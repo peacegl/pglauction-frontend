@@ -1,12 +1,12 @@
 // ForJWT Auth
-/* import { getUserFromJwtAuth } from "./helper/AuthHelper";
+import {getUserFromJwtAuth} from './helper/AuthHelper';
 import {
   useJWTAuth,
   useJWTAuthActions,
-} from "../services/auth/jwt-auth/JWTAuthProvider";
+} from '../services/auth/jwt-auth/JWTAuthProvider';
 
 export const useAuthUser = () => {
-  const { user, isAuthenticated, isLoading } = useJWTAuth();
+  const {user, isAuthenticated, isLoading} = useJWTAuth();
   return {
     isLoading,
     isAuthenticated,
@@ -15,16 +15,16 @@ export const useAuthUser = () => {
 };
 
 export const useAuthMethod = () => {
-  const { signInUser, signUpUser, logout } = useJWTAuthActions();
+  const {signInUser, signUpUser, logout} = useJWTAuthActions();
 
   return {
     signInUser,
     logout,
     signUpUser,
   };
-};*/
+};
 // For Firebase Auth
-import {
+/* import {
   useFirebase,
   useFirebaseActions,
 } from '../services/auth/firebase/FirebaseAuthProvider';
@@ -54,7 +54,7 @@ export const useAuthMethod = () => {
     logout,
   };
 };
-
+*/
 /*
 // For AWS Auth
 import {getUserFromAWS} from './helper/AuthHelper';
