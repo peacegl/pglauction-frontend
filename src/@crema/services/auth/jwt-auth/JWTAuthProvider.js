@@ -18,10 +18,10 @@ export const useJWTAuthActions = () => useContext(JWTAuthActionsContext);
 const JWTAuthAuthProvider = ({children}) => {
   const [firebaseData, setJWTAuthData] = useState({
     user: null,
+    permissions: null,
     isAuthenticated: false,
     isLoading: true,
   });
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,6 +31,7 @@ const JWTAuthAuthProvider = ({children}) => {
       if (!token) {
         setJWTAuthData({
           user: undefined,
+          permissions: null,
           isLoading: false,
           isAuthenticated: false,
         });
@@ -39,16 +40,20 @@ const JWTAuthAuthProvider = ({children}) => {
       setAuthToken(token);
       jwtAxios
         .get('/auth')
-        .then(({data}) =>
+        .then(({data}) => {
+          const permissions = data.permissions;
+          delete data.permissions;
           setJWTAuthData({
             user: data,
+            permissions: permissions,
             isLoading: false,
             isAuthenticated: true,
-          }),
-        )
+          });
+        })
         .catch(() =>
           setJWTAuthData({
             user: undefined,
+            permissions: null,
             isLoading: false,
             isAuthenticated: false,
           }),
@@ -65,8 +70,11 @@ const JWTAuthAuthProvider = ({children}) => {
       localStorage.setItem('token', data.token);
       setAuthToken(data.token);
       const res = await jwtAxios.get('/auth');
+      const permissions = res?.data?.permissions;
+      delete res?.data?.permissions;
       setJWTAuthData({
         user: res.data,
+        permissions: permissions,
         isAuthenticated: true,
         isLoading: false,
       });
@@ -91,8 +99,11 @@ const JWTAuthAuthProvider = ({children}) => {
       localStorage.setItem('token', data.token);
       setAuthToken(data.token);
       const res = await jwtAxios.get('/auth');
+      const permissions = res?.data?.permissions;
+      delete res?.data?.permissions;
       setJWTAuthData({
         user: res.data,
+        permissions: permissions,
         isAuthenticated: true,
         isLoading: false,
       });
@@ -118,6 +129,7 @@ const JWTAuthAuthProvider = ({children}) => {
       setAuthToken();
       setJWTAuthData({
         user: null,
+        permissions: null,
         isLoading: false,
         isAuthenticated: false,
       });
