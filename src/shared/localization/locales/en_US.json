@@ -757,5 +757,7 @@
   "customizer.sidebarMenuStyle": "Menu Style",
   "wall.groupCall": "Group Call",
   "wall.videoCall": "Video Call",
-  "wall.likeTeam": "Like Team"
+  "wall.likeTeam": "Like Team",
+
+  "sidebar.users": "Users"
 }

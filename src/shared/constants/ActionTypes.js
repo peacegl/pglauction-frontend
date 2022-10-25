@@ -144,3 +144,9 @@ export const UPDATE_CUSTOM_DATA = 'update_custom_data';
 
 //GALLERY
 export const GET_GALLERY_PHOTO = 'get_gallery_photo';
+
+//Auction Items
+export const GET_AUCTION_ITEMS = 'get_auction_items';
+export const SET_AUCTION_VIEW_TYPE = 'set_auction_view_type';
+export const SET_AUCTION_FILTER_DATA = 'set_auction_filter_data';
+export const SET_AUCTION_DATA = 'set_auction_data';

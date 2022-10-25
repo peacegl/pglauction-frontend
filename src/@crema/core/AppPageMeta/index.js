@@ -7,11 +7,9 @@ const SITE_URL =
     ? 'http://localhost:3000'
     : 'https://qa-blog.mastersindia.co';
 
-const defaultTitle = 'Crema- React Material Admin Template';
-const defaultDescription =
-  'Crema is purely based on Material UI components and follows Google’s Material Design guidelines.';
-const defaultImage =
-  'https://cdn.mastersindia.co/custom_pages/img/Masters India_GST_Software.svg';
+const defaultTitle = 'PGL Live Auction';
+const defaultDescription = 'Peace Global Logistics';
+const defaultImage = 'logo.png';
 const defaultTwitter = '@crema';
 const defaultSep = ' | ';
 
@@ -20,8 +18,8 @@ const AppPage = ({children, ...rest}) => {
     title,
     description,
     image,
-    category = 'Admin Theme',
-    tags = ['Material Admin', 'MUI Nextjs'],
+    category = 'Admin Panel',
+    tags = ['Live Auction', 'PGL', 'Vehicle', 'Vehicle Auction'],
   } = rest;
   const theTitle = title
     ? title?.length > 48
@@ -48,18 +46,18 @@ const AppPage = ({children, ...rest}) => {
               url: theImage,
               width: 800,
               height: 600,
-              alt: 'Crema Admin Template',
+              alt: 'PGL Live Auction',
               type: 'image/jpeg',
             },
             {
               url: theImage,
               width: 900,
               height: 800,
-              alt: 'Crema Admin Template',
+              alt: 'PGL Live Auction',
               type: 'image/jpeg',
             },
           ],
-          site_name: 'Crema Admin Template',
+          site_name: 'PGL Live Auction',
         }}
         tags={tags}
         category={category}
