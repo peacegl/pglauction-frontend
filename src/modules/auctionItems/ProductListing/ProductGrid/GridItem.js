@@ -91,10 +91,7 @@ const GridItem = (props) => {
             },
           }}
         >
-          <img
-            // src={item?.image[0]?.src}
-            alt='watch'
-          />
+          <img src={item?.images[0]?.path} alt='watch' />
         </Box>
         <Box
           sx={{

@@ -1,11 +1,19 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import TreeView from '@mui/lab/TreeView';
 import TreeItem from '@mui/lab/TreeItem';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {Fonts} from '../../../shared/constants/AppEnums';
+import {useDispatch, useSelector} from 'react-redux';
+import {onGetCategories} from '../../../redux/actions';
 
 const ProductsCategory = () => {
+  const dispatch = useDispatch();
+  const categories = useSelector(({auction_items}) => auction_items.categories);
+  useEffect(() => {
+    dispatch(onGetCategories({per_page: -1}));
+  }, [dispatch]);
+
   return (
     <TreeView
       style={{

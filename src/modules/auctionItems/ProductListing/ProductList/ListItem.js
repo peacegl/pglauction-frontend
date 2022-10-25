@@ -61,7 +61,7 @@ const ListItem = (props) => {
         >
           <MediaSlider>
             <Slider {...settings}>
-              {item?.image?.map((img) => {
+              {item?.images?.map((img) => {
                 return (
                   <Box
                     sx={{
@@ -84,7 +84,7 @@ const ListItem = (props) => {
                         height: '100%',
                       }}
                     >
-                      <img src={img.src} alt='watch' />
+                      <img src={img.path} alt='watch' />
                     </Box>
                   </Box>
                 );
