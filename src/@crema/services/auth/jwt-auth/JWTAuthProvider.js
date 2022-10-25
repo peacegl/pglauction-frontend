@@ -69,10 +69,13 @@ const JWTAuthAuthProvider = ({children}) => {
     getAuthUser();
   }, []);
 
-  const signInUser = async ({email, password}) => {
+  const signInUser = async ({email_or_username, password}) => {
     dispatch({type: FETCH_START});
     try {
-      const {data} = await jwtAxios.post('login', {email, password});
+      const {data} = await jwtAxios.post('login', {
+        email_or_username,
+        password,
+      });
       localStorage.setItem('token', data.token);
       setAuthToken(data.token);
       const res = await jwtAxios.get('/auth');
