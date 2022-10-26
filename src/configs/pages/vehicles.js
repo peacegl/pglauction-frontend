@@ -1,65 +1,51 @@
-export default function () {
+export default function configs() {
   return {
     columns: [
       {
-        id: 'year',
-        numeric: false,
-        disablePadding: false,
+        name: 'year',
         label: 'Year',
       },
       {
-        id: 'color',
-        numeric: false,
-        disablePadding: false,
+        name: 'color',
         label: 'Color',
       },
       {
-        id: 'model',
-        numeric: false,
-        disablePadding: false,
+        name: 'model',
         label: 'Model',
       },
       {
-        id: 'vin',
-        numeric: false,
-        disablePadding: false,
+        name: 'vin',
         label: 'Vin',
       },
       {
-        id: 'lot_number',
-        numeric: false,
-        disablePadding: false,
+        name: 'lot_number',
         label: 'Lot Number',
       },
       {
-        id: 'engine_type',
-        numeric: false,
-        disablePadding: false,
+        name: 'engine_type',
         label: 'Engine Type',
       },
       {
-        id: 'cylinders',
-        numeric: false,
-        disablePadding: false,
+        name: 'cylinders',
         label: 'Cylinders',
       },
       {
-        id: 'vehicle_type',
-        numeric: false,
-        disablePadding: false,
+        name: 'vehicle_type',
         label: 'Vehicle Type',
       },
       {
-        id: 'created_by',
-        numeric: false,
-        disablePadding: false,
+        name: 'created_by',
         label: 'Created By',
+        options: {
+          customBodyRender: (value, tableMeta, updateValue) => value.username,
+        },
       },
       {
-        id: 'updated_by',
-        numeric: false,
-        disablePadding: false,
+        name: 'updated_by',
         label: 'Updated By',
+        options: {
+          customBodyRender: (value, tableMeta, updateValue) => value.username,
+        },
       },
     ],
     exportColumns: [],

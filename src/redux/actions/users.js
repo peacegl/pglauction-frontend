@@ -1,6 +1,5 @@
 import {
   GET_USER_LIST,
-  SELECT_USER,
   FETCH_START,
   FETCH_SUCCESS,
   FETCH_ERROR,
@@ -9,12 +8,18 @@ import {
 import {appIntl} from '../../@crema/utility/helper/Utils';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 
-export const onGetUserList = (page = 1, per_page = 20) => {
+export const onGetUserList = (filterData) => {
   return (dispatch) => {
     const {messages} = appIntl();
     dispatch({type: FETCH_START});
-    jwtAxios
-      .get('/users', {params: {page, per_page}})
+    return jwtAxios
+      .get('/users', {
+        params: {
+          page: filterData?.page,
+          per_page: filterData?.per_page,
+          ...filterData,
+        },
+      })
       .then((data) => {
         if (data.status === 200) {
           dispatch({type: FETCH_SUCCESS});
@@ -29,12 +34,5 @@ export const onGetUserList = (page = 1, per_page = 20) => {
       .catch((error) => {
         dispatch({type: FETCH_ERROR, payload: error.message});
       });
-  };
-};
-
-export const onSetSelected = (newSelected) => {
-  return (dispatch) => {
-    const {messages} = appIntl();
-    dispatch({type: SELECT_USER, payload: newSelected});
   };
 };
