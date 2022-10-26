@@ -150,3 +150,7 @@ export const SET_AUCTION_VIEW_TYPE = 'set_auction_view_type';
 export const SET_AUCTION_FILTER_DATA = 'set_auction_filter_data';
 export const SET_AUCTION_DATA = 'set_auction_data';
 export const GET_CATEGORIES = 'get_categories';
+
+// Vehicles List
+export const GET_VEHICLE_LIST = 'get_vehicles_list';
+export const SET_VEHICLE_FILTER_DATA = 'set_vehicle_filter_data';
