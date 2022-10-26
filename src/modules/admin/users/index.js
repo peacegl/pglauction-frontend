@@ -237,7 +237,9 @@ export default function EnhancedTable() {
   const [orderBy, setOrderBy] = React.useState('calories');
   const [dense, setDense] = React.useState(false);
   const [selected, setSelected] = React.useState([]);
-  const {user_list, page, per_page, total} = useSelector(({users}) => users);
+  const {user_list, current_page, per_page, total} = useSelector(
+    ({users}) => users,
+  );
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -368,7 +370,7 @@ export default function EnhancedTable() {
           rowsPerPageOptions={[20, 50, 100]}
           component='div'
           count={total}
-          page={page}
+          page={current_page}
           rowsPerPage={per_page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
