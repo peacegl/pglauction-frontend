@@ -25,11 +25,12 @@ const IconBtn = styled(IconButton)(({theme}) => {
     },
   };
 });
-const ProductHeader = ({
+const AuctionHeader = ({
   onSearch,
   viewType,
   list,
   page,
+  perPage,
   totalProducts,
   onPageChange,
 }) => {
@@ -84,7 +85,7 @@ const ProductHeader = ({
               }}
             >
               <AppsPagination
-                rowsPerPage={10}
+                rowsPerPage={perPage}
                 count={totalProducts}
                 page={page}
                 onPageChange={onPageChange}
@@ -97,13 +98,14 @@ const ProductHeader = ({
   );
 };
 
-export default ProductHeader;
+export default AuctionHeader;
 
-ProductHeader.propTypes = {
+AuctionHeader.propTypes = {
   viewType: PropTypes.number,
   onSearch: PropTypes.func,
   list: PropTypes.array,
   page: PropTypes.number,
+  perPage: PropTypes.number,
   totalProducts: PropTypes.number,
   onPageChange: PropTypes.func,
 };

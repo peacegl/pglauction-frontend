@@ -3,6 +3,7 @@ import AppGrid from '../../../../@crema/core/AppGrid';
 import GridItem from './GridItem';
 import ListEmptyResult from '../../../../@crema/core/AppList/ListEmptyResult';
 import PropTypes from 'prop-types';
+import {Grid} from '@mui/material';
 
 const ProductGrid = ({ecommerceList, loading}) => (
   <AppGrid
@@ -19,6 +20,11 @@ const ProductGrid = ({ecommerceList, loading}) => (
     }
   />
 );
+// ecommerceList.map((item, index) => (
+//   <Grid item xs={12} sm={6} md={4} key={index}>
+//     <GridItem item={item} key={item.id} />
+//   </Grid>
+// ));
 export default ProductGrid;
 
 ProductGrid.propTypes = {

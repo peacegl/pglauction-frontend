@@ -1,22 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import AppsHeader from '../../../@crema/core/AppsContainer/AppsHeader';
-import ProductHeader from '../ProductHeader';
+import ProductHeader from '../AuctionHeader';
 import {useDispatch, useSelector} from 'react-redux';
 import {VIEW_TYPE} from '../../../redux/reducers/AuctionItems';
-import ProductGrid from './ProductGrid/index';
+import AuctionGrid from './AuctionGrid/index';
 
-import ProductList from './ProductList';
-import AppsContent from '../../../@crema/core/AppsContainer/AppsContent';
-import {alpha, Box, Hidden} from '@mui/material';
+import AuctionList from './AuctionList';
+import AppsContent from './AppsContent';
+import {alpha, Box, Hidden, Card} from '@mui/material';
 import {useThemeContext} from '../../../@crema/utility/AppContextProvider/ThemeContextProvider';
 import {onGetAuctionData, setFilters} from '../../../redux/actions';
-import AppsFooter from '../../../@crema/core/AppsContainer/AppsFooter';
 import AppsPagination from '../../../@crema/core/AppsPagination';
 
-const ProductListing = () => {
+const AuctionListing = () => {
   const dispatch = useDispatch();
   const {theme} = useThemeContext();
   const [page, setPage] = useState(0);
+  const perPage = 20;
 
   const auctionItemsList = useSelector(
     ({auction_items}) => auction_items.auctionItemsList,
@@ -27,7 +26,9 @@ const ProductListing = () => {
   const loading = useSelector(({common}) => common.loading);
 
   useEffect(() => {
-    dispatch(onGetAuctionData({...filterData, page: page + 1}));
+    dispatch(
+      onGetAuctionData({...filterData, per_page: perPage, page: page + 1}),
+    );
   }, [dispatch, filterData, page]);
 
   const onPageChange = (event, value) => {
@@ -39,16 +40,35 @@ const ProductListing = () => {
   };
   return (
     <>
-      <AppsHeader>
-        <ProductHeader
-          list={data}
-          viewType={viewType}
-          page={page}
-          totalProducts={total}
-          onPageChange={onPageChange}
-          onSearch={searchProduct}
-        />
-      </AppsHeader>
+      <Card
+        sx={{
+          m: 3,
+          borderRadius: 2,
+        }}
+      >
+        <Box
+          sx={{
+            height: 60,
+            display: 'flex',
+            alignItems: 'center',
+            padding: {
+              xs: '4px 10px',
+              xl: '12px 10px',
+            },
+          }}
+          className='apps-header'
+        >
+          <ProductHeader
+            list={data}
+            viewType={viewType}
+            page={page}
+            perPage={perPage}
+            totalProducts={total}
+            onPageChange={onPageChange}
+            onSearch={searchProduct}
+          />
+        </Box>
+      </Card>
 
       <AppsContent
         style={{backgroundColor: alpha(theme.palette.background.default, 0.6)}}
@@ -67,26 +87,31 @@ const ProductListing = () => {
           }}
         >
           {viewType === VIEW_TYPE.GRID ? (
-            <ProductGrid ecommerceList={data} loading={loading} />
+            <AuctionGrid ecommerceList={data} loading={loading} />
           ) : (
-            <ProductList ecommerceList={data} loading={loading} />
+            <AuctionList ecommerceList={data} loading={loading} />
           )}
         </Box>
       </AppsContent>
       <Hidden smUp>
         {data.length > 0 ? (
-          <AppsFooter>
+          <Card
+            sx={{
+              m: 3,
+              borderRadius: 2,
+            }}
+          >
             <AppsPagination
               count={total}
-              rowsPerPage={10}
+              rowsPerPage={perPage}
               page={page}
               onPageChange={onPageChange}
             />
-          </AppsFooter>
+          </Card>
         ) : null}
       </Hidden>
     </>
   );
 };
 
-export default ProductListing;
+export default AuctionListing;
