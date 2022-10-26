@@ -2,6 +2,14 @@ import {BiAlignLeft} from 'react-icons/bi';
 
 const routesConfig = [
   {
+    id: 'users',
+    title: 'Users',
+    messageId: 'sidebar.users',
+    type: 'item',
+    icon: <BiAlignLeft />,
+    url: '/users',
+  },
+  {
     id: 'app',
     title: 'Sample',
     messageId: 'sidebar.sample',

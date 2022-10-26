@@ -1,4 +1,6 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {onGetUserList, onSetSelected} from 'redux/actions/users';
 import PropTypes from 'prop-types';
 import {alpha} from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -20,33 +22,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import Avatar from '@mui/material/Avatar';
 import {visuallyHidden} from '@mui/utils';
-
-function createData(name, calories, fat, carbs, protein) {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-  };
-}
-
-const rows = [
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Donut', 452, 25.0, 51, 4.9),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Honeycomb', 408, 3.2, 87, 6.5),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Jelly Bean', 375, 0.0, 94, 0.0),
-  createData('KitKat', 518, 26.0, 65, 7.0),
-  createData('Lollipop', 392, 0.2, 98, 0.0),
-  createData('Marshmallow', 318, 0, 81, 2.0),
-  createData('Nougat', 360, 19.0, 9, 37.0),
-  createData('Oreo', 437, 18.0, 63, 4.0),
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -80,34 +57,58 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'name',
+    id: 'profile',
     numeric: false,
-    disablePadding: true,
-    label: 'Dessert (100g serving)',
+    disablePadding: false,
+    label: 'Profile',
   },
   {
-    id: 'calories',
-    numeric: true,
+    id: 'first_name',
+    numeric: false,
     disablePadding: false,
-    label: 'Calories',
+    label: 'First Name',
   },
   {
-    id: 'fat',
-    numeric: true,
+    id: 'last_name',
+    numeric: false,
     disablePadding: false,
-    label: 'Fat (g)',
+    label: 'Last Name',
   },
   {
-    id: 'carbs',
-    numeric: true,
+    id: 'phone',
+    numeric: false,
     disablePadding: false,
-    label: 'Carbs (g)',
+    label: 'Phone Number',
   },
   {
-    id: 'protein',
-    numeric: true,
+    id: 'whatsapp',
+    numeric: false,
     disablePadding: false,
-    label: 'Protein (g)',
+    label: 'WhatsApp',
+  },
+  {
+    id: 'gender',
+    numeric: false,
+    disablePadding: false,
+    label: 'Gender',
+  },
+  {
+    id: 'email',
+    numeric: false,
+    disablePadding: false,
+    label: 'Email',
+  },
+  {
+    id: 'birth_date',
+    numeric: false,
+    disablePadding: false,
+    label: 'Birthday',
+  },
+  {
+    id: 'address',
+    numeric: false,
+    disablePadding: false,
+    label: 'Address',
   },
 ];
 
@@ -201,12 +202,12 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       ) : (
         <Typography
-          sx={{flex: '1 1 100%'}}
-          variant='h6'
+          sx={{flex: '1 1 100%', ml: 3}}
+          variant='h3'
           id='tableTitle'
           component='div'
         >
-          Nutrition
+          User List
         </Typography>
       )}
 
@@ -234,10 +235,16 @@ EnhancedTableToolbar.propTypes = {
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [selected, setSelected] = React.useState([]);
+  const {user_list, current_page, per_page, total} = useSelector(
+    ({users}) => users,
+  );
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(onGetUserList());
+  }, [dispatch]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -247,7 +254,7 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = user_list.map((n) => n.id);
       setSelected(newSelecteds);
       return;
     }
@@ -270,17 +277,16 @@ export default function EnhancedTable() {
         selected.slice(selectedIndex + 1),
       );
     }
-
     setSelected(newSelected);
+    // dispatch(onSetSelected(newSelected));
   };
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    dispatch(onGetUserList(newPage + 1, per_page));
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    dispatch(onGetUserList(1, parseInt(event.target.value, 10)));
   };
 
   const handleChangeDense = (event) => {
@@ -288,10 +294,6 @@ export default function EnhancedTable() {
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
-
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
     <Box sx={{width: '100%'}}>
@@ -309,29 +311,28 @@ export default function EnhancedTable() {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={user_list.length}
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+              {stableSort(user_list, getComparator(order, orderBy)).map(
+                (row, index) => {
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
                       role='checkbox'
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.id}
                       selected={isItemSelected}
                     >
                       <TableCell padding='checkbox'>
                         <Checkbox
+                          onClick={(event) => handleClick(event, row.id)}
                           color='primary'
                           checked={isItemSelected}
                           inputProps={{
@@ -345,41 +346,36 @@ export default function EnhancedTable() {
                         scope='row'
                         padding='none'
                       >
-                        {row.name}
+                        <Avatar
+                          alt={row.firstname + ' profile picture.'}
+                          src={row.profile}
+                        />
                       </TableCell>
-                      <TableCell align='right'>{row.calories}</TableCell>
-                      <TableCell align='right'>{row.fat}</TableCell>
-                      <TableCell align='right'>{row.carbs}</TableCell>
-                      <TableCell align='right'>{row.protein}</TableCell>
+                      <TableCell>{row.firstname}</TableCell>
+                      <TableCell>{row.lastname}</TableCell>
+                      <TableCell>{row.phone}</TableCell>
+                      <TableCell>{row.whatsapp}</TableCell>
+                      <TableCell>{row.gender}</TableCell>
+                      <TableCell>{row.second_email}</TableCell>
+                      <TableCell>{row.birth_date}</TableCell>
+                      <TableCell>{row.address}</TableCell>
                     </TableRow>
                   );
-                })}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: (dense ? 33 : 53) * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
+                },
               )}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[20, 50, 100]}
           component='div'
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
+          count={total}
+          page={current_page}
+          rowsPerPage={per_page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label='Dense padding'
-      />
     </Box>
   );
 }

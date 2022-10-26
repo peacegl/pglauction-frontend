@@ -105,16 +105,12 @@ export const EDIT_MESSAGE = 'edit_message';
 export const DELETE_MESSAGE = 'delete_message';
 export const DELETE_USER_MESSAGES = 'delete_user_messages';
 export const TOGGLE_CHAT_DRAWER = 'toggle_chat_drawer';
-export const SELECT_USER = 'select_user';
 
 //WALL_APP
 export const GET_WALL_DATA = 'get_wall_data';
 export const GET_FEED_POSTS = 'get_feed_posts';
 export const CREATE_NEW_POST = 'create_new_post';
 export const UPDATE_POST = 'update_post';
-
-//USER_LIST
-export const GET_USER_LIST = 'GET_USER_LIST';
 
 //ECOMMERCE_LIST
 export const GET_ECOMMERCE_LIST = 'get_ecommerce_list';
@@ -144,3 +140,7 @@ export const UPDATE_CUSTOM_DATA = 'update_custom_data';
 
 //GALLERY
 export const GET_GALLERY_PHOTO = 'get_gallery_photo';
+
+//USER_LIST
+export const GET_USER_LIST = 'get_user_list';
+export const SELECT_USER = 'select_user';
