@@ -8,11 +8,6 @@ import VehicleConfigs from '../../../configs/pages/vehicles';
 export default function UserList() {
   const columns = VehicleConfigs().columns;
 
-  // columns[0]['options'].customBodyRender = (value, tableMeta, updateValue) => (
-  //   <Avatar alt={' profile picture.'} src={value} />
-  // );
-  console.log(columns);
-
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);

@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import UserConfigs from '../../../configs/pages/users';
 
-export default function UserList() {
+export default function userList() {
   const columns = UserConfigs().columns;
 
   columns[0]['options'].customBodyRender = (value, tableMeta, updateValue) => (
