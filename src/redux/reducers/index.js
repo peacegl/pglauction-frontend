@@ -3,12 +3,12 @@ import Settings from './Setting';
 import AuctionItems from './AuctionItems';
 import Common from './Common';
 import Vehicles from './Vehicles';
-import users from './users';
+import Users from './Users';
 
 const reducers = combineReducers({
   settings: Settings,
   common: Common,
-  users: users,
+  users: Users,
   vehicles: Vehicles,
   auction_items: AuctionItems,
 });

@@ -1,6 +1,5 @@
 import {
   GET_USER_LIST,
-  SELECT_USER,
   FETCH_START,
   FETCH_SUCCESS,
   FETCH_ERROR,
@@ -13,7 +12,7 @@ export const onGetUserList = (page = 1, per_page = 20) => {
   return (dispatch) => {
     const {messages} = appIntl();
     dispatch({type: FETCH_START});
-    jwtAxios
+    return jwtAxios
       .get('/users', {params: {page, per_page}})
       .then((data) => {
         if (data.status === 200) {
@@ -29,12 +28,5 @@ export const onGetUserList = (page = 1, per_page = 20) => {
       .catch((error) => {
         dispatch({type: FETCH_ERROR, payload: error.message});
       });
-  };
-};
-
-export const onSetSelected = (newSelected) => {
-  return (dispatch) => {
-    const {messages} = appIntl();
-    dispatch({type: SELECT_USER, payload: newSelected});
   };
 };
