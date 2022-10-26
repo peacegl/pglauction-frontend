@@ -1,15 +1,39 @@
 import React from 'react';
-import ProductListing from './ProductListing';
+import AuctionListing from './AuctionListing';
 import Container from '@mui/material/Container';
-import ProductsSidebar from './ProductsSidebar';
+import AuctionsSidebar from './AuctionsSidebar';
 import AppsContainer from '../../@crema/core/AppsContainer';
+import {Box, alpha, Card} from '@mui/material';
 
 const Products = () => {
   return (
     <Container maxWidth='xl' sx={{mt: 4}}>
-      <AppsContainer sidebarContent={<ProductsSidebar />}>
-        <ProductListing />
-      </AppsContainer>
+      <Box
+        sx={{
+          display: 'flex',
+        }}
+      >
+        <Box
+          sx={{
+            flex: 1,
+          }}
+        >
+          <Card
+            sx={{
+              m: 3,
+            }}
+          >
+            <AuctionsSidebar />
+          </Card>
+        </Box>
+        <Box
+          sx={{
+            flex: 3,
+          }}
+        >
+          <AuctionListing />
+        </Box>
+      </Box>
     </Container>
   );
 };

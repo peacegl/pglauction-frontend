@@ -7,7 +7,7 @@ import {Fonts} from '../../../shared/constants/AppEnums';
 import {useDispatch, useSelector} from 'react-redux';
 import {onGetCategories} from '../../../redux/actions';
 
-const ProductsCategory = () => {
+const AuctionCategory = () => {
   const dispatch = useDispatch();
   const categories = useSelector(({auction_items}) => auction_items.categories);
   useEffect(() => {
@@ -34,4 +34,4 @@ const ProductsCategory = () => {
   );
 };
 
-export default ProductsCategory;
+export default AuctionCategory;

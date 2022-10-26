@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import ProductsCategory from './ProductsCategory';
+import AuctionCategory from './AuctionsCategory';
 import {Box} from '@mui/material';
 import {Fonts} from '../../../shared/constants/AppEnums';
 import Divider from '@mui/material/Divider';
@@ -17,9 +17,10 @@ import AppGrid from '../../../@crema/core/AppGrid';
 import ColorCell from './ColorCell';
 import RatingCell from './RatingCell';
 import {useDispatch, useSelector} from 'react-redux';
-// import {setFilters} from '../../../redux/actions';
+import {setFilters} from '../../../redux/actions';
+import PropTypes from 'prop-types';
 
-const ProductSidebar = () => {
+const AuctionsSidebar = ({backgroundColor}) => {
   const dispatch = useDispatch();
   const filterData = useSelector(({auction_items}) => auction_items.filterData);
   const [selectedBrand, setSelectedBrand] = useState(filterData.brand);
@@ -28,26 +29,26 @@ const ProductSidebar = () => {
   const [selectedColor, setSelectedColor] = useState(filterData.color);
   const [customerRating, setCustomerRating] = useState(filterData.rating);
 
-  // useEffect(() => {
-  //   dispatch(
-  //     setFilters({
-  //       title: filterData.title,
-  //       brand: selectedBrand,
-  //       ideaFor: selectedFor,
-  //       discount: selectedDiscount,
-  //       color: selectedColor,
-  //       rating: customerRating,
-  //     }),
-  //   );
-  // }, [
-  //   dispatch,
-  //   filterData.title,
-  //   selectedBrand,
-  //   selectedFor,
-  //   selectedDiscount,
-  //   selectedColor,
-  //   customerRating,
-  // ]);
+  useEffect(() => {
+    dispatch(
+      setFilters({
+        title: filterData.title,
+        brand: selectedBrand,
+        ideaFor: selectedFor,
+        discount: selectedDiscount,
+        color: selectedColor,
+        rating: customerRating,
+      }),
+    );
+  }, [
+    dispatch,
+    filterData.title,
+    selectedBrand,
+    selectedFor,
+    selectedDiscount,
+    selectedColor,
+    customerRating,
+  ]);
 
   const onSelectBrand = (brandId) => {
     if (selectedBrand.some((brand) => brand === brandId)) {
@@ -94,6 +95,7 @@ const ProductSidebar = () => {
       <Box
         sx={{
           p: 6,
+          backgroundColor: backgroundColor,
         }}
       >
         <Box
@@ -114,7 +116,7 @@ const ProductSidebar = () => {
         >
           CATEGORIES
         </Box>
-        <ProductsCategory />
+        <AuctionCategory />
         <Divider
           sx={{
             mt: 4,
@@ -263,4 +265,7 @@ const ProductSidebar = () => {
   );
 };
 
-export default ProductSidebar;
+export default AuctionsSidebar;
+AuctionsSidebar.propTypes = {
+  backgroundColor: PropTypes.string,
+};
