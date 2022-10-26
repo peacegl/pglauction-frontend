@@ -9,12 +9,12 @@ import {
 import {appIntl} from '../../@crema/utility/helper/Utils';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 
-export const onGetUserList = (page = 1, items_per_page = 20) => {
+export const onGetUserList = (page = 1, per_page = 20) => {
   return (dispatch) => {
     const {messages} = appIntl();
     dispatch({type: FETCH_START});
     jwtAxios
-      .get('/users', {params: {page, items_per_page}})
+      .get('/users', {params: {page, per_page}})
       .then((data) => {
         if (data.status === 200) {
           dispatch({type: FETCH_SUCCESS});
