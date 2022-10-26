@@ -263,6 +263,7 @@
   "common.tag": "Tag",
   "common.labels": "Labels",
   "common.email": "Email",
+  "common.email_or_username": "Email Or Username",
   "common.phone": "Phone",
   "common.birthday": "Birthday",
   "common.selectLabel": "Select Label",
@@ -356,6 +357,7 @@
   "common.writeContent": "Write content...",
   "validation.emailFormat": "The Email you entered is not a valid format!",
   "validation.emailRequired": "Please enter Email Address!",
+  "validation.email_or_usernameRequired": "Please enter Email or Username!",
   "validation.passwordRequired": "Please enter password!",
   "validation.nameRequired": "Please enter name!",
   "validation.reTypePassword": "Please re-enter password!",
@@ -755,5 +757,7 @@
   "customizer.sidebarMenuStyle": "Menu Style",
   "wall.groupCall": "Group Call",
   "wall.videoCall": "Video Call",
-  "wall.likeTeam": "Like Team"
+  "wall.likeTeam": "Like Team",
+
+  "sidebar.users": "Users"
 }

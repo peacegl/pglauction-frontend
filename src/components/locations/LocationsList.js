@@ -15,7 +15,7 @@ export default function LocationsList() {
       (async function () {
         try {
           const response = await axios.get(
-            process.env.NEXT_PUBLIC_BASE_URL + 'locations?items_per_page=-1',
+            process.env.NEXT_PUBLIC_BASE_URL + 'locations?per_page=-1',
           );
           if (response.status == 200 && response.data.result) {
             setLocations(response.data.data);

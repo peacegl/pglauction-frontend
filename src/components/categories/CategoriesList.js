@@ -15,7 +15,7 @@ export default function CategoriesList() {
       (async function () {
         try {
           const response = await axios.get(
-            process.env.NEXT_PUBLIC_BASE_URL + 'categories?items_per_page=-1',
+            process.env.NEXT_PUBLIC_BASE_URL + 'categories?per_page=-1',
           );
           if (response.status == 200 && response.data.result) {
             setCategories(response.data.data);
