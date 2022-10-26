@@ -18,7 +18,7 @@ export const onGetUserList = (page = 1, per_page = 20) => {
       .then((data) => {
         if (data.status === 200) {
           dispatch({type: FETCH_SUCCESS});
-          dispatch({type: GET_USER_LIST, payload: data.data.data});
+          dispatch({type: GET_USER_LIST, payload: data.data});
         } else {
           dispatch({
             type: FETCH_ERROR,
