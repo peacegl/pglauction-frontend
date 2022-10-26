@@ -14,6 +14,7 @@ export const onGetVehicleData = (filterData) => {
       .get(`/vehicles`, {
         params: {
           page: filterData?.page,
+          per_page: filterData?.per_page,
           ...filterData,
         },
       })

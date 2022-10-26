@@ -13,31 +13,35 @@ export default function UserList() {
     <Avatar alt={' profile picture.'} src={value} />
   );
 
+  const [selected, setSelected] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const {
-    data = [],
-    per_page = 20,
-    total = 0,
-  } = useSelector(({users}) => users.userList);
+  const [page, setPage] = useState(0);
+  const [per_page, setPerPage] = useState(20);
+  const {data = [], total = 0} = useSelector(({users}) => users.userList);
   const dispatch = useDispatch();
   useEffect(() => {
     setIsLoading(true);
-    dispatch(onGetUserList()).then(() => setIsLoading(false));
-  }, [dispatch]);
+    dispatch(
+      onGetUserList({
+        page: page + 1,
+        per_page,
+      }),
+    ).then(() => setIsLoading(false));
+  }, [dispatch, page, per_page]);
 
   const options = {
     rowsPerPageOptions: [20, 50, 100, 500],
     count: total,
     rowsPerPage: per_page,
+    serverSide: true,
     onTableChange: (action, tableState) => {
-      if (action == 'changeRowsPerPage' || action == 'changePage') {
-        setIsLoading(true);
-        dispatch(
-          onGetUserList(tableState.page + 1, tableState.rowsPerPage),
-        ).then((res) => {
-          setIsLoading(false);
-        });
+      switch (action) {
+        case 'changePage':
+          setPage(tableState.page);
+          break;
+        case 'changeRowsPerPage':
+          setPerPage(tableState.rowsPerPage);
+          break;
       }
     },
   };
