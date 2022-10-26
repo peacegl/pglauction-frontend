@@ -1,4 +1,5 @@
 import {BiAlignLeft} from 'react-icons/bi';
+import DriveEtaIcon from '@mui/icons-material/DriveEta';
 import GroupIcon from '@mui/icons-material/Group';
 
 const routesConfig = [
@@ -8,6 +9,14 @@ const routesConfig = [
     messageId: 'sidebar.sample',
     type: 'group',
     children: [
+      {
+        id: 'vehicles',
+        title: 'Vehicles List',
+        messageId: 'sidebar.vehicles',
+        type: 'item',
+        icon: <DriveEtaIcon />,
+        url: '/admin/vehicles',
+      },
       {
         id: 'users',
         title: 'Users List',

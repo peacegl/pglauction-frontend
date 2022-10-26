@@ -13,11 +13,13 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import SearchIcon from '@mui/icons-material/Search';
+import {useRouter} from 'next/router';
 
 const pages = ['Home', 'Browse', 'Search'];
 const settings = ['Profile', 'Account', 'Logout'];
 
 function TopMenu() {
+  const router = useRouter();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -36,6 +38,9 @@ function TopMenu() {
     setAnchorElUser(null);
   };
 
+  const openAdminPanel = () => {
+    router.push('/admin/');
+  };
   return (
     <AppBar position='static'>
       <Container maxWidth='xl'>
@@ -128,6 +133,13 @@ function TopMenu() {
             ))}
           </Box>
 
+          <Button
+            onClick={openAdminPanel}
+            alignItems='center'
+            sx={{my: 2, color: 'white', display: 'block'}}
+          >
+            Admin Panel
+          </Button>
           <Box sx={{flexGrow: 0}}>
             <Tooltip title='Open settings'>
               <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
