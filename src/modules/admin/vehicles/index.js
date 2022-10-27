@@ -1,8 +1,7 @@
-import MUIDataTable from 'mui-datatables';
 import {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
 import {onGetVehicleData} from 'redux/actions';
-import Box from '@mui/material/Box';
+import CustomDataTable from '../../CustomDataTable';
+import {useDispatch, useSelector} from 'react-redux';
 import VehicleConfigs from '../../../configs/pages/vehicles';
 
 export default function UserList() {
@@ -41,15 +40,15 @@ export default function UserList() {
       }
     },
   };
-
+  const onAdd = () => {};
   return (
-    <Box>
-      <MUIDataTable
-        title='Vehicle List'
-        data={data}
-        columns={columns}
-        options={options}
-      />
-    </Box>
+    <CustomDataTable
+      title='Vehicles List'
+      total={total}
+      data={data}
+      columns={columns}
+      options={options}
+      onAdd={onAdd}
+    />
   );
 }

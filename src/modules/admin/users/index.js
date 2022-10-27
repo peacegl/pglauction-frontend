@@ -1,10 +1,9 @@
-import MUIDataTable from 'mui-datatables';
-import {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {onGetUserList} from 'redux/actions';
-import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
 import UserConfigs from '../../../configs/pages/users';
+import {useDispatch, useSelector} from 'react-redux';
+import CustomDataTable from '../../CustomDataTable';
+import {onGetUserList} from 'redux/actions';
+import {useEffect, useState} from 'react';
+import Avatar from '@mui/material/Avatar';
 
 export default function userList() {
   const columns = UserConfigs().columns;
@@ -45,15 +44,16 @@ export default function userList() {
       }
     },
   };
+  const onAdd = () => {};
 
   return (
-    <Box>
-      <MUIDataTable
-        title='User List'
-        data={data}
-        columns={columns}
-        options={options}
-      />
-    </Box>
+    <CustomDataTable
+      title='Users List'
+      total={total}
+      data={data}
+      columns={columns}
+      options={options}
+      onAdd={onAdd}
+    />
   );
 }
