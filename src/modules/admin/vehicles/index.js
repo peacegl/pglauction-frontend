@@ -3,10 +3,11 @@ import {onGetVehicleData} from 'redux/actions';
 import CustomDataTable from '../../CustomDataTable';
 import {useDispatch, useSelector} from 'react-redux';
 import VehicleConfigs from '../../../configs/pages/vehicles';
+import VehicleModal from './VehicleModal';
+const columns = VehicleConfigs().columns;
 
 export default function UserList() {
-  const columns = VehicleConfigs().columns;
-
+  const [openModal, setOpenModal] = useState(false);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
@@ -40,15 +41,26 @@ export default function UserList() {
       }
     },
   };
-  const onAdd = () => {};
+  const onAdd = () => {
+    setOpenModal(true);
+  };
   return (
-    <CustomDataTable
-      title='Vehicles List'
-      total={total}
-      data={data}
-      columns={columns}
-      options={options}
-      onAdd={onAdd}
-    />
+    <>
+      <CustomDataTable
+        title='Vehicles List'
+        total={total}
+        data={data}
+        columns={columns}
+        options={options}
+        onAdd={onAdd}
+      />
+      {openModal && (
+        <VehicleModal
+          open={openModal}
+          toggleOpen={() => setOpenModal((d) => !d)}
+          // hideBackdrop
+        />
+      )}
+    </>
   );
 }
