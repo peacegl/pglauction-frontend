@@ -11,17 +11,22 @@ export default function UserList() {
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
-  const vehiclesList = useSelector(({vehicles}) => vehicles.vehiclesList);
-  const {data = [], total = 0} = vehiclesList;
+  const [isLoading, setIsLoading] = useState(false);
+  const {data = [], total = 0} = useSelector(
+    ({vehicles}) => vehicles.vehiclesList,
+  );
 
   const dispatch = useDispatch();
   useEffect(() => {
+    setIsLoading(true);
     dispatch(
       onGetVehicleData({
         page: page + 1,
         per_page,
       }),
-    );
+    ).then(() => {
+      setIsLoading(false);
+    });
   }, [dispatch, page, per_page]);
 
   const options = {
@@ -48,6 +53,7 @@ export default function UserList() {
         columns={columns}
         options={options}
         onAdd={onAdd}
+        isLoading={isLoading}
       />
       {openModal && (
         <VehicleModal

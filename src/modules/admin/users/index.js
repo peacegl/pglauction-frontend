@@ -42,13 +42,16 @@ export default function userList() {
   const onAdd = () => {};
 
   return (
-    <CustomDataTable
-      title='Users List'
-      total={total}
-      data={data}
-      columns={columns}
-      options={options}
-      onAdd={onAdd}
-    />
+    <>
+      <CustomDataTable
+        title='Users List'
+        total={total}
+        data={data}
+        columns={columns}
+        options={options}
+        onAdd={onAdd}
+        isLoading={isLoading}
+      />
+    </>
   );
 }

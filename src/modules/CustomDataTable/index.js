@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import AddToolTip from './AddToolTip';
 import MUIDataTable from 'mui-datatables';
 import {Badge, Typography} from '@mui/material';
+import AppLoader from '@crema/core/AppLoader';
 
 const CustomDataTable = ({
   title,
@@ -11,19 +12,23 @@ const CustomDataTable = ({
   options,
   hideAddButton,
   onAdd,
+  isLoading,
 }) => {
   return (
     <MUIDataTable
       title={
-        <Typography variant='h1' color='primary'>
-          {title}
-          <Badge
-            badgeContent={total}
-            max={99999999}
-            color='primary'
-            sx={{ml: 7}}
-          />
-        </Typography>
+        <>
+          <Typography variant='h1' color='primary'>
+            {title}
+            <Badge
+              badgeContent={total}
+              max={99999999}
+              color='primary'
+              sx={{ml: 7}}
+            />
+          </Typography>
+          {isLoading && <AppLoader />}
+        </>
       }
       data={data}
       columns={columns}
@@ -45,4 +50,5 @@ CustomDataTable.propTypes = {
   options: PropTypes.object.isRequired,
   hideAddButton: PropTypes.bool,
   onAdd: PropTypes.func,
+  isLoading: PropTypes.bool,
 };
