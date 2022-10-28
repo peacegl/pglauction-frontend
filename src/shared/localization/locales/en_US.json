@@ -760,5 +760,31 @@
   "wall.likeTeam": "Like Team",
 
   "sidebar.users": "Users",
-  "sidebar.vehicles": "Vechiles"
+  "sidebar.vehicles": "Vechiles",
+
+  "validation.yearRequired": "Year is required!",
+  "validation.colorRequired": "Color is required!",
+  "validation.modelRequired": "Model is required!",
+  "validation.vinRequired": "Vin is required!",
+  "validation.lotRequired": "Lot Number is required!",
+  "validation.lotNumber": "Lot Number must be number!",
+  "validation.yearNumber": "Year must be number!",
+  "validation.maxYear": "Vehicle year must not be greater than current year!",
+  "validation.minYear": "Vehicle year must not be less than 1900!",
+  "vehicle.model": "Model",
+  "vehicle.modelPlaceholder": "Type vehicle model",
+  "common.year": "Year",
+  "vehicle.yearPlaceholder": "Type vehicle year",
+  "vehicle.vin": "Vin",
+  "vehicle.vinPlaceholder": "Type vehicle vin",
+  "vehicle.lotNumber": "Lot Number",
+  "vehicle.lotNumberPlaceholder": "Type vehicle lot number",
+  "vehicle.color": "Color",
+  "vehicle.colorPlaceholder": "Type vehicle Color",
+  "vehicle.engineType": "Engine Type",
+  "vehicle.engineTypePlaceholder": "Type vehicle Engine Type",
+  "vehicle.cylinders": "Cylinders",
+  "vehicle.cylindersPlaceholder": "Type vehicle Cylinders",
+  "vehicle.vehicleType": "Vehicle Type",
+  "vehicle.vehicleTypePlaceholder": "Type vehicle Vehicle Type"
 }
