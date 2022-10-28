@@ -761,6 +761,7 @@
 
   "sidebar.users": "Users",
   "sidebar.vehicles": "Vechiles",
+  "user.deleteMessage": "Are you sure, you want to delete the selected User(s)?",
 
   "validation.yearRequired": "Year is required!",
   "validation.colorRequired": "Color is required!",

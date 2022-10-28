@@ -29,6 +29,33 @@ export const onGetUserList = (filterData) => {
             type: FETCH_ERROR,
             payload: messages['message.somethingWentWrong'],
           });
+          dispatch({type: GET_USER_LIST, payload: {}});
+        }
+      })
+      .catch((error) => {
+        dispatch({type: FETCH_ERROR, payload: error.message});
+        dispatch({type: GET_USER_LIST, payload: {}});
+      });
+  };
+};
+
+export const onDeleteUsers = (userIds) => {
+  return (dispatch) => {
+    const {messages} = appIntl();
+    dispatch({type: FETCH_START});
+    return jwtAxios
+      .delete('/users/' + userIds, {
+        params: {withData: true},
+      })
+      .then((data) => {
+        if (data.status === 202) {
+          dispatch({type: FETCH_SUCCESS});
+          dispatch({type: GET_USER_LIST, payload: data.data});
+        } else {
+          dispatch({
+            type: FETCH_ERROR,
+            payload: messages['message.somethingWentWrong'],
+          });
         }
       })
       .catch((error) => {

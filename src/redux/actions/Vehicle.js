@@ -10,7 +10,7 @@ import jwtAxios from '@crema/services/auth/jwt-auth';
 export const onGetVehicleData = (filterData) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    jwtAxios
+    return jwtAxios
       .get(`/vehicles`, {
         params: {
           page: filterData?.page,
@@ -27,10 +27,12 @@ export const onGetVehicleData = (filterData) => {
             type: FETCH_ERROR,
             payload: 'Something went wrong, Please try again!',
           });
+          dispatch({type: GET_VEHICLE_LIST, payload: {}});
         }
       })
       .catch((error) => {
         dispatch({type: FETCH_ERROR, payload: error.message});
+        dispatch({type: GET_VEHICLE_LIST, payload: {}});
       });
   };
 };
