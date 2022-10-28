@@ -1,9 +1,10 @@
 import UserConfigs from '../../../configs/pages/users';
 import {useDispatch, useSelector} from 'react-redux';
 import CustomDataTable from '../../CustomDataTable';
-import {onGetUserList} from 'redux/actions';
+import {onGetUserList, onDeleteUsers} from 'redux/actions';
 import {useEffect, useState} from 'react';
 import Avatar from '@mui/material/Avatar';
+import IntlMessages from '@crema/utility/IntlMessages';
 
 export default function userList() {
   const columns = UserConfigs().columns;
@@ -33,13 +34,29 @@ export default function userList() {
     count: total,
     rowsPerPage: per_page,
     serverSide: true,
+    rowsSelected: selected,
     onChangeRowsPerPage: (numberOfRows) => {
       setPerPage(numberOfRows);
       setPage(0);
     },
     onChangePage: (page) => setPage(page),
+    onRowSelectionChange: (
+      currentRowsSelected,
+      allRowsSelected,
+      rowsSelected,
+    ) => {
+      setSelected(rowsSelected);
+    },
   };
   const onAdd = () => {};
+  const onEdit = () => {};
+  const onDelete = () => {
+    setIsLoading(true);
+    dispatch(onDeleteUsers(selected.map((item) => data[item].id))).then(() =>
+      setIsLoading(false),
+    );
+    setSelected([]);
+  };
 
   return (
     <>
@@ -50,7 +67,11 @@ export default function userList() {
         columns={columns}
         options={options}
         onAdd={onAdd}
+        onEdit={onEdit}
+        onDelete={onDelete}
+        deleteTitle={<IntlMessages id='user.deleteMessage' />}
         isLoading={isLoading}
+        selected={selected}
       />
     </>
   );

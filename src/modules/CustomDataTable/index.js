@@ -3,6 +3,7 @@ import AddToolTip from './AddToolTip';
 import MUIDataTable from 'mui-datatables';
 import {Badge, Typography} from '@mui/material';
 import AppLoader from '@crema/core/AppLoader';
+import Toolbar from './Toolbar';
 
 const CustomDataTable = ({
   title,
@@ -12,7 +13,11 @@ const CustomDataTable = ({
   options,
   hideAddButton,
   onAdd,
+  onEdit,
+  onDelete,
+  deleteTitle,
   isLoading,
+  selected,
 }) => {
   return (
     <>
@@ -48,6 +53,16 @@ const CustomDataTable = ({
             ? options.tableBodyHeight
             : '73vh',
           customToolbar: () => !hideAddButton && <AddToolTip onAdd={onAdd} />,
+          customToolbarSelect: options.customToolbarSelect
+            ? options.customToolbarSelect
+            : () => (
+                <Toolbar
+                  selected={selected}
+                  deleteTitle={deleteTitle}
+                  onDelete={onDelete}
+                  onEdit={onEdit}
+                />
+              ),
         }}
       />
       {isLoading && <AppLoader />}
@@ -65,5 +80,9 @@ CustomDataTable.propTypes = {
   options: PropTypes.object.isRequired,
   hideAddButton: PropTypes.bool,
   onAdd: PropTypes.func,
+  onEdit: PropTypes.func,
+  onDelete: PropTypes.func,
+  deleteTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   isLoading: PropTypes.bool,
+  selected: PropTypes.array,
 };

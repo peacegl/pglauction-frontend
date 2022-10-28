@@ -760,5 +760,6 @@
   "wall.likeTeam": "Like Team",
 
   "sidebar.users": "Users",
-  "sidebar.vehicles": "Vechiles"
+  "sidebar.vehicles": "Vechiles",
+  "user.deleteMessage": "Are you sure, you want to delete the selected User(s)?"
 }
