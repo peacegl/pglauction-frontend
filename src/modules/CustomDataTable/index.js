@@ -15,28 +15,43 @@ const CustomDataTable = ({
   isLoading,
 }) => {
   return (
-    <MUIDataTable
-      title={
-        <>
-          <Typography variant='h1' color='primary'>
-            {title}
-            <Badge
-              badgeContent={total}
-              max={99999999}
-              color='primary'
-              sx={{ml: 7}}
-            />
-          </Typography>
-          {isLoading && <AppLoader />}
-        </>
-      }
-      data={data}
-      columns={columns}
-      options={{
-        ...options,
-        customToolbar: () => !hideAddButton && <AddToolTip onAdd={onAdd} />,
-      }}
-    />
+    <>
+      <MUIDataTable
+        title={
+          <>
+            <Typography variant='h1' color='primary'>
+              {title}
+              <Badge
+                badgeContent={total}
+                max={99999999}
+                color='primary'
+                sx={{ml: 7}}
+              />
+            </Typography>
+          </>
+        }
+        data={data}
+        columns={columns}
+        options={{
+          ...options,
+          textLabels: {
+            body: {
+              noMatch: isLoading
+                ? 'Data Loading...'
+                : 'Sorry, no matching records found',
+            },
+          },
+          tableBodyMaxHeight: options.tableBodyMaxHeight
+            ? options.tableBodyMaxHeight
+            : '73vh',
+          tableBodyHeight: options.tableBodyHeight
+            ? options.tableBodyHeight
+            : '73vh',
+          customToolbar: () => !hideAddButton && <AddToolTip onAdd={onAdd} />,
+        }}
+      />
+      {isLoading && <AppLoader />}
+    </>
   );
 };
 

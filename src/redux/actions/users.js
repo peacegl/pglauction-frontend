@@ -29,10 +29,12 @@ export const onGetUserList = (filterData) => {
             type: FETCH_ERROR,
             payload: messages['message.somethingWentWrong'],
           });
+          dispatch({type: GET_USER_LIST, payload: {}});
         }
       })
       .catch((error) => {
         dispatch({type: FETCH_ERROR, payload: error.message});
+        dispatch({type: GET_USER_LIST, payload: {}});
       });
   };
 };
