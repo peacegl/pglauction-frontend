@@ -59,7 +59,6 @@ export default function UserList() {
         <VehicleModal
           open={openModal}
           toggleOpen={() => setOpenModal((d) => !d)}
-          // hideBackdrop
         />
       )}
     </>

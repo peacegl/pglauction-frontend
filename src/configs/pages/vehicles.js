@@ -1,3 +1,7 @@
+import IntlMessages from '@crema/utility/IntlMessages';
+const year = new Date().getFullYear();
+import * as yup from 'yup';
+
 export default function configs() {
   return {
     columns: [
@@ -49,5 +53,29 @@ export default function configs() {
       },
     ],
     exportColumns: [],
+    validationSchema: [
+      yup.object({
+        year: yup
+          .number()
+          .typeError(<IntlMessages id='validation.yearNumber' />)
+          .min(1900, <IntlMessages id='validation.minYear' />)
+          .max(year, <IntlMessages id='validation.maxYear' />)
+          .required(<IntlMessages id='validation.yearRequired' />),
+        model: yup
+          .string()
+          .required(<IntlMessages id='validation.modelRequired' />),
+        vin: yup
+          .string()
+          .required(<IntlMessages id='validation.vinRequired' />),
+        lot_number: yup
+          .number()
+          .typeError(<IntlMessages id='validation.lotNumber' />)
+          .required(<IntlMessages id='validation.lotRequired' />),
+        color: yup
+          .string()
+          .required(<IntlMessages id='validation.colorRequired' />),
+      }),
+      yup.object({}),
+    ],
   };
 }
