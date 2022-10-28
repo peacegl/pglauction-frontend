@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import AddToolTip from './AddToolTip';
 import MUIDataTable from 'mui-datatables';
-import {Badge, Typography} from '@mui/material';
+import {Badge, Box, Typography} from '@mui/material';
 
 const CustomDataTable = ({
   title,
@@ -15,15 +15,17 @@ const CustomDataTable = ({
   return (
     <MUIDataTable
       title={
-        <Typography variant='h1' color='primary'>
-          {title}
+        <Box sx={{display: 'flex', alignItems: 'center'}}>
+          <Typography variant='h1' color='primary'>
+            {title}
+          </Typography>
           <Badge
             badgeContent={total}
             max={99999999}
             color='primary'
             sx={{ml: 7}}
           />
-        </Typography>
+        </Box>
       }
       data={data}
       columns={columns}

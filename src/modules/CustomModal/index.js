@@ -4,20 +4,47 @@ import Modal from '@mui/material/Modal';
 import Card from '@mui/material/Card';
 import CustomStepper from './CustomStepper';
 import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import {useState, useLayoutEffect} from 'react';
 import CloseIcon from '@mui/icons-material/Close';
+import LoadingButton from '@mui/lab/LoadingButton';
+import SaveIcon from '@mui/icons-material/Save';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {Form, Formik} from 'formik';
 
-const CustomModal = ({open, toggleOpen, width, steps, children, ...rest}) => {
+const CustomModal = ({
+  open,
+  toggleOpen,
+  width,
+  steps,
+  children,
+  onSave,
+  validationSchema,
+  initialValues,
+  customValidation,
+  ...rest
+}) => {
   const [activeStep, setActiveStep] = useState(0);
   const [size, setSize] = useState([0]);
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) =>
-      prevActiveStep === steps.length - 1 ? prevActiveStep : prevActiveStep + 1,
-    );
+  const handleSubmit = async (values, actions) => {
+    // const customValidation = await customValidation(values, activeStep);
+    if (activeStep == steps?.length - 1 || children) {
+      actions.setSubmitting(true);
+      await onSave(values);
+      actions.setSubmitting(false);
+      // actions.resetForm();
+    } else {
+      setActiveStep((prevActiveStep) =>
+        prevActiveStep === steps?.length - 1
+          ? prevActiveStep
+          : prevActiveStep + 1,
+      );
+      actions.setTouched({});
+      actions.setSubmitting(false);
+    }
   };
-
   const handleBack = () => {
     setActiveStep((prevActiveStep) =>
       prevActiveStep == 0 ? 0 : prevActiveStep - 1,
@@ -47,7 +74,6 @@ const CustomModal = ({open, toggleOpen, width, steps, children, ...rest}) => {
             : size - 10,
           bgcolor: 'background.paper',
           boxShadow: 24,
-          p: 4,
         }}
       >
         <IconButton
@@ -55,30 +81,101 @@ const CustomModal = ({open, toggleOpen, width, steps, children, ...rest}) => {
           onClick={toggleOpen}
           sx={{float: 'right'}}
         >
-          <CloseIcon />
+          <CloseIcon sx={{fontSize: 18}} />
         </IconButton>
         {steps && (
-          <Box sx={{width: '100%'}}>
+          <Paper variant='outlined' square sx={{py: 3}}>
             <CustomStepper steps={steps} activeStep={activeStep} />
-            <Box sx={{m: 4, minHeight: 500}}>{steps[activeStep].children}</Box>
-            <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-              <Button
-                color='inherit'
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{mr: 1}}
-              >
-                Back
-              </Button>
-              <Box sx={{flex: '1 1 auto'}} />
-
-              <Button onClick={handleNext}>
-                {activeStep === steps.length - 1 ? 'Save' : 'Next'}
-              </Button>
-            </Box>
-          </Box>
+          </Paper>
         )}
-        {children && children}
+        <Formik
+          validateOnChange={true}
+          initialValues={initialValues}
+          validationSchema={validationSchema[activeStep]}
+          onSubmit={handleSubmit}
+        >
+          {({isSubmitting}) => (
+            <Form>
+              <Box>
+                {steps && (
+                  <Box
+                    sx={{
+                      height: 450,
+                      overflowY: 'auto',
+                      position: 'relative',
+                    }}
+                  >
+                    <Paper
+                      square
+                      sx={{
+                        py: 3,
+                        position: 'relative',
+                        left: 0,
+                        right: 0,
+                      }}
+                    >
+                      <Typography variant='h3' sx={{textAlign: 'center'}}>
+                        {steps[activeStep]?.label}
+                      </Typography>
+                    </Paper>
+                    <Box sx={{mx: 3, my: 5}}>{steps[activeStep]?.children}</Box>
+                  </Box>
+                )}
+                {children && (
+                  <Box
+                    sx={{
+                      mx: 3,
+                      mt: 7,
+                      mb: 4,
+                      minHeight: 450,
+                      overflowY: 'auto',
+                    }}
+                  >
+                    {children}
+                  </Box>
+                )}
+                <Paper
+                  variant='outlined'
+                  square
+                  sx={{display: 'flex', flexDirection: 'row', p: 2}}
+                >
+                  {!children && (
+                    <Button
+                      color='inherit'
+                      disabled={activeStep === 0}
+                      onClick={handleBack}
+                      sx={{mr: 1}}
+                    >
+                      <IntlMessages id='common.back' />
+                    </Button>
+                  )}
+                  <Box sx={{flex: '1 1 auto'}} />
+
+                  {activeStep < steps?.length - 1 && (
+                    <Button
+                      variant='contained'
+                      sx={{px: 6, mx: 3}}
+                      type='submit'
+                    >
+                      <IntlMessages id='common.next' />
+                    </Button>
+                  )}
+                  {(activeStep === steps?.length - 1 || children) && (
+                    <LoadingButton
+                      loading={isSubmitting}
+                      loadingPosition='start'
+                      startIcon={<SaveIcon />}
+                      variant='contained'
+                      type='submit'
+                    >
+                      <IntlMessages id='common.save' />
+                    </LoadingButton>
+                  )}
+                </Paper>
+              </Box>
+            </Form>
+          )}
+        </Formik>
       </Card>
     </Modal>
   );
@@ -92,4 +189,8 @@ CustomModal.propTypes = {
   toggleOpen: PropTypes.func.isRequired,
   steps: PropTypes.array,
   children: PropTypes.node,
+  onSave: PropTypes.func.isRequired,
+  validationSchema: PropTypes.object,
+  initialValues: PropTypes.object,
+  customValidation: PropTypes.func,
 };
