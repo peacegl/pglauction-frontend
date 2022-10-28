@@ -30,16 +30,11 @@ export default function UserList() {
     rowsPerPage: per_page,
     page: page,
     serverSide: true,
-    onTableChange: (action, tableState) => {
-      switch (action) {
-        case 'changePage':
-          setPage(tableState.page);
-          break;
-        case 'changeRowsPerPage':
-          setPerPage(tableState.rowsPerPage);
-          break;
-      }
+    onChangeRowsPerPage: (numberOfRows) => {
+      setPerPage(numberOfRows);
+      setPage(0);
     },
+    onChangePage: (page) => setPage(page),
   };
   const onAdd = () => {
     setOpenModal(true);
