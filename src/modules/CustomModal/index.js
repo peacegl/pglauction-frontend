@@ -13,6 +13,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {Form, Formik} from 'formik';
+import React from 'react';
 
 const CustomModal = ({
   open,
@@ -20,6 +21,7 @@ const CustomModal = ({
   width,
   steps,
   children,
+  title,
   onSave,
   validationSchema,
   initialValues,
@@ -94,7 +96,7 @@ const CustomModal = ({
           validationSchema={validationSchema[activeStep]}
           onSubmit={handleSubmit}
         >
-          {({isSubmitting}) => (
+          {({values, setFieldValue, isSubmitting}) => (
             <Form>
               <Box>
                 {steps && (
@@ -102,37 +104,75 @@ const CustomModal = ({
                     sx={{
                       height: 450,
                       overflowY: 'auto',
-                      position: 'relative',
                     }}
                   >
-                    <Paper
-                      square
+                    <Box
                       sx={{
-                        py: 3,
-                        position: 'relative',
-                        left: 0,
-                        right: 0,
+                        pt: 2,
+                        display: 'flex',
+                        justifyContent: 'center',
                       }}
                     >
-                      <Typography variant='h3' sx={{textAlign: 'center'}}>
+                      <Typography
+                        variant='h3'
+                        sx={{
+                          textAlign: 'center',
+                          py: 3,
+                          borderBottom: (theme) =>
+                            `2px solid ${theme.palette.text.secondary}`,
+                          borderRadius: '1px',
+                          color: (theme) => theme.palette.primary.main,
+                        }}
+                      >
                         {steps[activeStep]?.label}
                       </Typography>
-                    </Paper>
-                    <Box sx={{mx: 3, my: 5}}>{steps[activeStep]?.children}</Box>
+                    </Box>
+                    <Box sx={{mx: 3, my: 5}}>
+                      {React.cloneElement(steps[activeStep]?.children, {
+                        values: values,
+                        setfieldvalue: setFieldValue,
+                      })}
+                    </Box>
                   </Box>
                 )}
                 {children && (
-                  <Box
-                    sx={{
-                      mx: 3,
-                      mt: 7,
-                      mb: 4,
-                      minHeight: 450,
-                      overflowY: 'auto',
-                    }}
-                  >
-                    {children}
-                  </Box>
+                  <>
+                    <Box
+                      sx={{
+                        pt: 2,
+                        display: 'flex',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <Typography
+                        variant='h3'
+                        sx={{
+                          textAlign: 'center',
+                          py: 3,
+                          borderBottom: (theme) =>
+                            `2px solid ${theme.palette.text.secondary}`,
+                          borderRadius: '1px',
+                          color: (theme) => theme.palette.primary.main,
+                        }}
+                      >
+                        {title ?? title}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        mx: 3,
+                        mt: 7,
+                        mb: 4,
+                        minHeight: 450,
+                        overflowY: 'auto',
+                      }}
+                    >
+                      {React.cloneElement(children, {
+                        values: values,
+                        setfieldvalue: setFieldValue,
+                      })}
+                    </Box>
+                  </>
                 )}
                 <Paper
                   variant='outlined'
@@ -189,8 +229,9 @@ CustomModal.propTypes = {
   toggleOpen: PropTypes.func.isRequired,
   steps: PropTypes.array,
   children: PropTypes.node,
+  title: PropTypes.string,
   onSave: PropTypes.func.isRequired,
-  validationSchema: PropTypes.object,
+  validationSchema: PropTypes.array,
   initialValues: PropTypes.object,
   customValidation: PropTypes.func,
 };

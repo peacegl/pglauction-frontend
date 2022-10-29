@@ -20,9 +20,15 @@ export default function AppAutoComplete({
   helperText = '',
   error,
   multiple = false,
+  onSearch,
+  ...rest
 }) {
   const loading = !disabled && dataLoading;
-
+  const onInputChange = (event, value, reason) => {
+    const object = {};
+    object[keyName] = value;
+    if (onSearch) onSearch(object);
+  };
   const onSelectValue = (e, value) => {
     const event = {
       target: {
@@ -52,6 +58,7 @@ export default function AppAutoComplete({
       disabled={disabled}
       multiple={multiple}
       onChange={onSelectValue}
+      onInputChange={onInputChange}
       isOptionEqualToValue={(option, value) => {
         if (multiple) {
           return option?.[idField] === value?.[idField];
@@ -74,11 +81,13 @@ export default function AppAutoComplete({
           />
         ))
       }
+      {...rest}
       renderInput={(params) => (
         <TextField
           name={name}
           placeholder={placeholder}
           {...params}
+          {...rest}
           variant='outlined'
           onChange={(ev) => onType(ev.target.value)}
           InputProps={{
@@ -116,4 +125,5 @@ AppAutoComplete.propTypes = {
   helperText: PropTypes.string,
   error: PropTypes.bool,
   disabledId: PropTypes.bool,
+  onSearch: PropTypes.func,
 };

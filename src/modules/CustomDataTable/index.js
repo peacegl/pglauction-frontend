@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import AddToolTip from './AddToolTip';
+import AddTooltip from './AddTooltip';
 import MUIDataTable from 'mui-datatables';
 import {Badge, Box, Typography} from '@mui/material';
 import AppLoader from '@crema/core/AppLoader';
@@ -53,7 +53,7 @@ const CustomDataTable = ({
           tableBodyHeight: options.tableBodyHeight
             ? options.tableBodyHeight
             : '73vh',
-          customToolbar: () => !hideAddButton && <AddToolTip onAdd={onAdd} />,
+          customToolbar: () => !hideAddButton && <AddTooltip onAdd={onAdd} />,
           customToolbarSelect: options.customToolbarSelect
             ? options.customToolbarSelect
             : () => (

@@ -36,39 +36,37 @@ export default function CustomStepper(props) {
       connector={<ColorlibConnector />}
       sx={{overflowX: 'auto'}}
     >
-      {props.steps.map((step, index) => {
-        return (
-          <Step key={step.id}>
-            <StepLabel
-              StepIconComponent={() => (
-                <Avatar
-                  sx={{
-                    bgcolor: (theme) => {
-                      return props.activeStep >= index
-                        ? theme.palette.primary.main
-                        : theme.palette.grey['500'];
-                    },
-                  }}
-                >
-                  {step.icon}
-                </Avatar>
-              )}
-            >
-              <Box
+      {props.steps.map((step, index) => (
+        <Step key={step.id}>
+          <StepLabel
+            StepIconComponent={() => (
+              <Avatar
                 sx={{
-                  color: (theme) => {
+                  bgcolor: (theme) => {
                     return props.activeStep >= index
                       ? theme.palette.primary.main
                       : theme.palette.grey['500'];
                   },
                 }}
               >
-                {step.label}
-              </Box>
-            </StepLabel>
-          </Step>
-        );
-      })}
+                {step.icon}
+              </Avatar>
+            )}
+          >
+            <Box
+              sx={{
+                color: (theme) => {
+                  return props.activeStep >= index
+                    ? theme.palette.primary.main
+                    : theme.palette.grey['500'];
+                },
+              }}
+            >
+              {step.label}
+            </Box>
+          </StepLabel>
+        </Step>
+      ))}
     </Stepper>
   );
 }
