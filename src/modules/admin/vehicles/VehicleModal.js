@@ -7,6 +7,7 @@ import VehicleStepTwo from './VehicleStepTwo';
 import CustomModal from '../../CustomModal';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
+import {useEffect} from 'react';
 
 const steps = [
   {
@@ -35,7 +36,7 @@ export default function VehicleModal({open, toggleOpen, width, ...rest}) {
   const onSave = (values) => {
     console.log('fff', values);
   };
-
+  useEffect(() => {}, []);
   return (
     <CustomModal
       open={open}
