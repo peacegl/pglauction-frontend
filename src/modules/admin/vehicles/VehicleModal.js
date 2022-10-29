@@ -25,7 +25,7 @@ const steps = [
     key: 3,
     icon: <CollectionsIcon />,
     label: 'Vehicle Images',
-    children: <Box>Third Step</Box>,
+    children: <Box>Third Steps</Box>,
   },
 ];
 
