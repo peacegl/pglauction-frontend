@@ -43,12 +43,10 @@ export const onDeleteUsers = (userIds) => {
   return (dispatch) => {
     const {messages} = appIntl();
     dispatch({type: FETCH_START});
-    return jwtAxios
-      .delete('/users/' + userIds, {
-        params: {withData: true},
-      })
+    jwtAxios
+      .delete('/users/delete', {data: {userIds}})
       .then((data) => {
-        if (data.status === 202) {
+        if (data.status === 200 && data.data.result === true) {
           dispatch({type: FETCH_SUCCESS});
           dispatch({type: GET_USER_LIST, payload: data.data});
         } else {
@@ -59,6 +57,7 @@ export const onDeleteUsers = (userIds) => {
         }
       })
       .catch((error) => {
+        console.log(error);
         dispatch({type: FETCH_ERROR, payload: error.message});
       });
   };

@@ -52,9 +52,7 @@ export default function userList() {
   const onEdit = () => {};
   const onDelete = () => {
     setIsLoading(true);
-    dispatch(onDeleteUsers(selected.map((item) => data[item].id))).then(() =>
-      setIsLoading(false),
-    );
+    dispatch(onDeleteUsers(selected.map((item) => data[item].id)));
     setSelected([]);
   };
 
