@@ -1,9 +1,11 @@
 import {useEffect, useState} from 'react';
-import {onGetVehicleData} from 'redux/actions';
+import {onGetVehicleData, onDeleteVehicles} from 'redux/actions';
 import CustomDataTable from '../../CustomDataTable';
 import {useDispatch, useSelector} from 'react-redux';
 import VehicleConfigs from '../../../configs/pages/vehicles';
 import VehicleModal from './VehicleModal';
+import IntlMessages from '@crema/utility/IntlMessages';
+
 const columns = VehicleConfigs().columns;
 
 export default function UserList() {
@@ -41,9 +43,24 @@ export default function UserList() {
       setPage(0);
     },
     onChangePage: (page) => setPage(page),
+    onRowSelectionChange: (
+      currentRowsSelected,
+      allRowsSelected,
+      rowsSelected,
+    ) => {
+      setSelected(rowsSelected);
+    },
   };
   const onAdd = () => {
     setOpenModal(true);
+  };
+  const onEdit = () => {};
+  const onDelete = async () => {
+    setIsLoading(true);
+    await dispatch(onDeleteVehicles(selected.map((item) => data[item].id)));
+    await fetchData();
+    setSelected([]);
+    setIsLoading(false);
   };
   return (
     <>
@@ -54,7 +71,11 @@ export default function UserList() {
         columns={columns}
         options={options}
         onAdd={onAdd}
+        onEdit={onEdit}
+        onDelete={onDelete}
+        deleteTitle={<IntlMessages id='vehicle.deleteMessage' />}
         isLoading={isLoading}
+        selected={selected}
       />
       {openModal && (
         <VehicleModal

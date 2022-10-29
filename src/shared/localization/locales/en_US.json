@@ -787,5 +787,6 @@
   "vehicle.cylinders": "Cylinders",
   "vehicle.cylindersPlaceholder": "Type vehicle Cylinders",
   "vehicle.vehicleType": "Vehicle Type",
-  "vehicle.vehicleTypePlaceholder": "Type vehicle Vehicle Type"
+  "vehicle.vehicleTypePlaceholder": "Type vehicle Vehicle Type",
+  "vehicle.deleteMessage": "Are you sure, you want to delete the selected Vehicle(s)?"
 }
