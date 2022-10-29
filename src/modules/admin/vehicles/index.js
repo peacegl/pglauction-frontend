@@ -15,10 +15,6 @@ export default function UserList() {
   const {data = [], total = 0} = useSelector(
     ({vehicles}) => vehicles.vehiclesList,
   );
-
-  useEffect(() => {
-    console.log('dddd', isLoading);
-  }, [isLoading]);
   const dispatch = useDispatch();
   useEffect(() => {
     fetchData();
