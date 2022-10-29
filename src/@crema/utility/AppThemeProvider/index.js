@@ -6,8 +6,8 @@ import {
   ThemeProvider,
 } from '@mui/material/styles';
 import {useThemeContext} from '../AppContextProvider/ThemeContextProvider';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
+import {LocalizationProvider} from '@mui/x-date-pickers';
 import {responsiveFontSizes} from '@mui/material';
 
 const AppThemeProvider = (props) => {

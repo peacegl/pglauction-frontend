@@ -8,32 +8,30 @@ import {
 import jwtAxios from '@crema/services/auth/jwt-auth';
 
 export const onGetVehicleData = (filterData) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch({type: FETCH_START});
-    return jwtAxios
-      .get(`/vehicles`, {
+    try {
+      const res = await jwtAxios.get(`/vehicles`, {
         params: {
           page: filterData?.page,
           per_page: filterData?.per_page,
           ...filterData,
         },
-      })
-      .then((data) => {
-        if (data.status === 200) {
-          dispatch({type: FETCH_SUCCESS});
-          dispatch({type: GET_VEHICLE_LIST, payload: data.data});
-        } else {
-          dispatch({
-            type: FETCH_ERROR,
-            payload: 'Something went wrong, Please try again!',
-          });
-          dispatch({type: GET_VEHICLE_LIST, payload: {}});
-        }
-      })
-      .catch((error) => {
-        dispatch({type: FETCH_ERROR, payload: error.message});
-        dispatch({type: GET_VEHICLE_LIST, payload: {}});
       });
+      if (res.status === 200 && res.data.result) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_VEHICLE_LIST, payload: res.data});
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: 'Something went wrong, Please try again!',
+        });
+        dispatch({type: GET_VEHICLE_LIST, payload: {}});
+      }
+    } catch (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      dispatch({type: GET_VEHICLE_LIST, payload: {}});
+    }
   };
 };
 

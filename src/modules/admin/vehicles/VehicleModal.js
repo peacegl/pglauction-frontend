@@ -53,6 +53,17 @@ export default function VehicleModal({open, toggleOpen, width, ...rest}) {
         engine_type: '',
         cylinders: '',
         vehicle_type: '',
+        location_id: '',
+        category_id: '',
+        title: '',
+        subtitle: '',
+        start_date: '',
+        end_date: '',
+        minimum_bid: '',
+        buy_now_price: '',
+        description: '',
+        youtube_url: '',
+        note: '',
       }}
       {...rest}
     />
