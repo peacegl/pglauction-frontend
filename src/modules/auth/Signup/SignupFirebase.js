@@ -178,9 +178,7 @@ const SignupFirebase = () => {
           }}
         >
           <Link href='/signin'>
-            <a>
-              <IntlMessages id='common.signIn' />
-            </a>
+            <IntlMessages id='common.signIn' />
           </Link>
         </Box>
       </Box>

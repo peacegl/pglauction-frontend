@@ -15,20 +15,21 @@ export default function UserList() {
   const {data = [], total = 0} = useSelector(
     ({vehicles}) => vehicles.vehiclesList,
   );
-
   const dispatch = useDispatch();
   useEffect(() => {
+    fetchData();
+  }, [dispatch, page, per_page]);
+
+  const fetchData = async () => {
     setIsLoading(true);
-    dispatch(
+    await dispatch(
       onGetVehicleData({
         page: page + 1,
         per_page,
       }),
-    ).then(() => {
-      setIsLoading(false);
-    });
-  }, [dispatch, page, per_page]);
-
+    );
+    setIsLoading(false);
+  };
   const options = {
     rowsPerPageOptions: [20, 50, 100, 500],
     count: total,
