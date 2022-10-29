@@ -13,24 +13,22 @@ export default function UserList() {
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
-  const [isLoading, setIsLoading] = useState(false);
   const {data = [], total = 0} = useSelector(
     ({vehicles}) => vehicles.vehiclesList,
   );
+  const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   useEffect(() => {
     fetchData();
   }, [dispatch, page, per_page]);
 
   const fetchData = async () => {
-    setIsLoading(true);
     await dispatch(
       onGetVehicleData({
         page: page + 1,
         per_page,
       }),
     );
-    setIsLoading(false);
   };
   const options = {
     rowsPerPageOptions: [20, 50, 100, 500],
@@ -56,11 +54,14 @@ export default function UserList() {
   };
   const onEdit = () => {};
   const onDelete = async () => {
-    setIsLoading(true);
-    await dispatch(onDeleteVehicles(selected.map((item) => data[item].id)));
-    await fetchData();
+    await dispatch(
+      onDeleteVehicles({
+        vehicleIds: selected.map((item) => data[item].id),
+        page: page + 1,
+        per_page,
+      }),
+    );
     setSelected([]);
-    setIsLoading(false);
   };
   return (
     <>
@@ -74,7 +75,7 @@ export default function UserList() {
         onEdit={onEdit}
         onDelete={onDelete}
         deleteTitle={<IntlMessages id='vehicle.deleteMessage' />}
-        isLoading={isLoading}
+        isLoading={loading}
         selected={selected}
       />
       {openModal && (

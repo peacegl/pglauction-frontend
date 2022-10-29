@@ -3,6 +3,7 @@ import {
   FETCH_START,
   FETCH_SUCCESS,
   FETCH_ERROR,
+  SHOW_MESSAGE,
 } from 'shared/constants/ActionTypes';
 
 import {appIntl} from '../../@crema/utility/helper/Utils';
@@ -38,14 +39,19 @@ export const onGetUserList = (filterData) => {
   };
 };
 
-export const onDeleteUsers = (userIds) => {
+export const onDeleteUsers = (data) => {
   return async (dispatch) => {
     const {messages} = appIntl();
     dispatch({type: FETCH_START});
     try {
-      const res = await jwtAxios.delete('/users/delete', {data: {userIds}});
+      const res = await jwtAxios.delete('/users/delete', {data});
       if (res.status === 200 && res.data.result === true) {
         dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_USER_LIST, payload: res.data});
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: messages['user.message.deleted'],
+        });
       } else {
         dispatch({
           type: FETCH_ERROR,

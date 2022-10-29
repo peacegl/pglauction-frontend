@@ -4,6 +4,7 @@ import {
   FETCH_SUCCESS,
   GET_VEHICLE_LIST,
   SET_VEHICLE_FILTER_DATA,
+  SHOW_MESSAGE,
 } from '../../shared/constants/ActionTypes';
 import {appIntl} from '../../@crema/utility/helper/Utils';
 import jwtAxios from '@crema/services/auth/jwt-auth';
@@ -28,25 +29,25 @@ export const onGetVehicleData = (filterData) => {
           type: FETCH_ERROR,
           payload: messages['message.somethingWentWrong'],
         });
-        dispatch({type: GET_VEHICLE_LIST, payload: {}});
       }
     } catch (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
-      dispatch({type: GET_VEHICLE_LIST, payload: {}});
     }
   };
 };
 
-export const onDeleteVehicles = (vehicleIds) => {
+export const onDeleteVehicles = (data) => {
   return async (dispatch) => {
     const {messages} = appIntl();
     dispatch({type: FETCH_START});
     try {
-      const res = await jwtAxios.delete('/vehicles/delete', {
-        data: {vehicleIds},
-      });
+      const res = await jwtAxios.delete('/vehicles/delete', {data});
       if (res.status === 200 && res.data.result === true) {
-        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_VEHICLE_LIST, payload: res.data});
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: messages['vehicle.message.deleted'],
+        });
       } else {
         dispatch({
           type: FETCH_ERROR,

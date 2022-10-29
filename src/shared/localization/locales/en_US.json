@@ -762,6 +762,7 @@
   "sidebar.users": "Users",
   "sidebar.vehicles": "Vechiles",
   "user.deleteMessage": "Are you sure, you want to delete the selected User(s)?",
+  "user.message.deleted": "User(s) deleted successfully!",
 
   "validation.yearRequired": "Year is required!",
   "validation.colorRequired": "Color is required!",
@@ -788,5 +789,6 @@
   "vehicle.cylindersPlaceholder": "Type vehicle Cylinders",
   "vehicle.vehicleType": "Vehicle Type",
   "vehicle.vehicleTypePlaceholder": "Type vehicle Vehicle Type",
-  "vehicle.deleteMessage": "Are you sure, you want to delete the selected Vehicle(s)?"
+  "vehicle.deleteMessage": "Are you sure, you want to delete the selected Vehicle(s)?",
+  "vehicle.message.deleted": "Vehicle(s) deleted successfully!"
 }
