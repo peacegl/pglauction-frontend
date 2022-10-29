@@ -3,10 +3,12 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import CollectionsIcon from '@mui/icons-material/Collections';
 import VehicleConfigs from '../../../configs/pages/vehicles';
 import jwtAxios from '@crema/services/auth/jwt-auth';
+import {onInsertVehicle} from 'redux/actions';
 import VehicleStepOne from './VehicleStepOne';
 import VehicleStepTwo from './VehicleStepTwo';
 import CustomModal from '../../CustomModal';
 import {useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 
@@ -34,22 +36,20 @@ export default function VehicleModal({open, toggleOpen, width, ...rest}) {
     }
   };
   const searchLocations = (content) => {
-    if (content.location_name)
-      fetchData(
-        `/location/auto_complete`,
-        content,
-        setLocationLoading,
-        setLocations,
-      );
+    fetchData(
+      `/location/auto_complete`,
+      content,
+      setLocationLoading,
+      setLocations,
+    );
   };
   const searchCategories = (content) => {
-    if (content.category_name)
-      fetchData(
-        `/category/auto_complete`,
-        content,
-        setCategoryLoading,
-        setCategories,
-      );
+    fetchData(
+      `/category/auto_complete`,
+      content,
+      setCategoryLoading,
+      setCategories,
+    );
   };
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function VehicleModal({open, toggleOpen, width, ...rest}) {
   }, []);
 
   const onSave = (values) => {
-    console.log('fff', values);
+    dispatch(onInsertVehicle(values));
   };
   const steps = [
     {
