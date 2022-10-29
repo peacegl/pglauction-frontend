@@ -1,27 +1,25 @@
 import React from 'react';
 import {Field} from 'formik';
-import DatePicker from '@mui/lab/DatePicker';
+import DateTimePicker from '@mui/lab/DateTimePicker';
 import TextField from '@mui/material/TextField';
 import PropTypes from 'prop-types';
 
-const AppDateFiled = (props) => {
+const AppDateTimeField = (props) => {
   return (
     <Field
-      component={DatePicker}
+      component={DateTimePicker}
       variant='outlined'
       inputVariant='outlined'
-      format='YYYY-MM-DD'
-      mask='____-__-__'
       {...props}
       renderInput={(params) => (
-        <TextField className={props.className} {...params} />
+        <TextField className={props.className} {...params} {...props} />
       )}
     />
   );
 };
 
-export default AppDateFiled;
+export default AppDateTimeField;
 
-AppDateFiled.propTypes = {
+AppDateTimeField.propTypes = {
   className: PropTypes.string,
 };

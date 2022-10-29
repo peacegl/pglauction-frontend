@@ -16,31 +16,31 @@ const AppContainerWrapper = ({children, navStyle, footer, ...rest}) => {
         height: {
           xs: `calc(100vh - ${
             47 + // AppsHeader Height // apps title block height
-            40 + // Container Padding
+            10 + // Container Padding
             getMainHeaderHeight(navStyle, 0) +
             (footer ? 47 : 0)
           }px) !important`,
           sm: `calc(100vh - ${
             47 + // AppsHeader Height
-            40 + // Container Padding
+            10 + // Container Padding
             getMainHeaderHeight(navStyle, 600) +
             (footer ? 47 : 0)
           }px) !important`,
           md: `calc(100vh - ${
             47 + // AppsHeader Height
-            60 + // Container Padding
+            10 + // Container Padding
             getMainHeaderHeight(navStyle, 900) +
             (footer ? 47 : 0)
           }px) !important`,
           lg: `calc(100vh - ${
             40 + // AppsHeader Height
-            60 + // Container Padding
+            10 + // Container Padding
             getMainHeaderHeight(navStyle, 1200) +
             (footer ? 47 : 0)
           }px) !important`,
           xl: `calc(100vh - ${
             40 + // AppsHeader Height
-            100 + // Container Padding
+            10 + // Container Padding
             getMainHeaderHeight(navStyle, 1536) +
             (footer ? 57 : 0)
           }px) !important`,

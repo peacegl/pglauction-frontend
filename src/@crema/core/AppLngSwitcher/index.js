@@ -3,7 +3,7 @@ import languageData from './data';
 import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
-import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined';
+import LanguageIcon from '@mui/icons-material/Language';
 import {Fonts} from 'shared/constants/AppEnums';
 import {
   useLocaleActionsContext,
@@ -69,7 +69,7 @@ const AppLngSwitcher = ({iconOnly, tooltipPosition}) => {
           color='inherit'
           size='large'
         >
-          <TranslateOutlinedIcon />
+          <LanguageIcon />
           <span className='langText'>{locale.name}</span>
         </IconButton>
       ) : (
@@ -109,7 +109,7 @@ const AppLngSwitcher = ({iconOnly, tooltipPosition}) => {
             color='inherit'
             size='large'
           >
-            <TranslateOutlinedIcon />
+            <LanguageIcon />
           </IconButton>
         </AppTooltip>
       )}

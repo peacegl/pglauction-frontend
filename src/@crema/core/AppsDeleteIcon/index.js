@@ -23,7 +23,10 @@ const AppsDeleteIcon = ({deleteAction, deleteTitle, sx}) => {
       <AppConfirmDialog
         open={isDeleteDialogOpen}
         onDeny={setDeleteDialogOpen}
-        onConfirm={deleteAction}
+        onConfirm={() => {
+          deleteAction();
+          setDeleteDialogOpen(false);
+        }}
         title={deleteTitle}
         dialogTitle={<IntlMessages id='common.deleteItem' />}
       />
