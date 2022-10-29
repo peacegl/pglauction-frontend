@@ -4,6 +4,7 @@ import MUIDataTable from 'mui-datatables';
 import {Badge, Box, Typography} from '@mui/material';
 import AppLoader from '@crema/core/AppLoader';
 import Toolbar from './Toolbar';
+import AppInfoView from '@crema/core/AppInfoView';
 
 const CustomDataTable = ({
   title,
@@ -66,6 +67,7 @@ const CustomDataTable = ({
         }}
       />
       {isLoading && <AppLoader />}
+      <AppInfoView />
     </>
   );
 };

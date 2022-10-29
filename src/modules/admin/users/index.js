@@ -14,20 +14,23 @@ export default function userList() {
   );
 
   const [selected, setSelected] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
   const {data = [], total = 0} = useSelector(({users}) => users.userList);
+  const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   useEffect(() => {
-    setIsLoading(true);
-    dispatch(
+    fetchData();
+  }, [dispatch, page, per_page]);
+
+  const fetchData = async () => {
+    await dispatch(
       onGetUserList({
         page: page + 1,
         per_page,
       }),
-    ).then(() => setIsLoading(false));
-  }, [dispatch, page, per_page]);
+    );
+  };
 
   const options = {
     rowsPerPageOptions: [20, 50, 100, 500],
@@ -50,10 +53,13 @@ export default function userList() {
   };
   const onAdd = () => {};
   const onEdit = () => {};
-  const onDelete = () => {
-    setIsLoading(true);
-    dispatch(onDeleteUsers(selected.map((item) => data[item].id))).then(() =>
-      setIsLoading(false),
+  const onDelete = async () => {
+    await dispatch(
+      onDeleteUsers({
+        userIds: selected.map((item) => data[item].id),
+        page: page + 1,
+        per_page,
+      }),
     );
     setSelected([]);
   };
@@ -70,7 +76,7 @@ export default function userList() {
         onEdit={onEdit}
         onDelete={onDelete}
         deleteTitle={<IntlMessages id='user.deleteMessage' />}
-        isLoading={isLoading}
+        isLoading={loading}
         selected={selected}
       />
     </>
