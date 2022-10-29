@@ -2,60 +2,11 @@ import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteF
 import AppDateTimeField from '@crema/core/AppFormComponents/AppDateTimeField';
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import IntlMessages from '@crema/utility/IntlMessages';
-import jwtAxios from '@crema/services/auth/jwt-auth';
-import {useEffect, useState} from 'react';
 import {Box, Stack} from '@mui/material';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 
 const VehicleStepTwo = (props) => {
-  const [locationLoading, setLocationLoading] = useState(false);
-  const [categoryLoading, setCategoryLoading] = useState(false);
-  const [locations, setLocations] = useState([]);
-  const [categories, setCategories] = useState([]);
-
-  const fetchData = async (url, content, loading, setData) => {
-    try {
-      loading(true);
-      const res = await jwtAxios.get(url, {params: content});
-      if (res.status === 200 && res.data.result) {
-        setData(res.data.data);
-      } else {
-        setData([]);
-      }
-      loading(false);
-    } catch (error) {
-      setData([]);
-      loading(false);
-    }
-  };
-  const searchCategories = (content) => {
-    fetchData(
-      `/locations/auto_complete`,
-      content,
-      setLocationLoading,
-      setLocations,
-    );
-  };
-  const searchLocations = (content) => {
-    fetchData(
-      `/categories/auto_complete`,
-      content,
-      setCategoryLoading,
-      setCategories,
-    );
-  };
-
-  useEffect(() => {
-    fetchData(`/locations/auto_complete`, {}, setLocationLoading, setLocations);
-    fetchData(
-      `/categories/auto_complete`,
-      {},
-      setLocationLoading,
-      setLocations,
-    );
-  }, []);
-
   const {messages} = useIntl();
   return (
     <Box>
@@ -68,10 +19,10 @@ const VehicleStepTwo = (props) => {
             variant='outlined'
             size='small'
             sx={{flex: 1, width: '100%'}}
-            dataLoading={locationLoading}
-            options={locations}
+            dataLoading={props.locationLoading}
+            options={props.locations}
             keyName='location_name'
-            onSearch={searchLocations}
+            onSearch={props.searchLocations}
           />
           <AppAutocompleteField
             placeholder={messages['vehicle.categoryPlaceholder']}
@@ -80,10 +31,10 @@ const VehicleStepTwo = (props) => {
             variant='outlined'
             size='small'
             sx={{flex: 1, width: '100%'}}
-            dataLoading={categoryLoading}
-            options={categories}
+            dataLoading={props.categoryLoading}
+            options={props.categories}
             keyName='category_name'
-            onSearch={searchCategories}
+            onSearch={props.searchCategories}
           />
         </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
@@ -153,4 +104,11 @@ export default VehicleStepTwo;
 VehicleStepTwo.propTypes = {
   values: PropTypes.object,
   setfieldvalue: PropTypes.func,
+  locationLoading: PropTypes.bool,
+  locations: PropTypes.array.isRequired,
+  searchLocations: PropTypes.func.isRequired,
+  categoryLoading: PropTypes.bool,
+  categories: PropTypes.array.isRequired,
+  searchLocations: PropTypes.func.isRequired,
+  searchCategories: PropTypes.func.isRequired,
 };

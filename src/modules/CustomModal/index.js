@@ -21,6 +21,7 @@ const CustomModal = ({
   width,
   steps,
   children,
+  title,
   onSave,
   validationSchema,
   initialValues,
@@ -135,20 +136,43 @@ const CustomModal = ({
                   </Box>
                 )}
                 {children && (
-                  <Box
-                    sx={{
-                      mx: 3,
-                      mt: 7,
-                      mb: 4,
-                      minHeight: 450,
-                      overflowY: 'auto',
-                    }}
-                  >
-                    {React.cloneElement(children, {
-                      values: values,
-                      setfieldvalue: setFieldValue,
-                    })}
-                  </Box>
+                  <>
+                    <Box
+                      sx={{
+                        pt: 2,
+                        display: 'flex',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <Typography
+                        variant='h3'
+                        sx={{
+                          textAlign: 'center',
+                          py: 3,
+                          borderBottom: (theme) =>
+                            `2px solid ${theme.palette.text.secondary}`,
+                          borderRadius: '1px',
+                          color: (theme) => theme.palette.primary.main,
+                        }}
+                      >
+                        {title ?? title}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        mx: 3,
+                        mt: 7,
+                        mb: 4,
+                        minHeight: 450,
+                        overflowY: 'auto',
+                      }}
+                    >
+                      {React.cloneElement(children, {
+                        values: values,
+                        setfieldvalue: setFieldValue,
+                      })}
+                    </Box>
+                  </>
                 )}
                 <Paper
                   variant='outlined'
@@ -205,6 +229,7 @@ CustomModal.propTypes = {
   toggleOpen: PropTypes.func.isRequired,
   steps: PropTypes.array,
   children: PropTypes.node,
+  title: PropTypes.string,
   onSave: PropTypes.func.isRequired,
   validationSchema: PropTypes.array,
   initialValues: PropTypes.object,
