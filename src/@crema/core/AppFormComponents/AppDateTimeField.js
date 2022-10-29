@@ -1,6 +1,6 @@
 import React from 'react';
 import {Field} from 'formik';
-import DateTimePicker from '@mui/lab/DateTimePicker';
+import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
 import TextField from '@mui/material/TextField';
 import PropTypes from 'prop-types';
 
