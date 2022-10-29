@@ -761,6 +761,7 @@
   "sidebar.users": "Users",
   "sidebar.vehicles": "Vechiles",
   "user.deleteMessage": "Are you sure, you want to delete the selected User(s)?",
+  "user.message.deleted": "User(s) deleted successfully!",
 
   "validation.yearRequired": "Year is required!",
   "validation.colorRequired": "Color is required!",
@@ -794,7 +795,7 @@
   "vehicle.cylinders": "Cylinders",
   "vehicle.cylindersPlaceholder": "Type vehicle cylinders",
   "vehicle.vehicleType": "Vehicle Type",
-  "vehicle.vehicleTypePlaceholder": "Type vehicle  type",
+  "vehicle.vehicleTypePlaceholder": "Type vehicle type",
   "vehicle.location": "Location",
   "vehicle.locationPlaceholder": "Select location",
   "vehicle.category": "Category",
@@ -810,5 +811,7 @@
   "vehicle.minimumBid": "Minimum Bid",
   "vehicle.minimumBidPlaceholder": "Type minimum bid price",
   "vehicle.buyNowPrice": "Buy Now Price",
-  "vehicle.buyNowPricePlaceholder": "Type buy now price"
+  "vehicle.buyNowPricePlaceholder": "Type buy now price",
+  "vehicle.deleteMessage": "Are you sure, you want to delete the selected Vehicle(s)?",
+  "vehicle.message.deleted": "Vehicle(s) deleted successfully!"
 }
