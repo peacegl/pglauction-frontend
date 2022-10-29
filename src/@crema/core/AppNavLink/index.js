@@ -5,10 +5,8 @@ import PropTypes from 'prop-types';
 const AppNavLink = React.forwardRef((props, ref) => {
   const {to} = props;
   return (
-    <Link innerRef={ref} href={to}>
-      <a {...props}>
-        <>{props.children}</>
-      </a>
+    <Link innerRef={ref} href={to} {...props}>
+      <>{props.children}</>
     </Link>
   );
 });
