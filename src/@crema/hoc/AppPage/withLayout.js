@@ -6,6 +6,7 @@ import {
 } from '../../utility/AppContextProvider/LayoutContextProvider';
 import {useSidebarActionsContext} from '../../utility/AppContextProvider/SidebarContextProvider';
 import {useRouter} from 'next/router';
+import AppInfoView from '@crema/core/AppInfoView';
 
 const withLayout = (ComposedComponent) => (props) => {
   const {navStyle} = useLayoutContext();
@@ -24,6 +25,7 @@ const withLayout = (ComposedComponent) => (props) => {
   return (
     <AppLayout>
       <ComposedComponent {...props} />
+      <AppInfoView />
     </AppLayout>
   );
 };

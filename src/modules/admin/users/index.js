@@ -3,8 +3,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import CustomDataTable from '../../CustomDataTable';
 import {onGetUserList, onDeleteUsers} from 'redux/actions';
 import {useEffect, useState} from 'react';
-import Avatar from '@mui/material/Avatar';
 import IntlMessages from '@crema/utility/IntlMessages';
+import {Button, Avatar} from '@mui/material';
 
 export default function userList() {
   const columns = UserConfigs().columns;
@@ -16,6 +16,7 @@ export default function userList() {
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
+  const [search, setSearch] = useState('');
   const {data = [], total = 0} = useSelector(({users}) => users.userList);
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
@@ -23,11 +24,13 @@ export default function userList() {
     fetchData();
   }, [dispatch, page, per_page]);
 
-  const fetchData = async () => {
+  const fetchData = async (search = '', filterData = {}) => {
     await dispatch(
       onGetUserList({
         page: page + 1,
         per_page,
+        search,
+        filterData,
       }),
     );
   };
@@ -50,6 +53,34 @@ export default function userList() {
     ) => {
       setSelected(rowsSelected);
     },
+    onSearchChange: (value) => {
+      setSearch(value);
+    },
+    confirmFilters: true,
+    // Calling the applyNewFilters parameter applies the selected filters to the table
+    customFilterDialogFooter: (currentFilterList, applyNewFilters) => {
+      return (
+        <div style={{marginTop: '40px'}}>
+          <Button
+            variant='contained'
+            onClick={() => handleFilterSubmit(applyNewFilters)}
+          >
+            Apply Filters
+          </Button>
+        </div>
+      );
+    },
+    // callback that gets executed when filters are confirmed
+    onFilterConfirm: (filterList) => {
+      console.log('onFilterConfirm');
+    },
+    onFilterChange: (column, filterList, type) => {
+      if (type === 'chip') {
+        var newFilters = () => filterList;
+        console.log('updating filters via chip');
+        // handleFilterSubmit(newFilters);
+      }
+    },
   };
   const onAdd = () => {};
   const onEdit = () => {};
@@ -62,6 +93,15 @@ export default function userList() {
       }),
     );
     setSelected([]);
+  };
+
+  const onEnterSearch = (value) => {
+    setPage(0);
+    fetchData(value);
+  };
+
+  const handleFilterSubmit = (applyFilters) => {
+    let filterList = applyFilters();
   };
 
   return (
@@ -78,6 +118,7 @@ export default function userList() {
         deleteTitle={<IntlMessages id='user.deleteMessage' />}
         isLoading={loading}
         selected={selected}
+        onEnterSearch={onEnterSearch}
       />
     </>
   );

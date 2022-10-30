@@ -4,7 +4,7 @@ import MUIDataTable from 'mui-datatables';
 import {Badge, Box, Typography} from '@mui/material';
 import AppLoader from '@crema/core/AppLoader';
 import Toolbar from './Toolbar';
-import AppInfoView from '@crema/core/AppInfoView';
+import Search from './Search';
 
 const CustomDataTable = ({
   title,
@@ -19,6 +19,7 @@ const CustomDataTable = ({
   deleteTitle,
   isLoading,
   selected,
+  onEnterSearch,
 }) => {
   return (
     <>
@@ -64,10 +65,22 @@ const CustomDataTable = ({
                   onEdit={onEdit}
                 />
               ),
+          customSearchRender: options.customSearchRender
+            ? options.customSearchRender
+            : (searchText, handleSearch, hideSearch, options) => {
+                return (
+                  <Search
+                    searchText={searchText}
+                    onSearch={handleSearch}
+                    onHide={hideSearch}
+                    onEnter={onEnterSearch ? onEnterSearch : () => {}}
+                    options={options}
+                  />
+                );
+              },
         }}
       />
       {isLoading && <AppLoader />}
-      <AppInfoView />
     </>
   );
 };
@@ -87,4 +100,5 @@ CustomDataTable.propTypes = {
   deleteTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   isLoading: PropTypes.bool,
   selected: PropTypes.array,
+  onEnterSearch: PropTypes.func,
 };

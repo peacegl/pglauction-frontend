@@ -13,20 +13,23 @@ export default function UserList() {
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
+  const [search, setSearch] = useState('');
   const {data = [], total = 0} = useSelector(
     ({vehicles}) => vehicles.vehiclesData,
   );
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   useEffect(() => {
-    fetchData();
+    fetchData(search);
   }, [dispatch, page, per_page]);
 
-  const fetchData = async () => {
+  const fetchData = async (search = '', filterData = {}) => {
     await dispatch(
       onGetVehicleData({
         page: page + 1,
         per_page,
+        search,
+        filterData,
       }),
     );
   };
@@ -36,6 +39,7 @@ export default function UserList() {
     rowsPerPage: per_page,
     page: page,
     serverSide: true,
+    rowsSelected: selected,
     onChangeRowsPerPage: (numberOfRows) => {
       setPerPage(numberOfRows);
       setPage(0);
@@ -47,6 +51,9 @@ export default function UserList() {
       rowsSelected,
     ) => {
       setSelected(rowsSelected);
+    },
+    onSearchChange: (value) => {
+      setSearch(value);
     },
   };
   const onAdd = () => {
@@ -63,6 +70,11 @@ export default function UserList() {
     );
     setSelected([]);
   };
+  const onEnterSearch = (value) => {
+    setPage(0);
+    fetchData(value);
+  };
+
   return (
     <>
       <CustomDataTable
@@ -77,6 +89,7 @@ export default function UserList() {
         deleteTitle={<IntlMessages id='vehicle.deleteMessage' />}
         isLoading={loading}
         selected={selected}
+        onEnterSearch={onEnterSearch}
       />
       {openModal && (
         <VehicleModal
