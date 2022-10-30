@@ -4,6 +4,7 @@ import {
   FETCH_SUCCESS,
   GET_VEHICLE_LIST,
   SET_VEHICLE_FILTER_DATA,
+  ADD_NEW_VEHICLE,
   SHOW_MESSAGE,
 } from '../../shared/constants/ActionTypes';
 import {appIntl} from '../../@crema/utility/helper/Utils';
@@ -24,6 +25,27 @@ export const onGetVehicleData = (filterData) => {
       if (res.status === 200 && res.data.result) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_VEHICLE_LIST, payload: res.data});
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: messages['message.somethingWentWrong'],
+        });
+      }
+    } catch (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+    }
+  };
+};
+
+export const onInsertVehicle = (data) => {
+  return async (dispatch) => {
+    dispatch({type: FETCH_START});
+    const {messages} = appIntl();
+    try {
+      const res = await jwtAxios.post(`/vehicles`, data);
+      if (res.status === 200 && res.data.result) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: ADD_NEW_VEHICLE, payload: res.data});
       } else {
         dispatch({
           type: FETCH_ERROR,

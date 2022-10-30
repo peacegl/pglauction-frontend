@@ -75,7 +75,35 @@ export default function configs() {
           .string()
           .required(<IntlMessages id='validation.colorRequired' />),
       }),
-      yup.object({}),
+      yup.object({
+        location_id: yup
+          .string()
+          .required(<IntlMessages id='validation.locationRequired' />),
+        category_id: yup
+          .string()
+          .required(<IntlMessages id='validation.categoryRequired' />),
+        title: yup
+          .string()
+          .required(<IntlMessages id='validation.titleRequired' />),
+        subtitle: yup
+          .string()
+          .required(<IntlMessages id='validation.subtitleRequired' />),
+        start_date: yup
+          .date()
+          .typeError(<IntlMessages id='validation.dateValidation' />)
+          .nullable(),
+        end_date: yup
+          .date()
+          .typeError(<IntlMessages id='validation.dateValidation' />)
+          .nullable(),
+        minimum_bid: yup.number(),
+        // .typeError(<IntlMessages id='validation.priceError' />)
+        // .required(<IntlMessages id='validation.mbidRequired' />),
+        buy_now_price: yup
+          .number()
+          .typeError(<IntlMessages id='validation.priceError' />)
+          .required(<IntlMessages id='validation.buyNowPriceRequired' />),
+      }),
     ],
   };
 }

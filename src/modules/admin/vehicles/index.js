@@ -14,7 +14,7 @@ export default function UserList() {
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
   const {data = [], total = 0} = useSelector(
-    ({vehicles}) => vehicles.vehiclesList,
+    ({vehicles}) => vehicles.vehiclesData,
   );
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
