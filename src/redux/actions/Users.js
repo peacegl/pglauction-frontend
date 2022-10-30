@@ -45,8 +45,7 @@ export const onDeleteUsers = (data) => {
     dispatch({type: FETCH_START});
     try {
       const res = await jwtAxios.delete('/users/delete', {data});
-      if (res.status === 200 && res.data.result === true) {
-        dispatch({type: FETCH_SUCCESS});
+      if (res.status === 200 && res.data.result) {
         dispatch({type: GET_USER_LIST, payload: res.data});
         dispatch({
           type: SHOW_MESSAGE,

@@ -42,7 +42,7 @@ export const onDeleteVehicles = (data) => {
     dispatch({type: FETCH_START});
     try {
       const res = await jwtAxios.delete('/vehicles/delete', {data});
-      if (res.status === 200 && res.data.result === true) {
+      if (res.status === 200 && res.data.result) {
         dispatch({type: GET_VEHICLE_LIST, payload: res.data});
         dispatch({
           type: SHOW_MESSAGE,
