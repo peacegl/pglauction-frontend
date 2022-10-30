@@ -9,6 +9,10 @@ export default function conifgs() {
         },
       },
       {
+        name: 'code',
+        label: 'Code',
+      },
+      {
         name: 'firstname',
         label: 'First Name',
       },
@@ -29,7 +33,7 @@ export default function conifgs() {
         label: 'Gender',
       },
       {
-        name: 'email',
+        name: 'second_email',
         label: 'Email',
       },
       {

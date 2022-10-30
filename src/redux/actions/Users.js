@@ -15,13 +15,8 @@ export const onGetUserList = (filterData) => {
     dispatch({type: FETCH_START});
     try {
       const res = await jwtAxios.get('/users', {
-        params: {
-          ...filterData,
-          page: filterData?.page,
-          per_page: filterData?.per_page,
-        },
+        params: {...filterData},
       });
-      console.log(res);
       if (res.status === 200 && res.data.result) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_USER_LIST, payload: res.data});

@@ -6,6 +6,10 @@ export default function configs() {
   return {
     columns: [
       {
+        name: 'code',
+        label: 'Code',
+      },
+      {
         name: 'year',
         label: 'Year',
       },
