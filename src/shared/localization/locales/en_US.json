@@ -760,6 +760,10 @@
 
   "sidebar.users": "Users",
   "sidebar.vehicles": "Vechiles",
+  "sidebar.customers": "Customers",
+  "sidebar.categories": "Categories",
+  "sidebar.locations": "Locations",
+
   "user.deleteMessage": "Are you sure, you want to delete the selected User(s)?",
   "user.message.deleted": "User(s) deleted successfully!",
 
