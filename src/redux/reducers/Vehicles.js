@@ -20,9 +20,9 @@ const AuctionItemReducer = (state = initialState, action) => {
       return {
         ...state,
         vehiclesData: {
-          ...vehiclesData,
-          total: vehiclesData.total + 1,
-          data: [action.payload, ...vehiclesData.data],
+          ...state.vehiclesData,
+          total: state.vehiclesData.total + 1,
+          data: [action.payload, ...state.vehiclesData.data],
         },
       };
     case SET_VEHICLE_FILTER_DATA:

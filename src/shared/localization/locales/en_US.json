@@ -796,6 +796,8 @@
   "vehicle.cylindersPlaceholder": "Type vehicle cylinders",
   "vehicle.vehicleType": "Vehicle Type",
   "vehicle.vehicleTypePlaceholder": "Type vehicle type",
+  "vehicle.seller": "Seller",
+  "vehicle.sellerPlaceholder": "Select seller",
   "vehicle.location": "Location",
   "vehicle.locationPlaceholder": "Select location",
   "vehicle.category": "Category",

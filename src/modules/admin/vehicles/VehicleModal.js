@@ -17,9 +17,11 @@ const validationSchema = VehicleConfigs().validationSchema;
 export default function VehicleModal({open, toggleOpen, width, ...rest}) {
   const [locationLoading, setLocationLoading] = useState(false);
   const [categoryLoading, setCategoryLoading] = useState(false);
+  const [sellersLoading, setSellersLoading] = useState(false);
   const [locations, setLocations] = useState([]);
   const [categories, setCategories] = useState([]);
-
+  const [sellers, setSellers] = useState([]);
+  const dispatch = useDispatch();
   const fetchData = async (url, content, loading, setData) => {
     try {
       loading(true);
@@ -51,10 +53,14 @@ export default function VehicleModal({open, toggleOpen, width, ...rest}) {
       setCategories,
     );
   };
+  const searchSellers = (content) => {
+    fetchData(`/sellers/auto_complete`, content, setSellersLoading, setSellers);
+  };
 
   useEffect(() => {
     fetchData(`/location/auto_complete`, {}, setLocationLoading, setLocations);
     fetchData(`/category/auto_complete`, {}, setCategoryLoading, setCategories);
+    fetchData(`/sellers/auto_complete`, {}, setSellersLoading, setSellers);
   }, []);
 
   const onSave = (values) => {
@@ -77,17 +83,20 @@ export default function VehicleModal({open, toggleOpen, width, ...rest}) {
           locationLoading={locationLoading}
           categories={categories}
           categoryLoading={categoryLoading}
+          sellersLoading={sellersLoading}
+          sellers={sellers}
           searchCategories={searchCategories}
           searchLocations={searchLocations}
+          searchSellers={searchSellers}
         />
       ),
     },
-    {
-      key: 3,
-      icon: <CollectionsIcon />,
-      label: 'Vehicle Images',
-      children: <Box>Third Steps</Box>,
-    },
+    // {
+    //   key: 3,
+    //   icon: <CollectionsIcon />,
+    //   label: 'Vehicle Images',
+    //   children: <Box>Third Steps</Box>,
+    // },
   ];
   return (
     <CustomModal

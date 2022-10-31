@@ -39,7 +39,7 @@ export const onInsertVehicle = (data) => {
     const {messages} = appIntl();
     try {
       const res = await jwtAxios.post(`/vehicles`, data);
-      if (res.status === 200 && res.data.result) {
+      if (res.status === 201 && res.data.result) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: ADD_NEW_VEHICLE, payload: res.data});
       } else {
