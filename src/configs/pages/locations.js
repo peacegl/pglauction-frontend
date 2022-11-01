@@ -6,32 +6,20 @@ export default function conifgs() {
         label: 'Code',
       },
       {
-        name: 'username',
-        label: 'Username',
+        name: 'name',
+        label: 'Name',
       },
       {
-        name: 'firstname',
-        label: 'First Name',
+        name: 'slug',
+        label: 'Slug',
       },
       {
-        name: 'lastname',
-        label: 'Last Name',
+        name: 'parent_name',
+        label: 'Parent Category',
       },
       {
-        name: 'phone',
-        label: 'Phone Number',
-      },
-      {
-        name: 'whatsapp',
-        label: 'WhatsApp',
-      },
-      {
-        name: 'gender',
-        label: 'Gender',
-      },
-      {
-        name: 'status',
-        label: 'Status',
+        name: 'description',
+        label: 'Description',
       },
       {
         name: 'created_by',
