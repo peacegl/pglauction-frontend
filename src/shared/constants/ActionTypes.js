@@ -143,7 +143,17 @@ export const GET_GALLERY_PHOTO = 'get_gallery_photo';
 
 //USER_LIST
 export const GET_USER_LIST = 'get_user_list';
-export const SELECT_USER = 'select_user';
+
+//Customer List
+export const GET_CUSTOMER_LIST = 'get_customer_list';
+export const SET_CUSTOMER_FILTER_DATA = 'set_customer_filter_data';
+//Location List
+export const GET_LOCATION_LIST = 'get_location_list';
+export const SET_LOCATION_FILTER_DATA = 'set_location_filter_data';
+//Category List
+export const GET_CATEGORY_LIST = 'get_category_list';
+export const SET_CATEGORY_FILTER_DATA = 'set_category_filter_data';
+
 //Auction Items
 export const GET_AUCTION_ITEMS = 'get_auction_items';
 export const SET_AUCTION_VIEW_TYPE = 'set_auction_view_type';
