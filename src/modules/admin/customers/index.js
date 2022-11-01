@@ -1,32 +1,30 @@
-import UserConfigs from '../../../configs/pages/users';
+import CustomerConfigs from '../../../configs/pages/customers';
 import {useDispatch, useSelector} from 'react-redux';
 import CustomDataTable from '../../CustomDataTable';
-import {onGetUserList, onDeleteUsers} from 'redux/actions';
+import {onGetCustomerList, onDeleteCustomers} from 'redux/actions';
 import {useEffect, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {Button, Avatar} from '@mui/material';
 
-export default function UserList() {
-  const columns = UserConfigs().columns;
-
-  columns[0]['options'].customBodyRender = (value, tableMeta, updateValue) => (
-    <Avatar alt={' profile picture.'} src={value} />
-  );
+export default function CustomerList() {
+  const columns = CustomerConfigs().columns;
 
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
   const [search, setSearch] = useState('');
-  const {data = [], total = 0} = useSelector(({users}) => users.userList);
+  const {data = [], total = 0} = useSelector(
+    ({customers}) => customers.customerData,
+  );
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   useEffect(() => {
-    fetchData();
+    fetchData(search);
   }, [dispatch, page, per_page]);
 
   const fetchData = async (search = '', filterData = {}) => {
     await dispatch(
-      onGetUserList({
+      onGetCustomerList({
         page: page + 1,
         per_page,
         search,
@@ -56,38 +54,13 @@ export default function UserList() {
     onSearchChange: (value) => {
       setSearch(value);
     },
-    confirmFilters: true,
-    // Calling the applyNewFilters parameter applies the selected filters to the table
-    customFilterDialogFooter: (currentFilterList, applyNewFilters) => {
-      return (
-        <div style={{marginTop: '40px'}}>
-          <Button
-            variant='contained'
-            onClick={() => handleFilterSubmit(applyNewFilters)}
-          >
-            Apply Filters
-          </Button>
-        </div>
-      );
-    },
-    // callback that gets executed when filters are confirmed
-    onFilterConfirm: (filterList) => {
-      console.log('onFilterConfirm');
-    },
-    onFilterChange: (column, filterList, type) => {
-      if (type === 'chip') {
-        var newFilters = () => filterList;
-        console.log('updating filters via chip');
-        // handleFilterSubmit(newFilters);
-      }
-    },
   };
   const onAdd = () => {};
   const onEdit = () => {};
   const onDelete = async () => {
     await dispatch(
-      onDeleteUsers({
-        userIds: selected.map((item) => data[item].id),
+      onDeleteCustomers({
+        customerIds: selected.map((item) => data[item].id),
         page: page + 1,
         per_page,
       }),
@@ -100,14 +73,10 @@ export default function UserList() {
     fetchData(value);
   };
 
-  const handleFilterSubmit = (applyFilters) => {
-    let filterList = applyFilters();
-  };
-
   return (
     <>
       <CustomDataTable
-        title='User List'
+        title='Customer List'
         total={total}
         data={data}
         columns={columns}

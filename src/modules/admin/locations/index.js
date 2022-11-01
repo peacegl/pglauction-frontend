@@ -6,7 +6,7 @@ import {useEffect, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {Button, Avatar} from '@mui/material';
 
-export default function UserList() {
+export default function userList() {
   const columns = UserConfigs().columns;
 
   columns[0]['options'].customBodyRender = (value, tableMeta, updateValue) => (
@@ -107,7 +107,7 @@ export default function UserList() {
   return (
     <>
       <CustomDataTable
-        title='User List'
+        title='Users List'
         total={total}
         data={data}
         columns={columns}

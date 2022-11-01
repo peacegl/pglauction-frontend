@@ -36,7 +36,7 @@ const routesConfig = [
     messageId: 'sidebar.categories',
     type: 'item',
     icon: <CategoryIcon />,
-    url: '/admin/category',
+    url: '/admin/categories',
   },
   {
     id: 'locations',
