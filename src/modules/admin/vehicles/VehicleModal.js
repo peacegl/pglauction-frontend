@@ -12,15 +12,24 @@ import {useDispatch} from 'react-redux';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 
+const insertColumns = VehicleConfigs().insertColumns;
 const validationSchema = VehicleConfigs().validationSchema;
 
-export default function VehicleModal({open, toggleOpen, width, ...rest}) {
+export default function VehicleModal({
+  open,
+  toggleOpen,
+  width,
+  recordId,
+  ...rest
+}) {
   const [locationLoading, setLocationLoading] = useState(false);
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [sellersLoading, setSellersLoading] = useState(false);
   const [locations, setLocations] = useState([]);
   const [categories, setCategories] = useState([]);
   const [sellers, setSellers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [formValues, setFormValues] = useState({});
   const dispatch = useDispatch();
   const fetchData = async (url, content, loading, setData) => {
     try {
@@ -63,6 +72,29 @@ export default function VehicleModal({open, toggleOpen, width, ...rest}) {
     fetchData(`/sellers/auto_complete`, {}, setSellersLoading, setSellers);
   }, []);
 
+  useEffect(() => {
+    if (recordId) {
+      (async function () {
+        try {
+          setIsLoading(true);
+          const res = await jwtAxios.get(`/vehicles/${recordId}`);
+          if (res.status === 200 && res.data.result) {
+            const formValues = {};
+            Object.keys(res.data.data).forEach((key) => {
+              if (insertColumns.includes(key)) {
+                formValues[key] = res.data.data[key];
+              }
+            });
+            setFormValues(formValues);
+          }
+          setIsLoading(false);
+        } catch (error) {
+          setIsLoading(false);
+        }
+      })();
+    }
+  }, [recordId]);
+
   const onSave = (values) => {
     dispatch(onInsertVehicle(values, toggleOpen));
   };
@@ -71,7 +103,12 @@ export default function VehicleModal({open, toggleOpen, width, ...rest}) {
       key: 1,
       icon: <DirectionsCarIcon />,
       label: 'Vehicle Properties',
-      children: <VehicleStepOne />,
+      children: (
+        <VehicleStepOne
+          formValues={formValues}
+          setFormValues={(setValues) => setValues(formValues)}
+        />
+      ),
     },
     {
       key: 2,
@@ -128,6 +165,7 @@ export default function VehicleModal({open, toggleOpen, width, ...rest}) {
         youtube_url: '',
         note: '',
       }}
+      isLoading={isLoading}
       {...rest}
     />
   );
@@ -136,4 +174,5 @@ VehicleModal.propTypes = {
   open: PropTypes.bool.isRequired,
   toggleOpen: PropTypes.func,
   width: PropTypes.number,
+  recordId: PropTypes.string,
 };

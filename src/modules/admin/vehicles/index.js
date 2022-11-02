@@ -14,6 +14,7 @@ export default function VehicleList() {
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
   const [search, setSearch] = useState('');
+  const [recordId, setRecordId] = useState(null);
   const {data = [], total = 0} = useSelector(
     ({vehicles}) => vehicles.vehiclesData,
   );
@@ -59,7 +60,10 @@ export default function VehicleList() {
   const onAdd = () => {
     setOpenModal(true);
   };
-  const onEdit = () => {};
+  const onEdit = () => {
+    setRecordId(data[selected[0]].id);
+    setOpenModal(true);
+  };
   const onDelete = async () => {
     await dispatch(
       onDeleteVehicles({
@@ -95,6 +99,7 @@ export default function VehicleList() {
         <VehicleModal
           open={openModal}
           toggleOpen={() => setOpenModal((d) => !d)}
+          recordId={recordId}
         />
       )}
     </>

@@ -2,9 +2,15 @@ import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {Box, Stack} from '@mui/material';
 import {useIntl} from 'react-intl';
+import {useEffect} from 'react';
+import PropTypes from 'prop-types';
 
-const VehicleStepOne = () => {
+const VehicleStepOne = (props) => {
   const {messages} = useIntl();
+
+  useEffect(() => {
+    if (props.formValues) props.setFormValues(props.setValues);
+  }, [props.formValues]);
 
   return (
     <Box>
@@ -87,3 +93,9 @@ const VehicleStepOne = () => {
 };
 
 export default VehicleStepOne;
+
+VehicleStepOne.propTypes = {
+  formValues: PropTypes.object,
+  setFormValues: PropTypes.func,
+  setValues: PropTypes.func,
+};
