@@ -96,125 +96,128 @@ const CustomModal = ({
           validationSchema={validationSchema[activeStep]}
           onSubmit={handleSubmit}
         >
-          {({values, setFieldValue, isSubmitting}) => (
-            <Form>
-              <Box>
-                {steps && (
-                  <Box
-                    sx={{
-                      height: 450,
-                      overflowY: 'auto',
-                    }}
-                  >
+          {({values, setFieldValue, isSubmitting}) => {
+            console.log('ff', values);
+            return (
+              <Form>
+                <Box>
+                  {steps && (
                     <Box
                       sx={{
-                        pt: 2,
-                        display: 'flex',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      <Typography
-                        variant='h3'
-                        sx={{
-                          textAlign: 'center',
-                          py: 3,
-                          borderBottom: (theme) =>
-                            `2px solid ${theme.palette.text.secondary}`,
-                          borderRadius: '1px',
-                          color: (theme) => theme.palette.primary.main,
-                        }}
-                      >
-                        {steps[activeStep]?.label}
-                      </Typography>
-                    </Box>
-                    <Box sx={{mx: 3, my: 5}}>
-                      {React.cloneElement(steps[activeStep]?.children, {
-                        values: values,
-                        setfieldvalue: setFieldValue,
-                      })}
-                    </Box>
-                  </Box>
-                )}
-                {children && (
-                  <>
-                    <Box
-                      sx={{
-                        pt: 2,
-                        display: 'flex',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      <Typography
-                        variant='h3'
-                        sx={{
-                          textAlign: 'center',
-                          py: 3,
-                          borderBottom: (theme) =>
-                            `2px solid ${theme.palette.text.secondary}`,
-                          borderRadius: '1px',
-                          color: (theme) => theme.palette.primary.main,
-                        }}
-                      >
-                        {title ?? title}
-                      </Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        mx: 3,
-                        mt: 7,
-                        mb: 4,
-                        minHeight: 450,
+                        height: 450,
                         overflowY: 'auto',
                       }}
                     >
-                      {React.cloneElement(children, {
-                        values: values,
-                        setfieldvalue: setFieldValue,
-                      })}
+                      <Box
+                        sx={{
+                          pt: 2,
+                          display: 'flex',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <Typography
+                          variant='h3'
+                          sx={{
+                            textAlign: 'center',
+                            py: 3,
+                            borderBottom: (theme) =>
+                              `2px solid ${theme.palette.text.secondary}`,
+                            borderRadius: '1px',
+                            color: (theme) => theme.palette.primary.main,
+                          }}
+                        >
+                          {steps[activeStep]?.label}
+                        </Typography>
+                      </Box>
+                      <Box sx={{mx: 3, my: 5}}>
+                        {React.cloneElement(steps[activeStep]?.children, {
+                          values: values,
+                          setfieldvalue: setFieldValue,
+                        })}
+                      </Box>
                     </Box>
-                  </>
-                )}
-                <Paper
-                  variant='outlined'
-                  square
-                  sx={{display: 'flex', flexDirection: 'row', p: 2}}
-                >
-                  {!children && (
-                    <Button
-                      color='inherit'
-                      disabled={activeStep === 0}
-                      onClick={handleBack}
-                      sx={{mr: 1}}
-                    >
-                      <IntlMessages id='common.back' />
-                    </Button>
                   )}
-                  <Box sx={{flex: '1 1 auto'}} />
+                  {children && (
+                    <>
+                      <Box
+                        sx={{
+                          pt: 2,
+                          display: 'flex',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <Typography
+                          variant='h3'
+                          sx={{
+                            textAlign: 'center',
+                            py: 3,
+                            borderBottom: (theme) =>
+                              `2px solid ${theme.palette.text.secondary}`,
+                            borderRadius: '1px',
+                            color: (theme) => theme.palette.primary.main,
+                          }}
+                        >
+                          {title ?? title}
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          mx: 3,
+                          mt: 7,
+                          mb: 4,
+                          minHeight: 450,
+                          overflowY: 'auto',
+                        }}
+                      >
+                        {React.cloneElement(children, {
+                          values: values,
+                          setfieldvalue: setFieldValue,
+                        })}
+                      </Box>
+                    </>
+                  )}
+                  <Paper
+                    variant='outlined'
+                    square
+                    sx={{display: 'flex', flexDirection: 'row', p: 2}}
+                  >
+                    {!children && (
+                      <Button
+                        color='inherit'
+                        disabled={activeStep === 0}
+                        onClick={handleBack}
+                        sx={{mr: 1}}
+                      >
+                        <IntlMessages id='common.back' />
+                      </Button>
+                    )}
+                    <Box sx={{flex: '1 1 auto'}} />
 
-                  {activeStep < steps?.length - 1 && (
-                    <Button
-                      variant='contained'
-                      sx={{px: 6, mx: 3}}
-                      type='submit'
-                    >
-                      <IntlMessages id='common.next' />
-                    </Button>
-                  )}
-                  {(activeStep === steps?.length - 1 || children) && (
-                    <LoadingButton
-                      loading={isSubmitting}
-                      loadingPosition='start'
-                      startIcon={<SaveIcon />}
-                      variant='contained'
-                      type='submit'
-                    >
-                      <IntlMessages id='common.save' />
-                    </LoadingButton>
-                  )}
-                </Paper>
-              </Box>
-            </Form>
-          )}
+                    {activeStep < steps?.length - 1 && (
+                      <Button
+                        variant='contained'
+                        sx={{px: 6, mx: 3}}
+                        type='submit'
+                      >
+                        <IntlMessages id='common.next' />
+                      </Button>
+                    )}
+                    {(activeStep === steps?.length - 1 || children) && (
+                      <LoadingButton
+                        loading={isSubmitting}
+                        loadingPosition='start'
+                        startIcon={<SaveIcon />}
+                        variant='contained'
+                        type='submit'
+                      >
+                        <IntlMessages id='common.save' />
+                      </LoadingButton>
+                    )}
+                  </Paper>
+                </Box>
+              </Form>
+            );
+          }}
         </Formik>
       </Card>
     </Modal>
