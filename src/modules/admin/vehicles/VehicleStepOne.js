@@ -8,10 +8,6 @@ import PropTypes from 'prop-types';
 const VehicleStepOne = (props) => {
   const {messages} = useIntl();
 
-  useEffect(() => {
-    if (props.formValues) props.setFormValues(props.setValues);
-  }, [props.formValues]);
-
   return (
     <Box>
       <Stack spacing={{xs: 5, md: 8}}>

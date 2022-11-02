@@ -97,6 +97,7 @@ const CustomModal = ({
         <Formik
           validateOnChange={true}
           initialValues={initialValues}
+          enableReinitialize
           validationSchema={
             Array.isArray(validationSchema)
               ? validationSchema[activeStep]
@@ -104,7 +105,7 @@ const CustomModal = ({
           }
           onSubmit={handleSubmit}
         >
-          {({values, setFieldValue, isSubmitting, setValues, ...rest}) => {
+          {({values, setFieldValue, isSubmitting, ...rest}) => {
             return (
               <Form>
                 <Box>
@@ -140,7 +141,6 @@ const CustomModal = ({
                         {React.cloneElement(steps[activeStep]?.children, {
                           values: values,
                           setfieldvalue: setFieldValue,
-                          setValues: setValues,
                         })}
                       </Box>
                     </Box>
@@ -180,7 +180,6 @@ const CustomModal = ({
                         {React.cloneElement(children, {
                           values: values,
                           setfieldvalue: setFieldValue,
-                          setValues: setValues,
                         })}
                       </Box>
                     </>

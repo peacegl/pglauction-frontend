@@ -29,7 +29,28 @@ export default function VehicleModal({
   const [categories, setCategories] = useState([]);
   const [sellers, setSellers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [formValues, setFormValues] = useState({});
+  const [initialValues, setInitialValues] = useState({
+    vin: '',
+    lot_number: '',
+    year: '',
+    model: '',
+    color: '',
+    engine_type: '',
+    cylinders: '',
+    vehicle_type: '',
+    seller_id: '',
+    location_id: '',
+    category_id: '',
+    title: '',
+    subtitle: '',
+    start_date: '',
+    end_date: '',
+    minimum_bid: '',
+    buy_now_price: '',
+    description: '',
+    youtube_url: '',
+    note: '',
+  });
   const dispatch = useDispatch();
   const fetchData = async (url, content, loading, setData) => {
     try {
@@ -79,13 +100,20 @@ export default function VehicleModal({
           setIsLoading(true);
           const res = await jwtAxios.get(`/vehicles/${recordId}`);
           if (res.status === 200 && res.data.result) {
-            const formValues = {};
+            let values = {};
             Object.keys(res.data.data).forEach((key) => {
               if (insertColumns.includes(key)) {
-                formValues[key] = res.data.data[key];
+                values[key] = res.data.data[key];
               }
+              // if (typeof res.data.data[key] === 'object') {
+              //   Object.keys(res.data.data[key]).forEach((item) => {
+              //     if (insertColumns.includes(item)) {
+              //       values[item] = res.data.data[key][item];
+              //     }
+              //   });
+              // }
             });
-            setFormValues(formValues);
+            setInitialValues(values);
           }
           setIsLoading(false);
         } catch (error) {
@@ -95,6 +123,9 @@ export default function VehicleModal({
     }
   }, [recordId]);
 
+  useEffect(() => {
+    console.log('fff', initialValues);
+  }, [initialValues]);
   const onSave = (values) => {
     dispatch(onInsertVehicle(values, toggleOpen));
   };
@@ -103,12 +134,7 @@ export default function VehicleModal({
       key: 1,
       icon: <DirectionsCarIcon />,
       label: 'Vehicle Properties',
-      children: (
-        <VehicleStepOne
-          formValues={formValues}
-          setFormValues={(setValues) => setValues(formValues)}
-        />
-      ),
+      children: <VehicleStepOne />,
     },
     {
       key: 2,
@@ -143,28 +169,7 @@ export default function VehicleModal({
       steps={steps}
       onSave={onSave}
       validationSchema={validationSchema}
-      initialValues={{
-        vin: '',
-        lot_number: '',
-        year: '',
-        model: '',
-        color: '',
-        engine_type: '',
-        cylinders: '',
-        vehicle_type: '',
-        seller_id: '',
-        location_id: '',
-        category_id: '',
-        title: '',
-        subtitle: '',
-        start_date: '',
-        end_date: '',
-        minimum_bid: '',
-        buy_now_price: '',
-        description: '',
-        youtube_url: '',
-        note: '',
-      }}
+      initialValues={initialValues}
       isLoading={isLoading}
       {...rest}
     />
