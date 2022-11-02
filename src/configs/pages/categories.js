@@ -15,7 +15,7 @@ export default function conifgs() {
       },
       {
         name: 'parent_name',
-        label: 'Parent Category',
+        label: 'Parent Name',
       },
       {
         name: 'description',

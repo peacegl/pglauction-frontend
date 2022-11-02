@@ -4,7 +4,6 @@ import CustomDataTable from '../../CustomDataTable';
 import {onGetCustomerList, onDeleteCustomers} from 'redux/actions';
 import {useEffect, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {Button, Avatar} from '@mui/material';
 
 export default function CustomerList() {
   const columns = CustomerConfigs().columns;
