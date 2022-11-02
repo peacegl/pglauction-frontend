@@ -45,14 +45,14 @@ export default function configs() {
         name: 'created_by',
         label: 'Created By',
         options: {
-          customBodyRender: (value, tableMeta, updateValue) => value.username,
+          customBodyRender: (value, tableMeta, updateValue) => value?.username,
         },
       },
       {
         name: 'updated_by',
         label: 'Updated By',
         options: {
-          customBodyRender: (value, tableMeta, updateValue) => value.username,
+          customBodyRender: (value, tableMeta, updateValue) => value?.username,
         },
       },
     ],

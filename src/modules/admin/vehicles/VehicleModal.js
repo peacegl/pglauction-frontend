@@ -64,7 +64,7 @@ export default function VehicleModal({open, toggleOpen, width, ...rest}) {
   }, []);
 
   const onSave = (values) => {
-    dispatch(onInsertVehicle(values));
+    dispatch(onInsertVehicle(values, toggleOpen));
   };
   const steps = [
     {

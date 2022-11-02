@@ -93,11 +93,14 @@ const CustomModal = ({
         <Formik
           validateOnChange={true}
           initialValues={initialValues}
-          validationSchema={validationSchema[activeStep]}
+          validationSchema={
+            Array.isArray(validationSchema)
+              ? validationSchema[activeStep]
+              : validationSchema
+          }
           onSubmit={handleSubmit}
         >
           {({values, setFieldValue, isSubmitting}) => {
-            console.log('ff', values);
             return (
               <Form>
                 <Box>
