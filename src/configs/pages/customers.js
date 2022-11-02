@@ -7,6 +7,7 @@ export default function conifgs() {
         label: 'Profile',
         options: {
           filter: false,
+          download: false,
           customBodyRender: (value, tableMeta, updateValue) => (
             <Avatar alt={' profile picture.'} src={value} />
           ),
@@ -15,6 +16,15 @@ export default function conifgs() {
       {
         name: 'code',
         label: 'Code',
+        options: {
+          filter: false,
+          customBodyRender: (value, tableMeta, updateValue) => (
+            <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+              {value}
+              {tableMeta.tableData[tableMeta.rowIndex]['key']}
+            </Typography>
+          ),
+        },
       },
       {
         name: 'username',
@@ -60,10 +70,16 @@ export default function conifgs() {
       {
         name: 'created_by',
         label: 'Created by',
+        options: {
+          customBodyRender: (value, tableMeta, updateValue) => value?.username,
+        },
       },
       {
         name: 'updated_by',
         label: 'Updated by',
+        options: {
+          customBodyRender: (value, tableMeta, updateValue) => value?.username,
+        },
       },
     ],
   };

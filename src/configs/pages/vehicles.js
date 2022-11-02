@@ -1,3 +1,5 @@
+import {Typography} from '@mui/material';
+
 import IntlMessages from '@crema/utility/IntlMessages';
 const year = new Date().getFullYear();
 import * as yup from 'yup';
@@ -8,6 +10,15 @@ export default function configs() {
       {
         name: 'code',
         label: 'Code',
+        options: {
+          filter: false,
+          customBodyRender: (value, tableMeta, updateValue) => (
+            <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+              {value}
+              {tableMeta.tableData[tableMeta.rowIndex]['key']}
+            </Typography>
+          ),
+        },
       },
       {
         name: 'year',
@@ -45,14 +56,14 @@ export default function configs() {
         name: 'created_by',
         label: 'Created By',
         options: {
-          customBodyRender: (value, tableMeta, updateValue) => value.username,
+          customBodyRender: (value, tableMeta, updateValue) => value?.username,
         },
       },
       {
         name: 'updated_by',
         label: 'Updated By',
         options: {
-          customBodyRender: (value, tableMeta, updateValue) => value.username,
+          customBodyRender: (value, tableMeta, updateValue) => value?.username,
         },
       },
     ],
