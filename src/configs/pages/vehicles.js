@@ -1,3 +1,5 @@
+import {Typography} from '@mui/material';
+
 import IntlMessages from '@crema/utility/IntlMessages';
 const year = new Date().getFullYear();
 import * as yup from 'yup';
@@ -9,6 +11,15 @@ export default function configs() {
       {
         name: 'code',
         label: 'Code',
+        options: {
+          filter: false,
+          customBodyRender: (value, tableMeta, updateValue) => (
+            <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+              {value}
+              {tableMeta.tableData[tableMeta.rowIndex]['key']}
+            </Typography>
+          ),
+        },
       },
       {
         name: 'year',

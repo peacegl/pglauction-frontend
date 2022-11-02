@@ -35,12 +35,9 @@ export default function VehicleList() {
     );
   };
   const options = {
-    rowsPerPageOptions: [20, 50, 100, 500],
     count: total,
     rowsPerPage: per_page,
     page: page,
-    serverSide: true,
-    rowsSelected: selected,
     onChangeRowsPerPage: (numberOfRows) => {
       setPerPage(numberOfRows);
       setPage(0);
@@ -51,6 +48,7 @@ export default function VehicleList() {
       allRowsSelected,
       rowsSelected,
     ) => {
+      console.log(rowsSelected);
       setSelected(rowsSelected);
     },
     onSearchChange: (value) => {
