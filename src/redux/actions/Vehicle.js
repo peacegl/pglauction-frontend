@@ -33,7 +33,7 @@ export const onGetVehicleData = (filterData) => {
   };
 };
 
-export const onInsertVehicle = (data) => {
+export const onInsertVehicle = (data, toggleOpen) => {
   return async (dispatch) => {
     dispatch({type: FETCH_START});
     const {messages} = appIntl();
@@ -41,7 +41,12 @@ export const onInsertVehicle = (data) => {
       const res = await jwtAxios.post(`/vehicles`, data);
       if (res.status === 201 && res.data.result) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: ADD_NEW_VEHICLE, payload: res.data});
+        dispatch({type: ADD_NEW_VEHICLE, payload: res.data.data});
+        toggleOpen(false);
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: messages['message.vehicleCreated'],
+        });
       } else {
         dispatch({
           type: FETCH_ERROR,
@@ -49,6 +54,13 @@ export const onInsertVehicle = (data) => {
         });
       }
     } catch (error) {
+      if (error.request.status == 422) {
+        const res = JSON.parse(error.request.response);
+        console.log('fff', res.errors);
+        // res.errors?.forEach((element) => {
+        //   dispatch({type: FETCH_ERROR, payload: element.message});
+        // });
+      }
       dispatch({type: FETCH_ERROR, payload: error.message});
     }
   };

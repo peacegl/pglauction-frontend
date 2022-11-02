@@ -12,6 +12,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import IntlMessages from '@crema/utility/IntlMessages';
+import AppLoader from '@crema/core/AppLoader';
 import {Form, Formik} from 'formik';
 import React from 'react';
 
@@ -26,6 +27,7 @@ const CustomModal = ({
   validationSchema,
   initialValues,
   customValidation,
+  isLoading,
   ...rest
 }) => {
   const [activeStep, setActiveStep] = useState(0);
@@ -76,8 +78,10 @@ const CustomModal = ({
             : size - 10,
           bgcolor: 'background.paper',
           boxShadow: 24,
+          position: 'relative',
         }}
       >
+        {isLoading && <AppLoader />}
         <IconButton
           aria-label='close'
           onClick={toggleOpen}
@@ -93,11 +97,15 @@ const CustomModal = ({
         <Formik
           validateOnChange={true}
           initialValues={initialValues}
-          validationSchema={validationSchema[activeStep]}
+          enableReinitialize
+          validationSchema={
+            Array.isArray(validationSchema)
+              ? validationSchema[activeStep]
+              : validationSchema
+          }
           onSubmit={handleSubmit}
         >
-          {({values, setFieldValue, isSubmitting}) => {
-            console.log('ff', values);
+          {({values, setFieldValue, isSubmitting, ...rest}) => {
             return (
               <Form>
                 <Box>
@@ -237,4 +245,6 @@ CustomModal.propTypes = {
   validationSchema: PropTypes.array,
   initialValues: PropTypes.object,
   customValidation: PropTypes.func,
+  isLoading: PropTypes.bool,
+  setValues: PropTypes.func,
 };

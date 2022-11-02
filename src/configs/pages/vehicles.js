@@ -1,6 +1,7 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 const year = new Date().getFullYear();
 import * as yup from 'yup';
+import {Typography} from '@mui/material';
 
 export default function configs() {
   return {
@@ -45,14 +46,14 @@ export default function configs() {
         name: 'created_by',
         label: 'Created By',
         options: {
-          customBodyRender: (value, tableMeta, updateValue) => value.username,
+          customBodyRender: (value, tableMeta, updateValue) => value?.username,
         },
       },
       {
         name: 'updated_by',
         label: 'Updated By',
         options: {
-          customBodyRender: (value, tableMeta, updateValue) => value.username,
+          customBodyRender: (value, tableMeta, updateValue) => value?.username,
         },
       },
     ],
@@ -111,6 +112,28 @@ export default function configs() {
           .typeError(<IntlMessages id='validation.priceError' />)
           .required(<IntlMessages id='validation.buyNowPriceRequired' />),
       }),
+    ],
+    insertColumns: [
+      'vin',
+      'lot_number',
+      'year',
+      'model',
+      'color',
+      'engine_type',
+      'cylinders',
+      'vehicle_type',
+      'seller_id',
+      'location_id',
+      'category_id',
+      'title',
+      'subtitle',
+      'start_date',
+      'end_date',
+      'minimum_bid',
+      'buy_now_price',
+      'description',
+      'youtube_url',
+      'note',
     ],
   };
 }

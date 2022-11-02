@@ -39,7 +39,7 @@ const VehicleStepTwo = (props) => {
             sx={{flex: 1, width: '100%'}}
             dataLoading={props.locationLoading}
             options={props.locations}
-            keyName='location_name'
+            keyName='name'
             onSearch={props.searchLocations}
             value={props.values?.location_id}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}

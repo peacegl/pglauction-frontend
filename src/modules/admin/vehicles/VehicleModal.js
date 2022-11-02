@@ -12,15 +12,45 @@ import {useDispatch} from 'react-redux';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 
+const insertColumns = VehicleConfigs().insertColumns;
 const validationSchema = VehicleConfigs().validationSchema;
 
-export default function VehicleModal({open, toggleOpen, width, ...rest}) {
+export default function VehicleModal({
+  open,
+  toggleOpen,
+  width,
+  recordId,
+  ...rest
+}) {
   const [locationLoading, setLocationLoading] = useState(false);
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [sellersLoading, setSellersLoading] = useState(false);
   const [locations, setLocations] = useState([]);
   const [categories, setCategories] = useState([]);
   const [sellers, setSellers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [initialValues, setInitialValues] = useState({
+    vin: '',
+    lot_number: '',
+    year: '',
+    model: '',
+    color: '',
+    engine_type: '',
+    cylinders: '',
+    vehicle_type: '',
+    seller_id: '',
+    location_id: '',
+    category_id: '',
+    title: '',
+    subtitle: '',
+    start_date: '',
+    end_date: '',
+    minimum_bid: '',
+    buy_now_price: '',
+    description: '',
+    youtube_url: '',
+    note: '',
+  });
   const dispatch = useDispatch();
   const fetchData = async (url, content, loading, setData) => {
     try {
@@ -63,8 +93,41 @@ export default function VehicleModal({open, toggleOpen, width, ...rest}) {
     fetchData(`/sellers/auto_complete`, {}, setSellersLoading, setSellers);
   }, []);
 
+  useEffect(() => {
+    if (recordId) {
+      (async function () {
+        try {
+          setIsLoading(true);
+          const res = await jwtAxios.get(`/vehicles/${recordId}`);
+          if (res.status === 200 && res.data.result) {
+            let values = {};
+            Object.keys(res.data.data).forEach((key) => {
+              if (insertColumns.includes(key)) {
+                values[key] = res.data.data[key];
+              }
+              // if (typeof res.data.data[key] === 'object') {
+              //   Object.keys(res.data.data[key]).forEach((item) => {
+              //     if (insertColumns.includes(item)) {
+              //       values[item] = res.data.data[key][item];
+              //     }
+              //   });
+              // }
+            });
+            setInitialValues(values);
+          }
+          setIsLoading(false);
+        } catch (error) {
+          setIsLoading(false);
+        }
+      })();
+    }
+  }, [recordId]);
+
+  useEffect(() => {
+    console.log('fff', initialValues);
+  }, [initialValues]);
   const onSave = (values) => {
-    dispatch(onInsertVehicle(values));
+    dispatch(onInsertVehicle(values, toggleOpen));
   };
   const steps = [
     {
@@ -106,28 +169,8 @@ export default function VehicleModal({open, toggleOpen, width, ...rest}) {
       steps={steps}
       onSave={onSave}
       validationSchema={validationSchema}
-      initialValues={{
-        vin: '',
-        lot_number: '',
-        year: '',
-        model: '',
-        color: '',
-        engine_type: '',
-        cylinders: '',
-        vehicle_type: '',
-        seller_id: '',
-        location_id: '',
-        category_id: '',
-        title: '',
-        subtitle: '',
-        start_date: '',
-        end_date: '',
-        minimum_bid: '',
-        buy_now_price: '',
-        description: '',
-        youtube_url: '',
-        note: '',
-      }}
+      initialValues={initialValues}
+      isLoading={isLoading}
       {...rest}
     />
   );
@@ -136,4 +179,5 @@ VehicleModal.propTypes = {
   open: PropTypes.bool.isRequired,
   toggleOpen: PropTypes.func,
   width: PropTypes.number,
+  recordId: PropTypes.string,
 };

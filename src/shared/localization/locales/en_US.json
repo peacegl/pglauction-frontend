@@ -826,5 +826,7 @@
   "vehicle.buyNowPrice": "Buy Now Price",
   "vehicle.buyNowPricePlaceholder": "Type buy now price",
   "vehicle.deleteMessage": "Are you sure, you want to delete the selected Vehicle(s)?",
-  "vehicle.message.deleted": "Vehicle(s) deleted successfully!"
+  "vehicle.message.deleted": "Vehicle(s) deleted successfully!",
+
+  "message.vehicleCreated": "Vechicle created successfully!"
 }
