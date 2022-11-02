@@ -1,5 +1,4 @@
 import {Avatar, Typography} from '@mui/material';
-
 export default function conifgs() {
   return {
     columns: [
@@ -57,20 +56,6 @@ export default function conifgs() {
       {
         name: 'status',
         label: 'Status',
-      },
-      {
-        name: 'birth_date',
-        label: 'Birthday',
-        options: {
-          display: 'false',
-        },
-      },
-      {
-        name: 'address',
-        label: 'Address',
-        options: {
-          display: 'false',
-        },
       },
       {
         name: 'created_by',

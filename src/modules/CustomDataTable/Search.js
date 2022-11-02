@@ -7,22 +7,6 @@ import ClearIcon from '@mui/icons-material/Clear';
 import {withStyles} from 'tss-react/mui';
 import PropTypes from 'prop-types';
 
-function debounce(func, wait, immediate) {
-  var timeout;
-  return function () {
-    var context = this,
-      args = arguments;
-    var later = function () {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    };
-    var callNow = immediate && !timeout;
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-    if (callNow) func.apply(context, args);
-  };
-}
-
 const defaultStyles = (theme) => ({
   main: {
     display: 'flex',
@@ -50,7 +34,6 @@ class _Search extends React.Component {
   componentWillUnmount() {
     document.removeEventListener('keyup', this.onKeyUp, false);
   }
-
   onKeyUp(event) {
     if (event.keyCode === 27) {
       this.props.onHide();
@@ -58,21 +41,10 @@ class _Search extends React.Component {
   }
 
   render() {
-    const {
-      classes,
-      options,
-      onHide,
-      searchText,
-      debounceWait,
-      onEnter,
-      onSearch,
-    } = this.props;
-    const debouncedSearch = debounce((value) => {
-      onSearch(value);
-    }, debounceWait);
+    const {classes, options, onHide, searchText, onEnter, onSearch} =
+      this.props;
 
     const clearIconVisibility = options.searchAlwaysOpen ? 'hidden' : 'visible';
-
     return (
       <Grow appear in={true} timeout={0}>
         <div className={classes.main}>
@@ -87,7 +59,7 @@ class _Search extends React.Component {
             }}
             defaultValue={searchText}
             onChange={(event) => {
-              debouncedSearch(event.target.value);
+              onSearch(event.target.value);
             }}
             onKeyUp={(event) => {
               if (event.keyCode === 13) {
@@ -121,6 +93,5 @@ _Search.propTypes = {
   onEnter: PropTypes.func,
   onSearch: PropTypes.func,
   searchText: PropTypes.string,
-  debounceWait: PropTypes.number,
 };
 export default withStyles(_Search, defaultStyles, {name: 'MUIDataTableSearch'});

@@ -1,11 +1,14 @@
 import {BiAlignLeft} from 'react-icons/bi';
 import DriveEtaIcon from '@mui/icons-material/DriveEta';
-import GroupIcon from '@mui/icons-material/Group';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import CategoryIcon from '@mui/icons-material/Category';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 
 const routesConfig = [
   {
     id: 'vehicles',
-    title: 'Vehicles List',
+    title: 'Vehicle List',
     messageId: 'sidebar.vehicles',
     type: 'item',
     icon: <DriveEtaIcon />,
@@ -13,35 +16,35 @@ const routesConfig = [
   },
   {
     id: 'users',
-    title: 'Users List',
+    title: 'User List',
     messageId: 'sidebar.users',
     type: 'item',
-    icon: <GroupIcon />,
+    icon: <SupervisorAccountIcon />,
     url: '/admin/users',
   },
   {
-    id: 'app',
-    title: 'Sample',
-    messageId: 'sidebar.sample',
-    type: 'group',
-    children: [
-      {
-        id: 'page-1',
-        title: 'Page 1',
-        messageId: 'sidebar.sample.page1',
-        type: 'item',
-        icon: <BiAlignLeft />,
-        url: '/admin/sample/page-1',
-      },
-      {
-        id: 'page-2',
-        title: 'Page 2',
-        messageId: 'sidebar.sample.page2',
-        type: 'item',
-        icon: <BiAlignLeft />,
-        url: '/admin/sample/page-2',
-      },
-    ],
+    id: 'customers',
+    title: 'Customer List',
+    messageId: 'sidebar.customers',
+    type: 'item',
+    icon: <PeopleAltIcon />,
+    url: '/admin/customers',
+  },
+  {
+    id: 'categories',
+    title: 'Category List',
+    messageId: 'sidebar.categories',
+    type: 'item',
+    icon: <CategoryIcon />,
+    url: '/admin/categories',
+  },
+  {
+    id: 'locations',
+    title: 'Location List',
+    messageId: 'sidebar.locations',
+    type: 'item',
+    icon: <LocationOnIcon />,
+    url: '/admin/locations',
   },
 ];
 export default routesConfig;

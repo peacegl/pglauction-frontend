@@ -8,7 +8,7 @@ import IntlMessages from '@crema/utility/IntlMessages';
 
 const columns = VehicleConfigs().columns;
 
-export default function UserList() {
+export default function VehicleList() {
   const [openModal, setOpenModal] = useState(false);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
@@ -78,7 +78,7 @@ export default function UserList() {
   return (
     <>
       <CustomDataTable
-        title='Vehicles List'
+        title='Vehicle List'
         total={total}
         data={data}
         columns={columns}

@@ -760,8 +760,18 @@
 
   "sidebar.users": "Users",
   "sidebar.vehicles": "Vechiles",
+  "sidebar.customers": "Customers",
+  "sidebar.categories": "Categories",
+  "sidebar.locations": "Locations",
+
   "user.deleteMessage": "Are you sure, you want to delete the selected User(s)?",
   "user.message.deleted": "User(s) deleted successfully!",
+
+  "category.deleteMessage": "Are you sure, you want to delete the selected Category(s)?",
+  "category.message.deleted": "Category(s) deleted successfully!",
+
+  "location.deleteMessage": "Are you sure, you want to delete the selected Location(s)?",
+  "location.message.deleted": "Location(s) deleted successfully!",
 
   "validation.yearRequired": "Year is required!",
   "validation.colorRequired": "Color is required!",
