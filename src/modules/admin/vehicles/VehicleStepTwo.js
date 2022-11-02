@@ -13,6 +13,24 @@ const VehicleStepTwo = (props) => {
       <Stack spacing={{xs: 5, md: 8}}>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppAutocompleteField
+            placeholder={messages['vehicle.sellerPlaceholder']}
+            label={<IntlMessages id='vehicle.seller' />}
+            name='seller_id'
+            variant='outlined'
+            size='small'
+            sx={{flex: 1, width: '100%'}}
+            dataLoading={props.sellersLoading}
+            options={props.sellers}
+            keyName='name'
+            keyName2='lastname'
+            keyName1='firstname'
+            onSearch={props.searchSellers}
+            value={props.values?.seller_id}
+            handleChange={({name, value}) => props.setfieldvalue(name, value)}
+          />
+        </Stack>
+        <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+          <AppAutocompleteField
             placeholder={messages['vehicle.locationPlaceholder']}
             label={<IntlMessages id='vehicle.location' />}
             name='location_id'
@@ -23,6 +41,8 @@ const VehicleStepTwo = (props) => {
             options={props.locations}
             keyName='location_name'
             onSearch={props.searchLocations}
+            value={props.values?.location_id}
+            handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
           <AppAutocompleteField
             placeholder={messages['vehicle.categoryPlaceholder']}
@@ -33,8 +53,10 @@ const VehicleStepTwo = (props) => {
             sx={{flex: 1, width: '100%'}}
             dataLoading={props.categoryLoading}
             options={props.categories}
-            keyName='category_name'
+            keyName='name'
             onSearch={props.searchCategories}
+            value={props.values?.category_id}
+            handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
         </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
@@ -103,12 +125,16 @@ export default VehicleStepTwo;
 
 VehicleStepTwo.propTypes = {
   values: PropTypes.object,
+  handleChange: PropTypes.func,
   setfieldvalue: PropTypes.func,
   locationLoading: PropTypes.bool,
   locations: PropTypes.array.isRequired,
   searchLocations: PropTypes.func.isRequired,
   categoryLoading: PropTypes.bool,
+  sellersLoading: PropTypes.bool,
   categories: PropTypes.array.isRequired,
+  sellers: PropTypes.array.isRequired,
   searchLocations: PropTypes.func.isRequired,
   searchCategories: PropTypes.func.isRequired,
+  searchSellers: PropTypes.func.isRequired,
 };
