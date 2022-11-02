@@ -783,6 +783,7 @@
   "validation.maxYear": "Vehicle year must not be greater than current year!",
   "validation.minYear": "Vehicle year must not be less than 1900!",
   "validation.locationRequired": "Location is required!",
+  "validation.sellerRequired": "Seller is required!",
   "validation.categoryRequired": "Category is required!",
   "validation.titleRequired": "Title is required!",
   "validation.subtitleRequired": "Subtitle is required!",

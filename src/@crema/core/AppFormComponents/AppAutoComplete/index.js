@@ -39,10 +39,24 @@ export default function AppAutoComplete({
       name,
       value:
         multiple === true
-          ? value.map((data) => data?.[idField])
-          : value?.[idField],
+          ? value
+            ? value.map((data) => data?.[idField])
+            : ''
+          : value
+          ? value?.[idField]
+          : '',
     };
     if (handleChange) handleChange(event);
+  };
+  const getValue = () => {
+    if (multiple) {
+      if (value) {
+        return options?.filter((option) => value.includes(option?.[idField]));
+      } else {
+        return [];
+      }
+    }
+    return options?.find((option) => option?.[idField] === value) || null;
   };
   return (
     <Autocomplete
@@ -61,6 +75,14 @@ export default function AppAutoComplete({
       {...rest}
       onChange={onSelectValue}
       onInputChange={onInputChange}
+      isOptionEqualToValue={(option, value) => {
+        if (multiple) {
+          return option?.[idField] === value?.[idField];
+        } else {
+          return option?.[idField] === value?.[idField];
+        }
+      }}
+      value={getValue()}
       renderTags={(tagValue, getTagProps) =>
         tagValue.map((option, index) => (
           <Chip
@@ -76,6 +98,8 @@ export default function AppAutoComplete({
           />
         ))
       }
+      helperText={helperText}
+      error={error.toString()}
       renderInput={(params) => (
         <TextField
           placeholder={placeholder}
@@ -92,7 +116,7 @@ export default function AppAutoComplete({
               </React.Fragment>
             ),
           }}
-          helperText={helperText === {} ? '' : helperText}
+          helperText={helperText}
           error={error}
         />
       )}

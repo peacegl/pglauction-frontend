@@ -80,6 +80,9 @@ export default function configs() {
           .required(<IntlMessages id='validation.colorRequired' />),
       }),
       yup.object({
+        seller_id: yup
+          .string()
+          .required(<IntlMessages id='validation.sellerRequired' />),
         location_id: yup
           .string()
           .required(<IntlMessages id='validation.locationRequired' />),

@@ -25,6 +25,7 @@ const VehicleStepTwo = (props) => {
             keyName2='lastname'
             keyName1='firstname'
             onSearch={props.searchSellers}
+            value={props.values?.seller_id}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
         </Stack>
@@ -40,6 +41,7 @@ const VehicleStepTwo = (props) => {
             options={props.locations}
             keyName='location_name'
             onSearch={props.searchLocations}
+            value={props.values?.location_id}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
           <AppAutocompleteField
@@ -51,8 +53,9 @@ const VehicleStepTwo = (props) => {
             sx={{flex: 1, width: '100%'}}
             dataLoading={props.categoryLoading}
             options={props.categories}
-            keyName='category_name'
+            keyName='name'
             onSearch={props.searchCategories}
+            value={props.values?.category_id}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
         </Stack>
@@ -122,6 +125,7 @@ export default VehicleStepTwo;
 
 VehicleStepTwo.propTypes = {
   values: PropTypes.object,
+  handleChange: PropTypes.func,
   setfieldvalue: PropTypes.func,
   locationLoading: PropTypes.bool,
   locations: PropTypes.array.isRequired,

@@ -115,6 +115,7 @@ export default function VehicleModal({open, toggleOpen, width, ...rest}) {
         engine_type: '',
         cylinders: '',
         vehicle_type: '',
+        seller_id: '',
         location_id: '',
         category_id: '',
         title: '',
