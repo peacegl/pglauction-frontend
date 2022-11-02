@@ -8,6 +8,7 @@ export default function conifgs() {
         label: 'Profile',
         options: {
           filter: false,
+          download: false,
           customBodyRender: (value, tableMeta, updateValue) => (
             <Avatar alt={' profile picture.'} src={value} />
           ),
@@ -16,10 +17,23 @@ export default function conifgs() {
       {
         name: 'code',
         label: 'Code',
+        options: {
+          filter: false,
+          customBodyRender: (value, tableMeta, updateValue) => (
+            <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+              {value}
+              {tableMeta.tableData[tableMeta.rowIndex]['key']}
+            </Typography>
+          ),
+        },
       },
       {
-        name: 'username',
+        name: 'login',
         label: 'Username',
+        options: {
+          filter: false,
+          customBodyRender: (value, tableMeta, updateValue) => value.username,
+        },
       },
       {
         name: 'firstname',
@@ -42,21 +56,25 @@ export default function conifgs() {
         label: 'Gender',
       },
       {
-        name: 'email',
+        name: 'login',
         label: 'Email',
         options: {
           filter: false,
           customBodyRender: (value, tableMeta, updateValue) => (
             <Typography>
-              {value} <br />
+              {value.email} <br />
               {tableMeta.tableData[tableMeta.rowIndex]['second_email']}
             </Typography>
           ),
         },
       },
       {
-        name: 'status',
+        name: 'login',
         label: 'Status',
+        options: {
+          filter: false,
+          customBodyRender: (value, tableMeta, updateValue) => value.status,
+        },
       },
       {
         name: 'birth_date',
@@ -75,10 +93,16 @@ export default function conifgs() {
       {
         name: 'created_by',
         label: 'Created by',
+        options: {
+          customBodyRender: (value, tableMeta, updateValue) => value?.username,
+        },
       },
       {
         name: 'updated_by',
         label: 'Updated by',
+        options: {
+          customBodyRender: (value, tableMeta, updateValue) => value?.username,
+        },
       },
     ],
   };

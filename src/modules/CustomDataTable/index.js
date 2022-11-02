@@ -41,6 +41,11 @@ const CustomDataTable = ({
         columns={columns}
         options={{
           ...options,
+          rowsPerPageOptions: options.rowsPerPageOptions
+            ? options.rowsPerPageOptions
+            : [20, 50, 100, 500],
+          serverSide: options.serverSide ? options.serverSide : true,
+          rowsSelected: selected,
           textLabels: {
             body: {
               noMatch: isLoading

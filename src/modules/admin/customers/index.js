@@ -4,7 +4,6 @@ import CustomDataTable from '../../CustomDataTable';
 import {onGetCustomerList, onDeleteCustomers} from 'redux/actions';
 import {useEffect, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {Button, Avatar} from '@mui/material';
 
 export default function CustomerList() {
   const columns = CustomerConfigs().columns;
@@ -34,11 +33,8 @@ export default function CustomerList() {
   };
 
   const options = {
-    rowsPerPageOptions: [20, 50, 100, 500],
     count: total,
     rowsPerPage: per_page,
-    serverSide: true,
-    rowsSelected: selected,
     onChangeRowsPerPage: (numberOfRows) => {
       setPerPage(numberOfRows);
       setPage(0);

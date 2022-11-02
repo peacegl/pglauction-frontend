@@ -36,11 +36,8 @@ export default function UserList() {
   };
 
   const options = {
-    rowsPerPageOptions: [20, 50, 100, 500],
     count: total,
     rowsPerPage: per_page,
-    serverSide: true,
-    rowsSelected: selected,
     onChangeRowsPerPage: (numberOfRows) => {
       setPerPage(numberOfRows);
       setPage(0);
