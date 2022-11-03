@@ -1,4 +1,8 @@
+import IntlMessages from '@crema/utility/IntlMessages';
 import {Avatar, Typography} from '@mui/material';
+import * as yup from 'yup';
+import CommonConfigs from '../index';
+const phoneRegExp = CommonConfigs().phoneRegExp;
 
 export default function conifgs() {
   return {
@@ -104,6 +108,71 @@ export default function conifgs() {
           customBodyRender: (value, tableMeta, updateValue) => value?.username,
         },
       },
+    ],
+    exportColumns: [],
+    validationSchema: [
+      yup.object({
+        firstname: yup
+          .string()
+          .required(<IntlMessages id='validation.firstnameRequired' />),
+        lastname: yup
+          .string()
+          .required(<IntlMessages id='validation.lastnameRequired' />),
+        phone: yup
+          .string()
+          .matches(phoneRegExp, <IntlMessages id='validation.invalidPhone' />)
+          .required(<IntlMessages id='validation.phoneRequired' />),
+        whatsapp: yup
+          .string()
+          .matches(phoneRegExp, <IntlMessages id='validation.validatePhone' />)
+          .required(<IntlMessages id='validation.whatsappRequired' />),
+        gender: yup
+          .string()
+          .required(<IntlMessages id='validation.genderRequired' />),
+      }),
+      yup.object({
+        email: yup
+          .string()
+          .email(<IntlMessages id='validation.invalidEmail' />)
+          .required(<IntlMessages id='validation.eamilRequired' />),
+        username: yup
+          .string()
+          .required(<IntlMessages id='validation.usernameRequired' />),
+        password: yup
+          .string()
+          .required(<IntlMessages id='validation.passwordRequired' />),
+        second_email: yup
+          .string()
+          .required(<IntlMessages id='validation.secondEmailRequired' />),
+        status: yup
+          .string()
+          .required(<IntlMessages id='validation.statusRequired' />),
+        type: yup
+          .string()
+          .required(<IntlMessages id='validation.typeRequired' />),
+      }),
+    ],
+    insertColumns: [
+      'vin',
+      'lot_number',
+      'year',
+      'model',
+      'color',
+      'engine_type',
+      'cylinders',
+      'vehicle_type',
+      'seller_id',
+      'location_id',
+      'category_id',
+      'title',
+      'subtitle',
+      'start_date',
+      'end_date',
+      'minimum_bid',
+      'buy_now_price',
+      'description',
+      'youtube_url',
+      'note',
     ],
   };
 }

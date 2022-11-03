@@ -5,14 +5,15 @@ import {onGetUserList, onDeleteUsers} from 'redux/actions';
 import {useEffect, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {Button, Avatar} from '@mui/material';
+import UserModal from './UserModal';
+const columns = UserConfigs().columns;
 
 export default function UserList() {
-  const columns = UserConfigs().columns;
-
   columns[0]['options'].customBodyRender = (value, tableMeta, updateValue) => (
     <Avatar alt={' profile picture.'} src={value} />
   );
-
+  const [openModal, setOpenModal] = useState(false);
+  const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
@@ -79,8 +80,14 @@ export default function UserList() {
       }
     },
   };
-  const onAdd = () => {};
-  const onEdit = () => {};
+  const onAdd = () => {
+    setRecordId(null);
+    setOpenModal(true);
+  };
+  const onEdit = () => {
+    setRecordId(data[selected[0]].id);
+    setOpenModal(true);
+  };
   const onDelete = async () => {
     await dispatch(
       onDeleteUsers({
@@ -104,7 +111,7 @@ export default function UserList() {
   return (
     <>
       <CustomDataTable
-        title='User List'
+        title={<IntlMessages id='user.userList' />}
         total={total}
         data={data}
         columns={columns}
@@ -117,6 +124,14 @@ export default function UserList() {
         selected={selected}
         onEnterSearch={onEnterSearch}
       />
+      {openModal && (
+        <UserModal
+          open={openModal}
+          toggleOpen={() => setOpenModal((d) => !d)}
+          recordId={recordId}
+          edit={recordId ? true : false}
+        />
+      )}
     </>
   );
 }

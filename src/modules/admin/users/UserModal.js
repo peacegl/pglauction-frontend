@@ -1,22 +1,20 @@
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import CollectionsIcon from '@mui/icons-material/Collections';
-import VehicleConfigs from '../../../configs/pages/vehicles';
+import IntlMessages from '@crema/utility/IntlMessages';
+import UserConfigs from '../../../configs/pages/users';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-import {onInsertVehicle, onUpdateVehicle} from 'redux/actions';
-import VehicleStepOne from './VehicleStepOne';
-import VehicleStepTwo from './VehicleStepTwo';
+import {onInsertUser, onUpdateUser} from 'redux/actions';
+import UserStepOne from './UserStepOne';
+import UserStepTwo from './UserStepTwo';
 import CustomModal from '../../CustomModal';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
-import IntlMessages from '@crema/utility/IntlMessages';
 
-const insertColumns = VehicleConfigs().insertColumns;
-const validationSchema = VehicleConfigs().validationSchema;
+const insertColumns = UserConfigs().insertColumns;
+const validationSchema = UserConfigs().validationSchema;
 
-export default function VehicleModal({
+export default function UserModal({
   open,
   toggleOpen,
   width,
@@ -32,26 +30,18 @@ export default function VehicleModal({
   const [sellers, setSellers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
-    vin: '',
-    lot_number: '',
-    year: '',
-    model: '',
-    color: '',
-    engine_type: '',
-    cylinders: '',
-    vehicle_type: '',
-    seller_id: '',
-    location_id: '',
-    category_id: '',
-    title: '',
-    subtitle: '',
-    start_date: '',
-    end_date: '',
-    minimum_bid: '',
-    buy_now_price: '',
-    description: '',
-    youtube_url: '',
-    note: '',
+    firstname: '',
+    lastname: '',
+    phone: '',
+    whatsapp: '',
+    gender: '',
+    birth_date: '',
+    email: '',
+    username: '',
+    password: '',
+    second_email: '',
+    status: '',
+    type: '',
   });
   const dispatch = useDispatch();
   const fetchData = async (url, content, loading, setData) => {
@@ -100,7 +90,7 @@ export default function VehicleModal({
       (async function () {
         try {
           setIsLoading(true);
-          const res = await jwtAxios.get(`/vehicles/${recordId}`);
+          const res = await jwtAxios.get(`/users/${recordId}`);
           if (res.status === 200 && res.data.result) {
             let values = {};
             Object.entries(res.data.data).forEach(([key, value]) => {
@@ -125,24 +115,24 @@ export default function VehicleModal({
   }, [recordId]);
   const onSave = (values) => {
     if (recordId) {
-      dispatch(onUpdateVehicle(recordId, values, toggleOpen));
+      dispatch(onUpdateUser(recordId, values, toggleOpen));
     } else {
-      dispatch(onInsertVehicle(values, toggleOpen));
+      dispatch(onInsertUser(values, toggleOpen));
     }
   };
   const steps = [
     {
       key: 1,
       icon: <DirectionsCarIcon />,
-      label: <IntlMessages id='vehicle.vehicleProperties' />,
-      children: <VehicleStepOne />,
+      label: <IntlMessages id='user.userInfo' />,
+      children: <UserStepOne />,
     },
     {
       key: 2,
       icon: <ShoppingBagIcon />,
-      label: <IntlMessages id='vehicle.auctionDetails' />,
+      label: <IntlMessages id='user.accountInfo' />,
       children: (
-        <VehicleStepTwo
+        <UserStepTwo
           locations={locations}
           locationLoading={locationLoading}
           categories={categories}
@@ -165,12 +155,6 @@ export default function VehicleModal({
         />
       ),
     },
-    // {
-    //   key: 3,
-    //   icon: <CollectionsIcon />,
-    //   label: 'Vehicle Images',
-    //   children: <Box>Third Steps</Box>,
-    // },
   ];
   return (
     <CustomModal
@@ -186,7 +170,7 @@ export default function VehicleModal({
     />
   );
 }
-VehicleModal.propTypes = {
+UserModal.propTypes = {
   open: PropTypes.bool.isRequired,
   toggleOpen: PropTypes.func,
   width: PropTypes.number,
