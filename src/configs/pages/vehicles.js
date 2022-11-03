@@ -1,9 +1,7 @@
-import {Typography} from '@mui/material';
-
 import IntlMessages from '@crema/utility/IntlMessages';
+import {Typography} from '@mui/material';
 const year = new Date().getFullYear();
 import * as yup from 'yup';
-import {Typography} from '@mui/material';
 
 export default function configs() {
   return {

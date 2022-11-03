@@ -3,7 +3,7 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import CollectionsIcon from '@mui/icons-material/Collections';
 import VehicleConfigs from '../../../configs/pages/vehicles';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-import {onInsertVehicle} from 'redux/actions';
+import {onInsertVehicle, onUpdateVehicle} from 'redux/actions';
 import VehicleStepOne from './VehicleStepOne';
 import VehicleStepTwo from './VehicleStepTwo';
 import CustomModal from '../../CustomModal';
@@ -20,6 +20,7 @@ export default function VehicleModal({
   toggleOpen,
   width,
   recordId,
+  edit,
   ...rest
 }) {
   const [locationLoading, setLocationLoading] = useState(false);
@@ -101,17 +102,16 @@ export default function VehicleModal({
           const res = await jwtAxios.get(`/vehicles/${recordId}`);
           if (res.status === 200 && res.data.result) {
             let values = {};
-            Object.keys(res.data.data).forEach((key) => {
+            Object.entries(res.data.data).forEach(([key, value]) => {
               if (insertColumns.includes(key)) {
-                values[key] = res.data.data[key];
+                values[key] = value;
               }
-              // if (typeof res.data.data[key] === 'object') {
-              //   Object.keys(res.data.data[key]).forEach((item) => {
-              //     if (insertColumns.includes(item)) {
-              //       values[item] = res.data.data[key][item];
-              //     }
-              //   });
-              // }
+              if (typeof value === 'object' && value != null)
+                Object.entries(value).forEach(([ikey, ivalue]) => {
+                  if (insertColumns.includes(ikey)) {
+                    values[ikey] = ivalue;
+                  }
+                });
             });
             setInitialValues(values);
           }
@@ -122,12 +122,12 @@ export default function VehicleModal({
       })();
     }
   }, [recordId]);
-
-  useEffect(() => {
-    console.log('fff', initialValues);
-  }, [initialValues]);
   const onSave = (values) => {
-    dispatch(onInsertVehicle(values, toggleOpen));
+    if (recordId) {
+      dispatch(onUpdateVehicle(recordId, values, toggleOpen));
+    } else {
+      dispatch(onInsertVehicle(values, toggleOpen));
+    }
   };
   const steps = [
     {
@@ -151,6 +151,16 @@ export default function VehicleModal({
           searchCategories={searchCategories}
           searchLocations={searchLocations}
           searchSellers={searchSellers}
+          setIsLoading={setIsLoading}
+          fetchData={(url, type) => {
+            if (type == 'location') {
+              fetchData(url, {}, setLocationLoading, setLocations);
+            } else if (type == 'category') {
+              fetchData(url, {}, setCategoryLoading, setCategories);
+            } else if (type == 'seller') {
+              fetchData(url, {}, setSellersLoading, setSellers);
+            }
+          }}
         />
       ),
     },
@@ -180,4 +190,5 @@ VehicleModal.propTypes = {
   toggleOpen: PropTypes.func,
   width: PropTypes.number,
   recordId: PropTypes.string,
+  edit: PropTypes.bool,
 };
