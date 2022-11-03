@@ -5,6 +5,7 @@ import {
   GET_VEHICLE_LIST,
   SET_VEHICLE_FILTER_DATA,
   ADD_NEW_VEHICLE,
+  UPDATE_VEHICLE,
   SHOW_MESSAGE,
 } from '../../shared/constants/ActionTypes';
 import {appIntl} from '../../@crema/utility/helper/Utils';
@@ -73,7 +74,7 @@ export const onUpdateVehicle = (id, data, toggleOpen) => {
       const res = await jwtAxios.put(`/vehicles/${id}`, data);
       if (res.status === 202 && res.data.result) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: ADD_NEW_VEHICLE, payload: res.data.data});
+        dispatch({type: UPDATE_VEHICLE, payload: res.data.data});
         toggleOpen(false);
         dispatch({
           type: SHOW_MESSAGE,

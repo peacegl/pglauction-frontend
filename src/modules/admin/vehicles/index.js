@@ -81,7 +81,7 @@ export default function VehicleList() {
   return (
     <>
       <CustomDataTable
-        title='Vehicle List'
+        title={<IntlMessages id='vehicle.vehicleList' />}
         total={total}
         data={data}
         columns={columns}

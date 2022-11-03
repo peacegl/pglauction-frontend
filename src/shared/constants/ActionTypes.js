@@ -143,6 +143,8 @@ export const GET_GALLERY_PHOTO = 'get_gallery_photo';
 
 //USER_LIST
 export const GET_USER_LIST = 'get_user_list';
+export const ADD_NEW_USER = 'ADD_NEW_USER';
+export const UPDATE_USER = 'UPDATE_USER';
 
 //Customer List
 export const GET_CUSTOMER_LIST = 'get_customer_list';
@@ -165,3 +167,4 @@ export const GET_CATEGORIES = 'get_categories';
 export const GET_VEHICLE_LIST = 'GET_VEHICLE_LIST';
 export const SET_VEHICLE_FILTER_DATA = 'SET_VEHICLE_FILTER_DATA';
 export const ADD_NEW_VEHICLE = 'ADD_NEW_VEHICLE';
+export const UPDATE_VEHICLE = 'UPDATE_VEHICLE';
