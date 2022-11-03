@@ -56,6 +56,7 @@ export default function VehicleList() {
     },
   };
   const onAdd = () => {
+    setRecordId(null);
     setOpenModal(true);
   };
   const onEdit = () => {
