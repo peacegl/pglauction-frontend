@@ -5,9 +5,41 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import {Box, Stack} from '@mui/material';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
+import {useEffect} from 'react';
 
 const VehicleStepTwo = (props) => {
   const {messages} = useIntl();
+  useEffect(() => {
+    if (props.values?.seller_id) {
+      props.fetchData(
+        `/sellers/auto_complete${
+          props.values?.seller_id ? '?id=' + props.values?.seller_id : ''
+        }`,
+        'seller',
+      );
+    }
+  }, [props.values?.seller_id]);
+  useEffect(() => {
+    if (props.values?.location_id) {
+      props.fetchData(
+        `/location/auto_complete${
+          props.values?.location_id ? '?id=' + props.values?.location_id : ''
+        }`,
+        'location',
+      );
+    }
+  }, [props.values?.location_id]);
+  useEffect(() => {
+    if (props.values?.category_id) {
+      props.fetchData(
+        `/category/auto_complete${
+          props.values?.category_id ? '?id=' + props.values?.category_id : ''
+        }`,
+        'category',
+      );
+    }
+  }, [props.values?.category_id]);
+
   return (
     <Box>
       <Stack spacing={{xs: 5, md: 8}}>
@@ -137,4 +169,6 @@ VehicleStepTwo.propTypes = {
   searchLocations: PropTypes.func.isRequired,
   searchCategories: PropTypes.func.isRequired,
   searchSellers: PropTypes.func.isRequired,
+  fetchData: PropTypes.func.isRequired,
+  setIsLoading: PropTypes.func,
 };

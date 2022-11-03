@@ -98,6 +98,7 @@ export default function VehicleList() {
           open={openModal}
           toggleOpen={() => setOpenModal((d) => !d)}
           recordId={recordId}
+          edit={recordId ? true : false}
         />
       )}
     </>

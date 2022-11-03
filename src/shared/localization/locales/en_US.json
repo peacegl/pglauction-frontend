@@ -828,5 +828,6 @@
   "vehicle.deleteMessage": "Are you sure, you want to delete the selected Vehicle(s)?",
   "vehicle.message.deleted": "Vehicle(s) deleted successfully!",
 
-  "message.vehicleCreated": "Vechicle created successfully!"
+  "message.vehicleCreated": "Vechicle created successfully!",
+  "message.vehicleUpdated": "Vechicle updated successfully!"
 }
