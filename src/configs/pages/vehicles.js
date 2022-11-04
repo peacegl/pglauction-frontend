@@ -14,7 +14,9 @@ export default function configs() {
           customBodyRender: (value, tableMeta, updateValue) => (
             <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
               {value}
-              {tableMeta.tableData[tableMeta.rowIndex]['key']}
+              {tableMeta.tableData[tableMeta.rowIndex]['key']
+                .toString()
+                .padStart(8, '0')}
             </Typography>
           ),
         },
