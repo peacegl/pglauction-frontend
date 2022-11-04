@@ -94,7 +94,7 @@ const CustomDataTable = ({
 export default CustomDataTable;
 
 CustomDataTable.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   total: PropTypes.number,
   data: PropTypes.array.isRequired,
   columns: PropTypes.array.isRequired,

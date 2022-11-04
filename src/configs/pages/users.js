@@ -26,7 +26,9 @@ export default function conifgs() {
           customBodyRender: (value, tableMeta, updateValue) => (
             <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
               {value}
-              {tableMeta.tableData[tableMeta.rowIndex]['key']}
+              {tableMeta.tableData[tableMeta.rowIndex]['key']
+                .toString()
+                .padStart(5, '0')}
             </Typography>
           ),
         },
@@ -63,7 +65,7 @@ export default function conifgs() {
           customBodyRender: (value, tableMeta, updateValue) => {
             return (
               <Typography>
-                {tableMeta.tableData[tableMeta.rowIndex]['login']['email']}{' '}
+                {tableMeta.tableData[tableMeta.rowIndex]['login']['email']}
                 <br />
                 {tableMeta.tableData[tableMeta.rowIndex]['second_email']}
               </Typography>
