@@ -27,7 +27,7 @@ export default function conifgs() {
         },
       },
       {
-        name: 'username',
+        name: 'login.username',
         label: 'Username',
       },
       {
@@ -57,29 +57,23 @@ export default function conifgs() {
           filter: false,
           customBodyRender: (value, tableMeta, updateValue) => (
             <Typography>
-              {value} <br />
+              {tableMeta.tableData[tableMeta.rowIndex]['login']['email']} <br />
               {tableMeta.tableData[tableMeta.rowIndex]['second_email']}
             </Typography>
           ),
         },
       },
       {
-        name: 'status',
+        name: 'login.status',
         label: 'Status',
       },
       {
-        name: 'created_by',
+        name: 'created_by.username',
         label: 'Created by',
-        options: {
-          customBodyRender: (value, tableMeta, updateValue) => value?.username,
-        },
       },
       {
-        name: 'updated_by',
+        name: 'updated_by.username',
         label: 'Updated by',
-        options: {
-          customBodyRender: (value, tableMeta, updateValue) => value?.username,
-        },
       },
     ],
   };

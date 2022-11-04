@@ -52,18 +52,12 @@ export default function configs() {
         label: 'Vehicle Type',
       },
       {
-        name: 'created_by',
-        label: 'Created By',
-        options: {
-          customBodyRender: (value, tableMeta, updateValue) => value?.username,
-        },
+        name: 'created_by.username',
+        label: 'Created by',
       },
       {
-        name: 'updated_by',
-        label: 'Updated By',
-        options: {
-          customBodyRender: (value, tableMeta, updateValue) => value?.username,
-        },
+        name: 'updated_by.username',
+        label: 'Updated by',
       },
     ],
     exportColumns: [],

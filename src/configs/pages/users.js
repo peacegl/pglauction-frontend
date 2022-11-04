@@ -32,12 +32,8 @@ export default function conifgs() {
         },
       },
       {
-        name: 'login',
+        name: 'login.username',
         label: 'Username',
-        options: {
-          filter: false,
-          customBodyRender: (value, tableMeta, updateValue) => value.username,
-        },
       },
       {
         name: 'firstname',
@@ -60,25 +56,24 @@ export default function conifgs() {
         label: 'Gender',
       },
       {
-        name: 'login',
+        name: 'email',
         label: 'Email',
         options: {
           filter: false,
-          customBodyRender: (value, tableMeta, updateValue) => (
-            <Typography>
-              {value.email} <br />
-              {tableMeta.tableData[tableMeta.rowIndex]['second_email']}
-            </Typography>
-          ),
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return (
+              <Typography>
+                {tableMeta.tableData[tableMeta.rowIndex]['login']['email']}{' '}
+                <br />
+                {tableMeta.tableData[tableMeta.rowIndex]['second_email']}
+              </Typography>
+            );
+          },
         },
       },
       {
-        name: 'login',
+        name: 'login.status',
         label: 'Status',
-        options: {
-          filter: false,
-          customBodyRender: (value, tableMeta, updateValue) => value.status,
-        },
       },
       {
         name: 'birth_date',
@@ -95,18 +90,12 @@ export default function conifgs() {
         },
       },
       {
-        name: 'created_by',
+        name: 'created_by.username',
         label: 'Created by',
-        options: {
-          customBodyRender: (value, tableMeta, updateValue) => value?.username,
-        },
       },
       {
-        name: 'updated_by',
+        name: 'updated_by.username',
         label: 'Updated by',
-        options: {
-          customBodyRender: (value, tableMeta, updateValue) => value?.username,
-        },
       },
     ],
     exportColumns: [],

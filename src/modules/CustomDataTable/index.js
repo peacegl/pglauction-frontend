@@ -46,6 +46,7 @@ const CustomDataTable = ({
             : [20, 50, 100, 500],
           serverSide: options.serverSide ? options.serverSide : true,
           rowsSelected: selected,
+          enableNestedDataAccess: '.', // allows nested data separated by "." (see column names and the data structure above)
           textLabels: {
             body: {
               noMatch: isLoading
