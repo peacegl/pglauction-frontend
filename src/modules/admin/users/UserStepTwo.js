@@ -1,11 +1,26 @@
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import {InputAdornment, IconButton} from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
 import IntlMessages from '@crema/utility/IntlMessages';
 import MenuItem from '@mui/material/MenuItem';
 import {Box, Stack} from '@mui/material';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
+import {useState} from 'react';
 
 const UserStepTwo = (props) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordC, setShowPasswordC] = useState(false);
+
+  const handleClickShowPassword = () => {
+    setShowPassword((d) => !d);
+  };
+
+  const handleClickShowPasswordC = () => {
+    setShowPasswordC((d) => !d);
+  };
+
   const {messages} = useIntl();
   return (
     <Box>
@@ -36,20 +51,47 @@ const UserStepTwo = (props) => {
             variant='outlined'
             size='small'
             sx={{flex: 1}}
+            type={showPassword ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position='end'>
+                  <IconButton
+                    aria-label='toggle password visibility'
+                    onClick={handleClickShowPassword}
+                    edge='end'
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <AppTextField
-            placeholder={messages['common.second_emailPlaceholder']}
-            label={<IntlMessages id='common.second_email' />}
-            name='second_email'
+            placeholder={messages['common.passwordConfirmationPlaceholder']}
+            label={<IntlMessages id='common.passwordConfirmation' />}
+            name='password_confirmation'
             variant='outlined'
             size='small'
             sx={{flex: 1}}
+            type={showPasswordC ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position='end'>
+                  <IconButton
+                    aria-label='toggle password visibility'
+                    onClick={handleClickShowPasswordC}
+                    edge='end'
+                  >
+                    {showPasswordC ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
         </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppTextField
             select
-            placeholder={messages['common.statusPlaceholder']}
             label={<IntlMessages id='common.status' />}
             name='status'
             variant='outlined'
@@ -70,7 +112,6 @@ const UserStepTwo = (props) => {
 
           <AppTextField
             select
-            placeholder={messages['common.typePlaceholder']}
             label={<IntlMessages id='common.type' />}
             name='type'
             variant='outlined'
@@ -86,6 +127,14 @@ const UserStepTwo = (props) => {
             </MenuItem>
           </AppTextField>
         </Stack>
+        <AppTextField
+          placeholder={messages['common.secondEmailPlaceholder']}
+          label={<IntlMessages id='common.secondEmail' />}
+          name='second_email'
+          variant='outlined'
+          size='small'
+          sx={{flex: 1}}
+        />
       </Stack>
     </Box>
   );
