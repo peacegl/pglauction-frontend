@@ -105,7 +105,8 @@ const CustomModal = ({
           }
           onSubmit={handleSubmit}
         >
-          {({values, setFieldValue, isSubmitting, ...rest}) => {
+          {({values, setFieldValue, isSubmitting, setFieldError, ...rest}) => {
+            console.log('ffff', rest);
             return (
               <Form>
                 <Box>
@@ -141,6 +142,7 @@ const CustomModal = ({
                         {React.cloneElement(steps[activeStep]?.children, {
                           values: values,
                           setfieldvalue: setFieldValue,
+                          setFieldError: setFieldError,
                         })}
                       </Box>
                     </Box>
@@ -180,6 +182,7 @@ const CustomModal = ({
                         {React.cloneElement(children, {
                           values: values,
                           setfieldvalue: setFieldValue,
+                          setFieldError: setFieldError,
                         })}
                       </Box>
                     </>
