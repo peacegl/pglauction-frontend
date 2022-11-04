@@ -3,8 +3,10 @@ import {Avatar, Typography} from '@mui/material';
 import * as yup from 'yup';
 import CommonConfigs from '../index';
 const phoneRegExp = CommonConfigs().phoneRegExp;
+import {appIntl} from '@crema/utility/helper/Utils';
 
 export default function conifgs() {
+  const {messages} = appIntl();
   return {
     columns: [
       {
@@ -120,11 +122,11 @@ export default function conifgs() {
           .required(<IntlMessages id='validation.lastnameRequired' />),
         phone: yup
           .string()
-          .matches(phoneRegExp, <IntlMessages id='validation.invalidPhone' />)
+          .matches(phoneRegExp, messages['validation.invalidPhone'])
           .required(<IntlMessages id='validation.phoneRequired' />),
         whatsapp: yup
           .string()
-          .matches(phoneRegExp, <IntlMessages id='validation.validatePhone' />)
+          .matches(phoneRegExp, messages['validation.invalidWhatsapp'])
           .required(<IntlMessages id='validation.whatsappRequired' />),
         gender: yup
           .string()
@@ -141,9 +143,16 @@ export default function conifgs() {
         password: yup
           .string()
           .required(<IntlMessages id='validation.passwordRequired' />),
-        second_email: yup
+        password_confirmation: yup
           .string()
-          .required(<IntlMessages id='validation.secondEmailRequired' />),
+          .oneOf(
+            [yup.ref('password'), null],
+            messages['validation.passwordMisMatch'],
+          )
+          .required(
+            <IntlMessages id='validation.passwordConfrimationRequired' />,
+          ),
+        second_email: yup.string().nullable(),
         status: yup
           .string()
           .required(<IntlMessages id='validation.statusRequired' />),

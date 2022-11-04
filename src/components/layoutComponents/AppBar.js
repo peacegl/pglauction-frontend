@@ -39,7 +39,7 @@ function TopMenu() {
   };
 
   const openAdminPanel = () => {
-    router.push('/admin/');
+    router.push('/admin/vehicles');
   };
   return (
     <AppBar position='static'>
