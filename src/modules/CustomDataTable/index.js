@@ -46,6 +46,7 @@ const CustomDataTable = ({
             : [20, 50, 100, 500],
           serverSide: options.serverSide ? options.serverSide : true,
           rowsSelected: selected,
+          enableNestedDataAccess: '.', // allows nested data separated by "." (see column names and the data structure above)
           textLabels: {
             body: {
               noMatch: isLoading
@@ -93,7 +94,7 @@ const CustomDataTable = ({
 export default CustomDataTable;
 
 CustomDataTable.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   total: PropTypes.number,
   data: PropTypes.array.isRequired,
   columns: PropTypes.array.isRequired,

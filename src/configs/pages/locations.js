@@ -11,7 +11,9 @@ export default function conifgs() {
           customBodyRender: (value, tableMeta, updateValue) => (
             <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
               {value}
-              {tableMeta.tableData[tableMeta.rowIndex]['key']}
+              {tableMeta.tableData[tableMeta.rowIndex]['key']
+                .toString()
+                .padStart(5, '0')}
             </Typography>
           ),
         },
@@ -25,29 +27,20 @@ export default function conifgs() {
         label: 'Slug',
       },
       {
-        name: 'parent',
+        name: 'parent.name',
         label: 'Parent Name',
-        options: {
-          customBodyRender: (value, tableMeta, updateValue) => value?.name,
-        },
       },
       {
         name: 'description',
         label: 'Description',
       },
       {
-        name: 'created_by',
+        name: 'created_by.username',
         label: 'Created by',
-        options: {
-          customBodyRender: (value, tableMeta, updateValue) => value?.username,
-        },
       },
       {
-        name: 'updated_by',
+        name: 'updated_by.username',
         label: 'Updated by',
-        options: {
-          customBodyRender: (value, tableMeta, updateValue) => value?.username,
-        },
       },
     ],
   };
