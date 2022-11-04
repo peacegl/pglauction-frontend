@@ -8,6 +8,8 @@ import IntlMessages from '@crema/utility/IntlMessages';
 export default function userList() {
   const columns = CategoryConfigs().columns;
 
+  const [openModal, setOpenModal] = useState(false);
+  const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);

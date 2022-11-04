@@ -798,6 +798,7 @@
   "category.deleteMessage": "Are you sure, you want to delete the selected Category(s)?",
   "category.message.deleted": "Category(s) deleted successfully!",
 
+  "location.locationInfo": "Location Info",
   "location.deleteMessage": "Are you sure, you want to delete the selected Location(s)?",
   "location.message.deleted": "Location(s) deleted successfully!",
 

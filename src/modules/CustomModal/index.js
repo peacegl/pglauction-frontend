@@ -146,7 +146,12 @@ const CustomModal = ({
                     </Box>
                   )}
                   {children && (
-                    <>
+                    <Box
+                      sx={{
+                        height: 500,
+                        overflowY: 'auto',
+                      }}
+                    >
                       <Box
                         sx={{
                           pt: 2,
@@ -171,10 +176,7 @@ const CustomModal = ({
                       <Box
                         sx={{
                           mx: 3,
-                          mt: 7,
-                          mb: 4,
-                          minHeight: 450,
-                          overflowY: 'auto',
+                          my: 5,
                         }}
                       >
                         {React.cloneElement(children, {
@@ -182,7 +184,7 @@ const CustomModal = ({
                           setfieldvalue: setFieldValue,
                         })}
                       </Box>
-                    </>
+                    </Box>
                   )}
                   <Paper
                     variant='outlined'
@@ -240,9 +242,9 @@ CustomModal.propTypes = {
   toggleOpen: PropTypes.func.isRequired,
   steps: PropTypes.array,
   children: PropTypes.node,
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   onSave: PropTypes.func.isRequired,
-  validationSchema: PropTypes.array,
+  validationSchema: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   initialValues: PropTypes.object,
   customValidation: PropTypes.func,
   isLoading: PropTypes.bool,

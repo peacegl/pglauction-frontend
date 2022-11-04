@@ -4,10 +4,13 @@ import CustomDataTable from '../../CustomDataTable';
 import {onGetLocationList, onDeleteLocations} from 'redux/actions';
 import {useEffect, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
+import LocationModal from './LocationModal';
 
 export default function userList() {
   const columns = LocationConfigs().columns;
 
+  const [openModal, setOpenModal] = useState(false);
+  const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
@@ -51,7 +54,10 @@ export default function userList() {
       setSearch(value);
     },
   };
-  const onAdd = () => {};
+  const onAdd = () => {
+    setRecordId(null);
+    setOpenModal(true);
+  };
   const onEdit = () => {};
   const onDelete = async () => {
     await dispatch(
@@ -85,6 +91,14 @@ export default function userList() {
         selected={selected}
         onEnterSearch={onEnterSearch}
       />
+      {openModal && (
+        <LocationModal
+          open={openModal}
+          toggleOpen={() => setOpenModal((d) => !d)}
+          recordId={recordId}
+          edit={recordId ? true : false}
+        />
+      )}
     </>
   );
 }
