@@ -34,7 +34,6 @@ export default function UserModal({
     email: '',
     username: '',
     password: '',
-    second_email: '',
     status: '',
     type: '',
   });

@@ -60,18 +60,6 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch) {
       {
         name: 'email',
         label: 'Email',
-        options: {
-          filter: false,
-          customBodyRender: (value, tableMeta, updateValue) => {
-            return (
-              <Typography>
-                {tableMeta.tableData[tableMeta.rowIndex]['login']['email']}
-                <br />
-                {tableMeta.tableData[tableMeta.rowIndex]['second_email']}
-              </Typography>
-            );
-          },
-        },
       },
       {
         name: 'login.status',
@@ -139,7 +127,6 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch) {
           .required(
             <IntlMessages id='validation.passwordConfrimationRequired' />,
           ),
-        second_email: yup.string().nullable(),
         status: yup
           .string()
           .required(<IntlMessages id='validation.statusRequired' />),
