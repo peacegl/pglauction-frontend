@@ -109,5 +109,7 @@ UserStepThree.propTypes = {
   setfieldvalue: PropTypes.func,
   rolesLoading: PropTypes.bool,
   roles: PropTypes.array.isRequired,
+  permissionsLoading: PropTypes.bool,
+  permissions: PropTypes.array.isRequired,
   searchRoles: PropTypes.func,
 };
