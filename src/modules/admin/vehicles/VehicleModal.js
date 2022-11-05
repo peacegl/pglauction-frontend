@@ -9,11 +9,9 @@ import VehicleStepTwo from './VehicleStepTwo';
 import CustomModal from '../../CustomModal';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 import IntlMessages from '@crema/utility/IntlMessages';
 
-const insertColumns = VehicleConfigs().insertColumns;
 const validationSchema = VehicleConfigs().validationSchema;
 
 export default function VehicleModal({
@@ -104,12 +102,12 @@ export default function VehicleModal({
           if (res.status === 200 && res.data.result) {
             let values = {};
             Object.entries(res.data.data).forEach(([key, value]) => {
-              if (insertColumns.includes(key)) {
+              if (Object.keys(initialValues).includes(key)) {
                 values[key] = value;
               }
               if (typeof value === 'object' && value != null)
                 Object.entries(value).forEach(([ikey, ivalue]) => {
-                  if (insertColumns.includes(ikey)) {
+                  if (Object.keys(initialValues).includes(ikey)) {
                     values[ikey] = ivalue;
                   }
                 });
