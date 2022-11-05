@@ -1,8 +1,9 @@
 import AppDateField from '@crema/core/AppFormComponents/AppDateField';
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import IntlMessages from '@crema/utility/IntlMessages';
+import {Box, Stack, Typography} from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
-import {Box, Stack} from '@mui/material';
+import Profile from 'components/Profile';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -11,6 +12,14 @@ const UserStepOne = (props) => {
   return (
     <Box>
       <Stack spacing={{xs: 5, md: 8}}>
+        <Stack direction='row' spacing={5} sx={{mx: 'auto'}}>
+          <Profile
+            width={{xs: 70, lg: 100}}
+            value={props.values?.profile}
+            name='profile'
+            setfieldvalue={props.setfieldvalue}
+          />
+        </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppTextField
             placeholder={messages['common.firstnamePlaceholder']}
@@ -65,12 +74,22 @@ const UserStepOne = (props) => {
               <IntlMessages id='common.female' />
             </MenuItem>
           </AppTextField>
-
           <AppDateField
             label={<IntlMessages id='common.birthDate' />}
             value={props.values?.birth_date}
             setfieldvalue={props.setfieldvalue}
             name='birth_date'
+            size='small'
+            sx={{flex: 1}}
+          />
+        </Stack>
+        <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+          <AppTextField
+            multiline
+            placeholder={messages['common.addressPlaceholder']}
+            label={<IntlMessages id='common.address' />}
+            name='address'
+            variant='outlined'
             size='small'
             sx={{flex: 1}}
           />

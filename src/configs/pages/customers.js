@@ -55,15 +55,6 @@ export default function conifgs() {
       {
         name: 'email',
         label: 'Email',
-        options: {
-          filter: false,
-          customBodyRender: (value, tableMeta, updateValue) => (
-            <Typography>
-              {tableMeta.tableData[tableMeta.rowIndex]['login']['email']} <br />
-              {tableMeta.tableData[tableMeta.rowIndex]['second_email']}
-            </Typography>
-          ),
-        },
       },
       {
         name: 'login.status',
