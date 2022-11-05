@@ -33,7 +33,10 @@ const CustomModal = ({
   const [activeStep, setActiveStep] = useState(0);
   const [size, setSize] = useState([0]);
   const handleSubmit = async (values, actions) => {
-    // const customValidation = await customValidation(values, activeStep);
+    if (customValidation) {
+      const isValid = await customValidation(values, actions, activeStep + 1);
+      if (!isValid) return;
+    }
     if (activeStep == steps?.length - 1 || children) {
       actions.setSubmitting(true);
       await onSave(values);
@@ -106,7 +109,6 @@ const CustomModal = ({
           onSubmit={handleSubmit}
         >
           {({values, setFieldValue, isSubmitting, setFieldError, ...rest}) => {
-            console.log('ffff', rest);
             return (
               <Form>
                 <Box>

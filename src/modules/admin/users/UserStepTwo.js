@@ -22,30 +22,6 @@ const UserStepTwo = (props) => {
     setShowPasswordC((d) => !d);
   };
 
-  const checkUniqueness = async (url, value, type) => {
-    try {
-      const params = {};
-      type == 'email'
-        ? (params.email = value)
-        : type == 'username'
-        ? (params.username = value)
-        : true;
-
-      const res = await jwtAxios.get(url, {
-        params: {
-          ...params,
-          id: props.recordId,
-        },
-      });
-      if (res.status === 200) {
-        return res.data.result;
-      }
-      return false;
-    } catch (error) {
-      return false;
-    }
-  };
-
   const {messages} = useIntl();
   return (
     <Box>
@@ -58,22 +34,6 @@ const UserStepTwo = (props) => {
             variant='outlined'
             size='small'
             sx={{flex: 1}}
-            inputProps={{
-              onBlur: async (e) => {
-                const error = await checkUniqueness(
-                  '/loginables/valid_credential',
-                  e.target.value,
-                  'email',
-                );
-                if (!error) {
-                  props.setFieldError(
-                    'email',
-                    <IntlMessages id='validation.notUniqueEmail' />,
-                    false,
-                  );
-                }
-              },
-            }}
           />
           <AppTextField
             placeholder={messages['common.usernamePlaceholder']}
@@ -82,21 +42,6 @@ const UserStepTwo = (props) => {
             variant='outlined'
             size='small'
             sx={{flex: 1}}
-            inputProps={{
-              onBlur: async (e) => {
-                const error = await checkUniqueness(
-                  '/loginables/valid_credential',
-                  e.target.value,
-                  'username',
-                );
-                if (!error) {
-                  props.setFieldError(
-                    'username',
-                    <IntlMessages id='validation.notUniqueUsername' />,
-                  );
-                }
-              },
-            }}
           />
         </Stack>
         {!props.edit && (
@@ -194,6 +139,6 @@ UserStepTwo.propTypes = {
   values: PropTypes.object,
   setfieldvalue: PropTypes.func,
   edit: PropTypes.bool,
-  recordId: PropTypes.string,
+  user: PropTypes.object,
   setFieldError: PropTypes.func,
 };

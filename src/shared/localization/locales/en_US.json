@@ -811,6 +811,8 @@
   "validation.minUsername": "Username must be at least 3 characters",
   "validation.notUniqueEmail": "This email is taken",
   "validation.notUniqueUsername": "This username is taken",
+  "validation.notUniquePhone": "This phone number is taken",
+  "validation.notUniqueWhatsapp": "This whatsapp number is taken",
 
   "validation.statusRequired": "Status is required",
   "validation.typeRequired": "Type is required",

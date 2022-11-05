@@ -4,7 +4,7 @@ const phoneRegExp = CommonConfigs().phoneRegExp;
 import CommonConfigs from '../index';
 import * as yup from 'yup';
 
-export default function conifgs(invalidPhone, invalidWhatsapp, misMatch) {
+export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
   return {
     columns: [
       {
@@ -118,15 +118,19 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch) {
           .string()
           .min(3, <IntlMessages id='validation.minUsername' />)
           .required(<IntlMessages id='validation.usernameRequired' />),
-        password: yup
-          .string()
-          .required(<IntlMessages id='validation.passwordRequired' />),
-        password_confirmation: yup
-          .string()
-          .oneOf([yup.ref('password'), null], misMatch)
-          .required(
-            <IntlMessages id='validation.passwordConfrimationRequired' />,
-          ),
+        password: edit
+          ? yup.string().nullable()
+          : yup
+              .string()
+              .required(<IntlMessages id='validation.passwordRequired' />),
+        password_confirmation: edit
+          ? yup.string().nullable()
+          : yup
+              .string()
+              .oneOf([yup.ref('password'), null], misMatch)
+              .required(
+                <IntlMessages id='validation.passwordConfrimationRequired' />,
+              ),
         status: yup
           .string()
           .required(<IntlMessages id='validation.statusRequired' />),
