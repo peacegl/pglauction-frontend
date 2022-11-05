@@ -41,7 +41,7 @@ export default function AppAutoComplete({
         multiple === true
           ? value
             ? value.map((data) => data?.[idField])
-            : ''
+            : []
           : value
           ? value?.[idField]
           : '',

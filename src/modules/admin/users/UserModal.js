@@ -6,11 +6,12 @@ import UserConfigs from '../../../configs/pages/users';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
 import PersonIcon from '@mui/icons-material/Person';
-import UserStepOne from './UserStepOne';
-import UserStepTwo from './UserStepTwo';
 import CustomModal from '../../CustomModal';
+import UserStepThree from './UserStepThree';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
+import UserStepOne from './UserStepOne';
+import UserStepTwo from './UserStepTwo';
 import PropTypes from 'prop-types';
 
 export default function UserModal({
@@ -23,6 +24,10 @@ export default function UserModal({
 }) {
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [roles, setRoles] = useState([]);
+  const [rolesLoading, setRolesLoading] = useState([]);
+  const [permissions, setPermissions] = useState([]);
+  const [permissionsLoading, setPermissionsLoading] = useState([]);
   const [initialValues, setInitialValues] = useState({
     profile: '',
     firstname: '',
@@ -37,6 +42,8 @@ export default function UserModal({
     password: '',
     status: '',
     type: '',
+    roles: [],
+    permissions: [],
   });
   const {messages} = appIntl();
   const dispatch = useDispatch();
@@ -150,6 +157,31 @@ export default function UserModal({
     }
     return true;
   };
+
+  const fetchData = async (url, content, loading, setData) => {
+    try {
+      loading(true);
+      const res = await jwtAxios.get(url, {params: content});
+      if (res.status === 200 && res.data.result) {
+        setData(res.data.data);
+      } else {
+        setData([]);
+      }
+      loading(false);
+    } catch (error) {
+      setData([]);
+      loading(false);
+    }
+  };
+  useEffect(() => {
+    fetchData(`/roles/auto_complete`, {}, setRolesLoading, setRoles);
+    fetchData(`/permissions`, {}, setPermissionsLoading, setPermissions);
+  }, []);
+
+  const searchRoles = (content) => {
+    fetchData(`/roles/auto_complete`, content, setRolesLoading, setRoles);
+  };
+
   useEffect(() => {
     if (recordId) {
       (async function () {
@@ -203,7 +235,15 @@ export default function UserModal({
       key: 3,
       icon: <ManageAccountsIcon />,
       label: <IntlMessages id='user.rolePermission' />,
-      children: <UserStepOne />,
+      children: (
+        <UserStepThree
+          roles={roles}
+          rolesLoading={rolesLoading}
+          permissions={permissions}
+          permissionsLoading={permissionsLoading}
+          searchRoles={searchRoles}
+        />
+      ),
     },
   ];
   return (

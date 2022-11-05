@@ -3,7 +3,6 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import {InputAdornment, IconButton} from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import IntlMessages from '@crema/utility/IntlMessages';
-import jwtAxios from '@crema/services/auth/jwt-auth';
 import MenuItem from '@mui/material/MenuItem';
 import {Box, Stack} from '@mui/material';
 import {useIntl} from 'react-intl';
