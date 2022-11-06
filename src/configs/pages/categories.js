@@ -33,6 +33,12 @@ export default function conifgs() {
       {
         name: 'description',
         label: 'Description',
+        options: {
+          filter: false,
+          customBodyRender: (value, tableMeta, updateValue) => (
+            <div dangerouslySetInnerHTML={{__html: value}} />
+          ),
+        },
       },
       {
         name: 'created_by.username',

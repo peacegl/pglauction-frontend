@@ -1,5 +1,7 @@
 import {
   GET_CATEGORY_LIST,
+  ADD_NEW_CATEGORY,
+  UPDATE_CATEGORY,
   FETCH_START,
   FETCH_SUCCESS,
   FETCH_ERROR,
@@ -30,6 +32,72 @@ export const onGetCategoryList = (filterData) => {
     } catch (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
       dispatch({type: GET_CATEGORY_LIST, payload: {}});
+    }
+  };
+};
+
+export const onInsertCategory = (data, toggleOpen) => {
+  return async (dispatch) => {
+    dispatch({type: FETCH_START});
+    const {messages} = appIntl();
+    try {
+      const res = await jwtAxios.post(`/categories`, data);
+      if (res.status === 201 && res.data.result) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: ADD_NEW_CATEGORY, payload: res.data.data});
+        toggleOpen(false);
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: messages['message.category.created'],
+        });
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: messages['message.somethingWentWrong'],
+        });
+      }
+    } catch (error) {
+      if (error.request.status == 422) {
+        const res = JSON.parse(error.request.response);
+        console.log('fff', res.errors);
+        // res.errors?.forEach((element) => {
+        //   dispatch({type: FETCH_ERROR, payload: element.message});
+        // });
+      }
+      dispatch({type: FETCH_ERROR, payload: error.message});
+    }
+  };
+};
+
+export const onUpdateCategory = (id, data, toggleOpen) => {
+  return async (dispatch) => {
+    dispatch({type: FETCH_START});
+    const {messages} = appIntl();
+    try {
+      const res = await jwtAxios.put(`/categories/${id}`, data);
+      if (res.status === 202 && res.data.result) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: UPDATE_CATEGORY, payload: res.data.data});
+        toggleOpen(false);
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: messages['message.category.updated'],
+        });
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: messages['message.somethingWentWrong'],
+        });
+      }
+    } catch (error) {
+      if (error.request.status == 422) {
+        const res = JSON.parse(error.request.response);
+        console.log('fff', res.errors);
+        // res.errors?.forEach((element) => {
+        //   dispatch({type: FETCH_ERROR, payload: element.message});
+        // });
+      }
+      dispatch({type: FETCH_ERROR, payload: error.message});
     }
   };
 };

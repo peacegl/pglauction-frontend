@@ -156,8 +156,10 @@ export const ADD_NEW_LOCATION = 'ADD_NEW_LOCATION';
 export const UPDATE_LOCATION = 'UPDATE_LOCATION';
 
 //Category List
-export const GET_CATEGORY_LIST = 'get_category_list';
-export const SET_CATEGORY_FILTER_DATA = 'set_category_filter_data';
+export const GET_CATEGORY_LIST = 'GET_CATEGORY_LIST';
+export const SET_CATEGORY_FILTER_DATA = 'SET_CATEGORY_FILTER_DATA';
+export const ADD_NEW_CATEGORY = 'ADD_NEW_CATEGORY';
+export const UPDATE_CATEGORY = 'UPDATE_CATEGORY';
 
 //Auction Items
 export const GET_AUCTION_ITEMS = 'get_auction_items';

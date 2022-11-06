@@ -4,6 +4,7 @@ import CustomDataTable from '../../CustomDataTable';
 import {onGetCategoryList, onDeleteCategories} from 'redux/actions';
 import {useEffect, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
+import CategoryModal from './CategoryModal';
 
 export default function userList() {
   const columns = CategoryConfigs().columns;
@@ -53,8 +54,15 @@ export default function userList() {
       setSearch(value);
     },
   };
-  const onAdd = () => {};
-  const onEdit = () => {};
+  const onAdd = () => {
+    setRecordId(null);
+    setOpenModal(true);
+  };
+
+  const onEdit = () => {
+    setRecordId(data[selected[0]].id);
+    setOpenModal(true);
+  };
   const onDelete = async () => {
     await dispatch(
       onDeleteCategories({
@@ -87,6 +95,14 @@ export default function userList() {
         selected={selected}
         onEnterSearch={onEnterSearch}
       />
+      {openModal && (
+        <CategoryModal
+          open={openModal}
+          toggleOpen={() => setOpenModal((d) => !d)}
+          recordId={recordId}
+          edit={recordId ? true : false}
+        />
+      )}
     </>
   );
 }
