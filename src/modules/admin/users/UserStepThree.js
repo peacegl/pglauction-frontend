@@ -1,40 +1,76 @@
 import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteField';
-import IntlMessages from '@crema/utility/IntlMessages';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import {Box, Stack, Typography, Paper} from '@mui/material';
+import IntlMessages from '@crema/utility/IntlMessages';
+import Checkbox from '@mui/material/Checkbox';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import {useState} from 'react';
+import {useField} from 'formik';
 
 const UserStepThree = (props) => {
-  const [checked, setChecked] = useState([true, false]);
-
-  const handleChange1 = (event) => {
-    setChecked([event.target.checked, event.target.checked]);
-  };
-
-  const handleChange2 = (event) => {
-    setChecked([event.target.checked, checked[1]]);
-  };
-
-  const handleChange3 = (event) => {
-    setChecked([checked[0], event.target.checked]);
-  };
-
   const {messages} = useIntl();
-  const children = (
-    <Box sx={{display: 'flex', flexDirection: 'column', ml: 3}}>
-      <FormControlLabel
-        label='Child 1'
-        control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
-      />
-      <FormControlLabel
-        label='Child 2'
-        control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
-      />
-    </Box>
-  );
+  const [field] = useField('permissions');
+
+  const setAllPermissions = () => {
+    const permissionIds = [];
+    if (props.values.permissions?.length == props.totalPermissions) {
+      props.setfieldvalue('permissions', permissionIds);
+      return;
+    }
+    Object.values(props.permissions)?.map((permissions) => {
+      permissions.forEach((element) => {
+        permissionIds.push(element.id);
+      });
+    });
+    props.setfieldvalue('permissions', permissionIds);
+  };
+
+  const setCategoryPermissions = (permissions) => {
+    if (
+      permissions
+        .map((item) => item.id)
+        .every((item) => props.values.permissions?.includes(item))
+    ) {
+      props.setfieldvalue('permissions', []);
+      return;
+    }
+    if (
+      permissions
+        .map((item) => item.id)
+        .some((item) => props.values.permissions?.includes(item))
+    ) {
+      props.setfieldvalue('permissions', [
+        ...new Set([
+          ...permissions.map((item) => parseInt(item.id)),
+          ...props.values.permissions,
+        ]),
+      ]);
+      return;
+    }
+    props.setfieldvalue(
+      'permissions',
+      permissions.map((item) => parseInt(item.id)),
+    );
+  };
+
+  const handleChange = (e) => {
+    if (props.values?.permissions) {
+      if (props.values?.permissions.includes(parseInt(e.target.value))) {
+        let permissions = props.values?.permissions;
+        props.setfieldvalue(
+          'permissions',
+          permissions.filter((item) => item != e.target.value),
+        );
+        return;
+      }
+      props.setfieldvalue('permissions', [
+        ...new Set([parseInt(e.target.value), ...props.values.permissions]),
+      ]);
+      return;
+    }
+    props.setfieldvalue('permissions', [parseInt(e.target.value)]);
+  };
+
   return (
     <Box>
       <Stack spacing={{xs: 5, md: 8}}>
@@ -71,7 +107,19 @@ const UserStepThree = (props) => {
         >
           <Box>
             <FormControlLabel
-              control={<Checkbox />}
+              control={
+                <Checkbox
+                  checked={
+                    props.totalPermissions == props.values?.permissions?.length
+                  }
+                  indeterminate={
+                    props.totalPermissions >
+                      props.values?.permissions?.length &&
+                    props.values?.permissions?.length != 0
+                  }
+                  onChange={setAllPermissions}
+                />
+              }
               label={
                 <Typography variant='h4'>
                   <IntlMessages id='common.all' />
@@ -84,21 +132,94 @@ const UserStepThree = (props) => {
           </Typography>
         </Stack>
       </Paper>
-      <Stack px={9} mt={3}>
-        <Box>
-          <FormControlLabel
-            label='Parent'
-            control={
-              <Checkbox
-                checked={checked[0] && checked[1]}
-                indeterminate={checked[0] !== checked[1]}
-                onChange={handleChange1}
-              />
-            }
-          />
-          {children}
-        </Box>
-      </Stack>
+      <Paper sx={{px: 5, py: 4, mt: 3}}>
+        <Stack direction={{xs: 'column'}} sx={{flexWrap: 'wrap'}}>
+          {Object.entries(props.permissions)?.map(
+            ([name, permissions], index) => (
+              <Stack sx={{flex: '50%'}} key={index}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={
+                        props.values?.permissions
+                          ? permissions
+                              .map((item) => item.id)
+                              .every((item) =>
+                                props.values.permissions?.includes(item),
+                              )
+                          : false
+                      }
+                      indeterminate={
+                        props.values?.permissions
+                          ? !permissions
+                              .map((item) => item.id)
+                              .every((item) =>
+                                props.values.permissions?.includes(item),
+                              )
+                            ? permissions
+                                .map((item) => item.id)
+                                .some((item) =>
+                                  props.values.permissions?.includes(item),
+                                )
+                            : false
+                          : false
+                      }
+                      onChange={() => setCategoryPermissions(permissions)}
+                    />
+                  }
+                  label={
+                    <Typography sx={{fontWeight: 'bold'}}>
+                      {name
+                        .replaceAll('_', ' ')
+                        .replace(/^(.)|\s+(.)/g, (c) => c.toUpperCase())}
+                    </Typography>
+                  }
+                />
+                <Paper
+                  variant='outlined'
+                  square
+                  sx={{
+                    display: 'flex',
+                    flexDirection: {xs: 'column', md: 'row'},
+                    pl: 5,
+                    flexWrap: 'wrap',
+                    my: 1,
+                  }}
+                >
+                  {permissions.map((permission) => (
+                    <FormControlLabel
+                      key={permission.id}
+                      sx={{
+                        flex: '1 0 21%',
+                        // width: {xs: 'auto', md: '24%'},
+                      }}
+                      label={permission.name
+                        .replaceAll('_', ' ')
+                        .replace(/^(.)|\s+(.)/g, (c) => c.toUpperCase())}
+                      control={
+                        <Checkbox
+                          size='small'
+                          {...field}
+                          name='permissions'
+                          value={parseInt(permission.id)}
+                          checked={
+                            props.values?.permissions?.includes(
+                              parseInt(permission.id),
+                            )
+                              ? true
+                              : false
+                          }
+                          onChange={handleChange}
+                        />
+                      }
+                    />
+                  ))}
+                </Paper>
+              </Stack>
+            ),
+          )}
+        </Stack>
+      </Paper>
     </Box>
   );
 };
@@ -110,6 +231,7 @@ UserStepThree.propTypes = {
   rolesLoading: PropTypes.bool,
   roles: PropTypes.array.isRequired,
   permissionsLoading: PropTypes.bool,
-  permissions: PropTypes.array.isRequired,
+  permissions: PropTypes.object.isRequired,
   searchRoles: PropTypes.func,
+  totalPermissions: PropTypes.number,
 };

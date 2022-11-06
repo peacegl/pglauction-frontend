@@ -22,12 +22,13 @@ export default function UserModal({
   edit,
   ...rest
 }) {
+  const [totalPermissions, setTotalPermissions] = useState(0);
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [roles, setRoles] = useState([]);
-  const [rolesLoading, setRolesLoading] = useState([]);
+  const [rolesLoading, setRolesLoading] = useState(false);
   const [permissions, setPermissions] = useState([]);
-  const [permissionsLoading, setPermissionsLoading] = useState([]);
+  const [permissionsLoading, setPermissionsLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     profile: '',
     firstname: '',
@@ -158,12 +159,13 @@ export default function UserModal({
     return true;
   };
 
-  const fetchData = async (url, content, loading, setData) => {
+  const fetchData = async (url, content, loading, setData, setTotal = null) => {
     try {
       loading(true);
       const res = await jwtAxios.get(url, {params: content});
       if (res.status === 200 && res.data.result) {
         setData(res.data.data);
+        if (setTotal) setTotal(res.data.total);
       } else {
         setData([]);
       }
@@ -175,7 +177,13 @@ export default function UserModal({
   };
   useEffect(() => {
     fetchData(`/roles/auto_complete`, {}, setRolesLoading, setRoles);
-    fetchData(`/permissions`, {}, setPermissionsLoading, setPermissions);
+    fetchData(
+      `/permissions`,
+      {},
+      setPermissionsLoading,
+      setPermissions,
+      setTotalPermissions,
+    );
   }, []);
 
   const searchRoles = (content) => {
@@ -242,6 +250,7 @@ export default function UserModal({
           permissions={permissions}
           permissionsLoading={permissionsLoading}
           searchRoles={searchRoles}
+          totalPermissions={totalPermissions}
         />
       ),
     },
