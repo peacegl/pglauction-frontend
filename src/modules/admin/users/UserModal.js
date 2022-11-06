@@ -1,18 +1,17 @@
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import {onInsertUser, onUpdateUser} from 'redux/actions';
 import IntlMessages from '@crema/utility/IntlMessages';
 import UserConfigs from '../../../configs/pages/users';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-import {onInsertUser, onUpdateUser} from 'redux/actions';
+import {appIntl} from '@crema/utility/helper/Utils';
+import PersonIcon from '@mui/icons-material/Person';
 import UserStepOne from './UserStepOne';
 import UserStepTwo from './UserStepTwo';
 import CustomModal from '../../CustomModal';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
-
-const insertColumns = UserConfigs().insertColumns;
-const validationSchema = UserConfigs().validationSchema;
 
 export default function UserModal({
   open,
@@ -22,69 +21,135 @@ export default function UserModal({
   edit,
   ...rest
 }) {
-  const [locationLoading, setLocationLoading] = useState(false);
-  const [categoryLoading, setCategoryLoading] = useState(false);
-  const [sellersLoading, setSellersLoading] = useState(false);
-  const [locations, setLocations] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [sellers, setSellers] = useState([]);
+  const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
+    profile: '',
     firstname: '',
     lastname: '',
     phone: '',
     whatsapp: '',
     gender: '',
     birth_date: '',
+    address: '',
     email: '',
     username: '',
     password: '',
-    second_email: '',
     status: '',
     type: '',
   });
+  const {messages} = appIntl();
   const dispatch = useDispatch();
-  const fetchData = async (url, content, loading, setData) => {
+
+  const validationSchema = UserConfigs(
+    messages['validation.invalidPhone'],
+    messages['validation.invalidWhatsapp'],
+    messages['validation.passwordMisMatch'],
+    edit,
+  ).validationSchema;
+
+  const availableChecking = async (url, params, actions, onSuccess, onFail) => {
     try {
-      loading(true);
-      const res = await jwtAxios.get(url, {params: content});
-      if (res.status === 200 && res.data.result) {
-        setData(res.data.data);
-      } else {
-        setData([]);
+      const res = await jwtAxios.get(url, {
+        params: params,
+      });
+      if (res.status === 200) {
+        onSuccess(res, actions);
+        return res.data.result;
       }
-      loading(false);
+      onFail(actions);
+      return false;
     } catch (error) {
-      setData([]);
-      loading(false);
+      onFail(actions);
+      return false;
     }
   };
-  const searchLocations = (content) => {
-    fetchData(
-      `/location/auto_complete`,
-      content,
-      setLocationLoading,
-      setLocations,
+  const onStepOneSuccess = (res, actions) => {
+    if (!res.data.result) {
+      if (res.data.message == 2) {
+        actions.setErrors({
+          phone: <IntlMessages id='validation.notUniquePhone' />,
+        });
+      } else if (res.data.message == 1) {
+        actions.setErrors({
+          whatsapp: <IntlMessages id='validation.notUniqueWhatsapp' />,
+        });
+      } else {
+        actions.setErrors({
+          whatsapp: <IntlMessages id='validation.notUniqueWhatsapp' />,
+          phone: <IntlMessages id='validation.notUniquePhone' />,
+        });
+      }
+    }
+  };
+  const onStepOneFail = (actions) => {
+    actions.setErrors({
+      whatsapp: <IntlMessages id='validation.notUniqueWhatsapp' />,
+      phone: <IntlMessages id='validation.notUniquePhone' />,
+    });
+  };
+  const stepOneValidation = async (values, actions) => {
+    const params = {
+      whatsapp: values.whatsapp,
+      phone: values.phone,
+      id: user?.login?.id ? user?.id : null,
+    };
+    return availableChecking(
+      'user/valid_credential',
+      params,
+      actions,
+      onStepOneSuccess,
+      onStepOneFail,
     );
   };
-  const searchCategories = (content) => {
-    fetchData(
-      `/category/auto_complete`,
-      content,
-      setCategoryLoading,
-      setCategories,
+  const onStepTwoSuccess = (res, actions) => {
+    if (!res.data.result) {
+      if (res.data.message == 1) {
+        actions.setErrors({
+          email: <IntlMessages id='validation.notUniqueEmail' />,
+        });
+      } else if (res.data.message == 2) {
+        actions.setErrors({
+          username: <IntlMessages id='validation.notUniqueUsername' />,
+        });
+      } else {
+        actions.setErrors({
+          username: <IntlMessages id='validation.notUniqueUsername' />,
+          email: <IntlMessages id='validation.notUniqueEmail' />,
+        });
+      }
+    }
+  };
+  const onStepTwoFail = (actions) => {
+    actions.setErrors({
+      username: <IntlMessages id='validation.notUniqueUsername' />,
+      email: <IntlMessages id='validation.notUniqueEmail' />,
+    });
+  };
+
+  const stepTwoValidation = async (values, actions) => {
+    const params = {
+      username: values.username,
+      email: values.email,
+      id: user?.login?.id ? user?.login?.id : null,
+    };
+    return availableChecking(
+      'loginables/valid_credential',
+      params,
+      actions,
+      onStepTwoSuccess,
+      onStepTwoFail,
     );
   };
-  const searchSellers = (content) => {
-    fetchData(`/sellers/auto_complete`, content, setSellersLoading, setSellers);
+  const customValidation = async (values, actions, activeStep) => {
+    if (activeStep == 1) {
+      return await stepOneValidation(values, actions);
+    }
+    if (activeStep == 2) {
+      return await stepTwoValidation(values, actions);
+    }
+    return true;
   };
-
-  useEffect(() => {
-    fetchData(`/location/auto_complete`, {}, setLocationLoading, setLocations);
-    fetchData(`/category/auto_complete`, {}, setCategoryLoading, setCategories);
-    fetchData(`/sellers/auto_complete`, {}, setSellersLoading, setSellers);
-  }, []);
-
   useEffect(() => {
     if (recordId) {
       (async function () {
@@ -92,14 +157,15 @@ export default function UserModal({
           setIsLoading(true);
           const res = await jwtAxios.get(`/users/${recordId}`);
           if (res.status === 200 && res.data.result) {
+            setUser(res.data.data);
             let values = {};
             Object.entries(res.data.data).forEach(([key, value]) => {
-              if (insertColumns.includes(key)) {
+              if (Object.keys(initialValues).includes(key)) {
                 values[key] = value;
               }
               if (typeof value === 'object' && value != null)
                 Object.entries(value).forEach(([ikey, ivalue]) => {
-                  if (insertColumns.includes(ikey)) {
+                  if (Object.keys(initialValues).includes(ikey)) {
                     values[ikey] = ivalue;
                   }
                 });
@@ -123,37 +189,21 @@ export default function UserModal({
   const steps = [
     {
       key: 1,
-      icon: <DirectionsCarIcon />,
+      icon: <PersonIcon />,
       label: <IntlMessages id='user.userInfo' />,
       children: <UserStepOne />,
     },
     {
       key: 2,
-      icon: <ShoppingBagIcon />,
+      icon: <AccountCircleIcon />,
       label: <IntlMessages id='user.accountInfo' />,
-      children: (
-        <UserStepTwo
-          locations={locations}
-          locationLoading={locationLoading}
-          categories={categories}
-          categoryLoading={categoryLoading}
-          sellersLoading={sellersLoading}
-          sellers={sellers}
-          searchCategories={searchCategories}
-          searchLocations={searchLocations}
-          searchSellers={searchSellers}
-          setIsLoading={setIsLoading}
-          fetchData={(url, type) => {
-            if (type == 'location') {
-              fetchData(url, {}, setLocationLoading, setLocations);
-            } else if (type == 'category') {
-              fetchData(url, {}, setCategoryLoading, setCategories);
-            } else if (type == 'seller') {
-              fetchData(url, {}, setSellersLoading, setSellers);
-            }
-          }}
-        />
-      ),
+      children: <UserStepTwo edit={edit} user={user} />,
+    },
+    {
+      key: 3,
+      icon: <ManageAccountsIcon />,
+      label: <IntlMessages id='user.rolePermission' />,
+      children: <UserStepOne />,
     },
   ];
   return (
@@ -166,6 +216,7 @@ export default function UserModal({
       validationSchema={validationSchema}
       initialValues={initialValues}
       isLoading={isLoading}
+      customValidation={customValidation}
       {...rest}
     />
   );

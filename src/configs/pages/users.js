@@ -1,12 +1,10 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {Avatar, Typography} from '@mui/material';
-import * as yup from 'yup';
-import CommonConfigs from '../index';
 const phoneRegExp = CommonConfigs().phoneRegExp;
-import {appIntl} from '@crema/utility/helper/Utils';
+import CommonConfigs from '../index';
+import * as yup from 'yup';
 
-export default function conifgs() {
-  const {messages} = appIntl();
+export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
   return {
     columns: [
       {
@@ -62,18 +60,6 @@ export default function conifgs() {
       {
         name: 'email',
         label: 'Email',
-        options: {
-          filter: false,
-          customBodyRender: (value, tableMeta, updateValue) => {
-            return (
-              <Typography>
-                {tableMeta.tableData[tableMeta.rowIndex]['login']['email']}
-                <br />
-                {tableMeta.tableData[tableMeta.rowIndex]['second_email']}
-              </Typography>
-            );
-          },
-        },
       },
       {
         name: 'login.status',
@@ -113,11 +99,11 @@ export default function conifgs() {
           .required(<IntlMessages id='validation.lastnameRequired' />),
         phone: yup
           .string()
-          .matches(phoneRegExp, messages['validation.invalidPhone'])
+          .matches(phoneRegExp, invalidPhone)
           .required(<IntlMessages id='validation.phoneRequired' />),
         whatsapp: yup
           .string()
-          .matches(phoneRegExp, messages['validation.invalidWhatsapp'])
+          .matches(phoneRegExp, invalidWhatsapp)
           .required(<IntlMessages id='validation.whatsappRequired' />),
         gender: yup
           .string()
@@ -130,20 +116,21 @@ export default function conifgs() {
           .required(<IntlMessages id='validation.eamilRequired' />),
         username: yup
           .string()
+          .min(3, <IntlMessages id='validation.minUsername' />)
           .required(<IntlMessages id='validation.usernameRequired' />),
-        password: yup
-          .string()
-          .required(<IntlMessages id='validation.passwordRequired' />),
-        password_confirmation: yup
-          .string()
-          .oneOf(
-            [yup.ref('password'), null],
-            messages['validation.passwordMisMatch'],
-          )
-          .required(
-            <IntlMessages id='validation.passwordConfrimationRequired' />,
-          ),
-        second_email: yup.string().nullable(),
+        password: edit
+          ? yup.string().nullable()
+          : yup
+              .string()
+              .required(<IntlMessages id='validation.passwordRequired' />),
+        password_confirmation: edit
+          ? yup.string().nullable()
+          : yup
+              .string()
+              .oneOf([yup.ref('password'), null], misMatch)
+              .required(
+                <IntlMessages id='validation.passwordConfrimationRequired' />,
+              ),
         status: yup
           .string()
           .required(<IntlMessages id='validation.statusRequired' />),
@@ -151,28 +138,6 @@ export default function conifgs() {
           .string()
           .required(<IntlMessages id='validation.typeRequired' />),
       }),
-    ],
-    insertColumns: [
-      'vin',
-      'lot_number',
-      'year',
-      'model',
-      'color',
-      'engine_type',
-      'cylinders',
-      'vehicle_type',
-      'seller_id',
-      'location_id',
-      'category_id',
-      'title',
-      'subtitle',
-      'start_date',
-      'end_date',
-      'minimum_bid',
-      'buy_now_price',
-      'description',
-      'youtube_url',
-      'note',
     ],
   };
 }

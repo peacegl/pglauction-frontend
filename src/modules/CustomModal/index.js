@@ -33,7 +33,10 @@ const CustomModal = ({
   const [activeStep, setActiveStep] = useState(0);
   const [size, setSize] = useState([0]);
   const handleSubmit = async (values, actions) => {
-    // const customValidation = await customValidation(values, activeStep);
+    if (customValidation) {
+      const isValid = await customValidation(values, actions, activeStep + 1);
+      if (!isValid) return;
+    }
     if (activeStep == steps?.length - 1 || children) {
       actions.setSubmitting(true);
       await onSave(values);
@@ -105,7 +108,7 @@ const CustomModal = ({
           }
           onSubmit={handleSubmit}
         >
-          {({values, setFieldValue, isSubmitting, ...rest}) => {
+          {({values, setFieldValue, isSubmitting, setFieldError, ...rest}) => {
             return (
               <Form>
                 <Box>
@@ -141,50 +144,53 @@ const CustomModal = ({
                         {React.cloneElement(steps[activeStep]?.children, {
                           values: values,
                           setfieldvalue: setFieldValue,
+                          setFieldError: setFieldError,
                         })}
                       </Box>
                     </Box>
                   )}
                   {children && (
-                    <Box
-                      sx={{
-                        height: 500,
-                        overflowY: 'auto',
-                      }}
-                    >
+                    <>
                       <Box
                         sx={{
-                          pt: 2,
-                          display: 'flex',
-                          justifyContent: 'center',
+                          height: 500,
+                          overflowY: 'auto',
                         }}
                       >
-                        <Typography
-                          variant='h3'
+                        <Box
                           sx={{
-                            textAlign: 'center',
-                            py: 3,
-                            borderBottom: (theme) =>
-                              `2px solid ${theme.palette.text.secondary}`,
-                            borderRadius: '1px',
-                            color: (theme) => theme.palette.primary.main,
+                            pt: 2,
+                            display: 'flex',
+                            justifyContent: 'center',
                           }}
                         >
-                          {title ?? title}
-                        </Typography>
+                          <Typography
+                            variant='h3'
+                            sx={{
+                              textAlign: 'center',
+                              py: 3,
+                              borderBottom: (theme) =>
+                                `2px solid ${theme.palette.text.secondary}`,
+                              borderRadius: '1px',
+                              color: (theme) => theme.palette.primary.main,
+                            }}
+                          >
+                            {title ?? title}
+                          </Typography>
+                        </Box>
+                        <Box
+                          sx={{
+                            mx: 3,
+                            my: 5,
+                          }}
+                        >
+                          {React.cloneElement(children, {
+                            values: values,
+                            setfieldvalue: setFieldValue,
+                          })}
+                        </Box>
                       </Box>
-                      <Box
-                        sx={{
-                          mx: 3,
-                          my: 5,
-                        }}
-                      >
-                        {React.cloneElement(children, {
-                          values: values,
-                          setfieldvalue: setFieldValue,
-                        })}
-                      </Box>
-                    </Box>
+                    </>
                   )}
                   <Paper
                     variant='outlined'
@@ -242,9 +248,9 @@ CustomModal.propTypes = {
   toggleOpen: PropTypes.func.isRequired,
   steps: PropTypes.array,
   children: PropTypes.node,
-  title: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  title: PropTypes.string,
   onSave: PropTypes.func.isRequired,
-  validationSchema: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  validationSchema: PropTypes.array,
   initialValues: PropTypes.object,
   customValidation: PropTypes.func,
   isLoading: PropTypes.bool,
