@@ -1,5 +1,5 @@
 import IntlMessages from '@crema/utility/IntlMessages';
-import LocationConfigs from '../../../configs/pages/locations';
+import CategoryConfigs from '../../../configs/pages/categories';
 import {onInsertCategory, onUpdateCategory} from 'redux/actions';
 import CustomModal from '../../CustomModal';
 import {useState, useEffect} from 'react';
@@ -8,8 +8,8 @@ import PropTypes from 'prop-types';
 import CategoryForm from './CategoryForm';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 // import RichTextEditor from 'react-rte';
-const insertColumns = LocationConfigs().insertColumns;
-const validationSchema = LocationConfigs().validationSchema;
+const insertColumns = CategoryConfigs().insertColumns;
+const validationSchema = CategoryConfigs().validationSchema;
 
 export default function CategoryModal({
   open,
@@ -68,7 +68,7 @@ export default function CategoryModal({
       isLoading={isLoading}
       {...rest}
     >
-      <CategoryForm />
+      <CategoryForm recordId={recordId} />
     </CustomModal>
   );
 }

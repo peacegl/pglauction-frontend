@@ -35,7 +35,7 @@ const LocationForm = (props) => {
   };
   const searchLocations = (content) => {
     fetchData(
-      `/location/auto_complete`,
+      `/location/auto_complete?type=parent_only`,
       content,
       setLocationLoading,
       setParentLocations,
@@ -44,13 +44,13 @@ const LocationForm = (props) => {
   useEffect(() => {
     fetchData(
       `/location/auto_complete${
-        props.values?.location_id ? '?id=' + props.values?.location_id : ''
+        props.values?.parent_id ? '?id=' + props.values?.parent_id : ''
       }`,
-      '',
+      {},
       setLocationLoading,
       setParentLocations,
     );
-  }, [props.values?.location_id]);
+  }, [props.values?.parent_id]);
 
   const convertToDraftJS = (htmlContent) => {
     // 1. Convert the HTML
@@ -92,7 +92,7 @@ const LocationForm = (props) => {
             options={parentLocations}
             keyName='name'
             onSearch={searchLocations}
-            value={props.values?.location_id}
+            value={props.values?.parent_id}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
         </Stack>

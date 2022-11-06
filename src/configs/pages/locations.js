@@ -1,7 +1,6 @@
 import IntlMessages from '@crema/utility/IntlMessages';
-import {Typography, Box} from '@mui/material';
+import {Typography} from '@mui/material';
 import * as yup from 'yup';
-import {appIntl} from '@crema/utility/helper/Utils';
 
 export default function conifgs() {
   // const {messages} = appIntl();

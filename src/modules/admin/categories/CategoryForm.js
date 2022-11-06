@@ -33,24 +33,25 @@ const CategoryForm = (props) => {
       loading(false);
     }
   };
-  const searchLocations = (content) => {
+  const searchCategories = (content) => {
     fetchData(
-      `/category/auto_complete`,
+      `/category/auto_complete?type=parent_only`,
       content,
       setCategoryLoading,
       setParentCategories,
     );
   };
   useEffect(() => {
+    console.log(props.values?.parent_id);
     fetchData(
       `/category/auto_complete${
-        props.values?.category_id ? '?id=' + props.values?.category_id : ''
+        props.values?.parent_id ? '?id=' + props.values?.parent_id : ''
       }`,
-      '',
+      {},
       setCategoryLoading,
       setParentCategories,
     );
-  }, [props.values?.category_id]);
+  }, [props.values?.parent_id]);
 
   const convertToDraftJS = (htmlContent) => {
     // 1. Convert the HTML
@@ -91,8 +92,8 @@ const CategoryForm = (props) => {
             dataLoading={categoryLoading}
             options={parentCategories}
             keyName='name'
-            onSearch={searchLocations}
-            value={props.values?.category_id}
+            onSearch={searchCategories}
+            value={props.values?.parent_id}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
         </Stack>
