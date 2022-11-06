@@ -58,7 +58,11 @@ export default function userList() {
     setRecordId(null);
     setOpenModal(true);
   };
-  const onEdit = () => {};
+
+  const onEdit = () => {
+    setRecordId(data[selected[0]].id);
+    setOpenModal(true);
+  };
   const onDelete = async () => {
     await dispatch(
       onDeleteLocations({
@@ -86,7 +90,7 @@ export default function userList() {
         onAdd={onAdd}
         onEdit={onEdit}
         onDelete={onDelete}
-        deleteTitle={<IntlMessages id='location.deleteMessage' />}
+        deleteTitle={<IntlMessages id='confirm.location.delete' />}
         isLoading={loading}
         selected={selected}
         onEnterSearch={onEnterSearch}

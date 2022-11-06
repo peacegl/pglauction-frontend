@@ -150,8 +150,11 @@ export const UPDATE_USER = 'UPDATE_USER';
 export const GET_CUSTOMER_LIST = 'get_customer_list';
 export const SET_CUSTOMER_FILTER_DATA = 'set_customer_filter_data';
 //Location List
-export const GET_LOCATION_LIST = 'get_location_list';
-export const SET_LOCATION_FILTER_DATA = 'set_location_filter_data';
+export const GET_LOCATION_LIST = 'GET_LOCATION_LIST';
+export const SET_LOCATION_FILTER_DATA = 'SET_LOCATION_FILTER_DATA';
+export const ADD_NEW_LOCATION = 'ADD_NEW_LOCATION';
+export const UPDATE_LOCATION = 'UPDATE_LOCATION';
+
 //Category List
 export const GET_CATEGORY_LIST = 'get_category_list';
 export const SET_CATEGORY_FILTER_DATA = 'set_category_filter_data';

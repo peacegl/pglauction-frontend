@@ -82,7 +82,7 @@ export default function userList() {
         onAdd={onAdd}
         onEdit={onEdit}
         onDelete={onDelete}
-        deleteTitle={<IntlMessages id='category.deleteMessage' />}
+        deleteTitle={<IntlMessages id='confirm.category.delete' />}
         isLoading={loading}
         selected={selected}
         onEnterSearch={onEnterSearch}

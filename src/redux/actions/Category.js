@@ -44,7 +44,7 @@ export const onDeleteCategories = (data) => {
         dispatch({type: GET_CATEGORY_LIST, payload: res.data});
         dispatch({
           type: SHOW_MESSAGE,
-          payload: messages['category.message.deleted'],
+          payload: messages['message.category.deleted'],
         });
       } else {
         dispatch({
