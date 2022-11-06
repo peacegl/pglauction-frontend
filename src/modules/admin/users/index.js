@@ -22,7 +22,7 @@ export default function UserList() {
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   useEffect(() => {
-    fetchData();
+    fetchData(search);
   }, [dispatch, page, per_page]);
 
   const fetchData = async (search = '', filterData = {}) => {

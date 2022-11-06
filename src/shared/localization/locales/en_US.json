@@ -784,6 +784,7 @@
   "common.seller": "Seller",
   "common.password": "Password",
   "common.passwordConfirmation": "Password Confirmation",
+  "common.parentName": "Parent Name",
 
   "common.firstnamePlaceholder": "Type firstname",
   "common.lastnamePlaceholder": "Type lastname",
@@ -795,12 +796,21 @@
   "common.emailPlaceholder": "Type email",
   "common.usernamePlaceholder": "Type username",
   "common.secondEmailPlaceholder": "Type second email",
+  "common.descriptionPlaceholder": "Type Description here...",
+  "common.namePlaceholder": "Type Name",
+  "common.parentNamePlaceholder": "Type Parent Name",
 
-  "category.deleteMessage": "Are you sure, you want to delete the selected Category(s)?",
-  "category.message.deleted": "Category(s) deleted successfully!",
+  "category.categoryInfo": "Category Info",
+  "confirm.category.delete": "Are you sure, you want to delete the selected Category(s)?",
+  "message.category.deleted": "Category(s) deleted successfully!",
+  "message.category.created": "Category created successfully!",
+  "message.category.updated": "Category updated successfully!",
 
-  "location.deleteMessage": "Are you sure, you want to delete the selected Location(s)?",
-  "location.message.deleted": "Location(s) deleted successfully!",
+  "location.locationInfo": "Location Info",
+  "confirm.location.delete": "Are you sure, you want to delete the selected Location(s)?",
+  "message.location.deleted": "Location(s) deleted successfully!",
+  "message.location.created": "Location created successfully!",
+  "message.location.updated": "Location updated successfully!",
 
   "validation.firstnameRequired": "Firstname is required",
   "validation.lastnameRequired": "Lastname is required",
