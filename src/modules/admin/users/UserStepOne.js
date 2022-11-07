@@ -6,9 +6,13 @@ import MenuItem from '@mui/material/MenuItem';
 import Profile from 'components/Profile';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
+import {useEffect} from 'react';
 
 const UserStepOne = (props) => {
   const {messages} = useIntl();
+  useEffect(() => {
+    console.log('fff', props.values?.profile);
+  }, [props.values?.profile]);
   return (
     <Box>
       <Stack spacing={{xs: 5, md: 8}}>
