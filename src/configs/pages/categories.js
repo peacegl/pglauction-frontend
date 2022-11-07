@@ -1,4 +1,6 @@
+import IntlMessages from '@crema/utility/IntlMessages';
 import {Typography} from '@mui/material';
+import * as yup from 'yup';
 
 export default function conifgs() {
   return {
@@ -33,6 +35,12 @@ export default function conifgs() {
       {
         name: 'description',
         label: 'Description',
+        options: {
+          filter: false,
+          customBodyRender: (value, tableMeta, updateValue) => (
+            <div dangerouslySetInnerHTML={{__html: value}} />
+          ),
+        },
       },
       {
         name: 'created_by.username',
@@ -43,5 +51,12 @@ export default function conifgs() {
         label: 'Updated by',
       },
     ],
+    exportColumns: [],
+    validationSchema: yup.object({
+      name: yup
+        .string()
+        .required(<IntlMessages id='validation.nameRequired' />),
+    }),
+    insertColumns: ['name', 'parent_id', 'description'],
   };
 }

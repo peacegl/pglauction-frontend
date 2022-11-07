@@ -4,10 +4,13 @@ import CustomDataTable from '../../CustomDataTable';
 import {onGetLocationList, onDeleteLocations} from 'redux/actions';
 import {useEffect, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
+import LocationModal from './LocationModal';
 
 export default function userList() {
   const columns = LocationConfigs().columns;
 
+  const [openModal, setOpenModal] = useState(false);
+  const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
@@ -18,7 +21,7 @@ export default function userList() {
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   useEffect(() => {
-    fetchData();
+    fetchData(search);
   }, [dispatch, page, per_page]);
 
   const fetchData = async (search = '', filterData = {}) => {
@@ -51,8 +54,15 @@ export default function userList() {
       setSearch(value);
     },
   };
-  const onAdd = () => {};
-  const onEdit = () => {};
+  const onAdd = () => {
+    setRecordId(null);
+    setOpenModal(true);
+  };
+
+  const onEdit = () => {
+    setRecordId(data[selected[0]].id);
+    setOpenModal(true);
+  };
   const onDelete = async () => {
     await dispatch(
       onDeleteLocations({
@@ -80,11 +90,19 @@ export default function userList() {
         onAdd={onAdd}
         onEdit={onEdit}
         onDelete={onDelete}
-        deleteTitle={<IntlMessages id='location.deleteMessage' />}
+        deleteTitle={<IntlMessages id='confirm.location.delete' />}
         isLoading={loading}
         selected={selected}
         onEnterSearch={onEnterSearch}
       />
+      {openModal && (
+        <LocationModal
+          open={openModal}
+          toggleOpen={() => setOpenModal((d) => !d)}
+          recordId={recordId}
+          edit={recordId ? true : false}
+        />
+      )}
     </>
   );
 }

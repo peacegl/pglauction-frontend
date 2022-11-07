@@ -153,39 +153,42 @@ const CustomModal = ({
                     <>
                       <Box
                         sx={{
-                          pt: 2,
-                          display: 'flex',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        <Typography
-                          variant='h3'
-                          sx={{
-                            textAlign: 'center',
-                            py: 3,
-                            borderBottom: (theme) =>
-                              `2px solid ${theme.palette.text.secondary}`,
-                            borderRadius: '1px',
-                            color: (theme) => theme.palette.primary.main,
-                          }}
-                        >
-                          {title ?? title}
-                        </Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          mx: 3,
-                          mt: 7,
-                          mb: 4,
-                          minHeight: 450,
+                          height: 500,
                           overflowY: 'auto',
                         }}
                       >
-                        {React.cloneElement(children, {
-                          values: values,
-                          setfieldvalue: setFieldValue,
-                          setFieldError: setFieldError,
-                        })}
+                        <Box
+                          sx={{
+                            pt: 2,
+                            display: 'flex',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <Typography
+                            variant='h3'
+                            sx={{
+                              textAlign: 'center',
+                              py: 3,
+                              borderBottom: (theme) =>
+                                `2px solid ${theme.palette.text.secondary}`,
+                              borderRadius: '1px',
+                              color: (theme) => theme.palette.primary.main,
+                            }}
+                          >
+                            {title ?? title}
+                          </Typography>
+                        </Box>
+                        <Box
+                          sx={{
+                            mx: 3,
+                            my: 5,
+                          }}
+                        >
+                          {React.cloneElement(children, {
+                            values: values,
+                            setfieldvalue: setFieldValue,
+                          })}
+                        </Box>
                       </Box>
                     </>
                   )}

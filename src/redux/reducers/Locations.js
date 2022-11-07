@@ -1,6 +1,8 @@
 import {
+  ADD_NEW_LOCATION,
   GET_LOCATION_LIST,
   SET_LOCATION_FILTER_DATA,
+  UPDATE_LOCATION,
 } from '../../shared/constants/ActionTypes';
 
 const initialState = {
@@ -14,6 +16,25 @@ const LocationReducer = (state = initialState, action) => {
       return {
         ...state,
         locationData: action.payload,
+      };
+    case ADD_NEW_LOCATION:
+      return {
+        ...state,
+        locationData: {
+          ...state.locationData,
+          total: state.locationData.total + 1,
+          data: [action.payload, ...state.locationData.data],
+        },
+      };
+    case UPDATE_LOCATION:
+      return {
+        ...state,
+        locationData: {
+          ...state.locationData,
+          data: state.locationData.data.map((item) =>
+            item.id == action.payload.id ? action.payload : item,
+          ),
+        },
       };
     case SET_LOCATION_FILTER_DATA:
       return {
