@@ -53,7 +53,7 @@ export default function conifgs() {
         label: 'Gender',
       },
       {
-        name: 'email',
+        name: 'login.email',
         label: 'Email',
       },
       {
