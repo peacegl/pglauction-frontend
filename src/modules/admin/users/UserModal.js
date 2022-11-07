@@ -28,6 +28,8 @@ export default function UserModal({
   const [roles, setRoles] = useState([]);
   const [rolesLoading, setRolesLoading] = useState(false);
   const [permissions, setPermissions] = useState([]);
+  const [timezones, setTimezones] = useState([]);
+  const [timezonesLoading, setTimezonesLoading] = useState(false);
   const [permissionsLoading, setPermissionsLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     profile: '',
@@ -41,6 +43,7 @@ export default function UserModal({
     email: '',
     username: '',
     password: '',
+    timezone: '',
     status: '',
     type: '',
     roles: [],
@@ -178,6 +181,12 @@ export default function UserModal({
   useEffect(() => {
     fetchData(`/roles/auto_complete`, {}, setRolesLoading, setRoles);
     fetchData(
+      `/timezones/auto_complete`,
+      {},
+      setTimezonesLoading,
+      setTimezones,
+    );
+    fetchData(
       `/permissions`,
       {},
       setPermissionsLoading,
@@ -188,6 +197,15 @@ export default function UserModal({
 
   const searchRoles = (content) => {
     fetchData(`/roles/auto_complete`, content, setRolesLoading, setRoles);
+  };
+
+  const searchTimezones = (content) => {
+    fetchData(
+      `/timezones/auto_complete`,
+      content,
+      setTimezonesLoading,
+      setTimezones,
+    );
   };
 
   useEffect(() => {
@@ -250,7 +268,15 @@ export default function UserModal({
       key: 2,
       icon: <AccountCircleIcon />,
       label: <IntlMessages id='user.accountInfo' />,
-      children: <UserStepTwo edit={edit} user={user} />,
+      children: (
+        <UserStepTwo
+          edit={edit}
+          user={user}
+          timezones={timezones}
+          timezonesLoading={timezonesLoading}
+          searchTimezones={searchTimezones}
+        />
+      ),
     },
     {
       key: 3,

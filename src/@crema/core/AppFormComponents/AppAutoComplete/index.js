@@ -105,6 +105,7 @@ export default function AppAutoComplete({
         <TextField
           placeholder={placeholder}
           {...params}
+          label={rest.label}
           InputProps={{
             ...params.InputProps,
             endAdornment: (
