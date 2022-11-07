@@ -1,10 +1,8 @@
 import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteField';
-import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import {Box, Stack, Typography, Paper} from '@mui/material';
 import IntlMessages from '@crema/utility/IntlMessages';
 import Checkbox from '@mui/material/Checkbox';
-import MenuItem from '@mui/material/MenuItem';
 import Permissions from './Permissions';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
@@ -47,6 +45,7 @@ const UserStepThree = (props) => {
               return item;
             })}
             keyName='name'
+            onSearch={props.searchRoles}
             value={props.values?.roles}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
