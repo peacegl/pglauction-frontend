@@ -87,6 +87,7 @@ export default function AppAutoComplete({
         tagValue.map((option, index) => (
           <Chip
             color='primary'
+            size='small'
             key={index}
             label={
               rest.keyName1 && rest.keyName2
@@ -104,7 +105,6 @@ export default function AppAutoComplete({
         <TextField
           placeholder={placeholder}
           {...params}
-          {...rest}
           InputProps={{
             ...params.InputProps,
             endAdornment: (

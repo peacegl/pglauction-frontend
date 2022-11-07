@@ -1,15 +1,16 @@
 import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteField';
+import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import {Box, Stack, Typography, Paper} from '@mui/material';
 import IntlMessages from '@crema/utility/IntlMessages';
 import Checkbox from '@mui/material/Checkbox';
+import MenuItem from '@mui/material/MenuItem';
+import Permissions from './Permissions';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
-import {useField} from 'formik';
 
 const UserStepThree = (props) => {
   const {messages} = useIntl();
-  const [field] = useField('permissions');
 
   const setAllPermissions = () => {
     const permissionIds = [];
@@ -23,52 +24,6 @@ const UserStepThree = (props) => {
       });
     });
     props.setfieldvalue('permissions', permissionIds);
-  };
-
-  const setCategoryPermissions = (permissions) => {
-    if (
-      permissions
-        .map((item) => item.id)
-        .every((item) => props.values.permissions?.includes(item))
-    ) {
-      props.setfieldvalue('permissions', []);
-      return;
-    }
-    if (
-      permissions
-        .map((item) => item.id)
-        .some((item) => props.values.permissions?.includes(item))
-    ) {
-      props.setfieldvalue('permissions', [
-        ...new Set([
-          ...permissions.map((item) => parseInt(item.id)),
-          ...props.values.permissions,
-        ]),
-      ]);
-      return;
-    }
-    props.setfieldvalue(
-      'permissions',
-      permissions.map((item) => parseInt(item.id)),
-    );
-  };
-
-  const handleChange = (e) => {
-    if (props.values?.permissions) {
-      if (props.values?.permissions.includes(parseInt(e.target.value))) {
-        let permissions = props.values?.permissions;
-        props.setfieldvalue(
-          'permissions',
-          permissions.filter((item) => item != e.target.value),
-        );
-        return;
-      }
-      props.setfieldvalue('permissions', [
-        ...new Set([parseInt(e.target.value), ...props.values.permissions]),
-      ]);
-      return;
-    }
-    props.setfieldvalue('permissions', [parseInt(e.target.value)]);
   };
 
   return (
@@ -92,7 +47,6 @@ const UserStepThree = (props) => {
               return item;
             })}
             keyName='name'
-            onSearch={props.searchRoles}
             value={props.values?.roles}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
@@ -132,94 +86,7 @@ const UserStepThree = (props) => {
           </Typography>
         </Stack>
       </Paper>
-      <Paper sx={{px: 5, py: 4, mt: 3}}>
-        <Stack direction={{xs: 'column'}} sx={{flexWrap: 'wrap'}}>
-          {Object.entries(props.permissions)?.map(
-            ([name, permissions], index) => (
-              <Stack sx={{flex: '50%'}} key={index}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={
-                        props.values?.permissions
-                          ? permissions
-                              .map((item) => item.id)
-                              .every((item) =>
-                                props.values.permissions?.includes(item),
-                              )
-                          : false
-                      }
-                      indeterminate={
-                        props.values?.permissions
-                          ? !permissions
-                              .map((item) => item.id)
-                              .every((item) =>
-                                props.values.permissions?.includes(item),
-                              )
-                            ? permissions
-                                .map((item) => item.id)
-                                .some((item) =>
-                                  props.values.permissions?.includes(item),
-                                )
-                            : false
-                          : false
-                      }
-                      onChange={() => setCategoryPermissions(permissions)}
-                    />
-                  }
-                  label={
-                    <Typography sx={{fontWeight: 'bold'}}>
-                      {name
-                        .replaceAll('_', ' ')
-                        .replace(/^(.)|\s+(.)/g, (c) => c.toUpperCase())}
-                    </Typography>
-                  }
-                />
-                <Paper
-                  variant='outlined'
-                  square
-                  sx={{
-                    display: 'flex',
-                    flexDirection: {xs: 'column', md: 'row'},
-                    pl: 5,
-                    flexWrap: 'wrap',
-                    my: 1,
-                  }}
-                >
-                  {permissions.map((permission) => (
-                    <FormControlLabel
-                      key={permission.id}
-                      sx={{
-                        flex: '1 0 21%',
-                        // width: {xs: 'auto', md: '24%'},
-                      }}
-                      label={permission.name
-                        .replaceAll('_', ' ')
-                        .replace(/^(.)|\s+(.)/g, (c) => c.toUpperCase())}
-                      control={
-                        <Checkbox
-                          size='small'
-                          {...field}
-                          name='permissions'
-                          value={parseInt(permission.id)}
-                          checked={
-                            props.values?.permissions?.includes(
-                              parseInt(permission.id),
-                            )
-                              ? true
-                              : false
-                          }
-                          onChange={handleChange}
-                        />
-                      }
-                    />
-                  ))}
-                </Paper>
-              </Stack>
-            ),
-          )}
-        </Stack>
-      </Paper>
+      <Permissions {...props} />
     </Box>
   );
 };

@@ -203,12 +203,25 @@ export default function UserModal({
               if (Object.keys(initialValues).includes(key)) {
                 values[key] = value;
               }
-              if (typeof value === 'object' && value != null)
+              if (typeof value === 'object' && value != null) {
                 Object.entries(value).forEach(([ikey, ivalue]) => {
                   if (Object.keys(initialValues).includes(ikey)) {
                     values[ikey] = ivalue;
                   }
+                  if (ikey == 'permissions') {
+                    values.permissions = [];
+                    ivalue.forEach((item) => {
+                      values.permissions.push(item.id);
+                    });
+                  }
+                  if (ikey == 'roles') {
+                    values.roles = [];
+                    ivalue.forEach((item) => {
+                      values.roles.push(item.id);
+                    });
+                  }
                 });
+              }
             });
             setInitialValues(values);
           }
@@ -221,7 +234,7 @@ export default function UserModal({
   }, [recordId]);
   const onSave = (values) => {
     if (recordId) {
-      dispatch(onUpdateUser(recordId, values, toggleOpen));
+      dispatch(onUpdateUser(recordId, user?.login?.id, values, toggleOpen));
     } else {
       dispatch(onInsertUser(values, toggleOpen));
     }
