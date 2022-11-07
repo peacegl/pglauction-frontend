@@ -35,22 +35,23 @@ const CategoryForm = (props) => {
   };
   const searchCategories = (content) => {
     fetchData(
-      `/category/auto_complete?type=parent_only`,
+      `/category/auto_complete`,
       content,
       setCategoryLoading,
       setParentCategories,
     );
   };
   useEffect(() => {
-    console.log(props.values?.parent_id);
-    fetchData(
-      `/category/auto_complete${
-        props.values?.parent_id ? '?id=' + props.values?.parent_id : ''
-      }`,
-      {},
-      setCategoryLoading,
-      setParentCategories,
-    );
+    if (props.values?.parent_id) {
+      fetchData(
+        `/category/auto_complete${
+          props.values?.parent_id ? '?id=' + props.values?.parent_id : ''
+        }`,
+        {},
+        setCategoryLoading,
+        setParentCategories,
+      );
+    }
   }, [props.values?.parent_id]);
 
   const convertToDraftJS = (htmlContent) => {
