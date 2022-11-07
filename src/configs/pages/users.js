@@ -58,12 +58,16 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
         label: 'Gender',
       },
       {
-        name: 'email',
+        name: 'login.email',
         label: 'Email',
       },
       {
         name: 'login.status',
         label: 'Status',
+      },
+      {
+        name: 'login.type',
+        label: 'Type',
       },
       {
         name: 'birth_date',
@@ -93,9 +97,13 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
       yup.object({
         firstname: yup
           .string()
+          .min(3, <IntlMessages id='validation.min3Letter' />)
+          .max(64, <IntlMessages id='validation.max64Letter' />)
           .required(<IntlMessages id='validation.firstnameRequired' />),
         lastname: yup
           .string()
+          .min(3, <IntlMessages id='validation.min3Letter' />)
+          .max(64, <IntlMessages id='validation.max64Letter' />)
           .required(<IntlMessages id='validation.lastnameRequired' />),
         phone: yup
           .string()
@@ -116,17 +124,22 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
           .required(<IntlMessages id='validation.eamilRequired' />),
         username: yup
           .string()
-          .min(3, <IntlMessages id='validation.minUsername' />)
+          .min(3, <IntlMessages id='validation.min3Letter' />)
+          .max(64, <IntlMessages id='validation.max64Letter' />)
           .required(<IntlMessages id='validation.usernameRequired' />),
         password: edit
           ? yup.string().nullable()
           : yup
               .string()
+              .min(8, <IntlMessages id='validation.min8Letter' />)
+              .max(64, <IntlMessages id='validation.max64Letter' />)
               .required(<IntlMessages id='validation.passwordRequired' />),
         password_confirmation: edit
           ? yup.string().nullable()
           : yup
               .string()
+              .min(8, <IntlMessages id='validation.min8Letter' />)
+              .max(64, <IntlMessages id='validation.max64Letter' />)
               .oneOf([yup.ref('password'), null], misMatch)
               .required(
                 <IntlMessages id='validation.passwordConfrimationRequired' />,

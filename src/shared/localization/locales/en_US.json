@@ -769,6 +769,9 @@
   "user.userInfo": "User Info",
   "user.accountInfo": "Account Info",
   "user.rolePermission": "Role and Permission",
+  "user.role": "Roles",
+  "user.permissions": "Permissions",
+  "user.rolePlaceholder": "Select Roles",
   "common.gender": "Gender",
   "common.username": "Username",
   "common.secondEmail": "Second Email",
@@ -818,7 +821,9 @@
   "validation.whatsappRequired": "Whatsapp is required",
   "validation.genderRequired": "Gender is required",
   "validation.usernameRequired": "Username is required",
-  "validation.minUsername": "Username must be at least 3 characters",
+  "validation.min3Letter": "Minimum 3 characters is required",
+  "validation.min8Letter": "Minimum 8 characters is required",
+  "validation.max64Letter": "Maximum 64 characters is allowed",
   "validation.notUniqueEmail": "This email is taken",
   "validation.notUniqueUsername": "This username is taken",
   "validation.notUniquePhone": "This phone number is taken",
@@ -892,5 +897,8 @@
   "vehicle.vehicleProperties": "Vehicle Properties",
   "vehicle.auctionDetails": "Auction Details",
   "message.vehicleCreated": "Vechicle created successfully!",
-  "message.vehicleUpdated": "Vechicle updated successfully!"
+  "message.vehicleUpdated": "Vechicle updated successfully!",
+
+  "user.timezone": "User Timezone",
+  "user.timezonePlaceholder": "Select User Timezone"
 }

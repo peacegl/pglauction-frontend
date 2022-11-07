@@ -68,12 +68,15 @@ export const onInsertUser = (data, toggleOpen) => {
     }
   };
 };
-export const onUpdateUser = (id, data, toggleOpen) => {
+export const onUpdateUser = (id, loginableId, data, toggleOpen) => {
   return async (dispatch) => {
     dispatch({type: FETCH_START});
     const {messages} = appIntl();
     try {
-      const res = await jwtAxios.put(`/users/${id}`, data);
+      const res = await jwtAxios.put(`/users/${id}`, {
+        ...data,
+        loginableId: loginableId,
+      });
       if (res.status === 202 && res.data.result) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: UPDATE_USER, payload: res.data.data});
