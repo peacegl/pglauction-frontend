@@ -15,14 +15,16 @@ export default function VehicleList() {
   const [per_page, setPerPage] = useState(20);
   const [search, setSearch] = useState('');
   const [recordId, setRecordId] = useState(null);
+  const [orderBy, setOrderBy] = useState({column: 'code', order: 'desc'});
   const {data = [], total = 0} = useSelector(
     ({vehicles}) => vehicles.vehiclesData,
   );
+  const filterData = useSelector(({vehicles}) => vehicles.filterData);
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   useEffect(() => {
     fetchData(search);
-  }, [dispatch, page, per_page]);
+  }, [dispatch, page, per_page, orderBy]);
 
   const fetchData = async (search = '', filterData = {}) => {
     await dispatch(
@@ -31,6 +33,7 @@ export default function VehicleList() {
         per_page,
         search,
         filterData,
+        orderBy,
       }),
     );
   };
@@ -53,6 +56,9 @@ export default function VehicleList() {
     },
     onSearchChange: (value) => {
       setSearch(value);
+    },
+    onColumnSortChange: (column, order) => {
+      setOrderBy({column, order});
     },
   };
   const onAdd = () => {

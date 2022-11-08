@@ -248,7 +248,7 @@ CustomModal.propTypes = {
   toggleOpen: PropTypes.func.isRequired,
   steps: PropTypes.array,
   children: PropTypes.node,
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   onSave: PropTypes.func.isRequired,
   validationSchema: PropTypes.array,
   initialValues: PropTypes.object,

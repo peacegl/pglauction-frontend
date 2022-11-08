@@ -12,22 +12,25 @@ export default function CustomerList() {
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
   const [search, setSearch] = useState('');
+  const [orderBy, setOrderBy] = useState({column: 'code', order: 'asc'});
   const {data = [], total = 0} = useSelector(
     ({customers}) => customers.customerData,
   );
+  const filterData = useSelector(({customers}) => customers.filterData);
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   useEffect(() => {
     fetchData(search);
-  }, [dispatch, page, per_page]);
+  }, [dispatch, page, per_page, orderBy]);
 
-  const fetchData = async (search = '', filterData = {}) => {
+  const fetchData = async (search = '') => {
     await dispatch(
       onGetCustomerList({
         page: page + 1,
         per_page,
         search,
         filterData,
+        orderBy,
       }),
     );
   };
@@ -49,6 +52,9 @@ export default function CustomerList() {
     },
     onSearchChange: (value) => {
       setSearch(value);
+    },
+    onColumnSortChange: (column, order) => {
+      setOrderBy({column, order});
     },
   };
   const onAdd = () => {};

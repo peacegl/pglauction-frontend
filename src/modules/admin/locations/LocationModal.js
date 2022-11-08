@@ -7,7 +7,6 @@ import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import LocationForm from './LocationForm';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-// import RichTextEditor from 'react-rte';
 const insertColumns = LocationConfigs().insertColumns;
 const validationSchema = LocationConfigs().validationSchema;
 

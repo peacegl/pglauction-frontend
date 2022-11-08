@@ -35,21 +35,23 @@ const LocationForm = (props) => {
   };
   const searchLocations = (content) => {
     fetchData(
-      `/location/auto_complete?type=parent_only`,
+      `/location/auto_complete`,
       content,
       setLocationLoading,
       setParentLocations,
     );
   };
   useEffect(() => {
-    fetchData(
-      `/location/auto_complete${
-        props.values?.parent_id ? '?id=' + props.values?.parent_id : ''
-      }`,
-      {},
-      setLocationLoading,
-      setParentLocations,
-    );
+    if (props.values?.parent_id) {
+      fetchData(
+        `/location/auto_complete${
+          props.values?.parent_id ? '?id=' + props.values?.parent_id : ''
+        }`,
+        {},
+        setLocationLoading,
+        setParentLocations,
+      );
+    }
   }, [props.values?.parent_id]);
 
   const convertToDraftJS = (htmlContent) => {

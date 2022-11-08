@@ -7,10 +7,9 @@ import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import CategoryForm from './CategoryForm';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-// import RichTextEditor from 'react-rte';
+
 const insertColumns = CategoryConfigs().insertColumns;
 const validationSchema = CategoryConfigs().validationSchema;
-
 export default function CategoryModal({
   open,
   toggleOpen,

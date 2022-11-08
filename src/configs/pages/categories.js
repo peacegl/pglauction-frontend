@@ -29,26 +29,24 @@ export default function conifgs() {
         label: 'Slug',
       },
       {
-        name: 'parent.name',
+        name: 'parent_name',
         label: 'Parent Name',
       },
       {
-        name: 'description',
-        label: 'Description',
-        options: {
-          filter: false,
-          customBodyRender: (value, tableMeta, updateValue) => (
-            <div dangerouslySetInnerHTML={{__html: value}} />
-          ),
-        },
-      },
-      {
-        name: 'created_by.username',
+        name: 'created_by',
         label: 'Created by',
       },
       {
-        name: 'updated_by.username',
+        name: 'created_at',
+        label: 'Created At',
+      },
+      {
+        name: 'updated_by',
         label: 'Updated by',
+      },
+      {
+        name: 'updated_at',
+        label: 'Updated At',
       },
     ],
     exportColumns: [],
