@@ -59,7 +59,7 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
         label: 'Gender',
       },
       {
-        name: 'login.email',
+        name: 'email',
         label: 'Email',
       },
       {
@@ -67,7 +67,7 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
         label: 'Status',
       },
       {
-        name: 'login.type',
+        name: 'type',
         label: 'Type',
       },
       {
