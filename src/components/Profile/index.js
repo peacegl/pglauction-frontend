@@ -7,14 +7,14 @@ import Box from '@mui/material/Box';
 import {alpha} from '@mui/material';
 import PropTypes from 'prop-types';
 
-const Profile = ({width, value, name, setfieldvalue}) => {
+const Profile = ({width, profileUrl, name, setfieldvalue}) => {
   const {getRootProps, getInputProps} = useDropzone({
     accept: 'image/*',
     onDrop: (acceptedFiles) => {
-      setfieldvalue(name, URL.createObjectURL(acceptedFiles[0]));
+      profileUrl.current = URL.createObjectURL(acceptedFiles[0]);
+      setfieldvalue(name, acceptedFiles[0]);
     },
   });
-
   return (
     <Box sx={{position: 'relative'}}>
       <AvatarViewWrapper {...getRootProps({className: 'dropzone'})}>
@@ -26,16 +26,19 @@ const Profile = ({width, value, name, setfieldvalue}) => {
               height: width ? width : {xs: 50, lg: 64},
               cursor: 'pointer',
             }}
-            src={value}
+            src={profileUrl.current}
           />
           <Box className='edit-icon'>
             <EditIcon />
           </Box>
         </label>
       </AvatarViewWrapper>
-      {value && (
+      {profileUrl.current && (
         <Box
-          onClick={() => setfieldvalue(name, '')}
+          onClick={() => {
+            profileUrl.current = '';
+            setfieldvalue(name, '');
+          }}
           sx={{
             position: 'absolute',
             top: 0,
@@ -67,7 +70,7 @@ const Profile = ({width, value, name, setfieldvalue}) => {
 export default Profile;
 Profile.propTypes = {
   setfieldvalue: PropTypes.func,
-  value: PropTypes.string,
   name: PropTypes.string,
   width: PropTypes.object,
+  profileUrl: PropTypes.string,
 };

@@ -1,9 +1,9 @@
+import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteField';
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import {InputAdornment, IconButton} from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import IntlMessages from '@crema/utility/IntlMessages';
-import jwtAxios from '@crema/services/auth/jwt-auth';
 import MenuItem from '@mui/material/MenuItem';
 import {Box, Stack} from '@mui/material';
 import {useIntl} from 'react-intl';
@@ -129,6 +129,23 @@ const UserStepTwo = (props) => {
             </MenuItem>
           </AppTextField>
         </Stack>
+        <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+          <AppAutocompleteField
+            placeholder={messages['user.timezonePlaceholder']}
+            label={<IntlMessages id='user.timezone' />}
+            name='timezone'
+            variant='outlined'
+            size='small'
+            sx={{width: {xs: '100%', md: '49%'}}}
+            dataLoading={props.timezonesLoading}
+            options={props.timezones}
+            keyName='name'
+            idField='name'
+            onSearch={props.searchTimezones}
+            value={props.values?.timezone}
+            handleChange={({name, value}) => props.setfieldvalue(name, value)}
+          />
+        </Stack>
       </Stack>
     </Box>
   );
@@ -141,4 +158,7 @@ UserStepTwo.propTypes = {
   edit: PropTypes.bool,
   user: PropTypes.object,
   setFieldError: PropTypes.func,
+  timezones: PropTypes.array,
+  timezonesLoading: PropTypes.bool,
+  searchTimezones: PropTypes.func,
 };

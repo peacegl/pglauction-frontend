@@ -6,12 +6,14 @@ import UserConfigs from '../../../configs/pages/users';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
 import PersonIcon from '@mui/icons-material/Person';
+import {useEffect, useState, useRef} from 'react';
+import CustomModal from '../../CustomModal';
+import UserStepThree from './UserStepThree';
+import {useDispatch} from 'react-redux';
 import UserStepOne from './UserStepOne';
 import UserStepTwo from './UserStepTwo';
-import CustomModal from '../../CustomModal';
-import {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
+import Helper from 'helpers/helpers';
 
 export default function UserModal({
   open,
@@ -21,8 +23,16 @@ export default function UserModal({
   edit,
   ...rest
 }) {
+  const profileUrl = useRef();
+  const [totalPermissions, setTotalPermissions] = useState(0);
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [roles, setRoles] = useState([]);
+  const [rolesLoading, setRolesLoading] = useState(false);
+  const [permissions, setPermissions] = useState([]);
+  const [timezones, setTimezones] = useState([]);
+  const [timezonesLoading, setTimezonesLoading] = useState(false);
+  const [permissionsLoading, setPermissionsLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     profile: '',
     firstname: '',
@@ -35,10 +45,13 @@ export default function UserModal({
     email: '',
     username: '',
     password: '',
+    timezone: '',
     status: '',
     type: '',
+    roles: [],
+    permissions: [],
   });
-  const {messages} = appIntl();
+  const {messages} = appIntl('');
   const dispatch = useDispatch();
 
   const validationSchema = UserConfigs(
@@ -150,6 +163,53 @@ export default function UserModal({
     }
     return true;
   };
+
+  const fetchData = async (url, content, loading, setData, setTotal = null) => {
+    try {
+      loading(true);
+      const res = await jwtAxios.get(url, {params: content});
+      if (res.status === 200 && res.data.result) {
+        setData(res.data.data);
+        if (setTotal) setTotal(res.data.total);
+      } else {
+        setData([]);
+      }
+      loading(false);
+    } catch (error) {
+      setData([]);
+      loading(false);
+    }
+  };
+  useEffect(() => {
+    fetchData(`/roles`, {}, setRolesLoading, setRoles);
+    fetchData(
+      `/timezones/auto_complete`,
+      {},
+      setTimezonesLoading,
+      setTimezones,
+    );
+    fetchData(
+      `/permissions`,
+      {},
+      setPermissionsLoading,
+      setPermissions,
+      setTotalPermissions,
+    );
+  }, []);
+
+  const searchRoles = (content) => {
+    fetchData(`/roles/auto_complete`, content, setRolesLoading, setRoles);
+  };
+
+  const searchTimezones = (content) => {
+    fetchData(
+      `/timezones/auto_complete`,
+      content,
+      setTimezonesLoading,
+      setTimezones,
+    );
+  };
+
   useEffect(() => {
     if (recordId) {
       (async function () {
@@ -161,14 +221,31 @@ export default function UserModal({
             let values = {};
             Object.entries(res.data.data).forEach(([key, value]) => {
               if (Object.keys(initialValues).includes(key)) {
-                values[key] = value;
+                if (key == 'profile') {
+                  profileUrl.current = value;
+                } else {
+                  values[key] = value;
+                }
               }
-              if (typeof value === 'object' && value != null)
+              if (typeof value === 'object' && value != null) {
                 Object.entries(value).forEach(([ikey, ivalue]) => {
                   if (Object.keys(initialValues).includes(ikey)) {
                     values[ikey] = ivalue;
                   }
+                  if (ikey == 'permissions') {
+                    values.permissions = [];
+                    ivalue.forEach((item) => {
+                      values.permissions.push(item.id);
+                    });
+                  }
+                  if (ikey == 'roles') {
+                    values.roles = [];
+                    ivalue.forEach((item) => {
+                      values.roles.push(item.id);
+                    });
+                  }
                 });
+              }
             });
             setInitialValues(values);
           }
@@ -179,11 +256,14 @@ export default function UserModal({
       })();
     }
   }, [recordId]);
+
   const onSave = (values) => {
+    values.loginableId = user?.login?.id;
+    const userFormData = Helper.getFormData(values);
     if (recordId) {
-      dispatch(onUpdateUser(recordId, values, toggleOpen));
+      dispatch(onUpdateUser(recordId, userFormData, toggleOpen));
     } else {
-      dispatch(onInsertUser(values, toggleOpen));
+      dispatch(onInsertUser(userFormData, toggleOpen));
     }
   };
   const steps = [
@@ -191,19 +271,36 @@ export default function UserModal({
       key: 1,
       icon: <PersonIcon />,
       label: <IntlMessages id='user.userInfo' />,
-      children: <UserStepOne />,
+      children: <UserStepOne profileUrl={profileUrl} />,
     },
     {
       key: 2,
       icon: <AccountCircleIcon />,
       label: <IntlMessages id='user.accountInfo' />,
-      children: <UserStepTwo edit={edit} user={user} />,
+      children: (
+        <UserStepTwo
+          edit={edit}
+          user={user}
+          timezones={timezones}
+          timezonesLoading={timezonesLoading}
+          searchTimezones={searchTimezones}
+        />
+      ),
     },
     {
       key: 3,
       icon: <ManageAccountsIcon />,
       label: <IntlMessages id='user.rolePermission' />,
-      children: <UserStepOne />,
+      children: (
+        <UserStepThree
+          roles={roles}
+          rolesLoading={rolesLoading}
+          permissions={permissions}
+          permissionsLoading={permissionsLoading}
+          searchRoles={searchRoles}
+          totalPermissions={totalPermissions}
+        />
+      ),
     },
   ];
   return (

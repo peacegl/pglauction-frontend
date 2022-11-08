@@ -1,9 +1,9 @@
 import React from 'react';
 import {useField} from 'formik';
-import Select from '@mui/material/Select';
-import Box from '@mui/material/Box';
-import FormHelperText from '@mui/material/FormHelperText';
 import PropTypes from 'prop-types';
+import Box from '@mui/material/Box';
+import Select from '@mui/material/Select';
+import FormHelperText from '@mui/material/FormHelperText';
 
 const AppSelectField = (props) => {
   const [field, meta] = useField(props);

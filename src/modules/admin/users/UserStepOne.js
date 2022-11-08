@@ -1,21 +1,22 @@
 import AppDateField from '@crema/core/AppFormComponents/AppDateField';
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {Box, Stack, Typography} from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Profile from 'components/Profile';
+import {Box, Stack} from '@mui/material';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 
 const UserStepOne = (props) => {
   const {messages} = useIntl();
+
   return (
     <Box>
       <Stack spacing={{xs: 5, md: 8}}>
         <Stack direction='row' spacing={5} sx={{mx: 'auto'}}>
           <Profile
             width={{xs: 70, lg: 100}}
-            value={props.values?.profile}
+            profileUrl={props.profileUrl}
             name='profile'
             setfieldvalue={props.setfieldvalue}
           />
@@ -77,7 +78,16 @@ const UserStepOne = (props) => {
           <AppDateField
             label={<IntlMessages id='common.birthDate' />}
             value={props.values?.birth_date}
-            setfieldvalue={props.setfieldvalue}
+            setfieldvalue={(name, value) =>
+              props.setfieldvalue(
+                name,
+                value.getFullYear() +
+                  '/' +
+                  value.getMonth() +
+                  '/' +
+                  value.getDate(),
+              )
+            }
             name='birth_date'
             size='small'
             sx={{flex: 1}}
@@ -103,4 +113,5 @@ export default UserStepOne;
 UserStepOne.propTypes = {
   values: PropTypes.object,
   setfieldvalue: PropTypes.func,
+  profileUrl: PropTypes.string,
 };
