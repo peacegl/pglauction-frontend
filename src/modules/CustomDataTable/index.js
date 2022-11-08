@@ -81,6 +81,7 @@ const CustomDataTable = ({
                     onHide={hideSearch}
                     onEnter={onEnterSearch ? onEnterSearch : () => {}}
                     options={options}
+                    total={total}
                   />
                 );
               },

@@ -67,6 +67,10 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
         label: 'Status',
       },
       {
+        name: 'type',
+        label: 'Type',
+      },
+      {
         name: 'created_by',
         label: 'Created by',
       },
