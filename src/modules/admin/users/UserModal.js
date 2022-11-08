@@ -6,13 +6,14 @@ import UserConfigs from '../../../configs/pages/users';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
 import PersonIcon from '@mui/icons-material/Person';
+import {useEffect, useState, useRef} from 'react';
 import CustomModal from '../../CustomModal';
 import UserStepThree from './UserStepThree';
-import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import UserStepOne from './UserStepOne';
 import UserStepTwo from './UserStepTwo';
 import PropTypes from 'prop-types';
+import Helper from 'helpers/helpers';
 
 export default function UserModal({
   open,
@@ -22,6 +23,7 @@ export default function UserModal({
   edit,
   ...rest
 }) {
+  const profileUrl = useRef();
   const [totalPermissions, setTotalPermissions] = useState(0);
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -49,7 +51,7 @@ export default function UserModal({
     roles: [],
     permissions: [],
   });
-  const {messages} = appIntl();
+  const {messages} = appIntl('');
   const dispatch = useDispatch();
 
   const validationSchema = UserConfigs(
@@ -179,7 +181,7 @@ export default function UserModal({
     }
   };
   useEffect(() => {
-    fetchData(`/roles/auto_complete`, {}, setRolesLoading, setRoles);
+    fetchData(`/roles`, {}, setRolesLoading, setRoles);
     fetchData(
       `/timezones/auto_complete`,
       {},
@@ -219,7 +221,11 @@ export default function UserModal({
             let values = {};
             Object.entries(res.data.data).forEach(([key, value]) => {
               if (Object.keys(initialValues).includes(key)) {
-                values[key] = value;
+                if (key == 'profile') {
+                  profileUrl.current = value;
+                } else {
+                  values[key] = value;
+                }
               }
               if (typeof value === 'object' && value != null) {
                 Object.entries(value).forEach(([ikey, ivalue]) => {
@@ -250,11 +256,14 @@ export default function UserModal({
       })();
     }
   }, [recordId]);
+
   const onSave = (values) => {
+    values.loginableId = user?.login?.id;
+    const userFormData = Helper.getFormData(values);
     if (recordId) {
-      dispatch(onUpdateUser(recordId, user?.login?.id, values, toggleOpen));
+      dispatch(onUpdateUser(recordId, userFormData, toggleOpen));
     } else {
-      dispatch(onInsertUser(values, toggleOpen));
+      dispatch(onInsertUser(userFormData, toggleOpen));
     }
   };
   const steps = [
@@ -262,7 +271,7 @@ export default function UserModal({
       key: 1,
       icon: <PersonIcon />,
       label: <IntlMessages id='user.userInfo' />,
-      children: <UserStepOne />,
+      children: <UserStepOne profileUrl={profileUrl} />,
     },
     {
       key: 2,

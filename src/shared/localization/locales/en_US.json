@@ -828,9 +828,11 @@
   "validation.notUniqueUsername": "This username is taken",
   "validation.notUniquePhone": "This phone number is taken",
   "validation.notUniqueWhatsapp": "This whatsapp number is taken",
+  "validation.maxBirthDate": "Your birth year can't be more than 2005",
 
   "validation.statusRequired": "Status is required",
   "validation.typeRequired": "Type is required",
+  "validation.timezoneRequired": "Timezone is required",
   "validation.passwordRequired": "Password is required",
   "validation.passwordConfrimationRequired": "Password Confirmation is required",
   "validation.passwordMisMatch": "The two passwords you entered did not match",
