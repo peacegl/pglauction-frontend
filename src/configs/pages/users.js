@@ -150,6 +150,9 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
         type: yup
           .string()
           .required(<IntlMessages id='validation.typeRequired' />),
+        timezone: yup
+          .string()
+          .required(<IntlMessages id='validation.timezoneRequired' />),
       }),
     ],
   };
