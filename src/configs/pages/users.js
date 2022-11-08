@@ -13,6 +13,7 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
         options: {
           filter: false,
           download: false,
+          sort: false,
           customBodyRender: (value, tableMeta, updateValue) => (
             <Avatar alt={' profile picture.'} src={value} />
           ),
@@ -34,7 +35,7 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
         },
       },
       {
-        name: 'login.username',
+        name: 'username',
         label: 'Username',
       },
       {
@@ -58,11 +59,11 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
         label: 'Gender',
       },
       {
-        name: 'login.email',
+        name: 'email',
         label: 'Email',
       },
       {
-        name: 'login.status',
+        name: 'status',
         label: 'Status',
       },
       {
@@ -80,12 +81,20 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
         },
       },
       {
-        name: 'created_by.username',
+        name: 'created_by',
         label: 'Created by',
       },
       {
-        name: 'updated_by.username',
+        name: 'created_at',
+        label: 'Created At',
+      },
+      {
+        name: 'updated_by',
         label: 'Updated by',
+      },
+      {
+        name: 'updated_at',
+        label: 'Updated At',
       },
     ],
     exportColumns: [],

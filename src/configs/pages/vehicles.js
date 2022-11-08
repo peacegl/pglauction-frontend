@@ -54,12 +54,20 @@ export default function configs() {
         label: 'Vehicle Type',
       },
       {
-        name: 'created_by.username',
+        name: 'created_by',
         label: 'Created by',
       },
       {
-        name: 'updated_by.username',
+        name: 'created_at',
+        label: 'Created At',
+      },
+      {
+        name: 'updated_by',
         label: 'Updated by',
+      },
+      {
+        name: 'updated_at',
+        label: 'Updated At',
       },
     ],
     exportColumns: [],
