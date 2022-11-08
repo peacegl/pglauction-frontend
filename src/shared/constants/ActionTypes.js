@@ -149,6 +149,9 @@ export const UPDATE_USER = 'UPDATE_USER';
 //Customer List
 export const GET_CUSTOMER_LIST = 'get_customer_list';
 export const SET_CUSTOMER_FILTER_DATA = 'set_customer_filter_data';
+export const ADD_NEW_CUSTOMER = 'ADD_NEW_CUSTOMER';
+export const UPDATE_CUSTOMER = 'UPDATE_CUSTOMER';
+
 //Location List
 export const GET_LOCATION_LIST = 'GET_LOCATION_LIST';
 export const SET_LOCATION_FILTER_DATA = 'SET_LOCATION_FILTER_DATA';

@@ -1,13 +1,16 @@
+import {onGetCustomerList, onDeleteCustomers} from 'redux/actions';
 import CustomerConfigs from '../../../configs/pages/customers';
+import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import CustomDataTable from '../../CustomDataTable';
-import {onGetCustomerList, onDeleteCustomers} from 'redux/actions';
+import CustomerModal from './CustomerModal';
 import {useEffect, useState} from 'react';
-import IntlMessages from '@crema/utility/IntlMessages';
 
 export default function CustomerList() {
   const columns = CustomerConfigs().columns;
 
+  const [openModal, setOpenModal] = useState(false);
+  const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
@@ -57,8 +60,14 @@ export default function CustomerList() {
       setOrderBy({column, order});
     },
   };
-  const onAdd = () => {};
-  const onEdit = () => {};
+  const onAdd = () => {
+    setRecordId(null);
+    setOpenModal(true);
+  };
+  const onEdit = () => {
+    setRecordId(data[selected[0]].id);
+    setOpenModal(true);
+  };
   const onDelete = async () => {
     await dispatch(
       onDeleteCustomers({
@@ -91,6 +100,14 @@ export default function CustomerList() {
         selected={selected}
         onEnterSearch={onEnterSearch}
       />
+      {openModal && (
+        <CustomerModal
+          open={openModal}
+          toggleOpen={() => setOpenModal((d) => !d)}
+          recordId={recordId}
+          edit={recordId ? true : false}
+        />
+      )}
     </>
   );
 }
