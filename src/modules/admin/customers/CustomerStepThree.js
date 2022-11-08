@@ -7,7 +7,7 @@ import Checkbox from '@mui/material/Checkbox';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 
-const UserStepThree = (props) => {
+const CustomerStepThree = (props) => {
   const {messages} = useIntl();
 
   const setAllPermissions = () => {
@@ -90,8 +90,8 @@ const UserStepThree = (props) => {
   );
 };
 
-export default UserStepThree;
-UserStepThree.propTypes = {
+export default CustomerStepThree;
+CustomerStepThree.propTypes = {
   values: PropTypes.object,
   setfieldvalue: PropTypes.func,
   rolesLoading: PropTypes.bool,

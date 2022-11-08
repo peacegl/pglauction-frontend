@@ -766,12 +766,13 @@
   "user.userList": "User List",
   "message.userCreated": "User created successfully!",
   "message.userUpdated": "User updated successfully!",
-  "user.userInfo": "User Info",
-  "user.accountInfo": "Account Info",
-  "user.rolePermission": "Role and Permission",
-  "user.role": "Roles",
-  "user.permissions": "Permissions",
-  "user.rolePlaceholder": "Select Roles",
+  "common.userInfo": "User Info",
+  "common.customerInfo": "Customer Info",
+  "common.accountInfo": "Account Info",
+  "common.rolePermission": "Role and Permission",
+  "common.role": "Roles",
+  "common.permissions": "Permissions",
+  "common.rolePlaceholder": "Select Roles",
   "common.gender": "Gender",
   "common.username": "Username",
   "common.secondEmail": "Second Email",
@@ -902,5 +903,7 @@
   "message.vehicleUpdated": "Vechicle updated successfully!",
 
   "user.timezone": "User Timezone",
-  "user.timezonePlaceholder": "Select User Timezone"
+  "user.timezonePlaceholder": "Select User Timezone",
+  "customer.timezone": "Customer Timezone",
+  "customer.timezonePlaceholder": "Select Customer Timezone"
 }
