@@ -20,6 +20,7 @@ const CustomDataTable = ({
   isLoading,
   selected,
   onEnterSearch,
+  onExactChange,
 }) => {
   return (
     <>
@@ -82,6 +83,7 @@ const CustomDataTable = ({
                     onEnter={onEnterSearch ? onEnterSearch : () => {}}
                     options={options}
                     total={total}
+                    onExactChange={onExactChange ? onExactChange : () => {}}
                   />
                 );
               },
@@ -106,6 +108,7 @@ CustomDataTable.propTypes = {
   onDelete: PropTypes.func,
   deleteTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   isLoading: PropTypes.bool,
+  onExactChange: PropTypes.func,
   selected: PropTypes.array,
   onEnterSearch: PropTypes.func,
 };

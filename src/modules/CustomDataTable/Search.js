@@ -7,6 +7,7 @@ import Badge from '@mui/material/Badge';
 import ClearIcon from '@mui/icons-material/Clear';
 import {withStyles} from 'tss-react/mui';
 import PropTypes from 'prop-types';
+import {Checkbox, FormControlLabel} from '@mui/material';
 
 const defaultStyles = (theme) => ({
   main: {
@@ -50,6 +51,7 @@ class _Search extends React.Component {
       onEnter,
       onSearch,
       total = 0,
+      onExactChange,
     } = this.props;
 
     const clearIconVisibility = options.searchAlwaysOpen ? 'hidden' : 'visible';
@@ -89,6 +91,14 @@ class _Search extends React.Component {
           >
             <ClearIcon />
           </IconButton>
+          <FormControlLabel
+            control={
+              <Checkbox
+                onChange={(event) => onExactChange(event.target.checked)}
+              />
+            }
+            label='Exact Match'
+          />
           <Badge
             badgeContent={total}
             max={99999999}
@@ -107,6 +117,7 @@ _Search.propTypes = {
   onEnter: PropTypes.func,
   onSearch: PropTypes.func,
   searchText: PropTypes.string,
-  total: PropTypes.integer,
+  total: PropTypes.number,
+  onExactChange: PropTypes.func,
 };
 export default withStyles(_Search, defaultStyles, {name: 'MUIDataTableSearch'});
