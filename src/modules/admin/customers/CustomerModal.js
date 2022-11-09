@@ -179,7 +179,12 @@ export default function CustomerModal({
     }
   };
   useEffect(() => {
-    fetchData('/role/auto_complete', {}, setRolesLoading, setRoles);
+    fetchData(
+      '/role/auto_complete?type=customer',
+      {},
+      setRolesLoading,
+      setRoles,
+    );
     fetchData(
       `/timezones/auto_complete`,
       {},
