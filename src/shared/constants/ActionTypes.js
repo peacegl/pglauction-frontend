@@ -146,6 +146,13 @@ export const GET_USER_LIST = 'get_user_list';
 export const ADD_NEW_USER = 'ADD_NEW_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 
+//ROLE_LIST
+export const GET_ROLE_LIST = 'get_role_list';
+export const ADD_NEW_ROLE = 'ADD_NEW_ROLE';
+export const UPDATE_ROLE = 'UPDATE_ROLE';
+
+export const GET_PERMISSION_LIST = 'get_permission_list';
+
 //Customer List
 export const GET_CUSTOMER_LIST = 'get_customer_list';
 export const SET_CUSTOMER_FILTER_DATA = 'set_customer_filter_data';

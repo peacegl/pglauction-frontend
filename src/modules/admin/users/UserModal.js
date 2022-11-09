@@ -181,7 +181,7 @@ export default function UserModal({
     }
   };
   useEffect(() => {
-    fetchData(`/roles`, {}, setRolesLoading, setRoles);
+    fetchData(`/role/auto_complete?type=user`, {}, setRolesLoading, setRoles);
     fetchData(
       `/timezones/auto_complete`,
       {},
@@ -196,10 +196,6 @@ export default function UserModal({
       setTotalPermissions,
     );
   }, []);
-
-  const searchRoles = (content) => {
-    fetchData(`/roles/auto_complete`, content, setRolesLoading, setRoles);
-  };
 
   const searchTimezones = (content) => {
     fetchData(
@@ -270,13 +266,13 @@ export default function UserModal({
     {
       key: 1,
       icon: <PersonIcon />,
-      label: <IntlMessages id='user.userInfo' />,
+      label: <IntlMessages id='common.userInfo' />,
       children: <UserStepOne profileUrl={profileUrl} />,
     },
     {
       key: 2,
       icon: <AccountCircleIcon />,
-      label: <IntlMessages id='user.accountInfo' />,
+      label: <IntlMessages id='common.accountInfo' />,
       children: (
         <UserStepTwo
           edit={edit}
@@ -290,14 +286,13 @@ export default function UserModal({
     {
       key: 3,
       icon: <ManageAccountsIcon />,
-      label: <IntlMessages id='user.rolePermission' />,
+      label: <IntlMessages id='common.rolePermission' />,
       children: (
         <UserStepThree
           roles={roles}
           rolesLoading={rolesLoading}
           permissions={permissions}
           permissionsLoading={permissionsLoading}
-          searchRoles={searchRoles}
           totalPermissions={totalPermissions}
         />
       ),
