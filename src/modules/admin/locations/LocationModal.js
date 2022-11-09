@@ -19,11 +19,58 @@ export default function LocationModal({
   ...rest
 }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [locationLoading, setLocationLoading] = useState(false);
+  const [parentLocations, setParentLocations] = useState([]);
   const [initialValues, setInitialValues] = useState({
     name: '',
     parent_id: '',
     description: '',
   });
+
+  const fetchData = async (url, content, loading, setData) => {
+    try {
+      loading(true);
+      const res = await jwtAxios.get(url, {params: content});
+      if (res.status === 200 && res.data.result) {
+        setData(res.data.data);
+      } else {
+        setData([]);
+      }
+      loading(false);
+    } catch (error) {
+      setData([]);
+      loading(false);
+    }
+  };
+  const searchLocations = (content) => {
+    fetchData(
+      `/location/auto_complete`,
+      content,
+      setLocationLoading,
+      setParentLocations,
+    );
+  };
+
+  useEffect(() => {
+    if (initialValues.parent_id && recordId) {
+      fetchData(
+        `/location/auto_complete${
+          initialValues.parent_id ? '?id=' + initialValues.parent_id : ''
+        }`,
+        {},
+        setLocationLoading,
+        setParentLocations,
+      );
+    } else {
+      fetchData(
+        `/location/auto_complete`,
+        {},
+        setLocationLoading,
+        setParentLocations,
+      );
+    }
+  }, []);
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (recordId) {
@@ -67,7 +114,11 @@ export default function LocationModal({
       isLoading={isLoading}
       {...rest}
     >
-      <LocationForm />
+      <LocationForm
+        locationLoading={locationLoading}
+        parentLocations={parentLocations}
+        searchLocations={searchLocations}
+      />
     </CustomModal>
   );
 }

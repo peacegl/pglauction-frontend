@@ -19,11 +19,55 @@ export default function CategoryModal({
   ...rest
 }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [categoryLoading, setCategoryLoading] = useState(false);
+  const [parentCategories, setParentCategories] = useState([]);
   const [initialValues, setInitialValues] = useState({
     name: '',
     parent_id: '',
     description: '',
   });
+  const fetchData = async (url, content, loading, setData) => {
+    try {
+      loading(true);
+      const res = await jwtAxios.get(url, {params: content});
+      if (res.status === 200 && res.data.result) {
+        setData(res.data.data);
+      } else {
+        setData([]);
+      }
+      loading(false);
+    } catch (error) {
+      setData([]);
+      loading(false);
+    }
+  };
+
+  const searchCategories = (content) => {
+    fetchData(
+      `/category/auto_complete`,
+      content,
+      setCategoryLoading,
+      setParentCategories,
+    );
+  };
+
+  useEffect(() => {
+    if (initialValues.parent_id && recordId) {
+      fetchData(
+        `/category/auto_complete${
+          initialValues.parent_id ? '?id=' + initialValues.parent_id : ''
+        }`,
+        {},
+      );
+    } else {
+      fetchData(
+        `/category/auto_complete`,
+        {},
+        setCategoryLoading,
+        setParentCategories,
+      );
+    }
+  }, []);
   const dispatch = useDispatch();
   useEffect(() => {
     if (recordId) {
@@ -67,7 +111,11 @@ export default function CategoryModal({
       isLoading={isLoading}
       {...rest}
     >
-      <CategoryForm recordId={recordId} />
+      <CategoryForm
+        parentCategories={parentCategories}
+        categoryLoading={categoryLoading}
+        searchCategories={searchCategories}
+      />
     </CustomModal>
   );
 }
