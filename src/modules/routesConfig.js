@@ -4,6 +4,7 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CategoryIcon from '@mui/icons-material/Category';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 
 const routesConfig = [
   {
@@ -11,7 +12,7 @@ const routesConfig = [
     title: 'Vehicle List',
     messageId: 'sidebar.vehicles',
     type: 'item',
-    icon: <DriveEtaIcon />,
+    icon: <DriveEtaIcon sx={{fontSize: 22}} />,
     url: '/admin/vehicles',
   },
   {
@@ -19,7 +20,7 @@ const routesConfig = [
     title: 'User List',
     messageId: 'sidebar.users',
     type: 'item',
-    icon: <SupervisorAccountIcon />,
+    icon: <SupervisorAccountIcon sx={{fontSize: 22}} />,
     url: '/admin/users',
   },
   {
@@ -27,15 +28,23 @@ const routesConfig = [
     title: 'Customer List',
     messageId: 'sidebar.customers',
     type: 'item',
-    icon: <PeopleAltIcon />,
+    icon: <PeopleAltIcon sx={{fontSize: 22}} />,
     url: '/admin/customers',
+  },
+  {
+    id: 'roles',
+    title: 'Roles List',
+    messageId: 'sidebar.roles',
+    type: 'item',
+    icon: <VerifiedUserIcon sx={{fontSize: 21}} />,
+    url: '/admin/roles',
   },
   {
     id: 'categories',
     title: 'Category List',
     messageId: 'sidebar.categories',
     type: 'item',
-    icon: <CategoryIcon />,
+    icon: <CategoryIcon sx={{fontSize: 22}} />,
     url: '/admin/categories',
   },
   {
@@ -43,7 +52,7 @@ const routesConfig = [
     title: 'Location List',
     messageId: 'sidebar.locations',
     type: 'item',
-    icon: <LocationOnIcon />,
+    icon: <LocationOnIcon sx={{fontSize: 22}} />,
     url: '/admin/locations',
   },
 ];

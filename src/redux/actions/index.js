@@ -6,3 +6,4 @@ export * from './Category';
 export * from './Location';
 export * from './AuctionItem';
 export * from './Vehicle';
+export * from './Role';

@@ -9,9 +9,6 @@ import UserModal from './UserModal';
 const columns = UserConfigs().columns;
 
 export default function UserList() {
-  columns[0]['options'].customBodyRender = (value, tableMeta, updateValue) => (
-    <Avatar alt={' profile picture.'} src={value} />
-  );
   const [openModal, setOpenModal] = useState(false);
   const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
