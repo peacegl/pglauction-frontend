@@ -10,7 +10,7 @@ const initialState = {
   filterData: {},
 };
 
-const AuctionItemReducer = (state = initialState, action) => {
+const VeihcleReducers = (state = initialState, action) => {
   switch (action.type) {
     case GET_VEHICLE_LIST:
       return {
@@ -45,4 +45,4 @@ const AuctionItemReducer = (state = initialState, action) => {
       return state;
   }
 };
-export default AuctionItemReducer;
+export default VeihcleReducers;
