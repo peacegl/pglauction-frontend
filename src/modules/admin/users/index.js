@@ -15,6 +15,7 @@ export default function UserList() {
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
   const [search, setSearch] = useState('');
+  const [exactMatch, setExactMatch] = useState(false);
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(({users}) => users.userList);
   const filterData = useSelector(({users}) => users.filterData);
@@ -30,6 +31,7 @@ export default function UserList() {
         page: page + 1,
         per_page,
         search,
+        exactMatch,
         filterData,
         orderBy,
       }),
@@ -126,6 +128,7 @@ export default function UserList() {
         isLoading={loading}
         selected={selected}
         onEnterSearch={onEnterSearch}
+        onExactChange={(value) => setExactMatch(value)}
       />
       {openModal && (
         <UserModal

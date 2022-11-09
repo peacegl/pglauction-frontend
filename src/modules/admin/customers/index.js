@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import CustomDataTable from '../../CustomDataTable';
 import CustomerModal from './CustomerModal';
 import {useEffect, useState} from 'react';
+import {Satellite} from '@mui/icons-material';
 
 export default function CustomerList() {
   const columns = CustomerConfigs().columns;
@@ -15,7 +16,8 @@ export default function CustomerList() {
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
   const [search, setSearch] = useState('');
-  const [orderBy, setOrderBy] = useState({column: 'code', order: 'asc'});
+  const [exactMatch, setExactMatch] = useState(false);
+  const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(
     ({customers}) => customers.customerData,
   );
@@ -32,6 +34,7 @@ export default function CustomerList() {
         page: page + 1,
         per_page,
         search,
+        exactMatch,
         filterData,
         orderBy,
       }),
@@ -97,6 +100,7 @@ export default function CustomerList() {
         onDelete={onDelete}
         deleteTitle={<IntlMessages id='user.deleteMessage' />}
         isLoading={loading}
+        onExactChange={(value) => setExactMatch(value)}
         selected={selected}
         onEnterSearch={onEnterSearch}
       />
