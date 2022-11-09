@@ -7,6 +7,7 @@ import Users from './Users';
 import Customers from './Customers';
 import Categories from './Categories';
 import Locations from './Locations';
+import Roles from './Roles';
 
 const reducers = combineReducers({
   settings: Settings,
@@ -17,5 +18,6 @@ const reducers = combineReducers({
   locations: Locations,
   vehicles: Vehicles,
   auction_items: AuctionItems,
+  roles: Roles,
 });
 export default reducers;

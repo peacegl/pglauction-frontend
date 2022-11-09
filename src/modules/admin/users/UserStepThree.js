@@ -45,7 +45,6 @@ const UserStepThree = (props) => {
               return item;
             })}
             keyName='name'
-            // onSearch={props.searchRoles}
             value={props.values?.roles}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
@@ -98,6 +97,5 @@ UserStepThree.propTypes = {
   roles: PropTypes.array.isRequired,
   permissionsLoading: PropTypes.bool,
   permissions: PropTypes.object.isRequired,
-  searchRoles: PropTypes.func,
   totalPermissions: PropTypes.number,
 };

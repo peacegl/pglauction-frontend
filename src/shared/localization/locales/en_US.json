@@ -756,6 +756,7 @@
   "wall.likeTeam": "Like Team",
 
   "sidebar.users": "Users",
+  "sidebar.roles": "Roles",
   "sidebar.vehicles": "Vechiles",
   "sidebar.customers": "Customers",
   "sidebar.categories": "Categories",
@@ -905,5 +906,15 @@
   "user.timezone": "User Timezone",
   "user.timezonePlaceholder": "Select User Timezone",
   "customer.timezone": "Customer Timezone",
-  "customer.timezonePlaceholder": "Select Customer Timezone"
+  "customer.timezonePlaceholder": "Select Customer Timezone",
+
+  "role.roleList": "Role List",
+  "role.roleInfo": "Role Info",
+  "role.permissions": "Permissions",
+  "message.roleCreated": "Role created successfully!",
+  "message.roleUpdated": "Role updated successfully!",
+  "role.deleteMessage": "Are you sure, you want to delete the selected Role(s)?",
+  "role.message.deleted": "Role(s) deleted successfully!",
+
+  "validation.notUniquName": "This name is taken"
 }

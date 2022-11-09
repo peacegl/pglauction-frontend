@@ -9,16 +9,13 @@ import UserModal from './UserModal';
 const columns = UserConfigs().columns;
 
 export default function UserList() {
-  columns[0]['options'].customBodyRender = (value, tableMeta, updateValue) => (
-    <Avatar alt={' profile picture.'} src={value} />
-  );
   const [openModal, setOpenModal] = useState(false);
   const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
   const [search, setSearch] = useState('');
-  const [orderBy, setOrderBy] = useState({column: 'code', order: 'desc'});
+  const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(({users}) => users.userList);
   const filterData = useSelector(({users}) => users.filterData);
   const {loading} = useSelector(({common}) => common);

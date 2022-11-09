@@ -55,44 +55,46 @@ const Permissions = (props) => {
         {Object.entries(props.permissions)?.map(
           ([name, permissions], index) => (
             <Stack sx={{flex: '50%'}} key={index}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={
-                      props.values?.permissions
-                        ? permissions
-                            .map((item) => item.id)
-                            .every((item) =>
-                              props.values.permissions?.includes(item),
-                            )
-                        : false
-                    }
-                    indeterminate={
-                      props.values?.permissions
-                        ? !permissions
-                            .map((item) => item.id)
-                            .every((item) =>
-                              props.values.permissions?.includes(item),
-                            )
+              <Stack direction='row'>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={
+                        props.values?.permissions
                           ? permissions
                               .map((item) => item.id)
-                              .some((item) =>
+                              .every((item) =>
                                 props.values.permissions?.includes(item),
                               )
                           : false
-                        : false
-                    }
-                    onChange={() => setCategoryPermissions(permissions)}
-                  />
-                }
-                label={
-                  <Typography sx={{fontWeight: 'bold'}}>
-                    {name
-                      .replaceAll('_', ' ')
-                      .replace(/^(.)|\s+(.)/g, (c) => c.toUpperCase())}
-                  </Typography>
-                }
-              />
+                      }
+                      indeterminate={
+                        props.values?.permissions
+                          ? !permissions
+                              .map((item) => item.id)
+                              .every((item) =>
+                                props.values.permissions?.includes(item),
+                              )
+                            ? permissions
+                                .map((item) => item.id)
+                                .some((item) =>
+                                  props.values.permissions?.includes(item),
+                                )
+                            : false
+                          : false
+                      }
+                      onChange={() => setCategoryPermissions(permissions)}
+                    />
+                  }
+                  label={
+                    <Typography sx={{fontWeight: 'bold'}}>
+                      {name
+                        .replaceAll('_', ' ')
+                        .replace(/^(.)|\s+(.)/g, (c) => c.toUpperCase())}
+                    </Typography>
+                  }
+                />
+              </Stack>
               <Paper
                 variant='outlined'
                 square

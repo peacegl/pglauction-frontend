@@ -179,7 +179,7 @@ export default function CustomerModal({
     }
   };
   useEffect(() => {
-    fetchData(`/roles`, {}, setRolesLoading, setRoles);
+    fetchData('/role/auto_complete', {}, setRolesLoading, setRoles);
     fetchData(
       `/timezones/auto_complete`,
       {},
@@ -194,10 +194,6 @@ export default function CustomerModal({
       setTotalPermissions,
     );
   }, []);
-
-  const searchRoles = (content) => {
-    fetchData(`/roles/auto_complete`, content, setRolesLoading, setRoles);
-  };
 
   const searchTimezones = (content) => {
     fetchData(
@@ -295,7 +291,6 @@ export default function CustomerModal({
           rolesLoading={rolesLoading}
           permissions={permissions}
           permissionsLoading={permissionsLoading}
-          searchRoles={searchRoles}
           totalPermissions={totalPermissions}
         />
       ),
