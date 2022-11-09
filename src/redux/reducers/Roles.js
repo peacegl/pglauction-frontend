@@ -4,12 +4,12 @@ import {
   UPDATE_ROLE,
 } from 'shared/constants/ActionTypes';
 
-const initialUsers = {
+const initialState = {
   roleList: {},
   filterData: {},
 };
 
-const usersReducer = (state = initialUsers, action) => {
+const permissionsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ROLE_LIST:
       return {
@@ -40,4 +40,4 @@ const usersReducer = (state = initialUsers, action) => {
   }
 };
 
-export default usersReducer;
+export default permissionsReducer;

@@ -1,5 +1,4 @@
 import IntlMessages from '@crema/utility/IntlMessages';
-const phoneRegExp = CommonConfigs().phoneRegExp;
 import {Typography} from '@mui/material';
 import CommonConfigs from '../index';
 import * as yup from 'yup';

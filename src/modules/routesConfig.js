@@ -1,4 +1,4 @@
-import {BiAlignLeft} from 'react-icons/bi';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import DriveEtaIcon from '@mui/icons-material/DriveEta';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -38,6 +38,14 @@ const routesConfig = [
     type: 'item',
     icon: <VerifiedUserIcon sx={{fontSize: 21}} />,
     url: '/admin/roles',
+  },
+  {
+    id: 'permissions',
+    title: 'Permissions List',
+    messageId: 'sidebar.permissions',
+    type: 'item',
+    icon: <ManageAccountsIcon sx={{fontSize: 22}} />,
+    url: '/admin/permissions',
   },
   {
     id: 'categories',

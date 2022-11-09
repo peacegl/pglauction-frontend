@@ -757,6 +757,7 @@
 
   "sidebar.users": "Users",
   "sidebar.roles": "Roles",
+  "sidebar.permissions": "Permissions",
   "sidebar.vehicles": "Vechiles",
   "sidebar.customers": "Customers",
   "sidebar.categories": "Categories",
