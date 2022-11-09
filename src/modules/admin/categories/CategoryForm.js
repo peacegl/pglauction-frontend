@@ -7,7 +7,6 @@ import dynamic from 'next/dynamic';
 import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteField';
 import {convertToRaw, convertFromHTML, ContentState} from 'draft-js';
 import {stateToHTML} from 'draft-js-export-html';
-import jwtAxios from '@crema/services/auth/jwt-auth';
 const AppRichTextEditor = dynamic(
   () => import('@crema/core/AppFormComponents/AppRichTextEditor'),
   {ssr: false},
