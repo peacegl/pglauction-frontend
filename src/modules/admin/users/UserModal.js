@@ -181,7 +181,7 @@ export default function UserModal({
     }
   };
   useEffect(() => {
-    fetchData(`/role/auto_complete`, {}, setRolesLoading, setRoles);
+    fetchData(`/role/auto_complete?type=user`, {}, setRolesLoading, setRoles);
     fetchData(
       `/timezones/auto_complete`,
       {},
