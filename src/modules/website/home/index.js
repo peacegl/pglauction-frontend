@@ -6,7 +6,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import LocationsList from '../../../components/locations/LocationsList';
 import CategoriesList from '../../../components/categories/CategoriesList';
-import AuctionItemsList from '../../../components/auctionItems/AuctionItemsList';
+import AuctionsList from '../../../components/auctions/AuctionsList';
 
 export default function Home() {
   return (
@@ -31,7 +31,7 @@ export default function Home() {
           </Stack>
         </Grid>
         <Grid item xs={9}>
-          <AuctionItemsList />
+          <AuctionsList />
         </Grid>
       </Grid>
     </Container>

@@ -9,5 +9,5 @@ import React from 'react';
 import AppPage from '../@crema/hoc/WebPage';
 import asyncComponent from '../@crema/utility/asyncComponent';
 
-const Home = asyncComponent(() => import('../modules/auctionItems'));
+const Home = asyncComponent(() => import('../modules/auctions'));
 export default AppPage(() => <Home />);
