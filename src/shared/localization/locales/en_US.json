@@ -921,5 +921,7 @@
   "validation.notUniquName": "This name is taken",
   "permission.permissionList": "Permission List",
   "auction.deleteMessage": "Are you sure, you want to delete the selected Auction(s)?",
-  "auction.auctionList": "Auction List"
+  "auction.auctionList": "Auction List",
+  "message.auctionUpdated": "Auction updated successfully!",
+  "auction.message.deleted": "Auction(s) deleted successfully"
 }

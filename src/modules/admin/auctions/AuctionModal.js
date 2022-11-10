@@ -29,14 +29,6 @@ export default function AuctionModal({
   const [sellers, setSellers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
-    vin: '',
-    lot_number: '',
-    year: '',
-    model: '',
-    color: '',
-    engine_type: '',
-    cylinders: '',
-    vehicle_type: '',
     seller_id: '',
     location_id: '',
     category_id: '',
@@ -97,7 +89,7 @@ export default function AuctionModal({
       (async function () {
         try {
           setIsLoading(true);
-          const res = await jwtAxios.get(`/vehicles/${recordId}`);
+          const res = await jwtAxios.get(`/auctions/${recordId}`);
           if (res.status === 200 && res.data.result) {
             let values = {};
             Object.entries(res.data.data).forEach(([key, value]) => {
@@ -154,34 +146,34 @@ export default function AuctionModal({
         />
       ),
     },
-    {
-      key: 2,
-      icon: <SellIcon />,
-      label: <IntlMessages id='vehicle.auctionDetails' />,
-      children: (
-        <AuctionStep
-          locations={locations}
-          locationLoading={locationLoading}
-          categories={categories}
-          categoryLoading={categoryLoading}
-          sellersLoading={sellersLoading}
-          sellers={sellers}
-          searchCategories={searchCategories}
-          searchLocations={searchLocations}
-          searchSellers={searchSellers}
-          setIsLoading={setIsLoading}
-          fetchData={(url, type) => {
-            if (type == 'location') {
-              fetchData(url, {}, setLocationLoading, setLocations);
-            } else if (type == 'category') {
-              fetchData(url, {}, setCategoryLoading, setCategories);
-            } else if (type == 'seller') {
-              fetchData(url, {}, setSellersLoading, setSellers);
-            }
-          }}
-        />
-      ),
-    },
+    // {
+    //   key: 2,
+    //   icon: <SellIcon />,
+    //   label: <IntlMessages id='vehicle.auctionDetails' />,
+    //   children: (
+    //     <AuctionStep
+    //       locations={locations}
+    //       locationLoading={locationLoading}
+    //       categories={categories}
+    //       categoryLoading={categoryLoading}
+    //       sellersLoading={sellersLoading}
+    //       sellers={sellers}
+    //       searchCategories={searchCategories}
+    //       searchLocations={searchLocations}
+    //       searchSellers={searchSellers}
+    //       setIsLoading={setIsLoading}
+    //       fetchData={(url, type) => {
+    //         if (type == 'location') {
+    //           fetchData(url, {}, setLocationLoading, setLocations);
+    //         } else if (type == 'category') {
+    //           fetchData(url, {}, setCategoryLoading, setCategories);
+    //         } else if (type == 'seller') {
+    //           fetchData(url, {}, setSellersLoading, setSellers);
+    //         }
+    //       }}
+    //     />
+    //   ),
+    // },
     // {
     //   key: 3,
     //   icon: <CollectionsIcon />,

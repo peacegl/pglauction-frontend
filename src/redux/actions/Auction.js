@@ -7,9 +7,12 @@ import {
   GET_CATEGORIES,
   SET_AUCTION_FILTER_DATA,
   SET_AUCTION_DATA,
+  UPDATE_AUCTION,
   SET_AUCTION_VIEW_TYPE,
+  SHOW_MESSAGE,
 } from '../../shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
+import {appIntl} from '../../@crema/utility/helper/Utils';
 
 export const onGetAuctionData = (filterData) => {
   return (dispatch) => {
@@ -62,6 +65,63 @@ export const onGetWebAuctionData = (filterData) => {
       .catch((error) => {
         dispatch({type: FETCH_ERROR, payload: error.message});
       });
+  };
+};
+
+export const onUpdateAuction = (id, data, toggleOpen) => {
+  return async (dispatch) => {
+    dispatch({type: FETCH_START});
+    const {messages} = appIntl();
+    try {
+      const res = await jwtAxios.put(`/auctions/${id}`, data);
+      if (res.status === 202 && res.data.result) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: UPDATE_AUCTION, payload: res.data.data});
+        toggleOpen(false);
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: messages['message.auctionUpdated'],
+        });
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: messages['message.somethingWentWrong'],
+        });
+      }
+    } catch (error) {
+      if (error.request?.status == 422) {
+        const res = JSON.parse(error.request.response);
+        console.log('fff', res.errors);
+        // res.errors?.forEach((element) => {
+        //   dispatch({type: FETCH_ERROR, payload: element.message});
+        // });
+      }
+      dispatch({type: FETCH_ERROR, payload: error.message});
+    }
+  };
+};
+
+export const onDeleteAuctions = (data) => {
+  return async (dispatch) => {
+    const {messages} = appIntl();
+    dispatch({type: FETCH_START});
+    try {
+      const res = await jwtAxios.delete('/auctions/delete', {data});
+      if (res.status === 200 && res.data.result) {
+        dispatch({type: GET_AUCTIONS, payload: res.data});
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: messages['auction.message.deleted'],
+        });
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: messages['message.somethingWentWrong'],
+        });
+      }
+    } catch (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+    }
   };
 };
 
