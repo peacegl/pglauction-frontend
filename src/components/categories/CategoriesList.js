@@ -44,7 +44,7 @@ export default function CategoriesList() {
                 primary={<Typography color='primary'>{value.name}</Typography>}
               />
               <Badge
-                badgeContent={value.auction_items_count}
+                badgeContent={value.auctions_count}
                 color='primary'
                 sx={{mx: 2}}
                 max={999}
