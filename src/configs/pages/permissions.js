@@ -1,6 +1,6 @@
 import {Typography} from '@mui/material';
 
-export default function conifgs() {
+export default function conifgs(openUsersModal) {
   return {
     columns: [
       {
@@ -13,6 +13,15 @@ export default function conifgs() {
                 .replaceAll('_', ' ')
                 .replace(/^(.)|\s+(.)/g, (c) => c.toUpperCase())}
             </Typography>
+          ),
+        },
+      },
+      {
+        name: 'name',
+        label: 'Slug',
+        options: {
+          customBodyRender: (value, tableMeta, updateValue) => (
+            <Typography noWrap={true}>{value}</Typography>
           ),
         },
       },
@@ -32,10 +41,34 @@ export default function conifgs() {
       {
         name: 'users_count',
         label: 'Users Count',
+        options: {
+          customBodyRender: (value, tableMeta, updateValue) => (
+            <Typography
+              noWrap={true}
+              // onClick={() =>
+              //   openUsersModal(tableMeta.tableData[tableMeta.rowIndex]['id'])
+              // }
+            >
+              {value}
+            </Typography>
+          ),
+        },
       },
       {
         name: 'roles_count',
         label: 'Roles Count',
+        options: {
+          customBodyRender: (value, tableMeta, updateValue) => (
+            <Typography
+              noWrap={true}
+              // onClick={() =>
+              //   openUsersModal(tableMeta.tableData[tableMeta.rowIndex]['id'])
+              // }
+            >
+              {value}
+            </Typography>
+          ),
+        },
       },
       {
         name: 'created_at',

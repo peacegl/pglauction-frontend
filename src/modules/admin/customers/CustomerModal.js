@@ -6,12 +6,12 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
 import PersonIcon from '@mui/icons-material/Person';
-import {useEffect, useState, useRef} from 'react';
-import CustomModal from '../../CustomModal';
 import CustomerStepThree from './CustomerStepThree';
-import {useDispatch} from 'react-redux';
+import {useEffect, useState, useRef} from 'react';
 import CustomerStepOne from './CustomerStepOne';
 import CustomerStepTwo from './CustomerStepTwo';
+import CustomModal from '../../CustomModal';
+import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import Helper from 'helpers/helpers';
 
@@ -192,7 +192,7 @@ export default function CustomerModal({
       setTimezones,
     );
     fetchData(
-      `/permissions`,
+      `/groupedPermissions`,
       {},
       setPermissionsLoading,
       setPermissions,
