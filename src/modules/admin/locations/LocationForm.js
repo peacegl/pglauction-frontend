@@ -7,8 +7,7 @@ import dynamic from 'next/dynamic';
 import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteField';
 import {convertToRaw, convertFromHTML, ContentState} from 'draft-js';
 import {stateToHTML} from 'draft-js-export-html';
-import React, {useEffect, useState} from 'react';
-import jwtAxios from '@crema/services/auth/jwt-auth';
+
 const AppRichTextEditor = dynamic(
   () => import('@crema/core/AppFormComponents/AppRichTextEditor'),
   {ssr: false},
@@ -16,43 +15,6 @@ const AppRichTextEditor = dynamic(
 
 const LocationForm = (props) => {
   const {messages} = useIntl();
-  const [locationLoading, setLocationLoading] = useState(false);
-  const [parentLocations, setParentLocations] = useState([]);
-  const fetchData = async (url, content, loading, setData) => {
-    try {
-      loading(true);
-      const res = await jwtAxios.get(url, {params: content});
-      if (res.status === 200 && res.data.result) {
-        setData(res.data.data);
-      } else {
-        setData([]);
-      }
-      loading(false);
-    } catch (error) {
-      setData([]);
-      loading(false);
-    }
-  };
-  const searchLocations = (content) => {
-    fetchData(
-      `/location/auto_complete`,
-      content,
-      setLocationLoading,
-      setParentLocations,
-    );
-  };
-  useEffect(() => {
-    if (props.values?.parent_id) {
-      fetchData(
-        `/location/auto_complete${
-          props.values?.parent_id ? '?id=' + props.values?.parent_id : ''
-        }`,
-        {},
-        setLocationLoading,
-        setParentLocations,
-      );
-    }
-  }, [props.values?.parent_id]);
 
   const convertToDraftJS = (htmlContent) => {
     // 1. Convert the HTML
@@ -90,10 +52,10 @@ const LocationForm = (props) => {
             variant='outlined'
             size='small'
             sx={{flex: 1, width: '100%'}}
-            dataLoading={locationLoading}
-            options={parentLocations}
+            dataLoading={props.locationLoading}
+            options={props.parentLocations}
             keyName='name'
-            onSearch={searchLocations}
+            onSearch={props.searchLocations}
             value={props.values?.parent_id}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
@@ -116,4 +78,7 @@ export default LocationForm;
 LocationForm.propTypes = {
   values: PropTypes.object,
   setfieldvalue: PropTypes.func,
+  parentLocations: PropTypes.object,
+  locationLoading: PropTypes.bool,
+  searchLocations: PropTypes.func,
 };

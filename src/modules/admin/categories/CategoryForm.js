@@ -7,8 +7,6 @@ import dynamic from 'next/dynamic';
 import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteField';
 import {convertToRaw, convertFromHTML, ContentState} from 'draft-js';
 import {stateToHTML} from 'draft-js-export-html';
-import React, {useEffect, useState} from 'react';
-import jwtAxios from '@crema/services/auth/jwt-auth';
 const AppRichTextEditor = dynamic(
   () => import('@crema/core/AppFormComponents/AppRichTextEditor'),
   {ssr: false},
@@ -16,43 +14,6 @@ const AppRichTextEditor = dynamic(
 
 const CategoryForm = (props) => {
   const {messages} = useIntl();
-  const [categoryLoading, setCategoryLoading] = useState(false);
-  const [parentCategories, setParentCategories] = useState([]);
-  const fetchData = async (url, content, loading, setData) => {
-    try {
-      loading(true);
-      const res = await jwtAxios.get(url, {params: content});
-      if (res.status === 200 && res.data.result) {
-        setData(res.data.data);
-      } else {
-        setData([]);
-      }
-      loading(false);
-    } catch (error) {
-      setData([]);
-      loading(false);
-    }
-  };
-  const searchCategories = (content) => {
-    fetchData(
-      `/category/auto_complete`,
-      content,
-      setCategoryLoading,
-      setParentCategories,
-    );
-  };
-  useEffect(() => {
-    if (props.values?.parent_id) {
-      fetchData(
-        `/category/auto_complete${
-          props.values?.parent_id ? '?id=' + props.values?.parent_id : ''
-        }`,
-        {},
-        setCategoryLoading,
-        setParentCategories,
-      );
-    }
-  }, [props.values?.parent_id]);
 
   const convertToDraftJS = (htmlContent) => {
     // 1. Convert the HTML
@@ -90,10 +51,10 @@ const CategoryForm = (props) => {
             variant='outlined'
             size='small'
             sx={{flex: 1, width: '100%'}}
-            dataLoading={categoryLoading}
-            options={parentCategories}
+            dataLoading={props.categoryLoading}
+            options={props.parentCategories}
             keyName='name'
-            onSearch={searchCategories}
+            onSearch={props.searchCategories}
             value={props.values?.parent_id}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
@@ -116,4 +77,7 @@ export default CategoryForm;
 CategoryForm.propTypes = {
   values: PropTypes.object,
   setfieldvalue: PropTypes.func,
+  parentCategories: PropTypes.object,
+  categoryLoading: PropTypes.bool,
+  searchCategories: PropTypes.func,
 };

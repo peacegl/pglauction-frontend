@@ -77,6 +77,7 @@ export default function userList() {
         categoryIds: selected.map((item) => data[item].id),
         page: page + 1,
         per_page,
+        orderBy,
       }),
     );
     setSelected([]);
