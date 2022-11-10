@@ -8,7 +8,7 @@ import AuctionList from './AuctionList';
 import AppsContent from './AppsContent';
 import {alpha, Box, Hidden, Card} from '@mui/material';
 import {useThemeContext} from '../../../@crema/utility/AppContextProvider/ThemeContextProvider';
-import {onGetAuctionData, setFilters} from '../../../redux/actions';
+import {onGetWebAuctionData, setFilters} from '../../../redux/actions';
 import AppsPagination from '../../../@crema/core/AppsPagination';
 
 const AuctionListing = () => {
@@ -17,7 +17,7 @@ const AuctionListing = () => {
   const [page, setPage] = useState(0);
   const perPage = 20;
 
-  const auctionsList = useSelector(({auctions}) => auctions.auctionsList);
+  const auctionsList = useSelector(({auctions}) => auctions.webAuctionsList);
   const {data = [], total = 0} = auctionsList;
   const viewType = useSelector(({auctions}) => auctions.viewType);
   const filterData = useSelector(({auctions}) => auctions.filterData);
@@ -25,7 +25,7 @@ const AuctionListing = () => {
 
   useEffect(() => {
     dispatch(
-      onGetAuctionData({...filterData, per_page: perPage, page: page + 1}),
+      onGetWebAuctionData({...filterData, per_page: perPage, page: page + 1}),
     );
   }, [dispatch, filterData, page]);
 

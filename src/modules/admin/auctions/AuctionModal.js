@@ -1,11 +1,9 @@
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import ShoppingBag from '@mui/icons-material/ShoppingBag';
 import SellIcon from '@mui/icons-material/Sell';
 import CollectionsIcon from '@mui/icons-material/Collections';
-import VehicleConfigs from '../../../configs/pages/vehicles';
+import AuctionConfigs from '../../../configs/pages/auctions';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-import {onInsertVehicle, onUpdateVehicle} from 'redux/actions';
-import VehicleStepOne from './VehicleStepOne';
+import {onUpdateAuction} from 'redux/actions';
 import AuctionStep from '../../../components/auctions/AuctionStep';
 import CustomModal from '../../CustomModal';
 import {useEffect, useState} from 'react';
@@ -13,9 +11,9 @@ import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import IntlMessages from '@crema/utility/IntlMessages';
 
-const validationSchema = VehicleConfigs().validationSchema;
+const validationSchema = AuctionConfigs().validationSchema;
 
-export default function VehicleModal({
+export default function AuctionModal({
   open,
   toggleOpen,
   width,
@@ -124,17 +122,37 @@ export default function VehicleModal({
   }, [recordId]);
   const onSave = (values) => {
     if (recordId) {
-      dispatch(onUpdateVehicle(recordId, values, toggleOpen));
-    } else {
-      dispatch(onInsertVehicle(values, toggleOpen));
+      dispatch(onUpdateAuction(recordId, values, toggleOpen));
     }
   };
   const steps = [
     {
       key: 1,
-      icon: <DirectionsCarIcon />,
-      label: <IntlMessages id='vehicle.vehicleProperties' />,
-      children: <VehicleStepOne />,
+      icon: <SellIcon />,
+      label: <IntlMessages id='vehicle.auctionDetails' />,
+      children: (
+        <AuctionStep
+          locations={locations}
+          locationLoading={locationLoading}
+          categories={categories}
+          categoryLoading={categoryLoading}
+          sellersLoading={sellersLoading}
+          sellers={sellers}
+          searchCategories={searchCategories}
+          searchLocations={searchLocations}
+          searchSellers={searchSellers}
+          setIsLoading={setIsLoading}
+          fetchData={(url, type) => {
+            if (type == 'location') {
+              fetchData(url, {}, setLocationLoading, setLocations);
+            } else if (type == 'category') {
+              fetchData(url, {}, setCategoryLoading, setCategories);
+            } else if (type == 'seller') {
+              fetchData(url, {}, setSellersLoading, setSellers);
+            }
+          }}
+        />
+      ),
     },
     {
       key: 2,
@@ -185,7 +203,7 @@ export default function VehicleModal({
     />
   );
 }
-VehicleModal.propTypes = {
+AuctionModal.propTypes = {
   open: PropTypes.bool.isRequired,
   toggleOpen: PropTypes.func,
   width: PropTypes.number,

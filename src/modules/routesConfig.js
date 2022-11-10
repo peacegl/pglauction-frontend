@@ -5,6 +5,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CategoryIcon from '@mui/icons-material/Category';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import SellIcon from '@mui/icons-material/Sell';
 
 const routesConfig = [
   {
@@ -14,6 +15,14 @@ const routesConfig = [
     type: 'item',
     icon: <DriveEtaIcon sx={{fontSize: 22}} />,
     url: '/admin/vehicles',
+  },
+  {
+    id: 'auctions',
+    title: 'Vehicle List',
+    messageId: 'sidebar.auctions',
+    type: 'item',
+    icon: <SellIcon sx={{fontSize: 22}} />,
+    url: '/admin/auctions',
   },
   {
     id: 'users',
