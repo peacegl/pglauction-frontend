@@ -759,6 +759,7 @@
   "sidebar.roles": "Roles",
   "sidebar.permissions": "Permissions",
   "sidebar.vehicles": "Vechiles",
+  "sidebar.auctions": "Auctions",
   "sidebar.customers": "Customers",
   "sidebar.categories": "Categories",
   "sidebar.locations": "Locations",
@@ -918,5 +919,7 @@
   "role.message.deleted": "Role(s) deleted successfully!",
 
   "validation.notUniquName": "This name is taken",
-  "permission.permissionList": "Permission List"
+  "permission.permissionList": "Permission List",
+  "auction.deleteMessage": "Are you sure, you want to delete the selected Auction(s)?",
+  "auction.auctionList": "Auction List"
 }

@@ -173,6 +173,7 @@ export const UPDATE_CATEGORY = 'UPDATE_CATEGORY';
 
 //Auction Items
 export const GET_AUCTIONS = 'get_auctions';
+export const GET_WEB_AUCTIONS = 'get_web_auctions';
 export const SET_AUCTION_VIEW_TYPE = 'set_auction_view_type';
 export const SET_AUCTION_FILTER_DATA = 'set_auction_filter_data';
 export const SET_AUCTION_DATA = 'set_auction_data';

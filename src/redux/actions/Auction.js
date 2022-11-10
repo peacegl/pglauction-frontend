@@ -3,6 +3,7 @@ import {
   FETCH_START,
   FETCH_SUCCESS,
   GET_AUCTIONS,
+  GET_WEB_AUCTIONS,
   GET_CATEGORIES,
   SET_AUCTION_FILTER_DATA,
   SET_AUCTION_DATA,
@@ -14,7 +15,7 @@ export const onGetAuctionData = (filterData) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     jwtAxios
-      .get(`/fetchItems`, {
+      .get(`/auctions`, {
         params: {
           page: filterData?.page,
           ...filterData,
@@ -36,6 +37,34 @@ export const onGetAuctionData = (filterData) => {
       });
   };
 };
+
+export const onGetWebAuctionData = (filterData) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    jwtAxios
+      .get(`/fetchItems`, {
+        params: {
+          page: filterData?.page,
+          ...filterData,
+        },
+      })
+      .then((data) => {
+        if (data.status === 200) {
+          dispatch({type: FETCH_SUCCESS});
+          dispatch({type: GET_WEB_AUCTIONS, payload: data.data});
+        } else {
+          dispatch({
+            type: FETCH_ERROR,
+            payload: 'Something went wrong, Please try again!',
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      });
+  };
+};
+
 export const onGetCategories = (filterData) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
