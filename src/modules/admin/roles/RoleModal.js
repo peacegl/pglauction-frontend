@@ -103,7 +103,7 @@ export default function RoleModal({
 
   useEffect(() => {
     fetchData(
-      `/permissions`,
+      `/groupedPermissions`,
       {},
       setPermissionsLoading,
       setPermissions,

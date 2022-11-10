@@ -189,7 +189,7 @@ export default function UserModal({
       setTimezones,
     );
     fetchData(
-      `/permissions`,
+      `/groupedPermissions`,
       {},
       setPermissionsLoading,
       setPermissions,

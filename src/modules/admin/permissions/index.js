@@ -5,10 +5,8 @@ import {onGetPermissionList} from 'redux/actions';
 import {useEffect, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {Button} from '@mui/material';
-const columns = PermissionsConfigs().columns;
 
 export default function UserList() {
-  const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
   const [search, setSearch] = useState('');
@@ -18,6 +16,7 @@ export default function UserList() {
   );
   const filterData = useSelector(({permissions}) => permissions.filterData);
   const {loading} = useSelector(({common}) => common);
+  const columns = PermissionsConfigs().columns;
   const dispatch = useDispatch();
   useEffect(() => {
     fetchData(search);
@@ -38,18 +37,12 @@ export default function UserList() {
   const options = {
     count: total,
     rowsPerPage: per_page,
+    selectableRows: false,
     onChangeRowsPerPage: (numberOfRows) => {
       setPerPage(numberOfRows);
       setPage(0);
     },
     onChangePage: (page) => setPage(page),
-    onRowSelectionChange: (
-      currentRowsSelected,
-      allRowsSelected,
-      rowsSelected,
-    ) => {
-      setSelected(rowsSelected);
-    },
     onSearchChange: (value) => {
       setSearch(value);
     },
@@ -82,10 +75,6 @@ export default function UserList() {
       }
     },
   };
-  const onAdd = () => {};
-  const onEdit = () => {};
-  const onDelete = async () => {};
-
   const onEnterSearch = (value) => {
     setPage(0);
     fetchData(value);
@@ -103,13 +92,9 @@ export default function UserList() {
         data={data}
         columns={columns}
         options={options}
-        onAdd={onAdd}
-        onEdit={onEdit}
-        onDelete={onDelete}
-        deleteTitle={<IntlMessages id='permission.deleteMessage' />}
         isLoading={loading}
-        selected={selected}
         onEnterSearch={onEnterSearch}
+        hideAddButton
       />
     </>
   );

@@ -917,5 +917,6 @@
   "role.deleteMessage": "Are you sure, you want to delete the selected Role(s)?",
   "role.message.deleted": "Role(s) deleted successfully!",
 
-  "validation.notUniquName": "This name is taken"
+  "validation.notUniquName": "This name is taken",
+  "permission.permissionList": "Permission List"
 }
