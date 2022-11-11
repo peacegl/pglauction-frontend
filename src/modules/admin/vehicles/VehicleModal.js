@@ -68,30 +68,37 @@ export default function VehicleModal({
       loading(false);
     }
   };
-  const searchLocations = (content) => {
+  const searchLocations = (content, location_id = null) => {
     fetchData(
-      `/location/auto_complete`,
+      `/location/auto_complete${location_id ? '?id=' + location_id : ''}`,
       content,
       setLocationLoading,
       setLocations,
     );
   };
-  const searchCategories = (content) => {
+  const searchCategories = (content, category_id = null) => {
     fetchData(
-      `/category/auto_complete`,
+      `/category/auto_complete${category_id ? '?id=' + category_id : ''}`,
       content,
       setCategoryLoading,
       setCategories,
     );
   };
-  const searchSellers = (content) => {
-    fetchData(`/sellers/auto_complete`, content, setSellersLoading, setSellers);
+  const searchSellers = (content, seller_id = null) => {
+    fetchData(
+      `/sellers/auto_complete${seller_id ? '?id=' + seller_id : ''}`,
+      content,
+      setSellersLoading,
+      setSellers,
+    );
   };
 
   useEffect(() => {
-    fetchData(`/location/auto_complete`, {}, setLocationLoading, setLocations);
-    fetchData(`/category/auto_complete`, {}, setCategoryLoading, setCategories);
-    fetchData(`/sellers/auto_complete`, {}, setSellersLoading, setSellers);
+    if (!recordId) {
+      searchLocations({});
+      searchCategories({});
+      searchSellers({});
+    }
   }, []);
 
   useEffect(() => {
@@ -114,6 +121,9 @@ export default function VehicleModal({
                 });
             });
             setInitialValues(values);
+            searchLocations({}, values.location_id);
+            searchCategories({}, values.category_id);
+            searchSellers({}, values.seller_id);
           }
           setIsLoading(false);
         } catch (error) {
@@ -152,15 +162,6 @@ export default function VehicleModal({
           searchLocations={searchLocations}
           searchSellers={searchSellers}
           setIsLoading={setIsLoading}
-          fetchData={(url, type) => {
-            if (type == 'location') {
-              fetchData(url, {}, setLocationLoading, setLocations);
-            } else if (type == 'category') {
-              fetchData(url, {}, setCategoryLoading, setCategories);
-            } else if (type == 'seller') {
-              fetchData(url, {}, setSellersLoading, setSellers);
-            }
-          }}
         />
       ),
     },

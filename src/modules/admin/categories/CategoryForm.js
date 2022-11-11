@@ -77,7 +77,7 @@ export default CategoryForm;
 CategoryForm.propTypes = {
   values: PropTypes.object,
   setfieldvalue: PropTypes.func,
-  parentCategories: PropTypes.object,
+  parentCategories: PropTypes.array,
   categoryLoading: PropTypes.bool,
   searchCategories: PropTypes.func,
 };

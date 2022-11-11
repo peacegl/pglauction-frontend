@@ -1,14 +1,16 @@
 import IntlMessages from '@crema/utility/IntlMessages';
+import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
 const year = new Date().getFullYear();
 import * as yup from 'yup';
 
 export default function configs() {
+  const {messages = []} = appIntl() ? appIntl() : {};
   return {
     columns: [
       {
         name: 'code',
-        label: 'Code',
+        label: messages['common.code'],
         options: {
           filter: false,
           customBodyRender: (value, tableMeta, updateValue) => (
@@ -23,51 +25,51 @@ export default function configs() {
       },
       {
         name: 'year',
-        label: 'Year',
+        label: messages['common.year'],
       },
       {
         name: 'color',
-        label: 'Color',
+        label: messages['common.color'],
       },
       {
         name: 'model',
-        label: 'Model',
+        label: messages['common.model'],
       },
       {
         name: 'vin',
-        label: 'Vin',
+        label: messages['common.vin'],
       },
       {
         name: 'lot_number',
-        label: 'Lot Number',
+        label: messages['common.lot_number'],
       },
       {
         name: 'engine_type',
-        label: 'Engine Type',
+        label: messages['common.engine_type'],
       },
       {
         name: 'cylinders',
-        label: 'Cylinders',
+        label: messages['common.cylinders'],
       },
       {
         name: 'vehicle_type',
-        label: 'Vehicle Type',
+        label: messages['common.vehicle_type'],
       },
       {
         name: 'created_by',
-        label: 'Created by',
+        label: messages['common.created_by'],
       },
       {
         name: 'created_at',
-        label: 'Created At',
+        label: messages['common.created_at'],
       },
       {
         name: 'updated_by',
-        label: 'Updated by',
+        label: messages['common.updated_by'],
       },
       {
         name: 'updated_at',
-        label: 'Updated At',
+        label: messages['common.updated_at'],
       },
     ],
     exportColumns: [],

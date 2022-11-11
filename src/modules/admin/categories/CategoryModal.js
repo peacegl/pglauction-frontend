@@ -52,14 +52,7 @@ export default function CategoryModal({
   };
 
   useEffect(() => {
-    if (initialValues.parent_id && recordId) {
-      fetchData(
-        `/category/auto_complete${
-          initialValues.parent_id ? '?id=' + initialValues.parent_id : ''
-        }`,
-        {},
-      );
-    } else {
+    if (!recordId) {
       fetchData(
         `/category/auto_complete`,
         {},
@@ -83,6 +76,14 @@ export default function CategoryModal({
               }
             });
             setInitialValues(values);
+            fetchData(
+              `/category/auto_complete${
+                values.parent_id ? '?id=' + values.parent_id : ''
+              }`,
+              {},
+              setCategoryLoading,
+              setParentCategories,
+            );
           }
           setIsLoading(false);
         } catch (error) {

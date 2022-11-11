@@ -1,11 +1,14 @@
+import IntlMessages from '@crema/utility/IntlMessages';
+import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
 
 export default function conifgs(openUsersModal) {
+  const {messages = []} = appIntl() ? appIntl() : {};
   return {
     columns: [
       {
         name: 'name',
-        label: 'Name',
+        label: messages['common.name'],
         options: {
           customBodyRender: (value, tableMeta, updateValue) => (
             <Typography noWrap={true}>
@@ -18,7 +21,7 @@ export default function conifgs(openUsersModal) {
       },
       {
         name: 'name',
-        label: 'Slug',
+        label: messages['common.slug'],
         options: {
           customBodyRender: (value, tableMeta, updateValue) => (
             <Typography noWrap={true}>{value}</Typography>
@@ -27,7 +30,7 @@ export default function conifgs(openUsersModal) {
       },
       {
         name: 'group_name',
-        label: 'Group',
+        label: messages['common.group'],
         options: {
           customBodyRender: (value, tableMeta, updateValue) => (
             <Typography noWrap={true}>
@@ -40,7 +43,7 @@ export default function conifgs(openUsersModal) {
       },
       {
         name: 'users_count',
-        label: 'Users Count',
+        label: messages['common.users_count'],
         options: {
           customBodyRender: (value, tableMeta, updateValue) => (
             <Typography
@@ -56,7 +59,7 @@ export default function conifgs(openUsersModal) {
       },
       {
         name: 'roles_count',
-        label: 'Roles Count',
+        label: messages['common.roles_count'],
         options: {
           customBodyRender: (value, tableMeta, updateValue) => (
             <Typography
@@ -72,11 +75,11 @@ export default function conifgs(openUsersModal) {
       },
       {
         name: 'created_at',
-        label: 'Created At',
+        label: messages['common.created_at'],
       },
       {
         name: 'updated_at',
-        label: 'Updated At',
+        label: messages['common.updated_at'],
       },
     ],
   };

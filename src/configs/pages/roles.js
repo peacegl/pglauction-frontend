@@ -1,14 +1,16 @@
 import IntlMessages from '@crema/utility/IntlMessages';
+import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
 import CommonConfigs from '../index';
 import * as yup from 'yup';
 
 export default function conifgs() {
+  const {messages = []} = appIntl() ? appIntl() : {};
   return {
     columns: [
       {
         name: 'name',
-        label: 'Name',
+        label: messages['common.name'],
         options: {
           customBodyRender: (value, tableMeta, updateValue) => (
             <Typography noWrap={true}>{value}</Typography>
@@ -17,7 +19,7 @@ export default function conifgs() {
       },
       {
         name: 'type',
-        label: 'Type',
+        label: messages['common.type'],
         options: {
           customBodyRender: (value, tableMeta, updateValue) => (
             <Typography noWrap={true}>
@@ -30,27 +32,27 @@ export default function conifgs() {
       },
       {
         name: 'users_count',
-        label: 'Users Count',
+        label: messages['common.users_count'],
       },
       {
         name: 'permissions_count',
-        label: 'Permissions Count',
+        label: messages['common.permissions_count'],
       },
       {
         name: 'created_by',
-        label: 'Created by',
+        label: messages['common.created_by'],
       },
       {
         name: 'created_at',
-        label: 'Created At',
+        label: messages['common.created_at'],
       },
       {
         name: 'updated_by',
-        label: 'Updated by',
+        label: messages['common.updated_by'],
       },
       {
         name: 'updated_at',
-        label: 'Updated At',
+        label: messages['common.updated_at'],
       },
     ],
     exportColumns: [],
