@@ -1,15 +1,17 @@
 import IntlMessages from '@crema/utility/IntlMessages';
+import {appIntl} from '@crema/utility/helper/Utils';
 import {Avatar, Typography} from '@mui/material';
 const phoneRegExp = CommonConfigs().phoneRegExp;
 import CommonConfigs from '../index';
 import * as yup from 'yup';
 
 export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
+  const {messages = []} = appIntl() ? appIntl() : {};
   return {
     columns: [
       {
         name: 'profile',
-        label: 'Profile',
+        label: messages['common.profile'],
         options: {
           filter: false,
           download: false,
@@ -21,7 +23,7 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
       },
       {
         name: 'code',
-        label: 'Code',
+        label: messages['common.code'],
         options: {
           filter: false,
           customBodyRender: (value, tableMeta, updateValue) => (
@@ -36,69 +38,69 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
       },
       {
         name: 'username',
-        label: 'Username',
+        label: messages['common.username'],
       },
       {
         name: 'firstname',
-        label: 'First Name',
+        label: messages['common.firstname'],
       },
       {
         name: 'lastname',
-        label: 'Last Name',
+        label: messages['common.lastname'],
       },
       {
         name: 'phone',
-        label: 'Phone Number',
+        label: messages['common.phone'],
       },
       {
         name: 'whatsapp',
-        label: 'WhatsApp',
+        label: messages['common.whatsapp'],
       },
       {
         name: 'gender',
-        label: 'Gender',
+        label: messages['common.gender'],
       },
       {
         name: 'email',
-        label: 'Email',
+        label: messages['common.email'],
       },
       {
         name: 'status',
-        label: 'Status',
+        label: messages['common.status'],
       },
       {
         name: 'type',
-        label: 'Type',
+        label: messages['common.type'],
       },
       {
         name: 'birth_date',
-        label: 'Birthday',
+        label: messages['common.birth_date'],
         options: {
           display: 'false',
         },
       },
       {
         name: 'address',
-        label: 'Address',
+        label: messages['common.address'],
         options: {
           display: 'false',
         },
       },
       {
         name: 'created_by',
-        label: 'Created by',
+        label: messages['common.created_by'],
       },
       {
         name: 'created_at',
-        label: 'Created At',
+        label: messages['common.created_at'],
       },
       {
         name: 'updated_by',
-        label: 'Updated by',
+        label: messages['common.updated_by'],
       },
       {
         name: 'updated_at',
-        label: 'Updated At',
+        label: messages['common.updated_at'],
       },
     ],
     exportColumns: [],

@@ -52,16 +52,7 @@ export default function LocationModal({
   };
 
   useEffect(() => {
-    if (initialValues.parent_id && recordId) {
-      fetchData(
-        `/location/auto_complete${
-          initialValues.parent_id ? '?id=' + initialValues.parent_id : ''
-        }`,
-        {},
-        setLocationLoading,
-        setParentLocations,
-      );
-    } else {
+    if (!recordId) {
       fetchData(
         `/location/auto_complete`,
         {},
@@ -86,6 +77,14 @@ export default function LocationModal({
               }
             });
             setInitialValues(values);
+            fetchData(
+              `/location/auto_complete${
+                values.parent_id ? '?id=' + values.parent_id : ''
+              }`,
+              {},
+              setLocationLoading,
+              setParentLocations,
+            );
           }
           setIsLoading(false);
         } catch (error) {

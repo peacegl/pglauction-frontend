@@ -78,7 +78,7 @@ export default LocationForm;
 LocationForm.propTypes = {
   values: PropTypes.object,
   setfieldvalue: PropTypes.func,
-  parentLocations: PropTypes.object,
+  parentLocations: PropTypes.array,
   locationLoading: PropTypes.bool,
   searchLocations: PropTypes.func,
 };

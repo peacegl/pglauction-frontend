@@ -1,14 +1,16 @@
 import IntlMessages from '@crema/utility/IntlMessages';
+import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
 const year = new Date().getFullYear();
 import * as yup from 'yup';
 
 export default function configs() {
+  const {messages = []} = appIntl() ? appIntl() : {};
   return {
     columns: [
       {
         name: 'code',
-        label: 'Code',
+        label: messages['common.code'],
         options: {
           filter: false,
           customBodyRender: (value, tableMeta, updateValue) => (
@@ -23,66 +25,66 @@ export default function configs() {
       },
       {
         name: 'vin',
-        label: 'Vin',
+        label: messages['common.vin'],
       },
       {
         name: 'lot_number',
-        label: 'Lot Number',
+        label: messages['common.lot_number'],
       },
       {
         name: 'title',
-        label: 'Title',
+        label: messages['common.title'],
       },
       {
         name: 'subtitle',
-        label: 'Subtitle',
+        label: messages['common.subtitle'],
       },
       {
         name: 'start_date',
-        label: 'Start Date',
+        label: messages['common.start_date'],
       },
       {
         name: 'end_date',
-        label: 'End Date',
+        label: messages['common.end_date'],
       },
       {
         name: 'minimum_bid',
-        label: 'Minimum Bid',
+        label: messages['common.minimum_bid'],
       },
       {
         name: 'buy_now_price',
-        label: 'Buy Now Price',
+        label: messages['common.buy_now_price'],
       },
       {
         name: 'note',
-        label: 'Note',
+        label: messages['common.note'],
         options: {
-          display: 'false',
+          display: false,
         },
       },
       {
         name: 'status',
-        label: 'Status',
+        label: messages['common.status'],
       },
       {
         name: 'seller',
-        label: 'Seller',
+        label: messages['common.seller'],
       },
       {
         name: 'created_by',
-        label: 'Created by',
+        label: messages['common.created_by'],
       },
       {
         name: 'created_at',
-        label: 'Created At',
+        label: messages['common.created_at'],
       },
       {
         name: 'updated_by',
-        label: 'Updated by',
+        label: messages['common.updated_by'],
       },
       {
         name: 'updated_at',
-        label: 'Updated At',
+        label: messages['common.updated_at'],
       },
     ],
     exportColumns: [],
