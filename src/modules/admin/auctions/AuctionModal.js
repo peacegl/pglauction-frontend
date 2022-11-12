@@ -1,15 +1,15 @@
-import ShoppingBag from '@mui/icons-material/ShoppingBag';
-import SellIcon from '@mui/icons-material/Sell';
+import AuctionImagesStep from '../../../components/auctions/AuctionImagesStep';
+import AuctionStep from '../../../components/auctions/AuctionStep';
 import CollectionsIcon from '@mui/icons-material/Collections';
 import AuctionConfigs from '../../../configs/pages/auctions';
+import IntlMessages from '@crema/utility/IntlMessages';
 import jwtAxios from '@crema/services/auth/jwt-auth';
+import SellIcon from '@mui/icons-material/Sell';
 import {onUpdateAuction} from 'redux/actions';
-import AuctionStep from '../../../components/auctions/AuctionStep';
 import CustomModal from '../../CustomModal';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
-import IntlMessages from '@crema/utility/IntlMessages';
 
 const validationSchema = AuctionConfigs().validationSchema;
 
@@ -21,9 +21,14 @@ export default function AuctionModal({
   edit,
   ...rest
 }) {
+  const [images, setImages] = useState([]);
+  const [mainImageUrl, setMainImageUrl] = useState('');
   const [locationLoading, setLocationLoading] = useState(false);
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [sellersLoading, setSellersLoading] = useState(false);
+  const [isMainImageValid, setIsMainImageValid] = useState(true);
+  const [isMinImagesValid, setMinImagesValid] = useState(true);
+  const [isMaxImagesValid, setMaxImagesValid] = useState(true);
   const [locations, setLocations] = useState([]);
   const [categories, setCategories] = useState([]);
   const [sellers, setSellers] = useState([]);
@@ -41,6 +46,8 @@ export default function AuctionModal({
     description: '',
     youtube_url: '',
     note: '',
+    main_image: '',
+    images: [],
   });
   const dispatch = useDispatch();
   const fetchData = async (url, content, loading, setData) => {
@@ -99,17 +106,23 @@ export default function AuctionModal({
           const res = await jwtAxios.get(`/auctions/${recordId}`);
           if (res.status === 200 && res.data.result) {
             let values = {};
+            let oldImages = [];
             Object.entries(res.data.data).forEach(([key, value]) => {
               if (Object.keys(initialValues).includes(key)) {
-                values[key] = value;
+                if (key == 'images') {
+                  value?.forEach((item) => {
+                    if (item.type == 'sub_image') {
+                      oldImages.push({preview: item.path});
+                    } else if (item.type == 'main_image') {
+                      setMainImageUrl(item.path);
+                    }
+                  });
+                } else {
+                  values[key] = value;
+                }
               }
-              if (typeof value === 'object' && value != null)
-                Object.entries(value).forEach(([ikey, ivalue]) => {
-                  if (Object.keys(initialValues).includes(ikey)) {
-                    values[ikey] = ivalue;
-                  }
-                });
             });
+            setImages(oldImages);
             setInitialValues(values);
             searchLocations({}, values.location_id);
             searchCategories({}, values.category_id);
@@ -122,6 +135,30 @@ export default function AuctionModal({
       })();
     }
   }, [recordId]);
+
+  const stepTwoValidation = (values, actions) => {
+    if (!values.main_image) {
+      setIsMainImageValid(false);
+    }
+    if (images?.length >= 1) {
+      if (images?.length > 20) {
+        setMaxImagesValid(false);
+        return false;
+      }
+      setMinImagesValid(true);
+      return true;
+    }
+    setMinImagesValid(false);
+    return false;
+  };
+
+  const customValidation = async (values, actions, activeStep) => {
+    if (activeStep == 2) {
+      return await stepTwoValidation(values, actions);
+    }
+    return true;
+  };
+
   const onSave = (values) => {
     if (recordId) {
       dispatch(onUpdateAuction(recordId, values, toggleOpen));
@@ -131,7 +168,7 @@ export default function AuctionModal({
     {
       key: 1,
       icon: <SellIcon />,
-      label: <IntlMessages id='vehicle.auctionDetails' />,
+      label: <IntlMessages id='auction.auctionDetails' />,
       children: (
         <AuctionStep
           locations={locations}
@@ -147,40 +184,25 @@ export default function AuctionModal({
         />
       ),
     },
-    // {
-    //   key: 2,
-    //   icon: <SellIcon />,
-    //   label: <IntlMessages id='vehicle.auctionDetails' />,
-    //   children: (
-    //     <AuctionStep
-    //       locations={locations}
-    //       locationLoading={locationLoading}
-    //       categories={categories}
-    //       categoryLoading={categoryLoading}
-    //       sellersLoading={sellersLoading}
-    //       sellers={sellers}
-    //       searchCategories={searchCategories}
-    //       searchLocations={searchLocations}
-    //       searchSellers={searchSellers}
-    //       setIsLoading={setIsLoading}
-    //       fetchData={(url, type) => {
-    //         if (type == 'location') {
-    //           fetchData(url, {}, setLocationLoading, setLocations);
-    //         } else if (type == 'category') {
-    //           fetchData(url, {}, setCategoryLoading, setCategories);
-    //         } else if (type == 'seller') {
-    //           fetchData(url, {}, setSellersLoading, setSellers);
-    //         }
-    //       }}
-    //     />
-    //   ),
-    // },
-    // {
-    //   key: 3,
-    //   icon: <CollectionsIcon />,
-    //   label: 'Vehicle Images',
-    //   children: <Box>Third Steps</Box>,
-    // },
+    {
+      key: 2,
+      icon: <CollectionsIcon />,
+      label: <IntlMessages id='auction.auctionImages' />,
+      children: (
+        <AuctionImagesStep
+          mainImageUrl={mainImageUrl}
+          setMainImageUrl={setMainImageUrl}
+          images={images}
+          setImages={setImages}
+          isMinImagesValid={isMinImagesValid}
+          isMaxImagesValid={isMaxImagesValid}
+          setMinImagesValid={setMinImagesValid}
+          setMaxImagesValid={setMaxImagesValid}
+          setIsMainImageValid={setIsMainImageValid}
+          isMainImageValid={isMainImageValid}
+        />
+      ),
+    },
   ];
   return (
     <CustomModal
@@ -192,6 +214,7 @@ export default function AuctionModal({
       validationSchema={validationSchema}
       initialValues={initialValues}
       isLoading={isLoading}
+      customValidation={customValidation}
       {...rest}
     />
   );

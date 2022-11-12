@@ -1,4 +1,4 @@
-import AvatarViewWrapper from './AvatarViewWrapper';
+import AvatarViewWrapper from '../main/AvatarViewWrapper';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import {useDropzone} from 'react-dropzone';
