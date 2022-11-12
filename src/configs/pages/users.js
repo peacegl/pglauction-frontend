@@ -1,9 +1,14 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Avatar, Typography} from '@mui/material';
-const phoneRegExp = CommonConfigs().phoneRegExp;
-import CommonConfigs from '../index';
+import CommonConfigs, {
+  createdAt,
+  createdBy,
+  updatedAt,
+  updatedBy,
+} from '../index';
 import * as yup from 'yup';
+const phoneRegExp = CommonConfigs().phoneRegExp;
 
 export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
   const {messages = []} = appIntl() ? appIntl() : {};
@@ -39,30 +44,54 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
       {
         name: 'username',
         label: messages['common.username'],
+        options: {
+          display: true,
+          filterType: 'textField',
+        },
       },
       {
         name: 'firstname',
         label: messages['common.firstname'],
+        options: {
+          display: true,
+          filterType: 'textField',
+        },
       },
       {
         name: 'lastname',
         label: messages['common.lastname'],
+        options: {
+          display: true,
+          filterType: 'textField',
+        },
       },
       {
         name: 'phone',
         label: messages['common.phone'],
+        options: {
+          filter: false,
+        },
       },
       {
         name: 'whatsapp',
         label: messages['common.whatsapp'],
+        options: {
+          filter: false,
+        },
       },
       {
         name: 'gender',
         label: messages['common.gender'],
+        options: {
+          filter: true,
+        },
       },
       {
         name: 'email',
         label: messages['common.email'],
+        options: {
+          filter: false,
+        },
       },
       {
         name: 'status',
@@ -76,32 +105,22 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
         name: 'birth_date',
         label: messages['common.birth_date'],
         options: {
-          display: 'false',
+          display: false,
+          filter: false,
         },
       },
       {
         name: 'address',
         label: messages['common.address'],
         options: {
-          display: 'false',
+          display: false,
+          filter: false,
         },
       },
-      {
-        name: 'created_by',
-        label: messages['common.created_by'],
-      },
-      {
-        name: 'created_at',
-        label: messages['common.created_at'],
-      },
-      {
-        name: 'updated_by',
-        label: messages['common.updated_by'],
-      },
-      {
-        name: 'updated_at',
-        label: messages['common.updated_at'],
-      },
+      createdBy,
+      createdAt,
+      updatedBy,
+      updatedAt,
     ],
     exportColumns: [],
     validationSchema: [

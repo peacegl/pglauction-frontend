@@ -105,6 +105,7 @@ export default function AppAutoComplete({
         <TextField
           placeholder={placeholder}
           {...params}
+          variant={rest.variant ? rest.variant : 'outlined'}
           label={rest.label}
           InputProps={{
             ...params.InputProps,

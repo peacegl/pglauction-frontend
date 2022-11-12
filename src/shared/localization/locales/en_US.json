@@ -822,6 +822,8 @@
   "common.engine_type": "Engine Type",
   "common.cylinders": "Cylinders",
   "common.vehicle_type": "Vehicle Type",
+  "common.from_date": "From Date",
+  "common.to_date": "To Date",
 
   "common.created_by": "Created By",
   "common.created_at": "Created At",
