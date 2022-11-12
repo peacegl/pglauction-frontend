@@ -4,11 +4,12 @@ import CollectionsIcon from '@mui/icons-material/Collections';
 import AuctionConfigs from '../../../configs/pages/auctions';
 import IntlMessages from '@crema/utility/IntlMessages';
 import jwtAxios from '@crema/services/auth/jwt-auth';
+import {useEffect, useState, useRef} from 'react';
 import SellIcon from '@mui/icons-material/Sell';
 import {onUpdateAuction} from 'redux/actions';
 import CustomModal from '../../CustomModal';
-import {useEffect, useState, useRef} from 'react';
 import {useDispatch} from 'react-redux';
+import Helper from 'helpers/helpers';
 import PropTypes from 'prop-types';
 
 const validationSchema = AuctionConfigs().validationSchema;
@@ -139,6 +140,7 @@ export default function AuctionModal({
   const stepTwoValidation = (values, actions) => {
     if (!values.main_image) {
       setIsMainImageValid(false);
+      return false;
     }
     if (images?.length >= 1) {
       if (images?.length > 20) {
@@ -160,8 +162,9 @@ export default function AuctionModal({
   };
 
   const onSave = (values) => {
+    const auctionFormData = Helper.getFormData(values);
     if (recordId) {
-      dispatch(onUpdateAuction(recordId, values, toggleOpen));
+      dispatch(onUpdateAuction(recordId, auctionFormData, toggleOpen));
     }
   };
   const steps = [
