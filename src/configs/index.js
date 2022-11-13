@@ -11,7 +11,11 @@ export default function CommonConfigs() {
   };
 }
 
-export const createdBy = (function () {
+export const createdBy = function (
+  optionValues,
+  onSearch,
+  dataLoading = false,
+) {
   return {
     name: 'created_by',
     label: messages['common.created_by'],
@@ -32,12 +36,6 @@ export const createdBy = (function () {
       filterOptions: {
         fullWidth: true,
         display: (filterList, onChange, index, column) => {
-          const optionValues = [
-            {id: 1, name: 'ALi'},
-            {id: 2, name: 'Ahmad'},
-            {id: 3, name: 'Jamal'},
-            {id: 4, name: 'Hakim'},
-          ];
           return (
             <AppAutoComplete
               multiple={true}
@@ -55,7 +53,7 @@ export const createdBy = (function () {
               error={false}
               handleChange={({name, value}) => {
                 filterList[index] = optionValues.filter((item) => {
-                  return value.includes(item.id) ? item.name : false;
+                  return value.includes(item.id) ? item : false;
                 });
                 onChange(filterList[index], index, column);
               }}
@@ -65,7 +63,7 @@ export const createdBy = (function () {
       },
     },
   };
-})();
+};
 
 export const updatedBy = function (
   optionValues,

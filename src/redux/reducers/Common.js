@@ -6,7 +6,7 @@ import {
   SHOW_MESSAGE,
   TOGGLE_APP_DRAWER,
   UPDATING_CONTENT,
-  GET_USER_AUTOCOMPLETE,
+  GET_USER_AUTOCOMPLETE_OPTIONS,
 } from 'shared/constants/ActionTypes';
 
 const INIT_STATE = {
@@ -15,7 +15,7 @@ const INIT_STATE = {
   isAppDrawerOpen: false,
   updatingContent: false,
   message: '',
-  userAutocomplete: [],
+  userAutocompleteOptions: [],
 };
 
 const commonReducer = (state = INIT_STATE, action) => {
@@ -68,10 +68,10 @@ const commonReducer = (state = INIT_STATE, action) => {
         isAppDrawerOpen: !state.isAppDrawerOpen,
       };
     }
-    case GET_USER_AUTOCOMPLETE: {
+    case GET_USER_AUTOCOMPLETE_OPTIONS: {
       return {
         ...state,
-        userAutocomplete: state.payload,
+        userAutocompleteOptions: action.payload,
       };
     }
     default:

@@ -1,12 +1,15 @@
-import UserConfigs from '../../../configs/pages/users';
+import UserConfigs, {userColumns} from '../../../configs/pages/users';
 import {useDispatch, useSelector} from 'react-redux';
 import CustomDataTable from '../../CustomDataTable';
-import {onGetUserList, onDeleteUsers, getUserAutocomplete} from 'redux/actions';
+import {
+  onGetUserList,
+  onDeleteUsers,
+  getUserAutocompleteOptions,
+} from 'redux/actions';
 import {useEffect, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {Button, Avatar} from '@mui/material';
+import {Button} from '@mui/material';
 import UserModal from './UserModal';
-const columns = UserConfigs().columns;
 
 export default function UserList() {
   const [openModal, setOpenModal] = useState(false);
@@ -19,7 +22,11 @@ export default function UserList() {
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(({users}) => users.userList);
   const filterData = useSelector(({users}) => users.filterData);
-  const {loading} = useSelector(({common}) => common);
+  const {loading, userAutocompleteOptions = []} = useSelector(
+    ({common}) => common,
+  );
+
+  const columns = userColumns(userAutocompleteOptions);
   const dispatch = useDispatch();
   useEffect(() => {
     fetchData(search);
@@ -61,7 +68,7 @@ export default function UserList() {
     },
     confirmFilters: true,
     onFilterDialogOpen: () => {
-      dispatch(getUserAutocomplete());
+      dispatch(getUserAutocompleteOptions());
     },
     // Calling the applyNewFilters parameter applies the selected filters to the table
     customFilterDialogFooter: (currentFilterList, applyNewFilters) => {

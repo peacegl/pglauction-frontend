@@ -8,126 +8,125 @@ import CommonConfigs, {
   updatedBy,
 } from '../index';
 import * as yup from 'yup';
+
 const phoneRegExp = CommonConfigs().phoneRegExp;
+
+export const userColumns = function (userAutocompleteOptions = []) {
+  const {messages = []} = appIntl() ? appIntl() : {};
+  return [
+    {
+      name: 'profile',
+      label: messages['common.profile'],
+      options: {
+        filter: false,
+        download: false,
+        sort: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Avatar alt={' profile picture.'} src={value} />
+        ),
+      },
+    },
+    {
+      name: 'code',
+      label: messages['common.code'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+            {value}
+            {tableMeta.tableData[tableMeta.rowIndex]['key']
+              .toString()
+              .padStart(5, '0')}
+          </Typography>
+        ),
+      },
+    },
+    {
+      name: 'username',
+      label: messages['common.username'],
+      options: {
+        display: true,
+        filterType: 'textField',
+      },
+    },
+    {
+      name: 'firstname',
+      label: messages['common.firstname'],
+      options: {
+        display: true,
+        filterType: 'textField',
+      },
+    },
+    {
+      name: 'lastname',
+      label: messages['common.lastname'],
+      options: {
+        display: true,
+        filterType: 'textField',
+      },
+    },
+    {
+      name: 'phone',
+      label: messages['common.phone'],
+      options: {
+        filter: false,
+      },
+    },
+    {
+      name: 'whatsapp',
+      label: messages['common.whatsapp'],
+      options: {
+        filter: false,
+      },
+    },
+    {
+      name: 'gender',
+      label: messages['common.gender'],
+      options: {
+        filter: true,
+      },
+    },
+    {
+      name: 'email',
+      label: messages['common.email'],
+      options: {
+        filter: false,
+      },
+    },
+    {
+      name: 'status',
+      label: messages['common.status'],
+    },
+    {
+      name: 'type',
+      label: messages['common.type'],
+    },
+    {
+      name: 'birth_date',
+      label: messages['common.birth_date'],
+      options: {
+        display: false,
+        filter: false,
+      },
+    },
+    {
+      name: 'address',
+      label: messages['common.address'],
+      options: {
+        display: false,
+        filter: false,
+      },
+    },
+    createdBy(userAutocompleteOptions, () => {}),
+    createdAt,
+    updatedBy(userAutocompleteOptions, () => {}),
+    updatedAt,
+  ];
+};
 
 export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
   const {messages = []} = appIntl() ? appIntl() : {};
-  const optionValues = [
-    {id: 1, name: 'ALi'},
-    {id: 2, name: 'Ahmad'},
-    {id: 3, name: 'Jamal'},
-    {id: 4, name: 'Hakim'},
-  ];
   return {
-    columns: [
-      {
-        name: 'profile',
-        label: messages['common.profile'],
-        options: {
-          filter: false,
-          download: false,
-          sort: false,
-          customBodyRender: (value, tableMeta, updateValue) => (
-            <Avatar alt={' profile picture.'} src={value} />
-          ),
-        },
-      },
-      {
-        name: 'code',
-        label: messages['common.code'],
-        options: {
-          filter: false,
-          customBodyRender: (value, tableMeta, updateValue) => (
-            <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-              {value}
-              {tableMeta.tableData[tableMeta.rowIndex]['key']
-                .toString()
-                .padStart(5, '0')}
-            </Typography>
-          ),
-        },
-      },
-      {
-        name: 'username',
-        label: messages['common.username'],
-        options: {
-          display: true,
-          filterType: 'textField',
-        },
-      },
-      {
-        name: 'firstname',
-        label: messages['common.firstname'],
-        options: {
-          display: true,
-          filterType: 'textField',
-        },
-      },
-      {
-        name: 'lastname',
-        label: messages['common.lastname'],
-        options: {
-          display: true,
-          filterType: 'textField',
-        },
-      },
-      {
-        name: 'phone',
-        label: messages['common.phone'],
-        options: {
-          filter: false,
-        },
-      },
-      {
-        name: 'whatsapp',
-        label: messages['common.whatsapp'],
-        options: {
-          filter: false,
-        },
-      },
-      {
-        name: 'gender',
-        label: messages['common.gender'],
-        options: {
-          filter: true,
-        },
-      },
-      {
-        name: 'email',
-        label: messages['common.email'],
-        options: {
-          filter: false,
-        },
-      },
-      {
-        name: 'status',
-        label: messages['common.status'],
-      },
-      {
-        name: 'type',
-        label: messages['common.type'],
-      },
-      {
-        name: 'birth_date',
-        label: messages['common.birth_date'],
-        options: {
-          display: false,
-          filter: false,
-        },
-      },
-      {
-        name: 'address',
-        label: messages['common.address'],
-        options: {
-          display: false,
-          filter: false,
-        },
-      },
-      createdBy,
-      createdAt,
-      updatedBy(optionValues, () => {}),
-      updatedAt,
-    ],
     exportColumns: [],
     validationSchema: [
       yup.object({
