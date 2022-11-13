@@ -12,6 +12,12 @@ const phoneRegExp = CommonConfigs().phoneRegExp;
 
 export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
   const {messages = []} = appIntl() ? appIntl() : {};
+  const optionValues = [
+    {id: 1, name: 'ALi'},
+    {id: 2, name: 'Ahmad'},
+    {id: 3, name: 'Jamal'},
+    {id: 4, name: 'Hakim'},
+  ];
   return {
     columns: [
       {
@@ -119,7 +125,7 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
       },
       createdBy,
       createdAt,
-      updatedBy,
+      updatedBy(optionValues, () => {}),
       updatedAt,
     ],
     exportColumns: [],

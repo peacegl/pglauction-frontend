@@ -1,7 +1,7 @@
 import UserConfigs from '../../../configs/pages/users';
 import {useDispatch, useSelector} from 'react-redux';
 import CustomDataTable from '../../CustomDataTable';
-import {onGetUserList, onDeleteUsers} from 'redux/actions';
+import {onGetUserList, onDeleteUsers, getUserAutocomplete} from 'redux/actions';
 import {useEffect, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {Button, Avatar} from '@mui/material';
@@ -60,6 +60,9 @@ export default function UserList() {
       setOrderBy({column, order});
     },
     confirmFilters: true,
+    onFilterDialogOpen: () => {
+      dispatch(getUserAutocomplete());
+    },
     // Calling the applyNewFilters parameter applies the selected filters to the table
     customFilterDialogFooter: (currentFilterList, applyNewFilters) => {
       return (

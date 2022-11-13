@@ -1,3 +1,4 @@
+import jwtAxios from '@crema/services/auth/jwt-auth';
 import {
   FETCH_ERROR,
   FETCH_START,
@@ -6,7 +7,9 @@ import {
   SHOW_MESSAGE,
   TOGGLE_APP_DRAWER,
   UPDATING_CONTENT,
+  GET_USER_AUTOCOMPLETE,
 } from 'shared/constants/ActionTypes';
+import {appIntl} from '../../@crema/utility/helper/Utils';
 
 export const fetchStart = () => {
   return (dispatch) => dispatch({type: FETCH_START});
@@ -32,4 +35,34 @@ export const onToggleAppDrawer = () => {
 
 export const hideMessage = () => {
   return (dispatch) => dispatch({type: HIDE_MESSAGE});
+};
+
+export const getUserAutocomplete = () => {
+  return async (dispatch, getState) => {
+    const {messages} = appIntl();
+    const {common} = getState();
+    console.log(common);
+    if (
+      common.userAutocomplete == undefined ||
+      common.userAutocomplete?.length <= 0
+    ) {
+      dispatch({type: FETCH_START});
+      try {
+        const res = await jwtAxios.get('/user/autocomplete');
+        if (res.status === 200 && res.data.result) {
+          dispatch({type: FETCH_SUCCESS});
+          dispatch({type: GET_USER_AUTOCOMPLETE, payload: res.data});
+        } else {
+          dispatch({
+            type: FETCH_ERROR,
+            payload: messages['message.somethingWentWrong'],
+          });
+          dispatch({type: GET_USER_AUTOCOMPLETE, payload: []});
+        }
+      } catch (error) {
+        dispatch({type: FETCH_ERROR, payload: error.message});
+        dispatch({type: GET_USER_AUTOCOMPLETE, payload: []});
+      }
+    }
+  };
 };

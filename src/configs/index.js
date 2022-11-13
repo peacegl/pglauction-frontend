@@ -67,7 +67,11 @@ export const createdBy = (function () {
   };
 })();
 
-export const updatedBy = (function () {
+export const updatedBy = function (
+  optionValues,
+  onSearch,
+  dataLoading = false,
+) {
   return {
     name: 'updated_by',
     label: messages['common.updated_by'],
@@ -88,12 +92,6 @@ export const updatedBy = (function () {
       filterOptions: {
         fullWidth: true,
         display: (filterList, onChange, index, column) => {
-          const optionValues = [
-            {id: 1, name: 'ALi'},
-            {id: 2, name: 'Ahmad'},
-            {id: 3, name: 'Jamal'},
-            {id: 4, name: 'Hakim'},
-          ];
           return (
             <AppAutoComplete
               multiple={true}
@@ -103,10 +101,10 @@ export const updatedBy = (function () {
               variant='standard'
               size='small'
               sx={{flex: 1, width: '100%'}}
-              dataLoading={false}
+              dataLoading={dataLoading}
               options={optionValues}
               keyName='name'
-              onSearch={() => {}}
+              onSearch={onSearch}
               value={filterList[index].map((item) => item.id)}
               error={false}
               handleChange={({name, value}) => {
@@ -121,7 +119,7 @@ export const updatedBy = (function () {
       },
     },
   };
-})();
+};
 
 export const createdAt = (function () {
   return {
@@ -140,20 +138,7 @@ export const createdAt = (function () {
           } else if (v[1]) {
             return `${messages['common.created_at']} To: ${v[1]}`;
           }
-          console.log(v);
-          v = undefined;
           return false;
-        },
-        update: (filterList, filterPos, index) => {
-          if (filterPos === 0) {
-            filterList[index].splice(filterPos, 1, '');
-          } else if (filterPos === 1) {
-            filterList[index].splice(filterPos, 1);
-          } else if (filterPos === -1) {
-            filterList[index] = [];
-          }
-          console.log(filterList);
-          return filterList;
         },
       },
       filterOptions: {
@@ -246,8 +231,6 @@ export const updatedAt = (function () {
           } else if (v[1]) {
             return `${messages['common.updated_at']} To: ${v[1]}`;
           }
-          console.log(v);
-          v = undefined;
           return false;
         },
       },
