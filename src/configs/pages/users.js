@@ -11,7 +11,7 @@ import * as yup from 'yup';
 
 const phoneRegExp = CommonConfigs().phoneRegExp;
 
-export const userColumns = function (userAutocompleteOptions = []) {
+export const tableColumns = function () {
   const {messages = []} = appIntl() ? appIntl() : {};
   return [
     {
@@ -117,9 +117,9 @@ export const userColumns = function (userAutocompleteOptions = []) {
         filter: false,
       },
     },
-    createdBy(userAutocompleteOptions, () => {}),
+    createdBy(),
     createdAt,
-    updatedBy(userAutocompleteOptions, () => {}),
+    updatedBy(),
     updatedAt,
   ];
 };

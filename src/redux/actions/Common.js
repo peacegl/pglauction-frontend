@@ -44,7 +44,7 @@ export const getUserAutocompleteOptions = () => {
     if (common.userAutocompleteOptions?.length <= 0) {
       dispatch({type: FETCH_START});
       try {
-        const res = await jwtAxios.get('/user/autocomplete');
+        const res = await jwtAxios.get('/user/auto_complete');
         if (res.status === 200 && res.data.result) {
           dispatch({type: FETCH_SUCCESS});
           dispatch({

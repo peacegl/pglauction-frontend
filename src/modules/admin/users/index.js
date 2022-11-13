@@ -1,4 +1,4 @@
-import UserConfigs, {userColumns} from '../../../configs/pages/users';
+import UserConfigs, {tableColumns} from '../../../configs/pages/users';
 import {useDispatch, useSelector} from 'react-redux';
 import CustomDataTable from '../../CustomDataTable';
 import {
@@ -22,11 +22,11 @@ export default function UserList() {
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(({users}) => users.userList);
   const filterData = useSelector(({users}) => users.filterData);
-  const {loading, userAutocompleteOptions = []} = useSelector(
-    ({common}) => common,
-  );
+  const {loading} = useSelector(({common}) => common);
 
-  const columns = userColumns(userAutocompleteOptions);
+  const getUserAutocomplete = (value) => {
+    console.log(value);
+  };
   const dispatch = useDispatch();
   useEffect(() => {
     fetchData(search);
@@ -130,7 +130,7 @@ export default function UserList() {
         title={<IntlMessages id='user.userList' />}
         total={total}
         data={data}
-        columns={columns}
+        columns={tableColumns()}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}

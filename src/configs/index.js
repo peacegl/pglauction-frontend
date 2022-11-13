@@ -2,6 +2,9 @@ import {appIntl} from '@crema/utility/helper/Utils';
 import {FormLabel, Stack, TextField} from '@mui/material';
 import AppAutoComplete from '@crema/core/AppFormComponents/AppAutoComplete';
 import {DatePicker} from '@mui/x-date-pickers';
+import {useState} from 'react';
+import jwtAxios from '@crema/services/auth/jwt-auth';
+import {useSelector} from 'react-redux';
 const {messages = []} = appIntl() ? appIntl() : {};
 
 export default function CommonConfigs() {
@@ -11,11 +14,39 @@ export default function CommonConfigs() {
   };
 }
 
-export const createdBy = function (
-  optionValues,
-  onSearch,
-  dataLoading = false,
-) {
+export const createdBy = function () {
+  const [isLoading, setIsLoading] = useState(false);
+  const [options, setOptions] = useState([]);
+  const [input, setInput] = useState('');
+  const {userAutocompleteOptions} = useSelector(({common}) => common);
+
+  const merge = (a, b, p) =>
+    a.filter((aa) => !b.find((bb) => aa[p] === bb[p])).concat(b);
+  const fetchData = async (url, content, loading, setData) => {
+    try {
+      loading(true);
+      const res = await jwtAxios.get(url, {params: content});
+      if (res.status === 200 && res.data.result) {
+        setData((state) =>
+          merge(
+            options.length > 0 ? options : userAutocompleteOptions,
+            res.data.data,
+            'id',
+          ),
+        );
+      } else {
+        setData([]);
+      }
+      loading(false);
+    } catch (error) {
+      setData([]);
+      loading(false);
+    }
+  };
+  const searchUsers = (content) => {
+    setInput(content.username);
+    fetchData(`/user/auto_complete`, content, setIsLoading, setOptions);
+  };
   return {
     name: 'created_by',
     label: messages['common.created_by'],
@@ -37,27 +68,30 @@ export const createdBy = function (
         fullWidth: true,
         display: (filterList, onChange, index, column) => {
           return (
-            <AppAutoComplete
-              multiple={true}
-              placeholder={messages['common.created_by']}
-              label={messages['common.created_by']}
-              name='created_by'
-              variant='standard'
-              size='small'
-              sx={{flex: 1, width: '100%'}}
-              dataLoading={false}
-              options={optionValues}
-              keyName='name'
-              onSearch={() => {}}
-              value={filterList[index].map((item) => item.id)}
-              error={false}
-              handleChange={({name, value}) => {
-                filterList[index] = optionValues.filter((item) => {
-                  return value.includes(item.id) ? item : false;
-                });
-                onChange(filterList[index], index, column);
-              }}
-            />
+            <>
+              <AppAutoComplete
+                multiple={true}
+                placeholder={messages['common.created_by']}
+                label={messages['common.created_by']}
+                name='created_by'
+                variant='standard'
+                size='small'
+                sx={{flex: 1, width: '100%'}}
+                dataLoading={isLoading}
+                options={options.length > 0 ? options : userAutocompleteOptions}
+                keyName='username'
+                onSearch={searchUsers}
+                value={filterList[index].map((item) => item.id)}
+                inputValue={input}
+                error={false}
+                handleChange={({name, value}) => {
+                  console.log(value);
+                  setInput('');
+                  filterList[index] = value;
+                  onChange(filterList[index], index, column);
+                }}
+              />
+            </>
           );
         },
       },
@@ -65,11 +99,39 @@ export const createdBy = function (
   };
 };
 
-export const updatedBy = function (
-  optionValues,
-  onSearch,
-  dataLoading = false,
-) {
+export const updatedBy = function () {
+  const [isLoading, setIsLoading] = useState(false);
+  const [options, setOptions] = useState([]);
+  const [input, setInput] = useState('');
+  const {userAutocompleteOptions} = useSelector(({common}) => common);
+
+  const merge = (a, b, p) =>
+    a.filter((aa) => !b.find((bb) => aa[p] === bb[p])).concat(b);
+  const fetchData = async (url, content, loading, setData) => {
+    try {
+      loading(true);
+      const res = await jwtAxios.get(url, {params: content});
+      if (res.status === 200 && res.data.result) {
+        setData((state) =>
+          merge(
+            options.length > 0 ? options : userAutocompleteOptions,
+            res.data.data,
+            'id',
+          ),
+        );
+      } else {
+        setData([]);
+      }
+      loading(false);
+    } catch (error) {
+      setData([]);
+      loading(false);
+    }
+  };
+  const searchUsers = (content) => {
+    setInput(content.username);
+    fetchData(`/user/auto_complete`, content, setIsLoading, setOptions);
+  };
   return {
     name: 'updated_by',
     label: messages['common.updated_by'],
@@ -99,16 +161,17 @@ export const updatedBy = function (
               variant='standard'
               size='small'
               sx={{flex: 1, width: '100%'}}
-              dataLoading={dataLoading}
-              options={optionValues}
-              keyName='name'
-              onSearch={onSearch}
+              dataLoading={isLoading}
+              options={options.length > 0 ? options : userAutocompleteOptions}
+              keyName='username'
+              onSearch={searchUsers}
               value={filterList[index].map((item) => item.id)}
+              inputValue={input}
               error={false}
               handleChange={({name, value}) => {
-                filterList[index] = optionValues.filter((item) => {
-                  return value.includes(item.id) ? item.name : false;
-                });
+                console.log(value);
+                setInput('');
+                filterList[index] = value;
                 onChange(filterList[index], index, column);
               }}
             />
