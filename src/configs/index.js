@@ -144,6 +144,17 @@ export const createdAt = (function () {
           v = undefined;
           return false;
         },
+        update: (filterList, filterPos, index) => {
+          if (filterPos === 0) {
+            filterList[index].splice(filterPos, 1, '');
+          } else if (filterPos === 1) {
+            filterList[index].splice(filterPos, 1);
+          } else if (filterPos === -1) {
+            filterList[index] = [];
+          }
+          console.log(filterList);
+          return filterList;
+        },
       },
       filterOptions: {
         fullWidth: true,
@@ -153,7 +164,7 @@ export const createdAt = (function () {
               <FormLabel>{messages['common.created_at']}</FormLabel>
               <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
                 <DatePicker
-                  value={filterList[index][0] || ''}
+                  value={filterList[index][0] || null}
                   onChange={(event) => {
                     if (event) {
                       filterList[index][0] =
@@ -182,7 +193,7 @@ export const createdAt = (function () {
                   }}
                 />
                 <DatePicker
-                  value={filterList[index][1] || ''}
+                  value={filterList[index][1] || null}
                   onChange={(event) => {
                     if (event) {
                       filterList[index][1] =
@@ -248,7 +259,7 @@ export const updatedAt = (function () {
               <FormLabel>{messages['common.updated_at']}</FormLabel>
               <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
                 <DatePicker
-                  value={filterList[index][0] || ''}
+                  value={filterList[index][0] || null}
                   onChange={(event) => {
                     if (event) {
                       filterList[index][0] =
@@ -277,7 +288,7 @@ export const updatedAt = (function () {
                   }}
                 />
                 <DatePicker
-                  value={filterList[index][1] || ''}
+                  value={filterList[index][1] || null}
                   onChange={(event) => {
                     if (event) {
                       filterList[index][1] =
