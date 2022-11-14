@@ -6,6 +6,8 @@ import {useState} from 'react';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {useSelector} from 'react-redux';
 const {messages = []} = appIntl() ? appIntl() : {};
+const merge = (a, b, p) =>
+  a.filter((aa) => !b.find((bb) => aa[p] === bb[p])).concat(b);
 
 export default function CommonConfigs() {
   return {
@@ -22,8 +24,6 @@ export const createdBy = function () {
   const [input, setInput] = useState('');
   const {userAutocompleteOptions} = useSelector(({common}) => common);
 
-  const merge = (a, b, p) =>
-    a.filter((aa) => !b.find((bb) => aa[p] === bb[p])).concat(b);
   const fetchData = async (url, content, loading, setData) => {
     try {
       loading(true);
@@ -60,7 +60,7 @@ export const createdBy = function () {
         render: (v) => {
           if (v && v.length > 0) {
             return v.map((item) => {
-              return `${messages['common.created_by']} ${item.name}`;
+              return `${messages['common.created_by']}: ${item.username}`;
             });
           }
           return false;
@@ -82,12 +82,12 @@ export const createdBy = function () {
                 dataLoading={isLoading}
                 options={options.length > 0 ? options : userAutocompleteOptions}
                 keyName='username'
-                onSearch={searchUsers}
-                value={filterList[index].map((item) => item.id)}
+                returnObject={true}
                 inputValue={input}
+                onSearch={searchUsers}
+                value={filterList[index].map((item) => item.id) ?? []}
                 error={false}
                 handleChange={({name, value}) => {
-                  console.log(value);
                   setInput('');
                   filterList[index] = value;
                   onChange(filterList[index], index, column);
@@ -106,9 +106,6 @@ export const updatedBy = function () {
   const [options, setOptions] = useState([]);
   const [input, setInput] = useState('');
   const {userAutocompleteOptions} = useSelector(({common}) => common);
-
-  const merge = (a, b, p) =>
-    a.filter((aa) => !b.find((bb) => aa[p] === bb[p])).concat(b);
   const fetchData = async (url, content, loading, setData) => {
     try {
       loading(true);
@@ -145,7 +142,7 @@ export const updatedBy = function () {
         render: (v) => {
           if (v && v.length > 0) {
             return v.map((item) => {
-              return `${messages['common.updated_by']} ${item.name}`;
+              return `${messages['common.updated_by']}: ${item.username}`;
             });
           }
           return false;
@@ -166,12 +163,12 @@ export const updatedBy = function () {
               dataLoading={isLoading}
               options={options.length > 0 ? options : userAutocompleteOptions}
               keyName='username'
+              returnObject={true}
               onSearch={searchUsers}
-              value={filterList[index].map((item) => item.id)}
+              value={filterList[index].map((item) => item.id) ?? []}
               inputValue={input}
               error={false}
               handleChange={({name, value}) => {
-                console.log(value);
                 setInput('');
                 filterList[index] = value;
                 onChange(filterList[index], index, column);

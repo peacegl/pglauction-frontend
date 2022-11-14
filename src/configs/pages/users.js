@@ -10,9 +10,9 @@ import CommonConfigs, {
 import * as yup from 'yup';
 
 const phoneRegExp = CommonConfigs().phoneRegExp;
+const {messages = []} = appIntl() ? appIntl() : {};
 
 export const tableColumns = function () {
-  const {messages = []} = appIntl() ? appIntl() : {};
   return [
     {
       name: 'profile',
@@ -47,6 +47,14 @@ export const tableColumns = function () {
       options: {
         display: true,
         filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `Username: ${v}`;
+            }
+            return false;
+          },
+        },
       },
     },
     {
@@ -55,6 +63,14 @@ export const tableColumns = function () {
       options: {
         display: true,
         filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `First Name: ${v}`;
+            }
+            return false;
+          },
+        },
       },
     },
     {
@@ -63,6 +79,14 @@ export const tableColumns = function () {
       options: {
         display: true,
         filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `Last Name: ${v}`;
+            }
+            return false;
+          },
+        },
       },
     },
     {
@@ -84,6 +108,18 @@ export const tableColumns = function () {
       label: messages['common.gender'],
       options: {
         filter: true,
+        filterType: 'select',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `Gender: ${v}`;
+            }
+            return false;
+          },
+        },
+        filterOptions: {
+          names: ['Male', 'Female'],
+        },
       },
     },
     {
@@ -96,10 +132,40 @@ export const tableColumns = function () {
     {
       name: 'status',
       label: messages['common.status'],
+      options: {
+        filter: true,
+        filterType: 'select',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `Status: ${v}`;
+            }
+            return false;
+          },
+        },
+        filterOptions: {
+          names: ['Active', 'Pending', 'Inactive'],
+        },
+      },
     },
     {
       name: 'type',
       label: messages['common.type'],
+      options: {
+        filter: true,
+        filterType: 'select',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `Type: ${v}`;
+            }
+            return false;
+          },
+        },
+        filterOptions: {
+          names: ['Employee', 'Seller'],
+        },
+      },
     },
     {
       name: 'birth_date',
