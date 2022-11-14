@@ -71,7 +71,7 @@ export const onUpdateVehicle = (id, data, toggleOpen) => {
     dispatch({type: FETCH_START});
     const {messages} = appIntl();
     try {
-      const res = await jwtAxios.put(`/vehicles/${id}`, data);
+      const res = await jwtAxios.post(`/vehicles/${id}?_method=PUT`, data);
       if (res.status === 202 && res.data.result) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: UPDATE_VEHICLE, payload: res.data.data});
