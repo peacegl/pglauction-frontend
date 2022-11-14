@@ -1,18 +1,19 @@
+import AuctionDescriptionStep from 'components/auctions/AuctionDescriptionStep';
 import AuctionImagesStep from '../../../components/auctions/AuctionImagesStep';
 import AuctionStep from '../../../components/auctions/AuctionStep';
 import CollectionsIcon from '@mui/icons-material/Collections';
 import AuctionConfigs from '../../../configs/pages/auctions';
 import IntlMessages from '@crema/utility/IntlMessages';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-import {useEffect, useState, useRef} from 'react';
+import {appIntl} from '@crema/utility/helper/Utils';
 import SellIcon from '@mui/icons-material/Sell';
+import InfoIcon from '@mui/icons-material/Info';
 import {onUpdateAuction} from 'redux/actions';
 import CustomModal from '../../CustomModal';
+import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import Helper from 'helpers/helpers';
 import PropTypes from 'prop-types';
-
-const validationSchema = AuctionConfigs().validationSchema;
 
 export default function AuctionModal({
   open,
@@ -51,7 +52,13 @@ export default function AuctionModal({
     main_image: '',
     images: [],
   });
+  const {messages} = appIntl('');
   const dispatch = useDispatch();
+
+  const validationSchema = AuctionConfigs(
+    messages['validation.invalidYoutube'],
+  ).validationSchema;
+
   const fetchData = async (url, content, loading, setData) => {
     try {
       loading(true);
@@ -120,7 +127,7 @@ export default function AuctionModal({
                     }
                   });
                 } else {
-                  values[key] = value;
+                  values[key] = value ? value : initialValues[key];
                 }
               }
             });
@@ -138,7 +145,7 @@ export default function AuctionModal({
     }
   }, [recordId]);
 
-  const stepTwoValidation = (values, actions) => {
+  const stepThreeValidation = (values, actions) => {
     if (!mainImage.preview) {
       setIsMainImageValid(false);
       return false;
@@ -156,8 +163,8 @@ export default function AuctionModal({
   };
 
   const customValidation = async (values, actions, activeStep) => {
-    if (activeStep == 2) {
-      return await stepTwoValidation(values, actions);
+    if (activeStep == 3) {
+      return await stepThreeValidation(values, actions);
     }
     return true;
   };
@@ -191,6 +198,12 @@ export default function AuctionModal({
     },
     {
       key: 2,
+      icon: <InfoIcon />,
+      label: <IntlMessages id='auction.auctionDescription' />,
+      children: <AuctionDescriptionStep />,
+    },
+    {
+      key: 3,
       icon: <CollectionsIcon />,
       label: <IntlMessages id='auction.auctionImages' />,
       children: (

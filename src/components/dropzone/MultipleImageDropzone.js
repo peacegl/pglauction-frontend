@@ -4,7 +4,7 @@ import UploadModern from './UploadModern';
 import PreviewThumb from './PreviewThumb';
 import {Stack} from '@mui/material';
 import PropTypes from 'prop-types';
-import {useEffect} from 'react';
+import {useEffect, useCallback} from 'react';
 
 const MultipleImageDropzone = (props) => {
   const dropzone = useDropzone({
@@ -78,4 +78,5 @@ MultipleImageDropzone.propTypes = {
   isMaxImagesValid: PropTypes.bool,
   setMaxImagesValid: PropTypes.func,
   setDeletedImages: PropTypes.func,
+  isEdit: PropTypes.bool,
 };

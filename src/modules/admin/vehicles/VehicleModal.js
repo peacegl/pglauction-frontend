@@ -1,19 +1,21 @@
+import AuctionDescriptionStep from 'components/auctions/AuctionDescriptionStep';
+import AuctionImagesStep from '../../../components/auctions/AuctionImagesStep';
+import AuctionStep from '../../../components/auctions/AuctionStep';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
-import ShoppingBag from '@mui/icons-material/ShoppingBag';
-import SellIcon from '@mui/icons-material/Sell';
+import {onInsertVehicle, onUpdateVehicle} from 'redux/actions';
 import CollectionsIcon from '@mui/icons-material/Collections';
 import VehicleConfigs from '../../../configs/pages/vehicles';
+import IntlMessages from '@crema/utility/IntlMessages';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-import {onInsertVehicle, onUpdateVehicle} from 'redux/actions';
+import {appIntl} from '@crema/utility/helper/Utils';
+import SellIcon from '@mui/icons-material/Sell';
+import InfoIcon from '@mui/icons-material/Info';
 import VehicleStepOne from './VehicleStepOne';
-import AuctionStep from '../../../components/auctions/AuctionStep';
 import CustomModal from '../../CustomModal';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
+import Helper from 'helpers/helpers';
 import PropTypes from 'prop-types';
-import IntlMessages from '@crema/utility/IntlMessages';
-
-const validationSchema = VehicleConfigs().validationSchema;
 
 export default function VehicleModal({
   open,
@@ -23,6 +25,12 @@ export default function VehicleModal({
   edit,
   ...rest
 }) {
+  const [images, setImages] = useState([]);
+  const [deletedImages, setDeletedImages] = useState([]);
+  const [mainImage, setMainImage] = useState({});
+  const [isMainImageValid, setIsMainImageValid] = useState(true);
+  const [isMinImagesValid, setMinImagesValid] = useState(true);
+  const [isMaxImagesValid, setMaxImagesValid] = useState(true);
   const [locationLoading, setLocationLoading] = useState(false);
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [sellersLoading, setSellersLoading] = useState(false);
@@ -51,7 +59,13 @@ export default function VehicleModal({
     description: '',
     youtube_url: '',
     note: '',
+    main_image: '',
+    images: [],
   });
+  const {messages} = appIntl('');
+  const validationSchema = VehicleConfigs(
+    messages['validation.invalidYoutube'],
+  ).validationSchema;
   const dispatch = useDispatch();
   const fetchData = async (url, content, loading, setData) => {
     try {
@@ -109,17 +123,29 @@ export default function VehicleModal({
           const res = await jwtAxios.get(`/vehicles/${recordId}`);
           if (res.status === 200 && res.data.result) {
             let values = {};
+            let oldImages = [];
             Object.entries(res.data.data).forEach(([key, value]) => {
               if (Object.keys(initialValues).includes(key)) {
-                values[key] = value;
+                values[key] = value ? value : initialValues[key];
               }
               if (typeof value === 'object' && value != null)
                 Object.entries(value).forEach(([ikey, ivalue]) => {
                   if (Object.keys(initialValues).includes(ikey)) {
-                    values[ikey] = ivalue;
+                    if (ikey == 'images') {
+                      ivalue?.forEach((item) => {
+                        if (item.type == 'sub_image') {
+                          oldImages.push({preview: item.path, id: item.id});
+                        } else if (item.type == 'main_image') {
+                          setMainImage({preview: item.path, id: item.id});
+                        }
+                      });
+                    } else {
+                      values[ikey] = ivalue ? ivalue : initialValues[ikey];
+                    }
                   }
                 });
             });
+            setImages(oldImages);
             setInitialValues(values);
             searchLocations({}, values.location_id);
             searchCategories({}, values.category_id);
@@ -132,11 +158,38 @@ export default function VehicleModal({
       })();
     }
   }, [recordId]);
+
+  const stepFourValidation = (values, actions) => {
+    if (!mainImage.preview) {
+      setIsMainImageValid(false);
+      return false;
+    }
+    if (images?.length >= 1) {
+      if (images?.length > 20) {
+        setMaxImagesValid(false);
+        return false;
+      }
+      setMinImagesValid(true);
+      return true;
+    }
+    setMinImagesValid(false);
+    return false;
+  };
+
+  const customValidation = async (values, actions, activeStep) => {
+    if (activeStep == 4) {
+      return await stepFourValidation(values, actions);
+    }
+    return true;
+  };
+
   const onSave = (values) => {
+    values.deleted_images = deletedImages;
+    const vehicleFormData = Helper.getFormData(values);
     if (recordId) {
-      dispatch(onUpdateVehicle(recordId, values, toggleOpen));
+      dispatch(onUpdateVehicle(recordId, vehicleFormData, toggleOpen));
     } else {
-      dispatch(onInsertVehicle(values, toggleOpen));
+      dispatch(onInsertVehicle(vehicleFormData, toggleOpen));
     }
   };
   const steps = [
@@ -165,12 +218,33 @@ export default function VehicleModal({
         />
       ),
     },
-    // {
-    //   key: 3,
-    //   icon: <CollectionsIcon />,
-    //   label: 'Vehicle Images',
-    //   children: <Box>Third Steps</Box>,
-    // },
+    {
+      key: 3,
+      icon: <InfoIcon />,
+      label: <IntlMessages id='auction.auctionDescription' />,
+      children: <AuctionDescriptionStep />,
+    },
+    {
+      key: 4,
+      icon: <CollectionsIcon />,
+      label: <IntlMessages id='auction.auctionImages' />,
+      children: (
+        <AuctionImagesStep
+          mainImage={mainImage}
+          setMainImage={setMainImage}
+          images={images}
+          setImages={setImages}
+          isMinImagesValid={isMinImagesValid}
+          isMaxImagesValid={isMaxImagesValid}
+          setMinImagesValid={setMinImagesValid}
+          setMaxImagesValid={setMaxImagesValid}
+          setIsMainImageValid={setIsMainImageValid}
+          isMainImageValid={isMainImageValid}
+          setDeletedImages={setDeletedImages}
+          isEdit={edit}
+        />
+      ),
+    },
   ];
   return (
     <CustomModal
@@ -182,6 +256,7 @@ export default function VehicleModal({
       validationSchema={validationSchema}
       initialValues={initialValues}
       isLoading={isLoading}
+      customValidation={customValidation}
       {...rest}
     />
   );
