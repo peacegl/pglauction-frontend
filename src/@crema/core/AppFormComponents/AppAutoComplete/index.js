@@ -20,6 +20,7 @@ export default function AppAutoComplete({
   error,
   multiple = false,
   onSearch,
+  inputValue = '',
   ...rest
 }) {
   const loading = !disabled && dataLoading;
@@ -40,7 +41,7 @@ export default function AppAutoComplete({
       value:
         multiple === true
           ? value
-            ? value.map((data) => data?.[idField])
+            ? value
             : []
           : value
           ? value?.[idField]
@@ -53,7 +54,7 @@ export default function AppAutoComplete({
       if (value) {
         return options?.filter((option) => value.includes(option?.[idField]));
       } else {
-        return [];
+        return value;
       }
     }
     return options?.find((option) => option?.[idField] === value) || null;
@@ -83,6 +84,7 @@ export default function AppAutoComplete({
         }
       }}
       value={getValue()}
+      inputValue={inputValue}
       renderTags={(tagValue, getTagProps) =>
         tagValue.map((option, index) => (
           <Chip
@@ -105,6 +107,7 @@ export default function AppAutoComplete({
         <TextField
           placeholder={placeholder}
           {...params}
+          variant={rest.variant ? rest.variant : 'outlined'}
           label={rest.label}
           InputProps={{
             ...params.InputProps,
@@ -137,6 +140,7 @@ AppAutoComplete.propTypes = {
   multiple: PropTypes.bool,
   dataLoading: PropTypes.bool,
   helperText: PropTypes.string,
+  inputValue: PropTypes.string,
   error: PropTypes.bool,
   disabledId: PropTypes.bool,
   onSearch: PropTypes.func,
