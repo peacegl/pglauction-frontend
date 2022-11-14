@@ -23,7 +23,8 @@ export default function AuctionModal({
   ...rest
 }) {
   const [images, setImages] = useState([]);
-  const [mainImageUrl, setMainImageUrl] = useState('');
+  const [deletedImages, setDeletedImages] = useState([]);
+  const [mainImage, setMainImage] = useState({});
   const [locationLoading, setLocationLoading] = useState(false);
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [sellersLoading, setSellersLoading] = useState(false);
@@ -113,9 +114,9 @@ export default function AuctionModal({
                 if (key == 'images') {
                   value?.forEach((item) => {
                     if (item.type == 'sub_image') {
-                      oldImages.push({preview: item.path});
+                      oldImages.push({preview: item.path, id: item.id});
                     } else if (item.type == 'main_image') {
-                      setMainImageUrl(item.path);
+                      setMainImage({preview: item.path, id: item.id});
                     }
                   });
                 } else {
@@ -138,7 +139,7 @@ export default function AuctionModal({
   }, [recordId]);
 
   const stepTwoValidation = (values, actions) => {
-    if (!values.main_image) {
+    if (!mainImage.preview) {
       setIsMainImageValid(false);
       return false;
     }
@@ -162,6 +163,7 @@ export default function AuctionModal({
   };
 
   const onSave = (values) => {
+    values.deleted_images = deletedImages;
     const auctionFormData = Helper.getFormData(values);
     if (recordId) {
       dispatch(onUpdateAuction(recordId, auctionFormData, toggleOpen));
@@ -193,8 +195,8 @@ export default function AuctionModal({
       label: <IntlMessages id='auction.auctionImages' />,
       children: (
         <AuctionImagesStep
-          mainImageUrl={mainImageUrl}
-          setMainImageUrl={setMainImageUrl}
+          mainImage={mainImage}
+          setMainImage={setMainImage}
           images={images}
           setImages={setImages}
           isMinImagesValid={isMinImagesValid}
@@ -203,6 +205,7 @@ export default function AuctionModal({
           setMaxImagesValid={setMaxImagesValid}
           setIsMainImageValid={setIsMainImageValid}
           isMainImageValid={isMainImageValid}
+          setDeletedImages={setDeletedImages}
         />
       ),
     },

@@ -35,6 +35,7 @@ const MultipleImageDropzone = (props) => {
   }, [props.images]);
 
   const onDeleteUploadFile = (file) => {
+    props.setDeletedImages((d) => (file?.id ? [file.id, ...d] : d));
     dropzone.acceptedFiles.splice(dropzone.acceptedFiles.indexOf(file), 1);
     props.images.splice(props.images.indexOf(file), 1);
     props.setImages([...props.images]);
@@ -76,4 +77,5 @@ MultipleImageDropzone.propTypes = {
   setMinImagesValid: PropTypes.func,
   isMaxImagesValid: PropTypes.bool,
   setMaxImagesValid: PropTypes.func,
+  setDeletedImages: PropTypes.func,
 };
