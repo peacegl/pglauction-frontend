@@ -58,7 +58,7 @@ export const createdBy = function () {
         render: (v) => {
           if (v && v.length > 0) {
             return v.map((item) => {
-              return `${messages['common.created_by']} ${item.name}`;
+              return `${messages['common.created_by']} ${item.username}`;
             });
           }
           return false;
@@ -81,8 +81,9 @@ export const createdBy = function () {
                 options={options.length > 0 ? options : userAutocompleteOptions}
                 keyName='username'
                 returnObject={true}
+                inputValue={input}
                 onSearch={searchUsers}
-                value={filterList[index].map((item) => item.id)}
+                value={filterList[index].map((item) => item.id) ?? []}
                 error={false}
                 handleChange={({name, value}) => {
                   setInput('');
@@ -142,7 +143,7 @@ export const updatedBy = function () {
         render: (v) => {
           if (v && v.length > 0) {
             return v.map((item) => {
-              return `${messages['common.updated_by']} ${item.name}`;
+              return `${messages['common.updated_by']} ${item.username}`;
             });
           }
           return false;
@@ -163,12 +164,12 @@ export const updatedBy = function () {
               dataLoading={isLoading}
               options={options.length > 0 ? options : userAutocompleteOptions}
               keyName='username'
+              returnObject={true}
               onSearch={searchUsers}
-              value={filterList[index].map((item) => item.id)}
+              value={filterList[index].map((item) => item.id) ?? []}
               inputValue={input}
               error={false}
               handleChange={({name, value}) => {
-                console.log(value);
                 setInput('');
                 filterList[index] = value;
                 onChange(filterList[index], index, column);
