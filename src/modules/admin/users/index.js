@@ -104,15 +104,34 @@ export default function UserList() {
 
   const handleFilterSubmit = (filterList) => {
     const filterData = {};
-    filterData['login.username'] = filterList[2][0];
-    filterData['firstname'] = filterList[3][0];
-    filterData['lastname'] = filterList[4][0];
-    filterData['login.status'] = filterList[9][0];
-    filterData['type'] = filterList[10][0];
-    filterData['created_by'] = filterList[13].map((item) => item.id);
-    filterData['updated_by'] = filterList[15].map((item) => item.id);
-    filterData['created_at'] = {from: filterList[14][0], to: filterList[14][1]};
-    filterData['updated_at'] = {from: filterList[16][0], to: filterList[16][1]};
+    filterData['login.username'] = filterList[2][0]
+      ? 'like@@' + filterList[2][0].trim()
+      : undefined;
+    filterData['users.firstname'] = filterList[3][0]
+      ? 'like@@' + filterList[3][0].trim()
+      : undefined;
+    filterData['users.lastname'] = filterList[4][0]
+      ? 'like@@' + filterList[4][0].trim()
+      : undefined;
+    filterData['users.gender'] = filterList[7][0]
+      ? 'exact@@' + filterList[7][0].toLowerCase()
+      : undefined;
+    filterData['login.status'] = filterList[9][0]
+      ? 'exact@@' + filterList[9][0].toLowerCase()
+      : undefined;
+    filterData['login.type'] = filterList[10][0]
+      ? 'exact@@' + filterList[10][0].toLowerCase()
+      : undefined;
+    filterData['users.created_by'] = filterList[13].map((item) => item.id);
+    filterData['users.updated_by'] = filterList[15].map((item) => item.id);
+    filterData['users.created_at'] = {
+      from: filterList[14][0],
+      to: filterList[14][1],
+    };
+    filterData['users.updated_at'] = {
+      from: filterList[16][0],
+      to: filterList[16][1],
+    };
     setFilterData(filterData);
   };
 
