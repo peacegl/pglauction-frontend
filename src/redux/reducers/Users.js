@@ -6,7 +6,6 @@ import {
 
 const initialUsers = {
   userList: {},
-  filterData: {},
 };
 
 const usersReducer = (state = initialUsers, action) => {

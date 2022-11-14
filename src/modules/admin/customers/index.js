@@ -1,15 +1,16 @@
-import {onGetCustomerList, onDeleteCustomers} from 'redux/actions';
-import CustomerConfigs from '../../../configs/pages/customers';
+import {
+  onGetCustomerList,
+  onDeleteCustomers,
+  getUserAutocompleteOptions,
+} from 'redux/actions';
+import {tableColumns} from '../../../configs/pages/customers';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import CustomDataTable from '../../CustomDataTable';
 import CustomerModal from './CustomerModal';
 import {useEffect, useState} from 'react';
-import {Satellite} from '@mui/icons-material';
 
 export default function CustomerList() {
-  const columns = CustomerConfigs().columns;
-
   const [openModal, setOpenModal] = useState(false);
   const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
@@ -17,16 +18,16 @@ export default function CustomerList() {
   const [per_page, setPerPage] = useState(20);
   const [search, setSearch] = useState('');
   const [exactMatch, setExactMatch] = useState(false);
+  const [filterData, setFilterData] = useState({});
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(
     ({customers}) => customers.customerData,
   );
-  const filterData = useSelector(({customers}) => customers.filterData);
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   useEffect(() => {
     fetchData(search);
-  }, [dispatch, page, per_page, orderBy]);
+  }, [dispatch, page, per_page, orderBy, filterData]);
 
   const fetchData = async (search = '') => {
     await dispatch(
@@ -62,6 +63,19 @@ export default function CustomerList() {
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
+    confirmFilters: true,
+    onFilterDialogOpen: () => {
+      dispatch(getUserAutocompleteOptions());
+    },
+    // callback that gets executed when filters are confirmed
+    onFilterConfirm: (filterList) => {
+      handleFilter(filterList);
+    },
+    onFilterChange: (column, filterList, type) => {
+      if (type === 'chip') {
+        handleFilter(filterList);
+      }
+    },
   };
   const onAdd = () => {
     setRecordId(null);
@@ -88,13 +102,46 @@ export default function CustomerList() {
     fetchData(value);
   };
 
+  const handleFilter = (filterList) => {
+    const filterData = {};
+    filterData['login.username'] = filterList[2][0]
+      ? 'like@@' + filterList[2][0].trim()
+      : undefined;
+    filterData['customers.firstname'] = filterList[3][0]
+      ? 'like@@' + filterList[3][0].trim()
+      : undefined;
+    filterData['customers.lastname'] = filterList[4][0]
+      ? 'like@@' + filterList[4][0].trim()
+      : undefined;
+    filterData['customers.gender'] = filterList[7][0]
+      ? 'exact@@' + filterList[7][0].toLowerCase()
+      : undefined;
+    filterData['login.status'] = filterList[9][0]
+      ? 'exact@@' + filterList[9][0].toLowerCase()
+      : undefined;
+    filterData['login.type'] = filterList[10][0]
+      ? 'exact@@' + filterList[10][0].toLowerCase()
+      : undefined;
+    filterData['customers.created_by'] = filterList[11].map((item) => item.id);
+    filterData['customers.updated_by'] = filterList[13].map((item) => item.id);
+    filterData['customers.created_at'] = {
+      from: filterList[12][0],
+      to: filterList[12][1],
+    };
+    filterData['customers.updated_at'] = {
+      from: filterList[14][0],
+      to: filterList[14][1],
+    };
+    setFilterData(filterData);
+  };
+
   return (
     <>
       <CustomDataTable
         title='Customer List'
         total={total}
         data={data}
-        columns={columns}
+        columns={tableColumns()}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}

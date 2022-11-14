@@ -1,94 +1,183 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Avatar, Typography} from '@mui/material';
+import CommonConfigs, {
+  createdAt,
+  createdBy,
+  updatedAt,
+  updatedBy,
+} from '../index';
 const phoneRegExp = CommonConfigs().phoneRegExp;
-import CommonConfigs from '../index';
 import * as yup from 'yup';
+const {messages = []} = appIntl() ? appIntl() : {};
+
+export const tableColumns = function () {
+  return [
+    {
+      name: 'profile',
+      label: messages['common.profile'],
+      options: {
+        filter: false,
+        download: false,
+        sort: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Avatar alt={' profile picture.'} src={value} />
+        ),
+      },
+    },
+    {
+      name: 'code',
+      label: 'Code',
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+            {value}
+            {tableMeta.tableData[tableMeta.rowIndex]['key']
+              .toString()
+              .padStart(5, '0')}
+          </Typography>
+        ),
+      },
+    },
+    {
+      name: 'username',
+      label: messages['common.username'],
+      options: {
+        display: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `Username: ${v}`;
+            }
+            return false;
+          },
+        },
+      },
+    },
+    {
+      name: 'firstname',
+      label: messages['common.firstname'],
+      options: {
+        display: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `First Name: ${v}`;
+            }
+            return false;
+          },
+        },
+      },
+    },
+    {
+      name: 'lastname',
+      label: messages['common.lastname'],
+      options: {
+        display: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `Last Name: ${v}`;
+            }
+            return false;
+          },
+        },
+      },
+    },
+    {
+      name: 'phone',
+      label: messages['common.phone'],
+      options: {
+        display: true,
+        filter: false,
+      },
+    },
+    {
+      name: 'whatsapp',
+      label: messages['common.whatsapp'],
+      options: {
+        display: true,
+        filter: false,
+      },
+    },
+    {
+      name: 'gender',
+      label: messages['common.gender'],
+      options: {
+        filter: true,
+        filterType: 'select',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `Gender: ${v}`;
+            }
+            return false;
+          },
+        },
+        filterOptions: {
+          names: ['Male', 'Female'],
+        },
+      },
+    },
+    {
+      name: 'email',
+      label: messages['common.email'],
+      options: {
+        display: true,
+        filter: false,
+      },
+    },
+    {
+      name: 'status',
+      label: messages['common.status'],
+      options: {
+        filter: true,
+        filterType: 'select',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `Status: ${v}`;
+            }
+            return false;
+          },
+        },
+        filterOptions: {
+          names: ['Active', 'Pending', 'Inactive'],
+        },
+      },
+    },
+    {
+      name: 'type',
+      label: messages['common.type'],
+      options: {
+        filter: true,
+        filterType: 'select',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `Type: ${v}`;
+            }
+            return false;
+          },
+        },
+        filterOptions: {
+          names: ['Member', 'Seller'],
+        },
+      },
+    },
+    createdBy(),
+    createdAt,
+    updatedBy(),
+    updatedAt,
+  ];
+};
 
 export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
-  const {messages = []} = appIntl() ? appIntl() : {};
   return {
-    columns: [
-      {
-        name: 'profile',
-        label: messages['common.profile'],
-        options: {
-          filter: false,
-          download: false,
-          sort: false,
-          customBodyRender: (value, tableMeta, updateValue) => (
-            <Avatar alt={' profile picture.'} src={value} />
-          ),
-        },
-      },
-      {
-        name: 'code',
-        label: 'Code',
-        options: {
-          filter: false,
-          customBodyRender: (value, tableMeta, updateValue) => (
-            <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-              {value}
-              {tableMeta.tableData[tableMeta.rowIndex]['key']
-                .toString()
-                .padStart(5, '0')}
-            </Typography>
-          ),
-        },
-      },
-      {
-        name: 'username',
-        label: messages['common.username'],
-      },
-      {
-        name: 'firstname',
-        label: messages['common.firstname'],
-      },
-      {
-        name: 'lastname',
-        label: messages['common.lastname'],
-      },
-      {
-        name: 'phone',
-        label: messages['common.phone'],
-      },
-      {
-        name: 'whatsapp',
-        label: messages['common.whatsapp'],
-      },
-      {
-        name: 'gender',
-        label: messages['common.gender'],
-      },
-      {
-        name: 'email',
-        label: messages['common.email'],
-      },
-      {
-        name: 'status',
-        label: messages['common.status'],
-      },
-      {
-        name: 'type',
-        label: messages['common.type'],
-      },
-      {
-        name: 'created_by',
-        label: messages['common.created_by'],
-      },
-      {
-        name: 'created_at',
-        label: messages['common.created_at'],
-      },
-      {
-        name: 'updated_by',
-        label: messages['common.updated_by'],
-      },
-      {
-        name: 'updated_at',
-        label: messages['common.updated_at'],
-      },
-    ],
     exportColumns: [],
     validationSchema: [
       yup.object({
