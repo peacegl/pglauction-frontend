@@ -21,7 +21,7 @@ export default function AppAutoComplete({
   multiple = false,
   onSearch,
   inputValue = undefined,
-  returnValue = 'value',
+  returnObject = false,
   ...rest
 }) {
   const loading = !disabled && dataLoading;
@@ -41,7 +41,7 @@ export default function AppAutoComplete({
       name,
       value: multiple
         ? value
-          ? returnValue == 'object'
+          ? returnObject
             ? value
             : value.map((data) => data?.[idField])
           : []
@@ -145,5 +145,5 @@ AppAutoComplete.propTypes = {
   error: PropTypes.bool,
   disabledId: PropTypes.bool,
   onSearch: PropTypes.func,
-  returnValue: PropTypes.string,
+  returnObject: PropTypes.bool,
 };
