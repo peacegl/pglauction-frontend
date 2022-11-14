@@ -38,6 +38,7 @@ const AuctionImagesStep = (props) => {
             images={props.images}
             setImages={props.setImages}
             setDeletedImages={props.setDeletedImages}
+            isEdit={props.isEdit}
           />
         </Stack>
       </Stack>
@@ -61,4 +62,5 @@ AuctionImagesStep.propTypes = {
   setIsMainImageValid: PropTypes.func,
   isMainImageValid: PropTypes.bool,
   setDeletedImages: PropTypes.func,
+  isEdit: PropTypes.bool,
 };
