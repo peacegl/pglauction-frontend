@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import AddTooltip from './AddTooltip';
 import MUIDataTable from 'mui-datatables';
-import {Badge, Box, Typography} from '@mui/material';
+import {Badge, Box, Button, Typography} from '@mui/material';
 import AppLoader from '@crema/core/AppLoader';
 import Toolbar from './Toolbar';
 import Search from './Search';
@@ -61,6 +61,17 @@ const CustomDataTable = ({
           tableBodyHeight: options.tableBodyHeight
             ? options.tableBodyHeight
             : '73vh',
+
+          // Calling the applyNewFilters parameter applies the selected filters to the table
+          customFilterDialogFooter: (currentFilterList, applyNewFilters) => {
+            return (
+              <div style={{marginTop: '40px'}}>
+                <Button variant='contained' onClick={() => applyNewFilters()}>
+                  Apply Filters
+                </Button>
+              </div>
+            );
+          },
           customToolbar: () => !hideAddButton && <AddTooltip onAdd={onAdd} />,
           customToolbarSelect: options.customToolbarSelect
             ? options.customToolbarSelect
