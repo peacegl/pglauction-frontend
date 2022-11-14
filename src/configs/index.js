@@ -6,6 +6,8 @@ import {useState} from 'react';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {useSelector} from 'react-redux';
 const {messages = []} = appIntl() ? appIntl() : {};
+const merge = (a, b, p) =>
+  a.filter((aa) => !b.find((bb) => aa[p] === bb[p])).concat(b);
 
 export default function CommonConfigs() {
   return {
@@ -20,8 +22,6 @@ export const createdBy = function () {
   const [input, setInput] = useState('');
   const {userAutocompleteOptions} = useSelector(({common}) => common);
 
-  const merge = (a, b, p) =>
-    a.filter((aa) => !b.find((bb) => aa[p] === bb[p])).concat(b);
   const fetchData = async (url, content, loading, setData) => {
     try {
       loading(true);
@@ -104,9 +104,6 @@ export const updatedBy = function () {
   const [options, setOptions] = useState([]);
   const [input, setInput] = useState('');
   const {userAutocompleteOptions} = useSelector(({common}) => common);
-
-  const merge = (a, b, p) =>
-    a.filter((aa) => !b.find((bb) => aa[p] === bb[p])).concat(b);
   const fetchData = async (url, content, loading, setData) => {
     try {
       loading(true);
