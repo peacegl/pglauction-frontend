@@ -8,19 +8,20 @@ import PropTypes from 'prop-types';
 
 const SingleImageDropzone = ({
   width,
-  imageUrl,
+  image,
   name,
   setfieldvalue,
-  setImageUrl,
+  setImage,
   text,
   isImageValid,
   setIsImageValid,
   errorMessage,
+  deleteImage,
 }) => {
   const {getRootProps, getInputProps} = useDropzone({
     accept: 'image/*',
     onDrop: (acceptedFiles) => {
-      setImageUrl(URL.createObjectURL(acceptedFiles[0]));
+      setImage({preview: URL.createObjectURL(acceptedFiles[0])});
       setfieldvalue(name, acceptedFiles[0]);
       if (setIsImageValid) setIsImageValid(true);
     },
@@ -55,7 +56,7 @@ const SingleImageDropzone = ({
               },
             }}
           >
-            {!imageUrl && (
+            {!image.preview && (
               <Box
                 sx={{
                   display: 'flex',
@@ -75,7 +76,7 @@ const SingleImageDropzone = ({
                 <Typography>{text}</Typography>
               </Box>
             )}
-            {imageUrl && (
+            {image.preview && (
               <>
                 <Box
                   sx={{
@@ -96,12 +97,13 @@ const SingleImageDropzone = ({
                     onClick={(e) => {
                       e.stopPropagation();
                       if (setIsImageValid) setIsImageValid(false);
-                      setImageUrl('');
+                      if (deleteImage) deleteImage(image.id);
+                      setImage({});
                       setfieldvalue(name, '');
                     }}
                   />
                 </Box>
-                <img alt='preview' src={imageUrl} />
+                <img alt='preview' src={image.preview} />
               </>
             )}
           </Box>
@@ -121,10 +123,11 @@ SingleImageDropzone.propTypes = {
   setfieldvalue: PropTypes.func,
   name: PropTypes.string,
   width: PropTypes.object,
-  imageUrl: PropTypes.string,
+  image: PropTypes.object,
   text: PropTypes.string,
   isImageValid: PropTypes.bool,
   setIsImageValid: PropTypes.func,
   errorMessage: PropTypes.string,
-  setImageUrl: PropTypes.func,
+  setImage: PropTypes.func,
+  deleteImage: PropTypes.func,
 };
