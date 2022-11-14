@@ -1,4 +1,4 @@
-import UserConfigs, {tableColumns} from '../../../configs/pages/users';
+import {tableColumns} from '../../../configs/pages/users';
 import {useDispatch, useSelector} from 'react-redux';
 import CustomDataTable from '../../CustomDataTable';
 import {
@@ -8,7 +8,6 @@ import {
 } from 'redux/actions';
 import {useEffect, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {Button} from '@mui/material';
 import UserModal from './UserModal';
 
 export default function UserList() {
@@ -69,11 +68,11 @@ export default function UserList() {
     },
     // callback that gets executed when filters are confirmed
     onFilterConfirm: (filterList) => {
-      handleFilterSubmit(filterList);
+      handleFilter(filterList);
     },
     onFilterChange: (column, filterList, type) => {
       if (type === 'chip') {
-        handleFilterSubmit(filterList);
+        handleFilter(filterList);
       }
     },
   };
@@ -102,7 +101,7 @@ export default function UserList() {
     fetchData(value);
   };
 
-  const handleFilterSubmit = (filterList) => {
+  const handleFilter = (filterList) => {
     const filterData = {};
     filterData['login.username'] = filterList[2][0]
       ? 'like@@' + filterList[2][0].trim()
