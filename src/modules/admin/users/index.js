@@ -19,18 +19,15 @@ export default function UserList() {
   const [per_page, setPerPage] = useState(20);
   const [search, setSearch] = useState('');
   const [exactMatch, setExactMatch] = useState(false);
+  const [filterData, setFilterData] = useState({});
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(({users}) => users.userList);
-  const filterData = useSelector(({users}) => users.filterData);
   const {loading} = useSelector(({common}) => common);
 
-  const getUserAutocomplete = (value) => {
-    console.log(value);
-  };
   const dispatch = useDispatch();
   useEffect(() => {
     fetchData(search);
-  }, [dispatch, page, per_page, orderBy]);
+  }, [dispatch, page, per_page, orderBy, filterData]);
 
   const fetchData = async (search = '') => {
     await dispatch(
@@ -70,28 +67,13 @@ export default function UserList() {
     onFilterDialogOpen: () => {
       dispatch(getUserAutocompleteOptions());
     },
-    // Calling the applyNewFilters parameter applies the selected filters to the table
-    customFilterDialogFooter: (currentFilterList, applyNewFilters) => {
-      return (
-        <div style={{marginTop: '40px'}}>
-          <Button
-            variant='contained'
-            onClick={() => handleFilterSubmit(applyNewFilters)}
-          >
-            Apply Filters
-          </Button>
-        </div>
-      );
-    },
     // callback that gets executed when filters are confirmed
     onFilterConfirm: (filterList) => {
-      console.log('onFilterConfirm');
+      handleFilterSubmit(filterList);
     },
     onFilterChange: (column, filterList, type) => {
       if (type === 'chip') {
-        var newFilters = () => filterList;
-        console.log('updating filters via chip');
-        // handleFilterSubmit(newFilters);
+        handleFilterSubmit(filterList);
       }
     },
   };
@@ -120,8 +102,18 @@ export default function UserList() {
     fetchData(value);
   };
 
-  const handleFilterSubmit = (applyFilters) => {
-    let filterList = applyFilters();
+  const handleFilterSubmit = (filterList) => {
+    const filterData = {};
+    filterData['login.username'] = filterList[2][0];
+    filterData['firstname'] = filterList[3][0];
+    filterData['lastname'] = filterList[4][0];
+    filterData['login.status'] = filterList[9][0];
+    filterData['type'] = filterList[10][0];
+    filterData['created_by'] = filterList[13].map((item) => item.id);
+    filterData['updated_by'] = filterList[15].map((item) => item.id);
+    filterData['created_at'] = {from: filterList[14][0], to: filterList[14][1]};
+    filterData['updated_at'] = {from: filterList[16][0], to: filterList[16][1]};
+    setFilterData(filterData);
   };
 
   return (

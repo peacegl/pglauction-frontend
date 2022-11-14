@@ -58,7 +58,7 @@ export const createdBy = function () {
         render: (v) => {
           if (v && v.length > 0) {
             return v.map((item) => {
-              return `${messages['common.created_by']} ${item.username}`;
+              return `${messages['common.created_by']}: ${item.username}`;
             });
           }
           return false;
@@ -140,7 +140,7 @@ export const updatedBy = function () {
         render: (v) => {
           if (v && v.length > 0) {
             return v.map((item) => {
-              return `${messages['common.updated_by']} ${item.username}`;
+              return `${messages['common.updated_by']}: ${item.username}`;
             });
           }
           return false;

@@ -10,9 +10,9 @@ import CommonConfigs, {
 import * as yup from 'yup';
 
 const phoneRegExp = CommonConfigs().phoneRegExp;
+const {messages = []} = appIntl() ? appIntl() : {};
 
 export const tableColumns = function () {
-  const {messages = []} = appIntl() ? appIntl() : {};
   return [
     {
       name: 'profile',
