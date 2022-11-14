@@ -80,12 +80,11 @@ export const createdBy = function () {
                 dataLoading={isLoading}
                 options={options.length > 0 ? options : userAutocompleteOptions}
                 keyName='username'
+                returnObject={true}
                 onSearch={searchUsers}
                 value={filterList[index].map((item) => item.id)}
-                inputValue={input}
                 error={false}
                 handleChange={({name, value}) => {
-                  console.log(value);
                   setInput('');
                   filterList[index] = value;
                   onChange(filterList[index], index, column);
