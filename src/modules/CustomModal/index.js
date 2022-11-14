@@ -115,7 +115,7 @@ const CustomModal = ({
                   {steps && (
                     <Box
                       sx={{
-                        height: 450,
+                        height: 500,
                         overflowY: 'auto',
                       }}
                     >

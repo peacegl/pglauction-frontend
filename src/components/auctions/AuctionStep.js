@@ -134,7 +134,6 @@ AuctionStep.propTypes = {
   sellersLoading: PropTypes.bool,
   categories: PropTypes.array.isRequired,
   sellers: PropTypes.array.isRequired,
-  searchLocations: PropTypes.func.isRequired,
   searchCategories: PropTypes.func.isRequired,
   searchSellers: PropTypes.func.isRequired,
   setIsLoading: PropTypes.func,

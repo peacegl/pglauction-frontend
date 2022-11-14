@@ -149,7 +149,7 @@ export default function VehicleModal({
     {
       key: 2,
       icon: <SellIcon />,
-      label: <IntlMessages id='vehicle.auctionDetails' />,
+      label: <IntlMessages id='auction.auctionDetails' />,
       children: (
         <AuctionStep
           locations={locations}

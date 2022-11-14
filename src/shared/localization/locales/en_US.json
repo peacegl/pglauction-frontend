@@ -926,7 +926,7 @@
   "vehicle.message.deleted": "Vehicle(s) deleted successfully",
   "vehicle.vehicleList": "Vehicle List",
   "vehicle.vehicleProperties": "Vehicle Properties",
-  "vehicle.auctionDetails": "Auction Details",
+  "auction.auctionDetails": "Auction Details",
   "message.vehicleCreated": "Vechicle created successfully!",
   "message.vehicleUpdated": "Vechicle updated successfully!",
 
@@ -948,5 +948,11 @@
   "auction.deleteMessage": "Are you sure, you want to delete the selected Auction(s)?",
   "auction.auctionList": "Auction List",
   "message.auctionUpdated": "Auction updated successfully!",
-  "auction.message.deleted": "Auction(s) deleted successfully"
+  "auction.message.deleted": "Auction(s) deleted successfully",
+  "auction.auctionImages": "Auction Images",
+  "common.DropzoneImages": "Drag & drop Images here, or click to select Images",
+  "auction.atleastOneImageRequired": "At least one image is required for auction",
+  "auction.max20ImageAllowed": "Max 20 images are allowed",
+  "auction.mainImage": "Main Image",
+  "auction.mainImageRequired": "Main image is required"
 }
