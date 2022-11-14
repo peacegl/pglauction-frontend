@@ -20,7 +20,8 @@ export default function AppAutoComplete({
   error,
   multiple = false,
   onSearch,
-  inputValue = '',
+  inputValue = undefined,
+  returnValue = 'value',
   ...rest
 }) {
   const loading = !disabled && dataLoading;
@@ -38,14 +39,15 @@ export default function AppAutoComplete({
   const onSelectValue = (e, value) => {
     const event = {
       name,
-      value:
-        multiple === true
-          ? value
+      value: multiple
+        ? value
+          ? returnValue == 'object'
             ? value
-            : []
-          : value
-          ? value?.[idField]
-          : '',
+            : value.map((data) => data?.[idField])
+          : []
+        : value
+        ? value?.[idField]
+        : '',
     };
     if (handleChange) handleChange(event);
   };
@@ -84,7 +86,6 @@ export default function AppAutoComplete({
         }
       }}
       value={getValue()}
-      inputValue={inputValue}
       renderTags={(tagValue, getTagProps) =>
         tagValue.map((option, index) => (
           <Chip
@@ -144,4 +145,5 @@ AppAutoComplete.propTypes = {
   error: PropTypes.bool,
   disabledId: PropTypes.bool,
   onSearch: PropTypes.func,
+  returnValue: PropTypes.string,
 };
