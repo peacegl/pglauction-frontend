@@ -73,7 +73,7 @@ export const onUpdateAuction = (id, data, toggleOpen) => {
     dispatch({type: FETCH_START});
     const {messages} = appIntl();
     try {
-      const res = await jwtAxios.put(`/auctions/${id}`, data);
+      const res = await jwtAxios.post(`/auctions/${id}?_method=PUT`, data);
       if (res.status === 202 && res.data.result) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: UPDATE_AUCTION, payload: res.data.data});
