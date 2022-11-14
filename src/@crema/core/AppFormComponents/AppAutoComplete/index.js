@@ -86,6 +86,7 @@ export default function AppAutoComplete({
         }
       }}
       value={getValue()}
+      inputValue={inputValue}
       renderTags={(tagValue, getTagProps) =>
         tagValue.map((option, index) => (
           <Chip

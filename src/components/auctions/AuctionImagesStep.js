@@ -17,12 +17,15 @@ const AuctionImagesStep = (props) => {
             errorMessage={<IntlMessages id='auction.mainImageRequired' />}
             text={<IntlMessages id='auction.mainImage' />}
             width={{xs: 150, lg: 220}}
-            imageUrl={props.mainImageUrl}
+            image={props.mainImage}
             name='main_image'
             setfieldvalue={props.setfieldvalue}
-            setImageUrl={props.setMainImageUrl}
+            setImage={props.setMainImage}
             setIsImageValid={props.setIsMainImageValid}
             isImageValid={props.isMainImageValid}
+            deleteImage={(id) =>
+              props.setDeletedImages((d) => (id ? [id, ...d] : d))
+            }
           />
         </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
@@ -34,6 +37,7 @@ const AuctionImagesStep = (props) => {
             isMaxImagesValid={props.isMaxImagesValid}
             images={props.images}
             setImages={props.setImages}
+            setDeletedImages={props.setDeletedImages}
           />
         </Stack>
       </Stack>
@@ -52,8 +56,9 @@ AuctionImagesStep.propTypes = {
   setMaxImagesValid: PropTypes.func,
   images: PropTypes.array,
   setImages: PropTypes.func,
-  mainImageUrl: PropTypes.string,
-  setMainImageUrl: PropTypes.func,
+  mainImage: PropTypes.object,
+  setMainImage: PropTypes.func,
   setIsMainImageValid: PropTypes.func,
   isMainImageValid: PropTypes.bool,
+  setDeletedImages: PropTypes.func,
 };
