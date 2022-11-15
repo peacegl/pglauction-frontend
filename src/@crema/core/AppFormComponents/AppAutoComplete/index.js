@@ -39,11 +39,11 @@ export default function AppAutoComplete({
   const onSelectValue = (e, value) => {
     const event = {
       name,
-      value: multiple
+      value: returnObject
         ? value
-          ? returnObject
-            ? value
-            : value.map((data) => data?.[idField])
+        : multiple
+        ? value
+          ? value.map((data) => data?.[idField])
           : []
         : value
         ? value?.[idField]
