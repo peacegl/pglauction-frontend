@@ -108,8 +108,8 @@ export default function userList() {
     filterData['categories.name'] = filterList[1][0]
       ? 'like@@' + filterList[1][0].trim()
       : undefined;
-    filterData['parent.name'] = filterList[3][0]
-      ? 'exact@@' + filterList[3][0]
+    filterData['categories.parent_id'] = filterList[3][0]
+      ? 'exact@@' + filterList[3][0]['id']
       : undefined;
     filterData['categories.created_by'] = filterList[4].map((item) => item.id);
     filterData['categories.updated_by'] = filterList[6].map((item) => item.id);
