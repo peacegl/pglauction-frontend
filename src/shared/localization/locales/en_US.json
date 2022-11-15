@@ -959,5 +959,8 @@
   "auction.atleastOneImageRequired": "At least one image is required for auction",
   "auction.max20ImageAllowed": "Max 20 images are allowed",
   "auction.mainImage": "Main Image",
-  "auction.mainImageRequired": "Main image is required"
+  "auction.mainImageRequired": "Main image is required",
+  "bid.bids": "Bid(s)",
+  "bid.currentBid": "Current Bid",
+  "bid.timeRemaining": "Time Remaining"
 }

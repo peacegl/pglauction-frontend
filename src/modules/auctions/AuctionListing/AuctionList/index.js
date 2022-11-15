@@ -1,15 +1,15 @@
 import React from 'react';
 import ListItem from './ListItem';
+import AuctionListItem from './AuctionListItem';
 import AppList from '../../../../@crema/core/AppList';
 import ListEmptyResult from '../../../../@crema/core/AppList/ListEmptyResult';
 import PropTypes from 'prop-types';
 
-const ProductList = ({ecommerceList, loading}) => {
+const AuctionList = ({list, loading}) => {
   return (
     <AppList
-      delay={200}
-      data={ecommerceList}
-      renderRow={(item) => <ListItem item={item} key={item.id} />}
+      data={list}
+      renderRow={(item) => <AuctionListItem item={item} key={item.id} />}
       ListEmptyComponent={
         <ListEmptyResult content='No product found' loading={loading} />
       }
@@ -17,9 +17,9 @@ const ProductList = ({ecommerceList, loading}) => {
   );
 };
 
-export default ProductList;
+export default AuctionList;
 
-ProductList.propTypes = {
-  ecommerceList: PropTypes.array,
+AuctionList.propTypes = {
+  list: PropTypes.array,
   loading: PropTypes.bool,
 };

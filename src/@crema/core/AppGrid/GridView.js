@@ -43,7 +43,6 @@ const GridView = ({
   ListEmptyComponent,
 }) => {
   const {theme} = useThemeContext();
-  console.log('theme: ', theme);
 
   const width = useWidth();
   const borderStyle = {
