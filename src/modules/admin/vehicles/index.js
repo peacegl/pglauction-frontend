@@ -1,12 +1,14 @@
 import {useEffect, useState} from 'react';
-import {onGetVehicleData, onDeleteVehicles} from 'redux/actions';
+import {
+  onGetVehicleData,
+  onDeleteVehicles,
+  getUserAutocompleteOptions,
+} from 'redux/actions';
 import CustomDataTable from '../../CustomDataTable';
 import {useDispatch, useSelector} from 'react-redux';
-import VehicleConfigs from '../../../configs/pages/vehicles';
+import {tableColumns} from '../../../configs/pages/vehicles';
 import VehicleModal from './VehicleModal';
 import IntlMessages from '@crema/utility/IntlMessages';
-
-const columns = VehicleConfigs().columns;
 
 export default function VehicleList() {
   const [openModal, setOpenModal] = useState(false);
@@ -16,18 +18,18 @@ export default function VehicleList() {
   const [recordId, setRecordId] = useState(null);
   const [search, setSearch] = useState('');
   const [exactMatch, setExactMatch] = useState(false);
+  const [filterData, setFilterData] = useState([]);
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(
     ({vehicles}) => vehicles.vehiclesData,
   );
-  const filterData = useSelector(({vehicles}) => vehicles.filterData);
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   useEffect(() => {
     fetchData(search);
-  }, [dispatch, page, per_page, orderBy]);
+  }, [dispatch, page, per_page, orderBy, filterData]);
 
-  const fetchData = async (search = '', filterData = {}) => {
+  const fetchData = async (search = '') => {
     await dispatch(
       onGetVehicleData({
         page: page + 1,
@@ -53,7 +55,6 @@ export default function VehicleList() {
       allRowsSelected,
       rowsSelected,
     ) => {
-      console.log(rowsSelected);
       setSelected(rowsSelected);
     },
     onSearchChange: (value) => {
@@ -61,6 +62,19 @@ export default function VehicleList() {
     },
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
+    },
+    confirmFilters: true,
+    onFilterDialogOpen: () => {
+      dispatch(getUserAutocompleteOptions());
+    },
+    // callback that gets executed when filters are confirmed
+    onFilterConfirm: (filterList) => {
+      handleFilter(filterList);
+    },
+    onFilterChange: (column, filterList, type) => {
+      if (type === 'chip') {
+        handleFilter(filterList);
+      }
     },
   };
   const onAdd = () => {
@@ -87,13 +101,47 @@ export default function VehicleList() {
     fetchData(value);
   };
 
+  const handleFilter = (filterList) => {
+    const filterData = {};
+    console.log(filterList);
+    filterData['vehicles.year'] = filterList[1][0]
+      ? 'like@@' + filterList[1][0].trim()
+      : undefined;
+    filterData['vehicles.color'] = filterList[2][0]
+      ? 'like@@' + filterList[2][0].trim()
+      : undefined;
+    filterData['vehicles.model'] = filterList[3][0]
+      ? 'like@@' + filterList[3][0].trim()
+      : undefined;
+    filterData['vehicles.engine_type'] = filterList[4][0]
+      ? 'like@@' + filterList[4][0].trim()
+      : undefined;
+    filterData['vehicles.cylinders'] = filterList[7][0]
+      ? 'like@@' + filterList[7][0].trim()
+      : undefined;
+    filterData['vehicles.vehicle_type'] = filterList[8][0]
+      ? 'like@@' + filterList[8][0].trim()
+      : undefined;
+    filterData['vehicles.created_by'] = filterList[9].map((item) => item.id);
+    filterData['vehicles.updated_by'] = filterList[11].map((item) => item.id);
+    filterData['vehicles.created_at'] = {
+      from: filterList[10][0],
+      to: filterList[10][1],
+    };
+    filterData['vehicles.updated_at'] = {
+      from: filterList[12][0],
+      to: filterList[12][1],
+    };
+    setFilterData(filterData);
+  };
+
   return (
     <>
       <CustomDataTable
         title={<IntlMessages id='vehicle.vehicleList' />}
         total={total}
         data={data}
-        columns={columns}
+        columns={tableColumns()}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}

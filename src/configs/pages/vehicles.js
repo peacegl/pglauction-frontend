@@ -3,75 +3,155 @@ import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
 const year = new Date().getFullYear();
 import * as yup from 'yup';
+import {createdAt, createdBy, updatedAt, updatedBy} from 'configs';
+const {messages = []} = appIntl() ? appIntl() : {};
 
-export default function configs() {
-  const {messages = []} = appIntl() ? appIntl() : {};
-  return {
-    columns: [
-      {
-        name: 'code',
-        label: messages['common.code'],
-        options: {
-          filter: false,
-          customBodyRender: (value, tableMeta, updateValue) => (
-            <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-              {value}
-              {tableMeta.tableData[tableMeta.rowIndex]['key']
-                .toString()
-                .padStart(8, '0')}
-            </Typography>
-          ),
+export const tableColumns = function () {
+  return [
+    {
+      name: 'code',
+      label: messages['common.code'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+            {value}
+            {tableMeta.tableData[tableMeta.rowIndex]['key']
+              .toString()
+              .padStart(8, '0')}
+          </Typography>
+        ),
+      },
+    },
+    {
+      name: 'year',
+      label: messages['common.year'],
+      options: {
+        filter: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `${messages['common.year']}: ${v}`;
+            }
+            return false;
+          },
         },
       },
-      {
-        name: 'year',
-        label: messages['common.year'],
+    },
+    {
+      name: 'color',
+      label: messages['common.color'],
+      options: {
+        filter: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `${messages['common.color']}: ${v}`;
+            }
+            return false;
+          },
+        },
       },
-      {
-        name: 'color',
-        label: messages['common.color'],
+    },
+    {
+      name: 'model',
+      label: messages['common.model'],
+      options: {
+        filter: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `${messages['common.model']}: ${v}`;
+            }
+            return false;
+          },
+        },
       },
-      {
-        name: 'model',
-        label: messages['common.model'],
+    },
+    {
+      name: 'engine_type',
+      label: messages['common.engine_type'],
+      options: {
+        filter: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `${messages['common.engine_type']}: ${v}`;
+            }
+            return false;
+          },
+        },
       },
-      {
-        name: 'vin',
-        label: messages['common.vin'],
+    },
+    {
+      name: 'vin',
+      label: messages['common.vin'],
+      options: {
+        filter: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `${messages['common.vin']}: ${v}`;
+            }
+            return false;
+          },
+        },
       },
-      {
-        name: 'lot_number',
-        label: messages['common.lot_number'],
+    },
+    {
+      name: 'lot_number',
+      label: messages['common.lot_number'],
+      options: {
+        filter: false,
       },
-      {
-        name: 'engine_type',
-        label: messages['common.engine_type'],
+    },
+
+    {
+      name: 'cylinders',
+      label: messages['common.cylinders'],
+      options: {
+        filter: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `${messages['common.cylinders']}: ${v}`;
+            }
+            return false;
+          },
+        },
       },
-      {
-        name: 'cylinders',
-        label: messages['common.cylinders'],
+    },
+    {
+      name: 'vehicle_type',
+      label: messages['common.vehicle_type'],
+      options: {
+        filter: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `${messages['common.vehicle_type']}: ${v}`;
+            }
+            return false;
+          },
+        },
       },
-      {
-        name: 'vehicle_type',
-        label: messages['common.vehicle_type'],
-      },
-      {
-        name: 'created_by',
-        label: messages['common.created_by'],
-      },
-      {
-        name: 'created_at',
-        label: messages['common.created_at'],
-      },
-      {
-        name: 'updated_by',
-        label: messages['common.updated_by'],
-      },
-      {
-        name: 'updated_at',
-        label: messages['common.updated_at'],
-      },
-    ],
+    },
+    createdBy(),
+    createdAt,
+    updatedBy(),
+    updatedAt,
+  ];
+};
+
+export default function configs() {
+  return {
     exportColumns: [],
     validationSchema: [
       yup.object({
