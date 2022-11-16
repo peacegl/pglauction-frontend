@@ -14,6 +14,7 @@ import UserStepOne from './UserStepOne';
 import UserStepTwo from './UserStepTwo';
 import PropTypes from 'prop-types';
 import Helper from 'helpers/helpers';
+import {getData} from '../../../configs';
 
 export default function UserModal({
   open,
@@ -163,32 +164,10 @@ export default function UserModal({
     }
     return true;
   };
-
-  const fetchData = async (url, content, loading, setData, setTotal = null) => {
-    try {
-      loading(true);
-      const res = await jwtAxios.get(url, {params: content});
-      if (res.status === 200 && res.data.result) {
-        setData(res.data.data);
-        if (setTotal) setTotal(res.data.total);
-      } else {
-        setData([]);
-      }
-      loading(false);
-    } catch (error) {
-      setData([]);
-      loading(false);
-    }
-  };
   useEffect(() => {
-    fetchData(`/role/auto_complete?type=user`, {}, setRolesLoading, setRoles);
-    fetchData(
-      `/timezones/auto_complete`,
-      {},
-      setTimezonesLoading,
-      setTimezones,
-    );
-    fetchData(
+    getData(`/role/auto_complete?type=user`, {}, setRolesLoading, setRoles);
+    getData(`/timezones/auto_complete`, {}, setTimezonesLoading, setTimezones);
+    getData(
       `/groupedPermissions`,
       {},
       setPermissionsLoading,
@@ -198,7 +177,7 @@ export default function UserModal({
   }, []);
 
   const searchTimezones = (content) => {
-    fetchData(
+    getData(
       `/timezones/auto_complete`,
       content,
       setTimezonesLoading,

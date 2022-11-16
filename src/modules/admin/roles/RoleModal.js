@@ -10,6 +10,7 @@ import RoleStepTwo from './RoleStepTwo';
 import {useDispatch} from 'react-redux';
 import RoleStepOne from './RoleStepOne';
 import PropTypes from 'prop-types';
+import {getData} from '../../../configs';
 
 export default function RoleModal({
   open,
@@ -84,25 +85,8 @@ export default function RoleModal({
     return true;
   };
 
-  const fetchData = async (url, content, loading, setData, setTotal = null) => {
-    try {
-      loading(true);
-      const res = await jwtAxios.get(url, {params: content});
-      if (res.status === 200 && res.data.result) {
-        setData(res.data.data);
-        if (setTotal) setTotal(res.data.total);
-      } else {
-        setData([]);
-      }
-      loading(false);
-    } catch (error) {
-      setData([]);
-      loading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchData(
+    getData(
       `/groupedPermissions`,
       {},
       setPermissionsLoading,

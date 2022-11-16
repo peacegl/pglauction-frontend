@@ -367,3 +367,16 @@ export const updatedAt = (function () {
     },
   };
 })();
+
+export async function getData(url, content, loading, setData) {
+  try {
+    loading(true);
+    const res = await jwtAxios.get(url, {params: content});
+    if (res.status === 200 && res.data.result) {
+      setData(res.data.data);
+    }
+    loading(false);
+  } catch (error) {
+    loading(false);
+  }
+}

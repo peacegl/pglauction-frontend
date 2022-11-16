@@ -1,42 +1,39 @@
 import React from 'react';
 import AuctionListing from './AuctionListing';
-import Container from '@mui/material/Container';
 import AuctionsSidebar from './AuctionsSidebar';
 import AppsContainer from '../../@crema/core/AppsContainer';
 import {Box, alpha, Card} from '@mui/material';
 
-const Products = () => {
+const Auctions = () => {
   return (
-    <Container maxWidth='xl' sx={{mt: 4}}>
+    <Box
+      sx={{
+        display: 'flex',
+      }}
+    >
       <Box
         sx={{
-          display: 'flex',
+          flex: 1,
         }}
       >
-        <Box
+        <Card
           sx={{
-            flex: 1,
+            m: 3,
+            borderRadius: 1,
           }}
         >
-          <Card
-            sx={{
-              m: 3,
-              borderRadius: 1,
-            }}
-          >
-            <AuctionsSidebar />
-          </Card>
-        </Box>
-        <Box
-          sx={{
-            flex: 4,
-          }}
-        >
-          <AuctionListing />
-        </Box>
+          <AuctionsSidebar />
+        </Card>
       </Box>
-    </Container>
+      <Box
+        sx={{
+          flex: 4,
+        }}
+      >
+        <AuctionListing />
+      </Box>
+    </Box>
   );
 };
 
-export default Products;
+export default Auctions;
