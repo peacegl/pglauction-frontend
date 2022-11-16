@@ -41,7 +41,7 @@ const AuctionListing = () => {
       <Card
         sx={{
           m: 3,
-          borderRadius: 2,
+          borderRadius: 1,
         }}
       >
         <Box
@@ -85,9 +85,9 @@ const AuctionListing = () => {
           }}
         >
           {viewType === VIEW_TYPE.GRID ? (
-            <AuctionGrid ecommerceList={data} loading={loading} />
+            <AuctionGrid list={data} loading={loading} />
           ) : (
-            <AuctionList ecommerceList={data} loading={loading} />
+            <AuctionList list={data} loading={loading} />
           )}
         </Box>
       </AppsContent>
@@ -96,7 +96,7 @@ const AuctionListing = () => {
           <Card
             sx={{
               m: 3,
-              borderRadius: 2,
+              borderRadius: 1,
             }}
           >
             <AppsPagination
