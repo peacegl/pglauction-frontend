@@ -21,6 +21,7 @@ const Products = () => {
           <Card
             sx={{
               m: 3,
+              borderRadius: 1,
             }}
           >
             <AuctionsSidebar />
@@ -28,7 +29,7 @@ const Products = () => {
         </Box>
         <Box
           sx={{
-            flex: 3,
+            flex: 4,
           }}
         >
           <AuctionListing />

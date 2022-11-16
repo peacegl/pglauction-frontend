@@ -41,7 +41,7 @@ export const SearchInputBase = styled(InputBase)(({theme}) => ({
     padding: theme.spacing(2, 2, 2, 0),
     paddingLeft: `calc(1em + ${theme.spacing(6)})`,
     transition: theme.transitions.create('width'),
-    width: 200,
+    width: 240,
     height: 40,
     boxSizing: 'border-box',
     [theme.breakpoints.down('md')]: {
@@ -66,7 +66,7 @@ export const SearchIconBox = styled('div')((props) => ({
   '& .searchIconBox': {
     position: 'relative',
     '& $inputInput': {
-      width: 220,
+      width: 235,
       borderRadius: 50,
       paddingLeft: 27,
       '&:focus': {

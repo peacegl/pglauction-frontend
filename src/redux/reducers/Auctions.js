@@ -13,7 +13,7 @@ const initialState = {
   auctionsList: [],
   webAuctionsList: [],
   categories: [],
-  viewType: VIEW_TYPE.LIST,
+  viewType: VIEW_TYPE.GRID,
   currectAuction: null,
   filterData: {
     title: '',
