@@ -3,7 +3,14 @@ import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
 const year = new Date().getFullYear();
 import * as yup from 'yup';
-import {createdAt, createdBy, updatedAt, updatedBy} from 'configs';
+import {
+  createdAt,
+  createdBy,
+  updatedAt,
+  updatedBy,
+  vehicleLot,
+  vehicleVin,
+} from 'configs';
 const {messages = []} = appIntl() ? appIntl() : {};
 
 export const tableColumns = function () {
@@ -87,30 +94,8 @@ export const tableColumns = function () {
         },
       },
     },
-    {
-      name: 'vin',
-      label: messages['common.vin'],
-      options: {
-        filter: true,
-        filterType: 'textField',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `${messages['common.vin']}: ${v}`;
-            }
-            return false;
-          },
-        },
-      },
-    },
-    {
-      name: 'lot_number',
-      label: messages['common.lot_number'],
-      options: {
-        filter: false,
-      },
-    },
-
+    vehicleVin(),
+    vehicleLot(),
     {
       name: 'cylinders',
       label: messages['common.cylinders'],

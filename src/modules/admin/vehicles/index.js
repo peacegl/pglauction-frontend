@@ -116,6 +116,10 @@ export default function VehicleList() {
     filterData['vehicles.engine_type'] = filterList[4][0]
       ? 'like@@' + filterList[4][0].trim()
       : undefined;
+    filterData['vehicles.vin'] = filterList[5].map((item) => item.vin);
+    filterData['vehicles.lot_number'] = filterList[6].map(
+      (item) => item.lot_number,
+    );
     filterData['vehicles.cylinders'] = filterList[7][0]
       ? 'like@@' + filterList[7][0].trim()
       : undefined;

@@ -2,7 +2,7 @@ import {appIntl} from '@crema/utility/helper/Utils';
 import {FormLabel, Stack, TextField} from '@mui/material';
 import AppAutoComplete from '@crema/core/AppFormComponents/AppAutoComplete';
 import {DatePicker} from '@mui/x-date-pickers';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {useSelector} from 'react-redux';
 const {messages = []} = appIntl() ? appIntl() : {};
@@ -367,3 +367,161 @@ export const updatedAt = (function () {
     },
   };
 })();
+
+export const vehicleVin = function () {
+  const [isLoading, setIsLoading] = useState(false);
+  const [options, setOptions] = useState([]);
+  const [input, setInput] = useState('');
+  const fetchData = async (url, content, loading, setData) => {
+    try {
+      loading(true);
+      const res = await jwtAxios.get(url, {params: content});
+      if (res.status === 200 && res.data.result) {
+        setData((state) => merge(options, res.data.data, 'id'));
+      } else {
+        setData([]);
+      }
+      loading(false);
+    } catch (error) {
+      setData([]);
+      loading(false);
+    }
+  };
+  const searchVin = (content) => {
+    setInput(content.vin);
+    fetchData(`/vehicle_vins/auto_complete`, content, setIsLoading, setOptions);
+  };
+  useEffect(() => {
+    fetchData(`/vehicle_vins/auto_complete`, {}, setIsLoading, setOptions);
+  }, []);
+  return {
+    name: 'vin',
+    label: messages['common.vin'],
+    options: {
+      filter: true,
+      display: true,
+      filterType: 'custom',
+      customFilterListOptions: {
+        render: (v) => {
+          if (v && v.length > 0) {
+            return v.map((item) => {
+              return `${messages['common.vin']}: ${item.vin}`;
+            });
+          }
+          return false;
+        },
+      },
+      filterOptions: {
+        fullWidth: true,
+        display: (filterList, onChange, index, column) => {
+          return (
+            <>
+              <AppAutoComplete
+                multiple={true}
+                placeholder={messages['common.vin']}
+                label={messages['common.vin']}
+                name='vin'
+                variant='standard'
+                size='small'
+                sx={{flex: 1, width: '100%'}}
+                dataLoading={isLoading}
+                options={options}
+                keyName='vin'
+                returnObject={true}
+                inputValue={input}
+                onSearch={searchVin}
+                value={filterList[index].map((item) => item.id) ?? []}
+                error={false}
+                handleChange={({name, value}) => {
+                  setInput('');
+                  filterList[index] = value;
+                  onChange(filterList[index], index, column);
+                }}
+              />
+            </>
+          );
+        },
+      },
+    },
+  };
+};
+
+export const vehicleLot = function () {
+  const [isLoading, setIsLoading] = useState(false);
+  const [options, setOptions] = useState([]);
+  const [input, setInput] = useState('');
+
+  const fetchData = async (url, content, loading, setData) => {
+    try {
+      loading(true);
+      const res = await jwtAxios.get(url, {params: content});
+      if (res.status === 200 && res.data.result) {
+        setData((state) => merge(options, res.data.data, 'id'));
+      } else {
+        setData([]);
+      }
+      loading(false);
+    } catch (error) {
+      setData([]);
+      loading(false);
+    }
+  };
+  const searchLot = (content) => {
+    setInput(content.lot_number);
+    fetchData(`/vehicle_lots/auto_complete`, content, setIsLoading, setOptions);
+  };
+
+  useEffect(() => {
+    fetchData(`/vehicle_lots/auto_complete`, {}, setIsLoading, setOptions);
+  }, []);
+  return {
+    name: 'lot_number',
+    label: messages['common.lot_number'],
+    options: {
+      filter: true,
+      display: true,
+      filterType: 'custom',
+      customFilterListOptions: {
+        render: (v) => {
+          if (v && v.length > 0) {
+            return v.map((item) => {
+              return `${messages['common.lot_number']}: ${item.lot_number}`;
+            });
+          }
+          return false;
+        },
+      },
+      filterOptions: {
+        fullWidth: true,
+        display: (filterList, onChange, index, column) => {
+          return (
+            <>
+              <AppAutoComplete
+                multiple={true}
+                placeholder={messages['common.lot_number']}
+                label={messages['common.lot_number']}
+                name='lot_number'
+                variant='standard'
+                size='small'
+                sx={{flex: 1, width: '100%'}}
+                dataLoading={isLoading}
+                options={options}
+                keyName='lot_number'
+                returnObject={true}
+                inputValue={input}
+                onSearch={searchLot}
+                value={filterList[index].map((item) => item.id) ?? []}
+                error={false}
+                handleChange={({name, value}) => {
+                  setInput('');
+                  filterList[index] = value;
+                  onChange(filterList[index], index, column);
+                }}
+              />
+            </>
+          );
+        },
+      },
+    },
+  };
+};
