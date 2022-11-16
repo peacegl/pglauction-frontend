@@ -962,5 +962,7 @@
   "auction.mainImageRequired": "Main image is required",
   "bid.bids": "Bid(s)",
   "bid.currentBid": "Current Bid",
-  "bid.timeRemaining": "Time Remaining"
+  "bid.timeRemaining": "Time Remaining",
+  "bid.minimum_bid": "Minimum Bid",
+  "bid.buy_now_price": "Buy Now Price"
 }
