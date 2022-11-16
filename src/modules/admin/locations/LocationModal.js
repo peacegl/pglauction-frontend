@@ -9,6 +9,7 @@ import LocationForm from './LocationForm';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 const insertColumns = LocationConfigs().insertColumns;
 const validationSchema = LocationConfigs().validationSchema;
+import {getData} from '../../../configs';
 
 export default function LocationModal({
   open,
@@ -27,23 +28,8 @@ export default function LocationModal({
     description: '',
   });
 
-  const fetchData = async (url, content, loading, setData) => {
-    try {
-      loading(true);
-      const res = await jwtAxios.get(url, {params: content});
-      if (res.status === 200 && res.data.result) {
-        setData(res.data.data);
-      } else {
-        setData([]);
-      }
-      loading(false);
-    } catch (error) {
-      setData([]);
-      loading(false);
-    }
-  };
   const searchLocations = (content) => {
-    fetchData(
+    getData(
       `/location/auto_complete`,
       content,
       setLocationLoading,
@@ -53,7 +39,7 @@ export default function LocationModal({
 
   useEffect(() => {
     if (!recordId) {
-      fetchData(
+      getData(
         `/location/auto_complete`,
         {},
         setLocationLoading,
@@ -77,7 +63,7 @@ export default function LocationModal({
               }
             });
             setInitialValues(values);
-            fetchData(
+            getData(
               `/location/auto_complete${
                 values.parent_id ? '?id=' + values.parent_id : ''
               }`,

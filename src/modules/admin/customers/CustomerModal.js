@@ -14,6 +14,7 @@ import CustomModal from '../../CustomModal';
 import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import Helper from 'helpers/helpers';
+import {getData} from '../../../configs';
 
 export default function CustomerModal({
   open,
@@ -162,36 +163,10 @@ export default function CustomerModal({
     return true;
   };
 
-  const fetchData = async (url, content, loading, setData, setTotal = null) => {
-    try {
-      loading(true);
-      const res = await jwtAxios.get(url, {params: content});
-      if (res.status === 200 && res.data.result) {
-        setData(res.data.data);
-        if (setTotal) setTotal(res.data.total);
-      } else {
-        setData([]);
-      }
-      loading(false);
-    } catch (error) {
-      setData([]);
-      loading(false);
-    }
-  };
   useEffect(() => {
-    fetchData(
-      '/role/auto_complete?type=customer',
-      {},
-      setRolesLoading,
-      setRoles,
-    );
-    fetchData(
-      `/timezones/auto_complete`,
-      {},
-      setTimezonesLoading,
-      setTimezones,
-    );
-    fetchData(
+    getData('/role/auto_complete?type=customer', {}, setRolesLoading, setRoles);
+    getData(`/timezones/auto_complete`, {}, setTimezonesLoading, setTimezones);
+    getData(
       `/groupedPermissions`,
       {},
       setPermissionsLoading,
@@ -201,7 +176,7 @@ export default function CustomerModal({
   }, []);
 
   const searchTimezones = (content) => {
-    fetchData(
+    getData(
       `/timezones/auto_complete`,
       content,
       setTimezonesLoading,

@@ -11,7 +11,7 @@ import AuctionsList from '../../../components/auctions/AuctionsList';
 export default function Home() {
   return (
     <Container maxWidth='xl' sx={{mt: 6}}>
-      <Grid container spacing={5}>
+      {/* <Grid container spacing={5}>
         <Grid item xs={3}>
           <Stack direction='column' spacing={10}>
             <Box>
@@ -33,7 +33,7 @@ export default function Home() {
         <Grid item xs={9}>
           <AuctionsList />
         </Grid>
-      </Grid>
+      </Grid> */}
     </Container>
   );
 }
