@@ -16,7 +16,8 @@ const AuctionImagesStep = (props) => {
           <SingleImageDropzone
             errorMessage={<IntlMessages id='auction.mainImageRequired' />}
             text={<IntlMessages id='auction.mainImage' />}
-            width={{xs: 150, lg: 220}}
+            width={{xs: 160, lg: 220}}
+            height={{xs: 120, lg: 165}}
             image={props.mainImage}
             name='main_image'
             setfieldvalue={props.setfieldvalue}

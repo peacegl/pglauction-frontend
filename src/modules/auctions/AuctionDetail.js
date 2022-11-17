@@ -1,93 +1,96 @@
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import {Box, Card, Stack} from '@mui/material';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+import {Box, Divider, Paper, Stack} from '@mui/material';
+import {Carousel} from 'react-responsive-carousel';
 import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 import {getData} from '../../configs';
+import {SideBySideMagnifier} from 'react-image-magnifiers';
 
 const AuctionDetail = (props) => {
   const [auction, setAuction] = useState({});
-  const [image, setImage] = useState('');
   const [auctionLoading, setAuctionLoading] = useState(false);
   const router = useRouter();
   const {id} = router.query;
 
   useEffect(() => {
     if (id) {
-      getData(`/auctions/${id}`, {}, setAuctionLoading, setAuction);
+      getData(`/auctions/${id}`, {}, setAuctionLoading, setAuctionData);
     }
   }, [id]);
 
-  useEffect(() => {
-    if (auction) {
-      let mainImage = '';
-      auction.images?.forEach((image) => {
-        if (image.type == 'main_image') {
-          mainImage = image.path;
-        }
-      });
-      setImage(mainImage);
-    }
-  }, [auction]);
+  const setAuctionData = (data) => {
+    let sortedData = data;
+    sortedData.images.forEach((image, index, arr) => {
+      if (image.type == 'main_image') {
+        arr.unshift(image);
+        arr.splice(index, 1);
+      }
+    });
+    setAuction(sortedData);
+  };
+
+  const renderCustomThumbs = () => {
+    const thumbList = auction.images?.map((image, index) => (
+      <picture key={index}>
+        <source data-srcSet={image.path} type='image/*' />
+        <img
+          style={{objectFit: 'cover'}}
+          key={image._id}
+          src={image.path}
+          alt={image.alternativeText}
+          height='70'
+        />
+      </picture>
+    ));
+
+    return thumbList;
+  };
 
   return (
     <Stack direction={{xs: 'column', md: 'row'}} spacing={{xs: 5, md: 8}}>
       <Stack direction='row' spacing={5}>
-        <Card
-          sx={{
-            borderRadius: 1,
-            width: {xs: 'auto', md: '500px'},
-          }}
-        >
-          <CardMedia
-            component='img'
-            height='400'
-            image={image}
-            alt='green iguana'
-          />
-          <Box
+        <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+          <Paper
+            variant='outlined'
             sx={{
-              position: 'relative',
+              width: '600px',
+              '& .control-arrow': {
+                backgroundColor: (theme) => theme.palette.info.main,
+              },
             }}
           >
-            <ArrowBackIcon
-              color='primary'
+            <Carousel
+              showStatus={false}
+              showIndicators={false}
+              emulateTouch={true}
+              renderThumbs={renderCustomThumbs}
+              dynamicHeight={true}
+            >
+              {auction.images?.map((item) => (
+                // <div key={item.id}>
+                <SideBySideMagnifier
+                  key={item.id}
+                  imageSrc={item.path}
+                  alwaysInPlace={true}
+                  fillAvailableSpace={true}
+                  imageAlt='Image'
+                />
+                //   <img
+                //     src={item.path}
+                //     alt='Auction Item'
+                //     className='carousel-image'
+                //   />
+                // </div>
+              ))}
+            </Carousel>
+            {/* <Divider
               sx={{
-                cursor: 'pointer',
-                position: 'absolute',
-                top: '40%',
-                left: '0',
-                backgroundColor: (theme) => theme.palette.background.paper,
+                mb: 2,
               }}
             />
-            <CardContent>
-              <Box sx={{display: 'flex', alignItems: 'center'}}>
-                {auction.images?.map((item) => (
-                  <CardMedia
-                    key={item.id}
-                    component='img'
-                    height='100'
-                    sx={{width: '100px', mr: 3}}
-                    image={item.path}
-                    alt='green iguana'
-                  />
-                ))}
-              </Box>
-            </CardContent>
-            <ArrowForwardIcon
-              color='primary'
-              sx={{
-                cursor: 'pointer',
-                position: 'absolute',
-                top: '40%',
-                right: '0',
-                backgroundColor: (theme) => theme.palette.background.paper,
-              }}
-            />
-          </Box>
-        </Card>
+            <Box>d</Box> */}
+          </Paper>
+        </Stack>
       </Stack>
     </Stack>
   );

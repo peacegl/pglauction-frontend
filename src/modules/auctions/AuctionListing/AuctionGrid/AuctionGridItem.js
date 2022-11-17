@@ -21,11 +21,13 @@ export default function AuctionGridItem(props) {
         <CardMedia
           component='img'
           height='200'
-          image={props.item.images[0].path}
+          image={
+            props.item.images.find((image) => image.type == 'main_image').path
+          }
           alt='preview'
         />
         <CardContent>
-          <Typography variant='body1' color='text.secondary' sx={{mb: 1}}>
+          <Typography variant='body2' color='text.secondary' sx={{mb: 1}}>
             {props.item.bids_count} <IntlMessages id='bid.bids' />
           </Typography>
 
@@ -40,9 +42,13 @@ export default function AuctionGridItem(props) {
             }}
           >
             <Box sx={{flex: 1}}>
-              <Box sx={{fontSize: '12px', textTransform: 'uppercase'}}>
+              <Typography
+                variant='body2'
+                color='text.secondary'
+                sx={{textTransform: 'uppercase'}}
+              >
                 <IntlMessages id='bid.currentBid' />
-              </Box>
+              </Typography>
               <Box
                 sx={{
                   mt: 3,
@@ -61,9 +67,13 @@ export default function AuctionGridItem(props) {
               </Box>
             </Box>
             <Box sx={{flex: 1}}>
-              <Box sx={{fontSize: '12px', textTransform: 'uppercase'}}>
+              <Typography
+                variant='body2'
+                color='text.secondary'
+                sx={{textTransform: 'uppercase'}}
+              >
                 <IntlMessages id='bid.timeRemaining' />
-              </Box>
+              </Typography>
               <TimeRemainingBox end_date={props.item.end_date} />
             </Box>
           </Box>

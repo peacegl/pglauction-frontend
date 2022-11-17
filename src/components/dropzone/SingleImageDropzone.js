@@ -1,13 +1,16 @@
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import AvatarViewWrapper from '../main/AvatarViewWrapper';
 import ImageIcon from '@mui/icons-material/Image';
+import ImageCropModal from './ImageCropModal';
 import {useDropzone} from 'react-dropzone';
 import {Typography} from '@mui/material';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
+import {useState} from 'react';
 
 const SingleImageDropzone = ({
   width,
+  height,
   image,
   name,
   setfieldvalue,
@@ -18,14 +21,22 @@ const SingleImageDropzone = ({
   errorMessage,
   deleteImage,
 }) => {
+  const [imageForCrop, setImageForCrop] = useState('');
+  const [openImageCrop, setOpenImageCrop] = useState(false);
   const {getRootProps, getInputProps} = useDropzone({
     accept: 'image/*',
     onDrop: (acceptedFiles) => {
-      setImage({preview: URL.createObjectURL(acceptedFiles[0])});
-      setfieldvalue(name, acceptedFiles[0]);
-      if (setIsImageValid) setIsImageValid(true);
+      setImageForCrop(acceptedFiles[0]);
+      setOpenImageCrop(true);
     },
   });
+
+  const addImage = (croptedImage) => {
+    setImage({preview: URL.createObjectURL(croptedImage)});
+    setfieldvalue(name, croptedImage[0]);
+    if (setIsImageValid) setIsImageValid(true);
+  };
+
   return (
     <Box sx={{position: 'relative'}}>
       <AvatarViewWrapper {...getRootProps({className: 'dropzone'})}>
@@ -33,8 +44,8 @@ const SingleImageDropzone = ({
         <label htmlFor='icon-button-file'>
           <Box
             sx={{
-              width: width ? width : {xs: 50, lg: 80},
-              height: width ? width : {xs: 50, lg: 80},
+              width: width ? width : {xs: 60, lg: 80},
+              height: height ? height : {xs: 60, lg: 80},
               cursor: 'pointer',
               position: 'relative',
               display: 'inline-flex',
@@ -114,6 +125,13 @@ const SingleImageDropzone = ({
           {errorMessage}
         </Typography>
       )}
+      {openImageCrop && (
+        <ImageCropModal
+          open={openImageCrop}
+          toggleOpen={() => setOpenImageCrop((d) => !d)}
+          image={imageForCrop}
+        />
+      )}
     </Box>
   );
 };
@@ -123,6 +141,7 @@ SingleImageDropzone.propTypes = {
   setfieldvalue: PropTypes.func,
   name: PropTypes.string,
   width: PropTypes.object,
+  height: PropTypes.object,
   image: PropTypes.object,
   text: PropTypes.string,
   isImageValid: PropTypes.bool,
