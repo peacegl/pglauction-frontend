@@ -21,22 +21,20 @@ const SingleImageDropzone = ({
   errorMessage,
   deleteImage,
 }) => {
-  const [imageForCrop, setImageForCrop] = useState('');
+  const [imagesForCrop, setImagesForCrop] = useState([]);
   const [openImageCrop, setOpenImageCrop] = useState(false);
   const {getRootProps, getInputProps} = useDropzone({
     accept: 'image/*',
+    multiple: false,
     onDrop: (acceptedFiles) => {
-      setImageForCrop(acceptedFiles[0]);
+      setImagesForCrop(acceptedFiles);
       setOpenImageCrop(true);
-      setImage({preview: URL.createObjectURL(acceptedFiles[0])});
-      setfieldvalue(name, acceptedFiles[0]);
-      if (setIsImageValid) setIsImageValid(true);
     },
   });
 
-  const addImage = (croptedImage) => {
-    setImage({preview: URL.createObjectURL(croptedImage)});
-    setfieldvalue(name, croptedImage);
+  const addImage = (croptedImages) => {
+    setImage({preview: URL.createObjectURL(croptedImages[0])});
+    setfieldvalue(name, croptedImages[0]);
     if (setIsImageValid) setIsImageValid(true);
   };
 
@@ -132,7 +130,8 @@ const SingleImageDropzone = ({
         <ImageCropModal
           open={openImageCrop}
           toggleOpen={() => setOpenImageCrop((d) => !d)}
-          image={imageForCrop}
+          images={imagesForCrop}
+          saveImages={addImage}
         />
       )}
     </Box>

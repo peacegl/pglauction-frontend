@@ -964,5 +964,7 @@
   "bid.currentBid": "Current Bid",
   "bid.timeRemaining": "Time Remaining",
   "bid.minimum_bid": "Minimum Bid",
-  "bid.buy_now_price": "Buy Now Price"
+  "bid.buy_now_price": "Buy Now Price",
+  "common.zoom": "Zoom",
+  "common.rotation": "Rotation"
 }
