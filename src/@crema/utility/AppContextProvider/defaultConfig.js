@@ -191,6 +191,38 @@ export const defaultTheme = {
           },
         },
       },
+      MUIDataTableBodyCell: {
+        styleOverrides: {
+          root: {
+            whiteSpace: 'nowrap',
+          },
+        },
+      },
+      MUIDataTableHeadCell: {
+        styleOverrides: {
+          root: {
+            padding: 10,
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            fontWeight: 'bold',
+            backgroundColor: '#0A8FDC',
+            color: '#fff',
+            'div, svg, span': {
+              color: '#fff!important',
+            },
+          },
+        },
+      },
+      MUIDataTableSelectCell: {
+        styleOverrides: {
+          headerCell: {
+            backgroundColor: '#0A8FDC',
+            '.MuiButtonBase-root': {
+              color: '#fff',
+            },
+          },
+        },
+      },
     },
   },
 };
