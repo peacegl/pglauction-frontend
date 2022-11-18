@@ -1,14 +1,16 @@
-import CategoryConfigs from '../../../configs/pages/categories';
+import {tableColumns} from '../../../configs/pages/categories';
 import {useDispatch, useSelector} from 'react-redux';
 import CustomDataTable from '../../CustomDataTable';
-import {onGetCategoryList, onDeleteCategories} from 'redux/actions';
+import {
+  onGetCategoryList,
+  onDeleteCategories,
+  getUserAutocompleteOptions,
+} from 'redux/actions';
 import {useEffect, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
 import CategoryModal from './CategoryModal';
 
 export default function userList() {
-  const columns = CategoryConfigs().columns;
-
   const [openModal, setOpenModal] = useState(false);
   const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
@@ -16,16 +18,16 @@ export default function userList() {
   const [per_page, setPerPage] = useState(20);
   const [search, setSearch] = useState('');
   const [exactMatch, setExactMatch] = useState(false);
+  const [filterData, setFilterData] = useState({});
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(
     ({categories}) => categories.categoryData,
   );
-  const filterData = useSelector(({categories}) => categories.filterData);
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   useEffect(() => {
     fetchData(search);
-  }, [dispatch, page, per_page, orderBy]);
+  }, [dispatch, page, per_page, orderBy, filterData]);
 
   const fetchData = async (search = '') => {
     await dispatch(
@@ -61,6 +63,19 @@ export default function userList() {
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
+    confirmFilters: true,
+    onFilterDialogOpen: () => {
+      dispatch(getUserAutocompleteOptions());
+    },
+    // callback that gets executed when filters are confirmed
+    onFilterConfirm: (filterList) => {
+      handleFilter(filterList);
+    },
+    onFilterChange: (column, filterList, type) => {
+      if (type === 'chip') {
+        handleFilter(filterList);
+      }
+    },
   };
   const onAdd = () => {
     setRecordId(null);
@@ -88,13 +103,34 @@ export default function userList() {
     fetchData(value);
   };
 
+  const handleFilter = (filterList) => {
+    const filterData = {};
+    filterData['categories.name'] = filterList[1][0]
+      ? 'like@@' + filterList[1][0].trim()
+      : undefined;
+    filterData['categories.parent_id'] = filterList[3][0]
+      ? 'exact@@' + filterList[3][0]['id']
+      : undefined;
+    filterData['categories.created_by'] = filterList[4].map((item) => item.id);
+    filterData['categories.updated_by'] = filterList[6].map((item) => item.id);
+    filterData['categories.created_at'] = {
+      from: filterList[5][0],
+      to: filterList[5][1],
+    };
+    filterData['categories.updated_at'] = {
+      from: filterList[7][0],
+      to: filterList[7][1],
+    };
+    setFilterData(filterData);
+  };
+
   return (
     <>
       <CustomDataTable
         title='Category List'
         total={total}
         data={data}
-        columns={columns}
+        columns={tableColumns()}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}
