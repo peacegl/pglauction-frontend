@@ -13,7 +13,7 @@ export default function DefaultToolbar({
   selected,
 }) {
   return (
-    <Box style={{display: 'flex'}} sx={{mx: 4, my: 1.7}}>
+    <Box style={{display: 'flex'}} sx={{mx: 4, my: 1.75}}>
       {selected.length == 1 && (
         <AppTooltip title={<IntlMessages id='common.edit' />}>
           <IconButton color='info' onClick={onEdit}>
