@@ -64,7 +64,7 @@ const AuctionDetail = (props) => {
               showIndicators={false}
               emulateTouch={true}
               renderThumbs={renderCustomThumbs}
-              dynamicHeight={true}
+              // dynamicHeight={true}
             >
               {auction.images?.map((item) => (
                 // <div key={item.id}>
