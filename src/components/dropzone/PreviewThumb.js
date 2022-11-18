@@ -14,7 +14,7 @@ const PreviewThumb = ({file, onDeleteUploadFile}) => {
         marginBottom: 2,
         marginRight: 2,
         width: 200,
-        height: 200,
+        height: 150,
         padding: 1,
         boxSizing: 'border-box',
         '& img': {
