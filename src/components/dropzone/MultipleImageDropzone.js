@@ -1,24 +1,31 @@
 import IntlMessages from '@crema/utility/IntlMessages';
+import ImageCropModal from './ImageCropModal';
 import {useDropzone} from 'react-dropzone';
 import UploadModern from './UploadModern';
 import PreviewThumb from './PreviewThumb';
+import {useEffect, useState} from 'react';
 import {Stack} from '@mui/material';
 import PropTypes from 'prop-types';
-import {useEffect, useCallback} from 'react';
 
 const MultipleImageDropzone = (props) => {
+  const [imagesForCrop, setImagesForCrop] = useState([]);
+  const [openImageCrop, setOpenImageCrop] = useState(false);
   const dropzone = useDropzone({
     accept: 'image/*',
     onDrop: (acceptedFiles) => {
-      props.setfieldvalue('images', [...acceptedFiles]);
-      let newImages = acceptedFiles.map((file) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        }),
-      );
-      props.setImages([...newImages, ...props.images]);
+      setImagesForCrop(acceptedFiles);
+      setOpenImageCrop(true);
     },
   });
+  const addImages = (croptedImages) => {
+    props.setfieldvalue('images', [...croptedImages]);
+    let newImages = croptedImages.map((file) =>
+      Object.assign(file, {
+        preview: URL.createObjectURL(file),
+      }),
+    );
+    props.setImages([...newImages, ...props.images]);
+  };
 
   useEffect(() => {
     if (props.images.length > 0) {
@@ -63,6 +70,14 @@ const MultipleImageDropzone = (props) => {
           />
         ))}
       </Stack>
+      {openImageCrop && (
+        <ImageCropModal
+          open={openImageCrop}
+          toggleOpen={() => setOpenImageCrop((d) => !d)}
+          images={imagesForCrop}
+          saveImages={addImages}
+        />
+      )}
     </section>
   );
 };

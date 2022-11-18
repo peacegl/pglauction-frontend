@@ -3,7 +3,7 @@ import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
 const year = new Date().getFullYear();
 import * as yup from 'yup';
-import {
+import CommonConfigs, {
   createdAt,
   createdBy,
   updatedAt,
@@ -12,6 +12,7 @@ import {
   vehicleVin,
 } from 'configs';
 const {messages = []} = appIntl() ? appIntl() : {};
+const youtubeRegExp = CommonConfigs().youtubeRegExp;
 
 export const tableColumns = function () {
   return [
@@ -135,7 +136,7 @@ export const tableColumns = function () {
   ];
 };
 
-export default function configs() {
+export default function configs(invalidYoutube) {
   return {
     exportColumns: [],
     validationSchema: [
@@ -191,6 +192,9 @@ export default function configs() {
           .number()
           .typeError(<IntlMessages id='validation.priceError' />)
           .required(<IntlMessages id='validation.buyNowPriceRequired' />),
+      }),
+      yup.object({
+        youtube_url: yup.string().matches(youtubeRegExp, invalidYoutube),
       }),
     ],
   };
