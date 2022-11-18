@@ -1,11 +1,10 @@
-import {Box, Card, Stack} from '@mui/material';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+import {Box, Divider, Paper, Stack} from '@mui/material';
+import {Carousel} from 'react-responsive-carousel';
 import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
-import jwtAxios from '@crema/services/auth/jwt-auth';
-import getData from '../../configs';
+import {getData} from '../../configs';
+import {SideBySideMagnifier} from 'react-image-magnifiers';
 
 const AuctionDetail = (props) => {
   const [auction, setAuction] = useState({});
@@ -14,29 +13,84 @@ const AuctionDetail = (props) => {
   const {id} = router.query;
 
   useEffect(() => {
-    getData();
+    if (id) {
+      getData(`/auctions/${id}`, {}, setAuctionLoading, setAuctionData);
+    }
   }, [id]);
+
+  const setAuctionData = (data) => {
+    let sortedData = data;
+    sortedData.images.forEach((image, index, arr) => {
+      if (image.type == 'main_image') {
+        arr.unshift(image);
+        arr.splice(index, 1);
+      }
+    });
+    setAuction(sortedData);
+  };
+
+  const renderCustomThumbs = () => {
+    const thumbList = auction.images?.map((image, index) => (
+      <picture key={index}>
+        <source data-srcSet={image.path} type='image/*' />
+        <img
+          style={{objectFit: 'cover'}}
+          key={image._id}
+          src={image.path}
+          alt={image.alternativeText}
+          height='70'
+        />
+      </picture>
+    ));
+
+    return thumbList;
+  };
 
   return (
     <Stack direction={{xs: 'column', md: 'row'}} spacing={{xs: 5, md: 8}}>
       <Stack direction='row' spacing={5}>
-        <Card>
-          <CardMedia
-            component='img'
-            height='140'
-            image='/static/images/cards/contemplative-reptile.jpg'
-            alt='green iguana'
-          />
-          <CardContent>
-            <Typography gutterBottom variant='h5' component='div'>
-              Lizard
-            </Typography>
-            <Typography variant='body2' color='text.secondary'>
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
-            </Typography>
-          </CardContent>
-        </Card>
+        <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+          <Paper
+            variant='outlined'
+            sx={{
+              width: '600px',
+              '& .control-arrow': {
+                backgroundColor: (theme) => theme.palette.info.main,
+              },
+            }}
+          >
+            <Carousel
+              showStatus={false}
+              showIndicators={false}
+              emulateTouch={true}
+              renderThumbs={renderCustomThumbs}
+              dynamicHeight={true}
+            >
+              {auction.images?.map((item) => (
+                // <div key={item.id}>
+                <SideBySideMagnifier
+                  key={item.id}
+                  imageSrc={item.path}
+                  alwaysInPlace={true}
+                  fillAvailableSpace={true}
+                  imageAlt='Image'
+                />
+                //   <img
+                //     src={item.path}
+                //     alt='Auction Item'
+                //     className='carousel-image'
+                //   />
+                // </div>
+              ))}
+            </Carousel>
+            {/* <Divider
+              sx={{
+                mb: 2,
+              }}
+            />
+            <Box>d</Box> */}
+          </Paper>
+        </Stack>
       </Stack>
     </Stack>
   );
