@@ -28,12 +28,15 @@ const SingleImageDropzone = ({
     onDrop: (acceptedFiles) => {
       setImageForCrop(acceptedFiles[0]);
       setOpenImageCrop(true);
+      setImage({preview: URL.createObjectURL(acceptedFiles[0])});
+      setfieldvalue(name, acceptedFiles[0]);
+      if (setIsImageValid) setIsImageValid(true);
     },
   });
 
   const addImage = (croptedImage) => {
     setImage({preview: URL.createObjectURL(croptedImage)});
-    setfieldvalue(name, croptedImage[0]);
+    setfieldvalue(name, croptedImage);
     if (setIsImageValid) setIsImageValid(true);
   };
 
