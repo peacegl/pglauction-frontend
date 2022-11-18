@@ -1,7 +1,7 @@
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
 import * as yup from 'yup';
-import {createdAt, createdBy, updatedAt, updatedBy} from 'configs';
+import {createdBy, dateColumn, updatedBy} from 'configs';
 import {useEffect, useState} from 'react';
 import AppAutoComplete from '@crema/core/AppFormComponents/AppAutoComplete';
 import jwtAxios from '@crema/services/auth/jwt-auth';
@@ -122,9 +122,9 @@ export const tableColumns = function () {
       },
     },
     createdBy(),
-    createdAt,
+    dateColumn('created_at', messages['common.created_at']),
     updatedBy(),
-    updatedAt,
+    dateColumn('updated_at', messages['common.updated_at']),
   ];
 };
 

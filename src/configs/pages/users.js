@@ -1,12 +1,7 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Avatar, Typography} from '@mui/material';
-import CommonConfigs, {
-  createdAt,
-  createdBy,
-  updatedAt,
-  updatedBy,
-} from '../index';
+import CommonConfigs, {createdBy, dateColumn, updatedBy} from '../index';
 import * as yup from 'yup';
 
 const phoneRegExp = CommonConfigs().phoneRegExp;
@@ -184,9 +179,9 @@ export const tableColumns = function () {
       },
     },
     createdBy(),
-    createdAt,
+    dateColumn('created_at', messages['common.created_at']),
     updatedBy(),
-    updatedAt,
+    dateColumn('updated_at', messages['common.updated_at']),
   ];
 };
 

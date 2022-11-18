@@ -368,31 +368,110 @@ export const updatedAt = (function () {
   };
 })();
 
+export const dateColumn = (name, label) => {
+  return {
+    name: name,
+    label: label,
+    options: {
+      filter: true,
+      display: true,
+      filterType: 'custom',
+      customFilterListOptions: {
+        render: (v) => {
+          if (v[0] && v[1]) {
+            return `${label} from: ${v[0]}, To: ${v[1]}`;
+          } else if (v[0]) {
+            return `${label} from: ${v[0]}`;
+          } else if (v[1]) {
+            return `${label} To: ${v[1]}`;
+          }
+          return false;
+        },
+      },
+      filterOptions: {
+        fullWidth: true,
+        display: (filterList, onChange, index, column) => {
+          return (
+            <>
+              <FormLabel>{label}</FormLabel>
+              <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+                <DatePicker
+                  value={filterList[index][0] || null}
+                  onChange={(event) => {
+                    if (event) {
+                      filterList[index][0] =
+                        event.getFullYear() +
+                        '-' +
+                        event.getMonth() +
+                        '-' +
+                        event.getDate();
+                    } else {
+                      filterList[index].splice(0, 1);
+                    }
+                    onChange(filterList[index], index, column);
+                  }}
+                  label={messages['common.from_date']}
+                  renderInput={(params) => {
+                    return (
+                      <TextField
+                        variant='standard'
+                        name={name + '_from_date'}
+                        size='small'
+                        sx={{flex: 1}}
+                        {...params}
+                        error={false}
+                      />
+                    );
+                  }}
+                />
+                <DatePicker
+                  value={filterList[index][1] || null}
+                  onChange={(event) => {
+                    if (event) {
+                      filterList[index][1] =
+                        event.getFullYear() +
+                        '-' +
+                        event.getMonth() +
+                        '-' +
+                        event.getDate();
+                    } else {
+                      filterList[index].splice(1, 1);
+                    }
+                    onChange(filterList[index], index, column);
+                  }}
+                  label={messages['common.to_date']}
+                  renderInput={(params) => {
+                    return (
+                      <TextField
+                        variant='standard'
+                        name={name + '_to_date'}
+                        size='small'
+                        sx={{flex: 1}}
+                        {...params}
+                        error={false}
+                      />
+                    );
+                  }}
+                />
+              </Stack>
+            </>
+          );
+        },
+      },
+    },
+  };
+};
+
 export const vehicleVin = function () {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
   const [input, setInput] = useState('');
-  const fetchData = async (url, content, loading, setData) => {
-    try {
-      loading(true);
-      const res = await jwtAxios.get(url, {params: content});
-      if (res.status === 200 && res.data.result) {
-        setData((state) => merge(options, res.data.data, 'id'));
-      } else {
-        setData([]);
-      }
-      loading(false);
-    } catch (error) {
-      setData([]);
-      loading(false);
-    }
-  };
   const searchVin = (content) => {
     setInput(content.vin);
-    fetchData(`/vehicle_vins/auto_complete`, content, setIsLoading, setOptions);
+    getData(`/vehicle_vins/auto_complete`, content, setIsLoading, setOptions);
   };
   useEffect(() => {
-    fetchData(`/vehicle_vins/auto_complete`, {}, setIsLoading, setOptions);
+    getData(`/vehicle_vins/auto_complete`, {}, setIsLoading, setOptions);
   }, []);
   return {
     name: 'vin',
@@ -451,28 +530,13 @@ export const vehicleLot = function () {
   const [options, setOptions] = useState([]);
   const [input, setInput] = useState('');
 
-  const fetchData = async (url, content, loading, setData) => {
-    try {
-      loading(true);
-      const res = await jwtAxios.get(url, {params: content});
-      if (res.status === 200 && res.data.result) {
-        setData((state) => merge(options, res.data.data, 'id'));
-      } else {
-        setData([]);
-      }
-      loading(false);
-    } catch (error) {
-      setData([]);
-      loading(false);
-    }
-  };
   const searchLot = (content) => {
     setInput(content.lot_number);
-    fetchData(`/vehicle_lots/auto_complete`, content, setIsLoading, setOptions);
+    getData(`/vehicle_lots/auto_complete`, content, setIsLoading, setOptions);
   };
 
   useEffect(() => {
-    fetchData(`/vehicle_lots/auto_complete`, {}, setIsLoading, setOptions);
+    getData(`/vehicle_lots/auto_complete`, {}, setIsLoading, setOptions);
   }, []);
   return {
     name: 'lot_number',
