@@ -14,6 +14,7 @@ import {
   Paper,
   IconButton,
   Button,
+  Chip,
 } from '@mui/material';
 
 const ImageCropModal = ({
@@ -82,11 +83,24 @@ const ImageCropModal = ({
           borderRadius: 2,
         }}
       >
-        <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
+        <Box sx={{float: 'right'}}>
           <IconButton aria-label='close' onClick={toggleOpen}>
             <CloseIcon sx={{fontSize: 18}} />
           </IconButton>
         </Box>
+        {images.length > 1 && (
+          <Chip
+            label={
+              <Box sx={{display: 'flex'}}>
+                <Typography variant='h3'>{imageIndex + 1}</Typography> /
+                <Typography variant='body1'>{images.length}</Typography>
+              </Box>
+            }
+            size='small'
+            color='primary'
+            sx={{mx: 3, mt: 2}}
+          />
+        )}
         <Box>
           <Box
             sx={{

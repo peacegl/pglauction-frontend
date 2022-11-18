@@ -25,6 +25,7 @@ const SingleImageDropzone = ({
   const [openImageCrop, setOpenImageCrop] = useState(false);
   const {getRootProps, getInputProps} = useDropzone({
     accept: 'image/*',
+    multiple: false,
     onDrop: (acceptedFiles) => {
       setImagesForCrop(acceptedFiles);
       setOpenImageCrop(true);
