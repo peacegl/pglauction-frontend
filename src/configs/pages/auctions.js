@@ -1,94 +1,120 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
-import CommonConfigs from '../index';
+import CommonConfigs, {
+  createdAt,
+  createdBy,
+  updatedAt,
+  updatedBy,
+  vehicleLot,
+  vehicleVin,
+} from '../index';
 import * as yup from 'yup';
 
 const youtubeRegExp = CommonConfigs().youtubeRegExp;
+const {messages = []} = appIntl() ? appIntl() : {};
+
+export const tableColumns = function () {
+  return [
+    {
+      name: 'code',
+      label: messages['common.code'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+            {value}
+            {tableMeta.tableData[tableMeta.rowIndex]['key']
+              .toString()
+              .padStart(8, '0')}
+          </Typography>
+        ),
+      },
+    },
+    vehicleVin(),
+    vehicleLot(),
+    {
+      name: 'title',
+      label: messages['common.title'],
+      options: {
+        filter: false,
+      },
+    },
+    {
+      name: 'subtitle',
+      label: messages['common.subtitle'],
+      options: {
+        filter: false,
+      },
+    },
+    {
+      name: 'start_date',
+      label: messages['common.start_date'],
+    },
+    {
+      name: 'end_date',
+      label: messages['common.end_date'],
+    },
+    {
+      name: 'minimum_bid',
+      label: messages['common.minimum_bid'],
+    },
+    {
+      name: 'buy_now_price',
+      label: messages['common.buy_now_price'],
+    },
+    {
+      name: 'note',
+      label: messages['common.note'],
+      options: {
+        display: false,
+        filter: false,
+      },
+    },
+    {
+      name: 'status',
+      label: messages['common.status'],
+      options: {
+        filter: true,
+        filterType: 'select',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `Status: ${v}`;
+            }
+            return false;
+          },
+        },
+        filterOptions: {
+          names: ['Active', 'Pending', 'Sold'],
+        },
+      },
+    },
+    {
+      name: 'seller',
+      label: messages['common.seller'],
+      options: {
+        display: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `Seller: ${v}`;
+            }
+            return false;
+          },
+        },
+      },
+    },
+    createdBy(),
+    createdAt,
+    updatedBy(),
+    updatedAt,
+  ];
+};
 
 export default function configs(invalidYoutube) {
-  const {messages = []} = appIntl() ? appIntl() : {};
   return {
-    columns: [
-      {
-        name: 'code',
-        label: messages['common.code'],
-        options: {
-          filter: false,
-          customBodyRender: (value, tableMeta, updateValue) => (
-            <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-              {value}
-              {tableMeta.tableData[tableMeta.rowIndex]['key']
-                .toString()
-                .padStart(8, '0')}
-            </Typography>
-          ),
-        },
-      },
-      {
-        name: 'vin',
-        label: messages['common.vin'],
-      },
-      {
-        name: 'lot_number',
-        label: messages['common.lot_number'],
-      },
-      {
-        name: 'title',
-        label: messages['common.title'],
-      },
-      {
-        name: 'subtitle',
-        label: messages['common.subtitle'],
-      },
-      {
-        name: 'start_date',
-        label: messages['common.start_date'],
-      },
-      {
-        name: 'end_date',
-        label: messages['common.end_date'],
-      },
-      {
-        name: 'minimum_bid',
-        label: messages['common.minimum_bid'],
-      },
-      {
-        name: 'buy_now_price',
-        label: messages['common.buy_now_price'],
-      },
-      {
-        name: 'note',
-        label: messages['common.note'],
-        options: {
-          display: false,
-        },
-      },
-      {
-        name: 'status',
-        label: messages['common.status'],
-      },
-      {
-        name: 'seller',
-        label: messages['common.seller'],
-      },
-      {
-        name: 'created_by',
-        label: messages['common.created_by'],
-      },
-      {
-        name: 'created_at',
-        label: messages['common.created_at'],
-      },
-      {
-        name: 'updated_by',
-        label: messages['common.updated_by'],
-      },
-      {
-        name: 'updated_at',
-        label: messages['common.updated_at'],
-      },
-    ],
     exportColumns: [],
     validationSchema: [
       yup.object({

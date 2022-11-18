@@ -7,6 +7,7 @@ import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import CategoryForm from './CategoryForm';
 import jwtAxios from '@crema/services/auth/jwt-auth';
+import {getData} from '../../../configs';
 
 const insertColumns = CategoryConfigs().insertColumns;
 const validationSchema = CategoryConfigs().validationSchema;
@@ -26,24 +27,8 @@ export default function CategoryModal({
     parent_id: '',
     description: '',
   });
-  const fetchData = async (url, content, loading, setData) => {
-    try {
-      loading(true);
-      const res = await jwtAxios.get(url, {params: content});
-      if (res.status === 200 && res.data.result) {
-        setData(res.data.data);
-      } else {
-        setData([]);
-      }
-      loading(false);
-    } catch (error) {
-      setData([]);
-      loading(false);
-    }
-  };
-
   const searchCategories = (content) => {
-    fetchData(
+    getData(
       `/category/auto_complete`,
       content,
       setCategoryLoading,
@@ -53,7 +38,7 @@ export default function CategoryModal({
 
   useEffect(() => {
     if (!recordId) {
-      fetchData(
+      getData(
         `/category/auto_complete`,
         {},
         setCategoryLoading,
@@ -76,7 +61,7 @@ export default function CategoryModal({
               }
             });
             setInitialValues(values);
-            fetchData(
+            getData(
               `/category/auto_complete${
                 values.parent_id ? '?id=' + values.parent_id : ''
               }`,

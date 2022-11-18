@@ -11,6 +11,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import {onUpdateAuction} from 'redux/actions';
 import CustomModal from '../../CustomModal';
 import {useEffect, useState} from 'react';
+import {getData} from '../../../configs';
 import {useDispatch} from 'react-redux';
 import Helper from 'helpers/helpers';
 import PropTypes from 'prop-types';
@@ -59,23 +60,8 @@ export default function AuctionModal({
     messages['validation.invalidYoutube'],
   ).validationSchema;
 
-  const fetchData = async (url, content, loading, setData) => {
-    try {
-      loading(true);
-      const res = await jwtAxios.get(url, {params: content});
-      if (res.status === 200 && res.data.result) {
-        setData(res.data.data);
-      } else {
-        setData([]);
-      }
-      loading(false);
-    } catch (error) {
-      setData([]);
-      loading(false);
-    }
-  };
   const searchLocations = (content, location_id = null) => {
-    fetchData(
+    getData(
       `/location/auto_complete${location_id ? '?id=' + location_id : ''}`,
       content,
       setLocationLoading,
@@ -83,7 +69,7 @@ export default function AuctionModal({
     );
   };
   const searchCategories = (content, category_id = null) => {
-    fetchData(
+    getData(
       `/category/auto_complete${category_id ? '?id=' + category_id : ''}`,
       content,
       setCategoryLoading,
@@ -91,7 +77,7 @@ export default function AuctionModal({
     );
   };
   const searchSellers = (content, seller_id = null) => {
-    fetchData(
+    getData(
       `/sellers/auto_complete${seller_id ? '?id=' + seller_id : ''}`,
       content,
       setSellersLoading,

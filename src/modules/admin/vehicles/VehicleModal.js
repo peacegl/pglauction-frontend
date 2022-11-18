@@ -16,6 +16,7 @@ import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import Helper from 'helpers/helpers';
 import PropTypes from 'prop-types';
+import {getData} from '../../../configs';
 
 export default function VehicleModal({
   open,
@@ -67,23 +68,9 @@ export default function VehicleModal({
     messages['validation.invalidYoutube'],
   ).validationSchema;
   const dispatch = useDispatch();
-  const fetchData = async (url, content, loading, setData) => {
-    try {
-      loading(true);
-      const res = await jwtAxios.get(url, {params: content});
-      if (res.status === 200 && res.data.result) {
-        setData(res.data.data);
-      } else {
-        setData([]);
-      }
-      loading(false);
-    } catch (error) {
-      setData([]);
-      loading(false);
-    }
-  };
+
   const searchLocations = (content, location_id = null) => {
-    fetchData(
+    getData(
       `/location/auto_complete${location_id ? '?id=' + location_id : ''}`,
       content,
       setLocationLoading,
@@ -91,7 +78,7 @@ export default function VehicleModal({
     );
   };
   const searchCategories = (content, category_id = null) => {
-    fetchData(
+    getData(
       `/category/auto_complete${category_id ? '?id=' + category_id : ''}`,
       content,
       setCategoryLoading,
@@ -99,7 +86,7 @@ export default function VehicleModal({
     );
   };
   const searchSellers = (content, seller_id = null) => {
-    fetchData(
+    getData(
       `/sellers/auto_complete${seller_id ? '?id=' + seller_id : ''}`,
       content,
       setSellersLoading,
@@ -113,7 +100,7 @@ export default function VehicleModal({
       searchCategories({});
       searchSellers({});
     }
-  }, []);
+  }, [recordId]);
 
   useEffect(() => {
     if (recordId) {
