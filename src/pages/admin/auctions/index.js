@@ -2,7 +2,7 @@ import React from 'react';
 import AppPage from '../../../@crema/hoc/AppPage';
 import asyncComponent from '../../../@crema/utility/asyncComponent';
 
-const Auctionitems = asyncComponent(() =>
-  import('../../../modules/admin/auction_items'),
+const Auctions = asyncComponent(() =>
+  import('../../../modules/admin/auctions'),
 );
-export default AppPage(() => <Auctionitems />);
+export default AppPage(() => <Auctions />);

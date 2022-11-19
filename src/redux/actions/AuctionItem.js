@@ -7,7 +7,7 @@ import {
   GET_CATEGORIES,
   SET_AUCTION_ITEM_FILTER_DATA,
   SET_AUCTION_ITEM_DATA,
-  UPDATE_AUCTION,
+  UPDATE_AUCTION_ITEM,
   SET_AUCTION_ITEM_VIEW_TYPE,
   SHOW_MESSAGE,
 } from '../../shared/constants/ActionTypes';
@@ -68,7 +68,7 @@ export const onGetWebAuctionData = (filterData) => {
   };
 };
 
-export const onUpdateAuction = (id, data, toggleOpen) => {
+export const onUpdateAuctionItem = (id, data, toggleOpen) => {
   return async (dispatch) => {
     dispatch({type: FETCH_START});
     const {messages} = appIntl();
@@ -76,7 +76,7 @@ export const onUpdateAuction = (id, data, toggleOpen) => {
       const res = await jwtAxios.post(`/auction_items/${id}?_method=PUT`, data);
       if (res.status === 202 && res.data.result) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: UPDATE_AUCTION, payload: res.data.data});
+        dispatch({type: UPDATE_AUCTION_ITEM, payload: res.data.data});
         toggleOpen(false);
         dispatch({
           type: SHOW_MESSAGE,

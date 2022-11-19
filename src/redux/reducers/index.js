@@ -1,5 +1,6 @@
 import {combineReducers} from 'redux';
 import Settings from './Setting';
+import Auctions from './Auctions';
 import AuctionItems from './AuctionItems';
 import Common from './Common';
 import Vehicles from './Vehicles';
@@ -19,6 +20,7 @@ const reducers = combineReducers({
   locations: Locations,
   vehicles: Vehicles,
   auctionItems: AuctionItems,
+  auctions: Auctions,
   roles: Roles,
   permissions: Permissions,
 });

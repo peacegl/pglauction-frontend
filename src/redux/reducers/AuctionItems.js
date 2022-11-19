@@ -5,7 +5,7 @@ import {
   SET_AUCTION_ITEM_FILTER_DATA,
   SET_AUCTION_ITEM_DATA,
   SET_AUCTION_ITEM_VIEW_TYPE,
-  UPDATE_AUCTION,
+  UPDATE_AUCTION_ITEM,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -37,7 +37,7 @@ const AuctionReducer = (state = initialState, action) => {
         ...state,
         webAuctionItemsList: action.payload,
       };
-    case UPDATE_AUCTION:
+    case UPDATE_AUCTION_ITEM:
       return {
         ...state,
         auctionItemsList: {

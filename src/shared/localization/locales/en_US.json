@@ -759,6 +759,7 @@
   "sidebar.roles": "Roles",
   "sidebar.permissions": "Permissions",
   "sidebar.vehicles": "Vechiles",
+  "sidebar.auctions": "Auctions",
   "sidebar.auctionItems": "Auction Items",
   "sidebar.customers": "Customers",
   "sidebar.categories": "Categories",
@@ -967,5 +968,7 @@
   "bid.buy_now_price": "Buy Now Price",
   "common.zoom": "Zoom",
   "common.rotation": "Rotation",
-  "common.interval": "Interval"
+  "common.interval": "Interval",
+  "auction.auctionList": "Auction List",
+  "auction.VehiclesCount": "Vechicles Count"
 }

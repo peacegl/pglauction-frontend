@@ -1,14 +1,14 @@
 import AuctionDescriptionStep from 'components/auctions/AuctionDescriptionStep';
 import AuctionImagesStep from '../../../components/auctions/AuctionImagesStep';
+import AuctionItemConfigs from '../../../configs/pages/auctionItems';
 import AuctionStep from '../../../components/auctions/AuctionStep';
 import CollectionsIcon from '@mui/icons-material/Collections';
-import AuctionItemConfigs from '../../../configs/pages/auctionItems';
 import IntlMessages from '@crema/utility/IntlMessages';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
 import SellIcon from '@mui/icons-material/Sell';
 import InfoIcon from '@mui/icons-material/Info';
-import {onUpdateAuction} from 'redux/actions';
+import {onUpdateAuctionItem} from 'redux/actions';
 import CustomModal from '../../CustomModal';
 import {useEffect, useState} from 'react';
 import {getData} from '../../../configs';
@@ -16,7 +16,7 @@ import {useDispatch} from 'react-redux';
 import Helper from 'helpers/helpers';
 import PropTypes from 'prop-types';
 
-export default function AuctionModal({
+export default function AuctionItemModal({
   open,
   toggleOpen,
   width,
@@ -159,7 +159,7 @@ export default function AuctionModal({
     values.deleted_images = deletedImages;
     const auctionFormData = Helper.getFormData(values);
     if (recordId) {
-      dispatch(onUpdateAuction(recordId, auctionFormData, toggleOpen));
+      dispatch(onUpdateAuctionItem(recordId, auctionFormData, toggleOpen));
     }
   };
   const steps = [
@@ -224,7 +224,7 @@ export default function AuctionModal({
     />
   );
 }
-AuctionModal.propTypes = {
+AuctionItemModal.propTypes = {
   open: PropTypes.bool.isRequired,
   toggleOpen: PropTypes.func,
   width: PropTypes.number,

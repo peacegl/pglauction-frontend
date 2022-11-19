@@ -8,3 +8,4 @@ export * from './AuctionItem';
 export * from './Vehicle';
 export * from './Role';
 export * from './Permission';
+export * from './Auction';
