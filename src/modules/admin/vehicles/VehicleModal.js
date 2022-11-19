@@ -189,7 +189,7 @@ export default function VehicleModal({
     {
       key: 2,
       icon: <SellIcon />,
-      label: <IntlMessages id='auction.auctionDetails' />,
+      label: <IntlMessages id='auction.auctionItemDetails' />,
       children: (
         <AuctionStep
           locations={locations}
@@ -208,13 +208,13 @@ export default function VehicleModal({
     {
       key: 3,
       icon: <InfoIcon />,
-      label: <IntlMessages id='auction.auctionDescription' />,
+      label: <IntlMessages id='auction.auctionItemDescription' />,
       children: <AuctionDescriptionStep />,
     },
     {
       key: 4,
       icon: <CollectionsIcon />,
-      label: <IntlMessages id='auction.auctionImages' />,
+      label: <IntlMessages id='auction.auctionItemImages' />,
       children: (
         <AuctionImagesStep
           mainImage={mainImage}

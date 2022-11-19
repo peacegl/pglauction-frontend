@@ -19,7 +19,7 @@ const routesConfig = [
   {
     id: 'auctions',
     title: 'Vehicle List',
-    messageId: 'sidebar.auctions',
+    messageId: 'sidebar.auctionItems',
     type: 'item',
     icon: <SellIcon sx={{fontSize: 22}} />,
     url: '/admin/auctions',

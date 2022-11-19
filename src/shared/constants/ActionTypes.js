@@ -139,23 +139,23 @@ export const GET_CUSTOM_DATA = 'get_custom_data';
 export const UPDATE_CUSTOM_DATA = 'update_custom_data';
 
 //GALLERY
-export const GET_GALLERY_PHOTO = 'get_gallery_photo';
+export const GET_GALLERY_PHOTO = 'GET_GALLERY_PHOTO';
 
 //USER_LIST
-export const GET_USER_LIST = 'get_user_list';
+export const GET_USER_LIST = 'GET_USER_LIST';
 export const ADD_NEW_USER = 'ADD_NEW_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 
 //ROLE_LIST
-export const GET_ROLE_LIST = 'get_role_list';
+export const GET_ROLE_LIST = 'GET_ROLE_LIST';
 export const ADD_NEW_ROLE = 'ADD_NEW_ROLE';
 export const UPDATE_ROLE = 'UPDATE_ROLE';
 
-export const GET_PERMISSION_LIST = 'get_permission_list';
+export const GET_PERMISSION_LIST = 'GET_PERMISSION_LIST';
 
 //Customer List
-export const GET_CUSTOMER_LIST = 'get_customer_list';
-export const SET_CUSTOMER_FILTER_DATA = 'set_customer_filter_data';
+export const GET_CUSTOMER_LIST = 'GET_CUSTOMER_LIST';
+export const SET_CUSTOMER_FILTER_DATA = 'SET_CUSTOMER_FILTER_DATA';
 export const ADD_NEW_CUSTOMER = 'ADD_NEW_CUSTOMER';
 export const UPDATE_CUSTOMER = 'UPDATE_CUSTOMER';
 
@@ -172,12 +172,12 @@ export const ADD_NEW_CATEGORY = 'ADD_NEW_CATEGORY';
 export const UPDATE_CATEGORY = 'UPDATE_CATEGORY';
 
 //Auction Items
-export const GET_AUCTIONS = 'get_auctions';
-export const GET_WEB_AUCTIONS = 'get_web_auctions';
-export const SET_AUCTION_VIEW_TYPE = 'set_auction_view_type';
-export const SET_AUCTION_FILTER_DATA = 'set_auction_filter_data';
-export const SET_AUCTION_DATA = 'set_auction_data';
-export const GET_CATEGORIES = 'get_categories';
+export const GET_AUCTION_ITEMS = 'GET_AUCTION_ITEMS';
+export const GET_WEB_AUCTION_ITEMS = 'GET_WEB_AUCTION_ITEMS';
+export const SET_AUCTION_ITEM_VIEW_TYPE = 'SET_AUCTION_ITEM_VIEW_TYPE';
+export const SET_AUCTION_ITEM_FILTER_DATA = 'SET_AUCTION_ITEM_FILTER_DATA';
+export const SET_AUCTION_ITEM_DATA = 'SET_AUCTION_ITEM_DATA';
+export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const UPDATE_AUCTION = 'UPDATE_AUCTION';
 
 // Vehicles List

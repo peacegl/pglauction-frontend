@@ -2,7 +2,7 @@ import AuctionDescriptionStep from 'components/auctions/AuctionDescriptionStep';
 import AuctionImagesStep from '../../../components/auctions/AuctionImagesStep';
 import AuctionStep from '../../../components/auctions/AuctionStep';
 import CollectionsIcon from '@mui/icons-material/Collections';
-import AuctionConfigs from '../../../configs/pages/auctions';
+import AuctionItemConfigs from '../../../configs/pages/auctionItems';
 import IntlMessages from '@crema/utility/IntlMessages';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
@@ -56,7 +56,7 @@ export default function AuctionModal({
   const {messages} = appIntl('');
   const dispatch = useDispatch();
 
-  const validationSchema = AuctionConfigs(
+  const validationSchema = AuctionItemConfigs(
     messages['validation.invalidYoutube'],
   ).validationSchema;
 
@@ -166,7 +166,7 @@ export default function AuctionModal({
     {
       key: 1,
       icon: <SellIcon />,
-      label: <IntlMessages id='auction.auctionDetails' />,
+      label: <IntlMessages id='auction.auctionItemDetails' />,
       children: (
         <AuctionStep
           locations={locations}
@@ -185,13 +185,13 @@ export default function AuctionModal({
     {
       key: 2,
       icon: <InfoIcon />,
-      label: <IntlMessages id='auction.auctionDescription' />,
+      label: <IntlMessages id='auction.auctionItemDescription' />,
       children: <AuctionDescriptionStep />,
     },
     {
       key: 3,
       icon: <CollectionsIcon />,
-      label: <IntlMessages id='auction.auctionImages' />,
+      label: <IntlMessages id='auction.auctionItemImages' />,
       children: (
         <AuctionImagesStep
           mainImage={mainImage}

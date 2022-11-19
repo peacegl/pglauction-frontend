@@ -48,12 +48,14 @@ export const tableColumns = function () {
       },
     },
     {
-      name: 'start_date',
-      label: messages['common.start_date'],
-    },
-    {
-      name: 'end_date',
-      label: messages['common.end_date'],
+      name: 'interval',
+      label: messages['common.interval'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography noWrap={true}>{value} Hours</Typography>
+        ),
+      },
     },
     {
       name: 'minimum_bid',
@@ -141,8 +143,9 @@ export default function configs(invalidYoutube) {
           .date()
           .typeError(<IntlMessages id='validation.dateValidation' />)
           .nullable(),
-        minimum_bid: yup.number(),
-        // .typeError(<IntlMessages id='validation.priceError' />)
+        minimum_bid: yup
+          .number()
+          .typeError(<IntlMessages id='validation.priceError' />),
         // .required(<IntlMessages id='validation.mbidRequired' />),
         buy_now_price: yup
           .number()

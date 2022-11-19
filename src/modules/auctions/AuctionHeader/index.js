@@ -4,7 +4,7 @@ import AppSearch from '../../../@crema/core/AppSearchBar';
 import ListIcon from '@mui/icons-material/List';
 import AppsIcon from '@mui/icons-material/Apps';
 import {useDispatch} from 'react-redux';
-import {VIEW_TYPE} from '../../../redux/reducers/Auctions';
+import {VIEW_TYPE} from '../../../redux/reducers/AuctionItems';
 import IconButton from '@mui/material/IconButton';
 import PropTypes from 'prop-types';
 import {setAuctionViewType} from '../../../redux/actions';

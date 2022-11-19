@@ -1,17 +1,17 @@
 import {
-  GET_AUCTIONS,
-  GET_WEB_AUCTIONS,
+  GET_AUCTION_ITEMS,
+  GET_WEB_AUCTION_ITEMS,
   GET_CATEGORIES,
-  SET_AUCTION_FILTER_DATA,
-  SET_AUCTION_DATA,
-  SET_AUCTION_VIEW_TYPE,
+  SET_AUCTION_ITEM_FILTER_DATA,
+  SET_AUCTION_ITEM_DATA,
+  SET_AUCTION_ITEM_VIEW_TYPE,
   UPDATE_AUCTION,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
 const initialState = {
-  auctionsList: [],
-  webAuctionsList: [],
+  auctionItemsList: [],
+  webAuctionItemsList: [],
   categories: [],
   viewType: VIEW_TYPE.GRID,
   currectAuction: null,
@@ -27,22 +27,22 @@ const initialState = {
 
 const AuctionReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_AUCTIONS:
+    case GET_AUCTION_ITEMS:
       return {
         ...state,
-        auctionsList: action.payload,
+        auctionItemsList: action.payload,
       };
-    case GET_WEB_AUCTIONS:
+    case GET_WEB_AUCTION_ITEMS:
       return {
         ...state,
-        webAuctionsList: action.payload,
+        webAuctionItemsList: action.payload,
       };
     case UPDATE_AUCTION:
       return {
         ...state,
-        auctionsList: {
-          ...state.auctionsList,
-          data: state.auctionsList.data.map((item) =>
+        auctionItemsList: {
+          ...state.auctionItemsList,
+          data: state.auctionItemsList.data.map((item) =>
             item.id == action.payload.id ? action.payload : item,
           ),
         },
@@ -52,19 +52,19 @@ const AuctionReducer = (state = initialState, action) => {
         ...state,
         categories: action.payload,
       };
-    case SET_AUCTION_VIEW_TYPE:
+    case SET_AUCTION_ITEM_VIEW_TYPE:
       return {
         ...state,
         viewType: action.payload,
       };
 
-    case SET_AUCTION_FILTER_DATA:
+    case SET_AUCTION_ITEM_FILTER_DATA:
       return {
         ...state,
         filterData: action.payload,
       };
 
-    case SET_AUCTION_DATA:
+    case SET_AUCTION_ITEM_DATA:
       return {
         ...state,
         currectAuction: action.payload,

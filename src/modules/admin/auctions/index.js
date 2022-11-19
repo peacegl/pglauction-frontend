@@ -8,7 +8,7 @@ import CustomDataTable from '../../CustomDataTable';
 import {useDispatch, useSelector} from 'react-redux';
 import AuctionModal from './AuctionModal';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {tableColumns} from 'configs/pages/auctions';
+import {tableColumns} from 'configs/pages/auctionItems';
 
 export default function AuctionList() {
   const [openModal, setOpenModal] = useState(false);
@@ -21,7 +21,7 @@ export default function AuctionList() {
   const [filterData, setFilterData] = useState({});
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(
-    ({auctions}) => auctions.auctionsList,
+    ({auctionItems}) => auctionItems.auctionItemsList,
   );
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
@@ -138,14 +138,14 @@ export default function AuctionList() {
   return (
     <>
       <CustomDataTable
-        title={<IntlMessages id='auction.auctionList' />}
+        title={<IntlMessages id='auction.auctionItemList' />}
         total={total}
         data={data}
         columns={tableColumns()}
         options={options}
         onEdit={onEdit}
         onDelete={onDelete}
-        deleteTitle={<IntlMessages id='auction.deleteMessage' />}
+        deleteTitle={<IntlMessages id='auctionItem.deleteMessage' />}
         isLoading={loading}
         selected={selected}
         onEnterSearch={onEnterSearch}

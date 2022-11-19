@@ -185,8 +185,9 @@ export default function configs(invalidYoutube) {
         //   .date()
         //   .typeError(<IntlMessages id='validation.dateValidation' />)
         //   .nullable(),
-        minimum_bid: yup.number(),
-        // .typeError(<IntlMessages id='validation.priceError' />)
+        minimum_bid: yup
+          .number()
+          .typeError(<IntlMessages id='validation.priceError' />),
         // .required(<IntlMessages id='validation.mbidRequired' />),
         buy_now_price: yup
           .number()
