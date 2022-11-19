@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import ProductHeader from '../AuctionHeader';
 import {useDispatch, useSelector} from 'react-redux';
-import {VIEW_TYPE} from '../../../redux/reducers/Auctions';
+import {VIEW_TYPE} from '../../../redux/reducers/AuctionItems';
 import AuctionGrid from './AuctionGrid/index';
 
 import AuctionList from './AuctionList';
@@ -17,10 +17,12 @@ const AuctionListing = () => {
   const [page, setPage] = useState(0);
   const perPage = 20;
 
-  const auctionsList = useSelector(({auctions}) => auctions.webAuctionsList);
-  const {data = [], total = 0} = auctionsList;
-  const viewType = useSelector(({auctions}) => auctions.viewType);
-  const filterData = useSelector(({auctions}) => auctions.filterData);
+  const auctionItemsList = useSelector(
+    ({auctionItems}) => auctionItems.webAuctionItemsList,
+  );
+  const {data = [], total = 0} = auctionItemsList;
+  const viewType = useSelector(({auctionItems}) => auctionItems.viewType);
+  const filterData = useSelector(({auctionItems}) => auctionItems.filterData);
   const loading = useSelector(({common}) => common.loading);
 
   useEffect(() => {

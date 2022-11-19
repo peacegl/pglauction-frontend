@@ -1,16 +1,16 @@
 import {useEffect, useState} from 'react';
 import {
-  onGetAuctionData,
-  onDeleteAuctions,
+  onGetAuctionItemData,
+  onDeleteAuctionItems,
   getUserAutocompleteOptions,
 } from 'redux/actions';
 import CustomDataTable from '../../CustomDataTable';
 import {useDispatch, useSelector} from 'react-redux';
-import AuctionModal from './AuctionModal';
+import AuctionItemModal from './AuctionItemModal';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {tableColumns} from 'configs/pages/auctions';
+import {tableColumns} from 'configs/pages/auctionItems';
 
-export default function AuctionList() {
+export default function AuctionItemList() {
   const [openModal, setOpenModal] = useState(false);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
@@ -21,7 +21,7 @@ export default function AuctionList() {
   const [filterData, setFilterData] = useState({});
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(
-    ({auctions}) => auctions.auctionsList,
+    ({auctionItems}) => auctionItems.auctionItemsList,
   );
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ export default function AuctionList() {
 
   const fetchData = async (search = '') => {
     await dispatch(
-      onGetAuctionData({
+      onGetAuctionItemData({
         page: page + 1,
         per_page,
         search,
@@ -83,7 +83,7 @@ export default function AuctionList() {
   };
   const onDelete = async () => {
     await dispatch(
-      onDeleteAuctions({
+      onDeleteAuctionItems({
         auctionIds: selected.map((item) => data[item].id),
         page: page + 1,
         per_page,
@@ -99,6 +99,10 @@ export default function AuctionList() {
 
   const handleFilter = (filterList) => {
     const filterData = {};
+    filterData['vehicles.vin'] = filterList[1].map((item) => item.vin);
+    filterData['vehicles.lot_number'] = filterList[2].map(
+      (item) => item.lot_number,
+    );
     filterData['auction_items.status'] = filterList[9][0]
       ? 'exact@@' + filterList[9][0].toLowerCase()
       : undefined;
@@ -125,14 +129,14 @@ export default function AuctionList() {
   return (
     <>
       <CustomDataTable
-        title={<IntlMessages id='auction.auctionList' />}
+        title={<IntlMessages id='auction.auctionItemList' />}
         total={total}
         data={data}
         columns={tableColumns()}
         options={options}
         onEdit={onEdit}
         onDelete={onDelete}
-        deleteTitle={<IntlMessages id='auction.deleteMessage' />}
+        deleteTitle={<IntlMessages id='auctionItem.deleteMessage' />}
         isLoading={loading}
         selected={selected}
         onEnterSearch={onEnterSearch}
@@ -140,7 +144,7 @@ export default function AuctionList() {
         hideAddButton
       />
       {openModal && (
-        <AuctionModal
+        <AuctionItemModal
           open={openModal}
           toggleOpen={() => setOpenModal((d) => !d)}
           recordId={recordId}

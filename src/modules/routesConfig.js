@@ -6,6 +6,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import SellIcon from '@mui/icons-material/Sell';
+import StorefrontIcon from '@mui/icons-material/Storefront';
 
 const routesConfig = [
   {
@@ -18,11 +19,19 @@ const routesConfig = [
   },
   {
     id: 'auctions',
-    title: 'Vehicle List',
+    title: 'Auction List',
     messageId: 'sidebar.auctions',
     type: 'item',
-    icon: <SellIcon sx={{fontSize: 22}} />,
+    icon: <StorefrontIcon sx={{fontSize: 22}} />,
     url: '/admin/auctions',
+  },
+  {
+    id: 'auction_items',
+    title: 'Auction Item List',
+    messageId: 'sidebar.auctionItems',
+    type: 'item',
+    icon: <SellIcon sx={{fontSize: 22}} />,
+    url: '/admin/auction_items',
   },
   {
     id: 'users',

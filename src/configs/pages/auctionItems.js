@@ -30,19 +30,51 @@ export const tableColumns = function () {
         ),
       },
     },
+    vehicleVin(),
+    vehicleLot(),
     {
-      name: 'name',
-      label: messages['common.name'],
+      name: 'title',
+      label: messages['common.title'],
       options: {
         filter: false,
       },
     },
-    dateColumn('start_date', messages['common.start_date']),
-    dateColumn('end_date', messages['common.end_date']),
     {
-      name: 'items_count',
-      label: messages['auction.VehiclesCount'],
+      name: 'subtitle',
+      label: messages['common.subtitle'],
       options: {
+        filter: false,
+      },
+    },
+    {
+      name: 'interval',
+      label: messages['common.interval'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography noWrap={true}>{value} Hours</Typography>
+        ),
+      },
+    },
+    {
+      name: 'minimum_bid',
+      label: messages['common.minimum_bid'],
+      options: {
+        filter: false,
+      },
+    },
+    {
+      name: 'buy_now_price',
+      label: messages['common.buy_now_price'],
+      options: {
+        filter: false,
+      },
+    },
+    {
+      name: 'note',
+      label: messages['common.note'],
+      options: {
+        display: false,
         filter: false,
       },
     },
@@ -62,6 +94,22 @@ export const tableColumns = function () {
         },
         filterOptions: {
           names: ['Active', 'Pending', 'Sold'],
+        },
+      },
+    },
+    {
+      name: 'seller',
+      label: messages['common.seller'],
+      options: {
+        display: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `Seller: ${v}`;
+            }
+            return false;
+          },
         },
       },
     },
