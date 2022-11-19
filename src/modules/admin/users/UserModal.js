@@ -168,11 +168,11 @@ export default function UserModal({
     getData(`/role/auto_complete?type=user`, {}, setRolesLoading, setRoles);
     getData(`/timezones/auto_complete`, {}, setTimezonesLoading, setTimezones);
     getData(
-      `/groupedPermissions`,
+      `/grouped_permissions`,
       {},
       setPermissionsLoading,
       setPermissions,
-      setTotalPermissions,
+      (data) => setTotalPermissions(data.total),
     );
   }, []);
 

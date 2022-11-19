@@ -6,6 +6,8 @@ import Checkbox from '@mui/material/Checkbox';
 import PropTypes from 'prop-types';
 
 const RoleStepTwo = (props) => {
+  console.log('asdf', props.values.permissions?.length, props.totalPermissions);
+
   const setAllPermissions = () => {
     const permissionIds = [];
     if (props.values.permissions?.length == props.totalPermissions) {

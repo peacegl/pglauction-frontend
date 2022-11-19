@@ -177,14 +177,14 @@ export default function configs(invalidYoutube) {
         subtitle: yup
           .string()
           .required(<IntlMessages id='validation.subtitleRequired' />),
-        start_date: yup
-          .date()
-          .typeError(<IntlMessages id='validation.dateValidation' />)
-          .nullable(),
-        end_date: yup
-          .date()
-          .typeError(<IntlMessages id='validation.dateValidation' />)
-          .nullable(),
+        // start_date: yup
+        //   .date()
+        //   .typeError(<IntlMessages id='validation.dateValidation' />)
+        //   .nullable(),
+        // end_date: yup
+        //   .date()
+        //   .typeError(<IntlMessages id='validation.dateValidation' />)
+        //   .nullable(),
         minimum_bid: yup.number(),
         // .typeError(<IntlMessages id='validation.priceError' />)
         // .required(<IntlMessages id='validation.mbidRequired' />),

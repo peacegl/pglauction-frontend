@@ -93,6 +93,21 @@ const CustomerStepTwo = (props) => {
           </Stack>
         )}
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+          <AppAutocompleteField
+            placeholder={messages['customer.timezonePlaceholder']}
+            label={<IntlMessages id='customer.timezone' />}
+            name='timezone'
+            variant='outlined'
+            size='small'
+            sx={{flex: 1}}
+            dataLoading={props.timezonesLoading}
+            options={props.timezones}
+            keyName='name'
+            idField='name'
+            onSearch={props.searchTimezones}
+            value={props.values?.timezone}
+            handleChange={({name, value}) => props.setfieldvalue(name, value)}
+          />
           <AppTextField
             select
             label={<IntlMessages id='common.status' />}
@@ -112,6 +127,8 @@ const CustomerStepTwo = (props) => {
               <IntlMessages id='common.pending' />
             </MenuItem>
           </AppTextField>
+        </Stack>
+        {/* <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppTextField
             select
             label={<IntlMessages id='common.type' />}
@@ -119,7 +136,7 @@ const CustomerStepTwo = (props) => {
             variant='outlined'
             size='small'
             value={props.values?.type}
-            sx={{flex: 1}}
+            sx={{width: {xs: '100%', md: '49%'}}}
           >
             <MenuItem value='member'>
               <IntlMessages id='common.member' />
@@ -128,24 +145,7 @@ const CustomerStepTwo = (props) => {
               <IntlMessages id='common.seller' />
             </MenuItem>
           </AppTextField>
-        </Stack>
-        <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
-          <AppAutocompleteField
-            placeholder={messages['customer.timezonePlaceholder']}
-            label={<IntlMessages id='customer.timezone' />}
-            name='timezone'
-            variant='outlined'
-            size='small'
-            sx={{width: {xs: '100%', md: '49%'}}}
-            dataLoading={props.timezonesLoading}
-            options={props.timezones}
-            keyName='name'
-            idField='name'
-            onSearch={props.searchTimezones}
-            value={props.values?.timezone}
-            handleChange={({name, value}) => props.setfieldvalue(name, value)}
-          />
-        </Stack>
+        </Stack> */}
       </Stack>
     </Box>
   );
