@@ -95,7 +95,7 @@ const AuctionStep = (props) => {
             sx={{flex: 1}}
           />
         </Stack>
-        <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+        {/* <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppDateTimeField
             placeholder={messages['vehicle.startDatePlaceholder']}
             label={<IntlMessages id='vehicle.startDate' />}
@@ -115,7 +115,7 @@ const AuctionStep = (props) => {
             size='small'
             sx={{flex: 1}}
           />
-        </Stack>
+        </Stack> */}
       </Stack>
     </Box>
   );

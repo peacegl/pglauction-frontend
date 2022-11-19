@@ -1,28 +1,15 @@
 import {
   GET_AUCTIONS,
-  GET_WEB_AUCTIONS,
-  GET_CATEGORIES,
   SET_AUCTION_FILTER_DATA,
   SET_AUCTION_DATA,
-  SET_AUCTION_VIEW_TYPE,
   UPDATE_AUCTION,
+  ADD_NEW_AUCTION,
 } from '../../shared/constants/ActionTypes';
 
-export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
 const initialState = {
   auctionsList: [],
-  webAuctionsList: [],
-  categories: [],
-  viewType: VIEW_TYPE.GRID,
   currectAuction: null,
-  filterData: {
-    title: '',
-    brand: [],
-    ideaFor: [],
-    discount: [],
-    color: [],
-    rating: [],
-  },
+  filterData: {},
 };
 
 const AuctionReducer = (state = initialState, action) => {
@@ -32,10 +19,14 @@ const AuctionReducer = (state = initialState, action) => {
         ...state,
         auctionsList: action.payload,
       };
-    case GET_WEB_AUCTIONS:
+    case ADD_NEW_AUCTION:
       return {
         ...state,
-        webAuctionsList: action.payload,
+        auctionsList: {
+          ...state.auctionsList,
+          total: state.auctionsList.total + 1,
+          data: [action.payload, ...state.auctionsList.data],
+        },
       };
     case UPDATE_AUCTION:
       return {
@@ -47,17 +38,6 @@ const AuctionReducer = (state = initialState, action) => {
           ),
         },
       };
-    case GET_CATEGORIES:
-      return {
-        ...state,
-        categories: action.payload,
-      };
-    case SET_AUCTION_VIEW_TYPE:
-      return {
-        ...state,
-        viewType: action.payload,
-      };
-
     case SET_AUCTION_FILTER_DATA:
       return {
         ...state,

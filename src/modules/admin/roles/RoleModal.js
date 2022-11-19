@@ -87,11 +87,11 @@ export default function RoleModal({
 
   useEffect(() => {
     getData(
-      `/groupedPermissions`,
+      `/grouped_permissions`,
       {},
       setPermissionsLoading,
       setPermissions,
-      setTotalPermissions,
+      (data) => setTotalPermissions(data.total),
     );
   }, []);
 
