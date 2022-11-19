@@ -2,9 +2,8 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
 import CommonConfigs, {
-  createdAt,
   createdBy,
-  updatedAt,
+  dateColumn,
   updatedBy,
   vehicleLot,
   vehicleVin,
@@ -60,10 +59,16 @@ export const tableColumns = function () {
     {
       name: 'minimum_bid',
       label: messages['common.minimum_bid'],
+      options: {
+        filter: false,
+      },
     },
     {
       name: 'buy_now_price',
       label: messages['common.buy_now_price'],
+      options: {
+        filter: false,
+      },
     },
     {
       name: 'note',
@@ -109,9 +114,9 @@ export const tableColumns = function () {
       },
     },
     createdBy(),
-    createdAt,
+    dateColumn('created_at', messages['common.created_at']),
     updatedBy(),
-    updatedAt,
+    dateColumn('updated_at', messages['common.updated_at']),
   ];
 };
 

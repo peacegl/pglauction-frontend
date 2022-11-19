@@ -4,9 +4,8 @@ import {Typography} from '@mui/material';
 const year = new Date().getFullYear();
 import * as yup from 'yup';
 import CommonConfigs, {
-  createdAt,
   createdBy,
-  updatedAt,
+  dateColumn,
   updatedBy,
   vehicleLot,
   vehicleVin,
@@ -130,9 +129,9 @@ export const tableColumns = function () {
       },
     },
     createdBy(),
-    createdAt,
+    dateColumn('created_at', messages['common.created_at']),
     updatedBy(),
-    updatedAt,
+    dateColumn('updated_at', messages['common.updated_at']),
   ];
 };
 

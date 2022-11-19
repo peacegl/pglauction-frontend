@@ -100,37 +100,33 @@ export default function AuctionList() {
   const handleFilter = (filterList) => {
     const filterData = {};
     console.log(filterList);
-    filterData['vehicles.year'] = filterList[1][0]
-      ? 'like@@' + filterList[1][0].trim()
-      : undefined;
-    filterData['vehicles.color'] = filterList[2][0]
-      ? 'like@@' + filterList[2][0].trim()
-      : undefined;
-    filterData['vehicles.model'] = filterList[3][0]
-      ? 'like@@' + filterList[3][0].trim()
-      : undefined;
-    filterData['vehicles.engine_type'] = filterList[4][0]
-      ? 'like@@' + filterList[4][0].trim()
-      : undefined;
-    filterData['vehicles.vin'] = filterList[5].map((item) => item.vin);
-    filterData['vehicles.lot_number'] = filterList[6].map(
+    filterData['vehicles.vin'] = filterList[1].map((item) => item.vin);
+    filterData['vehicles.lot_number'] = filterList[2].map(
       (item) => item.lot_number,
     );
-    filterData['vehicles.cylinders'] = filterList[7][0]
-      ? 'like@@' + filterList[7][0].trim()
-      : undefined;
-    filterData['vehicles.vehicle_type'] = filterList[8][0]
-      ? 'like@@' + filterList[8][0].trim()
-      : undefined;
-    filterData['vehicles.created_by'] = filterList[9].map((item) => item.id);
-    filterData['vehicles.updated_by'] = filterList[11].map((item) => item.id);
-    filterData['vehicles.created_at'] = {
-      from: filterList[10][0],
-      to: filterList[10][1],
+    filterData['auctions.start_date'] = {
+      from: filterList[5][0],
+      to: filterList[5][1],
     };
-    filterData['vehicles.updated_at'] = {
-      from: filterList[12][0],
-      to: filterList[12][1],
+    filterData['auctions.end_date'] = {
+      from: filterList[6][0],
+      to: filterList[6][1],
+    };
+    filterData['auctions.status'] = filterList[10][0]
+      ? 'exact@@' + filterList[10][0].toLowerCase()
+      : undefined;
+    filterData['seller.username'] = filterList[11][0]
+      ? 'like@@' + filterList[11][0].trim()
+      : undefined;
+    filterData['auctions.created_by'] = filterList[12].map((item) => item.id);
+    filterData['auctions.updated_by'] = filterList[14].map((item) => item.id);
+    filterData['auctions.created_at'] = {
+      from: filterList[13][0],
+      to: filterList[13][1],
+    };
+    filterData['auctions.updated_at'] = {
+      from: filterList[15][0],
+      to: filterList[15][1],
     };
     setFilterData(filterData);
   };
