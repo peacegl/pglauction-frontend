@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {
-  onGetAuctionData,
-  onDeleteAuctions,
+  onGetAuctionItemData,
+  onDeleteAuctionItems,
   getUserAutocompleteOptions,
 } from 'redux/actions';
 import CustomDataTable from '../../CustomDataTable';
@@ -31,7 +31,7 @@ export default function AuctionList() {
 
   const fetchData = async (search = '') => {
     await dispatch(
-      onGetAuctionData({
+      onGetAuctionItemData({
         page: page + 1,
         per_page,
         search,
@@ -83,7 +83,7 @@ export default function AuctionList() {
   };
   const onDelete = async () => {
     await dispatch(
-      onDeleteAuctions({
+      onDeleteAuctionItems({
         auctionIds: selected.map((item) => data[item].id),
         page: page + 1,
         per_page,
@@ -104,29 +104,25 @@ export default function AuctionList() {
     filterData['vehicles.lot_number'] = filterList[2].map(
       (item) => item.lot_number,
     );
-    filterData['auctions.start_date'] = {
-      from: filterList[5][0],
-      to: filterList[5][1],
-    };
-    filterData['auctions.end_date'] = {
-      from: filterList[6][0],
-      to: filterList[6][1],
-    };
-    filterData['auctions.status'] = filterList[10][0]
-      ? 'exact@@' + filterList[10][0].toLowerCase()
+    filterData['auction_items.status'] = filterList[9][0]
+      ? 'exact@@' + filterList[9][0].toLowerCase()
       : undefined;
-    filterData['seller.username'] = filterList[11][0]
-      ? 'like@@' + filterList[11][0].trim()
+    filterData['seller.username'] = filterList[10][0]
+      ? 'like@@' + filterList[10][0].trim()
       : undefined;
-    filterData['auctions.created_by'] = filterList[12].map((item) => item.id);
-    filterData['auctions.updated_by'] = filterList[14].map((item) => item.id);
-    filterData['auctions.created_at'] = {
-      from: filterList[13][0],
-      to: filterList[13][1],
+    filterData['auction_items.created_by'] = filterList[11].map(
+      (item) => item.id,
+    );
+    filterData['auction_items.updated_by'] = filterList[13].map(
+      (item) => item.id,
+    );
+    filterData['auction_items.created_at'] = {
+      from: filterList[12][0],
+      to: filterList[12][1],
     };
-    filterData['auctions.updated_at'] = {
-      from: filterList[15][0],
-      to: filterList[15][1],
+    filterData['auction_items.updated_at'] = {
+      from: filterList[14][0],
+      to: filterList[14][1],
     };
     setFilterData(filterData);
   };

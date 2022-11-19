@@ -14,7 +14,7 @@ import {
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '../../@crema/utility/helper/Utils';
 
-export const onGetAuctionData = (filterData) => {
+export const onGetAuctionItemData = (filterData) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     jwtAxios
@@ -80,7 +80,7 @@ export const onUpdateAuction = (id, data, toggleOpen) => {
         toggleOpen(false);
         dispatch({
           type: SHOW_MESSAGE,
-          payload: messages['message.auctionUpdated'],
+          payload: messages['message.auctionItemUpdated'],
         });
       } else {
         dispatch({
@@ -101,7 +101,7 @@ export const onUpdateAuction = (id, data, toggleOpen) => {
   };
 };
 
-export const onDeleteAuctions = (data) => {
+export const onDeleteAuctionItems = (data) => {
   return async (dispatch) => {
     const {messages} = appIntl();
     dispatch({type: FETCH_START});

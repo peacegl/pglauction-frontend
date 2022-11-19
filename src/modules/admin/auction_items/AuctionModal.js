@@ -98,7 +98,7 @@ export default function AuctionModal({
       (async function () {
         try {
           setIsLoading(true);
-          const res = await jwtAxios.get(`/auctions/${recordId}`);
+          const res = await jwtAxios.get(`/auction_items/${recordId}`);
           if (res.status === 200 && res.data.result) {
             let values = {};
             let oldImages = [];

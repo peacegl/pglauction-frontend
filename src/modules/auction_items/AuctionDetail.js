@@ -14,7 +14,7 @@ const AuctionDetail = (props) => {
 
   useEffect(() => {
     if (id) {
-      getData(`/auctions/${id}`, {}, setAuctionLoading, setAuctionData);
+      getData(`/auction_items/${id}`, {}, setAuctionLoading, setAuctionData);
     }
   }, [id]);
 

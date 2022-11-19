@@ -17,12 +17,12 @@ const routesConfig = [
     url: '/admin/vehicles',
   },
   {
-    id: 'auctions',
-    title: 'Vehicle List',
+    id: 'auction_items',
+    title: 'Auction List',
     messageId: 'sidebar.auctionItems',
     type: 'item',
     icon: <SellIcon sx={{fontSize: 22}} />,
-    url: '/admin/auctions',
+    url: '/admin/auction_items',
   },
   {
     id: 'users',
