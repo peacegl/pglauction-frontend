@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 
 const AuctionsSidebar = ({backgroundColor}) => {
   const dispatch = useDispatch();
-  const filterData = useSelector(({auctions}) => auctions.filterData);
+  const filterData = useSelector(({auctionItems}) => auctionItems.filterData);
   const [selectedBrand, setSelectedBrand] = useState(filterData.brand);
   const [selectedFor, setSelectedFor] = useState(filterData.ideaFor);
   const [selectedDiscount, setSelectedDiscount] = useState(filterData.discount);

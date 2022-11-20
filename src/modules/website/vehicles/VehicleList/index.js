@@ -1,31 +1,32 @@
 import React, {useEffect, useState} from 'react';
 import ProductHeader from '../AuctionHeader';
 import {useDispatch, useSelector} from 'react-redux';
-import {VIEW_TYPE} from '../../../../redux/reducers/Auctions';
+import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
 import AuctionGrid from './AuctionGrid/index';
 
 import AuctionList from './AuctionList';
 import AppsContent from './AppsContent';
 import {alpha, Box, Hidden, Card} from '@mui/material';
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
-import {onGetWebAuctionData, setFilters} from '../../../../redux/actions';
+import {onGetWebVehicleData, setFilters} from '../../../../redux/actions';
 import AppsPagination from '@crema/core/AppsPagination';
 
-const AuctionListing = () => {
+const VehicleList = () => {
   const dispatch = useDispatch();
   const {theme} = useThemeContext();
   const [page, setPage] = useState(0);
   const perPage = 20;
 
-  const auctionsList = useSelector(({auctions}) => auctions.webAuctionsList);
-  const {data = [], total = 0} = auctionsList;
-  const viewType = useSelector(({auctions}) => auctions.viewType);
-  const filterData = useSelector(({auctions}) => auctions.filterData);
+  const {data = [], total = 0} = useSelector(
+    ({webVehicles}) => webVehicles.vehiclesData,
+  );
+  const viewType = useSelector(({auctionItems}) => auctionItems.viewType);
+  const filterData = useSelector(({auctionItems}) => auctionItems.filterData);
   const loading = useSelector(({common}) => common.loading);
 
   useEffect(() => {
     dispatch(
-      onGetWebAuctionData({...filterData, per_page: perPage, page: page + 1}),
+      onGetWebVehicleData({...filterData, per_page: perPage, page: page + 1}),
     );
   }, [dispatch, filterData, page]);
 
@@ -112,4 +113,4 @@ const AuctionListing = () => {
   );
 };
 
-export default AuctionListing;
+export default VehicleList;

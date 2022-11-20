@@ -6,9 +6,7 @@ const withLayout = (ComposedComponent) => (props) => {
   return (
     <div>
       <AppBar />
-      <Container maxWidth='xl' sx={{mt: 4}}>
-        <ComposedComponent {...props} />
-      </Container>
+      <ComposedComponent {...props} />
     </div>
   );
 };

@@ -21,9 +21,7 @@ export default function AuctionGridItem(props) {
         <CardMedia
           component='img'
           height='200'
-          image={
-            props.item.images.find((image) => image.type == 'main_image').path
-          }
+          image={props.item.path}
           alt='preview'
         />
         <CardContent>
