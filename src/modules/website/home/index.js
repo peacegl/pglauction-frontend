@@ -7,11 +7,14 @@ import Typography from '@mui/material/Typography';
 import LocationsList from '../../../components/locations/LocationsList';
 import CategoriesList from '../../../components/categories/CategoriesList';
 import AuctionsList from '../../../components/auctions/AuctionsList';
+import CarouselBanur from './CarouselBanur';
 
 export default function Home() {
   return (
-    <Container maxWidth='xl' sx={{mt: 6}}>
-      {/* <Grid container spacing={5}>
+    <>
+      <CarouselBanur></CarouselBanur>
+      <Container maxWidth='xl' sx={{mt: 6}}>
+        {/* <Grid container spacing={5}>
         <Grid item xs={3}>
           <Stack direction='column' spacing={10}>
             <Box>
@@ -34,6 +37,7 @@ export default function Home() {
           <AuctionsList />
         </Grid>
       </Grid> */}
-    </Container>
+      </Container>
+    </>
   );
 }
