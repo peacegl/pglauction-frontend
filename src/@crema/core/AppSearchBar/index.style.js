@@ -26,7 +26,7 @@ SearchWrapper.propTypes = {
   children: PropTypes.node,
 };
 
-export const SearchInputBase = styled(InputBase)(({theme}) => ({
+export const SearchInputBase = styled(InputBase)(({theme, width, mdWidth}) => ({
   fontWeight: Fonts.MEDIUM,
 
   [`& .${inputBaseClasses.root}`]: {
@@ -41,17 +41,17 @@ export const SearchInputBase = styled(InputBase)(({theme}) => ({
     padding: theme.spacing(2, 2, 2, 0),
     paddingLeft: `calc(1em + ${theme.spacing(6)})`,
     transition: theme.transitions.create('width'),
-    width: 240,
+    width: width ? width : 240,
     height: 40,
     boxSizing: 'border-box',
     [theme.breakpoints.down('md')]: {
-      width: 110,
+      width: mdWidth ? mdWidth : 110,
     },
     '&:focus': {
       backgroundColor: lighten(theme.palette.background.default, 0.25),
-      width: 240,
+      width: width ? width : 240,
       [theme.breakpoints.down('md')]: {
-        width: 162,
+        width: mdWidth ? mdWidth : 175,
       },
     },
     '&:hover': {
