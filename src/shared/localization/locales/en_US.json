@@ -822,7 +822,7 @@
   "common.roles_count": "Roles Count",
   "common.engine_type": "Engine Type",
   "common.cylinders": "Cylinders",
-  "common.vehicle_type": "Vehicle Type",
+  "common.transmission": "Transmission",
   "common.from_date": "From Date",
   "common.to_date": "To Date",
 
@@ -970,5 +970,7 @@
   "common.rotation": "Rotation",
   "common.interval": "Interval",
   "auction.auctionList": "Auction List",
-  "auction.VehiclesCount": "Vechicles Count"
+  "auction.VehiclesCount": "Vechicles Count",
+  "vehicle.exterior_color": "Exterior Color",
+  "vehicle.interior_color": "Interior Color"
 }
