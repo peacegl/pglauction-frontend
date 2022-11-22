@@ -1,19 +1,59 @@
-import {useDispatch, useSelector} from 'react-redux';
-import {styled, alpha} from '@mui/material/styles';
-import {Badge, Box, Container, IconButton} from '@mui/material';
+import {
+  Box,
+  Container,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from '@mui/material';
 import {useRouter} from 'next/router';
 import {useTheme} from '@mui/styles';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import MenuIcon from '@mui/icons-material/Menu';
-
 import {AppSearchBar} from '@crema';
+import {useState} from 'react';
+import {pages} from './AppBar';
 
 function Header() {
-  const dispatch = useDispatch();
   const router = useRouter();
   const theme = useTheme();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+    setIsMenuOpen(open);
+  };
+
+  const listMenu = (
+    <Box
+      sx={{width: 250}}
+      role='presentation'
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
+    >
+      <List>
+        {pages.map((item, index) => (
+          <ListItem key={item.title} disablePadding>
+            <ListItemButton onClick={() => router.push(item.link)}>
+              <ListItemText
+                primary={item.title}
+                sx={{color: theme.palette.primary.main}}
+              />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
 
   return (
     <Box
@@ -76,9 +116,19 @@ function Header() {
             }}
             zIndex='2'
           >
-            <IconButton sx={{color: theme.palette.secondary.main}}>
+            <IconButton
+              sx={{color: theme.palette.secondary.main}}
+              onClick={toggleDrawer(true)}
+            >
               <MenuIcon />
             </IconButton>
+            <Drawer
+              anchor='right'
+              open={isMenuOpen}
+              onClose={toggleDrawer(false)}
+            >
+              {listMenu}
+            </Drawer>
           </Box>
         </Box>
       </Container>
