@@ -10,6 +10,7 @@ import Categories from './Categories';
 import Locations from './Locations';
 import Roles from './Roles';
 import Permissions from './Permissions';
+import WebVehicles from './WebVehicles';
 
 const reducers = combineReducers({
   settings: Settings,
@@ -23,5 +24,6 @@ const reducers = combineReducers({
   auctions: Auctions,
   roles: Roles,
   permissions: Permissions,
+  webVehicles: WebVehicles,
 });
 export default reducers;
