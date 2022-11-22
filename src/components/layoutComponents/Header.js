@@ -1,12 +1,12 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {styled, alpha} from '@mui/material/styles';
 import {Badge, Box, Container, IconButton} from '@mui/material';
-import {MenuOutlined} from '@mui/icons-material';
 import {useRouter} from 'next/router';
 import {useTheme} from '@mui/styles';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import MenuIcon from '@mui/icons-material/Menu';
 
 import {AppSearchBar} from '@crema';
 
@@ -66,9 +66,20 @@ function Header() {
               <WhatsAppIcon />
             </IconButton>
           </Box>
-          <IconButton sx={{color: 'black', display: {xs: 'block', md: 'none'}}}>
-            <MenuOutlined />
-          </IconButton>
+          <Box
+            display='flex'
+            justifyContent='space-between'
+            alignItems='center'
+            sx={{
+              columnGap: {xs: '2px', sm: '5px', md: '8px'},
+              display: {xs: 'block', md: 'none'},
+            }}
+            zIndex='2'
+          >
+            <IconButton sx={{color: theme.palette.secondary.main}}>
+              <MenuIcon />
+            </IconButton>
+          </Box>
         </Box>
       </Container>
     </Box>
