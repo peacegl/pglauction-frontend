@@ -30,6 +30,29 @@ export const tableColumns = function () {
         ),
       },
     },
+    vehicleVin(),
+    vehicleLot(),
+    {
+      name: 'price',
+      label: messages['common.price'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+            {value} DH
+          </Typography>
+        ),
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `${messages['common.price']}: ${v}`;
+            }
+            return false;
+          },
+        },
+      },
+    },
     {
       name: 'year',
       label: messages['common.year'],
@@ -47,15 +70,15 @@ export const tableColumns = function () {
       },
     },
     {
-      name: 'color',
-      label: messages['common.color'],
+      name: 'make',
+      label: messages['common.make'],
       options: {
         filter: true,
         filterType: 'textField',
         customFilterListOptions: {
           render: (v) => {
             if (v) {
-              return `${messages['common.color']}: ${v}`;
+              return `${messages['common.make']}: ${v}`;
             }
             return false;
           },
@@ -79,6 +102,54 @@ export const tableColumns = function () {
       },
     },
     {
+      name: 'exterior_color',
+      label: messages['vehicle.exterior_color'],
+      options: {
+        filter: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `${messages['vehicle.exterior_color']}: ${v}`;
+            }
+            return false;
+          },
+        },
+      },
+    },
+    {
+      name: 'interior_color',
+      label: messages['vehicle.interior_color'],
+      options: {
+        filter: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `${messages['vehicle.interior_color']}: ${v}`;
+            }
+            return false;
+          },
+        },
+      },
+    },
+    {
+      name: 'primary_damage',
+      label: messages['common.primary_damage'],
+      options: {
+        filter: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `${messages['common.primary_damage']}: ${v}`;
+            }
+            return false;
+          },
+        },
+      },
+    },
+    {
       name: 'engine_type',
       label: messages['common.engine_type'],
       options: {
@@ -94,8 +165,6 @@ export const tableColumns = function () {
         },
       },
     },
-    vehicleVin(),
-    vehicleLot(),
     {
       name: 'cylinders',
       label: messages['common.cylinders'],
@@ -113,15 +182,66 @@ export const tableColumns = function () {
       },
     },
     {
-      name: 'vehicle_type',
-      label: messages['common.vehicle_type'],
+      name: 'fuel',
+      label: messages['common.fuel'],
       options: {
         filter: true,
         filterType: 'textField',
         customFilterListOptions: {
           render: (v) => {
             if (v) {
-              return `${messages['common.vehicle_type']}: ${v}`;
+              return `${messages['common.fuel']}: ${v}`;
+            }
+            return false;
+          },
+        },
+      },
+    },
+    {
+      name: 'document_type',
+      label: messages['common.document_type'],
+      options: {
+        filter: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `${messages['common.document_type']}: ${v}`;
+            }
+            return false;
+          },
+        },
+      },
+    },
+    {
+      name: 'odometer',
+      label: messages['common.odometer'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography noWrap={true}>{value} Miles</Typography>
+        ),
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `${messages['common.odometer']}: ${v}`;
+            }
+            return false;
+          },
+        },
+      },
+    },
+    {
+      name: 'transmission',
+      label: messages['common.transmission'],
+      options: {
+        filter: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `${messages['common.transmission']}: ${v}`;
             }
             return false;
           },

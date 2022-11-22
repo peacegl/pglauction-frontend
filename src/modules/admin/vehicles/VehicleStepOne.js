@@ -1,3 +1,4 @@
+import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteField';
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {Box, Stack} from '@mui/material';
@@ -11,6 +12,36 @@ const VehicleStepOne = (props) => {
   return (
     <Box>
       <Stack spacing={{xs: 5, md: 8}}>
+        <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+          <AppAutocompleteField
+            placeholder={messages['vehicle.makePlaceholder']}
+            label={<IntlMessages id='vehicle.make' />}
+            name='make_id'
+            variant='outlined'
+            size='small'
+            sx={{flex: 1, width: '100%'}}
+            dataLoading={props.makesLoading}
+            options={props.makes}
+            keyName='name'
+            onSearch={props.searchMakes}
+            value={props.values?.make_id}
+            handleChange={({name, value}) => props.setfieldvalue(name, value)}
+          />
+          <AppAutocompleteField
+            placeholder={messages['vehicle.modelPlaceholder']}
+            label={<IntlMessages id='vehicle.model' />}
+            name='model_id'
+            variant='outlined'
+            size='small'
+            sx={{flex: 1, width: '100%'}}
+            dataLoading={props.modelsLoading}
+            options={props.models}
+            keyName='name'
+            onSearch={props.searchModels}
+            value={props.values?.model_id}
+            handleChange={({name, value}) => props.setfieldvalue(name, value)}
+          />
+        </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppTextField
             placeholder={messages['vehicle.modelPlaceholder']}
@@ -91,7 +122,12 @@ const VehicleStepOne = (props) => {
 export default VehicleStepOne;
 
 VehicleStepOne.propTypes = {
-  formValues: PropTypes.object,
-  setFormValues: PropTypes.func,
-  setValues: PropTypes.func,
+  values: PropTypes.object,
+  setfieldvalue: PropTypes.func,
+  makesLoading: PropTypes.bool,
+  makes: PropTypes.array,
+  searchMakes: PropTypes.func,
+  modelsLoading: PropTypes.bool,
+  models: PropTypes.array,
+  searchModels: PropTypes.func,
 };

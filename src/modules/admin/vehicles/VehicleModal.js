@@ -34,10 +34,14 @@ export default function VehicleModal({
   const [isMaxImagesValid, setMaxImagesValid] = useState(true);
   const [locationLoading, setLocationLoading] = useState(false);
   const [categoryLoading, setCategoryLoading] = useState(false);
-  const [sellersLoading, setSellersLoading] = useState(false);
   const [locations, setLocations] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [sellersLoading, setSellersLoading] = useState(false);
   const [sellers, setSellers] = useState([]);
+  const [makesLoading, setMakesLoading] = useState(false);
+  const [makes, setMakes] = useState([]);
+  const [modelsLoading, setModelsLoading] = useState(false);
+  const [models, setModels] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     vin: '',
@@ -94,11 +98,30 @@ export default function VehicleModal({
     );
   };
 
+  const searchMakes = (content, make_id = null) => {
+    getData(
+      `/make/auto_complete${make_id ? '?id=' + make_id : ''}`,
+      content,
+      setMakesLoading,
+      setMakes,
+    );
+  };
+  const searchModels = (content, model_id = null) => {
+    getData(
+      `/model/auto_complete${model_id ? '?id=' + model_id : ''}`,
+      content,
+      setModelsLoading,
+      setModels,
+    );
+  };
+
   useEffect(() => {
     if (!recordId) {
       searchLocations({});
       searchCategories({});
       searchSellers({});
+      searchModels({});
+      searchMakes({});
     }
   }, [recordId]);
 
@@ -184,7 +207,14 @@ export default function VehicleModal({
       key: 1,
       icon: <DirectionsCarIcon />,
       label: <IntlMessages id='vehicle.vehicleProperties' />,
-      children: <VehicleStepOne />,
+      children: (
+        <VehicleStepOne
+          makes={makes}
+          makesLoading={makesLoading}
+          models={models}
+          modelsLoading={modelsLoading}
+        />
+      ),
     },
     {
       key: 2,
