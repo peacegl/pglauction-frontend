@@ -87,7 +87,7 @@ export const tableColumns = function () {
     },
     {
       name: 'model',
-      label: messages['common.model'],
+      label: messages['vehicle.model'],
       options: {
         filter: true,
         filterType: 'textField',
@@ -135,18 +135,36 @@ export const tableColumns = function () {
     },
     {
       name: 'primary_damage',
-      label: messages['common.primary_damage'],
+      label: messages['vehicle.primary_damage'],
       options: {
         filter: true,
         filterType: 'textField',
         customFilterListOptions: {
           render: (v) => {
             if (v) {
-              return `${messages['common.primary_damage']}: ${v}`;
+              return `${messages['vehicle.primary_damage']}: ${v}`;
             }
             return false;
           },
         },
+      },
+    },
+    {
+      name: 'is_featured',
+      label: messages['vehicle.is_featured'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) =>
+          value ? messages['common.yes'] : messages['common.no'],
+      },
+    },
+    {
+      name: 'is_best_selling',
+      label: messages['vehicle.is_best_selling'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) =>
+          value ? messages['common.yes'] : messages['common.no'],
       },
     },
     {
@@ -166,47 +184,15 @@ export const tableColumns = function () {
       },
     },
     {
-      name: 'cylinders',
-      label: messages['common.cylinders'],
-      options: {
-        filter: true,
-        filterType: 'textField',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `${messages['common.cylinders']}: ${v}`;
-            }
-            return false;
-          },
-        },
-      },
-    },
-    {
-      name: 'fuel',
-      label: messages['common.fuel'],
-      options: {
-        filter: true,
-        filterType: 'textField',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `${messages['common.fuel']}: ${v}`;
-            }
-            return false;
-          },
-        },
-      },
-    },
-    {
       name: 'document_type',
-      label: messages['common.document_type'],
+      label: messages['vehicle.document_type'],
       options: {
         filter: true,
         filterType: 'textField',
         customFilterListOptions: {
           render: (v) => {
             if (v) {
-              return `${messages['common.document_type']}: ${v}`;
+              return `${messages['vehicle.document_type']}: ${v}`;
             }
             return false;
           },
@@ -215,7 +201,7 @@ export const tableColumns = function () {
     },
     {
       name: 'odometer',
-      label: messages['common.odometer'],
+      label: messages['vehicle.odometer'],
       options: {
         filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
@@ -225,7 +211,7 @@ export const tableColumns = function () {
         customFilterListOptions: {
           render: (v) => {
             if (v) {
-              return `${messages['common.odometer']}: ${v}`;
+              return `${messages['vehicle.odometer']}: ${v}`;
             }
             return false;
           },
@@ -257,6 +243,9 @@ export const tableColumns = function () {
 
 export default function configs(invalidYoutube) {
   return {
+    fuels: ['petrol', 'diesel', 'etlectric', 'hybrid'],
+    statuses: ['active', 'inactive', 'sold', 'pending'],
+    transmissions: ['automatic', 'manual'],
     exportColumns: [],
     validationSchema: [
       yup.object({
@@ -266,7 +255,10 @@ export default function configs(invalidYoutube) {
           .min(1900, <IntlMessages id='validation.minYear' />)
           .max(year, <IntlMessages id='validation.maxYear' />)
           .required(<IntlMessages id='validation.yearRequired' />),
-        model: yup
+        make_id: yup
+          .string()
+          .required(<IntlMessages id='validation.makeRequired' />),
+        model_id: yup
           .string()
           .required(<IntlMessages id='validation.modelRequired' />),
         vin: yup
@@ -276,42 +268,21 @@ export default function configs(invalidYoutube) {
           .number()
           .typeError(<IntlMessages id='validation.lotNumber' />)
           .required(<IntlMessages id='validation.lotRequired' />),
-        color: yup
-          .string()
-          .required(<IntlMessages id='validation.colorRequired' />),
+        price: yup
+          .number()
+          .typeError(<IntlMessages id='validation.priceError' />)
+          .required(<IntlMessages id='validation.priceRequired' />),
       }),
       yup.object({
-        seller_id: yup
+        status: yup
           .string()
-          .required(<IntlMessages id='validation.sellerRequired' />),
+          .required(<IntlMessages id='validation.statusRequired' />),
         location_id: yup
           .string()
           .required(<IntlMessages id='validation.locationRequired' />),
         category_id: yup
           .string()
           .required(<IntlMessages id='validation.categoryRequired' />),
-        title: yup
-          .string()
-          .required(<IntlMessages id='validation.titleRequired' />),
-        subtitle: yup
-          .string()
-          .required(<IntlMessages id='validation.subtitleRequired' />),
-        // start_date: yup
-        //   .date()
-        //   .typeError(<IntlMessages id='validation.dateValidation' />)
-        //   .nullable(),
-        // end_date: yup
-        //   .date()
-        //   .typeError(<IntlMessages id='validation.dateValidation' />)
-        //   .nullable(),
-        minimum_bid: yup
-          .number()
-          .typeError(<IntlMessages id='validation.priceError' />),
-        // .required(<IntlMessages id='validation.mbidRequired' />),
-        buy_now_price: yup
-          .number()
-          .typeError(<IntlMessages id='validation.priceError' />)
-          .required(<IntlMessages id='validation.buyNowPriceRequired' />),
       }),
       yup.object({
         youtube_url: yup.string().matches(youtubeRegExp, invalidYoutube),

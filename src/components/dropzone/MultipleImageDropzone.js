@@ -24,20 +24,19 @@ const MultipleImageDropzone = (props) => {
         preview: URL.createObjectURL(file),
       }),
     );
-    props.setImages([...newImages, ...props.images]);
+    const images = [...newImages, ...props.images];
+    if (images.length > 20) {
+      props.setMaxImagesValid(false);
+    } else {
+      props.setMaxImagesValid(true);
+      props.setMinImagesValid(true);
+    }
+    props.setImages(images);
   };
 
   useEffect(() => {
     if (props.images.length > 0) {
-      if (props.images.length > 20) {
-        props.setMaxImagesValid(false);
-      } else {
-        props.setMaxImagesValid(true);
-        props.setMinImagesValid(true);
-      }
     } else {
-      props.setMaxImagesValid(true);
-      props.setMinImagesValid(false);
     }
   }, [props.images]);
 
@@ -47,6 +46,13 @@ const MultipleImageDropzone = (props) => {
     props.images.splice(props.images.indexOf(file), 1);
     props.setImages([...props.images]);
     props.setfieldvalue('images', [...dropzone.acceptedFiles]);
+    if (props.images.length == 0) {
+      props.setMaxImagesValid(true);
+      props.setMinImagesValid(false);
+    } else if (props.images.length < 20 && props.images.length > 0) {
+      props.setMaxImagesValid(true);
+      props.setMinImagesValid(true);
+    }
   };
 
   return (
