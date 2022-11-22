@@ -46,7 +46,7 @@ function Header() {
             <ListItemButton onClick={() => router.push(item.link)}>
               <ListItemText
                 primary={item.title}
-                sx={{color: theme.palette.primary.main}}
+                sx={{color: theme.palette.secondary.main}}
               />
             </ListItemButton>
           </ListItem>
