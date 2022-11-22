@@ -27,14 +27,22 @@ export default function AppAutoComplete({
   const loading = !disabled && dataLoading;
   const onInputChange = (event, value, reason) => {
     if (reason == 'input') {
-      const object = {};
-      if (rest.keyName1 && rest.keyName2) {
+      const object = searchObject(value);
+      if (onSearch) onSearch(object);
+    }
+  };
+  const searchObject = (value) => {
+    const object = {};
+    if (rest.keyName1 && rest.keyName2) {
+      object.content = value;
+    } else {
+      if (rest.content) {
         object.content = value;
       } else {
         object[keyName] = value;
       }
-      if (onSearch) onSearch(object);
     }
+    return object;
   };
   const onSelectValue = (e, value) => {
     const event = {
@@ -49,6 +57,10 @@ export default function AppAutoComplete({
         ? value?.[idField]
         : '',
     };
+    if (value == {} || value == '' || value == [] || value == null) {
+      const object = searchObject('');
+      if (onSearch) onSearch(object);
+    }
     if (handleChange) handleChange(event);
   };
   const getValue = () => {
@@ -147,4 +159,5 @@ AppAutoComplete.propTypes = {
   disabledId: PropTypes.bool,
   onSearch: PropTypes.func,
   returnObject: PropTypes.bool,
+  content: PropTypes.bool,
 };

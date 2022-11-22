@@ -71,7 +71,7 @@ const UploadModern = ({
 export default UploadModern;
 
 UploadModern.propTypes = {
-  uploadText: PropTypes.string,
+  uploadText: PropTypes.string || PropTypes.object,
   dropzone: PropTypes.object,
   isMinImagesValid: PropTypes.bool,
   isMaxImagesValid: PropTypes.bool,

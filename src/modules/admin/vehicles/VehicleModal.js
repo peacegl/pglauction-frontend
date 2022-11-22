@@ -17,6 +17,8 @@ import {useDispatch} from 'react-redux';
 import Helper from 'helpers/helpers';
 import PropTypes from 'prop-types';
 import {getData} from '../../../configs';
+import VehicleStepTwo from './VehicleStepTwo';
+import VehicleStepThree from './VehicleStepThree';
 
 export default function VehicleModal({
   open,
@@ -36,8 +38,6 @@ export default function VehicleModal({
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [locations, setLocations] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [sellersLoading, setSellersLoading] = useState(false);
-  const [sellers, setSellers] = useState([]);
   const [makesLoading, setMakesLoading] = useState(false);
   const [makes, setMakes] = useState([]);
   const [modelsLoading, setModelsLoading] = useState(false);
@@ -47,23 +47,28 @@ export default function VehicleModal({
     vin: '',
     lot_number: '',
     year: '',
-    model: '',
-    color: '',
+    make_id: '',
+    model_id: '',
+    exterior_color: '',
+    interior_color: '',
     engine_type: '',
     cylinders: '',
-    vehicle_type: '',
-    seller_id: '',
+    transmission: '',
+    status: '',
     location_id: '',
     category_id: '',
-    title: '',
-    subtitle: '',
-    // start_date: '',
-    // end_date: '',
-    minimum_bid: '',
-    buy_now_price: '',
+    price: '',
+    document_type: '',
+    primary_damage: '',
+    odometer: '',
+    fuel: '',
+    body_style: '',
+    drive_type: '',
+    keys: 0,
+    test_drive: 0,
+    is_featured: 0,
+    is_best_selling: 0,
     description: '',
-    youtube_url: '',
-    note: '',
     main_image: '',
     images: [],
   });
@@ -71,6 +76,7 @@ export default function VehicleModal({
   const validationSchema = VehicleConfigs(
     messages['validation.invalidYoutube'],
   ).validationSchema;
+
   const dispatch = useDispatch();
 
   const searchLocations = (content, location_id = null) => {
@@ -89,15 +95,6 @@ export default function VehicleModal({
       setCategories,
     );
   };
-  const searchSellers = (content, seller_id = null) => {
-    getData(
-      `/sellers/auto_complete${seller_id ? '?id=' + seller_id : ''}`,
-      content,
-      setSellersLoading,
-      setSellers,
-    );
-  };
-
   const searchMakes = (content, make_id = null) => {
     getData(
       `/make/auto_complete${make_id ? '?id=' + make_id : ''}`,
@@ -119,7 +116,6 @@ export default function VehicleModal({
     if (!recordId) {
       searchLocations({});
       searchCategories({});
-      searchSellers({});
       searchModels({});
       searchMakes({});
     }
@@ -136,22 +132,22 @@ export default function VehicleModal({
             let oldImages = [];
             Object.entries(res.data.data).forEach(([key, value]) => {
               if (Object.keys(initialValues).includes(key)) {
-                values[key] = value ? value : initialValues[key];
+                if (key == 'images') {
+                  value?.forEach((item) => {
+                    if (item.type == 'sub_image') {
+                      oldImages.push({preview: item.path, id: item.id});
+                    } else if (item.type == 'main_image') {
+                      setMainImage({preview: item.path, id: item.id});
+                    }
+                  });
+                } else {
+                  values[key] = value ? value : initialValues[key];
+                }
               }
               if (typeof value === 'object' && value != null)
                 Object.entries(value).forEach(([ikey, ivalue]) => {
                   if (Object.keys(initialValues).includes(ikey)) {
-                    if (ikey == 'images') {
-                      ivalue?.forEach((item) => {
-                        if (item.type == 'sub_image') {
-                          oldImages.push({preview: item.path, id: item.id});
-                        } else if (item.type == 'main_image') {
-                          setMainImage({preview: item.path, id: item.id});
-                        }
-                      });
-                    } else {
-                      values[ikey] = ivalue ? ivalue : initialValues[ikey];
-                    }
+                    values[ikey] = ivalue ? ivalue : initialValues[ikey];
                   }
                 });
             });
@@ -159,7 +155,8 @@ export default function VehicleModal({
             setInitialValues(values);
             searchLocations({}, values.location_id);
             searchCategories({}, values.category_id);
-            searchSellers({}, values.seller_id);
+            searchMakes({}, values.make_id);
+            searchModels({make_id: values.make_id}, values.model_id);
           }
           setIsLoading(false);
         } catch (error) {
@@ -213,24 +210,23 @@ export default function VehicleModal({
           makesLoading={makesLoading}
           models={models}
           modelsLoading={modelsLoading}
+          searchModels={searchModels}
+          searchMakes={searchMakes}
         />
       ),
     },
     {
       key: 2,
       icon: <SellIcon />,
-      label: <IntlMessages id='auction.auctionItemDetails' />,
+      label: <IntlMessages id='vehicle.vehicleDetails' />,
       children: (
-        <AuctionStep
+        <VehicleStepTwo
           locations={locations}
           locationLoading={locationLoading}
           categories={categories}
           categoryLoading={categoryLoading}
-          sellersLoading={sellersLoading}
-          sellers={sellers}
           searchCategories={searchCategories}
           searchLocations={searchLocations}
-          searchSellers={searchSellers}
           setIsLoading={setIsLoading}
         />
       ),
@@ -238,8 +234,8 @@ export default function VehicleModal({
     {
       key: 3,
       icon: <InfoIcon />,
-      label: <IntlMessages id='auction.auctionItemDescription' />,
-      children: <AuctionDescriptionStep />,
+      label: <IntlMessages id='vehicle.vehicleDescription' />,
+      children: <VehicleStepThree />,
     },
     {
       key: 4,
