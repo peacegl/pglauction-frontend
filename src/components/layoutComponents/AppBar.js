@@ -14,10 +14,9 @@ import Menu from '@mui/material/Menu';
 import {useRouter} from 'next/router';
 import Box from '@mui/material/Box';
 import {useState} from 'react';
-import {MenuOutlined} from '@mui/icons-material';
 import {AppSearchBar} from '@crema';
 
-const pages = [
+export const pages = [
   {title: 'Home', link: '/'},
   {title: 'Browse', link: '/'},
   {title: 'Search', link: '/'},
