@@ -64,7 +64,7 @@ function Header() {
       zIndex='1'
       style={{
         width: '100%',
-        background: 'white',
+        backgroundColor: 'white',
       }}
       sx={{height: {xs: '60px', sm: '70px', md: '80px'}}}
     >
