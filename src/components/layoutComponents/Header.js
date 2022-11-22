@@ -79,8 +79,10 @@ function Header() {
             onClick={() => router.push('/')}
             sx={{'&:hover': {cursor: 'pointer'}}}
             color={theme.palette.secondary.main}
+            fontWeight='bold'
+            fontSize='18px'
           >
-            United Auction
+            United Cars Auctions
           </Box>
           <Box sx={{display: {xs: 'none', md: 'block'}}}>
             <AppSearchBar
@@ -88,7 +90,6 @@ function Header() {
               placeholder='Search Inventory By Make, Model, Vin, and More...'
             />
           </Box>
-
           <Box
             display='flex'
             justifyContent='space-between'

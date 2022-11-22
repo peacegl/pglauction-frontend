@@ -29,6 +29,7 @@ export default function Footer() {
         fontSize='14px'
         underline='none'
         onClick={() => router.push(link)}
+        color={theme.palette.secondary.main}
       >
         {text}
       </Link>
@@ -49,7 +50,7 @@ export default function Footer() {
               justifyContent: 'space-between',
               columnGap: '45px',
             }}
-            color={theme.palette.primary.main}
+            color={theme.palette.secondary.main}
           >
             <Box sx={{width: '30%'}}>
               <Image
@@ -101,6 +102,7 @@ export default function Footer() {
                   underline='none'
                   href='tel:+976776655688'
                   mx='5px'
+                  color={theme.palette.secondary.main}
                 >
                   (+97)6776655688
                 </Link>
@@ -113,6 +115,7 @@ export default function Footer() {
                   underline='none'
                   href='mailto:email@example.com'
                   mx='5px'
+                  color={theme.palette.secondary.main}
                 >
                   email@example
                 </Link>
