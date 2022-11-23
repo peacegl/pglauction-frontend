@@ -9,28 +9,33 @@ import Card from '@mui/material/Card';
 import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import {useState} from 'react';
 
 export default function AuctionGridItem(props) {
   const router = useRouter();
 
   return (
     <Card sx={{borderRadius: 1}}>
-      <CardActionArea
-        onClick={() => router.push(`/live-auctions/${props.item.id}`)}
-      >
-        <CardMedia
-          component='img'
-          height='200'
-          image={props.item.path}
-          alt='preview'
-        />
-        <CardContent>
-          <Typography variant='body2' color='text.secondary' sx={{mb: 1}}>
-            {props.item.bids_count} <IntlMessages id='bid.bids' />
-          </Typography>
-
+      <CardActionArea onClick={() => router.push(`/vehicles/${props.item.id}`)}>
+        <Box height='200' overflow='hidden'>
+          <CardMedia
+            component='img'
+            height='200'
+            image={
+              props.item.images.find((item) => item.type == 'main_image').path
+            }
+            alt='preview'
+            sx={{
+              transition: 'all 450ms ease-out',
+              '&:hover': {
+                transform: 'scale(1.2)',
+              },
+            }}
+          />
+        </Box>
+        <CardContent zIndex='10'>
           <Typography gutterBottom variant='h3' component='div' color='primary'>
-            {props.item.title}
+            {props.item.year}-{props.item.make}
           </Typography>
           <Divider sx={{my: 2}} />
           <Box
@@ -80,11 +85,10 @@ export default function AuctionGridItem(props) {
             variant='contained'
             size='small'
             sx={{mt: 2, width: '100%'}}
-            href={`https://wa.me/${props.item.seller.loginable.whatsapp}`}
+            href=''
             target='_blank'
           >
             <WhatsAppIcon sx={{mx: 2}} />
-            {props.item.seller.loginable.whatsapp}
           </Button>
         </CardContent>
       </CardActionArea>
