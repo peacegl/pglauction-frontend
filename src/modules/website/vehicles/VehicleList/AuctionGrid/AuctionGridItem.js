@@ -8,8 +8,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Card from '@mui/material/Card';
 import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
-import Link from 'next/link';
-import {useState} from 'react';
+import AppTooltip from '@crema/core/AppTooltip';
 
 export default function AuctionGridItem(props) {
   const router = useRouter();
@@ -34,52 +33,26 @@ export default function AuctionGridItem(props) {
           />
         </Box>
         <CardContent zIndex='10'>
-          <Typography gutterBottom variant='h3' component='div' color='primary'>
-            {props.item.year}-{props.item.make}
-          </Typography>
-          <Divider sx={{my: 2}} />
-          <Box
-            color='text.secondary'
-            sx={{
-              display: 'flex',
-            }}
+          <AppTooltip
+            title={`${props.item?.model.make?.name} 
+            ${props.item.model?.name}
+            ${props.item?.year}`}
           >
-            <Box sx={{flex: 1}}>
-              <Typography
-                variant='body2'
-                color='text.secondary'
-                sx={{textTransform: 'uppercase'}}
-              >
-                <IntlMessages id='bid.currentBid' />
-              </Typography>
-              <Box
-                sx={{
-                  mt: 3,
-                  color: (theme) => theme.palette.success.main,
-                }}
-              >
-                $
-                <Box
-                  display='inline'
-                  sx={{
-                    fontWeight: 'bold',
-                  }}
-                >
-                  {props.item.bids_max_amount}l
-                </Box>
-              </Box>
-            </Box>
-            <Box sx={{flex: 1}}>
-              <Typography
-                variant='body2'
-                color='text.secondary'
-                sx={{textTransform: 'uppercase'}}
-              >
-                <IntlMessages id='bid.timeRemaining' />
-              </Typography>
-              <TimeRemainingBox end_date={props.item.end_date} />
-            </Box>
-          </Box>
+            <Typography
+              height='20px'
+              gutterBottom
+              variant='h4'
+              component='div'
+              color='primary'
+              overflow='hidden'
+            >
+              {props.item?.model.make?.name} {props.item.model?.name}{' '}
+              {props.item.year}
+            </Typography>
+          </AppTooltip>
+          <Divider sx={{my: 2}} />
+          <Typography color='primary'>AED {props.item.price}</Typography>
+
           <Button
             onClick={(e) => e.stopPropagation()}
             variant='contained'
@@ -89,6 +62,7 @@ export default function AuctionGridItem(props) {
             target='_blank'
           >
             <WhatsAppIcon sx={{mx: 2}} />
+            +937669086
           </Button>
         </CardContent>
       </CardActionArea>
