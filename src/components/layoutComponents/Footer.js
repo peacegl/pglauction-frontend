@@ -1,7 +1,7 @@
 import React from 'react';
-import {Box, Container, Link, Typography} from '@mui/material';
+import {Box, Container, Link, Paper, Typography} from '@mui/material';
 import {useTheme} from '@mui/styles';
-import logoImage from '../../assets/united_logo.jpg';
+import logoImage from '../../assets/united_logo.png';
 import Image from 'next/image';
 import {pages} from './AppBar';
 import {useRouter} from 'next/router';
@@ -29,41 +29,22 @@ export default function Footer() {
         fontSize='14px'
         underline='none'
         onClick={() => router.push(link)}
-        color={theme.palette.secondary.main}
+        color={theme.palette.text.secondary}
       >
         {text}
       </Link>
     </Box>
   );
   return (
-    <>
-      <Box
-        display='flex'
-        alignItems='center'
-        width='100%'
-        position='static'
-        bottom='0'
-        zIndex='1'
-        style={{
-          width: '100%',
-          backgroundColor: 'white',
-        }}
-        sx={{minHeight: {sm: '80px', md: '100px'}}}
-      >
-        <Container maxWidth='xl'>
-          <Box
-            margin='auto'
-            display='flex'
-            justifyContent='center'
-            alignItems='center'
-          ></Box>
-        </Container>
-      </Box>
+    <Box
+      sx={{
+        mt: 17,
+        backgroundColor: (theme) => theme.palette.background.paper,
+      }}
+    >
       <Box
         sx={{
-          display: 'flex',
-          minHeight: '400px',
-          marginTop: '30px',
+          py: 15,
         }}
       >
         <Container maxWidth='xl'>
@@ -73,16 +54,13 @@ export default function Footer() {
               justifyContent: 'space-between',
               columnGap: '45px',
             }}
-            color={theme.palette.secondary.main}
+            color={theme.palette.text.secondary}
           >
             <Box sx={{width: '30%'}}>
-              <Image
-                width='140'
-                height='140'
-                src={logoImage.src}
-                alt='united logo'
-              />
-              <Typography>
+              <Box sx={{mt: 1}}>
+                <img width='160' src={logoImage.src} alt='united logo' />
+              </Box>
+              <Typography sx={{mt: 4}}>
                 Cum qui totam eligendi. Eos sed perferendis consequuntur
                 cupiditate voluptas aut et. Deserunt neque nobis est numquam ut
                 Cum qui totam eligendi. Eos sed perferendis consequuntur
@@ -125,7 +103,7 @@ export default function Footer() {
                   underline='none'
                   href='tel:+976776655688'
                   mx='5px'
-                  color={theme.palette.secondary.main}
+                  color={theme.palette.text.secondary}
                 >
                   (+97)6776655688
                 </Link>
@@ -138,7 +116,7 @@ export default function Footer() {
                   underline='none'
                   href='mailto:email@example.com'
                   mx='5px'
-                  color={theme.palette.secondary.main}
+                  color={theme.palette.text.secondary}
                 >
                   email@example
                 </Link>
@@ -147,33 +125,20 @@ export default function Footer() {
           </Box>
         </Container>
       </Box>
-      <Box
-        display='flex'
-        alignItems='center'
-        width='100%'
-        position='static'
-        bottom='0'
-        zIndex='1'
-        style={{
-          width: '100%',
-          backgroundColor: 'white',
-        }}
-        sx={{height: {xs: '60px', sm: '70px', md: '80px'}}}
-      >
-        <Container maxWidth='xl'>
-          <Box
-            margin='auto'
-            display='flex'
-            justifyContent='center'
-            alignItems='center'
-          >
-            <Typography color={theme.palette.primary.main}>
-              &copy;{new Date().getFullYear()} United Cars Auction. All Rights
-              Reserved
-            </Typography>
-          </Box>
-        </Container>
+      <Box>
+        <Typography
+          color={theme.palette.primary.main}
+          sx={{
+            borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+            textAlign: 'center',
+            backgroundColor: (theme) => theme.palette.background.paper,
+            py: 3,
+          }}
+        >
+          &copy;{new Date().getFullYear()} United Cars Auction. All Rights
+          Reserved
+        </Typography>
       </Box>
-    </>
+    </Box>
   );
 }
