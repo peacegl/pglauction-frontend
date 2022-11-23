@@ -52,7 +52,7 @@ const VehicleStepTwo = (props) => {
             value={props.values?.status}
             sx={{flex: 1}}
           >
-            {VehicleConfigs().statuses.map((index, status) => (
+            {VehicleConfigs().statuses.map((status, index) => (
               <MenuItem value={status} key={index}>
                 <Box sx={{textTransform: 'capitalize'}}>{status}</Box>
               </MenuItem>
@@ -81,7 +81,7 @@ const VehicleStepTwo = (props) => {
             <MenuItem value=''>
               <IntlMessages id='common.unknown' />
             </MenuItem>
-            {VehicleConfigs().fuels.map((index, fuel) => (
+            {VehicleConfigs().fuels.map((fuel, index) => (
               <MenuItem key={index} value={fuel}>
                 <Box sx={{textTransform: 'capitalize'}}>{fuel}</Box>
               </MenuItem>
@@ -136,7 +136,7 @@ const VehicleStepTwo = (props) => {
             <MenuItem value=''>
               <IntlMessages id='common.unknown' />
             </MenuItem>
-            {VehicleConfigs().transmissions.map((key, transmission) => (
+            {VehicleConfigs().transmissions.map((transmission, key) => (
               <MenuItem key={key} value={transmission}>
                 <Box sx={{textTransform: 'capitalize'}}>{transmission}</Box>
               </MenuItem>

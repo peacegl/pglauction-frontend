@@ -50,7 +50,7 @@ const CustomerStepThree = (props) => {
           />
         </Stack>
       </Stack>
-      <Paper sx={{mt: 5}}>
+      {/* <Paper sx={{mt: 5}}>
         <Stack
           mx={5}
           direction='row'
@@ -84,7 +84,7 @@ const CustomerStepThree = (props) => {
           </Typography>
         </Stack>
       </Paper>
-      <Permissions {...props} />
+      <Permissions {...props} /> */}
     </Box>
   );
 };

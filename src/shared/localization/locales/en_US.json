@@ -765,6 +765,8 @@
   "sidebar.customers": "Customers",
   "sidebar.categories": "Categories",
   "sidebar.locations": "Locations",
+  "sidebar.makes": "Makes",
+  "sidebar.models": "Models",
 
   "user.deleteMessage": "Are you sure, you want to delete the selected User(s)?",
   "user.message.deleted": "User(s) deleted successfully!",
@@ -996,5 +998,17 @@
   "vehicle.drive_type": "Drive Type",
   "vehicle.body_stylePlaceholder": "Type vehicle body style",
   "vehicle.drive_typePlaceholder": "Type vehicle drive type",
-  "vehicle.vehicleDescription": "Vechicle Description"
+  "vehicle.vehicleDescription": "Vechicle Description",
+  "make.makeInfo": "Make Info",
+  "make.makeList": "Make List",
+  "message.makeCreated": "Make(s) created successfully!",
+  "message.makeUpdated": "Make updated successfully!",
+  "message.makeDeleted": "Make(s) deleted successfully!",
+  "make.deleteMessage": "Are you sure, you want to delete the selected Make(s)?",
+  "model.modelInfo": "Model Info",
+  "model.modelList": "Model List",
+  "message.modelCreated": "Model(s) created successfully!",
+  "message.modelUpdated": "Model updated successfully!",
+  "message.modelDeleted": "Model(s) deleted successfully!",
+  "model.deleteMessage": "Are you sure, you want to delete the selected Model(s)?"
 }
