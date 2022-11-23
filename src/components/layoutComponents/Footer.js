@@ -6,9 +6,9 @@ import Image from 'next/image';
 import {pages} from './AppBar';
 import {useRouter} from 'next/router';
 
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
-import EmailIcon from '@mui/icons-material/Email';
+import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 
 export default function Footer() {
   const theme = useTheme();
@@ -83,7 +83,7 @@ export default function Footer() {
               {title('Location')}
 
               <Box marginBottom='10px' display='flex' alignItems='center'>
-                <LocationOnIcon />
+                <LocationOnOutlinedIcon />
                 <Typography
                   variant='body2'
                   fontSize='14px'
@@ -95,7 +95,7 @@ export default function Footer() {
                 </Typography>
               </Box>
               <Box marginBottom='10px' display='flex' alignItems='center'>
-                <LocalPhoneIcon />
+                <PhoneOutlinedIcon />
                 <Link
                   variant='body2'
                   fontSize='14px'
@@ -108,7 +108,7 @@ export default function Footer() {
                 </Link>
               </Box>
               <Box marginBottom='10px' display='flex' alignItems='center'>
-                <EmailIcon />
+                <EmailOutlinedIcon />
                 <Link
                   variant='body2'
                   fontSize='14px'
