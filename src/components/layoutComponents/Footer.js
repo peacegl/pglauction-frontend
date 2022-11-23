@@ -38,9 +38,32 @@ export default function Footer() {
   return (
     <>
       <Box
+        display='flex'
+        alignItems='center'
+        width='100%'
+        position='static'
+        bottom='0'
+        zIndex='1'
+        style={{
+          width: '100%',
+          backgroundColor: 'white',
+        }}
+        sx={{minHeight: {sm: '80px', md: '100px'}}}
+      >
+        <Container maxWidth='xl'>
+          <Box
+            margin='auto'
+            display='flex'
+            justifyContent='center'
+            alignItems='center'
+          ></Box>
+        </Container>
+      </Box>
+      <Box
         sx={{
           display: 'flex',
           minHeight: '400px',
+          marginTop: '30px',
         }}
       >
         <Container maxWidth='xl'>

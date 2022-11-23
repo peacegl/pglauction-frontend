@@ -1,10 +1,7 @@
-import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import AppBar from '@mui/material/AppBar';
@@ -20,6 +17,7 @@ export const pages = [
   {title: 'Home', link: '/'},
   {title: 'Browse', link: '/'},
   {title: 'Search', link: '/'},
+  {title: 'All Vehicle', link: '/all-vehicles'},
   {title: 'Live Auctions', link: '/live-auctions'},
 ];
 const settings = ['Profile', 'Account', 'Logout'];
