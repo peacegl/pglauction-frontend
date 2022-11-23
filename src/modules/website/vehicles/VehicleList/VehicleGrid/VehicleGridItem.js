@@ -10,7 +10,7 @@ import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
 import AppTooltip from '@crema/core/AppTooltip';
 
-export default function AuctionGridItem(props) {
+export default function VehicleGridItem(props) {
   const router = useRouter();
 
   return (
@@ -32,7 +32,7 @@ export default function AuctionGridItem(props) {
             }}
           />
         </Box>
-        <CardContent zIndex='10'>
+        <CardContent>
           <AppTooltip
             title={`${props.item?.model.make?.name} 
             ${props.item.model?.name}
@@ -58,7 +58,7 @@ export default function AuctionGridItem(props) {
             variant='contained'
             size='small'
             sx={{mt: 2, width: '100%'}}
-            href=''
+            href='https://wa.me/+937669086'
             target='_blank'
           >
             <WhatsAppIcon sx={{mx: 2}} />
@@ -69,6 +69,6 @@ export default function AuctionGridItem(props) {
     </Card>
   );
 }
-AuctionGridItem.propTypes = {
+VehicleGridItem.propTypes = {
   item: PropTypes.object.isRequired,
 };

@@ -8,6 +8,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Card from '@mui/material/Card';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import AppTooltip from '@crema/core/AppTooltip';
 
 export default function AuctionListItem(props) {
   return (
@@ -20,21 +21,42 @@ export default function AuctionListItem(props) {
         maxWidth: {xs: '360px', sm: '100%'},
       }}
     >
-      <CardMedia
-        component='img'
-        sx={{
-          width: {xs: '100%', sm: '220px'},
-          height: {xs: '220px', sm: 'auto'},
-        }}
-        image={props.item.images[0].path}
-        alt='preview'
-      />
+      <Box width='265px' overflow='hidden'>
+        <CardMedia
+          component='img'
+          height='200'
+          image={
+            props.item.images.find((item) => item.type == 'main_image').path
+          }
+          alt='preview'
+          sx={{
+            transition: 'all 450ms ease-out',
+            '&:hover': {
+              transform: 'scale(1.2)',
+            },
+          }}
+        />
+      </Box>
       <CardContent sx={{width: '100%'}}>
         <Stack direction={{xs: 'column', sm: 'row'}} spacing={5}>
           <Box sx={{flex: 1}}>
-            <Typography variant='body1' color='text.secondary' sx={{mb: 1}}>
-              {props.item.bids_count} <IntlMessages id='bid.bids' />
-            </Typography>
+            <AppTooltip
+              title={`${props.item?.model.make?.name} 
+            ${props.item.model?.name}
+            ${props.item?.year}`}
+            >
+              <Typography
+                height='20px'
+                gutterBottom
+                variant='h4'
+                component='div'
+                color='primary'
+                overflow='hidden'
+              >
+                {props.item?.model.make?.name} {props.item.model?.name}{' '}
+                {props.item.year}
+              </Typography>
+            </AppTooltip>
             <Typography
               gutterBottom
               variant='h3'
@@ -83,11 +105,11 @@ export default function AuctionListItem(props) {
               variant='contained'
               size='small'
               sx={{mt: 2, px: 4}}
-              href={`https://wa.me/${props.item.seller.loginable.whatsapp}`}
+              href={`https://wa.me/+93988668866`}
               target='_blank'
             >
               <WhatsAppIcon sx={{mx: 2}} />
-              {props.item.seller.loginable.whatsapp}
+              +93988668866
             </Button>
           </Box>
           <Divider orientation='vertical' flexItem />
