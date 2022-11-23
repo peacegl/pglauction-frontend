@@ -7,6 +7,8 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import SellIcon from '@mui/icons-material/Sell';
 import StorefrontIcon from '@mui/icons-material/Storefront';
+import AutoAwesomeMosaicIcon from '@mui/icons-material/AutoAwesomeMosaic';
+import AssistantIcon from '@mui/icons-material/Assistant';
 
 const routesConfig = [
   {
@@ -80,6 +82,22 @@ const routesConfig = [
     type: 'item',
     icon: <LocationOnIcon sx={{fontSize: 22}} />,
     url: '/admin/locations',
+  },
+  {
+    id: 'makes',
+    title: 'Make List',
+    messageId: 'sidebar.makes',
+    type: 'item',
+    icon: <AutoAwesomeMosaicIcon sx={{fontSize: 22}} />,
+    url: '/admin/makes',
+  },
+  {
+    id: 'models',
+    title: 'Model List',
+    messageId: 'sidebar.models',
+    type: 'item',
+    icon: <AssistantIcon sx={{fontSize: 22}} />,
+    url: '/admin/models',
   },
 ];
 export default routesConfig;

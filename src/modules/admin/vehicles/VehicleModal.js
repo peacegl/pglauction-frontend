@@ -119,7 +119,7 @@ export default function VehicleModal({
       searchModels({});
       searchMakes({});
     }
-  }, [recordId]);
+  }, []);
 
   useEffect(() => {
     if (recordId) {

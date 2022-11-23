@@ -258,23 +258,25 @@ export default function CustomerModal({
           timezones={timezones}
           timezonesLoading={timezonesLoading}
           searchTimezones={searchTimezones}
-        />
-      ),
-    },
-    {
-      key: 3,
-      icon: <ManageAccountsIcon />,
-      label: <IntlMessages id='common.rolePermission' />,
-      children: (
-        <CustomerStepThree
           roles={roles}
           rolesLoading={rolesLoading}
-          permissions={permissions}
-          permissionsLoading={permissionsLoading}
-          totalPermissions={totalPermissions}
         />
       ),
     },
+    // {
+    //   key: 3,
+    //   icon: <ManageAccountsIcon />,
+    //   label: <IntlMessages id='common.rolePermission' />,
+    //   children: (
+    //     <CustomerStepThree
+    //       roles={roles}
+    //       rolesLoading={rolesLoading}
+    //       permissions={permissions}
+    //       permissionsLoading={permissionsLoading}
+    //       totalPermissions={totalPermissions}
+    //     />
+    //   ),
+    // },
   ];
   return (
     <CustomModal

@@ -28,6 +28,7 @@ const CustomModal = ({
   initialValues,
   customValidation,
   isLoading,
+  height,
   ...rest
 }) => {
   const [activeStep, setActiveStep] = useState(0);
@@ -115,7 +116,7 @@ const CustomModal = ({
                   {steps && (
                     <Box
                       sx={{
-                        height: 500,
+                        height: height ? height : 500,
                         overflowY: 'auto',
                       }}
                     >
@@ -153,7 +154,7 @@ const CustomModal = ({
                     <>
                       <Box
                         sx={{
-                          height: 500,
+                          height: height ? height : 500,
                           overflowY: 'auto',
                         }}
                       >
@@ -255,4 +256,5 @@ CustomModal.propTypes = {
   customValidation: PropTypes.func,
   isLoading: PropTypes.bool,
   setValues: PropTypes.func,
+  height: PropTypes.number || PropTypes.string,
 };

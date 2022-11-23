@@ -11,6 +11,8 @@ import Locations from './Locations';
 import Roles from './Roles';
 import Permissions from './Permissions';
 import WebVehicles from './WebVehicles';
+import Makes from './Makes';
+import Models from './Models';
 
 const reducers = combineReducers({
   settings: Settings,
@@ -25,5 +27,7 @@ const reducers = combineReducers({
   roles: Roles,
   permissions: Permissions,
   webVehicles: WebVehicles,
+  makes: Makes,
+  models: Models,
 });
 export default reducers;
