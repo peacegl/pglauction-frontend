@@ -1,15 +1,19 @@
 import Container from '@mui/material/Container';
 import CarouselBanur from './CarouselBanur';
 import CustomCarousel from '../../CustomCarousel';
+import SecondCustomCarousel from '../../SecondCustomCarousel';
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {onGetFeaturedVehicles} from 'redux/actions';
+import {onGetFeaturedVehicles, onGetBestSellingVehicles} from 'redux/actions';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {Button} from '@mui/material';
 
 export default function Home() {
   const featuredVehicles = useSelector(
     ({vehicles}) => vehicles.featuredVehicles,
+  );
+  const bestSellingVehicles = useSelector(
+    ({vehicles}) => vehicles.bestSellingVehicles,
   );
   const dispatch = useDispatch();
   useEffect(() => {
@@ -18,6 +22,7 @@ export default function Home() {
 
   const fetchData = async () => {
     await dispatch(onGetFeaturedVehicles());
+    await dispatch(onGetBestSellingVehicles());
   };
 
   return (
@@ -27,6 +32,10 @@ export default function Home() {
         <CustomCarousel
           title={<IntlMessages id='vehicle.featuredVehicles' />}
           items={featuredVehicles ? featuredVehicles : []}
+        />
+        <SecondCustomCarousel
+          title={<IntlMessages id='vehicle.bestSellingVehicles' />}
+          items={bestSellingVehicles ? bestSellingVehicles : []}
         />
         {/* <Grid container spacing={5}>
         <Grid item xs={3}>

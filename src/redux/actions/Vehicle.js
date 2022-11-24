@@ -8,6 +8,7 @@ import {
   UPDATE_VEHICLE,
   SHOW_MESSAGE,
   GET_FEATURED_VEHICLE_LIST,
+  GET_BEST_SELLING_VEHICLE_LIST,
 } from '../../shared/constants/ActionTypes';
 import {appIntl} from '../../@crema/utility/helper/Utils';
 import jwtAxios from '@crema/services/auth/jwt-auth';
@@ -139,6 +140,27 @@ export const onGetFeaturedVehicles = () => {
       if (res.status === 200 && res.data.result) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_FEATURED_VEHICLE_LIST, payload: res.data.data});
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: messages['message.somethingWentWrong'],
+        });
+      }
+    } catch (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+    }
+  };
+};
+
+export const onGetBestSellingVehicles = () => {
+  return async (dispatch) => {
+    dispatch({type: FETCH_START});
+    const {messages} = appIntl();
+    try {
+      const res = await jwtAxios.get(`/best_selling_vehicles`);
+      if (res.status === 200 && res.data.result) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_BEST_SELLING_VEHICLE_LIST, payload: res.data.data});
       } else {
         dispatch({
           type: FETCH_ERROR,

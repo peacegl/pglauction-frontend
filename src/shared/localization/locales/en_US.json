@@ -1014,5 +1014,6 @@
   "message.modelUpdated": "Model updated successfully!",
   "message.modelDeleted": "Model(s) deleted successfully!",
   "model.deleteMessage": "Are you sure, you want to delete the selected Model(s)?",
-  "vehicle.featuredVehicles": "Featured Vehicles"
+  "vehicle.featuredVehicles": "Featured Vehicles",
+  "vehicle.bestSellingVehicles": "Best Selling Vehicles"
 }
