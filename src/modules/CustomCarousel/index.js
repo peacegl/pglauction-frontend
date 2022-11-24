@@ -1,40 +1,41 @@
-import React from 'react';
-import AppCard from '@crema/core/AppCard';
-import {useIntl} from 'react-intl';
-import Slider from 'react-slick';
-import CourseItem from './CourseItem';
-import PropTypes from 'prop-types';
+import VehicleGridCard from 'components/vehicles/VehicleGridCard';
+import {Grid, IconButton, Box} from '@mui/material';
 import CourseSlider from './CourseSlider';
+import CarouselItem from './CarouseItem';
+import PropTypes from 'prop-types';
+import Slider from 'react-slick';
+import {useRef} from 'react';
 
-const RelatedCourses = ({relatedCourses}) => {
-  const {messages} = useIntl();
+const CustomCarousel = ({title, items}) => {
+  const sliderRef = useRef(null);
 
   const settings = {
     dots: false,
     infinite: false,
+    lazyLoad: true,
     speed: 500,
     slidesToShow: 4,
-    slidesToScroll: 1,
-
+    slidesToScroll: 2,
+    // arrows: false,
     responsive: [
       {
         breakpoint: 1280,
         settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
+          slidesToShow: 3,
+          slidesToScroll: 2,
         },
       },
       {
-        breakpoint: 960,
+        breakpoint: 900,
         settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
+          slidesToShow: 2,
+          slidesToScroll: 2,
         },
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 1,
           slidesToScroll: 1,
         },
       },
@@ -49,20 +50,21 @@ const RelatedCourses = ({relatedCourses}) => {
   };
 
   return (
-    <AppCard sxStyle={{height: 1}} title={messages['academy.relatedCourses']}>
-      <CourseSlider>
-        <Slider className='slideRoot' {...settings}>
-          {relatedCourses.map((data, index) => (
-            <CourseItem key={index} data={data} />
-          ))}
-        </Slider>
-      </CourseSlider>
-    </AppCard>
+    <CourseSlider title={title}>
+      <Slider ref={sliderRef} className='slideRoot' {...settings}>
+        {items.map((data, index) => (
+          <Box key={index} sx={{px: 4, height: '100%'}}>
+            <CarouselItem item={data} />
+          </Box>
+        ))}
+      </Slider>
+    </CourseSlider>
   );
 };
 
-export default RelatedCourses;
+export default CustomCarousel;
 
-RelatedCourses.propTypes = {
-  relatedCourses: PropTypes.array,
+CustomCarousel.propTypes = {
+  items: PropTypes.array,
+  title: PropTypes.string || PropTypes.object,
 };
