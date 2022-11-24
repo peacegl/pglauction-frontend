@@ -5,30 +5,32 @@ import {Box, Paper, IconButton, Typography} from '@mui/material';
 
 const CourseSlider = ({title, children}) => {
   return (
-    <Paper
+    <Box
       sx={{
-        p: 4,
-        mt: 5,
-        position: 'relative',
+        mt: 7,
+        // position: 'relative',
         '& .slideRoot': {
           paddingBottom: 0,
           '& .slick-slide': {
             '&  img': {
-              height: 'auto',
+              // height: 'auto',
             },
           },
           '& .slick-prev, & .slick-next': {
-            top: -25,
+            // top: -25,
+            width: '40px',
+            hieght: '40px',
             '&:before': {
-              color: (theme) => theme.palette.text.primary,
+              fontSize: '40px',
+              color: (theme) => theme.palette.primary.main,
             },
           },
           '& .slick-prev': {
-            right: 32,
-            left: 'auto',
+            // right: 32,
+            // left: 'auto',
           },
           '& .slick-next': {
-            right: 10,
+            // right: 10,
           },
         },
       }}
@@ -70,7 +72,7 @@ const CourseSlider = ({title, children}) => {
           </IconButton>
         </Box>
       </Stack> */}
-    </Paper>
+    </Box>
   );
 };
 

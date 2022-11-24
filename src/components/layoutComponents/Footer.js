@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Container, Link, Paper, Typography} from '@mui/material';
+import {Box, Container, Link, Paper, Stack, Typography} from '@mui/material';
 import {useTheme} from '@mui/styles';
 import logoImage from '../../assets/united_logo.png';
 import Image from 'next/image';
@@ -48,12 +48,10 @@ export default function Footer() {
         }}
       >
         <Container maxWidth='xl'>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              columnGap: '45px',
-            }}
+          <Stack
+            direction={{xs: 'column', md: 'row'}}
+            justifyContent='space-between'
+            alignItems={{xs: 'center', md: 'flex-start'}}
             color={theme.palette.text.secondary}
           >
             <Box sx={{width: '30%'}}>
@@ -122,7 +120,7 @@ export default function Footer() {
                 </Link>
               </Box>
             </Box>
-          </Box>
+          </Stack>
         </Container>
       </Box>
       <Box>
