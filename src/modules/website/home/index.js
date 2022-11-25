@@ -1,11 +1,12 @@
 import {onGetFeaturedVehicles, onGetBestSellingVehicles} from 'redux/actions';
+import ContactForm from '../../../components/design/ContactForm';
 import SecondCustomCarousel from '../../SecondCustomCarousel';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import CustomCarousel from '../../CustomCarousel';
 import Container from '@mui/material/Container';
-import {Box, Typography} from '@mui/material';
+import {Box, Paper, Typography} from '@mui/material';
 import CarouselBanur from './CarouselBanur';
 import {styled} from '@mui/material/styles';
 import {useEffect, useState} from 'react';
@@ -39,7 +40,7 @@ export default function Home() {
   return (
     <>
       <CarouselBanur></CarouselBanur>
-      <Container maxWidth='xl' sx={{mt: 6}}>
+      <Container maxWidth='xl' sx={{mt: 12}}>
         <CustomCarousel
           title={<IntlMessages id='vehicle.featuredVehicles' />}
           items={featuredVehicles ? featuredVehicles : []}
@@ -63,7 +64,9 @@ export default function Home() {
               justifyContent: 'space-between',
             }}
           >
-            <Typography variant='h2'>Contact us on Whatsapp</Typography>
+            <Typography sx={{fontSize: '28px', textTransform: 'capitalize'}}>
+              <IntlMessages id='website.contact_on_whatsapp' />
+            </Typography>
             <ColorButton
               variant='contained'
               size='small'
@@ -76,12 +79,15 @@ export default function Home() {
           </Box>
         </Container>
       </Box>
-      <Container maxWidth='xl' sx={{mt: 6}}>
+      <Container maxWidth='xl' sx={{mt: 10}}>
         <SecondCustomCarousel
           title={<IntlMessages id='vehicle.bestSellingVehicles' />}
           items={bestSellingVehicles ? bestSellingVehicles : []}
         />
       </Container>
+      <Box variant='outlined' sqaure sx={{mt: 10}}>
+        <ContactForm></ContactForm>
+      </Box>
     </>
   );
 }
