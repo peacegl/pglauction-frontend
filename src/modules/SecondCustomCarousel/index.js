@@ -5,6 +5,7 @@ import CarouselItem from './CarouseItem';
 import PropTypes from 'prop-types';
 import Slider from 'react-slick';
 import {useRef} from 'react';
+import {IndeterminateCheckBox} from '@mui/icons-material';
 
 const CustomCarousel = ({title, items}) => {
   const sliderRef = useRef(null);
@@ -53,9 +54,7 @@ const CustomCarousel = ({title, items}) => {
     <CourseSlider title={title}>
       <Slider ref={sliderRef} className='slideRoot' {...settings}>
         {items.map((data, index) => (
-          <Box key={index} sx={{px: 4, height: '100%'}}>
-            <CarouselItem item={data} />
-          </Box>
+          <CarouselItem item={data} key={index} />
         ))}
       </Slider>
     </CourseSlider>

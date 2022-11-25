@@ -16,7 +16,6 @@ const CarouselItem = ({item}) => {
       sx={{
         borderRadius: 1,
         height: '100%',
-        alignItems: 'stretch',
       }}
     >
       <Box overflow='hidden' sx={{cursor: 'pointer'}}>
