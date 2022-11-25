@@ -813,6 +813,7 @@
   "common.code": "Code",
   "common.vin": "Vin",
   "common.lot_number": "Lot Number",
+  "common.lot": "Lot",
   "common.start_date": "Start Date",
   "common.end_date": "End Date",
   "common.minimum_bid": "Minimum Bid",
@@ -828,6 +829,8 @@
   "vehicle.transmission": "Transmission",
   "common.from_date": "From Date",
   "common.to_date": "To Date",
+  "common.location": "Location",
+  "common.view_details": "View Details",
 
   "common.created_by": "Created By",
   "common.created_at": "Created At",
@@ -1010,5 +1013,7 @@
   "message.modelCreated": "Model(s) created successfully!",
   "message.modelUpdated": "Model updated successfully!",
   "message.modelDeleted": "Model(s) deleted successfully!",
-  "model.deleteMessage": "Are you sure, you want to delete the selected Model(s)?"
+  "model.deleteMessage": "Are you sure, you want to delete the selected Model(s)?",
+  "vehicle.featuredVehicles": "Featured Vehicles",
+  "vehicle.bestSellingVehicles": "Best Selling Vehicles"
 }

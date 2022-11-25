@@ -1,19 +1,42 @@
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import LocationsList from '../../../components/locations/LocationsList';
-import CategoriesList from '../../../components/categories/CategoriesList';
-import AuctionsList from '../../../components/auctions/AuctionsList';
 import CarouselBanur from './CarouselBanur';
+import CustomCarousel from '../../CustomCarousel';
+import SecondCustomCarousel from '../../SecondCustomCarousel';
+import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {onGetFeaturedVehicles, onGetBestSellingVehicles} from 'redux/actions';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {Button} from '@mui/material';
 
 export default function Home() {
+  const featuredVehicles = useSelector(
+    ({vehicles}) => vehicles.featuredVehicles,
+  );
+  const bestSellingVehicles = useSelector(
+    ({vehicles}) => vehicles.bestSellingVehicles,
+  );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    fetchData();
+  }, [dispatch]);
+
+  const fetchData = async () => {
+    await dispatch(onGetFeaturedVehicles());
+    await dispatch(onGetBestSellingVehicles());
+  };
+
   return (
     <>
       <CarouselBanur></CarouselBanur>
       <Container maxWidth='xl' sx={{mt: 6}}>
+        <CustomCarousel
+          title={<IntlMessages id='vehicle.featuredVehicles' />}
+          items={featuredVehicles ? featuredVehicles : []}
+        />
+        <SecondCustomCarousel
+          title={<IntlMessages id='vehicle.bestSellingVehicles' />}
+          items={bestSellingVehicles ? bestSellingVehicles : []}
+        />
         {/* <Grid container spacing={5}>
         <Grid item xs={3}>
           <Stack direction='column' spacing={10}>

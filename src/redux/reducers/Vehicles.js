@@ -3,11 +3,15 @@ import {
   SET_VEHICLE_FILTER_DATA,
   ADD_NEW_VEHICLE,
   UPDATE_VEHICLE,
+  GET_FEATURED_VEHICLE_LIST,
+  GET_BEST_SELLING_VEHICLE_LIST,
 } from '../../shared/constants/ActionTypes';
 
 const initialState = {
   vehiclesData: {},
   filterData: {},
+  featuredVehicles: [],
+  bestSellingVehicles: [],
 };
 
 const VeihcleReducers = (state = initialState, action) => {
@@ -16,6 +20,16 @@ const VeihcleReducers = (state = initialState, action) => {
       return {
         ...state,
         vehiclesData: action.payload,
+      };
+    case GET_FEATURED_VEHICLE_LIST:
+      return {
+        ...state,
+        featuredVehicles: action.payload,
+      };
+    case GET_BEST_SELLING_VEHICLE_LIST:
+      return {
+        ...state,
+        bestSellingVehicles: action.payload,
       };
     case ADD_NEW_VEHICLE:
       return {
