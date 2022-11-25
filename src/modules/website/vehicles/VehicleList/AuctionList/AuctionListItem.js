@@ -82,7 +82,7 @@ export default function AuctionListItem(props) {
               borderRadius='28'
               size='small'
               sx={{mt: 2, px: 3}}
-              href={`https://wa.me/+93988668866`}
+              href=''
             >
               <BookmarkAddIcon />
               Watch
@@ -105,18 +105,23 @@ export default function AuctionListItem(props) {
             />
           </Box>
           <Box sx={{flex: 1}}>
-            <Typography component='div' color='primary' overflow='hidden'>
+            <Typography
+              component='div'
+              color='primary'
+              overflow='hidden'
+              mb='15px'
+            >
               <Box fontWeight='bold' display='inline'>
                 Price
               </Box>{' '}
               AED {props.item.price}
             </Typography>
-            <Typography component='div' color='primary' overflow='hidden'>
+            {/* <Typography component='div' color='primary' overflow='hidden'>
               <Box fontWeight='bold' display='inline'>
                 Sale Date
               </Box>{' '}
               {props.item.date}
-            </Typography>
+            </Typography> */}
 
             <Button
               variant='contained'
