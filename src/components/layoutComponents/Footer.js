@@ -54,70 +54,92 @@ export default function Footer() {
             alignItems={{xs: 'center', md: 'flex-start'}}
             color={theme.palette.text.secondary}
           >
-            <Box sx={{width: '30%'}}>
-              <Box sx={{mt: 1}}>
-                <img width='160' src={logoImage.src} alt='united logo' />
-              </Box>
-              <Typography sx={{mt: 4}}>
-                Cum qui totam eligendi. Eos sed perferendis consequuntur
-                cupiditate voluptas aut et. Deserunt neque nobis est numquam ut
-                Cum qui totam eligendi. Eos sed perferendis consequuntur
-                cupiditate voluptas aut et. Deserunt neque nobis est numquam ut.
-                Cum qui totam eligendi.
-              </Typography>
-            </Box>
-            <Box sx={{width: '20%'}}>
-              {title('Quick Links')}
-              {pages.map((page, index) => link(page.title, page.link))}
-            </Box>
-            <Box sx={{width: '20%', display: 'flex', flexDirection: 'column'}}>
-              {title('About Us')}
-              {link('About Us', '/')}
-              {title('Support')}
-              {link('Support', '/')}
-              {link('Terms & Condation', '/')}
-              {link('Privacy Policy', '/')}
-            </Box>
-            <Box sx={{width: '30%'}}>
-              {title('Location')}
-
-              <Box marginBottom='10px' display='flex' alignItems='center'>
-                <LocationOnOutlinedIcon />
-                <Typography
-                  variant='body2'
-                  fontSize='14px'
-                  underline='none'
-                  mx='5px'
-                >
-                  AL Qusais Industrial Area Fourth Al Saoud Building Room Number
-                  804 P.O.Box: 48551, Dubai-U.A.E.
+            <Box
+              sx={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: {xs: 'column', sm: 'row'},
+                alignItems: 'center',
+              }}
+            >
+              <Box sx={{flex: 3}}>
+                <Box sx={{mt: 1}}>
+                  <img width='160' src={logoImage.src} alt='united logo' />
+                </Box>
+                <Typography sx={{mt: 4, mr: 3}}>
+                  Cum qui totam eligendi. Eos sed perferendis consequuntur
+                  cupiditate voluptas aut et. Deserunt neque nobis est numquam
+                  ut Cum qui totam eligendi. Eos sed perferendis consequuntur
+                  cupiditate voluptas aut et. Deserunt neque nobis est numquam
+                  ut. Cum qui totam eligendi.
                 </Typography>
               </Box>
-              <Box marginBottom='10px' display='flex' alignItems='center'>
-                <PhoneOutlinedIcon />
-                <Link
-                  variant='body2'
-                  fontSize='14px'
-                  underline='none'
-                  href='tel:+976776655688'
-                  mx='5px'
-                  color={theme.palette.text.secondary}
-                >
-                  (+97)6776655688
-                </Link>
+              <Box sx={{flex: 2}}>
+                {title('Quick Links')}
+                {pages.map((page, index) => link(page.title, page.link))}
               </Box>
-              <Box marginBottom='10px' display='flex' alignItems='center'>
-                <EmailOutlinedIcon />
-                <Link
-                  variant='body2'
-                  fontSize='14px'
-                  underline='none'
-                  href='mailto:email@example.com'
-                  mx='5px'
-                  color={theme.palette.text.secondary}
-                >
-                  email@example
-                </Link>
+            </Box>
+            <Box
+              sx={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: {xs: 'column', sm: 'row'},
+                alignItems: 'center',
+              }}
+            >
+              <Box sx={{flex: 1, display: 'flex', flexDirection: 'column'}}>
+                {title('About Us')}
+                {link('About Us', '/')}
+                {title('Support')}
+                {link('Support', '/')}
+                {link('Terms & Condation', '/')}
+                {link('Privacy Policy', '/')}
+              </Box>
+              <Box
+                sx={{
+                  flex: 1,
+                }}
+              >
+                {title('Location')}
+
+                <Box marginBottom='10px' display='flex' alignItems='center'>
+                  <LocationOnOutlinedIcon />
+                  <Typography
+                    variant='body2'
+                    fontSize='14px'
+                    underline='none'
+                    mx='5px'
+                  >
+                    AL Qusais Industrial Area Fourth Al Saoud Building Room
+                    Number 804 P.O.Box: 48551, Dubai-U.A.E.
+                  </Typography>
+                </Box>
+                <Box marginBottom='10px' display='flex' alignItems='center'>
+                  <PhoneOutlinedIcon />
+                  <Link
+                    variant='body2'
+                    fontSize='14px'
+                    underline='none'
+                    href='tel:+976776655688'
+                    mx='5px'
+                    color={theme.palette.text.secondary}
+                  >
+                    (+97)6776655688
+                  </Link>
+                </Box>
+                <Box marginBottom='10px' display='flex' alignItems='center'>
+                  <EmailOutlinedIcon />
+                  <Link
+                    variant='body2'
+                    fontSize='14px'
+                    underline='none'
+                    href='mailto:email@example.com'
+                    mx='5px'
+                    color={theme.palette.text.secondary}
+                  >
+                    email@example
+                  </Link>
+                </Box>
               </Box>
             </Box>
           </Stack>

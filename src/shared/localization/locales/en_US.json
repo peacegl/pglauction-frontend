@@ -1015,5 +1015,8 @@
   "message.modelDeleted": "Model(s) deleted successfully!",
   "model.deleteMessage": "Are you sure, you want to delete the selected Model(s)?",
   "vehicle.featuredVehicles": "Featured Vehicles",
-  "vehicle.bestSellingVehicles": "Best Selling Vehicles"
+  "vehicle.bestSellingVehicles": "Best Selling Vehicles",
+  "website.contact_us": "Contact Us",
+  "website.contact_on_whatsapp": "Contact us on whatsapp",
+  "common.message": "Message"
 }
