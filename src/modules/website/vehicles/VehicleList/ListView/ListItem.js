@@ -1,8 +1,6 @@
 import {Box, Divider, Stack, Button} from '@mui/material';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import IntlMessages from '@crema/utility/IntlMessages';
 import CardContent from '@mui/material/CardContent';
-import TimeRemainingBox from '../TimeRemainingBox';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import Card from '@mui/material/Card';
@@ -10,7 +8,6 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import AppTooltip from '@crema/core/AppTooltip';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-import {LabelOffOutlined} from '@mui/icons-material';
 
 const TextShow = ({value, label}) => {
   return (
@@ -21,27 +18,27 @@ const TextShow = ({value, label}) => {
     </Typography>
   );
 };
-export default function AuctionListItem(props) {
+export default function ListItem(props) {
   return (
     <Card
       sx={{
         borderRadius: 1,
         display: 'flex',
-        flexDirection: {xs: 'column', sm: 'row'},
+        flexDirection: {xs: 'row', sm: 'row'},
         alignItems: 'center',
         mb: 4,
-        maxWidth: {xs: '360px', sm: '100%'},
+        maxWidth: {xs: '460px', sm: '100%'},
       }}
     >
-      <Box width='210px' overflow='hidden'>
+      <Box sx={{width: {xs: '160px', sm: '210px'}}} overflow='hidden'>
         <CardMedia
           component='img'
-          height='160'
           image={
             props.item.images.find((item) => item.type == 'main_image').path
           }
           alt='preview'
           sx={{
+            height: {xs: '100px', sm: '160px'},
             transition: 'all 450ms ease-out',
             '&:hover': {
               transform: 'scale(1.2)',
@@ -50,7 +47,7 @@ export default function AuctionListItem(props) {
         />
       </Box>
       <CardContent sx={{width: '100%'}}>
-        <Stack direction={{xs: 'column', sm: 'row'}} spacing={5}>
+        <Stack direction='row' spacing={5}>
           <Box sx={{flex: 2}}>
             <AppTooltip
               title={`${props.item?.model.make?.name} 
@@ -88,7 +85,10 @@ export default function AuctionListItem(props) {
               Watch
             </Button>
           </Box>
-          <Box sx={{flex: 1}} color='text.secondary'>
+          <Box
+            sx={{flex: 1, display: {xs: 'none', md: 'block'}}}
+            color='text.secondary'
+          >
             <TextShow label='Odometer' value={props.item.odometer} />
             <TextShow
               label='Interior Color'
@@ -104,7 +104,7 @@ export default function AuctionListItem(props) {
               value={props.item.keys ? 'Available' : 'Not Available'}
             />
           </Box>
-          <Box sx={{flex: 1}}>
+          <Box sx={{flex: 1, display: {xs: 'none', sm: 'block'}}}>
             <Typography
               component='div'
               color='primary'
@@ -126,12 +126,12 @@ export default function AuctionListItem(props) {
             <Button
               variant='contained'
               size='small'
-              sx={{mt: 3, px: 4}}
+              sx={{mt: 3, px: {md: 4, sm: 3}, borderRadius: '20px'}}
               href={`https://wa.me/+93988668866`}
               target='_blank'
             >
-              <WhatsAppIcon sx={{mx: 2}} />
-              +93988668866
+              <WhatsAppIcon />
+              <Box sx={{display: {xs: 'none', sm: 'block'}}}>+93988668866</Box>
             </Button>
           </Box>
           {/* <Divider orientation='vertical' flexItem /> */}
@@ -140,7 +140,7 @@ export default function AuctionListItem(props) {
     </Card>
   );
 }
-AuctionListItem.propTypes = {
+ListItem.propTypes = {
   item: PropTypes.object.isRequired,
 };
 

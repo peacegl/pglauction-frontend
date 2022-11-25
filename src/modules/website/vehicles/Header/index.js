@@ -25,7 +25,7 @@ const IconBtn = styled(IconButton)(({theme}) => {
     },
   };
 });
-const AuctionHeader = ({
+const Header = ({
   onSearch,
   viewType,
   list,
@@ -98,9 +98,9 @@ const AuctionHeader = ({
   );
 };
 
-export default AuctionHeader;
+export default Header;
 
-AuctionHeader.propTypes = {
+Header.propTypes = {
   viewType: PropTypes.number,
   onSearch: PropTypes.func,
   list: PropTypes.array,

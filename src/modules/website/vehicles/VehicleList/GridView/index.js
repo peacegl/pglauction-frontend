@@ -1,7 +1,6 @@
 import React from 'react';
 import AppGrid from '@crema/core/AppGrid';
 import GridItem from './GridItem';
-import VehicleGridItem from './VehicleGridItem';
 import ListEmptyResult from '@crema/core/AppList/ListEmptyResult';
 import PropTypes from 'prop-types';
 import {Grid} from '@mui/material';
@@ -15,9 +14,7 @@ const AuctionGrid = ({list, loading}) => (
       xl: 4,
     }}
     data={list}
-    renderRow={(item) => (
-      <VehicleGridItem item={item} key={item.id} url='vehicles' />
-    )}
+    renderRow={(item) => <GridItem item={item} key={item.id} url='vehicles' />}
     ListEmptyComponent={
       <ListEmptyResult content='No product found' loading={loading} />
     }

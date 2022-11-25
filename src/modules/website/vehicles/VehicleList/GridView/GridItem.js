@@ -8,7 +8,7 @@ import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
 import AppTooltip from '@crema/core/AppTooltip';
 
-export default function VehicleGridItem(props) {
+export default function GridItem(props) {
   const router = useRouter();
 
   return (
@@ -69,6 +69,6 @@ export default function VehicleGridItem(props) {
     </Card>
   );
 }
-VehicleGridItem.propTypes = {
+GridItem.propTypes = {
   item: PropTypes.object.isRequired,
 };
