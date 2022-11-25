@@ -34,9 +34,8 @@ export default function VehicleGridItem(props) {
         </Box>
         <CardContent>
           <AppTooltip
-            title={`${props.item?.model.make?.name} 
-            ${props.item.model?.name}
-            ${props.item?.year}`}
+            title={`${props.item?.year} ${props.item?.model.make?.name} 
+            ${props.item.model?.name}`}
           >
             <Typography
               height='20px'
@@ -46,8 +45,8 @@ export default function VehicleGridItem(props) {
               color='primary'
               overflow='hidden'
             >
-              {props.item?.model.make?.name} {props.item.model?.name}{' '}
-              {props.item.year}
+              {props.item.year} {props.item?.model.make?.name}{' '}
+              {props.item.model?.name}
             </Typography>
           </AppTooltip>
           <Divider sx={{my: 2}} />
