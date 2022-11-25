@@ -48,7 +48,10 @@ export default function VehicleGridItem(props) {
             </Typography>
           </AppTooltip>
           <Divider sx={{my: 2}} />
-          <Typography color='primary'>AED {props.item.price}</Typography>
+          <Box display='flex' justifyContent='space-between'>
+            <Typography color='primary'>AED {props.item.price}</Typography>
+            <Typography color='primary'>{props.item.odometer} Miles</Typography>
+          </Box>
 
           <Button
             onClick={(e) => e.stopPropagation()}
