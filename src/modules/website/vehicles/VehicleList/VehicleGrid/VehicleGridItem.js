@@ -1,8 +1,6 @@
 import {Box, Divider, Button, CardActionArea} from '@mui/material';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import IntlMessages from '@crema/utility/IntlMessages';
 import CardContent from '@mui/material/CardContent';
-import TimeRemainingBox from '../TimeRemainingBox';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import Card from '@mui/material/Card';

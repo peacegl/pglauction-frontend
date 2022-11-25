@@ -9,7 +9,18 @@ import Card from '@mui/material/Card';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import AppTooltip from '@crema/core/AppTooltip';
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import {LabelOffOutlined} from '@mui/icons-material';
 
+const TextShow = ({value, label}) => {
+  return (
+    <Typography>
+      <Box fontWeight='bold' display='inline'>
+        {label} {value}
+      </Box>
+    </Typography>
+  );
+};
 export default function AuctionListItem(props) {
   return (
     <Card
@@ -17,14 +28,15 @@ export default function AuctionListItem(props) {
         borderRadius: 1,
         display: 'flex',
         flexDirection: {xs: 'column', sm: 'row'},
+        alignItems: 'center',
         mb: 4,
         maxWidth: {xs: '360px', sm: '100%'},
       }}
     >
-      <Box width='265px' overflow='hidden'>
+      <Box width='210px' overflow='hidden'>
         <CardMedia
           component='img'
-          height='200'
+          height='160'
           image={
             props.item.images.find((item) => item.type == 'main_image').path
           }
@@ -39,72 +51,77 @@ export default function AuctionListItem(props) {
       </Box>
       <CardContent sx={{width: '100%'}}>
         <Stack direction={{xs: 'column', sm: 'row'}} spacing={5}>
-          <Box sx={{flex: 1}}>
+          <Box sx={{flex: 2}}>
             <AppTooltip
               title={`${props.item?.model.make?.name} 
             ${props.item.model?.name}
             ${props.item?.year}`}
             >
               <Typography
-                height='20px'
                 gutterBottom
                 variant='h4'
                 component='div'
                 color='primary'
                 overflow='hidden'
               >
-                {props.item?.model.make?.name} {props.item.model?.name}{' '}
-                {props.item.year}
+                {props.item.year} {props.item?.model.make?.name}{' '}
+                {props.item.model?.name}
               </Typography>
             </AppTooltip>
-            <Typography
-              gutterBottom
-              variant='h3'
-              component='div'
-              color='primary'
-            >
-              {props.item.title}
-            </Typography>
             <Divider sx={{my: 2}} />
-            <Box
-              color='text.secondary'
-              sx={{
-                display: 'flex',
-                alignSelf: 'flex-end',
-              }}
-            >
-              <Box sx={{flex: 1}}>
-                <Box sx={{fontSize: '12px', textTransform: 'uppercase'}}>
-                  <IntlMessages id='bid.currentBid' />
-                </Box>
-                <Box
-                  sx={{
-                    mt: 3,
-                    color: (theme) => theme.palette.success.main,
-                  }}
-                >
-                  $
-                  <Box
-                    display='inline'
-                    sx={{
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    {props.item.bids_max_amount}l
-                  </Box>
-                </Box>
-              </Box>
-              <Box sx={{flex: 1}}>
-                <Box sx={{fontSize: '12px', textTransform: 'uppercase'}}>
-                  <IntlMessages id='bid.timeRemaining' />
-                </Box>
-                <TimeRemainingBox end_date={props.item.end_date} />
-              </Box>
+            <Box>
+              <Typography color='text.secondary' display='inline'>
+                Lot#
+              </Typography>
+              <Typography color='primary' display='inline'>
+                {props.item.lot_number}
+              </Typography>
             </Box>
+            <Button
+              variant='outlined'
+              borderRadius='28'
+              size='small'
+              sx={{mt: 2, px: 3}}
+              href={`https://wa.me/+93988668866`}
+            >
+              <BookmarkAddIcon />
+              Watch
+            </Button>
+          </Box>
+          <Box sx={{flex: 1}} color='text.secondary'>
+            <TextShow label='Odometer' value={props.item.odometer} />
+            <TextShow
+              label='Interior Color'
+              value={props.item.interior_color}
+            />
+            <TextShow
+              label='Exterior Color'
+              value={props.item.exterior_color}
+            />
+            <TextShow label='Body Style' value={props.item.interior_color} />
+            <TextShow
+              label='Keys'
+              value={props.item.keys ? 'Available' : 'Not Available'}
+            />
+          </Box>
+          <Box sx={{flex: 1}}>
+            <Typography component='div' color='primary' overflow='hidden'>
+              <Box fontWeight='bold' display='inline'>
+                Price
+              </Box>{' '}
+              AED {props.item.price}
+            </Typography>
+            <Typography component='div' color='primary' overflow='hidden'>
+              <Box fontWeight='bold' display='inline'>
+                Sale Date
+              </Box>{' '}
+              {props.item.date}
+            </Typography>
+
             <Button
               variant='contained'
               size='small'
-              sx={{mt: 2, px: 4}}
+              sx={{mt: 3, px: 4}}
               href={`https://wa.me/+93988668866`}
               target='_blank'
             >
@@ -112,65 +129,7 @@ export default function AuctionListItem(props) {
               +93988668866
             </Button>
           </Box>
-          <Divider orientation='vertical' flexItem />
-          <Box
-            sx={{
-              flex: 1,
-              alignSelf: 'center',
-              // display: {xs: 'none', md: 'row'},
-            }}
-          >
-            <Typography variant='body1' color='text.secondary' sx={{mb: 2}}>
-              <span style={{fontWeight: 'bold'}}>
-                <IntlMessages id='bid.minimum_bid' />:
-              </span>{' '}
-              <Box
-                sx={{
-                  mt: 3,
-                  display: 'inline',
-                  color: (theme) => theme.palette.success.main,
-                }}
-              >
-                $
-                <span
-                  display='inline'
-                  style={{
-                    fontWeight: 'bold',
-                  }}
-                >
-                  {props.item.minimum_bid}
-                </span>
-              </Box>
-            </Typography>
-            <Typography variant='body1' color='text.secondary' sx={{mb: 2}}>
-              <span style={{fontWeight: 'bold'}}>
-                <IntlMessages id='bid.buy_now_price' />:
-              </span>{' '}
-              <Box
-                sx={{
-                  mt: 3,
-                  display: 'inline',
-                  color: (theme) => theme.palette.success.main,
-                }}
-              >
-                $
-                <span
-                  display='inline'
-                  style={{
-                    fontWeight: 'bold',
-                  }}
-                >
-                  {props.item.buy_now_price}
-                </span>
-              </Box>
-            </Typography>
-            <Typography variant='body1' color='text.secondary' sx={{mb: 2}}>
-              <span style={{fontWeight: 'bold'}}>
-                <IntlMessages id='common.note' />:
-              </span>{' '}
-              {props.item.note}
-            </Typography>
-          </Box>
+          {/* <Divider orientation='vertical' flexItem /> */}
         </Stack>
       </CardContent>
     </Card>
@@ -178,4 +137,9 @@ export default function AuctionListItem(props) {
 }
 AuctionListItem.propTypes = {
   item: PropTypes.object.isRequired,
+};
+
+TextShow.propTypes = {
+  value: PropTypes.string,
+  label: PropTypes.string,
 };
