@@ -12,9 +12,7 @@ const validationSchema = yup.object({
     .string()
     .email(<IntlMessages id='validation.invalidEmail' />)
     .required(<IntlMessages id='validation.eamilRequired' />),
-  message: yup
-    .string()
-    .required(<IntlMessages id='validation.messageRequired' />),
+  message: yup.string(),
 });
 
 const ContactForm = () => {
