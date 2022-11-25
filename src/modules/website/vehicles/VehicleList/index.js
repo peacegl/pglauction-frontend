@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import ProductHeader from '../AuctionHeader';
 import {useDispatch, useSelector} from 'react-redux';
 import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
-import AuctionGrid from './AuctionGrid/index';
+import VehicleGrid from './VehicleGrid/index';
 
 import AuctionList from './AuctionList';
 import AppsContent from './AppsContent';
@@ -86,7 +86,7 @@ const VehicleList = () => {
           }}
         >
           {viewType === VIEW_TYPE.GRID ? (
-            <AuctionGrid list={data} loading={loading} />
+            <VehicleGrid list={data} loading={loading} />
           ) : (
             <AuctionList list={data} loading={loading} />
           )}
