@@ -18,7 +18,7 @@ const CourseSlider = ({title, children}) => {
             },
           },
           '& .slick-prev, & .slick-next': {
-            top: -25,
+            top: -20,
             '&:before': {
               color: (theme) => theme.palette.text.primary,
             },

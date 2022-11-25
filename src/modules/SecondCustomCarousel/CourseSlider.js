@@ -8,29 +8,25 @@ const CourseSlider = ({title, children}) => {
     <Box
       sx={{
         mt: 7,
-        // position: 'relative',
         '& .slideRoot': {
+          paddingRight: '35px',
+          paddingLeft: '47px',
           paddingBottom: 0,
           '& .slick-slide': {
-            '&  img': {
-              // height: 'auto',
-            },
+            px: 3,
           },
-          '& .slick-prev, & .slick-next': {
-            // top: -25,
-            width: '40px',
-            hieght: '40px',
+          '& .slick-prev, .slick-next': {
+            zIndex: 1,
             '&:before': {
-              fontSize: '40px',
+              fontSize: '35px',
               color: (theme) => theme.palette.primary.main,
             },
           },
           '& .slick-prev': {
-            // right: 32,
-            // left: 'auto',
+            left: '25px !important',
           },
           '& .slick-next': {
-            // right: 10,
+            right: '25px !important',
           },
         },
       }}
@@ -40,7 +36,7 @@ const CourseSlider = ({title, children}) => {
           color='primary'
           component='h2'
           sx={{
-            mx: 3,
+            mx: 14,
             mb: 5,
             fontSize: '30px',
             fontWeight: 'bold',

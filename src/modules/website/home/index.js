@@ -60,14 +60,22 @@ export default function Home() {
             sx={{
               mx: 6,
               display: 'flex',
+              flexDirection: {xs: 'column', sm: 'row'},
               alignItems: 'center',
               justifyContent: 'space-between',
             }}
           >
-            <Typography sx={{fontSize: '28px', textTransform: 'capitalize'}}>
+            <Typography
+              sx={{
+                fontSize: '28px',
+                textTransform: 'capitalize',
+                textAlign: 'center',
+              }}
+            >
               <IntlMessages id='website.contact_on_whatsapp' />
             </Typography>
             <ColorButton
+              sx={{mt: {xs: 5, sm: 'inherit'}}}
               variant='contained'
               size='small'
               href={`https://wa.me/0785785785`}
