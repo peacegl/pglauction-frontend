@@ -2,41 +2,15 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import HighQualityIcon from '@mui/icons-material/HighQuality';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import {green, deepOrange, blue} from '@mui/material/colors';
-import {Box, Divider, Typography} from '@mui/material';
 import IntlMessages from '@crema/utility/IntlMessages';
 import SectionWIthIcon from './SectionWIthIcon';
-import {Stack} from '@mui/system';
+import {Box, Stack} from '@mui/material';
+import Title from './Title';
 
 function ChooseUsSection() {
   return (
     <Box sx={{my: 14}}>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      >
-        <Typography
-          component='h2'
-          sx={{
-            fontSize: '30px',
-            textAlign: 'center',
-            fontWeight: '500',
-            textTransform: 'capitalize',
-          }}
-        >
-          <IntlMessages id='website.why_choose_us' />
-          <Divider
-            sx={{
-              my: 4,
-              mx: 5,
-              backgroundColor: (theme) => theme.palette.primary.main,
-              borderRadius: 10,
-              height: '4px',
-            }}
-          />
-        </Typography>
-      </Box>
+      <Title title={<IntlMessages id='website.why_choose_us' />} />
       <Stack
         direction={{xs: 'column', md: 'row'}}
         spacing={10}
