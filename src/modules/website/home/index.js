@@ -11,6 +11,7 @@ import CarouselBanur from './CarouselBanur';
 import {styled} from '@mui/material/styles';
 import {useEffect, useState} from 'react';
 import Button from '@mui/material/Button';
+import ChooseUsSection from '../../../components/design/ChooseUsSection';
 
 const ColorButton = styled(Button)(({theme}) => ({
   color: (theme) => theme.palette.primary.contrastText('success'),
@@ -45,6 +46,9 @@ export default function Home() {
           title={<IntlMessages id='vehicle.featuredVehicles' />}
           items={featuredVehicles ? featuredVehicles : []}
         />
+      </Container>
+      <Container maxWidth='xl' sx={{mt: 10}}>
+        <ChooseUsSection />
       </Container>
       <Box
         sx={{
@@ -93,9 +97,9 @@ export default function Home() {
           items={bestSellingVehicles ? bestSellingVehicles : []}
         />
       </Container>
-      <Box variant='outlined' sqaure sx={{mt: 10}}>
+      {/* <Box variant='outlined' sqaure sx={{mt: 10}}>
         <ContactForm></ContactForm>
-      </Box>
+      </Box> */}
     </>
   );
 }
