@@ -1,3 +1,4 @@
+import IntlMessages from '@crema/utility/IntlMessages';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -10,15 +11,16 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import {useRouter} from 'next/router';
 import Box from '@mui/material/Box';
-import {useState} from 'react';
 import {AppSearchBar} from '@crema';
+import {useState} from 'react';
 
 export const pages = [
-  {title: 'Home', link: '/'},
-  {title: 'Browse', link: '/'},
-  {title: 'Search', link: '/'},
-  {title: 'All Vehicle', link: '/all-vehicles'},
-  {title: 'Live Auctions', link: '/live-auctions'},
+  {title: <IntlMessages id='website.home' />, link: '/'},
+  {title: <IntlMessages id='website.all_vehicles' />, link: '/all-vehicles'},
+  {title: <IntlMessages id='website.live_auctions' />, link: '/live-auctions'},
+  {title: <IntlMessages id='website.services' />, link: '/services'},
+  {title: <IntlMessages id='website.contact_us' />, link: '/contact-us'},
+  {title: <IntlMessages id='website.about_us' />, link: '/about-us'},
 ];
 const settings = ['Profile', 'Account', 'Logout'];
 

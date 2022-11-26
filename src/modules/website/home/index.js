@@ -1,5 +1,4 @@
 import {onGetFeaturedVehicles, onGetBestSellingVehicles} from 'redux/actions';
-import ContactForm from '../../../components/design/ContactForm';
 import SecondCustomCarousel from '../../SecondCustomCarousel';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import IntlMessages from '@crema/utility/IntlMessages';
@@ -97,9 +96,6 @@ export default function Home() {
           items={bestSellingVehicles ? bestSellingVehicles : []}
         />
       </Container>
-      {/* <Box variant='outlined' sqaure sx={{mt: 10}}>
-        <ContactForm></ContactForm>
-      </Box> */}
     </>
   );
 }
