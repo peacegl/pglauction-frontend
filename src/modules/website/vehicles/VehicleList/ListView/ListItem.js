@@ -8,14 +8,32 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import AppTooltip from '@crema/core/AppTooltip';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import {moneyFormater} from 'configs';
 
 const TextShow = ({value, label}) => {
   return (
-    <Typography>
-      <Box fontWeight='bold' display='inline'>
-        {label} {value}
-      </Box>
+    <Typography variant='body1'>
+      <Box display='inline' fontWeight='bold'>
+        {label}
+      </Box>{' '}
+      {value}
     </Typography>
+  );
+};
+
+const WhatsAppButton = (props) => {
+  return (
+    <Button
+      {...props}
+      variant='contained'
+      size='small'
+      sx={{mt: 2, px: {md: 4, sm: 3}, borderRadius: '20px'}}
+      href={`https://wa.me/${props.number}`}
+      target='_blank'
+    >
+      <WhatsAppIcon />
+      <Box pt='2px'>{props.number}</Box>
+    </Button>
   );
 };
 export default function ListItem(props) {
@@ -27,7 +45,7 @@ export default function ListItem(props) {
         flexDirection: {xs: 'row', sm: 'row'},
         alignItems: 'center',
         mb: 4,
-        maxWidth: {xs: '460px', sm: '100%'},
+        maxWidth: '100%',
       }}
     >
       <Box sx={{width: {xs: '160px', sm: '210px'}}} overflow='hidden'>
@@ -50,9 +68,8 @@ export default function ListItem(props) {
         <Stack direction='row' spacing={5}>
           <Box sx={{flex: 2}}>
             <AppTooltip
-              title={`${props.item?.model.make?.name} 
-            ${props.item.model?.name}
-            ${props.item?.year}`}
+              title={`${props.item?.year} ${props.item?.model.make?.name} 
+            ${props.item.model?.name}`}
             >
               <Typography
                 gutterBottom
@@ -60,30 +77,52 @@ export default function ListItem(props) {
                 component='div'
                 color='primary'
                 overflow='hidden'
+                height='20px'
               >
                 {props.item.year} {props.item?.model.make?.name}{' '}
                 {props.item.model?.name}
               </Typography>
             </AppTooltip>
             <Divider sx={{my: 2}} />
-            <Box>
-              <Typography color='text.secondary' display='inline'>
-                Lot#
-              </Typography>
-              <Typography color='primary' display='inline'>
-                {props.item.lot_number}
+            <Box display='flex' justifyContent='space-between'>
+              <Box>
+                <Typography color='text.secondary' display='inline'>
+                  Lot#
+                </Typography>
+                <Typography color='primary' display='inline'>
+                  {props.item.lot_number}
+                </Typography>
+              </Box>
+              <Typography
+                component='div'
+                color='primary'
+                overflow='hidden'
+                mb='10px'
+                fontSize='16px'
+                fontWeight='bold'
+                sx={{display: {xs: 'block', sm: 'none'}}}
+              >
+                {moneyFormater(props.item.price)}
               </Typography>
             </Box>
             <Button
               variant='outlined'
               borderRadius='28'
               size='small'
-              sx={{mt: 2, px: 3}}
+              sx={{mt: 2, px: 2}}
               href=''
             >
               <BookmarkAddIcon />
               Watch
             </Button>
+            <Box
+              sx={{
+                display: {xs: 'inline', sm: 'none'},
+                mx: 2,
+              }}
+            >
+              <WhatsAppButton number='+435345345342' />
+            </Box>
           </Box>
           <Box
             sx={{flex: 1, display: {xs: 'none', md: 'block'}}}
@@ -109,12 +148,11 @@ export default function ListItem(props) {
               component='div'
               color='primary'
               overflow='hidden'
-              mb='15px'
+              mb='10px'
+              fontSize='20px'
+              fontWeight='bold'
             >
-              <Box fontWeight='bold' display='inline'>
-                Price
-              </Box>{' '}
-              AED {props.item.price}
+              {moneyFormater(props.item.price)}
             </Typography>
             {/* <Typography component='div' color='primary' overflow='hidden'>
               <Box fontWeight='bold' display='inline'>
@@ -123,16 +161,7 @@ export default function ListItem(props) {
               {props.item.date}
             </Typography> */}
 
-            <Button
-              variant='contained'
-              size='small'
-              sx={{mt: 3, px: {md: 4, sm: 3}, borderRadius: '20px'}}
-              href={`https://wa.me/+93988668866`}
-              target='_blank'
-            >
-              <WhatsAppIcon />
-              <Box sx={{display: {xs: 'none', sm: 'block'}}}>+93988668866</Box>
-            </Button>
+            <WhatsAppButton number='+435345345342' />
           </Box>
           {/* <Divider orientation='vertical' flexItem /> */}
         </Stack>
@@ -147,4 +176,7 @@ ListItem.propTypes = {
 TextShow.propTypes = {
   value: PropTypes.string,
   label: PropTypes.string,
+};
+WhatsAppButton.propTypes = {
+  number: PropTypes.string,
 };

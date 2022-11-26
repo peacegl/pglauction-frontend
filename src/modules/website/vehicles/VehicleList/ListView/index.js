@@ -18,13 +18,13 @@ const Head = () => {
         alignItems: 'center',
         mb: 2,
         px: 2,
-        maxWidth: {xs: '460px', sm: '100%'},
+        maxWidth: '100%',
         backgroundColor: (theme) => theme.palette.primary.main,
         color: (theme) => theme.palette.primary.contrastText,
         fontWeight: 'bold',
       }}
     >
-      <Box width='210px' overflow='hidden'>
+      <Box sx={{width: {xs: '160px', sm: '210px'}}} overflow='hidden'>
         Image
       </Box>
       <CardContent sx={{width: '100%'}}>
