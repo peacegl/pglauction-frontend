@@ -19,6 +19,7 @@ import {pages} from './AppBar';
 import FacebookIcon from '../../assets/icon/facebook.svg';
 import WhatsAppIcon from '../../assets/icon/whatsapp.svg';
 import InstagramIcon from '../../assets/icon/instagram.svg';
+import Image from 'next/image';
 
 function Header() {
   const router = useRouter();
@@ -99,8 +100,8 @@ function Header() {
             sx={{columnGap: {xs: '2px', sm: '5px', md: '8px'}}}
             zIndex='2'
           >
-            <InstagramIcon width='30' />
             <FacebookIcon width='30' />
+            <InstagramIcon width='30' />
             <WhatsAppIcon width='30' />
           </Box>
           <Box
