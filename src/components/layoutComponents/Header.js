@@ -1,5 +1,7 @@
 import {
+  alpha,
   Box,
+  Button,
   Container,
   Drawer,
   IconButton,
@@ -10,13 +12,13 @@ import {
 } from '@mui/material';
 import {useRouter} from 'next/router';
 import {useTheme} from '@mui/styles';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
-import InstagramIcon from '@mui/icons-material/Instagram';
 import MenuIcon from '@mui/icons-material/Menu';
 import {AppSearchBar} from '@crema';
 import {useState} from 'react';
 import {pages} from './AppBar';
+import FacebookIcon from '../../assets/icon/facebook.svg';
+import WhatsAppIcon from '../../assets/icon/whatsapp.svg';
+import InstagramIcon from '../../assets/icon/instagram.svg';
 
 function Header() {
   const router = useRouter();
@@ -97,15 +99,9 @@ function Header() {
             sx={{columnGap: {xs: '2px', sm: '5px', md: '8px'}}}
             zIndex='2'
           >
-            <IconButton sx={{color: '#1976d2'}}>
-              <FacebookRoundedIcon />
-            </IconButton>
-            <IconButton sx={{color: '#f605a6'}}>
-              <InstagramIcon />
-            </IconButton>
-            <IconButton sx={{color: '#4ecc5c'}}>
-              <WhatsAppIcon />
-            </IconButton>
+            <InstagramIcon width='30' />
+            <FacebookIcon width='30' />
+            <WhatsAppIcon width='30' />
           </Box>
           <Box
             display='flex'

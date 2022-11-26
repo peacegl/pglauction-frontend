@@ -30,7 +30,7 @@ const Head = () => {
       <CardContent sx={{width: '100%'}}>
         <Stack direction='row' spacing={2}>
           <Box sx={{flex: 2}}>Lot Info</Box>
-          <Box sx={{flex: 1, display: {xs: 'none', md: 'block'}}}>
+          <Box sx={{flex: 1.5, display: {xs: 'none', md: 'block'}}}>
             Vehicle Info
           </Box>
           <Box sx={{flex: 1, display: {xs: 'none', sm: 'block'}}}>
