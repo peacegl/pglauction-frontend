@@ -23,12 +23,18 @@ const VehicleList = () => {
   const viewType = useSelector(({auctionItems}) => auctionItems.viewType);
   const filterData = useSelector(({auctionItems}) => auctionItems.filterData);
   const loading = useSelector(({common}) => common.loading);
+  const {search = ''} = useSelector(({webVehicles}) => webVehicles);
 
   useEffect(() => {
     dispatch(
-      onGetWebVehicleData({...filterData, per_page: perPage, page: page + 1}),
+      onGetWebVehicleData({
+        ...filterData,
+        per_page: perPage,
+        page: page + 1,
+        search,
+      }),
     );
-  }, [dispatch, filterData, page]);
+  }, [dispatch, filterData, page, search]);
 
   const onPageChange = (event, value) => {
     setPage(value);

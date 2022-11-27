@@ -1,7 +1,5 @@
 import {
-  alpha,
   Box,
-  Button,
   Container,
   Drawer,
   IconButton,
@@ -13,17 +11,19 @@ import {
 import {useRouter} from 'next/router';
 import {useTheme} from '@mui/styles';
 import MenuIcon from '@mui/icons-material/Menu';
-import {AppSearchBar} from '@crema';
 import {useState} from 'react';
 import {pages} from './AppBar';
 import FacebookIcon from '../../assets/icon/facebook.svg';
 import WhatsAppIcon from '../../assets/icon/whatsapp.svg';
 import InstagramIcon from '../../assets/icon/instagram.svg';
-import Image from 'next/image';
+import VehicleSearchBar from './VehicleSearchBar';
+import {useDispatch, useSelector} from 'react-redux';
+import {setVehicleSearch} from '../../redux/actions';
 
 function Header() {
   const router = useRouter();
   const theme = useTheme();
+  const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleDrawer = (open) => (event) => {
@@ -34,6 +34,13 @@ function Header() {
       return;
     }
     setIsMenuOpen(open);
+  };
+
+  const {search = ''} = useSelector(({webVehicles}) => webVehicles);
+
+  const onSearch = (value) => {
+    router.push('/all-vehicles');
+    dispatch(setVehicleSearch(value));
   };
 
   const listMenu = (
@@ -57,7 +64,6 @@ function Header() {
       </List>
     </Box>
   );
-
   return (
     <Box
       display='flex'
@@ -87,11 +93,24 @@ function Header() {
           >
             United Cars Auctions
           </Box>
-          <Box sx={{display: {xs: 'none', md: 'block'}}}>
-            <AppSearchBar
+
+          <Box sx={{display: {xs: 'none', md: 'flex'}}}>
+            <VehicleSearchBar
+              placeholder='Search Inventory By Make, Model, Vin, and More...'
+              onEnter={onSearch}
+              onSearch={onSearch}
+              defaultValue={search}
+            />
+            {/* <AppSearchBar
               width='450px'
               placeholder='Search Inventory By Make, Model, Vin, and More...'
-            />
+              overlap={true}
+              borderLight={true}
+              sx={{
+                '& .MuiInputBase-input': {px: '42px !important'},
+                display: 'inline',
+              }}
+            /> */}
           </Box>
           <Box
             display='flex'
