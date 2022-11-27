@@ -1,16 +1,24 @@
-import React from 'react';
-import {alpha, Box, Hidden, Stack} from '@mui/material';
-import AppSearch from '@crema/core/AppSearchBar';
+import React, {useEffect} from 'react';
+import {
+  alpha,
+  Badge,
+  Box,
+  Chip,
+  Hidden,
+  Stack,
+  Typography,
+} from '@mui/material';
 import ListIcon from '@mui/icons-material/List';
 import AppsIcon from '@mui/icons-material/Apps';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
 import IconButton from '@mui/material/IconButton';
 import PropTypes from 'prop-types';
-import {setAuctionViewType} from '../../../../redux/actions';
+import {setAuctionViewType, setVehicleSearch} from '../../../../redux/actions';
 import {styled} from '@mui/material/styles';
 import clsx from 'clsx';
 import AppsPagination from '@crema/core/AppsPagination';
+import {useTheme} from '@mui/material';
 
 const IconBtn = styled(IconButton)(({theme}) => {
   return {
@@ -25,7 +33,7 @@ const IconBtn = styled(IconButton)(({theme}) => {
     },
   };
 });
-const AuctionHeader = ({
+const Header = ({
   onSearch,
   viewType,
   list,
@@ -34,7 +42,14 @@ const AuctionHeader = ({
   totalProducts,
   onPageChange,
 }) => {
+  const {search = ''} = useSelector(({webVehicles}) => webVehicles);
+  const {total = 0} = useSelector(({webVehicles}) => webVehicles.vehiclesData);
   const dispatch = useDispatch();
+  const theme = useTheme();
+
+  const onDeleteSearch = () => {
+    dispatch(setVehicleSearch(''));
+  };
 
   return (
     <Box
@@ -44,11 +59,32 @@ const AuctionHeader = ({
         alignItems: 'center',
       }}
     >
-      <Box sx={{mr: 3}}>
-        <AppSearch
-          placeholder='Search here'
-          onChange={(e) => onSearch(e.target.value)}
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <Typography variant='h1' color='primary'>
+          All Vehicles
+        </Typography>
+        <Badge
+          badgeContent={total}
+          max={99999999}
+          color='primary'
+          sx={{ml: 6}}
         />
+        {search && (
+          <Box sx={{ml: 7}}>
+            <Chip
+              variant='outlined'
+              color='primary'
+              ml='20px'
+              label={`Search: ${search}`}
+              onDelete={onDeleteSearch}
+            />
+          </Box>
+        )}
       </Box>
 
       <Stack
@@ -98,9 +134,9 @@ const AuctionHeader = ({
   );
 };
 
-export default AuctionHeader;
+export default Header;
 
-AuctionHeader.propTypes = {
+Header.propTypes = {
   viewType: PropTypes.number,
   onSearch: PropTypes.func,
   list: PropTypes.array,

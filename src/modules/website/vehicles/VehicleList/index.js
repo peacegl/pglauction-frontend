@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import ProductHeader from '../AuctionHeader';
+import Header from '../Header';
 import {useDispatch, useSelector} from 'react-redux';
 import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
-import VehicleGrid from './VehicleGrid/index';
+import GridView from './GridView/index';
 
-import AuctionList from './AuctionList';
+import ListView from './ListView';
 import AppsContent from './AppsContent';
 import {alpha, Box, Hidden, Card} from '@mui/material';
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
@@ -23,12 +23,18 @@ const VehicleList = () => {
   const viewType = useSelector(({auctionItems}) => auctionItems.viewType);
   const filterData = useSelector(({auctionItems}) => auctionItems.filterData);
   const loading = useSelector(({common}) => common.loading);
+  const {search = ''} = useSelector(({webVehicles}) => webVehicles);
 
   useEffect(() => {
     dispatch(
-      onGetWebVehicleData({...filterData, per_page: perPage, page: page + 1}),
+      onGetWebVehicleData({
+        ...filterData,
+        per_page: perPage,
+        page: page + 1,
+        search,
+      }),
     );
-  }, [dispatch, filterData, page]);
+  }, [dispatch, filterData, page, search]);
 
   const onPageChange = (event, value) => {
     setPage(value);
@@ -57,7 +63,7 @@ const VehicleList = () => {
           }}
           className='apps-header'
         >
-          <ProductHeader
+          <Header
             list={data}
             viewType={viewType}
             page={page}
@@ -86,9 +92,9 @@ const VehicleList = () => {
           }}
         >
           {viewType === VIEW_TYPE.GRID ? (
-            <VehicleGrid list={data} loading={loading} />
+            <GridView list={data} loading={loading} />
           ) : (
-            <AuctionList list={data} loading={loading} />
+            <ListView list={data} loading={loading} />
           )}
         </Box>
       </AppsContent>

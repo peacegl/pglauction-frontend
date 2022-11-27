@@ -10,17 +10,20 @@ import {
 } from '@mui/material';
 import {useRouter} from 'next/router';
 import {useTheme} from '@mui/styles';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
-import InstagramIcon from '@mui/icons-material/Instagram';
 import MenuIcon from '@mui/icons-material/Menu';
-import {AppSearchBar} from '@crema';
 import {useState} from 'react';
 import {pages} from './AppBar';
+import FacebookIcon from '../../assets/icon/facebook.svg';
+import WhatsAppIcon from '../../assets/icon/whatsapp.svg';
+import InstagramIcon from '../../assets/icon/instagram.svg';
+import VehicleSearchBar from './VehicleSearchBar';
+import {useDispatch, useSelector} from 'react-redux';
+import {setVehicleSearch} from '../../redux/actions';
 
 function Header() {
   const router = useRouter();
   const theme = useTheme();
+  const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleDrawer = (open) => (event) => {
@@ -31,6 +34,13 @@ function Header() {
       return;
     }
     setIsMenuOpen(open);
+  };
+
+  const {search = ''} = useSelector(({webVehicles}) => webVehicles);
+
+  const onSearch = (value) => {
+    router.push('/all-vehicles');
+    dispatch(setVehicleSearch(value));
   };
 
   const listMenu = (
@@ -54,7 +64,6 @@ function Header() {
       </List>
     </Box>
   );
-
   return (
     <Box
       display='flex'
@@ -84,11 +93,24 @@ function Header() {
           >
             United Cars Auctions
           </Box>
-          <Box sx={{display: {xs: 'none', md: 'block'}}}>
-            <AppSearchBar
+
+          <Box sx={{display: {xs: 'none', md: 'flex'}}}>
+            <VehicleSearchBar
+              placeholder='Search Inventory By Make, Model, Vin, and More...'
+              onEnter={onSearch}
+              onSearch={onSearch}
+              defaultValue={search}
+            />
+            {/* <AppSearchBar
               width='450px'
               placeholder='Search Inventory By Make, Model, Vin, and More...'
-            />
+              overlap={true}
+              borderLight={true}
+              sx={{
+                '& .MuiInputBase-input': {px: '42px !important'},
+                display: 'inline',
+              }}
+            /> */}
           </Box>
           <Box
             display='flex'
@@ -97,15 +119,9 @@ function Header() {
             sx={{columnGap: {xs: '2px', sm: '5px', md: '8px'}}}
             zIndex='2'
           >
-            <IconButton sx={{color: '#1976d2'}}>
-              <FacebookRoundedIcon />
-            </IconButton>
-            <IconButton sx={{color: '#f605a6'}}>
-              <InstagramIcon />
-            </IconButton>
-            <IconButton sx={{color: '#4ecc5c'}}>
-              <WhatsAppIcon />
-            </IconButton>
+            <FacebookIcon width='30' />
+            <InstagramIcon width='30' />
+            <WhatsAppIcon width='30' />
           </Box>
           <Box
             display='flex'

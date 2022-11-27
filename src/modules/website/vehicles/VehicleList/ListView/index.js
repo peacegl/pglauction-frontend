@@ -1,52 +1,56 @@
 import React from 'react';
+
 import ListItem from './ListItem';
-import AuctionListItem from './AuctionListItem';
 import AppList from '@crema/core/AppList';
 import ListEmptyResult from '@crema/core/AppList/ListEmptyResult';
 import PropTypes from 'prop-types';
 import {Box, Card, CardContent, Stack, Typography} from '@mui/material';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useTheme} from '@mui/material';
-const Header = () => {
+const Head = () => {
   const theme = useTheme();
   return (
     <Card
       sx={{
         borderRadius: 1,
         display: 'flex',
-        flexDirection: {xs: 'column', sm: 'row'},
+        flexDirection: {xs: 'row', sm: 'row'},
         alignItems: 'center',
         mb: 2,
         px: 2,
-        maxWidth: {xs: '360px', sm: '100%'},
+        maxWidth: '100%',
         backgroundColor: (theme) => theme.palette.primary.main,
         color: (theme) => theme.palette.primary.contrastText,
         fontWeight: 'bold',
       }}
     >
-      <Box width='210px' overflow='hidden'>
+      <Box sx={{width: {xs: '160px', sm: '210px'}}} overflow='hidden'>
         Image
       </Box>
       <CardContent sx={{width: '100%'}}>
-        <Stack direction={{xs: 'column', sm: 'row'}} spacing={2}>
+        <Stack direction='row' spacing={2}>
           <Box sx={{flex: 2}}>Lot Info</Box>
-          <Box sx={{flex: 1}}>Vehicle Info</Box>
-          <Box sx={{flex: 1}}>Sale Info</Box>
+          <Box sx={{flex: 1.5, display: {xs: 'none', md: 'block'}}}>
+            Vehicle Info
+          </Box>
+          <Box sx={{flex: 1, display: {xs: 'none', sm: 'block'}}}>
+            Sale Info
+          </Box>
         </Stack>
       </CardContent>
     </Card>
   );
 };
 
-const AuctionList = ({list, loading}) => {
+const ListView = ({list, loading}) => {
   return (
     <>
       <AppList
         data={list}
         renderRow={(item, index) => (
           <>
-            {index == 0 && <Header />}
-            <AuctionListItem item={item} key={item.id} />{' '}
+            {index == 0 && <Head />}
+            <ListItem item={item} key={item.id} />{' '}
           </>
         )}
         ListEmptyComponent={
@@ -57,9 +61,9 @@ const AuctionList = ({list, loading}) => {
   );
 };
 
-export default AuctionList;
+export default ListView;
 
-AuctionList.propTypes = {
+ListView.propTypes = {
   list: PropTypes.array,
   loading: PropTypes.bool,
 };

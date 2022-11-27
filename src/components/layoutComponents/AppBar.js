@@ -13,6 +13,7 @@ import {useRouter} from 'next/router';
 import Box from '@mui/material/Box';
 import {AppSearchBar} from '@crema';
 import {useState} from 'react';
+import {SearchIconBox} from '@crema/core/AppSearchBar/index.style';
 
 export const pages = [
   {title: <IntlMessages id='website.home' />, link: '/'},
@@ -29,17 +30,9 @@ function TopMenu() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -57,7 +50,11 @@ function TopMenu() {
             <AppSearchBar
               mdWidth='60vw'
               placeholder='Search Inventory By Make, Model, Vin, and More...'
+              sx={{'& .MuiInputBase-input': {px: '42px !important'}}}
             />
+            <IconButton onClick={this}>
+              <SearchIconBox />
+            </IconButton>
           </Box>
 
           <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>

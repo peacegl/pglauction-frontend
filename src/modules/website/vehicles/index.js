@@ -3,7 +3,7 @@ import VehicleList from './VehicleList';
 import AuctionsSidebar from './AuctionsSidebar';
 import {Box, Card, Container} from '@mui/material';
 
-const Auctions = () => {
+const Vehicles = () => {
   return (
     <Container maxWidth='xl' sx={{mt: 6}}>
       <Box
@@ -14,6 +14,7 @@ const Auctions = () => {
         <Box
           sx={{
             flex: 1,
+            display: {xs: 'none', md: 'block'},
           }}
         >
           <Card
@@ -37,4 +38,4 @@ const Auctions = () => {
   );
 };
 
-export default Auctions;
+export default Vehicles;
