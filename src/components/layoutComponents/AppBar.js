@@ -1,4 +1,3 @@
-import {SearchIconBox} from '@crema/core/AppSearchBar/index.style';
 import {useAuthMethod, useAuthUser} from '@crema/utility/AuthHooks';
 import IntlMessages from '@crema/utility/IntlMessages';
 import IconButton from '@mui/material/IconButton';
@@ -27,11 +26,6 @@ export const pages = [
   {title: <IntlMessages id='website.contact_us' />, link: '/contact-us'},
   {title: <IntlMessages id='website.about_us' />, link: '/about-us'},
 ];
-const settings = [
-  {title: <IntlMessages id='common.admin' />, link: '/admin/vehicles'},
-  {title: <IntlMessages id='common.account' />, link: '/account'},
-  {title: <IntlMessages id='common.logout' />, link: 'logout'},
-];
 
 const signOptions = [
   {title: <IntlMessages id='common.signIn' />, link: 'signin'},
@@ -39,26 +33,43 @@ const signOptions = [
 ];
 
 function TopMenu() {
-  const [openSignInModal, setOpenSignInModal] = useState(false);
   const {logout} = useAuthMethod();
   const {user, isLoading} = useAuthUser();
   const router = useRouter();
+
   const dispatch = useDispatch();
   const theme = useTheme();
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
-
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [settings, setSettings] = useState([
+    user?.type == 'User'
+      ? {
+          title: <IntlMessages id='common.admin_panel' />,
+          link: '/admin/vehicles',
+        }
+      : user?.type == 'Customer'
+      ? {
+          title: <IntlMessages id='common.my_account' />,
+          link: '/my-account',
+        }
+      : null,
+    {
+      title: <IntlMessages id='common.logout' />,
+      link: 'logout',
+    },
+  ]);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
   const handleCloseUserMenu = (link) => {
     setAnchorElUser(null);
-    if (link == 'logout') {
-      logout();
-    }
   };
   const changePage = (link) => {
+    if (link == 'logout') {
+      logout();
+      return;
+    }
     router.push(link);
   };
   const openAdminPanel = () => {
@@ -114,7 +125,7 @@ function TopMenu() {
             <Box sx={{flexGrow: 0}}>
               <Tooltip title='Open settings'>
                 <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                  <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+                  <Avatar alt={user.username} src={user.photoURL} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -133,14 +144,19 @@ function TopMenu() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem
-                    key={setting.title}
-                    onClick={() => handleCloseUserMenu(setting.link)}
-                  >
-                    <Typography textAlign='center'>{setting.title}</Typography>
-                  </MenuItem>
-                ))}
+                {settings.map(
+                  (setting) =>
+                    setting && (
+                      <MenuItem
+                        key={setting.title}
+                        onClick={() => changePage(setting.link)}
+                      >
+                        <Typography textAlign='center'>
+                          {setting.title}
+                        </Typography>
+                      </MenuItem>
+                    ),
+                )}
               </Menu>
             </Box>
           ) : (

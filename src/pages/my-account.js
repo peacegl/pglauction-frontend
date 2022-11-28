@@ -1,6 +1,6 @@
 import React from 'react';
-import AppPage from '../@crema/hoc/AppPage';
-import asyncComponent from '../@crema/utility/asyncComponent';
+import AppPage from '@crema/hoc/WebPage';
+import asyncComponent from '@crema/utility/asyncComponent';
 
-const Page1 = asyncComponent(() => import('../modules/extraPages/Account'));
-export default AppPage(() => <Page1 />);
+const MyAccount = asyncComponent(() => import('../modules/website/myAccount'));
+export default AppPage(() => <MyAccount />);

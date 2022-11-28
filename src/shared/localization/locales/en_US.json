@@ -1028,5 +1028,8 @@
   "website.live_auctions": "Live Auctions",
   "website.services": "Services",
   "website.about_us": "About Us",
-  "website.send_message": "Send Message"
+  "website.send_message": "Send Message",
+  "common.my_account": "My Account",
+  "common.logout": "Logout",
+  "common.admin_panel": "Admin Panel"
 }
