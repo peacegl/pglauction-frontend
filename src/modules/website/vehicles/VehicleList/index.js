@@ -3,7 +3,6 @@ import Header from '../Header';
 import {useDispatch, useSelector} from 'react-redux';
 import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
 import GridView from './GridView/index';
-
 import ListView from './ListView';
 import AppsContent from './AppsContent';
 import {alpha, Box, Hidden, Card} from '@mui/material';
