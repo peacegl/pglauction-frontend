@@ -3,13 +3,13 @@ import Header from '../Header';
 import {useDispatch, useSelector} from 'react-redux';
 import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
 import GridView from './GridView/index';
-
 import ListView from './ListView';
 import AppsContent from './AppsContent';
 import {alpha, Box, Hidden, Card} from '@mui/material';
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
 import {onGetWebVehicleData, setFilters} from '../../../../redux/actions';
 import AppsPagination from '@crema/core/AppsPagination';
+import {AppLoader} from '@crema';
 
 const VehicleList = () => {
   const dispatch = useDispatch();
@@ -97,6 +97,11 @@ const VehicleList = () => {
             <ListView list={data} loading={loading} />
           )}
         </Box>
+        {loading && (
+          <Box position='fixed' left='50vw' top='50vh'>
+            <AppLoader />
+          </Box>
+        )}
       </AppsContent>
       <Hidden smUp>
         {data.length > 0 ? (

@@ -56,18 +56,19 @@ export default function VehicleSearchBar({
   onChange,
   onEnter,
   onSearch,
+  ...rest
 }) {
   const theme = useTheme();
   const [search, setSearch] = useState('');
   return (
-    <Box sx={{flexGrow: 1}}>
+    <Box sx={{display: 'flex'}}>
       <Search
         sx={{
-          width: {xs: '90vw', md: '50vw', lg: '30vw'},
-          margin: 'auto',
+          width: {xs: '90vw', md: '50vw', lg: '40vw'},
           backgroundColor: alpha(theme.palette.primary.main, 0.05),
           borderColor: alpha(theme.palette.primary.main, 0.2),
         }}
+        {...rest}
       >
         <StyledInputBase
           defaultValue={searchQuery}

@@ -62,13 +62,16 @@ const CarouselBanur = () => {
       )}
     >
       {Object.values(textureImports).map((texture, index) => (
-        <Box key={`carousel-image-${index}`}>
+        <Box
+          key={`carousel-image-${index}`}
+          sx={{height: {xs: '400px', sm: '450px', md: '550px', lg: '650px'}}}
+        >
           <img
             src={texture.default.src}
             alt={`carousel-${index}`}
             style={{
               width: '100%',
-              height: '500px',
+              height: '100%',
               objectFit: 'cover',
               backgroundAttachment: 'fixed',
             }}

@@ -1,36 +1,12 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-import {Box, Divider, Paper, Stack} from '@mui/material';
+import {Divider, Paper, Stack} from '@mui/material';
 import {Carousel} from 'react-responsive-carousel';
-import {useEffect, useState} from 'react';
-import {useRouter} from 'next/router';
-import {getData} from '../../configs';
 import {SideBySideMagnifier} from 'react-image-magnifiers';
+import {PropTypes} from 'prop-types';
 
-const AuctionDetail = (props) => {
-  const [auction, setAuction] = useState({});
-  const [auctionLoading, setAuctionLoading] = useState(false);
-  const router = useRouter();
-  const {id} = router.query;
-
-  useEffect(() => {
-    if (id) {
-      getData(`/auctions/${id}`, {}, setAuctionLoading, setAuctionData);
-    }
-  }, [id]);
-
-  const setAuctionData = (data) => {
-    let sortedData = data;
-    sortedData.images.forEach((image, index, arr) => {
-      if (image.type == 'main_image') {
-        arr.unshift(image);
-        arr.splice(index, 1);
-      }
-    });
-    setAuction(sortedData);
-  };
-
+const ImageCarousel = ({images, ...rest}) => {
   const renderCustomThumbs = () => {
-    const thumbList = auction.images?.map((image, index) => (
+    const thumbList = images?.map((image, index) => (
       <picture key={index}>
         <source data-srcSet={image.path} type='image/*' />
         <img
@@ -57,6 +33,7 @@ const AuctionDetail = (props) => {
               '& .control-arrow': {
                 backgroundColor: (theme) => theme.palette.info.main,
               },
+              minHeight: '600px',
             }}
           >
             <Carousel
@@ -66,7 +43,7 @@ const AuctionDetail = (props) => {
               renderThumbs={renderCustomThumbs}
               // dynamicHeight={true}
             >
-              {auction.images?.map((item) => (
+              {images?.map((item) => (
                 // <div key={item.id}>
                 <SideBySideMagnifier
                   key={item.id}
@@ -83,12 +60,6 @@ const AuctionDetail = (props) => {
                 // </div>
               ))}
             </Carousel>
-            {/* <Divider
-              sx={{
-                mb: 2,
-              }}
-            />
-            <Box>d</Box> */}
           </Paper>
         </Stack>
       </Stack>
@@ -96,4 +67,8 @@ const AuctionDetail = (props) => {
   );
 };
 
-export default AuctionDetail;
+export default ImageCarousel;
+
+ImageCarousel.propTypes = {
+  images: PropTypes.array,
+};

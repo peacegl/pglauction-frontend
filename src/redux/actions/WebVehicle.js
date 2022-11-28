@@ -32,6 +32,7 @@ export const onGetWebVehicleData = (data) => {
       });
   };
 };
+
 export const setVehicleSearch = (data) => {
   return (dispatch) => {
     dispatch({type: SET_VEHICLE_SEARCH, payload: data});
@@ -42,13 +43,11 @@ export const onGetWebVehicleView = (id) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     jwtAxios
-      .get('/auction_items', {
-        params: {id: id},
-      })
+      .get(`/website/vehicles/${id}`)
       .then((data) => {
         if (data.status === 200) {
           dispatch({type: FETCH_SUCCESS});
-          dispatch({type: GET_WEB_VEHICLE_VIEW, payload: data.data});
+          dispatch({type: GET_WEB_VEHICLE_VIEW, payload: data.data.data});
         } else {
           dispatch({
             type: FETCH_ERROR,

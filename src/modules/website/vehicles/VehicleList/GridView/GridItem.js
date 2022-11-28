@@ -15,7 +15,9 @@ export default function GridItem(props) {
 
   return (
     <Card sx={{borderRadius: 1}}>
-      <CardActionArea onClick={() => router.push(`/vehicles/${props.item.id}`)}>
+      <CardActionArea
+        onClick={() => router.push(`/all-vehicles/${props.item.id}`)}
+      >
         <Box height='200' overflow='hidden'>
           <CardMedia
             component='img'
