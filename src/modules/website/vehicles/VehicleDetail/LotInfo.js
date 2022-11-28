@@ -5,6 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import CommentIcon from '@mui/icons-material/Comment';
 import {alpha, Card, CardHeader, Typography, useTheme} from '@mui/material';
 import {useSelector} from 'react-redux';
+import {PropTypes} from 'prop-types';
 
 // export default function SaleInfo() {
 //   const theme = useTheme();

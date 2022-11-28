@@ -2,6 +2,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a lo
 import {Divider, Paper, Stack} from '@mui/material';
 import {Carousel} from 'react-responsive-carousel';
 import {SideBySideMagnifier} from 'react-image-magnifiers';
+import {PropTypes} from 'prop-types';
 
 const ImageCarousel = ({images, ...rest}) => {
   const renderCustomThumbs = () => {
