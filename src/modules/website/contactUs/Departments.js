@@ -144,23 +144,11 @@ const Departments = () => {
   return (
     <>
       <Title title={<IntlMessages id='website.contact_us' />} />
-      {/* <Stack
-        direction='row'
-        spacing={7}
-        alignItems='stretch'
-        justifyContent='center'
-        sx={{
-          mt: 7,
-          textAlign: 'center',
-          flexWrap: 'wrap',
-        }}
-      > */}
       <Box sx={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap'}}>
         {departments.map((department, index) => (
           <Department department={department} key={index} />
         ))}
       </Box>
-      {/* </Stack> */}
     </>
   );
 };

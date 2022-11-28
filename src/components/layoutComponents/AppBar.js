@@ -14,7 +14,7 @@ import Menu from '@mui/material/Menu';
 import {useRouter} from 'next/router';
 import Box from '@mui/material/Box';
 import {AppSearchBar} from '@crema';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 
 export const pages = [
   {title: <IntlMessages id='website.home' />, link: '/'},
@@ -36,8 +36,21 @@ function TopMenu() {
   const router = useRouter();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [settings, setSettings] = useState([
-    {title: <IntlMessages id='common.my_account' />, link: '/my-account'},
-    {title: <IntlMessages id='common.logout' />, link: 'logout'},
+    user?.type == 'User'
+      ? {
+          title: <IntlMessages id='common.admin_panel' />,
+          link: '/admin/vehicles',
+        }
+      : user?.type == 'Customer'
+      ? {
+          title: <IntlMessages id='common.my_account' />,
+          link: '/my-account',
+        }
+      : null,
+    {
+      title: <IntlMessages id='common.logout' />,
+      link: 'logout',
+    },
   ]);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -52,19 +65,7 @@ function TopMenu() {
     }
     router.push(link);
   };
-  useEffect(() => {
-    if (user?.type == 'User') {
-      if (settings.length == 2) {
-        setSettings((d) => [
-          {
-            title: <IntlMessages id='common.admin_panel' />,
-            link: '/admin/vehicles',
-          },
-          ...d.filter((item) => item.key != 1),
-        ]);
-      }
-    }
-  }, [user]);
+
   return (
     <AppBar position='static'>
       <Container maxWidth='xl'>
@@ -123,14 +124,19 @@ function TopMenu() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem
-                    key={setting.title}
-                    onClick={() => changePage(setting.link)}
-                  >
-                    <Typography textAlign='center'>{setting.title}</Typography>
-                  </MenuItem>
-                ))}
+                {settings.map(
+                  (setting) =>
+                    setting && (
+                      <MenuItem
+                        key={setting.title}
+                        onClick={() => changePage(setting.link)}
+                      >
+                        <Typography textAlign='center'>
+                          {setting.title}
+                        </Typography>
+                      </MenuItem>
+                    ),
+                )}
               </Menu>
             </Box>
           ) : (
