@@ -36,131 +36,126 @@ const Signin = () => {
   };
   const {messages} = useIntl();
   return (
-    <AppAnimate animation='transition.slideUpIn' delay={200}>
-      <Box
+    <Box
+      sx={{
+        p: 8,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Card
         sx={{
-          pb: 6,
-          py: {xl: 8},
-          display: 'flex',
-          flex: 1,
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
+          textAlign: 'center',
+          padding: {xs: 8, lg: 12, xl: '48px 64px'},
+          overflow: 'hidden',
+          boxShadow:
+            '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
         }}
       >
-        <Card
+        <Box
           sx={{
-            maxWidth: 576,
-            width: '100%',
-            textAlign: 'center',
-            padding: {xs: 8, lg: 12, xl: '48px 64px'},
-            overflow: 'hidden',
-            boxShadow:
-              '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+            mb: {xs: 3, xl: 4},
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           <Box
             sx={{
-              mb: {xs: 3, xl: 4},
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              mr: 2,
+              '.logo': {
+                height: 24,
+              },
             }}
           >
-            <Box
-              sx={{
-                mr: 2,
-                '.logo': {
-                  height: 24,
-                },
-              }}
-            >
-              <img
-                className='logo'
-                src={'/assets/images/logo-icon-large.png'}
-                alt='crema'
-                title='crema'
-              />
-            </Box>
-            <Box
-              sx={{
-                mb: 1.5,
-                fontWeight: Fonts.BOLD,
-                fontSize: 20,
-              }}
-            >
-              <IntlMessages id='common.login' />
-            </Box>
+            <img
+              className='logo'
+              src={'/assets/images/logo-icon-large.png'}
+              alt='crema'
+              title='crema'
+            />
           </Box>
-
-          <Formik
-            validateOnChange={true}
-            initialValues={{
-              email_or_username: '',
-              password: '',
-            }}
-            validationSchema={validationSchema}
-            onSubmit={(data, {setSubmitting}) => {
-              setSubmitting(true);
-              signInUser({
-                email_or_username: data.email_or_username,
-                password: data.password,
-              });
-              setSubmitting(false);
+          <Box
+            sx={{
+              mb: 1.5,
+              fontWeight: Fonts.BOLD,
+              fontSize: 20,
             }}
           >
-            {({isSubmitting}) => (
-              <Form
+            <IntlMessages id='common.login' />
+          </Box>
+        </Box>
+
+        <Formik
+          validateOnChange={true}
+          initialValues={{
+            email_or_username: '',
+            password: '',
+          }}
+          validationSchema={validationSchema}
+          onSubmit={(data, {setSubmitting}) => {
+            setSubmitting(true);
+            signInUser({
+              email_or_username: data.email_or_username,
+              password: data.password,
+            });
+            setSubmitting(false);
+          }}
+        >
+          {({isSubmitting}) => (
+            <Form
+              sx={{
+                textAlign: 'left',
+              }}
+              noValidate
+              autoComplete='off'
+            >
+              <Box
                 sx={{
-                  textAlign: 'left',
+                  mb: {xs: 3, xl: 4},
                 }}
-                noValidate
-                autoComplete='off'
               >
-                <Box
+                <AppTextField
+                  placeholder={messages['common.email_or_username']}
+                  label={<IntlMessages id='common.email_or_username' />}
+                  name='email_or_username'
+                  variant='outlined'
+                  size='small'
                   sx={{
-                    mb: {xs: 3, xl: 4},
+                    width: '100%',
                   }}
-                >
-                  <AppTextField
-                    placeholder={messages['common.email_or_username']}
-                    label={<IntlMessages id='common.email_or_username' />}
-                    name='email_or_username'
-                    variant='outlined'
-                    size='small'
-                    sx={{
-                      width: '100%',
-                    }}
-                  />
-                </Box>
+                />
+              </Box>
 
-                <Box
+              <Box
+                sx={{
+                  mb: {xs: 3, xl: 4},
+                }}
+              >
+                <AppTextField
+                  type='password'
+                  placeholder={messages['common.password']}
+                  label={<IntlMessages id='common.password' />}
+                  name='password'
+                  variant='outlined'
+                  size='small'
                   sx={{
-                    mb: {xs: 3, xl: 4},
+                    width: '100%',
                   }}
-                >
-                  <AppTextField
-                    type='password'
-                    placeholder={messages['common.password']}
-                    label={<IntlMessages id='common.password' />}
-                    name='password'
-                    variant='outlined'
-                    size='small'
-                    sx={{
-                      width: '100%',
-                    }}
-                  />
-                </Box>
+                />
+              </Box>
 
-                <Box
-                  sx={{
-                    mb: {xs: 3, xl: 4},
-                    display: 'flex',
-                    flexDirection: {xs: 'column', sm: 'row'},
-                    alignItems: {sm: 'center'},
-                  }}
-                >
-                  {/* <Box
+              <Box
+                sx={{
+                  mb: {xs: 3, xl: 4},
+                  display: 'flex',
+                  flexDirection: {xs: 'column', sm: 'row'},
+                  alignItems: {sm: 'center'},
+                }}
+              >
+                {/* <Box
                     sx={{
                       display: 'flex',
                       flexDirection: 'row',
@@ -178,111 +173,111 @@ const Signin = () => {
                       <IntlMessages id='common.rememberMe' />
                     </Box>
                   </Box> */}
-                  <Box
-                    component='span'
-                    sx={{
-                      // ml: {sm: 'auto'},
-                      color: 'primary.main',
-                      mt: {xs: 2, sm: 0},
-                      fontWeight: Fonts.BOLD,
-                      fontSize: 14,
-                      cursor: 'pointer',
-                    }}
-                    onClick={onGoToForgetPassword}
-                  >
-                    <IntlMessages id='common.forgetPassword' />
-                  </Box>
-                </Box>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  type='submit'
-                  disabled={isSubmitting}
+                <Box
+                  component='span'
                   sx={{
-                    width: '100%',
-                    height: 35,
+                    // ml: {sm: 'auto'},
+                    color: 'primary.main',
+                    mt: {xs: 2, sm: 0},
+                    fontWeight: Fonts.BOLD,
+                    fontSize: 14,
+                    cursor: 'pointer',
                   }}
+                  onClick={onGoToForgetPassword}
                 >
-                  <IntlMessages id='common.login' />
-                </Button>
-              </Form>
-            )}
-          </Formik>
+                  <IntlMessages id='common.forgetPassword' />
+                </Box>
+              </Box>
+              <Button
+                variant='contained'
+                color='primary'
+                type='submit'
+                disabled={isSubmitting}
+                sx={{
+                  width: '100%',
+                  height: 35,
+                }}
+              >
+                <IntlMessages id='common.login' />
+              </Button>
+            </Form>
+          )}
+        </Formik>
 
+        {/* <Box
+          sx={{
+            mt: {xs: 3, xl: 4},
+            mb: {xs: 2, xl: 4},
+            display: 'flex',
+            flexDirection: {xs: 'column', sm: 'row'},
+            justifyContent: {sm: 'center'},
+            alignItems: {sm: 'center'},
+          }}
+        >
           <Box
+            component='span'
             sx={{
-              mt: {xs: 3, xl: 4},
-              mb: {xs: 2, xl: 4},
-              display: 'flex',
-              flexDirection: {xs: 'column', sm: 'row'},
-              justifyContent: {sm: 'center'},
-              alignItems: {sm: 'center'},
-            }}
-          >
-            <Box
-              component='span'
-              sx={{
-                mr: 4,
-                color: grey[600],
-                fontSize: 14,
-              }}
-            >
-              <IntlMessages id='common.orLoginWith' />
-            </Box>
-            <Box display='inline-block'>
-              <IconButton>
-                <FacebookIcon
-                  sx={{
-                    color: 'text.secondary',
-                  }}
-                />
-              </IconButton>
-              <IconButton>
-                <GoogleIcon
-                  sx={{
-                    color: 'text.secondary',
-                  }}
-                />
-              </IconButton>
-              <IconButton>
-                <TwitterIcon
-                  sx={{
-                    color: 'text.secondary',
-                  }}
-                />
-              </IconButton>
-            </Box>
-          </Box>
-
-          <Box
-            sx={{
-              color: grey[700],
+              mr: 4,
+              color: grey[600],
               fontSize: 14,
-              fontWeight: Fonts.BOLD,
             }}
           >
-            <Box
-              component='span'
-              sx={{
-                mr: 2,
-              }}
-            >
-              <IntlMessages id='common.dontHaveAccount' />
-            </Box>
-            <Box
-              component='span'
-              color='primary.main'
-              sx={{
-                width: '100%',
-                height: 44,
-              }}
-            >
-              <IntlMessages id='common.signup' />
-            </Box>
+            <IntlMessages id='common.orLoginWith' />
           </Box>
-        </Card>
-      </Box>
-    </AppAnimate>
+          <Box display='inline-block'>
+            <IconButton>
+              <FacebookIcon
+                sx={{
+                  color: 'text.secondary',
+                }}
+              />
+            </IconButton>
+            <IconButton>
+              <GoogleIcon
+                sx={{
+                  color: 'text.secondary',
+                }}
+              />
+            </IconButton>
+            <IconButton>
+              <TwitterIcon
+                sx={{
+                  color: 'text.secondary',
+                }}
+              />
+            </IconButton>
+          </Box>
+        </Box> */}
+
+        <Box
+          sx={{
+            mt: {xs: 3, xl: 4},
+            color: grey[700],
+            fontSize: 14,
+            fontWeight: Fonts.BOLD,
+          }}
+        >
+          <Box
+            component='span'
+            sx={{
+              mr: 2,
+            }}
+          >
+            <IntlMessages id='common.dontHaveAccount' />
+          </Box>
+          <Box
+            component='span'
+            color='primary.main'
+            sx={{
+              width: '100%',
+              height: 44,
+            }}
+          >
+            <IntlMessages id='common.signup' />
+          </Box>
+        </Box>
+      </Card>
+    </Box>
   );
 };
 
