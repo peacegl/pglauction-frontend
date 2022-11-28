@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const SectionWIthIcon = (props) => {
   return (
-    <Box sx={{flex: 1}}>
+    <Box sx={{width: {xs: '100%', sm: '50%', md: '30%'}, mt: 7}}>
       <Avatar
         sx={{
           mx: 'auto',

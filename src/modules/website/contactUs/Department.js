@@ -13,7 +13,9 @@ const Department = (props) => {
   return (
     <Card
       sx={{
-        m: 3,
+        mb: 5,
+        mt: 7,
+        mx: 3,
         borderTop: props.department?.borderTop,
         borderRadius: '7px',
         py: 4,
