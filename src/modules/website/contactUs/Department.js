@@ -13,6 +13,7 @@ const Department = (props) => {
   return (
     <Card
       sx={{
+        m: 3,
         borderTop: props.department?.borderTop,
         borderRadius: '7px',
         py: 4,
@@ -31,7 +32,10 @@ const Department = (props) => {
         }}
       >
         <Stack sx={{height: '100%'}}>
-          <Typography component='h2' sx={{fontSize: '20px', fontWeight: '500'}}>
+          <Typography
+            component='h2'
+            sx={{fontSize: '20px', fontWeight: '500', textAlign: 'center'}}
+          >
             {props.department?.title}
           </Typography>
           <Stack spacing={3} sx={{mt: 3, mx: 'auto', height: '100%'}}>
