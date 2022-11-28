@@ -63,9 +63,10 @@ const Header = ({
         sx={{
           display: 'flex',
           alignItems: 'center',
+          pl: 3,
         }}
       >
-        <Typography variant='h1' color='primary'>
+        <Typography variant='h2' color='primary'>
           All Vehicles
         </Typography>
         <Badge

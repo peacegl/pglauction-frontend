@@ -2,11 +2,12 @@ import React from 'react';
 
 import ListItem from './ListItem';
 import AppList from '@crema/core/AppList';
-import ListEmptyResult from '@crema/core/AppList/ListEmptyResult';
 import PropTypes from 'prop-types';
 import {Box, Card, CardContent, Stack, Typography} from '@mui/material';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useTheme} from '@mui/material';
+import {AppLoader} from '@crema';
+import ListEmptyResult from '@crema/core/AppList/ListEmptyResult';
 const Head = () => {
   const theme = useTheme();
   return (
@@ -54,7 +55,10 @@ const ListView = ({list, loading}) => {
           </>
         )}
         ListEmptyComponent={
-          <ListEmptyResult content='No product found' loading={loading} />
+          <ListEmptyResult
+            content={loading ? 'Loading...' : 'No Vehicle Found'}
+            title={'Vehicle List'}
+          />
         }
       />
     </>

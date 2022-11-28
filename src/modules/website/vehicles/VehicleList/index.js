@@ -10,6 +10,7 @@ import {alpha, Box, Hidden, Card} from '@mui/material';
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
 import {onGetWebVehicleData, setFilters} from '../../../../redux/actions';
 import AppsPagination from '@crema/core/AppsPagination';
+import {AppLoader} from '@crema';
 
 const VehicleList = () => {
   const dispatch = useDispatch();
@@ -98,6 +99,7 @@ const VehicleList = () => {
           )}
         </Box>
       </AppsContent>
+      {loading && <AppLoader />}
       <Hidden smUp>
         {data.length > 0 ? (
           <Card

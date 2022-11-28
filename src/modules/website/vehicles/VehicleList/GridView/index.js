@@ -16,7 +16,10 @@ const AuctionGrid = ({list, loading}) => (
     data={list}
     renderRow={(item) => <GridItem item={item} key={item.id} url='vehicles' />}
     ListEmptyComponent={
-      <ListEmptyResult content='No product found' loading={loading} />
+      <ListEmptyResult
+        content={loading ? 'Loading...' : 'No Vehicle Found'}
+        title={'Vehicle List'}
+      />
     }
   />
 );

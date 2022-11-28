@@ -11,9 +11,11 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import {useRouter} from 'next/router';
 import Box from '@mui/material/Box';
-import {AppSearchBar} from '@crema';
 import {useState} from 'react';
-import {SearchIconBox} from '@crema/core/AppSearchBar/index.style';
+import VehicleSearchBar from './VehicleSearchBar';
+import {useDispatch, useSelector} from 'react-redux';
+import {useTheme} from '@mui/material';
+import {setVehicleSearch} from 'redux/actions';
 
 export const pages = [
   {title: <IntlMessages id='website.home' />, link: '/'},
@@ -27,8 +29,11 @@ const settings = ['Profile', 'Account', 'Logout'];
 
 function TopMenu() {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const theme = useTheme();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const {search = ''} = useSelector(({webVehicles}) => webVehicles);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -42,19 +47,29 @@ function TopMenu() {
   const openAdminPanel = () => {
     router.push('/admin/vehicles');
   };
+
+  const onSearch = (value) => {
+    router.push('/all-vehicles');
+    dispatch(setVehicleSearch(value));
+  };
   return (
     <AppBar position='static'>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
           <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
-            <AppSearchBar
-              mdWidth='60vw'
+            <VehicleSearchBar
               placeholder='Search Inventory By Make, Model, Vin, and More...'
-              sx={{'& .MuiInputBase-input': {px: '42px !important'}}}
+              onEnter={onSearch}
+              onSearch={onSearch}
+              defaultValue={search}
+              sx={{
+                width: {xs: '60vw'},
+                margin: 'auto',
+                backgroundColor: 'white',
+                borderColor: 'white',
+                color: theme.palette.primary.main,
+              }}
             />
-            <IconButton onClick={this}>
-              <SearchIconBox />
-            </IconButton>
           </Box>
 
           <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
