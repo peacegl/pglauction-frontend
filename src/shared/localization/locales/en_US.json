@@ -1029,7 +1029,7 @@
   "website.services": "Services",
   "website.about_us": "About Us",
   "website.send_message": "Send Message",
-  "common.account": "Account",
+  "common.my_account": "My Account",
   "common.logout": "Logout",
   "common.admin_panel": "Admin Panel"
 }

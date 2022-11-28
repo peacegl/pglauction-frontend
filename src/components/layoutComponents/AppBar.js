@@ -31,14 +31,12 @@ const signOptions = [
 ];
 
 function TopMenu() {
-  const [openSignInModal, setOpenSignInModal] = useState(false);
   const {logout} = useAuthMethod();
   const {user, isLoading} = useAuthUser();
   const router = useRouter();
-  const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [settings, setSettings] = useState([
-    {title: <IntlMessages id='common.account' />, link: '/my-account'},
+    {title: <IntlMessages id='common.my_account' />, link: '/my-account'},
     {title: <IntlMessages id='common.logout' />, link: 'logout'},
   ]);
   const handleOpenUserMenu = (event) => {
