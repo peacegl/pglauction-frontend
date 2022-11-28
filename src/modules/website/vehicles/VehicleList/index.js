@@ -98,8 +98,12 @@ const VehicleList = () => {
             <ListView list={data} loading={loading} />
           )}
         </Box>
+        {loading && (
+          <Box position='fixed' left='50vw' top='50vh'>
+            <AppLoader />
+          </Box>
+        )}
       </AppsContent>
-      {loading && <AppLoader />}
       <Hidden smUp>
         {data.length > 0 ? (
           <Card
