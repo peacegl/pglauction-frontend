@@ -14,7 +14,7 @@ import Menu from '@mui/material/Menu';
 import {useRouter} from 'next/router';
 import Box from '@mui/material/Box';
 import {AppSearchBar} from '@crema';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 export const pages = [
   {title: <IntlMessages id='website.home' />, link: '/'},
@@ -24,11 +24,6 @@ export const pages = [
   {title: <IntlMessages id='website.contact_us' />, link: '/contact-us'},
   {title: <IntlMessages id='website.about_us' />, link: '/about-us'},
 ];
-const settings = [
-  {title: <IntlMessages id='common.admin' />, link: '/admin/vehicles'},
-  {title: <IntlMessages id='common.account' />, link: '/account'},
-  {title: <IntlMessages id='common.logout' />, link: 'logout'},
-];
 
 const signOptions = [
   {title: <IntlMessages id='common.signIn' />, link: 'signin'},
@@ -36,32 +31,47 @@ const signOptions = [
 ];
 
 function TopMenu() {
-  const [openSignInModal, setOpenSignInModal] = useState(false);
   const {logout} = useAuthMethod();
   const {user, isLoading} = useAuthUser();
   const router = useRouter();
-  const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [settings, setSettings] = useState([
+    {title: <IntlMessages id='common.my_account' />, link: '/my-account'},
+    {title: <IntlMessages id='common.logout' />, link: 'logout'},
+  ]);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
   const handleCloseUserMenu = (link) => {
     setAnchorElUser(null);
-    if (link == 'logout') {
-      logout();
-    }
   };
   const changePage = (link) => {
+    if (link == 'logout') {
+      logout();
+      return;
+    }
     router.push(link);
   };
-
+  useEffect(() => {
+    if (user?.type == 'User') {
+      if (settings.length == 2) {
+        setSettings((d) => [
+          {
+            title: <IntlMessages id='common.admin_panel' />,
+            link: '/admin/vehicles',
+          },
+          ...d.filter((item) => item.key != 1),
+        ]);
+      }
+    }
+  }, [user]);
   return (
     <AppBar position='static'>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
           <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
             <AppSearchBar
-              mdWidth='60vw'
+              mdWidth='55vw'
               placeholder='Search Inventory By Make, Model, Vin, and More...'
               sx={{'& .MuiInputBase-input': {px: '42px !important'}}}
             />
@@ -94,7 +104,7 @@ function TopMenu() {
             <Box sx={{flexGrow: 0}}>
               <Tooltip title='Open settings'>
                 <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                  <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+                  <Avatar alt={user.username} src={user.photoURL} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -116,7 +126,7 @@ function TopMenu() {
                 {settings.map((setting) => (
                   <MenuItem
                     key={setting.title}
-                    onClick={() => handleCloseUserMenu(setting.link)}
+                    onClick={() => changePage(setting.link)}
                   >
                     <Typography textAlign='center'>{setting.title}</Typography>
                   </MenuItem>

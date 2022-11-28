@@ -43,7 +43,7 @@ const JWTAuthAuthProvider = ({children}) => {
       jwtAxios
         .get('/auth')
         .then(({data}) => {
-          const permissions = data.permissions;
+          // const permissions = data.permissions;
           // delete data.permissions;
           // const roles = data.roles;
           // delete data.roles;
@@ -79,7 +79,7 @@ const JWTAuthAuthProvider = ({children}) => {
       localStorage.setItem('token', data.token);
       setAuthToken(data.token);
       const res = await jwtAxios.get('/auth');
-      const permissions = res?.data?.permissions;
+      // const permissions = res?.data?.permissions;
       // delete res?.data?.permissions;
       // const roles = res?.data?.roles;
       // delete res?.data?.roles;
@@ -111,7 +111,7 @@ const JWTAuthAuthProvider = ({children}) => {
       localStorage.setItem('token', data.token);
       setAuthToken(data.token);
       const res = await jwtAxios.get('/auth');
-      const permissions = res?.data?.permissions;
+      // const permissions = res?.data?.permissions;
       // delete res?.data?.permissions;
       // const roles = res?.data?.roles;
       // delete res?.data?.roles;

@@ -33,8 +33,8 @@ const ResetPasswordAwsCognito = () => {
   const {messages} = useIntl();
 
   return (
-    <AuthWrapper>
-      <Box sx={{width: '100%'}}>
+    <Box sx={{width: '100%', mt: 7}}>
+      <AuthWrapper>
         <Box
           sx={{
             mb: 5,
@@ -156,8 +156,8 @@ const ResetPasswordAwsCognito = () => {
           )}
         </Formik>
         <AppInfoView />
-      </Box>
-    </AuthWrapper>
+      </AuthWrapper>
+    </Box>
   );
 };
 
