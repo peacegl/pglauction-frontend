@@ -1,3 +1,5 @@
+import {SearchIconBox} from '@crema/core/AppSearchBar/index.style';
+import {useAuthMethod, useAuthUser} from '@crema/utility/AuthHooks';
 import IntlMessages from '@crema/utility/IntlMessages';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -13,7 +15,6 @@ import {useRouter} from 'next/router';
 import Box from '@mui/material/Box';
 import {AppSearchBar} from '@crema';
 import {useState} from 'react';
-import {SearchIconBox} from '@crema/core/AppSearchBar/index.style';
 
 export const pages = [
   {title: <IntlMessages id='website.home' />, link: '/'},
@@ -23,25 +24,37 @@ export const pages = [
   {title: <IntlMessages id='website.contact_us' />, link: '/contact-us'},
   {title: <IntlMessages id='website.about_us' />, link: '/about-us'},
 ];
-const settings = ['Profile', 'Account', 'Logout'];
+const settings = [
+  {title: <IntlMessages id='common.admin' />, link: '/admin/vehicles'},
+  {title: <IntlMessages id='common.account' />, link: '/account'},
+  {title: <IntlMessages id='common.logout' />, link: 'logout'},
+];
+
+const signOptions = [
+  {title: <IntlMessages id='common.signIn' />, link: 'signin'},
+  {title: <IntlMessages id='common.signup' />, link: '/signup'},
+];
 
 function TopMenu() {
+  const [openSignInModal, setOpenSignInModal] = useState(false);
+  const {logout} = useAuthMethod();
+  const {user, isLoading} = useAuthUser();
   const router = useRouter();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (link) => {
     setAnchorElUser(null);
+    if (link == 'logout') {
+      logout();
+    }
   };
   const changePage = (link) => {
     router.push(link);
   };
-  const openAdminPanel = () => {
-    router.push('/admin/vehicles');
-  };
+
   return (
     <AppBar position='static'>
       <Container maxWidth='xl'>
@@ -70,42 +83,60 @@ function TopMenu() {
             ))}
           </Box>
 
-          <Button
+          {/* <Button
             onClick={openAdminPanel}
             alignItems='center'
             sx={{my: 2, color: 'white', display: 'block'}}
           >
             Admin Panel
-          </Button>
-          <Box sx={{flexGrow: 0}}>
-            <Tooltip title='Open settings'>
-              <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{mt: '45px'}}
-              id='menu-appbar'
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign='center'>{setting}</Typography>
-                </MenuItem>
+          </Button> */}
+          {user ? (
+            <Box sx={{flexGrow: 0}}>
+              <Tooltip title='Open settings'>
+                <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                  <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{mt: '45px'}}
+                id='menu-appbar'
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem
+                    key={setting.title}
+                    onClick={() => handleCloseUserMenu(setting.link)}
+                  >
+                    <Typography textAlign='center'>{setting.title}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          ) : (
+            <Box sx={{flexGrow: 0, display: 'flex'}}>
+              {signOptions.map((page) => (
+                <Button
+                  key={page.link}
+                  onClick={() => changePage(page.link)}
+                  alignItems='center'
+                  sx={{my: 2, color: 'white', display: 'block'}}
+                >
+                  {page.title}
+                </Button>
               ))}
-            </Menu>
-          </Box>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>
