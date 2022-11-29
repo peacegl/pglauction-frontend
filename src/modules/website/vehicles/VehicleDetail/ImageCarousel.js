@@ -25,15 +25,19 @@ const ImageCarousel = ({images, ...rest}) => {
   return (
     <Stack direction={{xs: 'column', md: 'row'}} spacing={{xs: 5, md: 8}}>
       <Stack direction='row' spacing={5}>
-        <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+        <Stack
+          direction={{xs: 'column', md: 'row'}}
+          spacing={5}
+          width='100%'
+          sx={{maxWidth: {xs: '100%', md: '650px'}}}
+        >
           <Paper
             variant='outlined'
             sx={{
-              width: '600px',
+              width: '100%',
               '& .control-arrow': {
                 backgroundColor: (theme) => theme.palette.info.main,
               },
-              minHeight: '600px',
             }}
           >
             <Carousel
@@ -41,7 +45,6 @@ const ImageCarousel = ({images, ...rest}) => {
               showIndicators={false}
               emulateTouch={true}
               renderThumbs={renderCustomThumbs}
-              // dynamicHeight={true}
             >
               {images?.map((item) => (
                 // <div key={item.id}>

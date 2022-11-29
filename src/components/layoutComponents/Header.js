@@ -7,6 +7,7 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  Typography,
 } from '@mui/material';
 import {useRouter} from 'next/router';
 import {useTheme} from '@mui/styles';
@@ -19,6 +20,7 @@ import InstagramIcon from '../../assets/icon/instagram.svg';
 import VehicleSearchBar from './VehicleSearchBar';
 import {useDispatch, useSelector} from 'react-redux';
 import {setVehicleSearch} from '../../redux/actions';
+import logoImage from '../../assets/united_logo.png';
 
 function Header() {
   const router = useRouter();
@@ -75,7 +77,7 @@ function Header() {
         width: '100%',
         backgroundColor: 'white',
       }}
-      sx={{height: {xs: '60px', sm: '70px', md: '80px'}}}
+      sx={{height: {sm: '70px', md: '80px'}}}
     >
       <Container maxWidth='xl'>
         <Box
@@ -83,6 +85,7 @@ function Header() {
           display='flex'
           justifyContent='space-between'
           alignItems='center'
+          columnGap='20px'
         >
           <Box
             onClick={() => router.push('/')}
@@ -90,8 +93,13 @@ function Header() {
             color={theme.palette.text.primary}
             fontWeight='bold'
             fontSize='18px'
+            display='flex'
+            alignItems='center'
           >
-            United Cars Auctions
+            <img width='160' src={logoImage.src} alt='united logo' />
+            <Typography variant='h1' sx={{display: {xs: 'none', sm: 'inline'}}}>
+              United Cars Auctions
+            </Typography>
           </Box>
 
           <Box sx={{display: {xs: 'none', md: 'flex'}}}>
