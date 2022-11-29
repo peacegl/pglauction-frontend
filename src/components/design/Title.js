@@ -1,12 +1,12 @@
 import {Box, Divider, Typography} from '@mui/material';
 import PropTypes from 'prop-types';
 
-const Title = ({title}) => {
+const Title = ({title, justifyContent}) => {
   return (
     <Box
       sx={{
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: justifyContent ? justifyContent : 'center',
       }}
     >
       <Typography
@@ -36,4 +36,5 @@ const Title = ({title}) => {
 export default Title;
 Title.propTypes = {
   title: PropTypes.any,
+  justifyContent: PropTypes.any,
 };

@@ -21,7 +21,7 @@ import {setVehicleSearch} from 'redux/actions';
 export const pages = [
   {title: <IntlMessages id='website.home' />, link: '/'},
   {title: <IntlMessages id='website.all_vehicles' />, link: '/all-vehicles'},
-  {title: <IntlMessages id='website.live_auctions' />, link: '/live-auctions'},
+  // {title: <IntlMessages id='website.live_auctions' />, link: '/live-auctions'},
   {title: <IntlMessages id='website.services' />, link: '/services'},
   {title: <IntlMessages id='website.contact_us' />, link: '/contact-us'},
   {title: <IntlMessages id='website.about_us' />, link: '/about-us'},
@@ -29,7 +29,7 @@ export const pages = [
 
 const signOptions = [
   {title: <IntlMessages id='common.signIn' />, link: 'signin'},
-  {title: <IntlMessages id='common.signup' />, link: '/signup'},
+  // {title: <IntlMessages id='common.signup' />, link: '/signup'},
 ];
 
 function TopMenu() {
