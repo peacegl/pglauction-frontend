@@ -1,6 +1,14 @@
+import IntlMessages from '@crema/utility/IntlMessages';
 import React, {useEffect, useState} from 'react';
 import AuctionCategory from './AuctionsCategory';
-import {Box} from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  Typography,
+} from '@mui/material';
 import {Fonts} from '../../../../shared/constants/AppEnums';
 import Divider from '@mui/material/Divider';
 import PriceSelector from './PriceSelector';
@@ -19,10 +27,11 @@ import RatingCell from './RatingCell';
 import {useDispatch, useSelector} from 'react-redux';
 import {setFilters} from '../../../../redux/actions';
 import PropTypes from 'prop-types';
+import FilterComponents from './FilterComponents';
 
 const AuctionsSidebar = ({backgroundColor}) => {
   const dispatch = useDispatch();
-  const filterData = useSelector(({auctionItems}) => auctionItems.filterData);
+  const filterData = useSelector(({webVehicles}) => webVehicles.filterData);
   const [selectedBrand, setSelectedBrand] = useState(filterData.brand);
   const [selectedFor, setSelectedFor] = useState(filterData.ideaFor);
   const [selectedDiscount, setSelectedDiscount] = useState(filterData.discount);
@@ -91,177 +100,30 @@ const AuctionsSidebar = ({backgroundColor}) => {
   };
 
   return (
-    <AppScrollbar>
+    <Box>
       <Box
         sx={{
-          p: 6,
-          backgroundColor: backgroundColor,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          m: 2,
         }}
       >
-        <Box
-          component='h5'
-          sx={{
-            mb: 2,
-            fontWeight: Fonts.MEDIUM,
-          }}
+        <Typography
+          component='h3'
+          sx={{fontSize: '18px', fontWeight: '500'}}
+          color='primary'
         >
-          Filter By
-        </Box>
-        <Box
-          sx={{
-            color: 'text.secondary',
-            mb: 4,
-            fontWeight: Fonts.MEDIUM,
-          }}
-        >
-          CATEGORIES
-        </Box>
-        <AuctionCategory />
-        <Divider
-          sx={{
-            mt: 4,
-          }}
-        />
-        <Box
-          sx={{
-            color: 'text.secondary',
-            my: 4,
-            fontWeight: Fonts.MEDIUM,
-          }}
-        >
-          PRICE
-        </Box>
-        <PriceSelector />
-        <Divider
-          sx={{
-            mt: 4,
-          }}
-        />
-        <Box
-          sx={{
-            color: 'text.secondary',
-            my: 4,
-            fontWeight: Fonts.MEDIUM,
-          }}
-        >
-          BRAND
-          <AppList
-            data={BrandData}
-            renderRow={(data) => (
-              <CheckedCell
-                key={data.id}
-                data={data}
-                onChange={onSelectBrand}
-                selected={selectedBrand}
-              />
-            )}
-          />
-        </Box>
-        <Divider
-          sx={{
-            mt: 4,
-          }}
-        />
-        <Box
-          sx={{
-            color: 'text.secondary',
-            my: 4,
-            fontWeight: Fonts.MEDIUM,
-          }}
-        >
-          IDEAL FOR
-          <AppList
-            data={IdealFor}
-            renderRow={(data) => (
-              <CheckedCell
-                key={data.id}
-                data={data}
-                onChange={onSelectFor}
-                selected={selectedFor}
-              />
-            )}
-          />
-        </Box>
-        <Divider
-          sx={{
-            mt: 4,
-          }}
-        />
-        <Box
-          sx={{
-            color: 'text.secondary',
-            my: 4,
-            fontWeight: Fonts.MEDIUM,
-          }}
-        >
-          DISCOUNT
-          <AppList
-            data={DiscountList}
-            renderRow={(data) => (
-              <CheckedCell
-                key={data.id}
-                data={data}
-                onChange={onSelectDiscount}
-                selected={selectedDiscount}
-              />
-            )}
-          />
-        </Box>
-        <Divider
-          sx={{
-            mt: 4,
-          }}
-        />
-        <Box
-          sx={{
-            color: 'text.secondary',
-            my: 4,
-            fontWeight: Fonts.MEDIUM,
-          }}
-        >
-          <Box sx={{mb: 3}}>COLOR</Box>
-
-          <AppGrid
-            data={Object.values(ProductColors)}
-            column={6}
-            itemPadding={10}
-            renderRow={(data, index) => (
-              <ColorCell
-                key={'color-' + index}
-                data={data}
-                selected={selectedColor}
-                onChange={onSelectColor}
-              />
-            )}
-          />
-        </Box>
-        <Divider
-          sx={{
-            mt: 4,
-          }}
-        />
-        <Box
-          sx={{
-            color: 'text.secondary',
-            my: 4,
-            fontWeight: Fonts.MEDIUM,
-          }}
-        >
-          CUSTOMER RATINGS
-          <AppList
-            data={[5, 4, 3, 2, 1]}
-            renderRow={(data) => (
-              <RatingCell
-                key={data}
-                data={data}
-                onChange={onSelectRating}
-                selected={customerRating}
-              />
-            )}
-          />
-        </Box>
+          <IntlMessages id='common.apply_filters' />
+        </Typography>
+        <Button onClick={() => {}}>
+          <IntlMessages id='common.reset_all' />
+        </Button>
       </Box>
-    </AppScrollbar>
+      <Box>
+        <FilterComponents filterData={filterData} />
+      </Box>
+    </Box>
   );
 };
 

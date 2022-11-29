@@ -5,6 +5,7 @@ import {
   GET_WEB_VEHICLE_LIST,
   GET_WEB_VEHICLE_VIEW,
   SET_VEHICLE_SEARCH,
+  SET_VEHICLE_VIEW_TYPE,
 } from '../../shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '../../@crema/utility/helper/Utils';
@@ -58,5 +59,11 @@ export const onGetWebVehicleView = (id) => {
       .catch((error) => {
         dispatch({type: FETCH_ERROR, payload: error.message});
       });
+  };
+};
+
+export const setVehicleViewType = (viewType) => {
+  return (dispatch) => {
+    dispatch({type: SET_VEHICLE_VIEW_TYPE, payload: viewType});
   };
 };

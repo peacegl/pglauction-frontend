@@ -1031,5 +1031,11 @@
   "website.send_message": "Send Message",
   "common.my_account": "My Account",
   "common.logout": "Logout",
-  "common.admin_panel": "Admin Panel"
+  "common.admin_panel": "Admin Panel",
+  "common.filter": "Filter",
+  "common.apply_filters": "Apply Filters",
+  "common.reset_all": "Reset All",
+  "filter.newly_added": "Newly Added",
+  "common.last_24_hours": "Last 24 Hours",
+  "common.last_7_days": "Last 7 Days"
 }

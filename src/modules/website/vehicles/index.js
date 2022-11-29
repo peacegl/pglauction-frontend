@@ -1,40 +1,67 @@
-import React from 'react';
-import VehicleList from './VehicleList';
+import {Box, Card, Container, Button, Drawer} from '@mui/material';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import IntlMessages from '@crema/utility/IntlMessages';
 import AuctionsSidebar from './AuctionsSidebar';
-import {Box, Card, Container} from '@mui/material';
+import Hidden from '@mui/material/Hidden';
+import VehicleList from './VehicleList';
+import {useState} from 'react';
 
 const Vehicles = () => {
+  const [openDrawer, setOpenDrawer] = useState(false);
   return (
-    <Container maxWidth='xl' sx={{mt: 6}}>
-      <Box
-        sx={{
-          display: 'flex',
-        }}
-      >
+    <>
+      <Container maxWidth='xl' sx={{mt: 6}}>
+        <Hidden mdUp>
+          <Button
+            sx={{mx: 3}}
+            variant='outlined'
+            startIcon={<FilterListIcon />}
+            aria-label='open filter'
+            onClick={() => setOpenDrawer(true)}
+          >
+            <IntlMessages id='common.filter' />
+          </Button>
+        </Hidden>
+
         <Box
           sx={{
-            flex: 1,
-            display: {xs: 'none', md: 'block'},
+            display: 'flex',
           }}
         >
-          <Card
+          <Box
             sx={{
-              m: 3,
-              borderRadius: 1,
+              flex: 1,
+              display: {xs: 'none', md: 'block'},
             }}
           >
-            <AuctionsSidebar />
-          </Card>
+            <Card
+              sx={{
+                m: 3,
+                borderRadius: 1,
+              }}
+            >
+              <AuctionsSidebar />
+            </Card>
+          </Box>
+          <Box
+            sx={{
+              flex: {xs: 1, md: 2, lg: 3, xl: 3},
+            }}
+          >
+            <VehicleList />
+          </Box>
         </Box>
-        <Box
-          sx={{
-            flex: 4,
-          }}
-        >
-          <VehicleList />
+      </Container>
+      <Drawer
+        anchor='left'
+        open={openDrawer}
+        onClose={() => setOpenDrawer(false)}
+      >
+        <Box sx={{width: {xs: '70vw', sm: '60vw'}}}>
+          <AuctionsSidebar />
         </Box>
-      </Box>
-    </Container>
+      </Drawer>
+    </>
   );
 };
 
