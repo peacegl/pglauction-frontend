@@ -31,7 +31,6 @@ function Head({}) {
           display='flex'
           justifyContent='space-between'
           alignItems='cemter'
-          px={3}
         >
           <Box>
             <Typography

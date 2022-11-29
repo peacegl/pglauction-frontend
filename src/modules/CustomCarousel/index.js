@@ -53,7 +53,7 @@ const CustomCarousel = ({title, items}) => {
     <CourseSlider title={title}>
       <Slider ref={sliderRef} className='slideRoot' {...settings}>
         {items.map((data, index) => (
-          <Box key={index} sx={{px: 4, height: '100%'}}>
+          <Box key={index} sx={{px: {xs: 1, md: 2, lg: 4}, height: '100%'}}>
             <CarouselItem item={data} />
           </Box>
         ))}

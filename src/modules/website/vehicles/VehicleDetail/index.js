@@ -37,15 +37,16 @@ const VehicleDetail = (props) => {
       ) : (
         <>
           <Head />
-          <Container maxWidth='xl' sx={{mt: 2}}>
+          <Container maxWidth='xl' sx={{mt: 6}}>
             <Box
               sx={{
                 display: 'flex',
                 alignContent: 'space-between',
-                p: {xs: 2, md: 4},
                 borderRadius: 2,
-                columnGap: '5px',
+                columnGap: '10px',
+                rowGap: '20px',
                 backgroundColor: 'transparent',
+                flexDirection: {xs: 'column', lg: 'row'},
               }}
             >
               <Box flex={1.5}>
@@ -56,7 +57,9 @@ const VehicleDetail = (props) => {
                 sx={{
                   display: 'flex',
                   alignContent: 'space-between',
-                  columnGap: '2vw',
+                  columnGap: '10px',
+                  rowGap: '20px',
+                  flexDirection: {xs: 'column', sm: 'row'},
                 }}
               >
                 <Box flex={1.5}>
