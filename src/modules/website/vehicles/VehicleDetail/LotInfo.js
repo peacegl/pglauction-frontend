@@ -1,63 +1,12 @@
 import React, {useState} from 'react';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import IconButton from '@mui/material/IconButton';
-import CommentIcon from '@mui/icons-material/Comment';
-import {alpha, Card, CardHeader, Typography, useTheme} from '@mui/material';
+import {Card, Typography, useTheme} from '@mui/material';
 import {useSelector} from 'react-redux';
-import {PropTypes} from 'prop-types';
-
-// export default function SaleInfo() {
-//   const theme = useTheme();
-//   const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
-
-//   const ListItem = () => {
-//     return (
-//       <ListItem
-//         key={value}
-//         secondaryAction={
-//           <IconButton edge='end' aria-label='comments'>
-//             <CommentIcon />
-//           </IconButton>
-//         }
-//         disablePadding
-//       >
-//         Heed
-//       </ListItem>
-//     );
-//   };
-
-//   return (
-//     <Card sx={{borderRadius: 1, boxShadow: 1, m: 0}}>
-//       <CardHeader
-//         sx={{
-//           backgroundColor: alpha(theme.palette.primary.main, 0.9),
-//           color: 'white',
-//           p: 2.5,
-//         }}
-//         title={
-//           <Typography
-//             component='div'
-//             fontSize='16px'
-//             fontWeight='bold'
-//             overflow='hidden'
-//           >
-//             Sale Information
-//           </Typography>
-//         }
-//       />
-//       <List sx={{width: '100%', bgcolor: 'background.paper'}}></List>
-//     </Card>
-//   );
-// }
-
-import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import TabPanel from '@mui/lab/TabPanel';
 import {TabContext, TabList} from '@mui/lab';
-import {indexof} from 'stylis';
-import {checkPropTypes} from 'prop-types';
+import Item from './Item';
 
 export default function SaleInfo() {
   const [value, setValue] = useState('lot_info');
@@ -68,35 +17,13 @@ export default function SaleInfo() {
     setValue(newValue);
   };
 
-  const handleChangeIndex = (index) => {
-    setValue(index);
-  };
-
-  const Item = ({label, value}) => {
-    return (
-      <ListItem
-        key={value}
-        sx={{bb: 1}}
-        secondaryAction={<Typography>{value}</Typography>}
-        disablePadding
-      >
-        {label}
-      </ListItem>
-    );
-  };
-
-  Item.propTypes = {
-    label: PropTypes.string,
-    value: PropTypes.string,
-  };
-
   const SingleTab = (index, label) => {
     return (
       <Tab
         label={
           <Typography
             component='div'
-            fontSize='16px'
+            fontSize='14px'
             fontWeight='bold'
             overflow='hidden'
             sx={{
@@ -130,17 +57,49 @@ export default function SaleInfo() {
             aria-label='lab API tabs example'
             variant='fullWidth'
           >
-            {SingleTab('lot_info', 'Lot#')}
+            {SingleTab('lot_info', `Lot# ${vehicle.lot_number}`)}
             {SingleTab('more_info', 'More Information')}
           </TabList>
         </Box>
-        <TabPanel value='lot_info'>
+        <TabPanel value='lot_info' sx={{py: 0}}>
           <List sx={{width: '100%', bgcolor: 'background.paper'}}>
-            <Item label='Lot#' value='898909080' />
-            <Item label='Lot#' value='898909080' />
+            <Item label='Vin:' value={vehicle.vin} />
+            <Item label='Document Type:' value={vehicle.document_type} />
+            <Item label='Odometer:' value={vehicle.odometer} />
+            <Item label='Primary Damage:' value={vehicle.primary_damage} />
+            <Item label='Engine Type:' value={vehicle.engine_type} />
+            <Item label='Cylinders:' value={vehicle.cylinders} />
+            <Item label='Transmission:' value={vehicle.transmission} />
+            <Item label='Fuel:' value={vehicle.fuel} />
+            <Item
+              label='Keys:'
+              value={vehicle.keys ? 'Available' : 'Not Available'}
+            />
+            <Item label='Body Style:' value={vehicle.body_style} />
+            <Item label='Exterior Color:' value={vehicle.exterior_color} />
+            <Item label='Interior Color:' value={vehicle.interior_color} />
+            <Item label='Drive Type:' value={vehicle.drive_type} />
+
+            <Item
+              label='Test Drive:'
+              value={vehicle.test_drive ? 'Yes' : 'No'}
+              sx={{borderBottom: 0}}
+            />
           </List>
         </TabPanel>
-        <TabPanel value='more_info'>Item Two</TabPanel>
+        <TabPanel value='more_info' sx={{pt: 3, pb: 7}}>
+          <Typography
+            sx={{
+              color: theme.palette.primary.main,
+              fontWeight: 'bold',
+              fontSize: '16px',
+              py: 2,
+            }}
+          >
+            About this {vehicle?.model?.make?.name} {vehicle.model?.name}
+          </Typography>
+          <Typography>{vehicle.description}</Typography>
+        </TabPanel>
       </TabContext>
     </Card>
   );

@@ -47,6 +47,13 @@ export const onGetWebVehicleView = (id) => {
       .then((data) => {
         if (data.status === 200) {
           dispatch({type: FETCH_SUCCESS});
+          data.data.data.images.forEach((image, index, arr) => {
+            if (image.type == 'main_image') {
+              arr.unshift(image);
+              arr.splice(index + 1, 1);
+              return;
+            }
+          });
           dispatch({type: GET_WEB_VEHICLE_VIEW, payload: data.data.data});
         } else {
           dispatch({
