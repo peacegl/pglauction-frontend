@@ -64,7 +64,7 @@ export default function VehicleSearchBar({
     <Box sx={{display: 'flex'}}>
       <Search
         sx={{
-          width: {xs: '90vw', md: '50vw', lg: '40vw'},
+          width: {md: '45vw', lg: '40vw'},
           backgroundColor: alpha(theme.palette.primary.main, 0.05),
           borderColor: alpha(theme.palette.primary.main, 0.2),
         }}
