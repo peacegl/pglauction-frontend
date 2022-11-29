@@ -25,7 +25,12 @@ const ImageCarousel = ({images, ...rest}) => {
   return (
     <Stack direction={{xs: 'column', md: 'row'}} spacing={{xs: 5, md: 8}}>
       <Stack direction='row' spacing={5}>
-        <Stack direction={{xs: 'column', md: 'row'}} spacing={5} width='100%'>
+        <Stack
+          direction={{xs: 'column', md: 'row'}}
+          spacing={5}
+          width='100%'
+          sx={{maxWidth: {xs: '100%', md: '650px'}}}
+        >
           <Paper
             variant='outlined'
             sx={{

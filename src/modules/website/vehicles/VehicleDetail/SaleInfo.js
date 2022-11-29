@@ -41,7 +41,7 @@ export default function LotInfo() {
         sx={{
           backgroundColor: alpha(theme.palette.primary.main, 0.9),
           color: 'white',
-          p: 2.5,
+          p: 3,
         }}
         title={
           <Typography

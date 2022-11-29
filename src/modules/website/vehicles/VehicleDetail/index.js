@@ -50,7 +50,7 @@ const VehicleDetail = (props) => {
               }}
             >
               <Box flex={1.5}>
-                <ImageCarousel images={vehicle.images} flex={2} />
+                <ImageCarousel images={vehicle.images} />
               </Box>
               <Box
                 flex={2}
