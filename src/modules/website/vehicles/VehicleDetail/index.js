@@ -12,7 +12,6 @@ import LotInfo from './LotInfo';
 import SaleInfo from './SaleInfo';
 
 const VehicleDetail = (props) => {
-  const [auction, setAuction] = useState({});
   const router = useRouter();
   const dispatch = useDispatch();
   const {id} = router.query;
@@ -23,17 +22,6 @@ const VehicleDetail = (props) => {
   useEffect(() => {
     id && dispatch(onGetWebVehicleView(id));
   }, [id]);
-
-  const setAuctionData = (data) => {
-    let sortedData = data;
-    sortedData.images.forEach((image, index, arr) => {
-      if (image.type == 'main_image') {
-        arr.unshift(image);
-        arr.splice(index, 1);
-      }
-    });
-    setAuction(sortedData);
-  };
 
   return (
     <>
