@@ -16,6 +16,7 @@ import Link from 'next/link';
 import AppTooltip from '@crema/core/AppTooltip';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import {moneyFormater} from 'configs';
+import {useRouter} from 'next/router';
 
 const TextShow = ({value, label}) => {
   return (
@@ -47,6 +48,11 @@ const WhatsAppButton = (props) => {
   );
 };
 export default function ListItem(props) {
+  const router = useRouter();
+
+  const viewPage = () => {
+    router.push(`/all-vehicles/${props.item.id}`);
+  };
   return (
     <>
       <Card
@@ -75,12 +81,14 @@ export default function ListItem(props) {
         >
           <Box sx={{width: {xs: '180px', sm: '210px'}}} overflow='hidden'>
             <CardMedia
+              onClick={() => viewPage()}
               component='img'
               image={
                 props.item.images.find((item) => item.type == 'main_image').path
               }
               alt='preview'
               sx={{
+                cursor: 'pointer',
                 height: {xs: '130px', sm: '160px'},
                 transition: 'all 450ms ease-out',
                 '&:hover': {
@@ -104,7 +112,11 @@ export default function ListItem(props) {
                       variant='h4'
                       overflow='hidden'
                       height='20px'
-                      sx={{fontSize: {xs: '14px', sm: '16px'}}}
+                      sx={{
+                        fontSize: {xs: '14px', sm: '16px'},
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => viewPage()}
                     >
                       {props.item.year} {props.item?.model.make?.name}{' '}
                       {props.item.model?.name}
@@ -117,7 +129,12 @@ export default function ListItem(props) {
                     <Typography color='text.secondary' display='inline'>
                       Lot#
                     </Typography>
-                    <Typography color='primary' display='inline'>
+                    <Typography
+                      color='primary'
+                      display='inline'
+                      sx={{cursor: 'pointer'}}
+                      onClick={() => viewPage()}
+                    >
                       {props.item.lot_number}
                     </Typography>
                   </Box>
