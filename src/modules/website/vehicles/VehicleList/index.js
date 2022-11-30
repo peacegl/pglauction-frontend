@@ -24,6 +24,9 @@ const VehicleList = () => {
   const filterData = useSelector(({auctionItems}) => auctionItems.filterData);
   const loading = useSelector(({common}) => common.loading);
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
+  useEffect(() => {
+    setPage(0);
+  }, [search]);
 
   useEffect(() => {
     dispatch(
