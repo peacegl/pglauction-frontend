@@ -7,9 +7,9 @@ import {
   SET_VEHICLE_SEARCH,
   SET_VEHICLE_VIEW_TYPE,
   GET_WEB_SIMILAR_VEHICLE,
+  SET_WEB_VEHICLE_FILTER_DATA,
 } from '../../shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-import {appIntl} from '../../@crema/utility/helper/Utils';
 
 export const onGetWebVehicleData = (data) => {
   return (dispatch) => {
@@ -94,5 +94,10 @@ export const onGetWebVehicleView = (id) => {
 export const setVehicleViewType = (viewType) => {
   return (dispatch) => {
     dispatch({type: SET_VEHICLE_VIEW_TYPE, payload: viewType});
+  };
+};
+export const setWebVehiclesFilter = (filters) => {
+  return (dispatch) => {
+    dispatch({type: SET_WEB_VEHICLE_FILTER_DATA, payload: filters});
   };
 };

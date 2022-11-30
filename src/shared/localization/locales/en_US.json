@@ -1039,5 +1039,11 @@
   "common.reset_all": "Reset All",
   "filter.newly_added": "Newly Added",
   "common.last_24_hours": "Last 24 Hours",
-  "common.last_7_days": "Last 7 Days"
+  "common.last_7_days": "Last 7 Days",
+  "filter.reset": "Reset",
+  "common.min": "Min",
+  "common.max": "Max",
+  "common.miles": "Miles",
+  "common.search": "Search",
+  "common.apply": "Apply"
 }

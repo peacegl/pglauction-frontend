@@ -1,7 +1,7 @@
 import {Box, Card, Container, Button, Drawer} from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import IntlMessages from '@crema/utility/IntlMessages';
-import AuctionsSidebar from './AuctionsSidebar';
+import AuctionsSidebar from '../../../components/filterSlider';
 import Hidden from '@mui/material/Hidden';
 import VehicleList from './VehicleList';
 import {useState} from 'react';

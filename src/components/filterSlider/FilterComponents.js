@@ -1,4 +1,3 @@
-import Configs from '../../../../configs/website_pages/all_vehicles';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import IntlMessages from '@crema/utility/IntlMessages';
@@ -10,12 +9,13 @@ import AddIcon from '@mui/icons-material/Add';
 import {styled} from '@mui/material/styles';
 import {useState} from 'react';
 import PropTypes from 'prop-types';
+import filterList from './filterList';
+import {useIntl} from 'react-intl';
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({theme}) => ({
   borderTop: `1px solid ${theme.palette.divider}`,
-
   '&:before': {
     display: 'none',
   },
@@ -41,32 +41,10 @@ const AccordionDetails = styled(MuiAccordionDetails)(({theme}) => ({
   borderTop: `1px solid ${theme.palette.divider}`,
 }));
 
-// newly_added: {},
-//     odometer: [],
-//     year: [],
-//     make: [],
-//     model: [],
-//     engine_type: [],
-//     transmission: [],
-//     fuel: [],
-//     cylinders: [],
-//     price: [],
-//     interior_color: [],
-//     exterior_color: [],
-//     document_type: [],
-//     body_style: [],
-//     drive_type: [],
-//     status: [],
-//     keys: 'both',
-//     test_drive: 'both',
-//     is_featured: 'both',
-//     is_best_selling: 'both',
-//     location: [],
-//     category: [],
-
 export default function FilterComponents(props) {
+  const {messages} = useIntl();
   const [openAccordians, setOpenAccordians] = useState([]);
-  const filterItems = Configs(props.filterData).filterItems;
+  const filterItems = filterList(props.filterData, messages).filterItems;
 
   const toggleAccordian = (key) => {
     if (openAccordians.includes(key)) {
@@ -93,7 +71,7 @@ export default function FilterComponents(props) {
                   console.log('sdf');
                 }}
               >
-                Reset
+                <IntlMessages id='filter.reset' />
               </Button>
               <IconButton>
                 {!openAccordians.includes(item.key) ? (
