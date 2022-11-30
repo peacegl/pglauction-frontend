@@ -3,6 +3,7 @@ import {
   Container,
   Drawer,
   IconButton,
+  Link,
   List,
   ListItem,
   ListItemButton,
@@ -127,9 +128,36 @@ function Header() {
             sx={{columnGap: {xs: '2px', sm: '5px', md: '8px'}}}
             zIndex='2'
           >
-            <FacebookIcon width='30' />
-            <InstagramIcon width='30' />
-            <WhatsAppIcon width='30' />
+            <Link
+              variant='body2'
+              fontSize='14px'
+              underline='none'
+              href='https://wa.me/+937669086'
+              mx='5px'
+              color={theme.palette.text.secondary}
+            >
+              <FacebookIcon width='30' />
+            </Link>
+            <Link
+              variant='body2'
+              fontSize='14px'
+              underline='none'
+              href='https://wa.me/+937669086'
+              mx='5px'
+              color={theme.palette.text.secondary}
+            >
+              <InstagramIcon width='30' />
+            </Link>
+            <Link
+              variant='body2'
+              fontSize='14px'
+              underline='none'
+              href='https://wa.me/+937669086'
+              mx='5px'
+              color={theme.palette.text.secondary}
+            >
+              <WhatsAppIcon width='30' />
+            </Link>
           </Box>
           <Box
             display='flex'
