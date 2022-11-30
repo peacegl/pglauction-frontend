@@ -1029,6 +1029,8 @@
   "website.services": "Services",
   "website.about_us": "About Us",
   "website.send_message": "Send Message",
+  "website.vehicle.similarVehicles": "Similar Vehicles",
+
   "common.my_account": "My Account",
   "common.logout": "Logout",
   "common.admin_panel": "Admin Panel",

@@ -8,8 +8,14 @@ import {
 } from '@mui/material';
 import IntlMessages from '@crema/utility/IntlMessages';
 import PropTypes from 'prop-types';
+import {useRouter} from 'next/router';
 
 const CarouselItem = ({item}) => {
+  const router = useRouter();
+
+  const viewDetails = () => {
+    router.push(`/all-vehicles/${item.id}`);
+  };
   return (
     <Card
       variant='outlined'
@@ -21,6 +27,7 @@ const CarouselItem = ({item}) => {
     >
       <Box overflow='hidden' sx={{cursor: 'pointer'}}>
         <CardMedia
+          onClick={() => viewDetails()}
           component='img'
           image={item.images.find((item) => item.type == 'main_image').path}
           alt='preview'
@@ -48,7 +55,11 @@ const CarouselItem = ({item}) => {
           </Typography>
           <Typography color='primary'>{item.location?.name}</Typography>
         </Box>
-        <Button variant='contained' sx={{mt: 2, px: 6, borderRadius: 1}}>
+        <Button
+          variant='contained'
+          sx={{mt: 2, px: 6, borderRadius: 1}}
+          onClick={() => viewDetails()}
+        >
           <IntlMessages id='common.view_details' />
         </Button>
       </CardContent>

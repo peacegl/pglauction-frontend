@@ -1,7 +1,6 @@
-import {alpha, Box, Container, Divider, Typography} from '@mui/material';
+import {alpha, Box, colors, Container, Typography} from '@mui/material';
 import {useRouter} from 'next/router';
 import {useTheme} from '@mui/styles';
-import {useState} from 'react';
 import {useSelector} from 'react-redux';
 
 function Head({}) {
@@ -23,6 +22,7 @@ function Head({}) {
         borderBottom: '1px',
         borderStyle: 'solid',
         borderColor: alpha(theme.palette.primary.main, 0.2),
+        color: colors.grey[800],
       }}
     >
       <Container maxWidth='xl'>
@@ -31,27 +31,25 @@ function Head({}) {
           display='flex'
           justifyContent='space-between'
           alignItems='cemter'
-          px={3}
         >
           <Box>
             <Typography
               component='h1'
               fontSize='22px'
               fontWeight='bold'
-              color='primary'
               overflow='hidden'
               pb={1}
             >
               {vehicle.year} {vehicle?.model?.make?.name} {vehicle.model?.name}
             </Typography>
             <Box display='flex' columnGap='10px'>
-              <Typography component='div' color='primary' overflow='hidden'>
+              <Typography component='div' overflow='hidden'>
                 <Box component='span' display='inline' fontWeight='bold'>
                   Lot#
                 </Box>
                 {vehicle.lot_number} |
               </Typography>
-              <Typography component='div' color='primary' overflow='hidden'>
+              <Typography component='div' overflow='hidden'>
                 <Box component='span' display='inline' fontWeight='bold'>
                   Sale Location:
                 </Box>{' '}

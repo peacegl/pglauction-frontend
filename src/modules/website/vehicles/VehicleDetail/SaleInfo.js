@@ -3,8 +3,17 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
 import CommentIcon from '@mui/icons-material/Comment';
-import {alpha, Card, CardHeader, Typography, useTheme} from '@mui/material';
+import {
+  alpha,
+  Card,
+  CardContent,
+  CardHeader,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import {useSelector} from 'react-redux';
+import Item from './Item';
+import {moneyFormater} from 'configs';
 
 export default function LotInfo() {
   const theme = useTheme();
@@ -32,7 +41,7 @@ export default function LotInfo() {
         sx={{
           backgroundColor: alpha(theme.palette.primary.main, 0.9),
           color: 'white',
-          p: 2.5,
+          p: 3,
         }}
         title={
           <Typography
@@ -45,7 +54,17 @@ export default function LotInfo() {
           </Typography>
         }
       />
-      <List sx={{width: '100%', bgcolor: 'background.paper'}}></List>
+      <CardContent sx={{px: 3, py: 0}}>
+        <List sx={{width: '100%', bgcolor: 'background.paper', pb: 0}}>
+          <Item label='Location:' value={vehicle.location?.name} />
+          <Item label='Price:' value={moneyFormater(vehicle.price)} />
+          <Item
+            label='Last Updated:'
+            value={vehicle.updated_at}
+            sx={{borderBottom: 0}}
+          />
+        </List>
+      </CardContent>
     </Card>
   );
 }
