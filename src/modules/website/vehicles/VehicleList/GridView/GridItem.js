@@ -9,19 +9,26 @@ import PropTypes from 'prop-types';
 import AppTooltip from '@crema/core/AppTooltip';
 import {moneyFormater} from 'configs';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import {useLayoutEffect, useRef, useState} from 'react';
 
 export default function GridItem(props) {
   const router = useRouter();
+  const cardRef = useRef();
+  const [height, setHeight] = useState('260px');
+
+  useLayoutEffect(() => {
+    setHeight((cardRef.current?.clientWidth / 4) * 3 + 'px');
+  });
 
   return (
-    <Card sx={{borderRadius: 1}}>
+    <Card sx={{borderRadius: 1}} ref={cardRef}>
       <CardActionArea
         onClick={() => router.push(`/all-vehicles/${props.item.id}`)}
       >
-        <Box height='200' overflow='hidden'>
+        <Box height={height} overflow='hidden'>
           <CardMedia
             component='img'
-            height='200'
+            height={height}
             image={
               props.item.images.find((item) => item.type == 'main_image').path
             }

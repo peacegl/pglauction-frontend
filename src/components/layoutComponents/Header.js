@@ -77,7 +77,7 @@ function Header() {
         width: '100%',
         backgroundColor: 'white',
       }}
-      sx={{height: {sm: '70px', md: '80px'}}}
+      sx={{height: {xs: '70px', md: '80px'}}}
     >
       <Container maxWidth='xl'>
         <Box

@@ -64,7 +64,7 @@ const CarouselBanur = () => {
       {Object.values(textureImports).map((texture, index) => (
         <Box
           key={`carousel-image-${index}`}
-          sx={{height: {xs: '400px', sm: '450px', md: '550px', lg: '650px'}}}
+          sx={{height: {xs: '300px', sm: '400px', md: '600px', lg: '700px'}}}
         >
           <img
             src={texture.default.src}

@@ -13,6 +13,7 @@ const AuctionGrid = ({list, loading}) => (
       lg: 3,
       xl: 4,
     }}
+    sx={{display: 'flex'}}
     data={list}
     renderRow={(item) => <GridItem item={item} key={item.id} url='vehicles' />}
     ListEmptyComponent={
