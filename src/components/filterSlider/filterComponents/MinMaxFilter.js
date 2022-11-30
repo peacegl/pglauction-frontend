@@ -1,0 +1,47 @@
+import PropTypes from 'prop-types';
+import {Box} from '@mui/material';
+import MinMax from './MinMax';
+
+const MinMaxFilter = ({
+  value,
+  reduxReducer,
+  data,
+  columnName,
+  select = false,
+  items,
+}) => {
+  const onSetValue = (updatedValue) => {
+    console.log('sdfsd', updatedValue);
+    dispatch(
+      reduxReducer({
+        ...data,
+        [columnName]: updatedValue,
+      }),
+    );
+  };
+  return (
+    <Box
+      sx={{
+        mx: 2,
+        my: 3,
+      }}
+    >
+      <MinMax
+        select={select}
+        value={value}
+        setValue={onSetValue}
+        items={items}
+      />
+    </Box>
+  );
+};
+
+export default MinMaxFilter;
+MinMaxFilter.propTypes = {
+  value: PropTypes.object,
+  reduxReducer: PropTypes.func,
+  data: PropTypes.array,
+  columnName: PropTypes.string,
+  select: PropTypes.bool,
+  items: PropTypes.array,
+};

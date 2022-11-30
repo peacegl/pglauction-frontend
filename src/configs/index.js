@@ -447,3 +447,10 @@ export function moneyFormater(number, currency = 'AED') {
   });
   return formater.format(number);
 }
+
+export function range(start, end, step) {
+  return Array.from(
+    Array.from(Array(Math.ceil((end - start) / step)).keys()),
+    (x) => start + x * step,
+  );
+}
