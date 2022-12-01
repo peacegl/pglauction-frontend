@@ -5,6 +5,9 @@ import {
   GET_WEB_VEHICLE_VIEW,
   GET_WEB_SIMILAR_VEHICLE,
   SET_WEB_VEHICLE_FILTER_DATA,
+  GET_FEATURED_VEHICLE_LIST,
+  GET_BEST_SELLING_VEHICLE_LIST,
+  GET_RECENTLY_ADDED_VEHICLE_LIST,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -14,6 +17,9 @@ const initialState = {
   vehicle: {},
   search: '',
   viewType: VIEW_TYPE.GRID,
+  featuredVehicles: [],
+  bestSellingVehicles: [],
+  recentlyAddedVehicles: [],
   filterData: {
     newly_added: {
       newly_added_duration: 24,
@@ -75,6 +81,21 @@ const WebVehicleReducer = (state = initialState, action) => {
       return {
         ...state,
         filterData: action.payload,
+      };
+    case GET_FEATURED_VEHICLE_LIST:
+      return {
+        ...state,
+        featuredVehicles: action.payload,
+      };
+    case GET_BEST_SELLING_VEHICLE_LIST:
+      return {
+        ...state,
+        bestSellingVehicles: action.payload,
+      };
+    case GET_RECENTLY_ADDED_VEHICLE_LIST:
+      return {
+        ...state,
+        recentlyAddedVehicles: action.payload,
       };
     default:
       return state;
