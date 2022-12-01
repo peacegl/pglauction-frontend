@@ -1,5 +1,5 @@
 import MultipleContentSection from '../../../components/design/MultipleContentSection';
-import {onGetFeaturedVehicles, onGetBestSellingVehicles} from 'redux/actions';
+import {onGetFeaturedVehicles, onGetRecentlyAddedVehicles} from 'redux/actions';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import HighQualityIcon from '@mui/icons-material/HighQuality';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
@@ -49,10 +49,10 @@ const contents = [
 
 export default function Home() {
   const featuredVehicles = useSelector(
-    ({vehicles}) => vehicles.featuredVehicles,
+    ({webVehicles}) => webVehicles.featuredVehicles,
   );
-  const bestSellingVehicles = useSelector(
-    ({vehicles}) => vehicles.bestSellingVehicles,
+  const recentlyAddedVehicles = useSelector(
+    ({webVehicles}) => webVehicles.recentlyAddedVehicles,
   );
   const dispatch = useDispatch();
   useEffect(() => {
@@ -61,7 +61,7 @@ export default function Home() {
 
   const fetchData = async () => {
     await dispatch(onGetFeaturedVehicles());
-    await dispatch(onGetBestSellingVehicles());
+    await dispatch(onGetRecentlyAddedVehicles());
   };
 
   return (
@@ -122,8 +122,8 @@ export default function Home() {
       </Box>
       <Container maxWidth='xl' sx={{mt: 10}}>
         <SecondCustomCarousel
-          title={<IntlMessages id='vehicle.bestSellingVehicles' />}
-          items={bestSellingVehicles ? bestSellingVehicles : []}
+          title={<IntlMessages id='vehicle.recentlyAddedVehicles' />}
+          items={recentlyAddedVehicles ? recentlyAddedVehicles : []}
         />
       </Container>
     </>
