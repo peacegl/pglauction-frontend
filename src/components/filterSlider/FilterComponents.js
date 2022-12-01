@@ -1,5 +1,6 @@
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
+import {setWebVehiclesFilter} from '../../redux/actions';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {Box, Button, IconButton} from '@mui/material';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -7,10 +8,11 @@ import MuiAccordion from '@mui/material/Accordion';
 import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
 import {styled} from '@mui/material/styles';
-import {useState} from 'react';
-import PropTypes from 'prop-types';
+import {useDispatch} from 'react-redux';
 import filterList from './filterList';
+import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
+import {useEffect, useState} from 'react';
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -43,8 +45,28 @@ const AccordionDetails = styled(MuiAccordionDetails)(({theme}) => ({
 
 export default function FilterComponents(props) {
   const {messages} = useIntl();
+  const dispatch = useDispatch();
   const [openAccordians, setOpenAccordians] = useState([]);
-  const filterItems = filterList(props.filterData, messages).filterItems;
+  const [reset, setReset] = useState({});
+
+  useEffect(() => {
+    if (props.resetAll) {
+      let values = {};
+      filterItems.forEach((item) => {
+        values[item.name] = item.initialValue;
+      });
+
+      setReset(values);
+      props.setResetAll(false);
+    }
+  }, [props.resetAll]);
+
+  const filterItems = filterList(
+    props.filterData,
+    messages,
+    reset,
+    setReset,
+  ).filterItems;
 
   const toggleAccordian = (key) => {
     if (openAccordians.includes(key)) {
@@ -53,24 +75,31 @@ export default function FilterComponents(props) {
       setOpenAccordians((d) => [...d, key]);
     }
   };
+
+  const onReset = (e, item) => {
+    e.stopPropagation();
+    setReset((d) => {
+      return {...d, [item.name]: item.initialValue};
+    });
+    dispatch(
+      setWebVehiclesFilter({
+        ...props.filterData,
+        [item.name]: item.initialValue,
+      }),
+    );
+  };
   return (
     <Box>
-      {filterItems.map((item) => (
+      {filterItems.map((item, index) => (
         <Accordion
-          key={item.key}
+          key={index}
           expanded={openAccordians.includes(item.key)}
           onChange={() => toggleAccordian(item.key)}
         >
           <AccordionSummary>
             <Typography>{item.title}</Typography>
             <Box>
-              <Button
-                size='small'
-                onClick={(e) => {
-                  e.stopPropagation();
-                  console.log('sdf');
-                }}
-              >
+              <Button size='small' onClick={(e) => onReset(e, item)}>
                 <IntlMessages id='filter.reset' />
               </Button>
               <IconButton>
@@ -82,7 +111,10 @@ export default function FilterComponents(props) {
               </IconButton>
             </Box>
           </AccordionSummary>
-          <AccordionDetails>{item.content}</AccordionDetails>
+
+          <AccordionDetails>
+            {openAccordians.includes(item.key) && item.content}
+          </AccordionDetails>
         </Accordion>
       ))}
     </Box>
@@ -90,4 +122,6 @@ export default function FilterComponents(props) {
 }
 FilterComponents.propTypes = {
   filterData: PropTypes.object,
+  resetAll: PropTypes.bool,
+  setResetAll: PropTypes.func,
 };

@@ -116,9 +116,9 @@ const VehicleStepTwo = (props) => {
         </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppTextField
-            placeholder={messages['vehicle.cylindersPlaceholder']}
-            label={<IntlMessages id='vehicle.cylinders' />}
-            name='cylinders'
+            placeholder={messages['vehicle.cylinderPlaceholder']}
+            label={<IntlMessages id='vehicle.cylinder' />}
+            name='cylinder'
             variant='outlined'
             size='small'
             sx={{flex: 1}}

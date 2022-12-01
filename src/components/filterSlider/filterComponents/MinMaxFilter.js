@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import {Box} from '@mui/material';
 import MinMax from './MinMax';
 import {useDispatch} from 'react-redux';
+import {useEffect} from 'react';
 
 const MinMaxFilter = ({
   value,
@@ -41,7 +42,7 @@ export default MinMaxFilter;
 MinMaxFilter.propTypes = {
   value: PropTypes.object,
   reduxReducer: PropTypes.func,
-  data: PropTypes.array,
+  data: PropTypes.any,
   columnName: PropTypes.string,
   select: PropTypes.bool,
   items: PropTypes.array,

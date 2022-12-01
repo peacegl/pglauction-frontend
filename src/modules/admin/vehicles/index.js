@@ -120,7 +120,7 @@ export default function VehicleList() {
     filterData['vehicles.lot_number'] = filterList[6].map(
       (item) => item.lot_number,
     );
-    filterData['vehicles.cylinders'] = filterList[7][0]
+    filterData['vehicles.cylinder'] = filterList[7][0]
       ? 'like@@' + filterList[7][0].trim()
       : undefined;
     filterData['vehicles.vehicle_type'] = filterList[8][0]
