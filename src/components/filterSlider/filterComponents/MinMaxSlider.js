@@ -14,6 +14,7 @@ const MinMaxSlider = ({
   step,
   data,
   columnName,
+  reduxReducer,
   onlyTitle = false,
   price = false,
 }) => {
@@ -29,7 +30,7 @@ const MinMaxSlider = ({
     dispatch(
       reduxReducer({
         ...data,
-        [columnName]: [...data[columnName], id],
+        [columnName]: dataValue,
       }),
     );
   };
@@ -69,4 +70,5 @@ MinMaxSlider.propTypes = {
   columnName: PropTypes.string,
   onlyTitle: PropTypes.bool,
   price: PropTypes.bool,
+  reduxReducer: PropTypes.func,
 };

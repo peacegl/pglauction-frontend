@@ -63,12 +63,12 @@ const ListItems = ({url, reduxReducer, data, columnName}) => {
         sx={{height: '200px', overflowY: 'auto', my: 2, px: 3}}
       >
         <FormGroup>
-          {values.map((item) => (
+          {values.map((item, index) => (
             <FormControlLabel
               checked={data[columnName].includes(item.id)}
               control={<Checkbox onChange={(e) => onSelect(e, item.id)} />}
               label={item.name}
-              key={item.id}
+              key={index}
             />
           ))}
 

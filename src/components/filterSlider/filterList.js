@@ -13,13 +13,26 @@ export default function filterList(filterData, messages) {
       {
         key: 1,
         title: <IntlMessages id='filter.newly_added' />,
-        content: <NewlyAdded filterData={filterData} />,
+        content: (
+          <NewlyAdded
+            filterData={filterData}
+            reduxReducer={setWebVehiclesFilter}
+          />
+        ),
       },
       {
         key: 2,
         title: <IntlMessages id='common.price' />,
         content: (
-          <MinMaxSlider value={filterData.price} step={100} onlyTitle price />
+          <MinMaxSlider
+            value={filterData.price}
+            step={100}
+            reduxReducer={setWebVehiclesFilter}
+            data={filterData}
+            columnName='price'
+            onlyTitle
+            price
+          />
         ),
       },
       {
@@ -31,6 +44,9 @@ export default function filterList(filterData, messages) {
             minTitle={messages['common.miles']}
             maxTitle={messages['common.miles']}
             step={1000}
+            reduxReducer={setWebVehiclesFilter}
+            data={filterData}
+            columnName='odometer'
           />
         ),
       },
@@ -44,11 +60,13 @@ export default function filterList(filterData, messages) {
             data={filterData}
             columnName='year'
             select
-            items={range(1950, new Date().getFullYear() + 1, 1).map((year) => (
-              <MenuItem value={year} key={year}>
-                {year}
-              </MenuItem>
-            ))}
+            items={range(1950, new Date().getFullYear() + 1, 1).map(
+              (year, index) => (
+                <MenuItem value={year} key={index}>
+                  {year}
+                </MenuItem>
+              ),
+            )}
           />
         ),
       },

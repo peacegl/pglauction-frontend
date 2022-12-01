@@ -1,4 +1,7 @@
 import IntlMessages from '@crema/utility/IntlMessages';
+import {useDispatch} from 'react-redux';
+import PropTypes from 'prop-types';
+import {useState} from 'react';
 import {
   Box,
   FormControl,
@@ -7,9 +10,22 @@ import {
   Select,
   Switch,
 } from '@mui/material';
-import PropTypes from 'prop-types';
 
-const NewlyAdded = ({filterData}) => {
+const NewlyAdded = ({filterData, reduxReducer}) => {
+  const dispatch = useDispatch();
+  const [duration, setDuration] = useState(24);
+  const onSelect = (e) => {
+    dispatch(
+      reduxReducer({
+        ...filterData,
+        newly_added: {
+          newly_added_duration: duration,
+          newly_added: e.target.checked,
+        },
+      }),
+    );
+  };
+
   return (
     <Box
       sx={{
@@ -20,11 +36,12 @@ const NewlyAdded = ({filterData}) => {
         justifyContent: 'space-between',
       }}
     >
-      <FormControl>
+      <FormControl sx={{width: '150px'}}>
         <Select
           labelId='demo-simple-select-label'
           id='demo-simple-select'
-          value={filterData.newly_added.newly_added_duration}
+          value={duration}
+          onChange={(e) => setDuration(e.target.value)}
           size='small'
         >
           <MenuItem value={24}>
@@ -36,7 +53,12 @@ const NewlyAdded = ({filterData}) => {
         </Select>
       </FormControl>
       <FormControlLabel
-        control={<Switch checked={filterData.newly_added.newly_added} />}
+        control={
+          <Switch
+            checked={filterData.newly_added.newly_added}
+            onChange={onSelect}
+          />
+        }
         sx={{mx: 0}}
       />
     </Box>
@@ -46,4 +68,5 @@ const NewlyAdded = ({filterData}) => {
 export default NewlyAdded;
 NewlyAdded.propTypes = {
   filterData: PropTypes.object,
+  reduxReducer: PropTypes.func,
 };

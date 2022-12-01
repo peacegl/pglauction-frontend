@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import {Box} from '@mui/material';
 import MinMax from './MinMax';
+import {useDispatch} from 'react-redux';
 
 const MinMaxFilter = ({
   value,
@@ -10,8 +11,8 @@ const MinMaxFilter = ({
   select = false,
   items,
 }) => {
+  const dispatch = useDispatch();
   const onSetValue = (updatedValue) => {
-    console.log('sdfsd', updatedValue);
     dispatch(
       reduxReducer({
         ...data,
