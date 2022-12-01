@@ -103,7 +103,6 @@ export default function VehicleList() {
 
   const handleFilter = (filterList) => {
     const filterData = {};
-    console.log(filterList);
     filterData['vehicles.year'] = filterList[1][0]
       ? 'like@@' + filterList[1][0].trim()
       : undefined;
