@@ -40,7 +40,7 @@ const CarouselItem = ({item}) => {
         />
       </Box>
       <CardContent>
-        <Typography>
+        <Typography noWrap gutterBottom variant='h5' component='h4'>
           {item.year} {item.model?.make?.name} {item.model?.name}
         </Typography>
         <Box sx={{display: 'flex', mt: 1, fontWeight: 'bold'}}>

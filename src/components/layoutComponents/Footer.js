@@ -15,7 +15,7 @@ export default function Footer() {
   const router = useRouter();
 
   const title = (title) => (
-    <Typography variant='h2' pb='20px'>
+    <Typography variant='h2' pb='12px'>
       {title}
     </Typography>
   );
@@ -44,14 +44,14 @@ export default function Footer() {
     >
       <Box
         sx={{
-          py: 15,
+          py: {xs: 10, sm: 15},
         }}
       >
         <Container maxWidth='xl'>
           <Stack
             direction={{xs: 'column', md: 'row'}}
             justifyContent='space-between'
-            alignItems={{xs: 'center', md: 'flex-start'}}
+            alignItems={{xs: 'center', sm: 'start'}}
             color={theme.palette.text.secondary}
           >
             <Box
@@ -60,13 +60,14 @@ export default function Footer() {
                 display: 'flex',
                 flexDirection: {xs: 'column', sm: 'row'},
                 alignItems: 'center',
+                textAlign: 'center',
               }}
             >
-              <Box sx={{flex: 3}}>
+              <Box sx={{flex: {xs: 2, md: 3}, pb: 3}}>
                 <Box sx={{mt: 1}}>
                   <img width='160' src={logoImage.src} alt='united logo' />
                 </Box>
-                <Typography sx={{mt: 4, mr: 3}}>
+                <Typography sx={{m: 4, ml: 0, textAlign: 'justify'}}>
                   Cum qui totam eligendi. Eos sed perferendis consequuntur
                   cupiditate voluptas aut et. Deserunt neque nobis est numquam
                   ut Cum qui totam eligendi. Eos sed perferendis consequuntur
@@ -74,7 +75,15 @@ export default function Footer() {
                   ut. Cum qui totam eligendi.
                 </Typography>
               </Box>
-              <Box sx={{flex: 2}}>
+              <Box
+                sx={{
+                  flex: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: {xs: 'center', sm: 'start'},
+                  pb: 3,
+                }}
+              >
                 {title('Quick Links')}
                 {pages.map((page, index) => link(page.title, page.link))}
               </Box>
@@ -85,9 +94,19 @@ export default function Footer() {
                 display: 'flex',
                 flexDirection: {xs: 'column', sm: 'row'},
                 alignItems: 'center',
+                textAlign: 'center',
+                width: '100%',
               }}
             >
-              <Box sx={{flex: 1, display: 'flex', flexDirection: 'column'}}>
+              <Box
+                sx={{
+                  flex: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: {xs: 'center', sm: 'start'},
+                  pb: 3,
+                }}
+              >
                 {title('About Us')}
                 {link('About Us', '/')}
                 {title('Support')}
@@ -98,6 +117,7 @@ export default function Footer() {
               <Box
                 sx={{
                   flex: 1,
+                  textAlign: 'start',
                 }}
               >
                 {title('Location')}
@@ -110,8 +130,9 @@ export default function Footer() {
                     underline='none'
                     mx='5px'
                   >
-                    AL Qusais Industrial Area Fourth Al Saoud Building Room
-                    Number 804 P.O.Box: 48551, Dubai-U.A.E.
+                    AL Qusais Industrial Area Fourth Al Saoud Building
+                    <br />
+                    Room Number 804 P.O.Box: 48551, Dubai-U.A.E.
                   </Typography>
                 </Box>
                 <Box marginBottom='10px' display='flex' alignItems='center'>
