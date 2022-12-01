@@ -13,7 +13,12 @@ export default function filterList(filterData, messages) {
       {
         key: 1,
         title: <IntlMessages id='filter.newly_added' />,
-        content: <NewlyAdded filterData={filterData} />,
+        content: (
+          <NewlyAdded
+            filterData={filterData}
+            reduxReducer={setWebVehiclesFilter}
+          />
+        ),
       },
       {
         key: 2,
@@ -55,7 +60,13 @@ export default function filterList(filterData, messages) {
             data={filterData}
             columnName='year'
             select
-            items={range(1950, new Date().getFullYear() + 1, 1)}
+            items={range(1950, new Date().getFullYear() + 1, 1).map(
+              (year, index) => (
+                <MenuItem value={year} key={index}>
+                  {year}
+                </MenuItem>
+              ),
+            )}
           />
         ),
       },

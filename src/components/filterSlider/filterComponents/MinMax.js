@@ -1,13 +1,6 @@
+import {Box, FormControl, InputLabel, Select, TextField} from '@mui/material';
 import IntlMessages from '@crema/utility/IntlMessages';
 import PropTypes from 'prop-types';
-import {
-  Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from '@mui/material';
 
 const MinMax = ({value, setValue, select = false, items}) => {
   return (
@@ -29,12 +22,7 @@ const MinMax = ({value, setValue, select = false, items}) => {
               onChange={(e) => setValue([e.target.value, value[1]])}
               MenuProps={{PaperProps: {sx: {maxHeight: 200}}}}
             >
-              {select &&
-                items.map((year, index) => (
-                  <MenuItem value={year} key={index}>
-                    {year}
-                  </MenuItem>
-                ))}
+              {items}
             </Select>
           </FormControl>
           <Box sx={{mx: 3}}>-</Box>
@@ -48,12 +36,7 @@ const MinMax = ({value, setValue, select = false, items}) => {
               onChange={(e) => setValue([value[0], e.target.value])}
               MenuProps={{PaperProps: {sx: {maxHeight: 200}}}}
             >
-              {select &&
-                items.map((year, index) => (
-                  <MenuItem value={year} key={index}>
-                    {year}
-                  </MenuItem>
-                ))}
+              {items}
             </Select>
           </FormControl>
         </>
@@ -87,5 +70,5 @@ MinMax.propTypes = {
   value: PropTypes.array,
   setValue: PropTypes.func,
   select: PropTypes.bool,
-  items: PropTypes.array,
+  items: PropTypes.any,
 };
