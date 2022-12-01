@@ -20,8 +20,8 @@ const VehicleList = () => {
   const {data = [], total = 0} = useSelector(
     ({webVehicles}) => webVehicles.vehiclesData,
   );
-  const viewType = useSelector(({auctionItems}) => auctionItems.viewType);
-  const filterData = useSelector(({auctionItems}) => auctionItems.filterData);
+  const viewType = useSelector(({webVehicles}) => webVehicles.viewType);
+  const filterData = useSelector(({webVehicles}) => webVehicles.filterData);
   const loading = useSelector(({common}) => common.loading);
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
   useEffect(() => {
@@ -41,10 +41,6 @@ const VehicleList = () => {
 
   const onPageChange = (event, value) => {
     setPage(value);
-  };
-
-  const searchProduct = (title) => {
-    dispatch(setFilters({...filterData, title}));
   };
   return (
     <>
@@ -73,7 +69,6 @@ const VehicleList = () => {
             perPage={perPage}
             totalProducts={total}
             onPageChange={onPageChange}
-            onSearch={searchProduct}
           />
         </Box>
       </Card>
