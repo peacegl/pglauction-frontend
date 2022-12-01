@@ -17,6 +17,8 @@ const MinMaxSlider = ({
   reduxReducer,
   onlyTitle = false,
   price = false,
+  reset,
+  setReset,
 }) => {
   const dispatch = useDispatch();
   const [dataValue, setDataValue] = useState(value);
@@ -25,6 +27,15 @@ const MinMaxSlider = ({
   useEffect(() => {
     setRange(value);
   }, []);
+
+  useEffect(() => {
+    if (reset[columnName]) {
+      setDataValue(reset[columnName]);
+      let values = reset;
+      delete values[columnName];
+      setReset(values);
+    }
+  }, [reset]);
 
   const onApply = () => {
     dispatch(
@@ -71,4 +82,6 @@ MinMaxSlider.propTypes = {
   onlyTitle: PropTypes.bool,
   price: PropTypes.bool,
   reduxReducer: PropTypes.func,
+  reset: PropTypes.object,
+  setReset: PropTypes.func,
 };

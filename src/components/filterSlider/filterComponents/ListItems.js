@@ -13,19 +13,36 @@ import {
   TextField,
 } from '@mui/material';
 
-const ListItems = ({url, reduxReducer, data, columnName}) => {
+const ListItems = ({
+  url,
+  reduxReducer,
+  data,
+  columnName,
+  items,
+  hideSearch = false,
+  customColumn = null,
+}) => {
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState('');
   const [values, setValues] = useState([]);
   const [valuesLoading, setValuesLoading] = useState(false);
 
   useEffect(() => {
-    getData(url, {}, setValuesLoading, setValues);
+    if (url) {
+      getData(url, {}, setValuesLoading, setValues);
+    } else if (items) {
+      setValues(items);
+    }
   }, []);
 
   const handleSearch = (e) => {
     if (e.keyCode == 13) {
-      getData(url, {name: searchValue}, setValuesLoading, setValues);
+      getData(
+        url,
+        customColumn ? {[customColumn]: searchValue} : {name: searchValue},
+        setValuesLoading,
+        setValues,
+      );
     }
   };
   const onSelect = (e, id) => {
@@ -50,28 +67,43 @@ const ListItems = ({url, reduxReducer, data, columnName}) => {
         my: 3,
       }}
     >
-      <TextField
-        fullWidth
-        label={<IntlMessages id='common.search' />}
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
-        onKeyDown={handleSearch}
-        size='small'
-      />
+      {!hideSearch && (
+        <TextField
+          fullWidth
+          label={<IntlMessages id='common.search' />}
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          onKeyDown={handleSearch}
+          size='small'
+        />
+      )}
       <Paper
         variant='outlined'
-        sx={{height: '200px', overflowY: 'auto', my: 2, px: 3}}
+        sx={{
+          minHeight: '50px',
+          maxHeight: '200px',
+          overflowY: 'auto',
+          my: 2,
+          px: 3,
+        }}
       >
         <FormGroup>
           {values.map((item, index) => (
             <FormControlLabel
-              checked={data[columnName].includes(item.id)}
-              control={<Checkbox onChange={(e) => onSelect(e, item.id)} />}
-              label={item.name}
+              checked={data[columnName].includes(
+                customColumn ? item[customColumn] : item.id,
+              )}
+              control={
+                <Checkbox
+                  onChange={(e) =>
+                    onSelect(e, customColumn ? item[customColumn] : item.id)
+                  }
+                />
+              }
+              label={customColumn ? item[customColumn] : item.name}
               key={index}
             />
           ))}
-
           {valuesLoading && <AppLoader />}
         </FormGroup>
       </Paper>
@@ -85,4 +117,7 @@ ListItems.propTypes = {
   reduxReducer: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
   columnName: PropTypes.string.isRequired,
+  items: PropTypes.array,
+  hideSearch: PropTypes.bool,
+  customColumn: PropTypes.string,
 };

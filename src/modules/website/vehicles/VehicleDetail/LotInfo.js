@@ -68,7 +68,7 @@ export default function SaleInfo() {
             <Item label='Odometer:' value={vehicle.odometer} />
             <Item label='Primary Damage:' value={vehicle.primary_damage} />
             <Item label='Engine Type:' value={vehicle.engine_type} />
-            <Item label='Cylinders:' value={vehicle.cylinders} />
+            <Item label='cylinder:' value={vehicle.cylinder} />
             <Item label='Transmission:' value={vehicle.transmission} />
             <Item label='Fuel:' value={vehicle.fuel} />
             <Item

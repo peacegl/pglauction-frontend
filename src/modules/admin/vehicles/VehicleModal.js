@@ -52,7 +52,7 @@ export default function VehicleModal({
     exterior_color: '',
     interior_color: '',
     engine_type: '',
-    cylinders: '',
+    cylinder: '',
     transmission: '',
     status: '',
     location_id: '',
