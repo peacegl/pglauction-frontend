@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import AppTooltip from '@crema/core/AppTooltip';
 import {moneyFormater} from 'configs';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 
 export default function GridItem({item, ...props}) {
   const router = useRouter();
@@ -22,19 +22,15 @@ export default function GridItem({item, ...props}) {
 
   return (
     <Card sx={{borderRadius: 1}} ref={cardRef}>
-      <CardActionArea
-        onClick={() => router.push(`/all-vehicles/${props.item.id}`)}
-      >
+      <CardActionArea onClick={() => router.push(`/all-vehicles/${item.id}`)}>
         <Box overflow='hidden'>
           <CardMedia
             component='img'
             // height={height}
-            image={
-              props.item.images.find((item) => item.type == 'main_image').path
-            }
+            image={item.images.find((item) => item.type == 'main_image').path}
             alt='preview'
+            width='100%'
             sx={{
-              height: height + 'px !important',
               objectFit: 'cover',
               transition: 'all 450ms ease-out',
               '&:hover': {
