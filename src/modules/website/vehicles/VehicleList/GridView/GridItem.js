@@ -14,28 +14,24 @@ import {useEffect, useRef, useState} from 'react';
 export default function GridItem({item, ...props}) {
   const router = useRouter();
   const cardRef = useRef();
-  const [height, setHeight] = useState(
-    parseInt((cardRef.current?.clientWidth / 4) * 3),
-  );
+  // const [height, setHeight] = useState('260px');
 
-  useEffect(() => {
-    if (window) {
-      window.addEventListener('resize', () => {
-        if (height != parseInt((cardRef.current?.clientWidth / 4) * 3)) {
-          setHeight(parseInt((cardRef.current?.clientWidth / 4) * 3));
-        }
-      });
-    }
-  }, []);
+  // useLayoutEffect(() => {
+  //   setHeight((cardRef.current?.clientWidth / 4) * 3 + 'px');
+  // });
 
   return (
     <Card sx={{borderRadius: 1}} ref={cardRef}>
-      <CardActionArea onClick={() => router.push(`/all-vehicles/${item.id}`)}>
-        <Box height={height} overflow='hidden'>
+      <CardActionArea
+        onClick={() => router.push(`/all-vehicles/${props.item.id}`)}
+      >
+        <Box overflow='hidden'>
           <CardMedia
             component='img'
-            height={height}
-            image={item.images.find((item) => item.type == 'main_image').path}
+            // height={height}
+            image={
+              props.item.images.find((item) => item.type == 'main_image').path
+            }
             alt='preview'
             sx={{
               height: height + 'px !important',
