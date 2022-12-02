@@ -17,7 +17,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         name: 'newly_added',
         initialValue: {
           newly_added_duration: 24,
-          newly_added: false,
+          newly_added: 0,
         },
         content: (
           <NewlyAdded
@@ -29,15 +29,15 @@ export default function filterList(filterData, messages, reset, setReset) {
       {
         key: 2,
         title: <IntlMessages id='common.price' />,
-        name: 'price',
-        initialValue: [0, 50000],
+        name: 'between@@price',
+        initialValue: [0, 100000],
         content: (
           <MinMaxSlider
-            value={filterData.price}
+            value={filterData['between@@price']}
             step={100}
             reduxReducer={setWebVehiclesFilter}
             data={filterData}
-            columnName='price'
+            columnName='between@@price'
             onlyTitle
             price
             reset={reset}
@@ -48,45 +48,45 @@ export default function filterList(filterData, messages, reset, setReset) {
       {
         key: 3,
         title: <IntlMessages id='common.location' />,
-        name: 'location',
+        name: 'location_id',
         initialValue: [],
         content: (
           <ListItems
             url='/location/auto_complete'
             reduxReducer={setWebVehiclesFilter}
             data={filterData}
-            columnName='location'
+            columnName='location_id'
           />
         ),
       },
       {
         key: 4,
         title: <IntlMessages id='vehicle.category' />,
-        name: 'category',
+        name: 'category_id',
         initialValue: [],
         content: (
           <ListItems
             url='/category/auto_complete'
             reduxReducer={setWebVehiclesFilter}
             data={filterData}
-            columnName='category'
+            columnName='category_id'
           />
         ),
       },
       {
         key: 5,
         title: <IntlMessages id='vehicle.odometer' />,
-        name: 'odometer',
+        name: 'between@@odometer',
         initialValue: [0, 250000],
         content: (
           <MinMaxSlider
-            value={filterData.odometer}
+            value={filterData['between@@odometer']}
             minTitle={messages['common.miles']}
             maxTitle={messages['common.miles']}
             step={1000}
             reduxReducer={setWebVehiclesFilter}
             data={filterData}
-            columnName='odometer'
+            columnName='between@@odometer'
             reset={reset}
             setReset={setReset}
           />
@@ -95,14 +95,14 @@ export default function filterList(filterData, messages, reset, setReset) {
       {
         key: 6,
         title: <IntlMessages id='common.year' />,
-        name: 'year',
+        name: 'between@@year',
         initialValue: [1995, new Date().getFullYear()],
         content: (
           <MinMaxFilter
-            value={filterData.year}
+            value={filterData['between@@year']}
             reduxReducer={setWebVehiclesFilter}
             data={filterData}
-            columnName='year'
+            columnName='between@@year'
             select
             items={range(1950, new Date().getFullYear() + 1, 1).map(
               (year, index) => (
@@ -117,28 +117,28 @@ export default function filterList(filterData, messages, reset, setReset) {
       {
         key: 7,
         title: <IntlMessages id='common.make' />,
-        name: 'make',
+        name: 'model.make_id',
         initialValue: [],
         content: (
           <ListItems
             url='/make/auto_complete'
             reduxReducer={setWebVehiclesFilter}
             data={filterData}
-            columnName='make'
+            columnName='model.make_id'
           />
         ),
       },
       {
         key: 8,
         title: <IntlMessages id='vehicle.model' />,
-        name: 'model',
+        name: 'model_id',
         initialValue: [],
         content: (
           <ListItems
             url='/model/auto_complete'
             reduxReducer={setWebVehiclesFilter}
             data={filterData}
-            columnName='model'
+            columnName='model_id'
           />
         ),
       },

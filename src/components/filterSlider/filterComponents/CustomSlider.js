@@ -20,7 +20,13 @@ const CustomSlider = ({
         }}
       >
         <Box>{onlyTitle ? minTitle : `${value[0]} ${minTitle}`}</Box>
-        <Box>{onlyTitle ? maxTitle : `${value[1]} ${maxTitle}`}</Box>
+        <Box>
+          {onlyTitle
+            ? value[1] == 100000
+              ? `${maxTitle}+`
+              : maxTitle
+            : `${value[1] == 250000 ? value[1] + '+' : value[1]} ${maxTitle}`}
+        </Box>
       </Box>
       <Box sx={{mx: 2}}>
         <Slider
