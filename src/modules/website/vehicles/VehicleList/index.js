@@ -26,7 +26,7 @@ const VehicleList = () => {
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
   useEffect(() => {
     setPage(0);
-  }, [search]);
+  }, [search, filterData]);
 
   useEffect(() => {
     dispatch(

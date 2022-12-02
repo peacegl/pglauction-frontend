@@ -14,22 +14,11 @@ import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 export default function GridItem({item, ...props}) {
   const router = useRouter();
   const cardRef = useRef();
-  const [height, setHeight] = useState(260);
+  // const [height, setHeight] = useState('260px');
 
-  useLayoutEffect(() => {
-    console.log(cardRef.current?.offsetWidth);
-    setHeight(parseInt((cardRef.current?.offsetWidth / 4) * 3));
-  }, [cardRef.current?.offsetWidth]);
-
-  useEffect(() => {
-    if (window) {
-      window.addEventListener('resize', () => {
-        if (height != parseInt((cardRef.current?.offsetWidth / 4) * 3)) {
-          setHeight(parseInt((cardRef.current?.offsetWidth / 4) * 3));
-        }
-      });
-    }
-  }, [cardRef.current?.offsetWidth]);
+  // useLayoutEffect(() => {
+  //   setHeight((cardRef.current?.clientWidth / 4) * 3 + 'px');
+  // });
 
   return (
     <Card sx={{borderRadius: 1}} ref={cardRef}>
@@ -37,6 +26,7 @@ export default function GridItem({item, ...props}) {
         <Box overflow='hidden'>
           <CardMedia
             component='img'
+            // height={height}
             image={item.images.find((item) => item.type == 'main_image').path}
             alt='preview'
             width='100%'

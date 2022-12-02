@@ -60,13 +60,11 @@ const AuctionsSidebar = () => {
           <IntlMessages id='common.reset_all' />
         </Button>
       </Box>
-      <Box>
-        <FilterComponents
-          filterData={filterData}
-          resetAll={resetAll}
-          setResetAll={setResetAll}
-        />
-      </Box>
+      <FilterComponents
+        filterData={filterData}
+        resetAll={resetAll}
+        setResetAll={setResetAll}
+      />
     </Box>
   );
 };
