@@ -20,8 +20,8 @@ export default function Footer() {
     </Typography>
   );
 
-  const link = (text, link) => (
-    <Box marginBottom='10px'>
+  const link = (text, link, index) => (
+    <Box marginBottom='10px' key={index}>
       <Link
         component='button'
         variant='body2'
@@ -85,7 +85,7 @@ export default function Footer() {
                 }}
               >
                 {title('Quick Links')}
-                {pages.map((page, index) => link(page.title, page.link))}
+                {pages.map((page, index) => link(page.title, page.link, index))}
               </Box>
             </Box>
             <Box
