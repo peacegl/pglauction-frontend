@@ -9,36 +9,38 @@ import PropTypes from 'prop-types';
 import AppTooltip from '@crema/core/AppTooltip';
 import {moneyFormater} from 'configs';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 
 export default function GridItem({item, ...props}) {
   const router = useRouter();
   const cardRef = useRef();
-  const [height, setHeight] = useState(
-    parseInt((cardRef.current?.clientWidth / 4) * 3),
-  );
+  const [height, setHeight] = useState(260);
+
+  useLayoutEffect(() => {
+    console.log(cardRef.current?.offsetWidth);
+    setHeight(parseInt((cardRef.current?.offsetWidth / 4) * 3));
+  }, [cardRef.current?.offsetWidth]);
 
   useEffect(() => {
     if (window) {
       window.addEventListener('resize', () => {
-        if (height != parseInt((cardRef.current?.clientWidth / 4) * 3)) {
-          setHeight(parseInt((cardRef.current?.clientWidth / 4) * 3));
+        if (height != parseInt((cardRef.current?.offsetWidth / 4) * 3)) {
+          setHeight(parseInt((cardRef.current?.offsetWidth / 4) * 3));
         }
       });
     }
-  }, []);
+  }, [cardRef.current?.offsetWidth]);
 
   return (
     <Card sx={{borderRadius: 1}} ref={cardRef}>
       <CardActionArea onClick={() => router.push(`/all-vehicles/${item.id}`)}>
-        <Box height={height} overflow='hidden'>
+        <Box overflow='hidden'>
           <CardMedia
             component='img'
-            height={height}
             image={item.images.find((item) => item.type == 'main_image').path}
             alt='preview'
+            width='100%'
             sx={{
-              height: height + 'px !important',
               objectFit: 'cover',
               transition: 'all 450ms ease-out',
               '&:hover': {
