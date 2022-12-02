@@ -302,7 +302,7 @@ export default function filterList(filterData, messages, reset, setReset) {
             hideSearch
             items={[
               {
-                id: 'status',
+                id: 'active',
                 name: 'Future',
               },
               {
