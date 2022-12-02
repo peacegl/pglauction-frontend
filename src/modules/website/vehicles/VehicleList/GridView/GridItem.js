@@ -14,21 +14,21 @@ import {useLayoutEffect, useRef, useState} from 'react';
 export default function GridItem(props) {
   const router = useRouter();
   const cardRef = useRef();
-  const [height, setHeight] = useState('260px');
+  // const [height, setHeight] = useState('260px');
 
-  useLayoutEffect(() => {
-    setHeight((cardRef.current?.clientWidth / 4) * 3 + 'px');
-  });
+  // useLayoutEffect(() => {
+  //   setHeight((cardRef.current?.clientWidth / 4) * 3 + 'px');
+  // });
 
   return (
     <Card sx={{borderRadius: 1}} ref={cardRef}>
       <CardActionArea
         onClick={() => router.push(`/all-vehicles/${props.item.id}`)}
       >
-        <Box height={height} overflow='hidden'>
+        <Box overflow='hidden'>
           <CardMedia
             component='img'
-            height={height}
+            // height={height}
             image={
               props.item.images.find((item) => item.type == 'main_image').path
             }

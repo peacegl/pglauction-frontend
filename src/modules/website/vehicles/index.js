@@ -57,7 +57,7 @@ const Vehicles = () => {
         open={openDrawer}
         onClose={() => setOpenDrawer(false)}
       >
-        <Box sx={{width: {xs: '70vw', sm: '60vw'}}}>
+        <Box sx={{width: {xs: '80vw', sm: '60vw'}}}>
           <AuctionsSidebar />
         </Box>
       </Drawer>
