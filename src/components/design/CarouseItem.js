@@ -9,20 +9,27 @@ import {
 import IntlMessages from '@crema/utility/IntlMessages';
 import PropTypes from 'prop-types';
 import {useRouter} from 'next/router';
-import {useRef, useState} from 'react';
+import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import AppTooltip from '@crema/core/AppTooltip';
 
 const CarouselItem = ({item}) => {
   const router = useRouter();
   const cardRef = useRef();
-  const [height, setHeight] = useState(null);
+  const [height, setHeight] = useState(260);
 
-  window.addEventListener('resize', () => {
-    if (height != parseInt((cardRef.current?.clientWidth / 4) * 3)) {
-      setHeight(parseInt((cardRef.current?.clientWidth / 4) * 3));
-      console.log(height);
+  useLayoutEffect(() => {
+    setHeight(parseInt((cardRef.current?.clientWidth / 4) * 3));
+  }, []);
+
+  useEffect(() => {
+    if (window) {
+      window.addEventListener('resize', () => {
+        if (height != parseInt((cardRef.current?.clientWidth / 4) * 3)) {
+          setHeight(parseInt((cardRef.current?.clientWidth / 4) * 3));
+        }
+      });
     }
-  });
+  }, []);
 
   const viewDetails = () => {
     router.push(`/all-vehicles/${item.id}`);

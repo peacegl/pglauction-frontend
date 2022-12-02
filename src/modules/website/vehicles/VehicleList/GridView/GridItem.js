@@ -9,18 +9,24 @@ import PropTypes from 'prop-types';
 import AppTooltip from '@crema/core/AppTooltip';
 import {moneyFormater} from 'configs';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 export default function GridItem({item, ...props}) {
   const router = useRouter();
   const cardRef = useRef();
-  const [height, setHeight] = useState('280px');
+  const [height, setHeight] = useState(
+    parseInt((cardRef.current?.clientWidth / 4) * 3),
+  );
 
-  window.addEventListener('resize', () => {
-    if (height != parseInt((cardRef.current?.clientWidth / 4) * 3)) {
-      setHeight(parseInt((cardRef.current?.clientWidth / 4) * 3));
+  useEffect(() => {
+    if (window) {
+      window.addEventListener('resize', () => {
+        if (height != parseInt((cardRef.current?.clientWidth / 4) * 3)) {
+          setHeight(parseInt((cardRef.current?.clientWidth / 4) * 3));
+        }
+      });
     }
-  });
+  }, []);
 
   return (
     <Card sx={{borderRadius: 1}} ref={cardRef}>
