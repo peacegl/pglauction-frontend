@@ -86,7 +86,7 @@ export default function Footer() {
             >
               <Box
                 sx={{
-                  flex: 2,
+                  flex: 1,
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: {xs: 'center', sm: 'start'},
@@ -98,7 +98,7 @@ export default function Footer() {
               </Box>
               <Box
                 sx={{
-                  flex: 2,
+                  flex: 1,
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: {xs: 'center', sm: 'start'},
@@ -114,7 +114,7 @@ export default function Footer() {
               </Box>
               <Box
                 sx={{
-                  flex: 3,
+                  flex: 1.2,
                   textAlign: {xs: 'center', sm: 'start'},
                   mb: 5,
                 }}
