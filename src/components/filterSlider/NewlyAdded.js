@@ -20,7 +20,7 @@ const NewlyAdded = ({filterData, reduxReducer}) => {
         ...filterData,
         newly_added: {
           newly_added_duration: duration,
-          newly_added: e.target.checked,
+          newly_added: e.target.checked ? 1 : 0,
         },
       }),
     );
