@@ -18,7 +18,7 @@ const Search = styled('div')(({theme}) => ({
   // marginLeft: 10,
   flexGrow: 1,
   width: 'auto',
-  '& :first-child': {
+  '& :first-of-type': {
     flexGrow: 1,
   },
   '.MuiInputBase-root': {

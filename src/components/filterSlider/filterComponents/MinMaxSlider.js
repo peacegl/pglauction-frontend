@@ -73,11 +73,11 @@ const MinMaxSlider = ({
 
 export default MinMaxSlider;
 MinMaxSlider.propTypes = {
-  value: PropTypes.object,
+  value: PropTypes.any,
   minTitle: PropTypes.string,
   maxTitle: PropTypes.string,
   step: PropTypes.number,
-  data: PropTypes.array,
+  data: PropTypes.any,
   columnName: PropTypes.string,
   onlyTitle: PropTypes.bool,
   price: PropTypes.bool,

@@ -115,7 +115,7 @@ export default ListItems;
 ListItems.propTypes = {
   url: PropTypes.any,
   reduxReducer: PropTypes.func.isRequired,
-  data: PropTypes.array.isRequired,
+  data: PropTypes.any.isRequired,
   columnName: PropTypes.string.isRequired,
   items: PropTypes.array,
   hideSearch: PropTypes.bool,

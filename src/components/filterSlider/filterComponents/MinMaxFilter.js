@@ -40,7 +40,7 @@ const MinMaxFilter = ({
 
 export default MinMaxFilter;
 MinMaxFilter.propTypes = {
-  value: PropTypes.object,
+  value: PropTypes.any,
   reduxReducer: PropTypes.func,
   data: PropTypes.any,
   columnName: PropTypes.string,
