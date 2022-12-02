@@ -9,31 +9,37 @@ import PropTypes from 'prop-types';
 import AppTooltip from '@crema/core/AppTooltip';
 import {moneyFormater} from 'configs';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-import {useLayoutEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
-export default function GridItem(props) {
+export default function GridItem({item, ...props}) {
   const router = useRouter();
   const cardRef = useRef();
-  const [height, setHeight] = useState('260px');
+  const [height, setHeight] = useState(
+    parseInt((cardRef.current?.clientWidth / 4) * 3),
+  );
 
-  useLayoutEffect(() => {
-    setHeight((cardRef.current?.clientWidth / 4) * 3 + 'px');
-  });
+  useEffect(() => {
+    if (window) {
+      window.addEventListener('resize', () => {
+        if (height != parseInt((cardRef.current?.clientWidth / 4) * 3)) {
+          setHeight(parseInt((cardRef.current?.clientWidth / 4) * 3));
+        }
+      });
+    }
+  }, []);
 
   return (
     <Card sx={{borderRadius: 1}} ref={cardRef}>
-      <CardActionArea
-        onClick={() => router.push(`/all-vehicles/${props.item.id}`)}
-      >
+      <CardActionArea onClick={() => router.push(`/all-vehicles/${item.id}`)}>
         <Box height={height} overflow='hidden'>
           <CardMedia
             component='img'
             height={height}
-            image={
-              props.item.images.find((item) => item.type == 'main_image').path
-            }
+            image={item.images.find((item) => item.type == 'main_image').path}
             alt='preview'
             sx={{
+              height: height + 'px !important',
+              objectFit: 'cover',
               transition: 'all 450ms ease-out',
               '&:hover': {
                 transform: 'scale(1.2)',
@@ -43,27 +49,25 @@ export default function GridItem(props) {
         </Box>
         <CardContent>
           <AppTooltip
-            title={`${props.item?.year} ${props.item?.model.make?.name} 
-            ${props.item.model?.name}`}
+            title={`${item?.year} ${item?.model.make?.name} 
+            ${item.model?.name}`}
           >
             <Typography
-              height='20px'
+              noWrap
               gutterBottom
               variant='h4'
-              component='div'
+              component='h4'
               color='primary'
-              overflow='hidden'
             >
-              {props.item.year} {props.item?.model.make?.name}{' '}
-              {props.item.model?.name}
+              {item.year} {item.model?.make?.name} {item.model?.name}
             </Typography>
           </AppTooltip>
           <Divider sx={{my: 2}} />
           <Box display='flex' justifyContent='space-between'>
             <Typography color='primary' fontWeight='bold'>
-              {moneyFormater(props.item.price)}
+              {moneyFormater(item.price)}
             </Typography>
-            <Typography color='primary'>{props.item.odometer} Miles</Typography>
+            <Typography color='primary'>{item.odometer} Miles</Typography>
           </Box>
           <Box
             display='flex'

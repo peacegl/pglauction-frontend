@@ -40,5 +40,5 @@ export default function Item({label, value, ...rest}) {
 
 Item.propTypes = {
   label: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.number,
 };

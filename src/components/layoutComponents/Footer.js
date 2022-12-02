@@ -59,11 +59,10 @@ export default function Footer() {
                 flex: 1,
                 display: 'flex',
                 flexDirection: {xs: 'column', sm: 'row'},
-                alignItems: 'center',
                 textAlign: 'center',
               }}
             >
-              <Box sx={{flex: {xs: 2, md: 3}, pb: 3}}>
+              <Box sx={{flex: {md: 3}, mb: 5}}>
                 <Box sx={{mt: 1}}>
                   <img width='160' src={logoImage.src} alt='united logo' />
                 </Box>
@@ -75,25 +74,12 @@ export default function Footer() {
                   ut. Cum qui totam eligendi.
                 </Typography>
               </Box>
-              <Box
-                sx={{
-                  flex: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: {xs: 'center', sm: 'start'},
-                  pb: 3,
-                }}
-              >
-                {title('Quick Links')}
-                {pages.map((page, index) => link(page.title, page.link, index))}
-              </Box>
             </Box>
             <Box
               sx={{
-                flex: 1,
+                flex: 2,
                 display: 'flex',
                 flexDirection: {xs: 'column', sm: 'row'},
-                alignItems: 'center',
                 textAlign: 'center',
                 width: '100%',
               }}
@@ -104,7 +90,19 @@ export default function Footer() {
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: {xs: 'center', sm: 'start'},
-                  pb: 3,
+                  mb: 5,
+                }}
+              >
+                {title('Quick Links')}
+                {pages.map((page, index) => link(page.title, page.link, index))}
+              </Box>
+              <Box
+                sx={{
+                  flex: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: {xs: 'center', sm: 'start'},
+                  mb: 5,
                 }}
               >
                 {title('About Us')}
@@ -116,13 +114,21 @@ export default function Footer() {
               </Box>
               <Box
                 sx={{
-                  flex: 1,
-                  textAlign: 'start',
+                  flex: 2,
+                  textAlign: {xs: 'center', sm: 'start'},
+                  mb: 5,
                 }}
               >
                 {title('Location')}
 
-                <Box marginBottom='10px' display='flex' alignItems='center'>
+                <Box
+                  marginBottom='10px'
+                  display='flex'
+                  alignItems='center'
+                  sx={{
+                    justifyContent: {xs: 'center', sm: 'flex-start'},
+                  }}
+                >
                   <LocationOnOutlinedIcon />
                   <Typography
                     variant='body2'
@@ -135,7 +141,12 @@ export default function Footer() {
                     Room Number 804 P.O.Box: 48551, Dubai-U.A.E.
                   </Typography>
                 </Box>
-                <Box marginBottom='10px' display='flex' alignItems='center'>
+                <Box
+                  marginBottom='10px'
+                  display='flex'
+                  alignItems='center'
+                  sx={{justifyContent: {xs: 'center', sm: 'flex-start'}}}
+                >
                   <PhoneOutlinedIcon />
                   <Link
                     variant='body2'
@@ -148,7 +159,11 @@ export default function Footer() {
                     (+97)6776655688
                   </Link>
                 </Box>
-                <Box marginBottom='10px' display='flex' alignItems='center'>
+                <Box
+                  marginBottom='10px'
+                  display='flex'
+                  sx={{justifyContent: {xs: 'center', sm: 'flex-start'}}}
+                >
                   <EmailOutlinedIcon />
                   <Link
                     variant='body2'
