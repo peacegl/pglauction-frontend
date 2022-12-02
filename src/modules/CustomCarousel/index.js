@@ -1,7 +1,7 @@
 import VehicleGridCard from 'components/vehicles/VehicleGridCard';
 import {Grid, IconButton, Box} from '@mui/material';
 import CourseSlider from './CourseSlider';
-import CarouselItem from './CarouseItem';
+import CarouselItem from '../../components/design/CarouseItem';
 import PropTypes from 'prop-types';
 import Slider from 'react-slick';
 import {useRef} from 'react';
