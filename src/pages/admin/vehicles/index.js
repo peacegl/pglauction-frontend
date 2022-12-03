@@ -2,7 +2,7 @@ import React from 'react';
 import AppPage from '../../../@crema/hoc/AppPage';
 import asyncComponent from '../../../@crema/utility/asyncComponent';
 
-const Auctions = asyncComponent(() =>
+const Vehicles = asyncComponent(() =>
   import('../../../modules/admin/vehicles'),
 );
-export default AppPage(() => <Auctions />);
+export default AppPage(() => <Vehicles />);

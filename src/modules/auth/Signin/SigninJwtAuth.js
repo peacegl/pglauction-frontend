@@ -162,9 +162,7 @@ const SigninJwtAuth = () => {
           }}
         >
           <Link href='/signup'>
-            <a>
-              <IntlMessages id='common.signup' />
-            </a>
+            <IntlMessages id='common.signup' />
           </Link>
         </Box>
       </Box>

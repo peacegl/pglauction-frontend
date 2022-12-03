@@ -139,18 +139,81 @@ export const GET_CUSTOM_DATA = 'get_custom_data';
 export const UPDATE_CUSTOM_DATA = 'update_custom_data';
 
 //GALLERY
-export const GET_GALLERY_PHOTO = 'get_gallery_photo';
+export const GET_GALLERY_PHOTO = 'GET_GALLERY_PHOTO';
 
 //USER_LIST
-export const GET_USER_LIST = 'get_user_list';
-export const SELECT_USER = 'select_user';
+export const GET_USER_LIST = 'GET_USER_LIST';
+export const ADD_NEW_USER = 'ADD_NEW_USER';
+export const UPDATE_USER = 'UPDATE_USER';
+
+//ROLE_LIST
+export const GET_ROLE_LIST = 'GET_ROLE_LIST';
+export const ADD_NEW_ROLE = 'ADD_NEW_ROLE';
+export const UPDATE_ROLE = 'UPDATE_ROLE';
+
+export const GET_PERMISSION_LIST = 'GET_PERMISSION_LIST';
+
+//Customer List
+export const GET_CUSTOMER_LIST = 'GET_CUSTOMER_LIST';
+export const SET_CUSTOMER_FILTER_DATA = 'SET_CUSTOMER_FILTER_DATA';
+export const ADD_NEW_CUSTOMER = 'ADD_NEW_CUSTOMER';
+export const UPDATE_CUSTOMER = 'UPDATE_CUSTOMER';
+
+//Location List
+export const GET_LOCATION_LIST = 'GET_LOCATION_LIST';
+export const SET_LOCATION_FILTER_DATA = 'SET_LOCATION_FILTER_DATA';
+export const ADD_NEW_LOCATION = 'ADD_NEW_LOCATION';
+export const UPDATE_LOCATION = 'UPDATE_LOCATION';
+
+//Category List
+export const GET_CATEGORY_LIST = 'GET_CATEGORY_LIST';
+export const SET_CATEGORY_FILTER_DATA = 'SET_CATEGORY_FILTER_DATA';
+export const ADD_NEW_CATEGORY = 'ADD_NEW_CATEGORY';
+export const UPDATE_CATEGORY = 'UPDATE_CATEGORY';
+
 //Auction Items
-export const GET_AUCTION_ITEMS = 'get_auction_items';
-export const SET_AUCTION_VIEW_TYPE = 'set_auction_view_type';
-export const SET_AUCTION_FILTER_DATA = 'set_auction_filter_data';
-export const SET_AUCTION_DATA = 'set_auction_data';
-export const GET_CATEGORIES = 'get_categories';
+export const GET_AUCTION_ITEMS = 'GET_AUCTION_ITEMS';
+export const GET_WEB_AUCTION_ITEMS = 'GET_WEB_AUCTION_ITEMS';
+export const SET_AUCTION_ITEM_VIEW_TYPE = 'SET_AUCTION_ITEM_VIEW_TYPE';
+export const SET_AUCTION_ITEM_FILTER_DATA = 'SET_AUCTION_ITEM_FILTER_DATA';
+export const SET_AUCTION_ITEM_DATA = 'SET_AUCTION_ITEM_DATA';
+export const GET_CATEGORIES = 'GET_CATEGORIES';
+export const UPDATE_AUCTION_ITEM = 'UPDATE_AUCTION_ITEM';
+
+export const GET_AUCTIONS = 'GET_AUCTIONS';
+export const SET_AUCTION_FILTER_DATA = 'SET_AUCTION_FILTER_DATA';
+export const ADD_NEW_AUCTION = 'ADD_NEW_AUCTION';
+export const UPDATE_AUCTION = 'UPDATE_AUCTION';
 
 // Vehicles List
-export const GET_VEHICLE_LIST = 'get_vehicles_list';
-export const SET_VEHICLE_FILTER_DATA = 'set_vehicle_filter_data';
+export const GET_VEHICLE_LIST = 'GET_VEHICLE_LIST';
+export const SET_VEHICLE_FILTER_DATA = 'SET_VEHICLE_FILTER_DATA';
+export const ADD_NEW_VEHICLE = 'ADD_NEW_VEHICLE';
+export const UPDATE_VEHICLE = 'UPDATE_VEHICLE';
+
+// Autocomplete
+export const GET_USER_AUTOCOMPLETE_OPTIONS = 'GET_USER_AUTOCOMPLETE_OPTIONS';
+
+// Website Vehicles List
+export const GET_WEB_VEHICLE_LIST = 'GET_WEB_VEHICLE_LIST';
+export const GET_WEB_VEHICLE_VIEW = 'GET_WEB_VEHICLE_VIEW';
+export const SET_VEHICLE_VIEW_TYPE = 'SET_VEHICLE_VIEW_TYPE';
+export const GET_WEB_SIMILAR_VEHICLE = 'GET_WEB_SIMILAR_VEHICLE';
+export const SET_VEHICLE_SEARCH = 'SET_VEHICLE_SEARCH';
+export const GET_FEATURED_VEHICLE_LIST = 'GET_FEATURED_VEHICLE_LIST';
+export const GET_BEST_SELLING_VEHICLE_LIST = 'GET_BEST_SELLING_VEHICLE_LIST';
+export const SET_WEB_VEHICLE_FILTER_DATA = 'SET_WEB_VEHICLE_FILTER_DATA';
+export const GET_RECENTLY_ADDED_VEHICLE_LIST =
+  'GET_RECENTLY_ADDED_VEHICLE_LIST';
+
+//Make List
+export const GET_MAKE_LIST = 'GET_MAKE_LIST';
+export const SET_MAKE_FILTER_DATA = 'SET_MAKE_FILTER_DATA';
+export const ADD_NEW_MAKE = 'ADD_NEW_MAKE';
+export const UPDATE_MAKE = 'UPDATE_MAKE';
+
+//Model List
+export const GET_MODEL_LIST = 'GET_MODEL_LIST';
+export const SET_MODEL_FILTER_DATA = 'SET_MODEL_FILTER_DATA';
+export const ADD_NEW_MODEL = 'ADD_NEW_MODEL';
+export const UPDATE_MODEL = 'UPDATE_MODEL';

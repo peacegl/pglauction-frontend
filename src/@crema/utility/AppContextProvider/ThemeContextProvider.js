@@ -28,6 +28,26 @@ const ThemeContextProvider = ({children}) => {
   const [themeStyle, updateThemeStyle] = useState(defaultConfig.themeStyle);
 
   const updateTheme = useCallback((theme) => {
+    // Table header styles
+    theme.components.MUIDataTableHeadCell.styleOverrides.root = {
+      ...theme.components.MUIDataTableHeadCell.styleOverrides.root,
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText,
+      'div, svg, span': {
+        color: theme.palette.primary.contrastText + '!important',
+      },
+    };
+    theme.components.MUIDataTableHeadCell.styleOverrides.fixedHeader = {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText,
+    };
+    // Header Checkbox style
+    theme.components.MUIDataTableSelectCell.styleOverrides.headerCell = {
+      backgroundColor: theme.palette.primary.main,
+      '.MuiButtonBase-root': {
+        color: theme.palette.primary.contrastText,
+      },
+    };
     setTheme(theme);
   }, []);
 

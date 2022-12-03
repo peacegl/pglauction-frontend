@@ -1,19 +1,29 @@
-import React from 'react';
-import {Field} from 'formik';
-import DateTimePicker from '@mui/lab/DateTimePicker';
+import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
 import TextField from '@mui/material/TextField';
 import PropTypes from 'prop-types';
+import {useField} from 'formik';
 
 const AppDateTimeField = (props) => {
+  const [field, meta] = useField(props);
+  const errorText = meta.error && meta.touched ? meta.error : '';
   return (
-    <Field
-      component={DateTimePicker}
-      variant='outlined'
-      inputVariant='outlined'
+    <DateTimePicker
+      onChange={(value) =>
+        props.setfieldvalue ? props.setfieldvalue(props.name, value) : {}
+      }
+      value={props.value}
       {...props}
-      renderInput={(params) => (
-        <TextField className={props.className} {...params} {...props} />
-      )}
+      renderInput={(params) => {
+        return (
+          <TextField
+            {...params}
+            {...props}
+            {...field}
+            helperText={errorText}
+            error={!!errorText}
+          />
+        );
+      }}
     />
   );
 };
@@ -22,4 +32,7 @@ export default AppDateTimeField;
 
 AppDateTimeField.propTypes = {
   className: PropTypes.string,
+  name: PropTypes.string,
+  value: PropTypes.string,
+  setfieldvalue: PropTypes.func,
 };

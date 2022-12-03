@@ -1,16 +1,19 @@
 import {
   GET_AUCTION_ITEMS,
+  GET_WEB_AUCTION_ITEMS,
   GET_CATEGORIES,
-  SET_AUCTION_FILTER_DATA,
-  SET_AUCTION_DATA,
-  SET_AUCTION_VIEW_TYPE,
+  SET_AUCTION_ITEM_FILTER_DATA,
+  SET_AUCTION_ITEM_DATA,
+  SET_AUCTION_ITEM_VIEW_TYPE,
+  UPDATE_AUCTION_ITEM,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
 const initialState = {
   auctionItemsList: [],
+  webAuctionItemsList: [],
   categories: [],
-  viewType: VIEW_TYPE.LIST,
+  viewType: VIEW_TYPE.GRID,
   currectAuction: null,
   filterData: {
     title: '',
@@ -22,31 +25,46 @@ const initialState = {
   },
 };
 
-const AuctionItemReducer = (state = initialState, action) => {
+const AuctionReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_AUCTION_ITEMS:
       return {
         ...state,
         auctionItemsList: action.payload,
       };
+    case GET_WEB_AUCTION_ITEMS:
+      return {
+        ...state,
+        webAuctionItemsList: action.payload,
+      };
+    case UPDATE_AUCTION_ITEM:
+      return {
+        ...state,
+        auctionItemsList: {
+          ...state.auctionItemsList,
+          data: state.auctionItemsList.data.map((item) =>
+            item.id == action.payload.id ? action.payload : item,
+          ),
+        },
+      };
     case GET_CATEGORIES:
       return {
         ...state,
         categories: action.payload,
       };
-    case SET_AUCTION_VIEW_TYPE:
+    case SET_AUCTION_ITEM_VIEW_TYPE:
       return {
         ...state,
         viewType: action.payload,
       };
 
-    case SET_AUCTION_FILTER_DATA:
+    case SET_AUCTION_ITEM_FILTER_DATA:
       return {
         ...state,
         filterData: action.payload,
       };
 
-    case SET_AUCTION_DATA:
+    case SET_AUCTION_ITEM_DATA:
       return {
         ...state,
         currectAuction: action.payload,
@@ -56,4 +74,4 @@ const AuctionItemReducer = (state = initialState, action) => {
       return state;
   }
 };
-export default AuctionItemReducer;
+export default AuctionReducer;

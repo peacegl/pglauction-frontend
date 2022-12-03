@@ -8,7 +8,7 @@ import {Button} from '@mui/material';
 import {Form} from 'formik';
 import AppTextField from '../../../../@crema/core/AppFormComponents/AppTextField';
 import PropTypes from 'prop-types';
-import DatePicker from '@mui/lab/DatePicker';
+import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import Autocomplete from '@mui/material/Autocomplete';
 import countries from '../../../../@crema/services/db/countries';
 

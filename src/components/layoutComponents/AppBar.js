@@ -1,174 +1,178 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
+import {useAuthMethod, useAuthUser} from '@crema/utility/AuthHooks';
+import IntlMessages from '@crema/utility/IntlMessages';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
+import MenuItem from '@mui/material/MenuItem';
+import Toolbar from '@mui/material/Toolbar';
+import Tooltip from '@mui/material/Tooltip';
+import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import SearchIcon from '@mui/icons-material/Search';
+import Menu from '@mui/material/Menu';
 import {useRouter} from 'next/router';
+import Box from '@mui/material/Box';
+import {useState} from 'react';
+import VehicleSearchBar from './VehicleSearchBar';
+import {useDispatch, useSelector} from 'react-redux';
+import {useTheme} from '@mui/material';
+import {setVehicleSearch} from 'redux/actions';
 
-const pages = ['Home', 'Browse', 'Search'];
-const settings = ['Profile', 'Account', 'Logout'];
+export const pages = [
+  {title: <IntlMessages id='website.home' />, link: '/'},
+  {title: <IntlMessages id='website.all_vehicles' />, link: '/all-vehicles'},
+  // {title: <IntlMessages id='website.live_auctions' />, link: '/live-auctions'},
+  {title: <IntlMessages id='website.services' />, link: '/services'},
+  {title: <IntlMessages id='website.contact_us' />, link: '/contact-us'},
+  {title: <IntlMessages id='website.about_us' />, link: '/about-us'},
+];
+
+const signOptions = [
+  {title: <IntlMessages id='common.signIn' />, link: 'signin'},
+  // {title: <IntlMessages id='common.signup' />, link: '/signup'},
+];
 
 function TopMenu() {
+  const {logout} = useAuthMethod();
+  const {user, isLoading} = useAuthUser();
   const router = useRouter();
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
+  const dispatch = useDispatch();
+  const theme = useTheme();
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const {search = ''} = useSelector(({webVehicles}) => webVehicles);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [settings, setSettings] = useState([
+    user?.type == 'User'
+      ? {
+          title: <IntlMessages id='common.admin_panel' />,
+          link: '/admin/vehicles',
+        }
+      : user?.type == 'Customer'
+      ? {
+          title: <IntlMessages id='common.my_account' />,
+          link: '/my-account',
+        }
+      : null,
+    {
+      title: <IntlMessages id='common.logout' />,
+      link: 'logout',
+    },
+  ]);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (link) => {
     setAnchorElUser(null);
   };
-
-  const openAdminPanel = () => {
-    router.push('/admin/');
+  const changePage = (link) => {
+    if (link == 'logout') {
+      logout();
+      return;
+    }
+    router.push(link);
   };
+  const openAdminPanel = () => {
+    router.push('/admin/vehicles');
+  };
+
+  const onSearch = (value) => {
+    router.push('/all-vehicles');
+    dispatch(setVehicleSearch(value));
+  };
+
   return (
     <AppBar position='static'>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
-          <AdbIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}} />
-          <Typography
-            variant='h6'
-            noWrap
-            component='a'
-            href='/'
-            sx={{
-              mr: 2,
-              display: {xs: 'none', md: 'flex'},
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-
           <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
-            <IconButton
-              size='large'
-              aria-label='account of current user'
-              aria-controls='menu-appbar'
-              aria-haspopup='true'
-              onClick={handleOpenNavMenu}
-              color='inherit'
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id='menu-appbar'
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+            <VehicleSearchBar
+              placeholder='Search Inventory By Make, Model, Vin, and More...'
+              onEnter={onSearch}
+              onSearch={onSearch}
+              defaultValue={search}
               sx={{
-                display: {xs: 'block', md: 'none'},
+                width: {xs: '60vw'},
+                margin: 'auto',
+                backgroundColor: 'white',
+                borderColor: 'white',
+                color: theme.palette.primary.main,
               }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign='center'>{page}</Typography>
-                  {page == 'Search' && <SearchIcon sx={{ml: 1}} />}
-                </MenuItem>
-              ))}
-            </Menu>
+            />
           </Box>
-          <AdbIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}} />
-          <Typography
-            variant='h5'
-            noWrap
-            component='a'
-            href=''
-            sx={{
-              mr: 2,
-              display: {xs: 'flex', md: 'none'},
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
+
           <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
             {pages.map((page) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={page.link}
+                onClick={() => changePage(page.link)}
                 alignItems='center'
                 sx={{my: 2, color: 'white', display: 'block'}}
               >
-                {page}
+                {page.title}
               </Button>
             ))}
           </Box>
 
-          <Button
+          {/* <Button
             onClick={openAdminPanel}
             alignItems='center'
             sx={{my: 2, color: 'white', display: 'block'}}
           >
             Admin Panel
-          </Button>
-          <Box sx={{flexGrow: 0}}>
-            <Tooltip title='Open settings'>
-              <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{mt: '45px'}}
-              id='menu-appbar'
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign='center'>{setting}</Typography>
-                </MenuItem>
+          </Button> */}
+          {user ? (
+            <Box sx={{flexGrow: 0}}>
+              <Tooltip title='Open settings'>
+                <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                  <Avatar alt={user.username} src={user.photoURL} />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{mt: '45px'}}
+                id='menu-appbar'
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map(
+                  (setting) =>
+                    setting && (
+                      <MenuItem
+                        key={setting.title}
+                        onClick={() => changePage(setting.link)}
+                      >
+                        <Typography textAlign='center'>
+                          {setting.title}
+                        </Typography>
+                      </MenuItem>
+                    ),
+                )}
+              </Menu>
+            </Box>
+          ) : (
+            <Box sx={{flexGrow: 0, display: 'flex'}}>
+              {signOptions.map((page) => (
+                <Button
+                  key={page.link}
+                  onClick={() => changePage(page.link)}
+                  alignItems='center'
+                  sx={{my: 2, color: 'white', display: 'block'}}
+                >
+                  {page.title}
+                </Button>
               ))}
-            </Menu>
-          </Box>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

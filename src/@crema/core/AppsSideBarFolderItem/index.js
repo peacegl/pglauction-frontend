@@ -105,7 +105,7 @@ const AppsSideBarFolderItem = ({item, path}) => {
   const {asPath} = useRouter();
 
   return (
-    <Link href={path}>
+    <Link href={path} legacyBehavior>
       <AppsSideBarFolderList
         button
         key={item.id}

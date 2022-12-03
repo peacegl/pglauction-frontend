@@ -21,41 +21,39 @@ const VerticalItem = ({level, router, item}) => {
   }
 
   return (
-    <Link href={item.url} as={item.as}>
-      <a style={{textDecoration: 'none'}}>
-        <VerticalNavItem
-          item={item}
-          level={level}
-          router={router}
-          exact={item.exact}
-        >
-          {item.icon && (
-            <Box component='span'>
-              <Icon
-                sx={{
-                  fontSize: 18,
-                  display: 'block',
-                  mr: 4,
-                }}
-                className={clsx('nav-item-icon', 'material-icons-outlined')}
-                color='action'
-              >
-                {item.icon}
-              </Icon>
-            </Box>
-          )}
-          <ListItemText
-            className='nav-item-content'
-            primary={<IntlMessages id={item.messageId} />}
-            classes={{primary: 'nav-item-text'}}
-          />
-          {item.count && (
-            <Box sx={{mr: 3.5}} className='menu-badge'>
-              <AppBadge count={item.count} color={item.color} />
-            </Box>
-          )}
-        </VerticalNavItem>
-      </a>
+    <Link href={item.url} as={item.as} style={{textDecoration: 'none'}}>
+      <VerticalNavItem
+        item={item}
+        level={level}
+        router={router}
+        exact={item.exact}
+      >
+        {item.icon && (
+          <Box component='span'>
+            <Icon
+              sx={{
+                fontSize: 18,
+                display: 'block',
+                mr: 4,
+              }}
+              className={clsx('nav-item-icon', 'material-icons-outlined')}
+              color='action'
+            >
+              {item.icon}
+            </Icon>
+          </Box>
+        )}
+        <ListItemText
+          className='nav-item-content'
+          primary={<IntlMessages id={item.messageId} />}
+          classes={{primary: 'nav-item-text'}}
+        />
+        {item.count && (
+          <Box sx={{mr: 3.5}} className='menu-badge'>
+            <AppBadge count={item.count} color={item.color} />
+          </Box>
+        )}
+      </VerticalNavItem>
     </Link>
   );
 };

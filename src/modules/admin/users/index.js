@@ -1,40 +1,49 @@
-import UserConfigs from '../../../configs/pages/users';
+import {tableColumns} from '../../../configs/pages/users';
 import {useDispatch, useSelector} from 'react-redux';
-import CustomDataTable from '../../CustomDataTable';
-import {onGetUserList, onDeleteUsers} from 'redux/actions';
+import CustomDataTable from '../../../components/CustomDataTable';
+import {
+  onGetUserList,
+  onDeleteUsers,
+  getUserAutocompleteOptions,
+} from 'redux/actions';
 import {useEffect, useState} from 'react';
-import Avatar from '@mui/material/Avatar';
 import IntlMessages from '@crema/utility/IntlMessages';
+import UserModal from './UserModal';
 
-export default function userList() {
-  const columns = UserConfigs().columns;
-
-  columns[0]['options'].customBodyRender = (value, tableMeta, updateValue) => (
-    <Avatar alt={' profile picture.'} src={value} />
-  );
-
+export default function UserList() {
+  const [openModal, setOpenModal] = useState(false);
+  const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
+  const [search, setSearch] = useState('');
+  const [exactMatch, setExactMatch] = useState(false);
+  const [filterData, setFilterData] = useState({});
+  const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(({users}) => users.userList);
+  const {loading} = useSelector(({common}) => common);
+
   const dispatch = useDispatch();
   useEffect(() => {
-    setIsLoading(true);
-    dispatch(
+    fetchData(search);
+  }, [dispatch, page, per_page, orderBy, filterData]);
+
+  const fetchData = async (search = '') => {
+    await dispatch(
       onGetUserList({
         page: page + 1,
         per_page,
+        search,
+        exactMatch,
+        filterData,
+        orderBy,
       }),
-    ).then(() => setIsLoading(false));
-  }, [dispatch, page, per_page]);
+    );
+  };
 
   const options = {
-    rowsPerPageOptions: [20, 50, 100, 500],
     count: total,
     rowsPerPage: per_page,
-    serverSide: true,
-    rowsSelected: selected,
     onChangeRowsPerPage: (numberOfRows) => {
       setPerPage(numberOfRows);
       setPage(0);
@@ -47,32 +56,109 @@ export default function userList() {
     ) => {
       setSelected(rowsSelected);
     },
+    onSearchChange: (value) => {
+      setSearch(value);
+    },
+    onColumnSortChange: (column, order) => {
+      setOrderBy({column, order});
+    },
+    confirmFilters: true,
+    onFilterDialogOpen: () => {
+      dispatch(getUserAutocompleteOptions());
+    },
+    // callback that gets executed when filters are confirmed
+    onFilterConfirm: (filterList) => {
+      handleFilter(filterList);
+    },
+    onFilterChange: (column, filterList, type) => {
+      if (type === 'chip') {
+        handleFilter(filterList);
+      }
+    },
   };
-  const onAdd = () => {};
-  const onEdit = () => {};
-  const onDelete = () => {
-    setIsLoading(true);
-    dispatch(onDeleteUsers(selected.map((item) => data[item].id))).then(() =>
-      setIsLoading(false),
+  const onAdd = () => {
+    setRecordId(null);
+    setOpenModal(true);
+  };
+  const onEdit = () => {
+    setRecordId(data[selected[0]].id);
+    setOpenModal(true);
+  };
+  const onDelete = async () => {
+    await dispatch(
+      onDeleteUsers({
+        userIds: selected.map((item) => data[item].id),
+        page: page + 1,
+        per_page,
+        orderBy,
+      }),
     );
     setSelected([]);
+  };
+
+  const onEnterSearch = (value) => {
+    setPage(0);
+    fetchData(value);
+  };
+
+  const handleFilter = (filterList) => {
+    const filterData = {};
+    filterData['login.username'] = filterList[2][0]
+      ? 'like@@' + filterList[2][0].trim()
+      : undefined;
+    filterData['users.firstname'] = filterList[3][0]
+      ? 'like@@' + filterList[3][0].trim()
+      : undefined;
+    filterData['users.lastname'] = filterList[4][0]
+      ? 'like@@' + filterList[4][0].trim()
+      : undefined;
+    filterData['users.gender'] = filterList[7][0]
+      ? 'exact@@' + filterList[7][0].toLowerCase()
+      : undefined;
+    filterData['login.status'] = filterList[9][0]
+      ? 'exact@@' + filterList[9][0].toLowerCase()
+      : undefined;
+    filterData['login.type'] = filterList[10][0]
+      ? 'exact@@' + filterList[10][0].toLowerCase()
+      : undefined;
+    filterData['users.created_by'] = filterList[13].map((item) => item.id);
+    filterData['users.updated_by'] = filterList[15].map((item) => item.id);
+    filterData['users.created_at'] = {
+      from: filterList[14][0],
+      to: filterList[14][1],
+    };
+    filterData['users.updated_at'] = {
+      from: filterList[16][0],
+      to: filterList[16][1],
+    };
+    setFilterData(filterData);
   };
 
   return (
     <>
       <CustomDataTable
-        title='Users List'
+        title={<IntlMessages id='user.userList' />}
         total={total}
         data={data}
-        columns={columns}
+        columns={tableColumns()}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}
         onDelete={onDelete}
         deleteTitle={<IntlMessages id='user.deleteMessage' />}
-        isLoading={isLoading}
+        isLoading={loading}
         selected={selected}
+        onEnterSearch={onEnterSearch}
+        onExactChange={(value) => setExactMatch(value)}
       />
+      {openModal && (
+        <UserModal
+          open={openModal}
+          toggleOpen={() => setOpenModal((d) => !d)}
+          recordId={recordId}
+          edit={recordId ? true : false}
+        />
+      )}
     </>
   );
 }

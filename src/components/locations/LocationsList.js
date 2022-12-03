@@ -41,12 +41,10 @@ export default function LocationsList() {
             <ListItemButton onClick={handleToggle(value.id)} dense sx={{py: 1}}>
               <ListItemText
                 id={value.id}
-                primary={
-                  <Typography color='primary'>{value.location_name}</Typography>
-                }
+                primary={<Typography color='primary'>{value.name}</Typography>}
               />
               <Badge
-                badgeContent={value.auction_items_count}
+                badgeContent={value.auctions_count}
                 color='primary'
                 sx={{mx: 2}}
                 max={999}
