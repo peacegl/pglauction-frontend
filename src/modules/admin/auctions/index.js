@@ -4,7 +4,7 @@ import {
   onDeleteAuctions,
   getUserAutocompleteOptions,
 } from 'redux/actions';
-import CustomDataTable from '../../CustomDataTable';
+import CustomDataTable from '../../../components/CustomDataTable';
 import {useDispatch, useSelector} from 'react-redux';
 import AuctionModal from './AuctionModal';
 import IntlMessages from '@crema/utility/IntlMessages';

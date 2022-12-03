@@ -1,7 +1,7 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import LocationConfigs from '../../../configs/pages/locations';
 import {onInsertLocation, onUpdateLocation} from 'redux/actions';
-import CustomModal from '../../CustomModal';
+import CustomModal from '../../../components/CustomModal';
 import {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';

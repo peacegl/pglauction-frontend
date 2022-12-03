@@ -2,7 +2,7 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import CategoryConfigs from '../../../configs/pages/categories';
 import {onInsertAuction, onUpdateAuction} from 'redux/actions';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-import CustomModal from '../../CustomModal';
+import CustomModal from '../../../components/CustomModal';
 import AuctionForm from './AuctionForm';
 import {useState, useEffect} from 'react';
 import {getData} from '../../../configs';

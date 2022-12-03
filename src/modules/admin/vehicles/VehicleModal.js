@@ -11,7 +11,7 @@ import {appIntl} from '@crema/utility/helper/Utils';
 import SellIcon from '@mui/icons-material/Sell';
 import InfoIcon from '@mui/icons-material/Info';
 import VehicleStepOne from './VehicleStepOne';
-import CustomModal from '../../CustomModal';
+import CustomModal from '../../../components/CustomModal';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import Helper from 'helpers/helpers';

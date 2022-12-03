@@ -4,7 +4,7 @@ import {onInsertRole, onUpdateRole} from 'redux/actions';
 import IntlMessages from '@crema/utility/IntlMessages';
 import RoleConfigs from '../../../configs/pages/roles';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-import CustomModal from '../../CustomModal';
+import CustomModal from '../../../components/CustomModal';
 import {useEffect, useState} from 'react';
 import RoleStepTwo from './RoleStepTwo';
 import {useDispatch} from 'react-redux';

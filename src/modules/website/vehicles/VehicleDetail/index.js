@@ -9,7 +9,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppLoader} from '@crema';
 import LotInfo from './LotInfo';
 import SaleInfo from './SaleInfo';
-import CustomCarousel from 'modules/CustomCarousel';
+import CustomCarousel from 'components/CustomCarousel';
 import IntlMessages from '@crema/utility/IntlMessages';
 
 const VehicleDetail = (props) => {

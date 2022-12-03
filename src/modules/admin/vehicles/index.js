@@ -4,7 +4,7 @@ import {
   onDeleteVehicles,
   getUserAutocompleteOptions,
 } from 'redux/actions';
-import CustomDataTable from '../../CustomDataTable';
+import CustomDataTable from '../../../components/CustomDataTable';
 import {useDispatch, useSelector} from 'react-redux';
 import {tableColumns} from '../../../configs/pages/vehicles';
 import VehicleModal from './VehicleModal';
