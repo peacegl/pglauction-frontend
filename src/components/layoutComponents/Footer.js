@@ -66,7 +66,7 @@ export default function Footer() {
                 <Box sx={{mt: 1}}>
                   <img width='160' src={logoImage.src} alt='united logo' />
                 </Box>
-                <Typography sx={{m: 4, ml: 0, textAlign: 'justify'}}>
+                <Typography sx={{m: 4, ml: 0}}>
                   Cum qui totam eligendi. Eos sed perferendis consequuntur
                   cupiditate voluptas aut et. Deserunt neque nobis est numquam
                   ut Cum qui totam eligendi. Eos sed perferendis consequuntur

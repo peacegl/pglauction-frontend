@@ -6,7 +6,7 @@ import {
 import {tableColumns} from '../../../configs/pages/customers';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
-import CustomDataTable from '../../CustomDataTable';
+import CustomDataTable from '../../../components/CustomDataTable';
 import CustomerModal from './CustomerModal';
 import {useEffect, useState} from 'react';
 

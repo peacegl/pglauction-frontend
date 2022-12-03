@@ -1,6 +1,6 @@
 import {tableColumns} from '../../../configs/pages/categories';
 import {useDispatch, useSelector} from 'react-redux';
-import CustomDataTable from '../../CustomDataTable';
+import CustomDataTable from '../../../components/CustomDataTable';
 import {
   onGetCategoryList,
   onDeleteCategories,
