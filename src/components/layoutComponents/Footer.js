@@ -114,7 +114,7 @@ export default function Footer() {
               </Box>
               <Box
                 sx={{
-                  flex: 2,
+                  flex: 1.2,
                   textAlign: {xs: 'center', sm: 'start'},
                   mb: 5,
                 }}
