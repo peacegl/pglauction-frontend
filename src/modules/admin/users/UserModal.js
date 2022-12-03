@@ -7,7 +7,7 @@ import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
 import PersonIcon from '@mui/icons-material/Person';
 import {useEffect, useState, useRef} from 'react';
-import CustomModal from '../../CustomModal';
+import CustomModal from '../../../components/CustomModal';
 import UserStepThree from './UserStepThree';
 import {useDispatch} from 'react-redux';
 import UserStepOne from './UserStepOne';

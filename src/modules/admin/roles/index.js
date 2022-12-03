@@ -1,6 +1,6 @@
 import RolesConfigs from '../../../configs/pages/roles';
 import {useDispatch, useSelector} from 'react-redux';
-import CustomDataTable from '../../CustomDataTable';
+import CustomDataTable from '../../../components/CustomDataTable';
 import {onGetRoleList, onDeleteRoles} from 'redux/actions';
 import {useEffect, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';

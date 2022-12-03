@@ -9,7 +9,7 @@ import {appIntl} from '@crema/utility/helper/Utils';
 import SellIcon from '@mui/icons-material/Sell';
 import InfoIcon from '@mui/icons-material/Info';
 import {onUpdateAuctionItem} from 'redux/actions';
-import CustomModal from '../../CustomModal';
+import CustomModal from '../../../components/CustomModal';
 import {useEffect, useState} from 'react';
 import {getData} from '../../../configs';
 import {useDispatch} from 'react-redux';

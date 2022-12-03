@@ -10,7 +10,7 @@ import CustomerStepThree from './CustomerStepThree';
 import {useEffect, useState, useRef} from 'react';
 import CustomerStepOne from './CustomerStepOne';
 import CustomerStepTwo from './CustomerStepTwo';
-import CustomModal from '../../CustomModal';
+import CustomModal from '../../../components/CustomModal';
 import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import Helper from 'helpers/helpers';

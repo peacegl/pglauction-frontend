@@ -1,6 +1,6 @@
 import PermissionsConfigs from '../../../configs/pages/permissions';
 import {useDispatch, useSelector} from 'react-redux';
-import CustomDataTable from '../../CustomDataTable';
+import CustomDataTable from '../../../components/CustomDataTable';
 import {onGetPermissionList} from 'redux/actions';
 import {useEffect, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
