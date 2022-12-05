@@ -1,10 +1,8 @@
-import React from 'react';
-import {Box, Container, Link, Paper, Stack, Typography} from '@mui/material';
-import {useTheme} from '@mui/styles';
+import {Box, Container, Link, Stack, Typography} from '@mui/material';
 import logoImage from '../../assets/united_logo.png';
-import Image from 'next/image';
-import {pages} from './AppBar';
 import {useRouter} from 'next/router';
+import {useTheme} from '@mui/styles';
+import {pages} from './AppBar';
 
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
