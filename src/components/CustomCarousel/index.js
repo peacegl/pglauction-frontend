@@ -12,8 +12,8 @@ const CustomCarousel = ({title, items}) => {
     lazyLoad: true,
     speed: 500,
     slidesToShow: 4,
-    slidesToScroll: 4,
-    initialSlide: 1,
+    slidesToScroll: 3,
+
     // arrows: false,
     responsive: [
       {
