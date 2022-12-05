@@ -16,7 +16,16 @@ const SectionWIthIcon = (props) => {
       >
         {props.icon}
       </Avatar>
-      <Typography component='h3' sx={{fontSize: 20, fontWeight: '500'}}>
+      <Typography
+        component='h3'
+        sx={{
+          fontSize: {
+            xs: '18px',
+            md: '20px',
+          },
+          fontWeight: '500',
+        }}
+      >
         {props.title}
       </Typography>
       {props.details && (
