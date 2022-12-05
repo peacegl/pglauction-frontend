@@ -113,7 +113,7 @@ function Header() {
                 fontWeight: 'bold',
               }}
             >
-              United Cars Auctions
+              United Trading Cars
             </Typography>
           </Box>
 
