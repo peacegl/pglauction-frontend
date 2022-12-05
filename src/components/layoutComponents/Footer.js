@@ -1,10 +1,8 @@
-import React from 'react';
-import {Box, Container, Link, Paper, Stack, Typography} from '@mui/material';
-import {useTheme} from '@mui/styles';
+import {Box, Container, Link, Stack, Typography} from '@mui/material';
 import logoImage from '../../assets/united_logo.png';
-import Image from 'next/image';
-import {pages} from './AppBar';
 import {useRouter} from 'next/router';
+import {useTheme} from '@mui/styles';
+import {pages} from './AppBar';
 
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
@@ -63,10 +61,15 @@ export default function Footer() {
               }}
             >
               <Box sx={{flex: {md: 3}, mb: 5}}>
-                <Box sx={{mt: 1}}>
-                  <img width='160' src={logoImage.src} alt='united logo' />
-                </Box>
-                <Typography sx={{m: 4, ml: 0}}>
+                <Box
+                  component='img'
+                  sx={{
+                    width: {xs: '120px', md: '140px', lg: '150px', xl: '160px'},
+                  }}
+                  alt='united logo'
+                  src={logoImage.src}
+                />
+                <Typography sx={{m: 4, ml: 0}} variant='body1'>
                   Cum qui totam eligendi. Eos sed perferendis consequuntur
                   cupiditate voluptas aut et. Deserunt neque nobis est numquam
                   ut Cum qui totam eligendi. Eos sed perferendis consequuntur

@@ -40,7 +40,12 @@ const CourseSlider = ({title, children}) => {
           sx={{
             mx: 3,
             mb: 5,
-            fontSize: '30px',
+            fontSize: {
+              xs: '22px',
+              md: '25px',
+              lg: '27px',
+              xl: '30px',
+            },
             fontWeight: 'bold',
           }}
         >

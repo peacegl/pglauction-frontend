@@ -12,9 +12,14 @@ const Title = ({title, justifyContent}) => {
       <Typography
         component='h2'
         sx={{
-          fontSize: '30px',
+          fontSize: {
+            xs: '23px',
+            sm: '25px',
+            lg: '28px',
+            xl: '30px',
+          },
           textAlign: 'center',
-          fontWeight: '500',
+          fontWeight: 'bold',
           textTransform: 'capitalize',
         }}
       >

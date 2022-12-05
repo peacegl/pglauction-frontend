@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import {useThemeContext} from '../../utility/AppContextProvider/ThemeContextProvider';
 import {useBottomScrollListener} from 'react-bottom-scroll-listener';
+import {useWidth} from '../../utility/helper/Utils';
+import React, {useEffect, useState} from 'react';
+import AppAnimateGroup from '../AppAnimateGroup';
 import PropTypes from 'prop-types';
 import {Box} from '@mui/material';
-import AppAnimateGroup from '../AppAnimateGroup';
-import {useWidth} from '../../utility/helper/Utils';
-import {useThemeContext} from '../../utility/AppContextProvider/ThemeContextProvider';
 
 const getEmptyContainer = (ListEmptyComponent) => {
   if (ListEmptyComponent) {
