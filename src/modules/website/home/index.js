@@ -102,7 +102,12 @@ export default function Home() {
           >
             <Typography
               sx={{
-                fontSize: '28px',
+                fontSize: {
+                  xs: '22px',
+                  sm: '24px',
+                  md: '26px',
+                  lg: '28px',
+                },
                 textTransform: 'capitalize',
                 textAlign: 'center',
               }}

@@ -97,8 +97,22 @@ function Header() {
             display='flex'
             alignItems='center'
           >
-            <img width='160' src={logoImage.src} alt='united logo' />
-            <Typography variant='h1' sx={{display: {xs: 'none', sm: 'inline'}}}>
+            <Box
+              component='img'
+              sx={{
+                width: {xs: '100px', md: '120px', lg: '140px', xl: '160px'},
+              }}
+              alt='united logo'
+              src={logoImage.src}
+            />
+            <Typography
+              component='h1'
+              sx={{
+                display: {xs: 'none', sm: 'inline'},
+                fontSize: {xs: '17px', lg: '22px'},
+                fontWeight: 'bold',
+              }}
+            >
               United Cars Auctions
             </Typography>
           </Box>
