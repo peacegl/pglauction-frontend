@@ -68,10 +68,12 @@ export default function Home() {
     <>
       <CarouselBanur></CarouselBanur>
       <Container maxWidth='xl' sx={{mt: 12}}>
-        <CustomCarousel
-          title={<IntlMessages id='vehicle.featuredVehicles' />}
-          items={featuredVehicles ? featuredVehicles : []}
-        />
+        {featuredVehicles.length > 0 && (
+          <CustomCarousel
+            title={<IntlMessages id='vehicle.featuredVehicles' />}
+            items={featuredVehicles}
+          />
+        )}
       </Container>
       <Container maxWidth='xl' sx={{mt: 10}}>
         <MultipleContentSection
@@ -100,7 +102,12 @@ export default function Home() {
           >
             <Typography
               sx={{
-                fontSize: '28px',
+                fontSize: {
+                  xs: '22px',
+                  sm: '24px',
+                  md: '26px',
+                  lg: '28px',
+                },
                 textTransform: 'capitalize',
                 textAlign: 'center',
               }}
@@ -121,10 +128,12 @@ export default function Home() {
         </Container>
       </Box>
       <Container maxWidth='xl' sx={{mt: 10}}>
-        <SecondCustomCarousel
-          title={<IntlMessages id='vehicle.recentlyAddedVehicles' />}
-          items={recentlyAddedVehicles ? recentlyAddedVehicles : []}
-        />
+        {recentlyAddedVehicles.length > 0 && (
+          <SecondCustomCarousel
+            title={<IntlMessages id='vehicle.recentlyAddedVehicles' />}
+            items={recentlyAddedVehicles}
+          />
+        )}
       </Container>
     </>
   );
