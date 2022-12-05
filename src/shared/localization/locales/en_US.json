@@ -1046,5 +1046,8 @@
   "common.max": "Max",
   "common.miles": "Miles",
   "common.search": "Search",
-  "common.apply": "Apply"
+  "common.apply": "Apply",
+  "website.firstService": "Shipping, Ocean Freight, Vessel Agency Services, Vehicle Loading",
+  "website.secondService": "Used Cars",
+  "website.thirdService": "Land Transport, Custom Clearance, You Buy We Ship"
 }

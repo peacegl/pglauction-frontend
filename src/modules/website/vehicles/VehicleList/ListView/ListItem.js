@@ -64,22 +64,23 @@ export default function ListItem(props) {
       >
         <Box sx={{display: {xs: 'block', sm: 'none'}}}>
           <Typography p='8px' gutterBottom component='div' color='primary'>
-            {props.item.year} {props.item?.model.make?.name}{' '}
+            {props.item.year} {props.item?.model.make?.name}
             {props.item.model?.name}
           </Typography>
           <Divider sx={{mb: 2}} />
         </Box>
         <Box
           sx={{
-            borderRadius: 1,
             display: 'flex',
-            flexDirection: {xs: 'row', sm: 'row'},
-            alignItems: 'center',
-            mb: 3,
-            maxWidth: '100%',
           }}
         >
-          <Box sx={{width: {xs: '180px', sm: '210px'}}} overflow='hidden'>
+          <Box
+            overflow='hidden'
+            sx={{
+              display: 'flex',
+              flex: {xs: 1, sm: 2, md: 2, lg: 1},
+            }}
+          >
             <CardMedia
               onClick={() => viewPage()}
               component='img'
@@ -88,8 +89,8 @@ export default function ListItem(props) {
               }
               alt='preview'
               sx={{
+                flex: 1,
                 cursor: 'pointer',
-                height: {xs: '130px', sm: '160px'},
                 transition: 'all 450ms ease-out',
                 '&:hover': {
                   transform: 'scale(1.2)',
@@ -97,7 +98,7 @@ export default function ListItem(props) {
               }}
             />
           </Box>
-          <CardContent sx={{width: '100%'}}>
+          <CardContent sx={{flex: {xs: 1, sm: 4, md: 4}}}>
             <Stack direction='row' spacing={0}>
               <Box sx={{flex: 2}}>
                 <Box sx={{display: {xs: 'none', sm: 'block'}}}>
@@ -118,7 +119,7 @@ export default function ListItem(props) {
                       }}
                       onClick={() => viewPage()}
                     >
-                      {props.item.year} {props.item?.model.make?.name}{' '}
+                      {props.item.year} {props.item?.model.make?.name}
                       {props.item.model?.name}
                     </Typography>
                   </AppTooltip>
@@ -178,7 +179,7 @@ export default function ListItem(props) {
                 </Box>
               </Box>
               <Box
-                sx={{flex: 1.5, display: {xs: 'none', md: 'block'}, px: 3}}
+                sx={{flex: 1.5, display: {xs: 'none', lg: 'block'}, px: 3}}
                 color='text.secondary'
               >
                 <TextShow label='Odometer' value={props.item.odometer} />

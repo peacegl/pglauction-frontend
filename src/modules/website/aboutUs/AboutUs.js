@@ -22,26 +22,53 @@ const AboutUs = () => {
           <Title title={<IntlMessages id='website.about_us' />} />
           <Box sx={{mt: 2}}>
             <Typography component='p' variant='body1'>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              United Trading Company sells used cars with an affordable rate in
+              Dubai, UAE. They have a showroom in Sharjah, an office in Dubai to
+              provide comprehensive support and services to the customers. We
+              have different affiliates to help provide shipping, clearance, and
+              sell cars from USA in Dubai and elsewhere.
             </Typography>
-            <Typography component='p' variant='body1'>
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <Typography component='p' variant='body1' sx={{mt: 3}}>
+              United Trading Cars LLC is one of the top companies in UAE selling
+              cars from ranging from different models and companies. It also
+              provides other services with its affiliates ranging from having
+              bidding rooms and computer labs in Sharjah office for you to buy
+              cars from USA auctions, shipping your cars, custom clearance for
+              your cars and selling your cars at its famous showroom in Sharjah.
             </Typography>
-            <Typography component='p' sx={{fontWeight: 'bold', my: 5}}>
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+            <Typography component='p' sx={{fontWeight: '500', my: 5}}>
+              Customers may ship cars via Peace Global Logistics LLC which is a
+              shipping company based in United States having two branches
+              located in Georgia and Texas. They are a well established company
+              which you may find more information in their website.
+              <a
+                href='https://peacegl.com'
+                target='_blank'
+                style={{
+                  textDecoration: 'none',
+                  marginLeft: 1,
+                }}
+                rel='noreferrer'
+              >
+                Peace Global Logistics LLC
+              </a>
+            </Typography>
+            <Typography component='p' sx={{fontWeight: '500', my: 5}}>
+              Customers may use custom clearance and other services via our
+              affiliate PGLC Shipping LLC. They are a well established company
+              having branches in UAE and you may find more information in their
+              website.
+              <a
+                href='https://pglcshipping.com'
+                target='_blank'
+                style={{
+                  textDecoration: 'none',
+                  marginLeft: 1,
+                }}
+                rel='noreferrer'
+              >
+                PGLC Shipping LLC
+              </a>
             </Typography>
             <Button
               variant='contained'

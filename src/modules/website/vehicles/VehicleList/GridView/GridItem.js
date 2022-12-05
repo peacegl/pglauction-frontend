@@ -29,7 +29,6 @@ export default function GridItem({item, ...props}) {
             // height={height}
             image={item.images.find((item) => item.type == 'main_image').path}
             alt='preview'
-            width='100%'
             sx={{
               objectFit: 'cover',
               transition: 'all 450ms ease-out',
