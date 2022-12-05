@@ -1,54 +1,72 @@
+import DirectionsBoatFilledIcon from '@mui/icons-material/DirectionsBoatFilled';
 import MultipleContentSection from 'components/design/MultipleContentSection';
-import IntlMessages from '@crema/utility/IntlMessages';
-import Container from '@mui/material/Container';
-import {Box, Paper} from '@mui/material';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import HighQualityIcon from '@mui/icons-material/HighQuality';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import {green, deepOrange, blue} from '@mui/material/colors';
+import IntlMessages from '@crema/utility/IntlMessages';
+import Container from '@mui/material/Container';
+import {Paper, Typography} from '@mui/material';
+import StarIcon from '@mui/icons-material/Star';
+import Link from 'next/link';
 
 const contents = [
   {
     icon: <EmojiEventsIcon sx={{fontSize: 35}} />,
-    title: <IntlMessages id='website.moreThan500Vehicle' />,
+    title: <IntlMessages id='website.firstService' />,
     color: deepOrange[500],
     bgcolor: deepOrange[100],
-    details: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.`,
+    details: (
+      <Typography>
+        UTC’s affiliate, Peace Global Logistics LLC is a FMC approved shipping
+        company which has shipped over 66,000 vehicles shipped from USA to
+        worldwide. For more information, please click
+        <Link
+          href='https://pglsystem.com'
+          target='_blank'
+          style={{
+            textDecoration: 'none',
+            paddingLeft: 3,
+          }}
+        >
+          here
+        </Link>
+      </Typography>
+    ),
   },
   {
-    icon: <AdminPanelSettingsIcon sx={{fontSize: 35}} />,
-    title: <IntlMessages id='website.simple_fast_secure' />,
+    icon: <StarIcon sx={{fontSize: 35}} />,
+    title: <IntlMessages id='website.secondService' />,
     color: (theme) => theme.palette.success.main,
     bgcolor: green[100],
-    details: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
+    details: (
+      <Typography component='p'>
+        United Trading Company presents used cars with affordable rate which you
+        can check out in
+        <Link
+          href='/all-vehicles'
+          style={{
+            textDecoration: 'none',
+            paddingLeft: 3,
+          }}
+        >
+          here
+        </Link>
+      </Typography>
+    ),
   },
   {
-    icon: <HighQualityIcon sx={{fontSize: 35}} />,
-    title: <IntlMessages id='website.quality' />,
+    icon: <DirectionsBoatFilledIcon sx={{fontSize: 35}} />,
+    title: <IntlMessages id='website.thirdService' />,
     color: (theme) => theme.palette.info.main,
     bgcolor: blue[100],
-    details: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's`,
-  },
-  {
-    icon: <AdminPanelSettingsIcon sx={{fontSize: 35}} />,
-    title: <IntlMessages id='website.simple_fast_secure' />,
-    color: (theme) => theme.palette.success.main,
-    bgcolor: green[100],
-    details: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
-  },
-  {
-    icon: <HighQualityIcon sx={{fontSize: 35}} />,
-    title: <IntlMessages id='website.quality' />,
-    color: (theme) => theme.palette.info.main,
-    bgcolor: blue[100],
-    details: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's`,
-  },
-  {
-    icon: <EmojiEventsIcon sx={{fontSize: 35}} />,
-    title: <IntlMessages id='website.moreThan500Vehicle' />,
-    color: deepOrange[500],
-    bgcolor: deepOrange[100],
-    details: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.`,
+    details: (
+      <Typography component='p'>
+        UTC’s affiliate, PGLC Shipping LLC does clearance, land transport and
+        has its own unique computer lab for customers to come and bid on cars in
+        USA auctions for their convenience. The computer lab is equipped with
+        computers, internet and they provide the auction account where you can
+        buy your favorite car from USA and PGL will ship it for you!
+      </Typography>
+    ),
   },
 ];
 
