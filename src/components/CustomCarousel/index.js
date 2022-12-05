@@ -4,19 +4,16 @@ import CourseSlider from './CourseSlider';
 import CarouselItem from '../design/CarouseItem';
 import PropTypes from 'prop-types';
 import Slider from 'react-slick';
-import {useRef} from 'react';
 
 const CustomCarousel = ({title, items}) => {
-  const sliderRef = useRef(null);
-
   let settings = {
     dots: false,
     infinite: false,
     lazyLoad: true,
     speed: 500,
     slidesToShow: 4,
-    slidesToScroll: 4,
-    initialSlide: 0,
+    slidesToScroll: 1,
+    // initialSlide: 0,
     // arrows: false,
     responsive: [
       {
@@ -52,10 +49,10 @@ const CustomCarousel = ({title, items}) => {
 
   return (
     <CourseSlider title={title}>
-      <Slider ref={sliderRef} className='slideRoot' {...settings}>
+      <Slider className='slideRoot' {...settings}>
         {items.map((data, index) => (
           <Box key={index} sx={{px: {xs: 1, md: 2, lg: 4}, height: '100%'}}>
-            <CarouselItem item={data} />
+            <CarouselItem key={index} item={data} />
           </Box>
         ))}
       </Slider>

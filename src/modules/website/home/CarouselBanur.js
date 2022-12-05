@@ -1,9 +1,12 @@
-import {Box, Typography, IconButton, useMediaQuery} from '@mui/material';
+import {Box, IconButton, Button, alpha} from '@mui/material';
 import {Carousel} from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import {useTheme} from '@mui/material';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {useRouter} from 'next/router';
+import {EastRounded} from '@mui/icons-material';
 
 // imports all images from assets folder
 const importAll = (r) =>
@@ -17,11 +20,9 @@ const textureImports = importAll(
 );
 
 const CarouselBanur = () => {
-  const isNonMobile = useMediaQuery('(min-width:600px)');
   const theme = useTheme();
-  Object.values(textureImports).map((texture, index) => {
-    console.log(texture);
-  });
+  const router = useRouter();
+
   return (
     <Carousel
       infiniteLoop={true}
@@ -35,11 +36,18 @@ const CarouselBanur = () => {
           onClick={onClickHandler}
           sx={{
             position: 'absolute',
-            top: '50%',
+            top: '46%',
             left: '0',
-            color: 'black',
-            padding: '5px',
+            color: theme.palette.primary.main,
+            backgroundColor: theme.palette.primary.contrastText,
+            opacity: 0.3,
+            padding: {xs: '0', md: '3px', lg: '5px'},
             zIndex: '10',
+            '&:hover': {
+              color: theme.palette.primary.main,
+              backgroundColor: theme.palette.primary.contrastText,
+              opacity: '0.6',
+            },
           }}
         >
           <NavigateBeforeIcon sx={{fontSize: 40}} />
@@ -50,11 +58,18 @@ const CarouselBanur = () => {
           onClick={onClickHandler}
           sx={{
             position: 'absolute',
-            top: '50%',
+            top: '46%',
             right: '0',
-            color: 'black',
-            padding: '5px',
+            color: theme.palette.primary.main,
+            backgroundColor: theme.palette.primary.contrastText,
+            opacity: 0.3,
+            padding: {xs: '0', md: '3px', lg: '5px'},
             zIndex: '10',
+            '&:hover': {
+              color: theme.palette.primary.main,
+              backgroundColor: theme.palette.primary.contrastText,
+              opacity: '0.6',
+            },
           }}
         >
           <NavigateNextIcon sx={{fontSize: 40}} />
@@ -77,25 +92,47 @@ const CarouselBanur = () => {
             }}
           />
           <Box
-            color='white'
-            padding='20px'
-            borderRadius='1px'
-            textAlign='left'
-            backgroundColor='rgb(0, 0, 0, 0.4)'
             position='absolute'
-            top='46%'
-            left={isNonMobile ? '10%' : '0'}
-            right={isNonMobile ? undefined : '0'}
-            margin={isNonMobile ? undefined : '0 auto'}
-            maxWidth={isNonMobile ? undefined : '240px'}
+            left='0'
+            top='0'
+            right='0'
+            bottom='0'
+            margin='auto'
           >
-            <Typography
-              fontWeight='bold'
-              color={theme.palette.secondary.main}
-              sx={{textDecoration: 'underline'}}
+            <Box
+              display='flex'
+              justifyContent='center'
+              alignItems='center'
+              height='100%'
             >
-              Discover More
-            </Typography>
+              <Button
+                variant='h1'
+                sx={{
+                  backgroundColor: theme.palette.primary.main,
+                  color: theme.palette.primary.contrastText,
+                  fontWeight: 'bold',
+                  borderRadius: 20,
+                  opacity: 0.9,
+                  px: {
+                    xs: 5,
+                    md: 8,
+                    lg: 12,
+                  },
+                  py: {
+                    xs: 2,
+                    md: 4,
+                  },
+                  textTransform: 'uppercase',
+                  '&:hover': {
+                    backgroundColor: theme.palette.primary.contrastText,
+                    color: theme.palette.primary.main,
+                  },
+                }}
+                onClick={() => router.push('/all-vehicles')}
+              >
+                <IntlMessages id='website.all_vehicles' />
+              </Button>
+            </Box>
           </Box>
         </Box>
       ))}
