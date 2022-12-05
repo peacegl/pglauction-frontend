@@ -19,19 +19,18 @@ const Head = () => {
         alignItems: 'center',
         mb: 2,
         px: 2,
-        maxWidth: '100%',
         backgroundColor: (theme) => theme.palette.primary.main,
         color: (theme) => theme.palette.primary.contrastText,
         fontWeight: 'bold',
       }}
     >
-      <Box sx={{width: {xs: '160px', sm: '210px'}}} overflow='hidden'>
+      <Box sx={{flex: {xs: 1, md: 2, lg: 1}}} overflow='hidden'>
         Image
       </Box>
-      <CardContent sx={{width: '100%'}}>
+      <CardContent sx={{flex: {xs: 1, sm: 2, md: 3}}}>
         <Stack direction='row' spacing={2}>
           <Box sx={{flex: 2}}>Lot Info</Box>
-          <Box sx={{flex: 1.5, display: {xs: 'none', md: 'block'}}}>
+          <Box sx={{flex: 1.5, display: {xs: 'none', lg: 'block'}}}>
             Vehicle Info
           </Box>
           <Box sx={{flex: 1, display: {xs: 'none', sm: 'block'}}}>
@@ -51,7 +50,7 @@ const ListView = ({list, loading}) => {
         renderRow={(item, index) => (
           <>
             {index == 0 && <Head />}
-            <ListItem item={item} key={item.id} />{' '}
+            <ListItem item={item} key={item.id} />
           </>
         )}
         ListEmptyComponent={

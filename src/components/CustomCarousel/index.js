@@ -4,7 +4,7 @@ import CourseSlider from './CourseSlider';
 import CarouselItem from '../design/CarouseItem';
 import PropTypes from 'prop-types';
 import Slider from 'react-slick';
-import {useRef} from 'react';
+import {useRef, useEffect} from 'react';
 
 const CustomCarousel = ({title, items}) => {
   const sliderRef = useRef(null);
@@ -16,7 +16,7 @@ const CustomCarousel = ({title, items}) => {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4,
-    initialSlide: 0,
+    initialSlide: 1,
     // arrows: false,
     responsive: [
       {
