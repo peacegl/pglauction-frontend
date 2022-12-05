@@ -19,6 +19,7 @@ function Head({}) {
         minHeight: '70px',
         backgroundColor: 'white',
         border: '0',
+        py: 1,
         borderBottom: '1px',
         borderStyle: 'solid',
         borderColor: alpha(theme.palette.primary.main, 0.2),
