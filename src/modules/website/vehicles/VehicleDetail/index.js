@@ -72,10 +72,12 @@ const VehicleDetail = (props) => {
             </Box>
           </Container>
           <Container maxWidth='xl' sx={{mt: 12}}>
-            <CustomCarousel
-              title={<IntlMessages id='website.vehicle.similarVehicles' />}
-              items={similarVehicles ? similarVehicles : []}
-            />
+            {similarVehicles.length > 0 && (
+              <CustomCarousel
+                title={<IntlMessages id='website.vehicle.similarVehicles' />}
+                items={similarVehicles}
+              />
+            )}
           </Container>
         </>
       )}
