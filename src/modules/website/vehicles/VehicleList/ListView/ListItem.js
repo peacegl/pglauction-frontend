@@ -47,11 +47,11 @@ const WhatsAppButton = (props) => {
     </Button>
   );
 };
-export default function ListItem(props) {
+export default function ListItem({item, ...props}) {
   const router = useRouter();
 
   const viewPage = () => {
-    router.push(`/all-vehicles/${props.item.id}`);
+    router.push(`/all-vehicles/${item.id}`);
   };
   return (
     <>
@@ -64,8 +64,8 @@ export default function ListItem(props) {
       >
         <Box sx={{display: {xs: 'block', sm: 'none'}}}>
           <Typography p='8px' gutterBottom component='div' color='primary'>
-            {props.item.year} {props.item?.model.make?.name}
-            {props.item.model?.name}
+            {item.year} {props.item?.model.make?.name}
+            {item.model?.name}
           </Typography>
           <Divider sx={{mb: 2}} />
         </Box>
@@ -84,9 +84,7 @@ export default function ListItem(props) {
             <CardMedia
               onClick={() => viewPage()}
               component='img'
-              image={
-                props.item.images.find((item) => item.type == 'main_image').path
-              }
+              image={item.images.find((item) => item.type == 'main_image').path}
               alt='preview'
               sx={{
                 flex: 1,
@@ -103,24 +101,21 @@ export default function ListItem(props) {
               <Box sx={{flex: 2}}>
                 <Box sx={{display: {xs: 'none', sm: 'block'}}}>
                   <AppTooltip
-                    title={`${props.item?.year} ${props.item?.model.make?.name} 
-                  ${props.item.model?.name}`}
+                    title={`${item?.year} ${item?.model?.make?.name} ${item.model?.name}`}
                   >
                     <Typography
                       gutterBottom
-                      component='div'
-                      color='primary'
                       variant='h4'
+                      color='primary'
+                      component='div'
                       overflow='hidden'
-                      height='20px'
                       sx={{
                         fontSize: {xs: '14px', sm: '16px'},
                         cursor: 'pointer',
                       }}
                       onClick={() => viewPage()}
                     >
-                      {props.item.year} {props.item?.model.make?.name}
-                      {props.item.model?.name}
+                      {item?.year} {item.model?.make?.name} {item?.model?.name}
                     </Typography>
                   </AppTooltip>
                   <Divider sx={{my: 2}} />
@@ -136,7 +131,7 @@ export default function ListItem(props) {
                       sx={{cursor: 'pointer'}}
                       onClick={() => viewPage()}
                     >
-                      {props.item.lot_number}
+                      {item.lot_number}
                     </Typography>
                   </Box>
                   <Typography
@@ -145,7 +140,7 @@ export default function ListItem(props) {
                     overflow='hidden'
                     sx={{display: {sm: 'block', md: 'none'}, fontSize: '14px'}}
                   >
-                    {props.item.odometer} Miles
+                    {item.odometer} Miles
                   </Typography>
                   <Typography
                     component='div'
@@ -156,7 +151,7 @@ export default function ListItem(props) {
                     fontWeight='bold'
                     sx={{display: {xs: 'block', sm: 'none'}, fontSize: '14px'}}
                   >
-                    {moneyFormater(props.item.price)}
+                    {moneyFormater(item.price)}
                   </Typography>
                 </Box>
                 <Button
@@ -182,22 +177,13 @@ export default function ListItem(props) {
                 sx={{flex: 1.5, display: {xs: 'none', lg: 'block'}, px: 3}}
                 color='text.secondary'
               >
-                <TextShow label='Odometer' value={props.item.odometer} />
-                <TextShow
-                  label='Interior Color'
-                  value={props.item.interior_color}
-                />
-                <TextShow
-                  label='Exterior Color'
-                  value={props.item.exterior_color}
-                />
-                <TextShow
-                  label='Body Style'
-                  value={props.item.interior_color}
-                />
+                <TextShow label='Odometer' value={item.odometer} />
+                <TextShow label='Interior Color' value={item.interior_color} />
+                <TextShow label='Exterior Color' value={item.exterior_color} />
+                <TextShow label='Body Style' value={item.interior_color} />
                 <TextShow
                   label='Keys'
-                  value={props.item.keys ? 'Available' : 'Not Available'}
+                  value={item.keys ? 'Available' : 'Not Available'}
                 />
               </Box>
               <Box sx={{flex: 1, display: {xs: 'none', sm: 'block'}, px: 2}}>
@@ -209,13 +195,13 @@ export default function ListItem(props) {
                   fontSize='20px'
                   fontWeight='bold'
                 >
-                  {moneyFormater(props.item.price)}
+                  {moneyFormater(item.price)}
                 </Typography>
                 {/* <Typography component='div' color='primary' overflow='hidden'>
               <Box fontWeight='bold' display='inline'>
                 Sale Date
               </Box>{' '}
-              {props.item.date}
+              {item.date}
             </Typography> */}
 
                 <WhatsAppButton number='+435345345342' />
