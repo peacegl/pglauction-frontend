@@ -1049,5 +1049,6 @@
   "common.apply": "Apply",
   "website.firstService": "Shipping, Ocean Freight, Vessel Agency Services, Vehicle Loading",
   "website.secondService": "Used Cars",
-  "website.thirdService": "Land Transport, Custom Clearance, You Buy We Ship"
+  "website.thirdService": "Land Transport, Custom Clearance, You Buy We Ship",
+  "website.terms&conditions": "Terms & Conditions"
 }
