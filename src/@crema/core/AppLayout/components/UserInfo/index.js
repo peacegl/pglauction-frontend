@@ -1,21 +1,22 @@
-import React from 'react';
-import orange from '@mui/material/colors/orange';
 import {useAuthMethod, useAuthUser} from '../../../../utility/AuthHooks';
-import {Box} from '@mui/material';
+import {Fonts} from '../../../../../shared/constants/AppEnums';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import IntlMessages from '@crema/utility/IntlMessages';
+import orange from '@mui/material/colors/orange';
+import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {Fonts} from '../../../../../shared/constants/AppEnums';
-import PropTypes from 'prop-types';
 import {useRouter} from 'next/router';
+import {Box} from '@mui/material';
+import PropTypes from 'prop-types';
+import {useState} from 'react';
 
 const UserInfo = ({color}) => {
   const {logout} = useAuthMethod();
   const {user} = useAuthUser();
   const history = useRouter();
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -98,7 +99,7 @@ const UserInfo = ({color}) => {
               }}
               component='span'
             >
-              {user.displayName ? user.displayName : 'Admin User '}
+              {user.displayName}
             </Box>
             <Box
               sx={{
@@ -110,16 +111,19 @@ const UserInfo = ({color}) => {
               <ExpandMoreIcon />
             </Box>
           </Box>
-          <Box
-            sx={{
-              mt: -0.5,
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-              color: 'inherit',
-            }}
-          >
-            System Manager
-          </Box>
+          {user.roles && (
+            <Box
+              sx={{
+                mt: -0.5,
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                color: 'inherit',
+                textTransform: 'capitalize',
+              }}
+            >
+              {user.roles[0]}
+            </Box>
+          )}
         </Box>
       </Box>
       <Menu
@@ -140,12 +144,14 @@ const UserInfo = ({color}) => {
         <MenuItem
           onClick={() => {
             handleClose();
-            history.push('/my-account');
+            history.push('/admin/my-account');
           }}
         >
-          My account
+          <IntlMessages id='common.my_account' />
         </MenuItem>
-        <MenuItem onClick={logout}>Logout</MenuItem>
+        <MenuItem onClick={logout}>
+          <IntlMessages id='common.logout' />
+        </MenuItem>
       </Menu>
     </>
   );
