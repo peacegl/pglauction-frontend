@@ -17,6 +17,8 @@
 .env
 /.env
 
+# Backend project
+/api.unitedtradingcars.com
 # testing
 /coverage
 

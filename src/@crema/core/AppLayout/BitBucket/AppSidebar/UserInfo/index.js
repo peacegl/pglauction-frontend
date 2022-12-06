@@ -1,11 +1,11 @@
-import React from 'react';
-import orange from '@mui/material/colors/orange';
 import {useAuthMethod, useAuthUser} from '../../../../../utility/AuthHooks';
-import {Box, alpha} from '@mui/material';
-import Avatar from '@mui/material/Avatar';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import {Fonts} from '../../../../../../shared/constants/AppEnums';
+import IntlMessages from '@crema/utility/IntlMessages';
+import orange from '@mui/material/colors/orange';
+import MenuItem from '@mui/material/MenuItem';
+import Avatar from '@mui/material/Avatar';
+import {Box, alpha} from '@mui/material';
+import Menu from '@mui/material/Menu';
 import {useRouter} from 'next/router';
 
 const UserInfo = () => {
@@ -13,7 +13,7 @@ const UserInfo = () => {
   const {user} = useAuthUser();
   const history = useRouter();
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -122,32 +122,35 @@ const UserInfo = () => {
               }}
               component='span'
             >
-              {user.displayName ? user.displayName : 'Admin User '}
+              {user.displayName}
             </Box>
-            <Box
-              sx={{
-                mt: -0.5,
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-                fontSize: 12,
-                color: (theme) => theme.palette.text.secondary,
-              }}
-            >
-              System Manager
-            </Box>
+            {user.roles && (
+              <Box
+                sx={{
+                  mt: -0.5,
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  fontSize: 12,
+                  textTransform: 'capitalize',
+                  color: (theme) => theme.palette.text.secondary,
+                }}
+              >
+                {user.roles[0]}
+              </Box>
+            )}
           </Box>
         </MenuItem>
         <MenuItem
           onClick={() => {
             handleClose();
-            history.push('/my-account');
+            history.push('/admin/my-account');
           }}
           sx={{
             px: 6,
             py: 1.5,
           }}
         >
-          My account
+          <IntlMessages id='common.my_account' />
         </MenuItem>
         <MenuItem
           sx={{
@@ -156,7 +159,7 @@ const UserInfo = () => {
           }}
           onClick={logout}
         >
-          Logout
+          <IntlMessages id='common.logout' />
         </MenuItem>
       </Menu>
     </Box>

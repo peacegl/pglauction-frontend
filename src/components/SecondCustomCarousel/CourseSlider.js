@@ -9,8 +9,8 @@ const CourseSlider = ({title, children}) => {
       sx={{
         mt: 7,
         '& .slideRoot': {
-          paddingRight: '35px',
-          paddingLeft: '47px',
+          paddingRight: {xs: '25px', sm: '35px'},
+          paddingLeft: {xs: '15px', sm: '35px'},
           paddingBottom: 0,
           '& .slick-slide': {
             px: 3,
@@ -18,15 +18,15 @@ const CourseSlider = ({title, children}) => {
           '& .slick-prev, .slick-next': {
             zIndex: 1,
             '&:before': {
-              fontSize: '35px',
+              fontSize: {xs: '25px', sm: '35px'},
               color: (theme) => theme.palette.primary.main,
             },
           },
           '& .slick-prev': {
-            left: '25px !important',
+            left: {xs: '0px !important', sm: '0px !important'},
           },
           '& .slick-next': {
-            right: '25px !important',
+            right: '15px !important',
           },
         },
       }}
@@ -36,7 +36,7 @@ const CourseSlider = ({title, children}) => {
           color='primary'
           component='h2'
           sx={{
-            mx: 14,
+            mx: {xs: 7, sm: 11},
             mb: 5,
             fontSize: {
               xs: '22px',
