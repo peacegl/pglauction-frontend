@@ -128,30 +128,6 @@ const CustomerStepTwo = (props) => {
             </MenuItem>
           </AppTextField>
         </Stack>
-        <Stack spacing={{xs: 5, md: 8}}>
-          {/* <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
-            <AppAutocompleteField
-              multiple
-              placeholder={messages['common.rolePlaceholder']}
-              label={<IntlMessages id='common.role' />}
-              name='roles'
-              variant='outlined'
-              size='small'
-              sx={{flex: 1, width: '100%'}}
-              dataLoading={props.rolesLoading}
-              options={props.roles.map((item) => {
-                item.name = item.name.replaceAll('_', ' ');
-                item.name = item.name.replace(/^(.)|\s+(.)/g, (c) =>
-                  c.toUpperCase(),
-                );
-                return item;
-              })}
-              keyName='name'
-              value={props.values?.roles}
-              handleChange={({name, value}) => props.setfieldvalue(name, value)}
-            />
-          </Stack> */}
-        </Stack>
         {/* <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppTextField
             select
@@ -185,6 +161,4 @@ CustomerStepTwo.propTypes = {
   timezones: PropTypes.array,
   timezonesLoading: PropTypes.bool,
   searchTimezones: PropTypes.func,
-  rolesLoading: PropTypes.bool,
-  roles: PropTypes.array.isRequired,
 };
