@@ -1,5 +1,5 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-import {Divider, Paper, Stack} from '@mui/material';
+import {Box, Divider, Paper, Stack} from '@mui/material';
 import {Carousel} from 'react-responsive-carousel';
 import {SideBySideMagnifier} from 'react-image-magnifiers';
 import {PropTypes} from 'prop-types';
@@ -7,16 +7,24 @@ import {PropTypes} from 'prop-types';
 const ImageCarousel = ({images, ...rest}) => {
   const renderCustomThumbs = () => {
     const thumbList = images?.map((image, index) => (
-      <picture key={index}>
-        <source data-srcSet={image.path} type='image/*' />
-        <img
-          style={{objectFit: 'cover'}}
-          key={image._id}
-          src={image.path}
-          alt={image.alternativeText}
-          height='70'
-        />
-      </picture>
+      <Box
+        component='img'
+        style={{objectFit: 'cover'}}
+        key={image._id}
+        src={image.path}
+        alt={image.alternativeText}
+        height='70'
+      />
+      // <picture key={index}>
+      //   <source data-srcSet={image.path} type='image/*' />
+      //   <img
+      //     style={{objectFit: 'cover'}}
+      //     key={image._id}
+      //     src={image.path}
+      //     alt={image.alternativeText}
+      //     height='70'
+      //   />
+      // </picture>
     ));
 
     return thumbList;
