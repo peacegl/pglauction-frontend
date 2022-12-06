@@ -113,7 +113,7 @@ function Header() {
                 fontWeight: 'bold',
               }}
             >
-              United Cars Auctions
+              United Trading Cars
             </Typography>
           </Box>
 
@@ -146,21 +146,11 @@ function Header() {
               variant='body2'
               fontSize='14px'
               underline='none'
-              href='https://wa.me/+937669086'
+              href='https://www.facebook.com/TowingLoadingShipping'
               mx='5px'
               color={theme.palette.text.secondary}
             >
               <FacebookIcon width='30' />
-            </Link>
-            <Link
-              variant='body2'
-              fontSize='14px'
-              underline='none'
-              href='https://wa.me/+937669086'
-              mx='5px'
-              color={theme.palette.text.secondary}
-            >
-              <InstagramIcon width='30' />
             </Link>
             <Link
               variant='body2'
