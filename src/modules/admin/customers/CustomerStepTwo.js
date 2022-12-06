@@ -129,7 +129,7 @@ const CustomerStepTwo = (props) => {
           </AppTextField>
         </Stack>
         <Stack spacing={{xs: 5, md: 8}}>
-          <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+          {/* <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
             <AppAutocompleteField
               multiple
               placeholder={messages['common.rolePlaceholder']}
@@ -150,7 +150,7 @@ const CustomerStepTwo = (props) => {
               value={props.values?.roles}
               handleChange={({name, value}) => props.setfieldvalue(name, value)}
             />
-          </Stack>
+          </Stack> */}
         </Stack>
         {/* <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppTextField
