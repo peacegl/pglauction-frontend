@@ -23,6 +23,7 @@ function MultipleContentSection(props) {
             color={content.color}
             bgcolor={content.bgcolor}
             details={content.details}
+            hideIcon={content.hideIcon}
           />
         ))}
       </Box>

@@ -4,18 +4,20 @@ import PropTypes from 'prop-types';
 const SectionWIthIcon = (props) => {
   return (
     <Box sx={{width: {xs: '100%', sm: '50%', md: '30%'}, mt: 7}}>
-      <Avatar
-        sx={{
-          mx: 'auto',
-          color: props.color,
-          bgcolor: props.bgcolor,
-          width: 90,
-          height: 90,
-          mb: 8,
-        }}
-      >
-        {props.icon}
-      </Avatar>
+      {!props.hideIcon && (
+        <Avatar
+          sx={{
+            mx: 'auto',
+            color: props.color,
+            bgcolor: props.bgcolor,
+            width: 90,
+            height: 90,
+            mb: 8,
+          }}
+        >
+          {props.icon}
+        </Avatar>
+      )}
       <Typography
         component='h3'
         sx={{
@@ -44,4 +46,5 @@ SectionWIthIcon.propTypes = {
   details: PropTypes.any,
   color: PropTypes.string,
   bgcolor: PropTypes.string,
+  hideIcon: PropTypes.bool,
 };

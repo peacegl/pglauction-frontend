@@ -112,7 +112,7 @@ export default function Footer() {
                 {link('About Us', '/')}
                 {title('Support')}
                 {link('Support', '/')}
-                {link('Terms & Condation', '/')}
+                {link('Terms & Condation', '/terms')}
                 {link('Privacy Policy', '/')}
               </Box>
               <Box
