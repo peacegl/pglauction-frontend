@@ -154,7 +154,7 @@ export default function ListItem({item, ...props}) {
                     {moneyFormater(item.price)}
                   </Typography>
                 </Box>
-                <Button
+                {/* <Button
                   variant='outlined'
                   borderRadius='28'
                   size='small'
@@ -163,7 +163,7 @@ export default function ListItem({item, ...props}) {
                 >
                   <BookmarkAddIcon />
                   Watch
-                </Button>
+                </Button> */}
                 <Box
                   sx={{
                     display: {xs: 'inline', sm: 'none'},
