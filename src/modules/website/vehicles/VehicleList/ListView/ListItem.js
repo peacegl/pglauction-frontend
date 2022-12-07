@@ -5,6 +5,7 @@ import {
   Button,
   ButtonBase,
   CardHeader,
+  useTheme,
 } from '@mui/material';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import CardContent from '@mui/material/CardContent';
@@ -35,20 +36,19 @@ const WhatsAppButton = (props) => {
       {...props}
       variant='contained'
       size='small'
-      sx={{mt: 2, px: {xs: 0, sm: 3, md: 4}}}
+      sx={{mt: 2, px: {xs: 2, md: 4}}}
       p='0px'
       href={`https://wa.me/${props.number}`}
       target='_blank'
     >
       <WhatsAppIcon />
-      <Box pt='2px' sx={{display: {xs: 'none', sm: 'inline'}}}>
-        {props.number}
-      </Box>
+      <Box pt='2px'>{props.number}</Box>
     </Button>
   );
 };
 export default function ListItem({item, ...props}) {
   const router = useRouter();
+  const theme = useTheme();
 
   const viewPage = () => {
     router.push(`/all-vehicles/${item.id}`);
@@ -63,11 +63,16 @@ export default function ListItem({item, ...props}) {
         }}
       >
         <Box sx={{display: {xs: 'block', sm: 'none'}}}>
-          <Typography p='8px' gutterBottom component='div' color='primary'>
-            {item.year} {props.item?.model.make?.name}
+          <Typography
+            p='8px'
+            gutterBottom
+            component='div'
+            color={theme.palette.primary.main}
+          >
+            {item.year} {item.model.make?.name}
             {item.model?.name}
           </Typography>
-          <Divider sx={{mb: 2}} />
+          <Divider />
         </Box>
         <Box
           sx={{
@@ -80,6 +85,7 @@ export default function ListItem({item, ...props}) {
               display: 'flex',
               flex: {xs: 1, sm: 2, md: 2, lg: 1},
             }}
+            minWidth='140px'
           >
             <CardMedia
               onClick={() => viewPage()}
@@ -106,7 +112,7 @@ export default function ListItem({item, ...props}) {
                     <Typography
                       gutterBottom
                       variant='h4'
-                      color='primary'
+                      color={theme.palette.primary.main}
                       component='div'
                       overflow='hidden'
                       sx={{
@@ -121,38 +127,52 @@ export default function ListItem({item, ...props}) {
                   <Divider sx={{my: 2}} />
                 </Box>
                 <Box>
-                  <Box>
-                    <Typography color='text.secondary' display='inline'>
-                      Lot#
-                    </Typography>
-                    <Typography
-                      color='primary'
-                      display='inline'
-                      sx={{cursor: 'pointer'}}
-                      onClick={() => viewPage()}
-                    >
-                      {item.lot_number}
-                    </Typography>
-                  </Box>
                   <Typography
                     component='div'
-                    color='primary'
+                    color={theme.palette.primary.main}
                     overflow='hidden'
-                    sx={{display: {sm: 'block', md: 'none'}, fontSize: '14px'}}
-                  >
-                    {item.odometer} Miles
-                  </Typography>
-                  <Typography
-                    component='div'
-                    color='primary'
-                    overflow='hidden'
-                    mb='10px'
                     fontSize='16px'
                     fontWeight='bold'
                     sx={{display: {xs: 'block', sm: 'none'}, fontSize: '14px'}}
                   >
                     {moneyFormater(item.price)}
                   </Typography>
+                  <Typography
+                    component='div'
+                    color={theme.palette.primary.main}
+                    overflow='hidden'
+                    sx={{display: {sm: 'block', md: 'none'}, fontSize: '14px'}}
+                  >
+                    {item.odometer} Miles
+                  </Typography>
+
+                  <Box display='flex' columnGap='5px'>
+                    <Typography>Lot#</Typography>
+                    <Typography
+                      color={theme.palette.primary.main}
+                      display='inline'
+                    >
+                      {item.lot_number}
+                    </Typography>
+                  </Box>
+                  <Box display='flex' columnGap='5px'>
+                    <Typography>Vin</Typography>
+                    <Typography
+                      color={theme.palette.primary.main}
+                      display='inline'
+                    >
+                      {item.vin}
+                    </Typography>
+                  </Box>
+                  <Box display='flex' columnGap='5px'>
+                    <Typography>Location</Typography>
+                    <Typography
+                      color={theme.palette.primary.main}
+                      display='inline'
+                    >
+                      {item.location?.name}
+                    </Typography>
+                  </Box>
                 </Box>
                 {/* <Button
                   variant='outlined'
@@ -167,7 +187,6 @@ export default function ListItem({item, ...props}) {
                 <Box
                   sx={{
                     display: {xs: 'inline', sm: 'none'},
-                    mx: 2,
                   }}
                 >
                   <WhatsAppButton number='+435345345342' />
@@ -189,7 +208,7 @@ export default function ListItem({item, ...props}) {
               <Box sx={{flex: 1, display: {xs: 'none', sm: 'block'}, px: 2}}>
                 <Typography
                   component='div'
-                  color='primary'
+                  color={theme.palette.primary.main}
                   overflow='hidden'
                   mb='10px'
                   fontSize='20px'
@@ -197,7 +216,7 @@ export default function ListItem({item, ...props}) {
                 >
                   {moneyFormater(item.price)}
                 </Typography>
-                {/* <Typography component='div' color='primary' overflow='hidden'>
+                {/* <Typography component='div' color={theme.palette.primary.main} overflow='hidden'>
               <Box fontWeight='bold' display='inline'>
                 Sale Date
               </Box>{' '}

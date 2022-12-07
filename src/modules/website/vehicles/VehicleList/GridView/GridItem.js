@@ -67,21 +67,21 @@ export default function GridItem({item, ...props}) {
           </Typography>
         </Box>
         <Box display='flex' flexDirection='column'>
-          <Box display='flex' columnGap='5px' justifyContent='flex-start'>
+          <Box display='flex' columnGap='5px'>
             <Typography>Lot# </Typography>{' '}
             <Typography color={theme.palette.primary.main}>
               {' '}
               {item.lot_number}
             </Typography>
           </Box>
-          <Box display='flex' columnGap='5px' justifyContent='flex-start'>
+          <Box display='flex' columnGap='5px'>
             <Typography>Vin</Typography>
             <Typography color={theme.palette.primary.main}>
               {' '}
               {item.vin}
             </Typography>
           </Box>
-          <Box display='flex' columnGap='5px' justifyContent='flex-start'>
+          <Box display='flex' columnGap='5px'>
             <Typography>Location</Typography>
             <Typography color={theme.palette.primary.main}>
               {' '}
