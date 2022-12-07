@@ -81,11 +81,13 @@ const UserStepOne = (props) => {
             setfieldvalue={(name, value) =>
               props.setfieldvalue(
                 name,
-                value.getFullYear() +
-                  '/' +
-                  value.getMonth() +
-                  '/' +
-                  value.getDate(),
+                value
+                  ? value.getFullYear() +
+                      '/' +
+                      value.getMonth() +
+                      '/' +
+                      value.getDate()
+                  : '',
               )
             }
             name='birth_date'

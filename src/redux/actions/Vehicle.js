@@ -128,3 +128,36 @@ export const setFilters = (filters) => {
     dispatch({type: SET_VEHICLE_FILTER_DATA, payload: filters});
   };
 };
+
+export const onSaleVehicle = (data, toggleOpen) => {
+  return async (dispatch) => {
+    dispatch({type: FETCH_START});
+    const {messages} = appIntl();
+    try {
+      const res = await jwtAxios.post(`/sell_vehicle`, data);
+      if (res.status === 201 && res.data.result) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: UPDATE_VEHICLE, payload: res.data.data});
+        toggleOpen(false);
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: messages['message.vehicleUpdated'],
+        });
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: messages['message.somethingWentWrong'],
+        });
+      }
+    } catch (error) {
+      if (error.request.status == 422) {
+        const res = JSON.parse(error.request.response);
+        console.log('fff', res.errors);
+        // res.errors?.forEach((element) => {
+        //   dispatch({type: FETCH_ERROR, payload: element.message});
+        // });
+      }
+      dispatch({type: FETCH_ERROR, payload: error.message});
+    }
+  };
+};

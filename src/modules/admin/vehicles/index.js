@@ -9,9 +9,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {tableColumns} from '../../../configs/pages/vehicles';
 import VehicleModal from './VehicleModal';
 import IntlMessages from '@crema/utility/IntlMessages';
+import SaleModal from './SaleModal';
 
 export default function VehicleList() {
   const [openModal, setOpenModal] = useState(false);
+  const [showSaleModal, setShowSaleModal] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
@@ -55,6 +58,7 @@ export default function VehicleList() {
       allRowsSelected,
       rowsSelected,
     ) => {
+      setSelectedItems(rowsSelected.map((item) => data[item]));
       setSelected(rowsSelected);
     },
     onSearchChange: (value) => {
@@ -95,6 +99,9 @@ export default function VehicleList() {
       }),
     );
     setSelected([]);
+  };
+  const onSell = () => {
+    setShowSaleModal(true);
   };
   const onEnterSearch = (value) => {
     setPage(0);
@@ -154,6 +161,9 @@ export default function VehicleList() {
         selected={selected}
         onEnterSearch={onEnterSearch}
         onExactChange={(value) => setExactMatch(value)}
+        onSell={onSell}
+        showSell={true}
+        selectedItems={selectedItems}
       />
       {openModal && (
         <VehicleModal
@@ -161,6 +171,13 @@ export default function VehicleList() {
           toggleOpen={() => setOpenModal((d) => !d)}
           recordId={recordId}
           edit={recordId ? true : false}
+        />
+      )}
+      {showSaleModal && (
+        <SaleModal
+          open={showSaleModal}
+          toggleOpen={() => setShowSaleModal((d) => !d)}
+          selectedItem={selectedItems[0]}
         />
       )}
     </>

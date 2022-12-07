@@ -1053,5 +1053,13 @@
   "website.secondService": "Used Cars",
   "website.thirdService": "Land Transport, Custom Clearance, You Buy We Ship",
   "website.terms&conditions": "Terms & Conditions",
-  "sidebar.dashboard": "Dashboard"
+  "sidebar.dashboard": "Dashboard",
+  "common.buyer": "Buyer",
+  "common.buyerPlaceholder": "Select Buyer",
+  "sale.saleData": "Sale Data",
+  "sale.salePrice": "Sale Price",
+  "sale.salePricePlaceholder": "Type Price",
+  "sale.saleDate": "Sale Date",
+  "validation.dateRequired": "Date is required",
+  "validation.buyerRequired": "Buyer is required"
 }
