@@ -25,15 +25,10 @@ export default function CustomerModal({
   ...rest
 }) {
   const profileUrl = useRef();
-  const [totalPermissions, setTotalPermissions] = useState(0);
   const [customer, setCustomer] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [roles, setRoles] = useState([]);
-  const [rolesLoading, setRolesLoading] = useState(false);
-  const [permissions, setPermissions] = useState([]);
   const [timezones, setTimezones] = useState([]);
   const [timezonesLoading, setTimezonesLoading] = useState(false);
-  const [permissionsLoading, setPermissionsLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     profile: '',
     firstname: '',
@@ -47,8 +42,6 @@ export default function CustomerModal({
     timezone: '',
     status: '',
     type: '',
-    roles: [],
-    permissions: [],
   });
   const {messages} = appIntl('');
   const dispatch = useDispatch();
@@ -164,15 +157,8 @@ export default function CustomerModal({
   };
 
   useEffect(() => {
-    getData('/role/auto_complete?type=customer', {}, setRolesLoading, setRoles);
+    // getData('/role/auto_complete?type=customer', {}, setRolesLoading, setRoles);
     getData(`/timezones/auto_complete`, {}, setTimezonesLoading, setTimezones);
-    getData(
-      `/grouped_permissions`,
-      {},
-      setPermissionsLoading,
-      setPermissions,
-      (data) => setTotalPermissions(data.total),
-    );
   }, []);
 
   const searchTimezones = (content) => {
@@ -205,18 +191,6 @@ export default function CustomerModal({
                 Object.entries(value).forEach(([ikey, ivalue]) => {
                   if (Object.keys(initialValues).includes(ikey)) {
                     values[ikey] = ivalue;
-                  }
-                  if (ikey == 'permissions') {
-                    values.permissions = [];
-                    ivalue.forEach((item) => {
-                      values.permissions.push(item.id);
-                    });
-                  }
-                  if (ikey == 'roles') {
-                    values.roles = [];
-                    ivalue.forEach((item) => {
-                      values.roles.push(item.id);
-                    });
                   }
                 });
               }
@@ -258,25 +232,9 @@ export default function CustomerModal({
           timezones={timezones}
           timezonesLoading={timezonesLoading}
           searchTimezones={searchTimezones}
-          roles={roles}
-          rolesLoading={rolesLoading}
         />
       ),
     },
-    // {
-    //   key: 3,
-    //   icon: <ManageAccountsIcon />,
-    //   label: <IntlMessages id='common.rolePermission' />,
-    //   children: (
-    //     <CustomerStepThree
-    //       roles={roles}
-    //       rolesLoading={rolesLoading}
-    //       permissions={permissions}
-    //       permissionsLoading={permissionsLoading}
-    //       totalPermissions={totalPermissions}
-    //     />
-    //   ),
-    // },
   ];
   return (
     <CustomModal
