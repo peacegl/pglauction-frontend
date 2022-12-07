@@ -44,10 +44,7 @@ const CarouselItem = ({item}) => {
         />
       </Box>
       <CardContent>
-        <AppTooltip
-          title={`${item?.year} ${item?.model?.make?.name} 
-            ${item.model?.name}`}
-        >
+        <AppTooltip title={`${item?.year} ${item?.make} ${item.model}`}>
           <Typography
             noWrap
             gutterBottom
@@ -55,7 +52,7 @@ const CarouselItem = ({item}) => {
             component='h4'
             color='primary'
           >
-            {item.year} {item.model?.make?.name} {item.model?.name}
+            {item.year} {item.make} {item.model}
           </Typography>
         </AppTooltip>
         <Box sx={{display: 'flex', mt: 1, justifyContent: 'space-between'}}>
