@@ -5,15 +5,26 @@ import PropTypes from 'prop-types';
 import AppsDeleteIcon from '@crema/core/AppsDeleteIcon';
 import AppTooltip from '@crema/core/AppTooltip';
 import IntlMessages from '@crema/utility/IntlMessages';
+import SellIcon from '@mui/icons-material/Sell';
 
 export default function DefaultToolbar({
   onEdit,
   onDelete,
   deleteTitle,
   selected,
+  onSell,
+  showSell = false,
+  selectedItems = [],
 }) {
   return (
     <Box style={{display: 'flex'}} sx={{mx: 4, my: 1.75}}>
+      {showSell && selected.length == 1 && selectedItems[0].status != 'sold' && (
+        <AppTooltip title={<IntlMessages id='common.sell' />}>
+          <IconButton color='info' onClick={onSell}>
+            <SellIcon />
+          </IconButton>
+        </AppTooltip>
+      )}
       {selected.length == 1 && (
         <AppTooltip title={<IntlMessages id='common.edit' />}>
           <IconButton color='info' onClick={onEdit}>
@@ -38,4 +49,7 @@ DefaultToolbar.propTypes = {
   onDelete: PropTypes.func,
   deleteTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   selected: PropTypes.array,
+  onSell: PropTypes.func,
+  selectedItems: PropTypes.array,
+  showSell: PropTypes.bool,
 };
