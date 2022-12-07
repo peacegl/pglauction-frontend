@@ -3,8 +3,11 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
 import CommentIcon from '@mui/icons-material/Comment';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import {
   alpha,
+  Box,
+  Button,
   Card,
   CardContent,
   CardHeader,
@@ -18,6 +21,7 @@ import {moneyFormater} from 'configs';
 export default function LotInfo() {
   const theme = useTheme();
   const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
+  const contactNumber = '+9390876500';
 
   const ListItem = () => {
     return (
@@ -58,12 +62,18 @@ export default function LotInfo() {
         <List sx={{width: '100%', bgcolor: 'background.paper', pb: 0}}>
           <Item label='Location:' value={vehicle.location?.name} />
           <Item label='Price:' value={moneyFormater(vehicle.price)} />
-          <Item
-            label='Last Updated:'
-            value={vehicle.updated_at}
-            sx={{borderBottom: 0}}
-          />
+          <Item label='Last Updated:' value={vehicle.updated_at} />
         </List>
+        <Button
+          variant='outlined'
+          size='large'
+          sx={{mt: 4, width: '100%', borderRadius: 20}}
+          href={`https://wa.me/${contactNumber}`}
+          target='_blank'
+        >
+          <WhatsAppIcon />
+          <Box pt='2px'>{contactNumber}</Box>
+        </Button>
       </CardContent>
     </Card>
   );
