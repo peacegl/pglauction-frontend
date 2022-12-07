@@ -18,6 +18,7 @@ import AppTooltip from '@crema/core/AppTooltip';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import {moneyFormater} from 'configs';
 import {useRouter} from 'next/router';
+import IntlMessages from '@crema/utility/IntlMessages';
 
 const TextShow = ({value, label}) => {
   return (
@@ -143,11 +144,11 @@ export default function ListItem({item, ...props}) {
                     overflow='hidden'
                     sx={{display: {sm: 'block', md: 'none'}, fontSize: '14px'}}
                   >
-                    {item.odometer} Miles
+                    {item.odometer} <IntlMessages id='common.miles' />
                   </Typography>
 
                   <Box display='flex' columnGap='5px'>
-                    <Typography>Lot#</Typography>
+                    <IntlMessages id='common.lot' />#
                     <Typography
                       color={theme.palette.primary.main}
                       display='inline'
@@ -156,7 +157,7 @@ export default function ListItem({item, ...props}) {
                     </Typography>
                   </Box>
                   <Box display='flex' columnGap='5px'>
-                    <Typography>Vin</Typography>
+                    <IntlMessages id='common.vin' />
                     <Typography
                       color={theme.palette.primary.main}
                       display='inline'
@@ -165,7 +166,7 @@ export default function ListItem({item, ...props}) {
                     </Typography>
                   </Box>
                   <Box display='flex' columnGap='5px'>
-                    <Typography>Location</Typography>
+                    <IntlMessages id='common.location' />
                     <Typography
                       color={theme.palette.primary.main}
                       display='inline'

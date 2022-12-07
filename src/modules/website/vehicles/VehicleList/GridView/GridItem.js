@@ -9,6 +9,7 @@ import Card from '@mui/material/Card';
 import {useRouter} from 'next/router';
 import {moneyFormater} from 'configs';
 import PropTypes from 'prop-types';
+import IntlMessages from '@crema/utility/IntlMessages';
 
 export default function GridItem({item, ...props}) {
   const router = useRouter();
@@ -63,26 +64,26 @@ export default function GridItem({item, ...props}) {
             {moneyFormater(item.price)}
           </Typography>
           <Typography color={theme.palette.primary.main}>
-            {item.odometer} Miles
+            {item.odometer} <IntlMessages id='common.miles' />
           </Typography>
         </Box>
         <Box display='flex' flexDirection='column'>
           <Box display='flex' columnGap='5px'>
-            <Typography>Lot# </Typography>{' '}
+            <IntlMessages id='common.lot' />#
             <Typography color={theme.palette.primary.main}>
               {' '}
               {item.lot_number}
             </Typography>
           </Box>
           <Box display='flex' columnGap='5px'>
-            <Typography>Vin</Typography>
+            <IntlMessages id='common.vin' />
             <Typography color={theme.palette.primary.main}>
               {' '}
               {item.vin}
             </Typography>
           </Box>
           <Box display='flex' columnGap='5px'>
-            <Typography>Location</Typography>
+            <IntlMessages id='common.location' />
             <Typography color={theme.palette.primary.main}>
               {' '}
               {item.location?.name}
