@@ -1,10 +1,9 @@
 import {alpha, Box, colors, Container, Typography} from '@mui/material';
-import {useRouter} from 'next/router';
 import {useTheme} from '@mui/styles';
 import {useSelector} from 'react-redux';
+import IntlMessages from '@crema/utility/IntlMessages';
 
 function Head({}) {
-  const router = useRouter();
   const theme = useTheme();
   const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
 
@@ -41,18 +40,18 @@ function Head({}) {
               overflow='hidden'
               pb={1}
             >
-              {vehicle.year} {vehicle?.model?.make?.name} {vehicle.model?.name}
+              {vehicle.year} {vehicle?.make} {vehicle.model}
             </Typography>
-            <Box display='flex' columnGap='10px'>
+            <Box display='flex' columnGap='8px'>
               <Typography component='div' overflow='hidden'>
                 <Box component='span' display='inline' fontWeight='bold'>
-                  Lot#
+                  <IntlMessages id='common.lot' />#
                 </Box>
                 {vehicle.lot_number} |
               </Typography>
               <Typography component='div' overflow='hidden'>
                 <Box component='span' display='inline' fontWeight='bold'>
-                  Sale Location:
+                  <IntlMessages id='common.sale_location' />
                 </Box>{' '}
                 {vehicle.location?.name}
               </Typography>
