@@ -29,6 +29,15 @@ const routesConfig = [
     url: '/admin/vehicles',
     // permission: 'view_vehicles',
   },
+  {
+    id: 'sales',
+    title: 'Sale List',
+    messageId: 'sidebar.sales',
+    type: 'item',
+    icon: <SellIcon sx={{fontSize: 22}} />,
+    url: '/admin/sales',
+    // permission: 'view_sales',
+  },
   // {
   //   id: 'auctions',
   //   title: 'Auction List',
