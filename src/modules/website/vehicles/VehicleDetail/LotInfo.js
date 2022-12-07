@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import TabPanel from '@mui/lab/TabPanel';
 import {TabContext, TabList} from '@mui/lab';
 import Item from './Item';
+import IntlMessages from '@crema/utility/IntlMessages';
 
 export default function SaleInfo() {
   const [value, setValue] = useState('lot_info');
@@ -57,32 +58,88 @@ export default function SaleInfo() {
             aria-label='lab API tabs example'
             variant='fullWidth'
           >
-            {SingleTab('lot_info', `Lot# ${vehicle.lot_number}`)}
-            {SingleTab('more_info', 'More Information')}
+            {SingleTab(
+              'lot_info',
+              <>
+                <IntlMessages id='common.lot' />#{vehicle.lot_number}
+              </>,
+            )}
+            {SingleTab(
+              'more_info',
+              <IntlMessages id='common.more_information' />,
+            )}
           </TabList>
         </Box>
         <TabPanel value='lot_info' sx={{py: 0}}>
           <List sx={{width: '100%', bgcolor: 'background.paper'}}>
-            <Item label='Vin:' value={vehicle.vin} />
-            <Item label='Document Type:' value={vehicle.document_type} />
-            <Item label='Odometer:' value={vehicle.odometer} />
-            <Item label='Primary Damage:' value={vehicle.primary_damage} />
-            <Item label='Engine Type:' value={vehicle.engine_type} />
-            <Item label='cylinder:' value={vehicle.cylinder} />
-            <Item label='Transmission:' value={vehicle.transmission} />
-            <Item label='Fuel:' value={vehicle.fuel} />
             <Item
-              label='Keys:'
-              value={vehicle.keys ? 'Available' : 'Not Available'}
+              label={<IntlMessages id='common.vin' />}
+              value={vehicle.vin}
             />
-            <Item label='Body Style:' value={vehicle.body_style} />
-            <Item label='Exterior Color:' value={vehicle.exterior_color} />
-            <Item label='Interior Color:' value={vehicle.interior_color} />
-            <Item label='Drive Type:' value={vehicle.drive_type} />
+            <Item
+              label={<IntlMessages id='vehicle.document_type' />}
+              value={vehicle.document_type}
+            />
+            <Item
+              label={<IntlMessages id='vehicle.odometer' />}
+              value={vehicle.odometer}
+            />
+            <Item
+              label={<IntlMessages id='vehicle.primary_damage' />}
+              value={vehicle.primary_damage}
+            />
+            <Item
+              label={<IntlMessages id='vehicle.engine_type' />}
+              value={vehicle.engine_type}
+            />
+            <Item
+              label={<IntlMessages id='vehicle.cylinder' />}
+              value={vehicle.cylinder}
+            />
+            <Item
+              label={<IntlMessages id='vehicle.transmission' />}
+              value={vehicle.transmission}
+            />
+            <Item
+              label={<IntlMessages id='vehicle.fuel' />}
+              value={vehicle.fuel}
+            />
+            <Item
+              label={<IntlMessages id='vehicle.keys' />}
+              value={
+                vehicle.keys ? (
+                  <IntlMessages id='common.available' />
+                ) : (
+                  <IntlMessages id='common.not_available' />
+                )
+              }
+            />
+            <Item
+              label={<IntlMessages id='vehicle.body_style' />}
+              value={vehicle.body_style}
+            />
+            <Item
+              label={<IntlMessages id='vehicle.exterior_color' />}
+              value={vehicle.exterior_color}
+            />
+            <Item
+              label={<IntlMessages id='vehicle.interior_color' />}
+              value={vehicle.interior_color}
+            />
+            <Item
+              label={<IntlMessages id='vehicle.drive_type' />}
+              value={vehicle.drive_type}
+            />
 
             <Item
-              label='Test Drive:'
-              value={vehicle.test_drive ? 'Yes' : 'No'}
+              label={<IntlMessages id='vehicle.test_drive' />}
+              value={
+                vehicle.test_drive ? (
+                  <IntlMessages id='common.yes' />
+                ) : (
+                  <IntlMessages id='common.no' />
+                )
+              }
               sx={{borderBottom: 0}}
             />
           </List>

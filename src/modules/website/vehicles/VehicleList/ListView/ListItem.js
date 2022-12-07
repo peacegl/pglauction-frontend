@@ -1,21 +1,11 @@
-import {
-  Box,
-  Divider,
-  Stack,
-  Button,
-  ButtonBase,
-  CardHeader,
-  useTheme,
-} from '@mui/material';
+import {Box, Divider, Stack, Button, useTheme} from '@mui/material';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import Card from '@mui/material/Card';
 import PropTypes from 'prop-types';
-import Link from 'next/link';
 import AppTooltip from '@crema/core/AppTooltip';
-import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import {moneyFormater} from 'configs';
 import {useRouter} from 'next/router';
 import IntlMessages from '@crema/utility/IntlMessages';
@@ -70,8 +60,7 @@ export default function ListItem({item, ...props}) {
             component='div'
             color={theme.palette.primary.main}
           >
-            {item.year} {item.make}
-            {item.model}
+            {item.year} {item.make} {item.model}
           </Typography>
           <Divider />
         </Box>
@@ -107,9 +96,7 @@ export default function ListItem({item, ...props}) {
             <Stack direction='row' spacing={0}>
               <Box sx={{flex: 2}}>
                 <Box sx={{display: {xs: 'none', sm: 'block'}}}>
-                  <AppTooltip
-                    title={`${item?.year} ${item?.model?.make?.name} ${item.model?.name}`}
-                  >
+                  <AppTooltip title={`${item.year} ${item.make} ${item.model}`}>
                     <Typography
                       gutterBottom
                       variant='h4'
@@ -122,7 +109,7 @@ export default function ListItem({item, ...props}) {
                       }}
                       onClick={() => viewPage()}
                     >
-                      {item?.year} {item.model?.make?.name} {item?.model?.name}
+                      {item.year} {item.make} {item.model}
                     </Typography>
                   </AppTooltip>
                   <Divider sx={{my: 2}} />
@@ -193,16 +180,31 @@ export default function ListItem({item, ...props}) {
                   <WhatsAppButton number='+435345345342' />
                 </Box>
               </Box>
-              <Box
-                sx={{flex: 1.5, display: {xs: 'none', lg: 'block'}, px: 3}}
-                color='text.secondary'
-              >
-                <TextShow label='Odometer' value={item.odometer} />
-                <TextShow label='Interior Color' value={item.interior_color} />
-                <TextShow label='Exterior Color' value={item.exterior_color} />
-                <TextShow label='Body Style' value={item.interior_color} />
+              <Box sx={{flex: 1.5, display: {xs: 'none', lg: 'block'}, px: 3}}>
                 <TextShow
-                  label='Keys'
+                  label={<IntlMessages id='vehicle.odometer' />}
+                  value={item.odometer}
+                />
+                <TextShow
+                  label={<IntlMessages id='vehicle.test_drive' />}
+                  value={
+                    item.test_drive ? (
+                      <IntlMessages id='common.yes' />
+                    ) : (
+                      <IntlMessages id='common.no' />
+                    )
+                  }
+                />
+                <TextShow
+                  label={<IntlMessages id='vehicle.exterior_color' />}
+                  value={item.exterior_color}
+                />
+                <TextShow
+                  label={<IntlMessages id='vehicle.interior_color' />}
+                  value={item.interior_color}
+                />
+                <TextShow
+                  label={<IntlMessages id='vehicle.keys' />}
                   value={item.keys ? 'Available' : 'Not Available'}
                 />
               </Box>
