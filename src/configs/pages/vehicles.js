@@ -99,6 +99,22 @@ export const tableColumns = function () {
       },
     },
     {
+      name: 'status',
+      label: messages['vehicle.status'],
+      options: {
+        filter: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `${messages['common.status']}: ${v}`;
+            }
+            return false;
+          },
+        },
+      },
+    },
+    {
       name: 'exterior_color',
       label: messages['vehicle.exterior_color'],
       options: {
