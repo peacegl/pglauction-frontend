@@ -900,6 +900,7 @@
   "validation.buyNowPriceRequired": "Buy now price is required",
   "validation.mbidRequired": "Minimum bid is required",
   "validation.priceError": "Invalid price",
+  "validation.numberError": "Only number acceptable",
   "validation.dateValidation": "Invalid date",
   "vehicle.model": "Model",
   "vehicle.modelPlaceholder": "Select model",
