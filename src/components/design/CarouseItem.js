@@ -63,9 +63,7 @@ const CarouselItem = ({item}) => {
             component='div'
             color={theme.palette.primary.main}
             overflow='hidden'
-            fontSize='16px'
             fontWeight='bold'
-            sx={{fontSize: '14px'}}
           >
             {item.price ? (
               moneyFormater(item.price)
@@ -77,7 +75,6 @@ const CarouselItem = ({item}) => {
             component='div'
             color={theme.palette.primary.main}
             overflow='hidden'
-            sx={{fontSize: '14px'}}
           >
             {item.odometer} <IntlMessages id='common.miles' />
           </Typography>
