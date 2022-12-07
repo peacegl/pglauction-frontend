@@ -833,6 +833,9 @@
   "common.view_details": "View Details",
   "common.available": "Available",
   "common.not_available": "Not Available",
+  "common.sale_information": "Sale Information",
+  "common.more_information": "More Information",
+  "common.sale_location": "Sale Location",
 
   "common.created_by": "Created By",
   "common.created_at": "Created At",
@@ -840,6 +843,7 @@
   "common.updated_at": "Updated At",
   "common.deleted_by": "Deleted By",
   "common.deleted_at": "Deleted At",
+  "common.last_updated": "Last Updated",
 
   "category.categoryInfo": "Category Info",
   "confirm.category.delete": "Are you sure, you want to delete the selected Category(s)?",
@@ -918,6 +922,8 @@
   "vehicle.category": "Category",
   "vehicle.categoryPlaceholder": "Select category",
   "vehicle.title": "Title",
+  "vehicle.engine_type": "Engine Type",
+  "vehicle.price": "Price",
   "vehicle.titlePlaceholder": "Type title",
   "common.subtitle": "Subtitle",
   "vehicle.subtitlePlaceholder": "Type subtitle",
@@ -1033,6 +1039,10 @@
   "website.about_us": "About Us",
   "website.send_message": "Send Message",
   "website.vehicle.similarVehicles": "Similar Vehicles",
+  "website.vehicle_info": "Vehicle Info",
+  "website.lot_info": "Lot Info",
+  "website.sale_info": "Sale Info",
+  "website.image": "Image",
 
   "common.my_account": "My Account",
   "common.logout": "Logout",

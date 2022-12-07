@@ -1,5 +1,4 @@
-import {Box, Divider, Button, CardActionArea, useTheme} from '@mui/material';
-import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import {Box, Divider, Button, useTheme} from '@mui/material';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -42,10 +41,7 @@ export default function GridItem({item, ...props}) {
         />
       </Box>
       <CardContent>
-        <AppTooltip
-          title={`${item?.year} ${item?.model.make?.name} 
-            ${item.model?.name}`}
-        >
+        <AppTooltip title={`${item.year} ${item.make} ${item.model}`}>
           <Typography
             onClick={() => router.push(`/all-vehicles/${item.id}`)}
             noWrap
@@ -55,7 +51,7 @@ export default function GridItem({item, ...props}) {
             color={theme.palette.primary.main}
             sx={{cursor: 'pointer'}}
           >
-            {item.year} {item.model?.make?.name} {item.model?.name}
+            {item.year} {item.make} {item.model}
           </Typography>
         </AppTooltip>
         <Divider sx={{my: 2}} />

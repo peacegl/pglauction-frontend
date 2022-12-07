@@ -1,12 +1,10 @@
 import React from 'react';
-
 import ListItem from './ListItem';
 import AppList from '@crema/core/AppList';
 import PropTypes from 'prop-types';
 import {Box, Card, CardContent, Stack, Typography} from '@mui/material';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useTheme} from '@mui/material';
-import {AppLoader} from '@crema';
 import ListEmptyResult from '@crema/core/AppList/ListEmptyResult';
 const Head = () => {
   const theme = useTheme();
@@ -24,17 +22,19 @@ const Head = () => {
         fontWeight: 'bold',
       }}
     >
-      <Box sx={{flex: {xs: 1, md: 2, lg: 1}}} overflow='hidden'>
-        Image
+      <Box sx={{flex: {xs: 1, sm: 2, md: 2, lg: 1}}} overflow='hidden'>
+        <IntlMessages id='website.image' />
       </Box>
-      <CardContent sx={{flex: {xs: 1, sm: 2, md: 3}}}>
+      <CardContent sx={{flex: {xs: 1, sm: 4, md: 4}}}>
         <Stack direction='row' spacing={2}>
-          <Box sx={{flex: 2}}>Lot Info</Box>
+          <Box sx={{flex: 2}}>
+            <IntlMessages id='website.lot_info' />
+          </Box>
           <Box sx={{flex: 1.5, display: {xs: 'none', lg: 'block'}}}>
-            Vehicle Info
+            <IntlMessages id='website.vehicle_info' />
           </Box>
           <Box sx={{flex: 1, display: {xs: 'none', sm: 'block'}}}>
-            Sale Info
+            <IntlMessages id='website.sale_info' />
           </Box>
         </Stack>
       </CardContent>
