@@ -1039,6 +1039,10 @@
   "website.about_us": "About Us",
   "website.send_message": "Send Message",
   "website.vehicle.similarVehicles": "Similar Vehicles",
+  "website.vehicle_info": "Vehicle Info",
+  "website.lot_info": "Lot Info",
+  "website.sale_info": "Sale Info",
+  "website.image": "Image",
 
   "common.my_account": "My Account",
   "common.logout": "Logout",
