@@ -217,3 +217,6 @@ export const GET_MODEL_LIST = 'GET_MODEL_LIST';
 export const SET_MODEL_FILTER_DATA = 'SET_MODEL_FILTER_DATA';
 export const ADD_NEW_MODEL = 'ADD_NEW_MODEL';
 export const UPDATE_MODEL = 'UPDATE_MODEL';
+
+//Sale List
+export const GET_SALE_LIST = 'GET_SALE_LIST';

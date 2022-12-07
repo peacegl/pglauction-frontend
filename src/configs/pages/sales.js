@@ -1,10 +1,9 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
-import {Avatar, Typography} from '@mui/material';
-import CommonConfigs, {createdBy, dateColumn, updatedBy} from '../index';
+import {Typography} from '@mui/material';
+import {createdBy, dateColumn, updatedBy} from '../index';
 import * as yup from 'yup';
 
-const phoneRegExp = CommonConfigs().phoneRegExp;
 const {messages = []} = appIntl() ? appIntl() : {};
 
 export const tableColumns = function () {
@@ -16,21 +15,21 @@ export const tableColumns = function () {
         filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            U{value.toString().padStart(5, '0')}
+            Sa{value.toString().padStart(5, '0')}
           </Typography>
         ),
       },
     },
     {
-      name: 'username',
-      label: messages['common.username'],
+      name: 'vin',
+      label: messages['common.vin'],
       options: {
         display: true,
         filterType: 'textField',
         customFilterListOptions: {
           render: (v) => {
             if (v) {
-              return `Username: ${v}`;
+              return `Vin: ${v}`;
             }
             return false;
           },
@@ -38,15 +37,15 @@ export const tableColumns = function () {
       },
     },
     {
-      name: 'firstname',
-      label: messages['common.firstname'],
+      name: 'lot_number',
+      label: messages['common.lot_number'],
       options: {
         display: true,
         filterType: 'textField',
         customFilterListOptions: {
           render: (v) => {
             if (v) {
-              return `First Name: ${v}`;
+              return `Lot Number: ${v}`;
             }
             return false;
           },
@@ -54,15 +53,15 @@ export const tableColumns = function () {
       },
     },
     {
-      name: 'lastname',
-      label: messages['common.lastname'],
+      name: 'buyer',
+      label: messages['common.buyer'],
       options: {
         display: true,
         filterType: 'textField',
         customFilterListOptions: {
           render: (v) => {
             if (v) {
-              return `Last Name: ${v}`;
+              return `Buyer: ${v}`;
             }
             return false;
           },
@@ -70,41 +69,15 @@ export const tableColumns = function () {
       },
     },
     {
-      name: 'phone',
-      label: messages['common.phone'],
+      name: 'sale_price',
+      label: messages['sale.salePrice'],
       options: {
         filter: false,
       },
     },
     {
-      name: 'whatsapp',
-      label: messages['common.whatsapp'],
-      options: {
-        filter: false,
-      },
-    },
-    {
-      name: 'gender',
-      label: messages['common.gender'],
-      options: {
-        filter: true,
-        filterType: 'select',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Gender: ${v}`;
-            }
-            return false;
-          },
-        },
-        filterOptions: {
-          names: ['Male', 'Female'],
-        },
-      },
-    },
-    {
-      name: 'email',
-      label: messages['common.email'],
+      name: 'sale_date',
+      label: messages['sale.saleDate'],
       options: {
         filter: false,
       },
@@ -124,35 +97,8 @@ export const tableColumns = function () {
           },
         },
         filterOptions: {
-          names: ['Active', 'Pending', 'Inactive'],
+          names: ['Sold', 'Cancelled', 'Pending'],
         },
-      },
-    },
-    {
-      name: 'type',
-      label: messages['common.type'],
-      options: {
-        filter: true,
-        filterType: 'select',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Type: ${v}`;
-            }
-            return false;
-          },
-        },
-        filterOptions: {
-          names: ['Employee', 'Seller'],
-        },
-      },
-    },
-    {
-      name: 'birth_date',
-      label: messages['common.birth_date'],
-      options: {
-        display: false,
-        filter: false,
       },
     },
     createdBy(),

@@ -12,3 +12,4 @@ export * from './Auction';
 export * from './WebVehicle';
 export * from './Make';
 export * from './Model';
+export * from './Sale';

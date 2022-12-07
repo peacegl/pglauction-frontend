@@ -13,6 +13,7 @@ import Permissions from './Permissions';
 import WebVehicles from './WebVehicles';
 import Makes from './Makes';
 import Models from './Models';
+import Sales from './Sales';
 
 const reducers = combineReducers({
   settings: Settings,
@@ -29,5 +30,6 @@ const reducers = combineReducers({
   webVehicles: WebVehicles,
   makes: Makes,
   models: Models,
+  sales: Sales,
 });
 export default reducers;

@@ -760,6 +760,7 @@
   "sidebar.roles": "Roles",
   "sidebar.permissions": "Permissions",
   "sidebar.vehicles": "Vechiles",
+  "sidebar.sales": "Sales",
   "sidebar.auctions": "Auctions",
   "sidebar.auctionItems": "Auction Items",
   "sidebar.customers": "Customers",
@@ -1071,5 +1072,6 @@
   "sale.salePricePlaceholder": "Type Price",
   "sale.saleDate": "Sale Date",
   "validation.dateRequired": "Date is required",
-  "validation.buyerRequired": "Buyer is required"
+  "validation.buyerRequired": "Buyer is required",
+  "sale.saleList": "Sale List"
 }
