@@ -117,28 +117,28 @@ export default function filterList(filterData, messages, reset, setReset) {
       {
         key: 7,
         title: <IntlMessages id='common.make' />,
-        name: 'model.make_id',
+        name: 'model.make',
         initialValue: [],
         content: (
           <ListItems
-            url='/make/auto_complete'
+            url='/vehicleColumn/auto_complete?column=make'
             reduxReducer={setWebVehiclesFilter}
             data={filterData}
-            columnName='model.make_id'
+            columnName='model.make'
           />
         ),
       },
       {
         key: 8,
         title: <IntlMessages id='vehicle.model' />,
-        name: 'model_id',
+        name: 'model',
         initialValue: [],
         content: (
           <ListItems
-            url='/model/auto_complete'
+            url='/vehicleColumn/auto_complete?column=model'
             reduxReducer={setWebVehiclesFilter}
             data={filterData}
-            columnName='model_id'
+            columnName='model'
           />
         ),
       },

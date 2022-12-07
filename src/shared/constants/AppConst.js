@@ -14,5 +14,5 @@ export const defaultUser = {
   role: 'user',
   photoURL: '/assets/images/avatar/A11.jpg',
 };
-export const userInitialUrl = '/admin/vehicles'; // this url will open after login
+export const userInitialUrl = '/admin/'; // this url will open after login
 export const customerInitialUrl = '/my-account'; // this url will open after login

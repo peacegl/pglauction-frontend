@@ -1,12 +1,14 @@
-import React from 'react';
-import HorizontalGroup from './HorizontalGroup';
+import routesConfig from '../../../../../modules/routesConfig';
 import HorizontalCollapse from './HorizontalCollapse';
+import {useAuthUser} from '@crema/utility/AuthHooks';
+import HorizontalGroup from './HorizontalGroup';
 import HorizontalItem from './HorizontalItem';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
-import routesConfig from '../../../../../modules/routesConfig';
+import React from 'react';
 
 const HorizontalNav = () => {
+  const {user} = useAuthUser();
   return (
     <List className='navbarNav'>
       {routesConfig.map((item) => (
@@ -19,9 +21,9 @@ const HorizontalNav = () => {
             <HorizontalCollapse item={item} nestedLevel={0} />
           )}
 
-          {item.type === 'item' && (
-            <HorizontalItem item={item} nestedLevel={0} />
-          )}
+          {item.type === 'item' && item.permission
+            ? user.permissions?.includes(item.permission)
+            : true && <HorizontalItem item={item} nestedLevel={0} />}
 
           {item.type === 'divider' && <Divider sx={{my: 5}} />}
         </React.Fragment>
