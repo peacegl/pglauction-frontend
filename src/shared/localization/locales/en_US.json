@@ -831,6 +831,8 @@
   "common.to_date": "To Date",
   "common.location": "Location",
   "common.view_details": "View Details",
+  "common.available": "Available",
+  "common.not_available": "Not Available",
 
   "common.created_by": "Created By",
   "common.created_at": "Created At",
