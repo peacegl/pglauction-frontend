@@ -70,8 +70,8 @@ export default function ListItem({item, ...props}) {
             component='div'
             color={theme.palette.primary.main}
           >
-            {item.year} {item.model.make?.name}
-            {item.model?.name}
+            {item.year} {item.make}
+            {item.model}
           </Typography>
           <Divider />
         </Box>

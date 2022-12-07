@@ -117,14 +117,15 @@ export default function filterList(filterData, messages, reset, setReset) {
       {
         key: 7,
         title: <IntlMessages id='common.make' />,
-        name: 'model.make',
+        name: 'make',
         initialValue: [],
         content: (
           <ListItems
             url='/vehicleColumn/auto_complete?column=make'
             reduxReducer={setWebVehiclesFilter}
             data={filterData}
-            columnName='model.make'
+            columnName='make'
+            customColumn='make'
           />
         ),
       },
@@ -139,6 +140,7 @@ export default function filterList(filterData, messages, reset, setReset) {
             reduxReducer={setWebVehiclesFilter}
             data={filterData}
             columnName='model'
+            customColumn='model'
           />
         ),
       },

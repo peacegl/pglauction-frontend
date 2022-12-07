@@ -43,8 +43,8 @@ export default function GridItem({item, ...props}) {
       </Box>
       <CardContent>
         <AppTooltip
-          title={`${item?.year} ${item?.model.make?.name} 
-            ${item.model?.name}`}
+          title={`${item?.year} ${item?.make} 
+            ${item.model}`}
         >
           <Typography
             onClick={() => router.push(`/all-vehicles/${item.id}`)}
