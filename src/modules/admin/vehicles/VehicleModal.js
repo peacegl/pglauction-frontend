@@ -240,7 +240,7 @@ export default function VehicleModal({
     {
       key: 4,
       icon: <CollectionsIcon />,
-      label: <IntlMessages id='auction.auctionItemImages' />,
+      label: <IntlMessages id='vehicle.images' />,
       children: (
         <AuctionImagesStep
           mainImage={mainImage}

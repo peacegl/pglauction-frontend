@@ -296,6 +296,9 @@ export default function configs(invalidYoutube) {
         category_id: yup
           .string()
           .required(<IntlMessages id='validation.categoryRequired' />),
+        odometer: yup
+          .number()
+          .typeError(<IntlMessages id='validation.numberError' />),
       }),
       yup.object({
         youtube_url: yup.string().matches(youtubeRegExp, invalidYoutube),
