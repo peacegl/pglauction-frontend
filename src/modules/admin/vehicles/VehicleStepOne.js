@@ -14,7 +14,7 @@ const VehicleStepOne = (props) => {
   const [field] = useField('test');
   useEffect(() => {
     if (props.makes.length == 1) {
-      props.setfieldvalue('make_id', props.makes[0]?.id);
+      props.setfieldvalue('make', props.makes[0]?.id);
     }
   }, [props.makes]);
 
@@ -25,7 +25,7 @@ const VehicleStepOne = (props) => {
           <AppAutocompleteField
             placeholder={messages['common.makePlaceholder']}
             label={<IntlMessages id='common.make' />}
-            name='make_id'
+            name='make'
             variant='outlined'
             size='small'
             sx={{flex: 1, width: '100%'}}
@@ -33,17 +33,17 @@ const VehicleStepOne = (props) => {
             options={props.makes}
             keyName='name'
             onSearch={props.searchMakes}
-            value={props.values?.make_id}
+            value={props.values?.make}
             handleChange={({name, value}) => {
               props.setfieldvalue(name, value);
-              props.setfieldvalue('model_id', '');
-              props.searchModels({make_id: value});
+              props.setfieldvalue('model', '');
+              props.searchModels({make: value});
             }}
           />
           <AppAutocompleteField
             placeholder={messages['vehicle.modelPlaceholder']}
             label={<IntlMessages id='vehicle.model' />}
-            name='model_id'
+            name='model'
             variant='outlined'
             size='small'
             sx={{flex: 1, width: '100%'}}
@@ -51,11 +51,11 @@ const VehicleStepOne = (props) => {
             options={props.models}
             keyName='name'
             onSearch={(content) =>
-              props.searchModels({make_id: props.values.make_id, ...content})
+              props.searchModels({make: props.values.make, ...content})
             }
-            value={props.values?.model_id}
+            value={props.values?.model}
             handleChange={({name, value}) => {
-              props.searchMakes({model_id: value});
+              props.searchMakes({model: value});
               props.setfieldvalue(name, value);
             }}
           />

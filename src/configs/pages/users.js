@@ -28,10 +28,7 @@ export const tableColumns = function () {
         filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            {value}
-            {tableMeta.tableData[tableMeta.rowIndex]['key']
-              .toString()
-              .padStart(5, '0')}
+            U{value.toString().padStart(5, '0')}
           </Typography>
         ),
       },

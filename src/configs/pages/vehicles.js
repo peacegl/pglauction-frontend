@@ -22,10 +22,7 @@ export const tableColumns = function () {
         filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            {value}
-            {tableMeta.tableData[tableMeta.rowIndex]['key']
-              .toString()
-              .padStart(8, '0')}
+            V{value.toString().padStart(8, '0')}
           </Typography>
         ),
       },
@@ -255,10 +252,10 @@ export default function configs(invalidYoutube) {
           .min(1900, <IntlMessages id='validation.minYear' />)
           .max(year, <IntlMessages id='validation.maxYear' />)
           .required(<IntlMessages id='validation.yearRequired' />),
-        make_id: yup
+        make: yup
           .string()
           .required(<IntlMessages id='validation.makeRequired' />),
-        model_id: yup
+        model: yup
           .string()
           .required(<IntlMessages id='validation.modelRequired' />),
         vin: yup
