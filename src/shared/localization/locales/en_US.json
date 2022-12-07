@@ -991,6 +991,7 @@
   "vehicle.document_typePlaceholder": "Type document type",
   "vehicle.odometer": "Odometer",
   "vehicle.odometerPlaceholder": "Type odometer",
+  "vehicle.images": "Vehicle Images",
   "common.make": "Make",
   "common.makePlaceholder": "Select make",
   "vehicle.primary_damage": "Primary Damage",
