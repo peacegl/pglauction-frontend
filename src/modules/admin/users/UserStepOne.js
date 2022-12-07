@@ -93,17 +93,6 @@ const UserStepOne = (props) => {
             sx={{flex: 1}}
           />
         </Stack>
-        <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
-          <AppTextField
-            multiline
-            placeholder={messages['common.addressPlaceholder']}
-            label={<IntlMessages id='common.address' />}
-            name='address'
-            variant='outlined'
-            size='small'
-            sx={{flex: 1}}
-          />
-        </Stack>
       </Stack>
     </Box>
   );

@@ -28,10 +28,7 @@ export const tableColumns = function () {
         filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            {value}
-            {tableMeta.tableData[tableMeta.rowIndex]['key']
-              .toString()
-              .padStart(5, '0')}
+            U{value.toString().padStart(5, '0')}
           </Typography>
         ),
       },
@@ -165,14 +162,6 @@ export const tableColumns = function () {
     {
       name: 'birth_date',
       label: messages['common.birth_date'],
-      options: {
-        display: false,
-        filter: false,
-      },
-    },
-    {
-      name: 'address',
-      label: messages['common.address'],
       options: {
         display: false,
         filter: false,
