@@ -2,7 +2,7 @@ import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteF
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import AppDateField from '@crema/core/AppFormComponents/AppDateField';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {Box, Stack} from '@mui/material';
+import {Box, MenuItem, Stack} from '@mui/material';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -13,6 +13,22 @@ const SaleForm = (props) => {
     <Box sx={{mt: 10}}>
       <Stack spacing={{xs: 5, md: 8}}>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+          {props.showVehicle && !props.recordId && (
+            <AppAutocompleteField
+              placeholder={messages['common.vehiclePlaceholder']}
+              label={<IntlMessages id='common.vehicle' />}
+              name='vehicle_id'
+              variant='outlined'
+              size='small'
+              sx={{flex: 1}}
+              dataLoading={props.vehiclesLoading}
+              options={props.vehicles}
+              keyName='vin'
+              onSearch={props.searchVehicles}
+              value={props.values?.vehicle_id}
+              handleChange={({name, value}) => props.setfieldvalue(name, value)}
+            />
+          )}
           <AppAutocompleteField
             placeholder={messages['common.buyerPlaceholder']}
             label={<IntlMessages id='common.buyer' />}
@@ -29,6 +45,22 @@ const SaleForm = (props) => {
             value={props.values?.buyer_id}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
+          {props.recordId && (
+            <AppTextField
+              select
+              placeholder={messages['common.statusPlaceholder']}
+              label={<IntlMessages id='common.status' />}
+              name='status'
+              variant='outlined'
+              size='small'
+              value={props.values?.status}
+              sx={{flex: 1}}
+            >
+              <MenuItem value='sold'>Sold</MenuItem>
+              <MenuItem value='cancelled'>Cancelled</MenuItem>
+              <MenuItem value='pending'>Pending</MenuItem>
+            </AppTextField>
+          )}
         </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppTextField
@@ -83,4 +115,9 @@ SaleForm.propTypes = {
   customers: PropTypes.array,
   customersLoading: PropTypes.bool,
   searchCustomers: PropTypes.func,
+  showVehicle: PropTypes.bool,
+  vehicles: PropTypes.array,
+  vehiclesLoading: PropTypes.bool,
+  searchVehicles: PropTypes.func,
+  recordId: PropTypes.any,
 };

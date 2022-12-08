@@ -220,3 +220,5 @@ export const UPDATE_MODEL = 'UPDATE_MODEL';
 
 //Sale List
 export const GET_SALE_LIST = 'GET_SALE_LIST';
+export const ADD_NEW_SALE = 'ADD_NEW_SALE';
+export const UPDATE_SALE = 'UPDATE_SALE';

@@ -1075,5 +1075,13 @@
   "sale.saleDate": "Sale Date",
   "validation.dateRequired": "Date is required",
   "validation.buyerRequired": "Buyer is required",
-  "sale.saleList": "Sale List"
+  "sale.saleList": "Sale List",
+  "common.saveAndAddAnother": "Save and add another",
+  "common.vehicle": "Vehicle",
+  "common.vehiclePlaceholder": "Select vehicle",
+  "message.saleAdded": "New sale successfully added",
+  "validation.vehicleRequired": "Vehicle is required",
+  "message.saleUpdated": "Sale updated successfully",
+  "sale.message.deleted": "Sale(s) deleted successfully!",
+  "sale.deleteMessage": "Are you sure, you want to delete the selected Sale(s)?"
 }

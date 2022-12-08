@@ -21,7 +21,7 @@ export default function DefaultToolbar({
       {showSell && selected.length == 1 && selectedItems[0].status != 'sold' && (
         <AppTooltip title={<IntlMessages id='common.sell' />}>
           <IconButton color='info' onClick={onSell}>
-            <SellIcon />
+            <SellIcon sx={{fontSize: '22px'}} />
           </IconButton>
         </AppTooltip>
       )}

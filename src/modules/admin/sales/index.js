@@ -1,17 +1,17 @@
-import {tableColumns} from '../../../configs/pages/sales';
-import {useDispatch, useSelector} from 'react-redux';
 import CustomDataTable from '../../../components/CustomDataTable';
+import {tableColumns} from '../../../configs/pages/sales';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {useDispatch, useSelector} from 'react-redux';
+import {useEffect, useState} from 'react';
+import SaleModal from './SaleModal';
 import {
   onGetSaleList,
-  onDeleteUsers,
+  onDeleteSales,
   getUserAutocompleteOptions,
 } from 'redux/actions';
-import {useEffect, useState} from 'react';
-import IntlMessages from '@crema/utility/IntlMessages';
-// import UserModal from './UserModal';
 
 export default function SaleList() {
-  const [openModal, setOpenModal] = useState(false);
+  const [showSaleModal, setShowSaleModal] = useState(false);
   const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
@@ -76,17 +76,17 @@ export default function SaleList() {
       }
     },
   };
-  const onAdd = () => {
-    setRecordId(null);
-    setOpenModal(true);
-  };
   const onEdit = () => {
     setRecordId(data[selected[0]].id);
-    setOpenModal(true);
+    setShowSaleModal(true);
+  };
+  const onSell = () => {
+    setRecordId(null);
+    setShowSaleModal(true);
   };
   const onDelete = async () => {
     await dispatch(
-      onDeleteUsers({
+      onDeleteSales({
         saleIds: selected.map((item) => data[item].id),
         page: page + 1,
         per_page,
@@ -142,7 +142,6 @@ export default function SaleList() {
         data={data}
         columns={tableColumns()}
         options={options}
-        onAdd={onAdd}
         onEdit={onEdit}
         onDelete={onDelete}
         deleteTitle={<IntlMessages id='sale.deleteMessage' />}
@@ -150,15 +149,18 @@ export default function SaleList() {
         selected={selected}
         onEnterSearch={onEnterSearch}
         onExactChange={(value) => setExactMatch(value)}
+        hideAddButton
+        sellButton
+        onSell={onSell}
       />
-      {/* {openModal && (
-        // <UserModal
-        //   open={openModal}
-        //   toggleOpen={() => setOpenModal((d) => !d)}
-        //   recordId={recordId}
-        //   edit={recordId ? true : false}
-        // />
-      )} */}
+      {showSaleModal && (
+        <SaleModal
+          open={showSaleModal}
+          toggleOpen={() => setShowSaleModal((d) => !d)}
+          recordId={recordId}
+          showVehicle
+        />
+      )}
     </>
   );
 }
