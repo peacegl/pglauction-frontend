@@ -15,7 +15,7 @@ export const tableColumns = function () {
         filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            Sa{value.toString().padStart(5, '0')}
+            Sa{value?.toString()?.padStart(5, '0')}
           </Typography>
         ),
       },
@@ -111,6 +111,21 @@ export const tableColumns = function () {
 export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
   return {
     exportColumns: [],
+    validationSchemaWithVehicle: yup.object({
+      vehicle_id: yup
+        .string()
+        .required(<IntlMessages id='validation.vehicleRequired' />),
+      buyer_id: yup
+        .string()
+        .required(<IntlMessages id='validation.buyerRequired' />),
+      sale_price: yup
+        .number()
+        .typeError(<IntlMessages id='validation.priceError' />)
+        .required(<IntlMessages id='validation.priceRequired' />),
+      sale_date: yup
+        .string()
+        .required(<IntlMessages id='validation.dateRequired' />),
+    }),
     validationSchema: yup.object({
       buyer_id: yup
         .string()

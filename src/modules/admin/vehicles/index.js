@@ -9,7 +9,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {tableColumns} from '../../../configs/pages/vehicles';
 import VehicleModal from './VehicleModal';
 import IntlMessages from '@crema/utility/IntlMessages';
-import SaleModal from './SaleModal';
+import SaleModal from '../sales/SaleModal';
 
 export default function VehicleList() {
   const [openModal, setOpenModal] = useState(false);

@@ -1,8 +1,11 @@
-import PropTypes from 'prop-types';
-import AddTooltip from './AddTooltip';
-import MUIDataTable from 'mui-datatables';
 import {Badge, Box, Button, Typography} from '@mui/material';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import IntlMessages from '@crema/utility/IntlMessages';
+import SellIcon from '@mui/icons-material/Sell';
 import AppLoader from '@crema/core/AppLoader';
+import BasicTooltip from './BasicTooltip';
+import MUIDataTable from 'mui-datatables';
+import PropTypes from 'prop-types';
 import Toolbar from './Toolbar';
 import Search from './Search';
 
@@ -24,6 +27,7 @@ const CustomDataTable = ({
   onSell,
   showSell = false,
   selectedItems = [],
+  sellButton = false,
 }) => {
   return (
     <>
@@ -76,7 +80,24 @@ const CustomDataTable = ({
               </div>
             );
           },
-          customToolbar: () => !hideAddButton && <AddTooltip onAdd={onAdd} />,
+          customToolbar: () => (
+            <>
+              {!hideAddButton && (
+                <BasicTooltip
+                  onClick={onAdd}
+                  title={<IntlMessages id='common.add' />}
+                  icon={<AddCircleIcon />}
+                />
+              )}
+              {sellButton && (
+                <BasicTooltip
+                  onClick={onSell}
+                  title={<IntlMessages id='common.sell' />}
+                  icon={<SellIcon sx={{fontSize: '22px'}} />}
+                />
+              )}
+            </>
+          ),
           customToolbarSelect: options.customToolbarSelect
             ? options.customToolbarSelect
             : () => (
@@ -136,4 +157,5 @@ CustomDataTable.propTypes = {
   onSell: PropTypes.func,
   showSell: PropTypes.bool,
   selectedItems: PropTypes.array,
+  sellButton: PropTypes.any,
 };

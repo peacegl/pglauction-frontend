@@ -1,6 +1,6 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
-import {Typography} from '@mui/material';
+import {Box, Typography} from '@mui/material';
 const year = new Date().getFullYear();
 import * as yup from 'yup';
 import CommonConfigs, {
@@ -102,16 +102,18 @@ export const tableColumns = function () {
       name: 'status',
       label: messages['vehicle.status'],
       options: {
-        filter: true,
-        filterType: 'textField',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `${messages['common.status']}: ${v}`;
-            }
-            return false;
-          },
-        },
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Box sx={{display: 'flex'}}>
+            <Typography
+              sx={{
+                textTransform: 'capitalize',
+              }}
+            >
+              {value}
+            </Typography>
+          </Box>
+        ),
       },
     },
     {

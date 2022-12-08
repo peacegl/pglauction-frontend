@@ -29,6 +29,26 @@ const routesConfig = [
     url: '/admin/vehicles',
     // permission: 'view_vehicles',
   },
+
+  // {
+  //   id: 'vehicles',
+  //   title: 'Vehicle List',
+  //   messageId: 'sidebar.vehicles',
+  //   type: 'collapse',
+  //   icon: <DriveEtaIcon sx={{fontSize: 22}} />,
+  //   url: '',
+  //   children: [
+  //     {
+  //       id: 'all',
+  //       title: 'All',
+  //       messageId: 'sidebar.vehicles',
+  //       type: 'item',
+  //       icon: <DriveEtaIcon sx={{fontSize: 22}} />,
+  //       url: '/admin/vehicles',
+  //     },
+  //   ],
+  // },
+
   {
     id: 'sales',
     title: 'Sale List',
