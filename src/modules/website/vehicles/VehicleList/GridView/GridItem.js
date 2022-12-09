@@ -126,11 +126,11 @@ export default function GridItem({item, ...props}) {
             variant='contained'
             size='small'
             sx={{mt: 2, width: '100%'}}
-            href='https://wa.me/+937669086'
+            href={`https://wa.me/${item.seller?.loginable?.whatsapp}`}
             target='_blank'
           >
             <WhatsAppIcon sx={{mx: 1}} />
-            +937669086
+            {item.seller?.loginable?.whatsapp}
           </Button>
         </Box>
       </CardContent>

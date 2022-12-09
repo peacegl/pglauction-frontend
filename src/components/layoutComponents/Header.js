@@ -89,7 +89,7 @@ function Header() {
           columnGap='20px'
         >
           <Box
-            onClick={() => router.push('/')}
+            onClick={() => router.push('/home')}
             sx={{'&:hover': {cursor: 'pointer'}}}
             color={theme.palette.text.primary}
             fontWeight='bold'
@@ -124,16 +124,6 @@ function Header() {
               onSearch={onSearch}
               defaultValue={search}
             />
-            {/* <AppSearchBar
-              width='450px'
-              placeholder='Search Inventory By Make, Model, Vin, and More...'
-              overlap={true}
-              borderLight={true}
-              sx={{
-                '& .MuiInputBase-input': {px: '42px !important'},
-                display: 'inline',
-              }}
-            /> */}
           </Box>
           <Box
             display='flex'
@@ -149,6 +139,7 @@ function Header() {
               href='https://www.facebook.com/TowingLoadingShipping'
               mx='5px'
               color={theme.palette.text.secondary}
+              target='_blank'
             >
               <FacebookIcon width='30' />
             </Link>
@@ -159,6 +150,7 @@ function Header() {
               href='https://wa.me/+937669086'
               mx='5px'
               color={theme.palette.text.secondary}
+              target='_blank'
             >
               <WhatsAppIcon width='30' />
             </Link>

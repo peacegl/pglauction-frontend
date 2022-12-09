@@ -177,7 +177,7 @@ export default function ListItem({item, ...props}) {
                     display: {xs: 'inline', sm: 'none'},
                   }}
                 >
-                  <WhatsAppButton number='+435345345342' />
+                  <WhatsAppButton number={item.seller?.loginable?.whatsapp} />
                 </Box>
               </Box>
               <Box sx={{flex: 1.5, display: {xs: 'none', lg: 'block'}, px: 3}}>
@@ -219,14 +219,7 @@ export default function ListItem({item, ...props}) {
                 >
                   {moneyFormater(item.price)}
                 </Typography>
-                {/* <Typography component='div' color={theme.palette.primary.main} overflow='hidden'>
-              <Box fontWeight='bold' display='inline'>
-                Sale Date
-              </Box>{' '}
-              {item.date}
-            </Typography> */}
-
-                <WhatsAppButton number='+435345345342' />
+                <WhatsAppButton number={item.seller?.loginable?.whatsapp} />
               </Box>
               {/* <Divider orientation='vertical' flexItem /> */}
             </Stack>

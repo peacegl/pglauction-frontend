@@ -19,7 +19,6 @@ import IntlMessages from '@crema/utility/IntlMessages';
 export default function LotInfo() {
   const theme = useTheme();
   const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
-  const contactNumber = '+9390876500';
 
   return (
     <Card sx={{borderRadius: 1, boxShadow: 1, m: 0}}>
@@ -59,11 +58,11 @@ export default function LotInfo() {
           variant='outlined'
           size='large'
           sx={{mt: 4, width: '100%', borderRadius: 20}}
-          href={`https://wa.me/${contactNumber}`}
+          href={`https://wa.me/${vehicle.seller?.loginable?.whatsapp}`}
           target='_blank'
         >
           <WhatsAppIcon />
-          <Box pt='2px'>{contactNumber}</Box>
+          <Box pt='2px'>{vehicle.seller?.loginable?.whatsapp}</Box>
         </Button>
       </CardContent>
     </Card>
