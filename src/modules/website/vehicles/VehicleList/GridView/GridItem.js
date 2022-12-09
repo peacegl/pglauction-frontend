@@ -9,11 +9,14 @@ import {useRouter} from 'next/router';
 import {moneyFormater} from 'configs';
 import PropTypes from 'prop-types';
 import IntlMessages from '@crema/utility/IntlMessages';
+import SoldIcon from '../../../../../assets/icon/sold.png';
+import {useState} from 'react';
 
 export default function GridItem({item, ...props}) {
   const router = useRouter();
   const theme = useTheme();
   // const [height, setHeight] = useState('260px');
+  const [hoverImage, setHoverImage] = useState(false);
 
   // useLayoutEffect(() => {
   //   setHeight((cardRef.current?.clientWidth / 4) * 3 + 'px');
@@ -25,7 +28,25 @@ export default function GridItem({item, ...props}) {
         sx={{cursor: 'pointer'}}
         overflow='hidden'
         onClick={() => router.push(`/all-vehicles/${item.id}`)}
+        onMouseEnter={() => setHoverImage(true)}
+        onMouseLeave={() => setHoverImage(false)}
       >
+        {item.status == 'sold' && (
+          <Box position='relative' zIndex='100'>
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 5,
+                left: 5,
+                transform: 'rotate(-40deg)',
+              }}
+              width='50px'
+              component='img'
+              src={SoldIcon.src}
+              alt={item.name}
+            />
+          </Box>
+        )}
         <CardMedia
           component='img'
           // height={height}
@@ -34,9 +55,7 @@ export default function GridItem({item, ...props}) {
           sx={{
             objectFit: 'cover',
             transition: 'all 450ms ease-out',
-            '&:hover': {
-              transform: 'scale(1.2)',
-            },
+            transform: hoverImage ? 'scale(1.2)' : 'scale(1)',
           }}
         />
       </Box>
