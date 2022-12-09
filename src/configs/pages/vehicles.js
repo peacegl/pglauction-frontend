@@ -261,6 +261,18 @@ export default function configs(invalidYoutube) {
     fuels: ['petrol', 'diesel', 'etlectric', 'hybrid'],
     statuses: ['active', 'inactive', 'sold', 'pending'],
     transmissions: ['automatic', 'manual'],
+    bodyStyles: [
+      'sedan',
+      'suv',
+      'coupe',
+      'hatchback',
+      'convertible',
+      'wagon',
+      'pickup',
+      'minivan',
+      'van',
+    ],
+    priceGuidances: ['great_price', 'good_price', 'fair_price'],
     exportColumns: [],
     validationSchema: [
       yup.object({
