@@ -90,33 +90,46 @@ export default function FilterComponents(props) {
   };
   return (
     <Box>
-      {filterItems.map((item, index) => (
-        <Accordion
-          key={index}
-          expanded={openAccordians.includes(item.key)}
-          onChange={() => toggleAccordian(item.key)}
-        >
-          <AccordionSummary>
-            <Typography>{item.title}</Typography>
-            <Box>
-              <Button size='small' onClick={(e) => onReset(e, item)}>
-                <IntlMessages id='filter.reset' />
-              </Button>
-              <IconButton>
-                {!openAccordians.includes(item.key) ? (
-                  <AddIcon sx={{fontSize: '16px'}} />
-                ) : (
-                  <RemoveIcon sx={{fontSize: '16px'}} />
-                )}
-              </IconButton>
-            </Box>
-          </AccordionSummary>
+      {filterItems.map((item, index) =>
+        item.hideAccordian ? (
+          <Box
+            key={index}
+            sx={{
+              borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+              mb: 4,
+            }}
+          >
+            <Box sx={{mx: 3, mt: 4}}>{item.title}</Box>
+            {item.content}
+          </Box>
+        ) : (
+          <Accordion
+            key={index}
+            expanded={openAccordians.includes(item.key)}
+            onChange={() => toggleAccordian(item.key)}
+          >
+            <AccordionSummary>
+              <Typography>{item.title}</Typography>
+              <Box>
+                <Button size='small' onClick={(e) => onReset(e, item)}>
+                  <IntlMessages id='filter.reset' />
+                </Button>
+                <IconButton>
+                  {!openAccordians.includes(item.key) ? (
+                    <AddIcon sx={{fontSize: '16px'}} />
+                  ) : (
+                    <RemoveIcon sx={{fontSize: '16px'}} />
+                  )}
+                </IconButton>
+              </Box>
+            </AccordionSummary>
 
-          <AccordionDetails>
-            {openAccordians.includes(item.key) && item.content}
-          </AccordionDetails>
-        </Accordion>
-      ))}
+            <AccordionDetails>
+              {openAccordians.includes(item.key) && item.content}
+            </AccordionDetails>
+          </Accordion>
+        ),
+      )}
     </Box>
   );
 }

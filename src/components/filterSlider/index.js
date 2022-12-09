@@ -31,6 +31,7 @@ const AuctionsSidebar = () => {
         exterior_color: [],
         document_type: [],
         body_style: [],
+        feature: [],
         drive_type: [],
         status: [],
         keys: [],
