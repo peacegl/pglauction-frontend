@@ -19,14 +19,14 @@ const BodyStyle = ({reduxReducer, data, columnName}) => {
   const bodyStyles = [
     {
       id: 1,
-      title: 'Saden',
-      value: 'saden',
+      title: 'Sedan',
+      value: 'sedan',
       icon: (
         <SedanIcon
           fill={
-            data[columnName].includes('saden')
+            data[columnName].includes('sedan')
               ? theme.palette.primary.main
-              : data[columnName].includes('saden')
+              : data[columnName].includes('sedan')
               ? theme.palette.primary.main
               : theme.palette.text.secondary
           }
