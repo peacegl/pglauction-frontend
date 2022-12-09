@@ -71,7 +71,7 @@ const BorderedItems = ({
                   ? alpha(theme.palette.primary.main, 0.1)
                   : 'inherit',
               px: 3,
-              py: 2,
+              py: 1,
               mb: 3,
               ml: 2,
               borderRadius: 10,

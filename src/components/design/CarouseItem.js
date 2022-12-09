@@ -12,10 +12,13 @@ import PropTypes from 'prop-types';
 import {useRouter} from 'next/router';
 import AppTooltip from '@crema/core/AppTooltip';
 import {moneyFormater} from 'configs';
+import SoldIcon from '../../assets/icon/sold.png';
+import {useState} from 'react';
 
 const CarouselItem = ({item}) => {
   const router = useRouter();
   const theme = useTheme();
+  const [hoverImage, setHoverImage] = useState(false);
 
   const viewDetails = () => {
     router.push(`/all-vehicles/${item.id}`);
@@ -28,18 +31,37 @@ const CarouselItem = ({item}) => {
       }}
       key={item.id}
     >
-      <Box overflow='hidden' sx={{cursor: 'pointer'}}>
+      <Box
+        overflow='hidden'
+        sx={{cursor: 'pointer'}}
+        onClick={() => viewDetails()}
+        onMouseEnter={() => setHoverImage(true)}
+        onMouseLeave={() => setHoverImage(false)}
+      >
+        {item.status == 'sold' && (
+          <Box position='relative' zIndex='100'>
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 5,
+                left: 5,
+                transform: 'rotate(-40deg)',
+              }}
+              width='50px'
+              component='img'
+              src={SoldIcon.src}
+              alt={item.name}
+            />
+          </Box>
+        )}
         <CardMedia
-          onClick={() => viewDetails()}
           component='img'
           image={item.images?.find((item) => item.type == 'main_image').path}
           alt='preview'
           sx={{
             objectFit: 'cover',
             transition: 'all 450ms ease-out',
-            '&:hover': {
-              transform: 'scale(1.2)',
-            },
+            transform: hoverImage ? 'scale(1.2)' : 'scale(1)',
           }}
         />
       </Box>

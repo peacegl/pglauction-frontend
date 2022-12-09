@@ -9,6 +9,8 @@ import AppTooltip from '@crema/core/AppTooltip';
 import {moneyFormater} from 'configs';
 import {useRouter} from 'next/router';
 import IntlMessages from '@crema/utility/IntlMessages';
+import SoldIcon from '../../../../../assets/icon/sold.png';
+import {useState} from 'react';
 
 const TextShow = ({value, label}) => {
   return (
@@ -40,6 +42,7 @@ const WhatsAppButton = (props) => {
 export default function ListItem({item, ...props}) {
   const router = useRouter();
   const theme = useTheme();
+  const [hoverImage, setHoverImage] = useState(false);
 
   const viewPage = () => {
     router.push(`/all-vehicles/${item.id}`);
@@ -76,9 +79,27 @@ export default function ListItem({item, ...props}) {
               flex: {xs: 1, sm: 2, md: 2, lg: 1},
             }}
             minWidth='140px'
+            onClick={() => viewPage()}
+            onMouseEnter={() => setHoverImage(true)}
+            onMouseLeave={() => setHoverImage(false)}
           >
+            {item.status == 'sold' && (
+              <Box position='relative' zIndex='100'>
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: 3,
+                    left: 3,
+                    transform: 'rotate(-40deg)',
+                  }}
+                  width='35px'
+                  component='img'
+                  src={SoldIcon.src}
+                  alt={item.name}
+                />
+              </Box>
+            )}
             <CardMedia
-              onClick={() => viewPage()}
               component='img'
               image={item.images.find((item) => item.type == 'main_image').path}
               alt='preview'
@@ -177,7 +198,7 @@ export default function ListItem({item, ...props}) {
                     display: {xs: 'inline', sm: 'none'},
                   }}
                 >
-                  <WhatsAppButton number='+435345345342' />
+                  <WhatsAppButton number={item.seller?.loginable?.whatsapp} />
                 </Box>
               </Box>
               <Box sx={{flex: 1.5, display: {xs: 'none', lg: 'block'}, px: 3}}>
@@ -219,14 +240,7 @@ export default function ListItem({item, ...props}) {
                 >
                   {moneyFormater(item.price)}
                 </Typography>
-                {/* <Typography component='div' color={theme.palette.primary.main} overflow='hidden'>
-              <Box fontWeight='bold' display='inline'>
-                Sale Date
-              </Box>{' '}
-              {item.date}
-            </Typography> */}
-
-                <WhatsAppButton number='+435345345342' />
+                <WhatsAppButton number={item.seller?.loginable?.whatsapp} />
               </Box>
               {/* <Divider orientation='vertical' flexItem /> */}
             </Stack>

@@ -1,6 +1,6 @@
 import React from 'react';
-import AppPage from '../@crema/hoc/WebPage';
-import asyncComponent from '../@crema/utility/asyncComponent';
+import AppPage from '@crema/hoc/WebPage';
+import asyncComponent from '@crema/utility/asyncComponent';
 
-const Home = asyncComponent(() => import('../modules/website/home/index'));
-export default AppPage(() => <Home />);
+const Vehicles = asyncComponent(() => import('../modules/website/vehicles'));
+export default AppPage(() => <Vehicles />);

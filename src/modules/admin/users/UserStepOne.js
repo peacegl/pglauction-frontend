@@ -84,7 +84,7 @@ const UserStepOne = (props) => {
                 value
                   ? value.getFullYear() +
                       '/' +
-                      value.getMonth() +
+                      (value.getMonth() + 1) +
                       '/' +
                       value.getDate()
                   : '',
