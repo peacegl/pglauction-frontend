@@ -1083,5 +1083,6 @@
   "validation.vehicleRequired": "Vehicle is required",
   "message.saleUpdated": "Sale updated successfully",
   "sale.message.deleted": "Sale(s) deleted successfully!",
-  "sale.deleteMessage": "Are you sure, you want to delete the selected Sale(s)?"
+  "sale.deleteMessage": "Are you sure, you want to delete the selected Sale(s)?",
+  "vehicle.features": "Features"
 }
