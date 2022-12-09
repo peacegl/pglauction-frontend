@@ -3,8 +3,9 @@ import {Box, Divider, Paper, Stack} from '@mui/material';
 import {Carousel} from 'react-responsive-carousel';
 import {SideBySideMagnifier} from 'react-image-magnifiers';
 import {PropTypes} from 'prop-types';
+import SoldIcon from '../../../../assets/icon/sold.png';
 
-const ImageCarousel = ({images, ...rest}) => {
+const ImageCarousel = ({images, isSold = false, ...rest}) => {
   const renderCustomThumbs = () => {
     const thumbList = images?.map((image, index) => (
       <Box
@@ -48,6 +49,22 @@ const ImageCarousel = ({images, ...rest}) => {
               },
             }}
           >
+            {isSold && (
+              <Box position='relative' zIndex='100'>
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: 5,
+                    left: 5,
+                    transform: 'rotate(-40deg)',
+                  }}
+                  width='45px'
+                  component='img'
+                  src={SoldIcon.src}
+                  alt='sold icon'
+                />
+              </Box>
+            )}
             <Carousel
               showStatus={false}
               showIndicators={false}
@@ -82,4 +99,5 @@ export default ImageCarousel;
 
 ImageCarousel.propTypes = {
   images: PropTypes.array,
+  isSold: PropTypes.bool,
 };

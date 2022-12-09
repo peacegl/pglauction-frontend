@@ -50,7 +50,10 @@ const VehicleDetail = (props) => {
               }}
             >
               <Box flex={1.5}>
-                <ImageCarousel images={vehicle.images} />
+                <ImageCarousel
+                  images={vehicle.images}
+                  isSold={vehicle.status == 'sold'}
+                />
               </Box>
               <Box
                 flex={2}

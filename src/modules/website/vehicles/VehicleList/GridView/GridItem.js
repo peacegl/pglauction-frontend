@@ -40,7 +40,7 @@ export default function GridItem({item, ...props}) {
                 left: 5,
                 transform: 'rotate(-40deg)',
               }}
-              width='50px'
+              width='45px'
               component='img'
               src={SoldIcon.src}
               alt={item.name}
