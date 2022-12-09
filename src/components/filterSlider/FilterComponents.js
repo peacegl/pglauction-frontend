@@ -93,6 +93,7 @@ export default function FilterComponents(props) {
       {filterItems.map((item, index) =>
         item.hideAccordian ? (
           <Box
+            key={index}
             sx={{
               borderTop: (theme) => `1px solid ${theme.palette.divider}`,
               mb: 4,
