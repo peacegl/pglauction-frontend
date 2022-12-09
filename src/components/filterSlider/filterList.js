@@ -268,11 +268,16 @@ export default function filterList(filterData, messages, reset, setReset) {
         initialValue: [],
         content: (
           <ListItems
-            url='/vehicleColumn/auto_complete?column=body_style'
             reduxReducer={setWebVehiclesFilter}
             data={filterData}
             columnName='body_style'
-            customColumn='body_style'
+            hideSearch
+            items={VehicleConfigs().bodyStyles.map((style) => {
+              return {
+                id: style,
+                name: <Box sx={{textTransform: 'capitalize'}}>{style}</Box>,
+              };
+            })}
           />
         ),
       },
