@@ -13,8 +13,8 @@ const VerticalNavGroup = ({item, router, level}) => {
   const {sidebarTextColor} = useSidebarContext();
   const {user} = useAuthUser();
   const hasPermission = useMemo(
-    () => checkPermission(item.permittedRole, user.role),
-    [item.permittedRole, user.role],
+    () => checkPermission(item.permittedPermission, user.permissions),
+    [item.permittedPermission, user.permissions],
   );
 
   if (!hasPermission) {
@@ -60,7 +60,10 @@ VerticalNavGroup.propTypes = {
     title: PropTypes.string,
     type: PropTypes.string,
     icon: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-    permittedRole: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+    permittedPermission: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.string,
+    ]),
     messageId: PropTypes.string,
     children: PropTypes.array,
   }),

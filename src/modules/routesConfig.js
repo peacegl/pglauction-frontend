@@ -26,7 +26,7 @@ const routesConfig = [
     type: 'item',
     icon: <DriveEtaIcon sx={{fontSize: 22}} />,
     url: '/admin/vehicles',
-    // permission: 'view_vehicles',
+    permittedPermission: 'view_vehicles',
   },
 
   // {
@@ -55,7 +55,7 @@ const routesConfig = [
     type: 'item',
     icon: <SellIcon sx={{fontSize: 22}} />,
     url: '/admin/sales',
-    // permission: 'view_sales',
+    permittedPermission: 'view_sales',
   },
   // {
   //   id: 'auctions',
@@ -82,7 +82,7 @@ const routesConfig = [
     type: 'item',
     icon: <SupervisorAccountIcon sx={{fontSize: 22}} />,
     url: '/admin/users',
-    // permission: 'view_users',
+    permittedPermission: 'view_users',
   },
   {
     id: 'customers',
@@ -91,7 +91,7 @@ const routesConfig = [
     type: 'item',
     icon: <PeopleAltIcon sx={{fontSize: 22}} />,
     url: '/admin/customers',
-    // permission: 'view_customers',
+    permittedPermission: 'view_customers',
   },
   {
     id: 'roles',
@@ -100,7 +100,7 @@ const routesConfig = [
     type: 'item',
     icon: <VerifiedUserIcon sx={{fontSize: 21}} />,
     url: '/admin/roles',
-    // permission: 'view_roles',
+    permittedPermission: 'view_roles',
   },
   {
     id: 'permissions',
@@ -109,7 +109,7 @@ const routesConfig = [
     type: 'item',
     icon: <ManageAccountsIcon sx={{fontSize: 22}} />,
     url: '/admin/permissions',
-    // permission: 'view_permissions',
+    permittedPermission: 'view_permissions',
   },
   {
     id: 'locations',
@@ -118,7 +118,7 @@ const routesConfig = [
     type: 'item',
     icon: <LocationOnIcon sx={{fontSize: 22}} />,
     url: '/admin/locations',
-    // permission: 'view_locations',
+    permittedPermission: 'view_locations',
   },
   // {
   //   id: 'makes',
