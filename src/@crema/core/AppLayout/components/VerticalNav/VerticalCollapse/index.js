@@ -59,10 +59,9 @@ const VerticalCollapse = ({item, router, level}) => {
 
   const {user} = useAuthUser();
   const hasPermission = useMemo(
-    () => checkPermission(item.permittedRole, user.role),
-    [item.permittedRole, user.role],
+    () => checkPermission(item.permittedPermission, user.permissions),
+    [item.permittedPermission, user.permissions],
   );
-
   if (!hasPermission) {
     return null;
   }
@@ -139,7 +138,10 @@ VerticalCollapse.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string,
     icon: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-    permittedRole: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+    permittedPermission: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.string,
+    ]),
     children: PropTypes.array,
     messageId: PropTypes.string,
     type: PropTypes.string,
