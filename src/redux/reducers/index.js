@@ -6,7 +6,6 @@ import Common from './Common';
 import Vehicles from './Vehicles';
 import Users from './Users';
 import Customers from './Customers';
-import Categories from './Categories';
 import Locations from './Locations';
 import Roles from './Roles';
 import Permissions from './Permissions';
@@ -20,7 +19,6 @@ const reducers = combineReducers({
   common: Common,
   users: Users,
   customers: Customers,
-  categories: Categories,
   locations: Locations,
   vehicles: Vehicles,
   auctionItems: AuctionItems,

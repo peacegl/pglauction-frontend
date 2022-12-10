@@ -62,20 +62,6 @@ export default function filterList(filterData, messages, reset, setReset) {
         ),
       },
       {
-        key: 4,
-        title: <IntlMessages id='vehicle.category' />,
-        name: 'category_id',
-        initialValue: [],
-        content: (
-          <ListItems
-            url='/category/auto_complete'
-            reduxReducer={setWebVehiclesFilter}
-            data={filterData}
-            columnName='category_id'
-          />
-        ),
-      },
-      {
         key: 5,
         title: <IntlMessages id='vehicle.odometer' />,
         name: 'between@@odometer',
