@@ -13,9 +13,10 @@ import VerticalNavItem from './VerticalNavItem';
 const VerticalItem = ({level, router, item}) => {
   const {user} = useAuthUser();
   const hasPermission = useMemo(
-    () => checkPermission(item.permittedRole, user.role),
-    [item.permittedRole, user.role],
+    () => checkPermission(item.permittedPermission, user.permissions),
+    [item.permittedPermission, user.permissions],
   );
+
   if (!hasPermission) {
     return null;
   }
@@ -63,7 +64,10 @@ VerticalItem.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string,
     icon: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-    permittedRole: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+    permittedPermission: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.string,
+    ]),
     exact: PropTypes.bool,
     messageId: PropTypes.string,
     count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

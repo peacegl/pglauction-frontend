@@ -1077,5 +1077,8 @@
   "message.saleUpdated": "Sale updated successfully",
   "sale.message.deleted": "Sale(s) deleted successfully!",
   "sale.deleteMessage": "Are you sure, you want to delete the selected Sale(s)?",
-  "vehicle.features": "Features"
+  "vehicle.features": "Features",
+  "message.loginSuccess": "Successfully logged in!",
+  "message.loginError2": "User account is blocked!",
+  "message.loginError1": "Invalid credentials!"
 }
