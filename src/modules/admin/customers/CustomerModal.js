@@ -41,7 +41,6 @@ export default function CustomerModal({
     password: '',
     timezone: '',
     status: '',
-    type: '',
   });
   const {messages} = appIntl('');
   const dispatch = useDispatch();
@@ -206,6 +205,7 @@ export default function CustomerModal({
   }, [recordId]);
 
   const onSave = (values) => {
+    console.log('dfdsf');
     values.loginableId = customer?.login?.id;
     const userFormData = Helper.getFormData(values);
     if (recordId) {
