@@ -846,12 +846,6 @@
   "common.deleted_at": "Deleted At",
   "common.last_updated": "Last Updated",
 
-  "category.categoryInfo": "Category Info",
-  "confirm.category.delete": "Are you sure, you want to delete the selected Category(s)?",
-  "message.category.deleted": "Category(s) deleted successfully!",
-  "message.category.created": "Category created successfully!",
-  "message.category.updated": "Category updated successfully!",
-
   "location.locationInfo": "Location Info",
   "confirm.location.delete": "Are you sure, you want to delete the selected Location(s)?",
   "message.location.deleted": "Location(s) deleted successfully!",
@@ -921,8 +915,6 @@
   "vehicle.sellerPlaceholder": "Select seller",
   "vehicle.location": "Location",
   "vehicle.locationPlaceholder": "Select location",
-  "vehicle.category": "Category",
-  "vehicle.categoryPlaceholder": "Select category",
   "vehicle.title": "Title",
   "vehicle.engine_type": "Engine Type",
   "vehicle.price": "Price",

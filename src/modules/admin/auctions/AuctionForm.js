@@ -30,7 +30,6 @@ const AuctionForm = (props) => {
             dataLoading={props.categoryLoading}
             options={props.parentCategories}
             keyName='name'
-            onSearch={props.searchCategories}
             value={props.values?.parent_id}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
           /> */}

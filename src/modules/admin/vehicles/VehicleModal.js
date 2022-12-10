@@ -56,7 +56,6 @@ export default function VehicleModal({
     transmission: '',
     status: '',
     location_id: '',
-    category_id: '',
     price: '',
     document_type: '',
     primary_damage: '',
@@ -87,14 +86,6 @@ export default function VehicleModal({
       setLocations,
     );
   };
-  const searchCategories = (content, category_id = null) => {
-    getData(
-      `/category/auto_complete${category_id ? '?id=' + category_id : ''}`,
-      content,
-      setCategoryLoading,
-      setCategories,
-    );
-  };
   const searchMakes = (content, make_id = null) => {
     getData(
       `/make/auto_complete${make_id ? '?id=' + make_id : ''}`,
@@ -115,7 +106,6 @@ export default function VehicleModal({
   useEffect(() => {
     if (!recordId) {
       searchLocations({});
-      searchCategories({});
       searchModels({});
       searchMakes({});
     }
@@ -154,7 +144,6 @@ export default function VehicleModal({
             setImages(oldImages);
             setInitialValues(values);
             searchLocations({}, values.location_id);
-            searchCategories({}, values.category_id);
             searchMakes({}, values.make_id);
             searchModels({make_id: values.make_id}, values.model_id);
           }
@@ -223,9 +212,6 @@ export default function VehicleModal({
         <VehicleStepTwo
           locations={locations}
           locationLoading={locationLoading}
-          categories={categories}
-          categoryLoading={categoryLoading}
-          searchCategories={searchCategories}
           searchLocations={searchLocations}
           setIsLoading={setIsLoading}
         />

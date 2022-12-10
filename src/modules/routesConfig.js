@@ -2,7 +2,6 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import DriveEtaIcon from '@mui/icons-material/DriveEta';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import CategoryIcon from '@mui/icons-material/Category';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import SellIcon from '@mui/icons-material/Sell';
@@ -111,15 +110,6 @@ const routesConfig = [
     icon: <ManageAccountsIcon sx={{fontSize: 22}} />,
     url: '/admin/permissions',
     // permission: 'view_permissions',
-  },
-  {
-    id: 'categories',
-    title: 'Category List',
-    messageId: 'sidebar.categories',
-    type: 'item',
-    icon: <CategoryIcon sx={{fontSize: 22}} />,
-    url: '/admin/categories',
-    // permission: 'view_categories',
   },
   {
     id: 'locations',
