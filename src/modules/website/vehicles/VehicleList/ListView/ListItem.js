@@ -17,7 +17,7 @@ const TextShow = ({value, label, extra = ''}) => {
     <Typography variant='body1'>
       <Box display='inline' fontWeight='bold' columnGap='5px'>
         {label}
-      </Box>
+      </Box>{' '}
       {value} {extra}
     </Typography>
   );
