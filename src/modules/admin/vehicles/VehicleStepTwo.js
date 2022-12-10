@@ -27,6 +27,20 @@ const VehicleStepTwo = (props) => {
             value={props.values?.location_id}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
+          <AppAutocompleteField
+            placeholder={messages['vehicle.sellerPlaceholder']}
+            label={<IntlMessages id='vehicle.seller' />}
+            name='seller_id'
+            variant='outlined'
+            size='small'
+            sx={{flex: 1, width: '100%'}}
+            dataLoading={props.sellerLoading}
+            options={props.sellers}
+            keyName='fullname'
+            onSearch={props.searchSellers}
+            value={props.values?.seller_id}
+            handleChange={({name, value}) => props.setfieldvalue(name, value)}
+          />
         </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppTextField
@@ -177,4 +191,7 @@ VehicleStepTwo.propTypes = {
   locationLoading: PropTypes.bool,
   locations: PropTypes.array,
   searchLocations: PropTypes.func,
+  sellerLoading: PropTypes.bool,
+  sellers: PropTypes.array,
+  searchSellers: PropTypes.func,
 };

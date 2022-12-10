@@ -12,11 +12,11 @@ import {useField} from 'formik';
 const VehicleStepOne = (props) => {
   const {messages} = useIntl();
   const [field] = useField('test');
-  useEffect(() => {
-    if (props.makes.length == 1) {
-      props.setfieldvalue('make', props.makes[0]?.id);
-    }
-  }, [props.makes]);
+  // useEffect(() => {
+  //   if (props.makes.length == 1) {
+  //     props.setfieldvalue('make', props.makes[0]?.id);
+  //   }
+  // }, [props.makes]);
 
   return (
     <Box>
@@ -202,10 +202,10 @@ export default VehicleStepOne;
 VehicleStepOne.propTypes = {
   values: PropTypes.object,
   setfieldvalue: PropTypes.func,
-  makesLoading: PropTypes.bool,
-  makes: PropTypes.array,
-  searchMakes: PropTypes.func,
-  modelsLoading: PropTypes.bool,
-  models: PropTypes.array,
-  searchModels: PropTypes.func,
+  // makesLoading: PropTypes.bool,
+  // makes: PropTypes.array,
+  // searchMakes: PropTypes.func,
+  // modelsLoading: PropTypes.bool,
+  // models: PropTypes.array,
+  // searchModels: PropTypes.func,
 };

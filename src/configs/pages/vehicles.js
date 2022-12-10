@@ -307,6 +307,9 @@ export default function configs(invalidYoutube) {
         location_id: yup
           .string()
           .required(<IntlMessages id='validation.locationRequired' />),
+        seller_id: yup
+          .string()
+          .required(<IntlMessages id='validation.sellerRequired' />),
         odometer: yup
           .number()
           .typeError(<IntlMessages id='validation.numberError' />),

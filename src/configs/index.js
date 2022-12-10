@@ -215,7 +215,7 @@ export const dateColumn = (name, label) => {
                       filterList[index][0] =
                         event.getFullYear() +
                         '-' +
-                        event.getMonth() +
+                        (event.getMonth() + 1) +
                         '-' +
                         event.getDate();
                     } else {
@@ -244,7 +244,7 @@ export const dateColumn = (name, label) => {
                       filterList[index][1] =
                         event.getFullYear() +
                         '-' +
-                        event.getMonth() +
+                        (event.getMonth() + 1) +
                         '-' +
                         event.getDate();
                     } else {
