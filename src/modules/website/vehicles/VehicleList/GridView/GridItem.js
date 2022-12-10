@@ -1,5 +1,7 @@
-import {Box, Divider, Button, useTheme} from '@mui/material';
+import {Box, Divider, Button, useTheme, Chip} from '@mui/material';
+import SoldIcon from '../../../../../assets/icon/sold.png';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import IntlMessages from '@crema/utility/IntlMessages';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
@@ -8,8 +10,6 @@ import Card from '@mui/material/Card';
 import {useRouter} from 'next/router';
 import {moneyFormater} from 'configs';
 import PropTypes from 'prop-types';
-import IntlMessages from '@crema/utility/IntlMessages';
-import SoldIcon from '../../../../../assets/icon/sold.png';
 import {useState} from 'react';
 
 export default function GridItem({item, ...props}) {
@@ -60,20 +60,22 @@ export default function GridItem({item, ...props}) {
         />
       </Box>
       <CardContent>
-        <AppTooltip title={`${item.year} ${item.make} ${item.model}`}>
-          <Typography
-            onClick={() => router.push(`/all-vehicles/${item.id}`)}
-            noWrap
-            gutterBottom
-            variant='h4'
-            component='h4'
-            color={theme.palette.primary.main}
-            sx={{cursor: 'pointer'}}
-          >
-            {item.year} {item.make} {item.model}
-          </Typography>
-        </AppTooltip>
-        <Divider sx={{my: 2}} />
+        <Box sx={{display: 'flex'}}>
+          <AppTooltip title={`${item.year} ${item.make} ${item.model}`}>
+            <Typography
+              onClick={() => router.push(`/all-vehicles/${item.id}`)}
+              noWrap
+              gutterBottom
+              variant='h4'
+              component='h4'
+              color={theme.palette.primary.main}
+              sx={{cursor: 'pointer'}}
+            >
+              {item.year} {item.make} {item.model}
+            </Typography>
+          </AppTooltip>
+        </Box>
+        <Divider sx={{mb: 2}} />
         <Box display='flex' justifyContent='space-between'>
           <Typography color={theme.palette.primary.main} fontWeight='bold'>
             {moneyFormater(item.price)}
@@ -82,25 +84,38 @@ export default function GridItem({item, ...props}) {
             {item.odometer} <IntlMessages id='common.miles' />
           </Typography>
         </Box>
-        <Box display='flex' flexDirection='column'>
+        <Box sx={{mt: 1}}>
+          <Chip
+            sx={{
+              float: 'right',
+              textTransform: 'capitalize',
+              fontWeight: 'bold',
+              color: (theme) => theme.palette.primary.contrastText,
+              bgcolor: (theme) =>
+                item.status == 'sold'
+                  ? theme.palette.error.main
+                  : item.status == 'available'
+                  ? theme.palette.success.main
+                  : '#ffa834',
+            }}
+            label={item.status}
+            size='small'
+          />
           <Box display='flex' columnGap='5px'>
             <IntlMessages id='common.lot' />#
             <Typography color={theme.palette.primary.main}>
-              {' '}
               {item.lot_number}
             </Typography>
           </Box>
           <Box display='flex' columnGap='5px'>
             <IntlMessages id='common.vin' />
             <Typography color={theme.palette.primary.main}>
-              {' '}
               {item.vin}
             </Typography>
           </Box>
           <Box display='flex' columnGap='5px'>
             <IntlMessages id='common.location' />
-            <Typography color={theme.palette.primary.main}>
-              {' '}
+            <Typography noWrap gutterBottom color={theme.palette.primary.main}>
               {item.location?.name}
             </Typography>
           </Box>

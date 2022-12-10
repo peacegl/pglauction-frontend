@@ -259,7 +259,7 @@ export const tableColumns = function () {
 export default function configs(invalidYoutube) {
   return {
     fuels: ['petrol', 'diesel', 'etlectric', 'hybrid'],
-    statuses: ['active', 'inactive', 'sold', 'pending'],
+    statuses: ['available', 'inactive', 'sold', 'future'],
     transmissions: ['automatic', 'manual'],
     bodyStyles: [
       'sedan',
