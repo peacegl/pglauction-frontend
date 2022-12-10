@@ -1,4 +1,4 @@
-import {Box, Divider, Stack, Button, useTheme} from '@mui/material';
+import {Box, Divider, Stack, Button, useTheme, Chip} from '@mui/material';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -12,13 +12,13 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import SoldIcon from '../../../../../assets/icon/sold.png';
 import {useState} from 'react';
 
-const TextShow = ({value, label}) => {
+const TextShow = ({value, label, extra = ''}) => {
   return (
     <Typography variant='body1'>
-      <Box display='inline' fontWeight='bold'>
+      <Box display='inline' fontWeight='bold' columnGap='5px'>
         {label}
       </Box>{' '}
-      {value}
+      {value} {extra}
     </Typography>
   );
 };
@@ -117,25 +117,45 @@ export default function ListItem({item, ...props}) {
             <Stack direction='row' spacing={0}>
               <Box sx={{flex: 2}}>
                 <Box sx={{display: {xs: 'none', sm: 'block'}}}>
-                  <AppTooltip title={`${item.year} ${item.make} ${item.model}`}>
-                    <Typography
-                      gutterBottom
-                      variant='h4'
-                      color={theme.palette.primary.main}
-                      component='div'
-                      overflow='hidden'
-                      sx={{
-                        fontSize: {xs: '14px', sm: '16px'},
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => viewPage()}
+                  <Box sx={{display: 'flex'}}>
+                    <AppTooltip
+                      title={`${item.year} ${item.make} ${item.model}`}
                     >
-                      {item.year} {item.make} {item.model}
-                    </Typography>
-                  </AppTooltip>
-                  <Divider sx={{my: 2}} />
+                      <Typography
+                        gutterBottom
+                        variant='h4'
+                        color={theme.palette.primary.main}
+                        component='div'
+                        overflow='hidden'
+                        sx={{
+                          fontSize: {xs: '14px', sm: '16px'},
+                          cursor: 'pointer',
+                        }}
+                        onClick={() => viewPage()}
+                      >
+                        {item.year} {item.make} {item.model}
+                      </Typography>
+                    </AppTooltip>
+                  </Box>
+                  <Divider sx={{mb: 2}} />
                 </Box>
                 <Box>
+                  <Chip
+                    sx={{
+                      float: 'right',
+                      textTransform: 'capitalize',
+                      fontWeight: 'bold',
+                      color: (theme) => theme.palette.primary.contrastText,
+                      bgcolor: (theme) =>
+                        item.status == 'sold'
+                          ? theme.palette.error.main
+                          : item.status == 'available'
+                          ? theme.palette.success.main
+                          : '#ffa834',
+                    }}
+                    label={item.status}
+                    size='small'
+                  />
                   <Typography
                     component='div'
                     color={theme.palette.primary.main}
@@ -150,7 +170,7 @@ export default function ListItem({item, ...props}) {
                     component='div'
                     color={theme.palette.primary.main}
                     overflow='hidden'
-                    sx={{display: {sm: 'block', md: 'none'}, fontSize: '14px'}}
+                    sx={{display: {sm: 'block', lg: 'none'}, fontSize: '14px'}}
                   >
                     {item.odometer} <IntlMessages id='common.miles' />
                   </Typography>
@@ -176,8 +196,9 @@ export default function ListItem({item, ...props}) {
                   <Box display='flex' columnGap='5px'>
                     <IntlMessages id='common.location' />
                     <Typography
+                      noWrap
+                      gutterBottom
                       color={theme.palette.primary.main}
-                      display='inline'
                     >
                       {item.location?.name}
                     </Typography>
@@ -205,6 +226,7 @@ export default function ListItem({item, ...props}) {
                 <TextShow
                   label={<IntlMessages id='vehicle.odometer' />}
                   value={item.odometer}
+                  extra={<IntlMessages id='common.miles' />}
                 />
                 <TextShow
                   label={<IntlMessages id='vehicle.test_drive' />}
@@ -257,6 +279,7 @@ ListItem.propTypes = {
 TextShow.propTypes = {
   value: PropTypes.string,
   label: PropTypes.string,
+  extra: PropTypes.any,
 };
 WhatsAppButton.propTypes = {
   number: PropTypes.string,

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import List from '@mui/material/List';
-import {Card, Typography, useTheme} from '@mui/material';
+import {Card, Chip, Typography, useTheme} from '@mui/material';
 import {useSelector} from 'react-redux';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -72,6 +72,27 @@ export default function SaleInfo() {
         </Box>
         <TabPanel value='lot_info' sx={{py: 0}}>
           <List sx={{width: '100%', bgcolor: 'background.paper'}}>
+            <Item
+              label={<IntlMessages id='common.status' />}
+              value={
+                <Chip
+                  sx={{
+                    px: 2,
+                    textTransform: 'capitalize',
+                    fontWeight: 'bold',
+                    color: (theme) => theme.palette.primary.contrastText,
+                    bgcolor: (theme) =>
+                      vehicle.status == 'sold'
+                        ? theme.palette.error.main
+                        : vehicle.status == 'available'
+                        ? theme.palette.success.main
+                        : '#ffa834',
+                  }}
+                  label={vehicle.status}
+                  size='small'
+                />
+              }
+            />
             <Item
               label={<IntlMessages id='common.vin' />}
               value={vehicle.vin}
