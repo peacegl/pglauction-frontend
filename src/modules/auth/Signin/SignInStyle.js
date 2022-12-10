@@ -17,6 +17,7 @@ import AppAnimate from '../../../@crema/core/AppAnimate';
 import AppTextField from '../../../@crema/core/AppFormComponents/AppTextField';
 import {useAuthMethod} from '@crema/utility/AuthHooks';
 import {useRouter} from 'next/router';
+import {LoadingButton} from '@mui/lab';
 
 const validationSchema = yup.object({
   email_or_username: yup
@@ -35,6 +36,7 @@ const Signin = () => {
     history.push('/forget-password', {tab: 'jwtAuth'});
   };
   const {messages} = useIntl();
+
   return (
     <Box
       sx={{
@@ -95,9 +97,9 @@ const Signin = () => {
             password: '',
           }}
           validationSchema={validationSchema}
-          onSubmit={(data, {setSubmitting}) => {
+          onSubmit={async (data, {setSubmitting}) => {
             setSubmitting(true);
-            signInUser({
+            await signInUser({
               email_or_username: data.email_or_username,
               password: data.password,
             });
@@ -188,18 +190,18 @@ const Signin = () => {
                   <IntlMessages id='common.forgetPassword' />
                 </Box>
               </Box>
-              <Button
+              <LoadingButton
                 variant='contained'
                 color='primary'
                 type='submit'
-                disabled={isSubmitting}
+                loading={isSubmitting}
                 sx={{
                   width: '100%',
                   height: 35,
                 }}
               >
                 <IntlMessages id='common.login' />
-              </Button>
+              </LoadingButton>
             </Form>
           )}
         </Formik>
