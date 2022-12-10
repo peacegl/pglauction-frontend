@@ -225,9 +225,6 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
         status: yup
           .string()
           .required(<IntlMessages id='validation.statusRequired' />),
-        type: yup
-          .string()
-          .required(<IntlMessages id='validation.typeRequired' />),
         timezone: yup
           .string()
           .required(<IntlMessages id='validation.timezoneRequired' />),
