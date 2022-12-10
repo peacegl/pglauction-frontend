@@ -27,7 +27,7 @@ const Title = ({title, justifyContent}) => {
         <Divider
           sx={{
             my: 4,
-            mx: 5,
+            mx: 1,
             backgroundColor: (theme) => theme.palette.primary.main,
             borderRadius: 10,
             height: '4px',

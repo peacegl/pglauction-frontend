@@ -174,9 +174,12 @@ export default function SaleInfo() {
               py: 2,
             }}
           >
-            About this {vehicle?.model?.make?.name} {vehicle.model?.name}
+            About this {vehicle.make} {vehicle.model}
           </Typography>
-          <Typography>{vehicle.description}</Typography>
+          <Typography
+            px={3}
+            dangerouslySetInnerHTML={{__html: vehicle.description}}
+          />
         </TabPanel>
       </TabContext>
     </Card>
