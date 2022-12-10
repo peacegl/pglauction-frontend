@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import AuthLayout from './AuthLayout';
 import {useLayoutActionsContext} from '../../utility/AppContextProvider/LayoutContextProvider';
 import {useSidebarActionsContext} from '../../utility/AppContextProvider/SidebarContextProvider';
+import AppInfoView from '@crema/core/AppInfoView';
 import {useRouter} from 'next/router';
 
 const withLayout = (ComposedComponent) => (props) => {
@@ -17,6 +18,7 @@ const withLayout = (ComposedComponent) => (props) => {
   return (
     <AuthLayout>
       <ComposedComponent {...props} />
+      <AppInfoView />
     </AuthLayout>
   );
 };
