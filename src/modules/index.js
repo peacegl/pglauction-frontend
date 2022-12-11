@@ -1,5 +1,5 @@
 import {authRouteConfig} from './auth';
-import {initialUrl} from 'shared/constants/AppConst';
+import {userInitialUrl} from 'shared/constants/AppConst';
 import {Redirect} from 'react-router-dom';
 import Error403 from './errorPages/Error403';
 import {adminConfigs} from './admin/index';
@@ -12,7 +12,7 @@ const authorizedStructure = {
 };
 
 const unAuthorizedStructure = {
-  fallbackPath: initialUrl,
+  fallbackPath: userInitialUrl,
   routes: authRouteConfig,
 };
 
@@ -21,7 +21,7 @@ const anonymousStructure = {
     {
       path: '/',
       exact: true,
-      component: () => <Redirect to={initialUrl} />,
+      component: () => <Redirect to={userInitialUrl} />,
     },
   ]),
 };
