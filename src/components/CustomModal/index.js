@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import {useState, useLayoutEffect} from 'react';
-import LoadingButton from '@mui/lab/LoadingButton';
+import {LoadingButton} from '@mui/lab';
 import SaveIcon from '@mui/icons-material/Save';
 import IntlMessages from '@crema/utility/IntlMessages';
 import AppLoader from '@crema/core/AppLoader';
@@ -39,10 +39,7 @@ const CustomModal = ({
       if (!isValid) return;
     }
     if (activeStep == steps?.length - 1 || children) {
-      actions.setSubmitting(true);
       await onSave(values);
-      actions.setSubmitting(false);
-      // actions.resetForm();
     } else {
       setActiveStep((prevActiveStep) =>
         prevActiveStep === steps?.length - 1
@@ -50,7 +47,6 @@ const CustomModal = ({
           : prevActiveStep + 1,
       );
       actions.setTouched({});
-      actions.setSubmitting(false);
     }
   };
   const handleBack = () => {
@@ -66,6 +62,7 @@ const CustomModal = ({
     updateSize();
     return () => window.removeEventListener('resize', updateSize);
   }, []);
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   return (
     <Modal {...rest} open={open}>
@@ -107,13 +104,56 @@ const CustomModal = ({
               ? validationSchema[activeStep]
               : validationSchema
           }
-          onSubmit={handleSubmit}
+          onSubmit={async (values, actions) => {
+            actions.setSubmitting(true);
+            await delay(0);
+            await handleSubmit(values, actions);
+            actions.setSubmitting(false);
+          }}
         >
           {({values, setFieldValue, isSubmitting, setFieldError, ...rest}) => {
+            console.log(isSubmitting);
             return (
               <Form>
-                <Box>
-                  {steps && (
+                {steps && (
+                  <Box
+                    sx={{
+                      height: height ? height : 500,
+                      overflowY: 'auto',
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        pt: 2,
+                        display: 'flex',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <Typography
+                        variant='h3'
+                        sx={{
+                          textAlign: 'center',
+                          py: 3,
+                          borderBottom: (theme) =>
+                            `2px solid ${theme.palette.text.secondary}`,
+                          borderRadius: '1px',
+                          color: (theme) => theme.palette.primary.main,
+                        }}
+                      >
+                        {steps[activeStep]?.label}
+                      </Typography>
+                    </Box>
+                    <Box sx={{mx: 3, my: 5}}>
+                      {React.cloneElement(steps[activeStep]?.children, {
+                        values: values,
+                        setfieldvalue: setFieldValue,
+                        setFieldError: setFieldError,
+                      })}
+                    </Box>
+                  </Box>
+                )}
+                {children && (
+                  <>
                     <Box
                       sx={{
                         height: height ? height : 500,
@@ -138,100 +178,62 @@ const CustomModal = ({
                             color: (theme) => theme.palette.primary.main,
                           }}
                         >
-                          {steps[activeStep]?.label}
+                          {title ?? title}
                         </Typography>
                       </Box>
-                      <Box sx={{mx: 3, my: 5}}>
-                        {React.cloneElement(steps[activeStep]?.children, {
+                      <Box
+                        sx={{
+                          mx: 3,
+                          my: 5,
+                        }}
+                      >
+                        {React.cloneElement(children, {
                           values: values,
                           setfieldvalue: setFieldValue,
-                          setFieldError: setFieldError,
                         })}
                       </Box>
                     </Box>
+                  </>
+                )}
+                <Paper
+                  variant='outlined'
+                  square
+                  sx={{display: 'flex', flexDirection: 'row', p: 2}}
+                >
+                  {!children && (
+                    <Button
+                      color='inherit'
+                      disabled={activeStep === 0}
+                      onClick={handleBack}
+                      sx={{mr: 1}}
+                    >
+                      <IntlMessages id='common.back' />
+                    </Button>
                   )}
-                  {children && (
-                    <>
-                      <Box
-                        sx={{
-                          height: height ? height : 500,
-                          overflowY: 'auto',
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            pt: 2,
-                            display: 'flex',
-                            justifyContent: 'center',
-                          }}
-                        >
-                          <Typography
-                            variant='h3'
-                            sx={{
-                              textAlign: 'center',
-                              py: 3,
-                              borderBottom: (theme) =>
-                                `2px solid ${theme.palette.text.secondary}`,
-                              borderRadius: '1px',
-                              color: (theme) => theme.palette.primary.main,
-                            }}
-                          >
-                            {title ?? title}
-                          </Typography>
-                        </Box>
-                        <Box
-                          sx={{
-                            mx: 3,
-                            my: 5,
-                          }}
-                        >
-                          {React.cloneElement(children, {
-                            values: values,
-                            setfieldvalue: setFieldValue,
-                          })}
-                        </Box>
-                      </Box>
-                    </>
-                  )}
-                  <Paper
-                    variant='outlined'
-                    square
-                    sx={{display: 'flex', flexDirection: 'row', p: 2}}
-                  >
-                    {!children && (
-                      <Button
-                        color='inherit'
-                        disabled={activeStep === 0}
-                        onClick={handleBack}
-                        sx={{mr: 1}}
-                      >
-                        <IntlMessages id='common.back' />
-                      </Button>
-                    )}
-                    <Box sx={{flex: '1 1 auto'}} />
+                  <Box sx={{flex: '1 1 auto'}} />
 
-                    {activeStep < steps?.length - 1 && (
-                      <Button
-                        variant='contained'
-                        sx={{px: 6, mx: 3}}
-                        type='submit'
-                      >
-                        <IntlMessages id='common.next' />
-                      </Button>
-                    )}
-                    {(activeStep === steps?.length - 1 || children) && (
-                      <LoadingButton
-                        loading={isSubmitting}
-                        loadingPosition='start'
-                        startIcon={<SaveIcon />}
-                        variant='contained'
-                        type='submit'
-                      >
-                        <IntlMessages id='common.save' />
-                      </LoadingButton>
-                    )}
-                  </Paper>
-                </Box>
+                  {activeStep < steps?.length - 1 && (
+                    <LoadingButton
+                      variant='contained'
+                      sx={{px: 6, mx: 3}}
+                      type='submit'
+                      loading={isSubmitting}
+                    >
+                      <IntlMessages id='common.next' />
+                    </LoadingButton>
+                  )}
+                  {(activeStep === steps?.length - 1 || children) && (
+                    <LoadingButton
+                      loading={isSubmitting}
+                      loadingPosition='start'
+                      startIcon={<SaveIcon />}
+                      variant='contained'
+                      type='submit'
+                    >
+                      <IntlMessages id='common.save' />
+                    </LoadingButton>
+                  )}
+                </Paper>
               </Form>
             );
           }}
