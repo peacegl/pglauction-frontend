@@ -28,7 +28,7 @@ export const pages = [
 ];
 
 const signOptions = [
-  {title: <IntlMessages id='common.signIn' />, link: 'signin'},
+  {title: <IntlMessages id='common.signIn' />, link: '/signin'},
   // {title: <IntlMessages id='common.signup' />, link: '/signup'},
 ];
 

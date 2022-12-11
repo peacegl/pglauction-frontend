@@ -1,16 +1,22 @@
-import {tableColumns} from '../../../configs/pages/locations';
+import CustomDataTable from 'components/CustomDataTable';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {tableColumns} from 'configs/pages/locations';
 import {useDispatch, useSelector} from 'react-redux';
-import CustomDataTable from '../../../components/CustomDataTable';
+import LocationModal from './LocationModal';
+import {useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
+import {
+  ADD_LOCATION,
+  EDIT_LOCATION,
+  DELETE_LOCATION,
+} from 'shared/constants/Permissions';
 import {
   onGetLocationList,
   onDeleteLocations,
   getUserAutocompleteOptions,
 } from 'redux/actions';
-import {useEffect, useState} from 'react';
-import IntlMessages from '@crema/utility/IntlMessages';
-import LocationModal from './LocationModal';
 
-export default function userList() {
+export default function LocationList({user}) {
   const [openModal, setOpenModal] = useState(false);
   const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
@@ -139,6 +145,13 @@ export default function userList() {
         selected={selected}
         onEnterSearch={onEnterSearch}
         onExactChange={(value) => setExactMatch(value)}
+        showAddButton={user?.permissions?.includes(ADD_LOCATION)}
+        showEditButton={user?.permissions?.includes(EDIT_LOCATION)}
+        showDeleteButton={user?.permissions?.includes(DELETE_LOCATION)}
+        selectableRows={
+          user?.permissions?.includes(EDIT_LOCATION) ||
+          user?.permissions?.includes(DELETE_LOCATION)
+        }
       />
       {openModal && (
         <LocationModal
@@ -151,3 +164,6 @@ export default function userList() {
     </>
   );
 }
+LocationList.propTypes = {
+  user: PropTypes.any,
+};

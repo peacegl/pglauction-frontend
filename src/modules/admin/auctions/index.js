@@ -1,16 +1,22 @@
+import CustomDataTable from 'components/CustomDataTable';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {tableColumns} from 'configs/pages/auctions';
+import {useDispatch, useSelector} from 'react-redux';
+import AuctionModal from './AuctionModal';
 import {useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
+import {
+  ADD_AUCTION,
+  DELETE_AUCTION,
+  EDIT_AUCTION,
+} from 'shared/constants/Permissions';
 import {
   onGetAuctionData,
   onDeleteAuctions,
   getUserAutocompleteOptions,
 } from 'redux/actions';
-import CustomDataTable from '../../../components/CustomDataTable';
-import {useDispatch, useSelector} from 'react-redux';
-import AuctionModal from './AuctionModal';
-import IntlMessages from '@crema/utility/IntlMessages';
-import {tableColumns} from 'configs/pages/auctions';
 
-export default function AuctionList() {
+export default function AuctionList({user}) {
   const [openModal, setOpenModal] = useState(false);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
@@ -137,7 +143,13 @@ export default function AuctionList() {
         selected={selected}
         onEnterSearch={onEnterSearch}
         onExactChange={(value) => setExactMatch(value)}
-        hideAddButton
+        showAddButton={user?.permissions?.includes(ADD_AUCTION)}
+        showEditButton={user?.permissions?.includes(EDIT_AUCTION)}
+        showDeleteButton={user?.permissions?.includes(DELETE_AUCTION)}
+        selectableRows={
+          user?.permissions?.includes(EDIT_AUCTION) ||
+          user?.permissions?.includes(DELETE_AUCTION)
+        }
       />
       {openModal && (
         <AuctionModal
@@ -150,3 +162,6 @@ export default function AuctionList() {
     </>
   );
 }
+AuctionList.propTypes = {
+  user: PropTypes.any,
+};
