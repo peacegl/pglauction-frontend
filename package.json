@@ -97,7 +97,7 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next build && node app.js",
+    "start": "node app.js",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
     "lint": "eslint \"src/**/*.+(js|jsx)\"",
     "lint:fix": "eslint --fix \"src/**/*.+(js|jsx)\"",
