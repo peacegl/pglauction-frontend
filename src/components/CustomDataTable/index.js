@@ -1,5 +1,6 @@
 import {Badge, Box, Button, Typography} from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
 import IntlMessages from '@crema/utility/IntlMessages';
 import SellIcon from '@mui/icons-material/Sell';
 import AppLoader from '@crema/core/AppLoader';
@@ -16,7 +17,9 @@ const CustomDataTable = ({
   columns,
   options,
   hideAddButton,
+  hideFilterButton = true,
   onAdd,
+  onFilter,
   onEdit,
   onDelete,
   deleteTitle,
@@ -63,25 +66,32 @@ const CustomDataTable = ({
           },
           fixedHeader: true,
           rowHover: true,
+          filter: false,
           tableBodyMaxHeight: options.tableBodyMaxHeight
             ? options.tableBodyMaxHeight
             : '73vh',
           tableBodyHeight: options.tableBodyHeight
             ? options.tableBodyHeight
             : '73vh',
-
           // Calling the applyNewFilters parameter applies the selected filters to the table
-          customFilterDialogFooter: (currentFilterList, applyNewFilters) => {
-            return (
-              <div style={{marginTop: '40px'}}>
-                <Button variant='contained' onClick={() => applyNewFilters()}>
-                  Apply Filters
-                </Button>
-              </div>
-            );
-          },
+          // customFilterDialogFooter: (currentFilterList, applyNewFilters) => {
+          //   return (
+          //     <div style={{marginTop: '40px'}}>
+          //       <Button variant='contained' onClick={() => applyNewFilters()}>
+          //         Apply Filters
+          //       </Button>
+          //     </div>
+          //   );
+          // },
           customToolbar: () => (
             <>
+              {hideFilterButton && (
+                <BasicTooltip
+                  onClick={onFilter}
+                  title={<IntlMessages id='common.filter' />}
+                  icon={<FilterListRoundedIcon />}
+                />
+              )}
               {!hideAddButton && (
                 <BasicTooltip
                   onClick={onAdd}
@@ -145,8 +155,10 @@ CustomDataTable.propTypes = {
   data: PropTypes.array.isRequired,
   columns: PropTypes.array.isRequired,
   options: PropTypes.object.isRequired,
+  hideFilterButton: PropTypes.bool,
   hideAddButton: PropTypes.bool,
   onAdd: PropTypes.func,
+  onFilter: PropTypes.func,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
   deleteTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),

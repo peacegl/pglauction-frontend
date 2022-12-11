@@ -10,9 +10,11 @@ import {tableColumns} from '../../../configs/pages/vehicles';
 import VehicleModal from './VehicleModal';
 import IntlMessages from '@crema/utility/IntlMessages';
 import SaleModal from '../sales/SaleModal';
+import FilterModal from 'components/CustomModal/FilterModal';
 
 export default function VehicleList() {
   const [openModal, setOpenModal] = useState(false);
+  const [openFilter, setOpenFilter] = useState(false);
   const [showSaleModal, setShowSaleModal] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selected, setSelected] = useState([]);
@@ -67,19 +69,19 @@ export default function VehicleList() {
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
-    confirmFilters: true,
-    onFilterDialogOpen: () => {
-      dispatch(getUserAutocompleteOptions());
-    },
-    // callback that gets executed when filters are confirmed
-    onFilterConfirm: (filterList) => {
-      handleFilter(filterList);
-    },
-    onFilterChange: (column, filterList, type) => {
-      if (type === 'chip') {
-        handleFilter(filterList);
-      }
-    },
+    // confirmFilters: true,
+    // onFilterDialogOpen: () => {
+    //   dispatch(getUserAutocompleteOptions());
+    // },
+    // // callback that gets executed when filters are confirmed
+    // onFilterConfirm: (filterList) => {
+    //   handleFilter(filterList);
+    // },
+    // onFilterChange: (column, filterList, type) => {
+    //   if (type === 'chip') {
+    //     handleFilter(filterList);
+    //   }
+    // },
   };
   const onAdd = () => {
     setRecordId(null);
@@ -156,6 +158,7 @@ export default function VehicleList() {
         onAdd={onAdd}
         onEdit={onEdit}
         onDelete={onDelete}
+        onFilter={() => setOpenFilter(true)}
         deleteTitle={<IntlMessages id='vehicle.deleteMessage' />}
         isLoading={loading}
         selected={selected}
@@ -165,6 +168,12 @@ export default function VehicleList() {
         showSell={true}
         selectedItems={selectedItems}
       />
+      {openFilter && (
+        <FilterModal
+          open={openFilter}
+          toggleOpen={() => setOpenFilter((d) => !d)}
+        />
+      )}
       {openModal && (
         <VehicleModal
           open={openModal}
