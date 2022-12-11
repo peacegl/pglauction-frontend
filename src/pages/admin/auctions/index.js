@@ -8,7 +8,7 @@ const Auctions = asyncComponent(() => import('modules/admin/auctions'));
 export default AppPage(() => {
   const {user} = useAuthUser();
   return user?.permissions?.includes(VIEW_AUCTIONS) ? (
-    <Auctions />
+    <Auctions user={user} />
   ) : (
     <Error403 />
   );

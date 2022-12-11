@@ -1,16 +1,22 @@
+import CustomDataTable from 'components/CustomDataTable';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {useDispatch, useSelector} from 'react-redux';
+import {tableColumns} from 'configs/pages/customers';
+import CustomerModal from './CustomerModal';
+import {useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
+import {
+  ADD_CUSTOMER,
+  EDIT_CUSTOMER,
+  DELETE_CUSTOMER,
+} from 'shared/constants/Permissions';
 import {
   onGetCustomerList,
   onDeleteCustomers,
   getUserAutocompleteOptions,
 } from 'redux/actions';
-import {tableColumns} from '../../../configs/pages/customers';
-import IntlMessages from '@crema/utility/IntlMessages';
-import {useDispatch, useSelector} from 'react-redux';
-import CustomDataTable from '../../../components/CustomDataTable';
-import CustomerModal from './CustomerModal';
-import {useEffect, useState} from 'react';
 
-export default function CustomerList() {
+export default function CustomerList({user}) {
   const [openModal, setOpenModal] = useState(false);
   const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
@@ -151,6 +157,13 @@ export default function CustomerList() {
         onExactChange={(value) => setExactMatch(value)}
         selected={selected}
         onEnterSearch={onEnterSearch}
+        showAddButton={user?.permissions?.includes(ADD_CUSTOMER)}
+        showEditButton={user?.permissions?.includes(EDIT_CUSTOMER)}
+        showDeleteButton={user?.permissions?.includes(DELETE_CUSTOMER)}
+        selectableRows={
+          user?.permissions?.includes(EDIT_CUSTOMER) ||
+          user?.permissions?.includes(DELETE_CUSTOMER)
+        }
       />
       {openModal && (
         <CustomerModal
@@ -163,3 +176,6 @@ export default function CustomerList() {
     </>
   );
 }
+CustomerList.propTypes = {
+  user: PropTypes.any,
+};

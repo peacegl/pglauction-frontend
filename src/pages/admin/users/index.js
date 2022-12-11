@@ -7,5 +7,9 @@ import AppPage from '@crema/hoc/AppPage';
 const Users = asyncComponent(() => import('modules/admin/users'));
 export default AppPage(() => {
   const {user} = useAuthUser();
-  return user?.permissions?.includes(VIEW_USERS) ? <Users /> : <Error403 />;
+  return user?.permissions?.includes(VIEW_USERS) ? (
+    <Users user={user} />
+  ) : (
+    <Error403 />
+  );
 });

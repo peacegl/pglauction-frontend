@@ -8,7 +8,7 @@ const Customers = asyncComponent(() => import('modules/admin/customers'));
 export default AppPage(() => {
   const {user} = useAuthUser();
   return user?.permissions?.includes(VIEW_CUSTOMERS) ? (
-    <Customers />
+    <Customers user={user} />
   ) : (
     <Error403 />
   );

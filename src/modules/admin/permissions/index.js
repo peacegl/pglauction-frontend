@@ -1,9 +1,9 @@
-import PermissionsConfigs from '../../../configs/pages/permissions';
+import PermissionsConfigs from 'configs/pages/permissions';
+import CustomDataTable from 'components/CustomDataTable';
+import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
-import CustomDataTable from '../../../components/CustomDataTable';
 import {onGetPermissionList} from 'redux/actions';
 import {useEffect, useState} from 'react';
-import IntlMessages from '@crema/utility/IntlMessages';
 import {Button} from '@mui/material';
 
 export default function UserList() {
@@ -94,7 +94,6 @@ export default function UserList() {
         options={options}
         isLoading={loading}
         onEnterSearch={onEnterSearch}
-        hideAddButton
       />
     </>
   );

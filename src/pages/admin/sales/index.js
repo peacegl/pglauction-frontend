@@ -7,5 +7,9 @@ import AppPage from '@crema/hoc/AppPage';
 const Sales = asyncComponent(() => import('modules/admin/sales'));
 export default AppPage(() => {
   const {user} = useAuthUser();
-  return user?.permissions?.includes(VIEW_SALES) ? <Sales /> : <Error403 />;
+  return user?.permissions?.includes(VIEW_SALES) ? (
+    <Sales user={user} />
+  ) : (
+    <Error403 />
+  );
 });

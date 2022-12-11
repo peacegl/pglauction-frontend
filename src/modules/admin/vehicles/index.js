@@ -5,13 +5,19 @@ import {useDispatch, useSelector} from 'react-redux';
 import SaleModal from '../sales/SaleModal';
 import {useEffect, useState} from 'react';
 import VehicleModal from './VehicleModal';
+import PropTypes from 'prop-types';
+import {
+  ADD_VEHICLE,
+  DELETE_VEHICLE,
+  EDIT_VEHICLE,
+  ADD_SALE,
+} from 'shared/constants/Permissions';
 import {
   onGetVehicleData,
   onDeleteVehicles,
   getUserAutocompleteOptions,
 } from 'redux/actions';
-
-export default function VehicleList() {
+export default function VehicleList({user}) {
   const [openModal, setOpenModal] = useState(false);
   const [showSaleModal, setShowSaleModal] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -162,8 +168,16 @@ export default function VehicleList() {
         onEnterSearch={onEnterSearch}
         onExactChange={(value) => setExactMatch(value)}
         onSell={onSell}
-        showSell={true}
+        showSell={user?.permissions?.includes(ADD_SALE)}
         selectedItems={selectedItems}
+        showAddButton={user?.permissions?.includes(ADD_VEHICLE)}
+        showEditButton={user?.permissions?.includes(EDIT_VEHICLE)}
+        showDeleteButton={user?.permissions?.includes(DELETE_VEHICLE)}
+        selectableRows={
+          user?.permissions?.includes(EDIT_VEHICLE) ||
+          user?.permissions?.includes(DELETE_VEHICLE) ||
+          user?.permissions?.includes(ADD_SALE)
+        }
       />
       {openModal && (
         <VehicleModal
@@ -183,3 +197,6 @@ export default function VehicleList() {
     </>
   );
 }
+VehicleList.propTypes = {
+  user: PropTypes.any,
+};

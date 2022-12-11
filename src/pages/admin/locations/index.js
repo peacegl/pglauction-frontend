@@ -8,7 +8,7 @@ const Locations = asyncComponent(() => import('modules/admin/locations'));
 export default AppPage(() => {
   const {user} = useAuthUser();
   return user?.permissions?.includes(VIEW_LOCATIONS) ? (
-    <Locations />
+    <Locations user={user} />
   ) : (
     <Error403 />
   );

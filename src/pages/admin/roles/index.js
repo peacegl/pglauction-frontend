@@ -7,5 +7,9 @@ import AppPage from '@crema/hoc/AppPage';
 const Roles = asyncComponent(() => import('modules/admin/roles'));
 export default AppPage(() => {
   const {user} = useAuthUser();
-  return user?.permissions?.includes(VIEW_ROLES) ? <Roles /> : <Error403 />;
+  return user?.permissions?.includes(VIEW_ROLES) ? (
+    <Roles user={user} />
+  ) : (
+    <Error403 />
+  );
 });

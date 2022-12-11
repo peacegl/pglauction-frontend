@@ -8,7 +8,7 @@ const Permissions = asyncComponent(() => import('modules/admin/permissions'));
 export default AppPage(() => {
   const {user} = useAuthUser();
   return user?.permissions?.includes(VIEW_PERMISSIONS) ? (
-    <Permissions />
+    <Permissions user={user} />
   ) : (
     <Error403 />
   );

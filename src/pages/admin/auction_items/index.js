@@ -10,7 +10,7 @@ const AuctionItems = asyncComponent(() =>
 export default AppPage(() => {
   const {user} = useAuthUser();
   return user?.permissions?.includes(VIEW_AUCTION_ITEMS) ? (
-    <AuctionItems />
+    <AuctionItems user={user} />
   ) : (
     <Error403 />
   );

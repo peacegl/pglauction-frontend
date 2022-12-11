@@ -8,7 +8,7 @@ const Vehicles = asyncComponent(() => import('modules/admin/vehicles'));
 export default AppPage(() => {
   const {user} = useAuthUser();
   return user?.permissions?.includes(VIEW_VEHICLES) ? (
-    <Vehicles />
+    <Vehicles user={user} />
   ) : (
     <Error403 />
   );
