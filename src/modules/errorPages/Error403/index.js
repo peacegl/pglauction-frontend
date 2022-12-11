@@ -11,13 +11,14 @@ import Logo from '../../../assets/icon/403.svg';
 import {useTheme} from '@mui/material';
 import {useRouter} from 'next/router';
 import AppPageMeta from '../../../@crema/core/AppPageMeta';
+import PropTypes from 'prop-types';
 
-const Error403 = () => {
+const Error403 = (props) => {
   const theme = useTheme();
   const history = useRouter();
 
   const onGoBackToHome = () => {
-    history.push(userInitialUrl);
+    history.push(props.url ? props.url : userInitialUrl);
   };
 
   return (
@@ -87,3 +88,6 @@ const Error403 = () => {
 };
 
 export default Error403;
+Error403.propTypes = {
+  url: PropTypes.string,
+};

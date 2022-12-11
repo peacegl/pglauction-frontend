@@ -1,0 +1,9 @@
+export const VIEW_VEHICLES = 'view_vehicles';
+export const VIEW_USERS = 'view_users';
+export const VIEW_CUSTOMERS = 'view_customers';
+export const VIEW_SALES = 'view_sales';
+export const VIEW_ROLES = 'view_roles';
+export const VIEW_PERMISSIONS = 'view_permissions';
+export const VIEW_LOCATIONS = 'view_locations';
+export const VIEW_AUCTIONS = 'view_auctions';
+export const VIEW_AUCTION_ITEMS = 'view_auction_items';

@@ -1,65 +1,15 @@
-import React from 'react';
-import AppPage from '../../../@crema/hoc/AppPage';
-import asyncComponent from '../../../@crema/utility/asyncComponent';
+import {VIEW_VEHICLES} from 'shared/constants/Permissions';
+import asyncComponent from '@crema/utility/asyncComponent';
+import {useAuthUser} from '@crema/utility/AuthHooks';
+import Error403 from 'modules/errorPages/Error403';
+import AppPage from '@crema/hoc/AppPage';
 
-const Vehicles = asyncComponent(() =>
-  import('../../../modules/admin/vehicles'),
-);
-export default AppPage(() => <Vehicles />);
-
-// import {UseServerSideProps} from '../../../customHooks';
-// import jwtAxios from '@crema/services/auth/jwt-auth';
-// export async function getServerSideProps(context) {
-//   // try {
-//   const res = await jwtAxios.get(`/auth`);
-//   console.log('dsfasdfd', res.data);
-//   if (res.status === 200) {
-//     if (data.permissions?.includes('view_vehicles')) {
-//       return {props: {}};
-//     }
-//   }
-//   return {
-//     redirect: {
-//       destination: '/admin',
-//       permanent: false,
-//     },
-//   };
-
-//   // } catch (error) {
-//   //   return {
-//   //     redirect: {
-//   //       destination: '/admin',
-//   //       permanent: false,
-//   //     },
-//   //   };
-//   // }
-//   jwtAxios
-//     .get('/auth')
-//     .then(({data}) => {
-//       console.log('dsfasdfd', data);
-//       if (data.permissions?.includes('view_vehicles')) {
-//         return {props: {}};
-//       }
-//       return {
-//         redirect: {
-//           destination: '/admin',
-//           permanent: false,
-//         },
-//       };
-//     })
-//     .catch(() => {
-//       return {
-//         redirect: {
-//           destination: '/admin',
-//           permanent: false,
-//         },
-//       };
-//     });
-//   return {
-//     redirect: {
-//       destination: '/admin',
-//       permanent: false,
-//     },
-//   };
-//   // return UseServerSideProps('view_vehicles');
-// }
+const Vehicles = asyncComponent(() => import('modules/admin/vehicles'));
+export default AppPage(() => {
+  const {user} = useAuthUser();
+  return user?.permissions?.includes(VIEW_VEHICLES) ? (
+    <Vehicles />
+  ) : (
+    <Error403 />
+  );
+});

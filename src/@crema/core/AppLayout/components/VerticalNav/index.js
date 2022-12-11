@@ -28,9 +28,9 @@ const VerticalNav = () => {
             <VerticalCollapse item={item} level={0} router={router} />
           )}
 
-          {item.type === 'item' && item.permission
-            ? user.permissions?.includes(item.permission)
-            : true && <VerticalItem item={item} level={0} router={router} />}
+          {item.type === 'item' && (
+            <VerticalItem item={item} level={0} router={router} />
+          )}
         </React.Fragment>
       ))}
     </List>

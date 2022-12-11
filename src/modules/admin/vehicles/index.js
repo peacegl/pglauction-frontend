@@ -1,15 +1,15 @@
+import CustomDataTable from '../../../components/CustomDataTable';
+import {tableColumns} from '../../../configs/pages/vehicles';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {useDispatch, useSelector} from 'react-redux';
+import SaleModal from '../sales/SaleModal';
 import {useEffect, useState} from 'react';
+import VehicleModal from './VehicleModal';
 import {
   onGetVehicleData,
   onDeleteVehicles,
   getUserAutocompleteOptions,
 } from 'redux/actions';
-import CustomDataTable from '../../../components/CustomDataTable';
-import {useDispatch, useSelector} from 'react-redux';
-import {tableColumns} from '../../../configs/pages/vehicles';
-import VehicleModal from './VehicleModal';
-import IntlMessages from '@crema/utility/IntlMessages';
-import SaleModal from '../sales/SaleModal';
 
 export default function VehicleList() {
   const [openModal, setOpenModal] = useState(false);
