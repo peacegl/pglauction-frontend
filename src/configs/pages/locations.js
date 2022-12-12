@@ -126,6 +126,56 @@ export const tableColumns = function () {
     dateColumn('updated_at', messages['common.updated_at']),
   ];
 };
+export const filterContent = [
+  {
+    title: 'id_filtering',
+    items: [
+      {
+        name: 'locations.code',
+        label: 'Code',
+        type: 'autocomplete',
+        url: '/location_codes/auto_complete',
+        keyName: 'code',
+      },
+      {
+        name: 'locations.parent_id',
+        label: 'Parent',
+        type: 'autocomplete',
+        url: '/user/auto_complete',
+        keyName: 'username',
+      },
+      {
+        name: 'customers.created_by',
+        label: 'Created By',
+        type: 'autocomplete',
+        url: '/user/auto_complete',
+        keyName: 'username',
+      },
+      {
+        name: 'customers.updated_by',
+        label: 'Updated By',
+        type: 'autocomplete',
+        url: '/user/auto_complete',
+        keyName: 'username',
+      },
+    ],
+  },
+  {
+    title: 'date_range',
+    items: [
+      {
+        name: 'customers.created_at',
+        label: 'Created At',
+        type: 'date_range',
+      },
+      {
+        name: 'customers.updated_at',
+        label: 'Updated At',
+        type: 'date_range',
+      },
+    ],
+  },
+];
 
 export default function conifgs() {
   return {

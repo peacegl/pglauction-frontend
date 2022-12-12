@@ -3,15 +3,17 @@ import {
   onDeleteCustomers,
   getUserAutocompleteOptions,
 } from 'redux/actions';
-import {tableColumns} from '../../../configs/pages/customers';
+import {filterContent, tableColumns} from '../../../configs/pages/customers';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import CustomDataTable from '../../../components/CustomDataTable';
 import CustomerModal from './CustomerModal';
 import {useEffect, useState} from 'react';
+import FilterModal from 'components/CustomModal/FilterModal';
 
 export default function CustomerList() {
   const [openModal, setOpenModal] = useState(false);
+  const [openFilter, setOpenFilter] = useState(false);
   const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
@@ -146,12 +148,26 @@ export default function CustomerList() {
         onAdd={onAdd}
         onEdit={onEdit}
         onDelete={onDelete}
+        onFilterClick={() => setOpenFilter(true)}
         deleteTitle={<IntlMessages id='user.deleteMessage' />}
         isLoading={loading}
         onExactChange={(value) => setExactMatch(value)}
         selected={selected}
         onEnterSearch={onEnterSearch}
       />
+      {openFilter && (
+        <FilterModal
+          open={openFilter}
+          toggleOpen={() => setOpenFilter((d) => !d)}
+          initialData={filterData}
+          onApply={(filterData) => {
+            setFilterData(filterData);
+            setOpenFilter(false);
+          }}
+          title='Customers Filter'
+          content={filterContent}
+        />
+      )}
       {openModal && (
         <CustomerModal
           open={openModal}

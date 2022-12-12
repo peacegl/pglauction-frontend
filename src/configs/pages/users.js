@@ -174,6 +174,81 @@ export const tableColumns = function () {
   ];
 };
 
+export const filterContent = [
+  {
+    title: 'id_filtering',
+    items: [
+      {
+        name: 'users.code',
+        label: 'Code',
+        type: 'autocomplete',
+        url: '/user_codes/auto_complete',
+        keyName: 'code',
+      },
+      {
+        name: 'login.username',
+        label: 'Username',
+        type: 'autocomplete',
+        url: '/user/auto_complete',
+        keyName: 'username',
+      },
+      {
+        name: 'users.created_by',
+        label: 'Created By',
+        type: 'autocomplete',
+        url: '/user/auto_complete',
+        keyName: 'username',
+      },
+      {
+        name: 'users.updated_by',
+        label: 'Updated By',
+        type: 'autocomplete',
+        url: '/user/auto_complete',
+        keyName: 'username',
+      },
+    ],
+  },
+  {
+    title: 'data',
+    items: [
+      {
+        name: 'login.status',
+        label: 'Status',
+        type: 'checkbox',
+        items: ['active', 'inactive', 'pending'],
+      },
+
+      {
+        name: 'users.gender',
+        label: 'Gender',
+        type: 'checkbox',
+        items: ['male', 'female'],
+      },
+      {
+        name: 'login.type',
+        label: 'Type',
+        type: 'checkbox',
+        items: ['employee', 'seller'],
+      },
+    ],
+  },
+  {
+    title: 'date_range',
+    items: [
+      {
+        name: 'users.created_at',
+        label: 'Created At',
+        type: 'date_range',
+      },
+      {
+        name: 'users.updated_at',
+        label: 'Updated At',
+        type: 'date_range',
+      },
+    ],
+  },
+];
+
 export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
   const {messages = []} = appIntl() ? appIntl() : {};
   return {

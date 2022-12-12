@@ -108,6 +108,92 @@ export const tableColumns = function () {
   ];
 };
 
+export const filterContent = [
+  {
+    title: 'id_filtering',
+    items: [
+      {
+        name: 'sales.code',
+        label: 'Code',
+        type: 'autocomplete',
+        url: '/sale_codes/auto_complete',
+        keyName: 'code',
+      },
+      {
+        name: 'sales.lot_number',
+        label: 'Lot Number',
+        type: 'autocomplete',
+        url: '/vehicle_lots/auto_complete',
+        keyName: 'lot_number',
+      },
+      {
+        name: 'sales.vin',
+        label: 'Vin',
+        type: 'autocomplete',
+        url: '/vehicle_vins/auto_complete',
+        keyName: 'vin',
+      },
+      {
+        name: 'created_by',
+        label: 'Created By',
+        type: 'autocomplete',
+        url: '/user/auto_complete',
+        keyName: 'username',
+      },
+      {
+        name: 'sales.updated_by',
+        label: 'Updated By',
+        type: 'autocomplete',
+        url: '/user/auto_complete',
+        keyName: 'username',
+      },
+    ],
+  },
+  {
+    title: 'data',
+    items: [
+      {
+        name: 'sales.price',
+        label: 'Price',
+        type: 'number_range',
+      },
+      {
+        name: 'sales.buyer_id',
+        label: 'Buyers',
+        type: 'autocomplete',
+        url: '/user/auto_complete?type=buyer',
+        keyName: 'username',
+      },
+      {
+        name: 'sales.status',
+        label: 'Status',
+        type: 'checkbox',
+        items: ['sold', 'cancelled', 'pending'],
+      },
+    ],
+  },
+  {
+    title: 'date_range',
+    items: [
+      {
+        name: 'sales.sale_date',
+        label: 'Sale Date',
+        type: 'date_range',
+      },
+      {
+        name: 'sales.created_at',
+        label: 'Created At',
+        type: 'date_range',
+      },
+      {
+        name: 'sales.updated_at',
+        label: 'Updated At',
+        type: 'date_range',
+      },
+    ],
+  },
+];
+
 export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
   return {
     exportColumns: [],

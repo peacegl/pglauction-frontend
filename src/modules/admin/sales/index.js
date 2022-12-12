@@ -1,5 +1,5 @@
 import CustomDataTable from '../../../components/CustomDataTable';
-import {tableColumns} from '../../../configs/pages/sales';
+import {filterContent, tableColumns} from '../../../configs/pages/sales';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect, useState} from 'react';
@@ -9,9 +9,11 @@ import {
   onDeleteSales,
   getUserAutocompleteOptions,
 } from 'redux/actions';
+import FilterModal from 'components/CustomModal/FilterModal';
 
 export default function SaleList() {
   const [showSaleModal, setShowSaleModal] = useState(false);
+  const [openFilter, setOpenFilter] = useState(false);
   const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
@@ -142,6 +144,7 @@ export default function SaleList() {
         data={data}
         columns={tableColumns()}
         options={options}
+        onFilterClick={() => setOpenFilter(true)}
         onEdit={onEdit}
         onDelete={onDelete}
         deleteTitle={<IntlMessages id='sale.deleteMessage' />}
@@ -153,6 +156,19 @@ export default function SaleList() {
         sellButton
         onSell={onSell}
       />
+      {openFilter && (
+        <FilterModal
+          open={openFilter}
+          toggleOpen={() => setOpenFilter((d) => !d)}
+          initialData={filterData}
+          onApply={(filterData) => {
+            setFilterData(filterData);
+            setOpenFilter(false);
+          }}
+          title='Sales Filter'
+          content={filterContent}
+        />
+      )}
       {showSaleModal && (
         <SaleModal
           open={showSaleModal}

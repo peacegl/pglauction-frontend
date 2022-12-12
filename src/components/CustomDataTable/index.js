@@ -17,9 +17,8 @@ const CustomDataTable = ({
   columns,
   options,
   hideAddButton,
-  hideFilterButton = true,
   onAdd,
-  onFilter,
+  onFilterClick,
   onEdit,
   onDelete,
   deleteTitle,
@@ -85,9 +84,9 @@ const CustomDataTable = ({
           // },
           customToolbar: () => (
             <>
-              {hideFilterButton && (
+              {onFilterClick && (
                 <BasicTooltip
-                  onClick={onFilter}
+                  onClick={onFilterClick}
                   title={<IntlMessages id='common.filter' />}
                   icon={<FilterListRoundedIcon />}
                 />
@@ -155,10 +154,9 @@ CustomDataTable.propTypes = {
   data: PropTypes.array.isRequired,
   columns: PropTypes.array.isRequired,
   options: PropTypes.object.isRequired,
-  hideFilterButton: PropTypes.bool,
   hideAddButton: PropTypes.bool,
   onAdd: PropTypes.func,
-  onFilter: PropTypes.func,
+  onFilterClick: PropTypes.func,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
   deleteTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),

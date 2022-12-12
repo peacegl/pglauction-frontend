@@ -845,6 +845,10 @@
   "common.deleted_by": "Deleted By",
   "common.deleted_at": "Deleted At",
   "common.last_updated": "Last Updated",
+  "common.id_filtering": "ID Filtering",
+  "common.data": "Data",
+  "common.date_range": "Date Renge",
+  "common.reset": "Reset",
 
   "location.locationInfo": "Location Info",
   "confirm.location.delete": "Are you sure, you want to delete the selected Location(s)?",

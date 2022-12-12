@@ -1,12 +1,8 @@
 import {useEffect, useState} from 'react';
-import {
-  onGetVehicleData,
-  onDeleteVehicles,
-  getUserAutocompleteOptions,
-} from 'redux/actions';
+import {onGetVehicleData, onDeleteVehicles} from 'redux/actions';
 import CustomDataTable from '../../../components/CustomDataTable';
 import {useDispatch, useSelector} from 'react-redux';
-import {tableColumns} from '../../../configs/pages/vehicles';
+import {filterContent, tableColumns} from '../../../configs/pages/vehicles';
 import VehicleModal from './VehicleModal';
 import IntlMessages from '@crema/utility/IntlMessages';
 import SaleModal from '../sales/SaleModal';
@@ -110,43 +106,6 @@ export default function VehicleList() {
     fetchData(value);
   };
 
-  const handleFilter = (filterList) => {
-    const filterData = {};
-    filterData['vehicles.year'] = filterList[1][0]
-      ? 'like@@' + filterList[1][0].trim()
-      : undefined;
-    filterData['vehicles.color'] = filterList[2][0]
-      ? 'like@@' + filterList[2][0].trim()
-      : undefined;
-    filterData['vehicles.model'] = filterList[3][0]
-      ? 'like@@' + filterList[3][0].trim()
-      : undefined;
-    filterData['vehicles.engine_type'] = filterList[4][0]
-      ? 'like@@' + filterList[4][0].trim()
-      : undefined;
-    filterData['vehicles.vin'] = filterList[5].map((item) => item.vin);
-    filterData['vehicles.lot_number'] = filterList[6].map(
-      (item) => item.lot_number,
-    );
-    filterData['vehicles.cylinder'] = filterList[7][0]
-      ? 'like@@' + filterList[7][0].trim()
-      : undefined;
-    filterData['vehicles.vehicle_type'] = filterList[8][0]
-      ? 'like@@' + filterList[8][0].trim()
-      : undefined;
-    filterData['vehicles.created_by'] = filterList[9].map((item) => item.id);
-    filterData['vehicles.updated_by'] = filterList[11].map((item) => item.id);
-    filterData['vehicles.created_at'] = {
-      from: filterList[10][0],
-      to: filterList[10][1],
-    };
-    filterData['vehicles.updated_at'] = {
-      from: filterList[12][0],
-      to: filterList[12][1],
-    };
-    setFilterData(filterData);
-  };
-
   return (
     <>
       <CustomDataTable
@@ -158,7 +117,7 @@ export default function VehicleList() {
         onAdd={onAdd}
         onEdit={onEdit}
         onDelete={onDelete}
-        onFilter={() => setOpenFilter(true)}
+        onFilterClick={() => setOpenFilter(true)}
         deleteTitle={<IntlMessages id='vehicle.deleteMessage' />}
         isLoading={loading}
         selected={selected}
@@ -172,6 +131,13 @@ export default function VehicleList() {
         <FilterModal
           open={openFilter}
           toggleOpen={() => setOpenFilter((d) => !d)}
+          initialData={filterData}
+          onApply={(filterData) => {
+            setFilterData(filterData);
+            setOpenFilter(false);
+          }}
+          title='Vehicle Filter'
+          content={filterContent}
         />
       )}
       {openModal && (

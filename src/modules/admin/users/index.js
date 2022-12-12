@@ -1,4 +1,4 @@
-import {tableColumns} from '../../../configs/pages/users';
+import {filterContent, tableColumns} from '../../../configs/pages/users';
 import {useDispatch, useSelector} from 'react-redux';
 import CustomDataTable from '../../../components/CustomDataTable';
 import {
@@ -9,9 +9,11 @@ import {
 import {useEffect, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
 import UserModal from './UserModal';
+import FilterModal from 'components/CustomModal/FilterModal';
 
 export default function UserList() {
   const [openModal, setOpenModal] = useState(false);
+  const [openFilter, setOpenFilter] = useState(false);
   const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
@@ -145,12 +147,26 @@ export default function UserList() {
         onAdd={onAdd}
         onEdit={onEdit}
         onDelete={onDelete}
+        onFilterClick={() => setOpenFilter(true)}
         deleteTitle={<IntlMessages id='user.deleteMessage' />}
         isLoading={loading}
         selected={selected}
         onEnterSearch={onEnterSearch}
         onExactChange={(value) => setExactMatch(value)}
       />
+      {openFilter && (
+        <FilterModal
+          open={openFilter}
+          toggleOpen={() => setOpenFilter((d) => !d)}
+          initialData={filterData}
+          onApply={(filterData) => {
+            setFilterData(filterData);
+            setOpenFilter(false);
+          }}
+          title='Users Filter'
+          content={filterContent}
+        />
+      )}
       {openModal && (
         <UserModal
           open={openModal}

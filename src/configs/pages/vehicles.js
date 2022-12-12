@@ -22,7 +22,7 @@ export const tableColumns = function () {
         filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            V{value.toString().padStart(8, '0')}
+            {value}
           </Typography>
         ),
       },
@@ -255,6 +255,124 @@ export const tableColumns = function () {
     dateColumn('updated_at', messages['common.updated_at']),
   ];
 };
+
+export const filterContent = [
+  {
+    title: 'id_filtering',
+    items: [
+      {
+        name: 'vehicles.code',
+        label: 'Code',
+        type: 'autocomplete',
+        url: '/vehicle_codes/auto_complete',
+        keyName: 'code',
+      },
+      {
+        name: 'vehicles.lot_number',
+        label: 'Lot Number',
+        type: 'autocomplete',
+        url: '/vehicle_lots/auto_complete',
+        keyName: 'lot_number',
+      },
+      {
+        name: 'vehicles.vin',
+        label: 'Vin',
+        type: 'autocomplete',
+        url: '/vehicle_vins/auto_complete',
+        keyName: 'vin',
+      },
+      {
+        name: 'created_by',
+        label: 'Created By',
+        type: 'autocomplete',
+        url: '/user/auto_complete',
+        keyName: 'username',
+      },
+      {
+        name: 'vehicles.updated_by',
+        label: 'Updated By',
+        type: 'autocomplete',
+        url: '/user/auto_complete',
+        keyName: 'username',
+      },
+      {
+        name: 'vehicles.status',
+        label: 'Status',
+        type: 'checkbox',
+        items: ['available', 'sold', 'inactive', 'future'],
+      },
+    ],
+  },
+  {
+    title: 'data',
+    items: [
+      {
+        name: 'vehicles.make',
+        label: 'Make',
+        type: 'textfield',
+      },
+      {
+        name: 'vehicles.model',
+        label: 'model',
+        type: 'textfield',
+      },
+      {
+        name: 'vehicles.price',
+        label: 'Price',
+        type: 'number_range',
+      },
+      {
+        name: 'vehicles.year',
+        label: 'Year',
+        min: 'Start',
+        max: 'End',
+        type: 'number_range',
+      },
+      {
+        name: 'vehicles.odometer',
+        label: 'Odometer',
+        type: 'number_range',
+      },
+      {
+        name: 'vehicles.body_style',
+        label: 'Body Styles',
+        type: 'checkbox',
+        items: [
+          'sedan',
+          'suv',
+          'coupe',
+          'hatchback',
+          'convertible',
+          'wagon',
+          'pickup',
+          'minivan',
+          'van',
+        ],
+      },
+      {
+        name: 'vehicles.transmission',
+        label: 'Transmission',
+        type: 'checkbox',
+        items: ['automatic', 'manual'],
+      },
+    ],
+  },
+  {
+    title: 'date_range',
+    items: [
+      {
+        name: 'vehicles.created_at',
+        label: 'Created At',
+        type: 'date_range',
+      },
+      {
+        name: 'vehicles.updated_at',
+        label: 'Updated At',
+        type: 'date_range',
+      },
+    ],
+  },
+];
 
 export default function configs(invalidYoutube) {
   return {
