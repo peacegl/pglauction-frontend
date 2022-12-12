@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import {grey} from '@mui/material/colors';
 import {Fonts} from 'shared/constants/AppEnums';
-import {initialUrl} from 'shared/constants/AppConst';
+import {userInitialUrl} from 'shared/constants/AppConst';
 import AppAnimate from '@crema/core/AppAnimate';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useTheme} from '@mui/material';
@@ -17,7 +17,7 @@ const Maintenance = () => {
   const history = useRouter();
 
   const onGoBackToHome = () => {
-    history.push(initialUrl);
+    history.push(userInitialUrl);
   };
 
   return (

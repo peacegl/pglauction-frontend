@@ -21,9 +21,9 @@ const HorizontalNav = () => {
             <HorizontalCollapse item={item} nestedLevel={0} />
           )}
 
-          {item.type === 'item' && item.permission
-            ? user.permissions?.includes(item.permission)
-            : true && <HorizontalItem item={item} nestedLevel={0} />}
+          {item.type === 'item' && (
+            <HorizontalItem item={item} nestedLevel={0} />
+          )}
 
           {item.type === 'divider' && <Divider sx={{my: 5}} />}
         </React.Fragment>

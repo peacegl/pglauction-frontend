@@ -1,17 +1,23 @@
+import CustomDataTable from 'components/CustomDataTable';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {useDispatch, useSelector} from 'react-redux';
+import CustomerModal from './CustomerModal';
+import {useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
+import {
+  ADD_CUSTOMER,
+  EDIT_CUSTOMER,
+  DELETE_CUSTOMER,
+} from 'shared/constants/Permissions';
 import {
   onGetCustomerList,
   onDeleteCustomers,
   getUserAutocompleteOptions,
 } from 'redux/actions';
 import {filterContent, tableColumns} from '../../../configs/pages/customers';
-import IntlMessages from '@crema/utility/IntlMessages';
-import {useDispatch, useSelector} from 'react-redux';
-import CustomDataTable from '../../../components/CustomDataTable';
-import CustomerModal from './CustomerModal';
-import {useEffect, useState} from 'react';
 import FilterModal from 'components/CustomModal/FilterModal';
 
-export default function CustomerList() {
+export default function CustomerList({user}) {
   const [openModal, setOpenModal] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
   const [recordId, setRecordId] = useState(null);
@@ -65,19 +71,19 @@ export default function CustomerList() {
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
-    confirmFilters: true,
-    onFilterDialogOpen: () => {
-      dispatch(getUserAutocompleteOptions());
-    },
-    // callback that gets executed when filters are confirmed
-    onFilterConfirm: (filterList) => {
-      handleFilter(filterList);
-    },
-    onFilterChange: (column, filterList, type) => {
-      if (type === 'chip') {
-        handleFilter(filterList);
-      }
-    },
+    // confirmFilters: true,
+    // onFilterDialogOpen: () => {
+    //   dispatch(getUserAutocompleteOptions());
+    // },
+    // // callback that gets executed when filters are confirmed
+    // onFilterConfirm: (filterList) => {
+    //   handleFilter(filterList);
+    // },
+    // onFilterChange: (column, filterList, type) => {
+    //   if (type === 'chip') {
+    //     handleFilter(filterList);
+    //   }
+    // },
   };
   const onAdd = () => {
     setRecordId(null);
@@ -154,6 +160,13 @@ export default function CustomerList() {
         onExactChange={(value) => setExactMatch(value)}
         selected={selected}
         onEnterSearch={onEnterSearch}
+        showAddButton={user?.permissions?.includes(ADD_CUSTOMER)}
+        showEditButton={user?.permissions?.includes(EDIT_CUSTOMER)}
+        showDeleteButton={user?.permissions?.includes(DELETE_CUSTOMER)}
+        selectableRows={
+          user?.permissions?.includes(EDIT_CUSTOMER) ||
+          user?.permissions?.includes(DELETE_CUSTOMER)
+        }
       />
       {openFilter && (
         <FilterModal
@@ -179,3 +192,6 @@ export default function CustomerList() {
     </>
   );
 }
+CustomerList.propTypes = {
+  user: PropTypes.any,
+};

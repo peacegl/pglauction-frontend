@@ -15,31 +15,37 @@ export default function DefaultToolbar({
   onSell,
   showSell = false,
   selectedItems = [],
+  showDeleteButton,
+  showEditButton,
 }) {
   return (
     <Box style={{display: 'flex'}} sx={{mx: 4, my: 1.75}}>
-      {showSell && selected.length == 1 && selectedItems[0].status != 'sold' && (
-        <AppTooltip title={<IntlMessages id='common.sell' />}>
-          <IconButton color='info' onClick={onSell}>
-            <SellIcon sx={{fontSize: '22px'}} />
-          </IconButton>
-        </AppTooltip>
-      )}
-      {selected.length == 1 && (
+      {showSell &&
+        selected.length == 1 &&
+        selectedItems[0].status != 'sold' && (
+          <AppTooltip title={<IntlMessages id='common.sell' />}>
+            <IconButton color='info' onClick={onSell}>
+              <SellIcon sx={{fontSize: '22px'}} />
+            </IconButton>
+          </AppTooltip>
+        )}
+      {showEditButton && selected.length == 1 && (
         <AppTooltip title={<IntlMessages id='common.edit' />}>
           <IconButton color='info' onClick={onEdit}>
             <EditIcon />
           </IconButton>
         </AppTooltip>
       )}
-      <AppsDeleteIcon
-        deleteAction={onDelete}
-        deleteTitle={deleteTitle}
-        sx={{
-          cursor: 'pointer',
-          color: 'text.disabled',
-        }}
-      />
+      {showDeleteButton && (
+        <AppsDeleteIcon
+          deleteAction={onDelete}
+          deleteTitle={deleteTitle}
+          sx={{
+            cursor: 'pointer',
+            color: 'text.disabled',
+          }}
+        />
+      )}
     </Box>
   );
 }
@@ -52,4 +58,6 @@ DefaultToolbar.propTypes = {
   onSell: PropTypes.func,
   selectedItems: PropTypes.array,
   showSell: PropTypes.bool,
+  showDeleteButton: PropTypes.bool,
+  showEditButton: PropTypes.bool,
 };

@@ -9,6 +9,17 @@ import StorefrontIcon from '@mui/icons-material/Storefront';
 import AutoAwesomeMosaicIcon from '@mui/icons-material/AutoAwesomeMosaic';
 import AssistantIcon from '@mui/icons-material/Assistant';
 import HomeIcon from '@mui/icons-material/Home';
+import {
+  VIEW_VEHICLES,
+  VIEW_USERS,
+  VIEW_SALES,
+  VIEW_CUSTOMERS,
+  VIEW_LOCATIONS,
+  VIEW_PERMISSIONS,
+  VIEW_ROLES,
+  VIEW_AUCTIONS,
+  VIEW_AUCTION_ITEMS,
+} from 'shared/constants/Permissions';
 
 const routesConfig = [
   {
@@ -26,7 +37,7 @@ const routesConfig = [
     type: 'item',
     icon: <DriveEtaIcon sx={{fontSize: 22}} />,
     url: '/admin/vehicles',
-    permittedPermission: 'view_vehicles',
+    permittedPermission: VIEW_VEHICLES,
   },
 
   // {
@@ -55,7 +66,7 @@ const routesConfig = [
     type: 'item',
     icon: <SellIcon sx={{fontSize: 22}} />,
     url: '/admin/sales',
-    permittedPermission: 'view_sales',
+    permittedPermission: VIEW_SALES,
   },
   // {
   //   id: 'auctions',
@@ -64,7 +75,7 @@ const routesConfig = [
   //   type: 'item',
   //   icon: <StorefrontIcon sx={{fontSize: 22}} />,
   //   url: '/admin/auctions',
-  //   permission: 'view_auctions',
+  //   permittedPermission: VIEW_AUCTIONS',
   // },
   // {
   //   id: 'auction_items',
@@ -73,7 +84,7 @@ const routesConfig = [
   //   type: 'item',
   //   icon: <SellIcon sx={{fontSize: 22}} />,
   //   url: '/admin/auction_items',
-  //   permission: 'view_auction_items',
+  //   permittedPermission: VIEW_AUCTION_ITEMS,
   // },
   {
     id: 'users',
@@ -82,7 +93,7 @@ const routesConfig = [
     type: 'item',
     icon: <SupervisorAccountIcon sx={{fontSize: 22}} />,
     url: '/admin/users',
-    permittedPermission: 'view_users',
+    permittedPermission: VIEW_USERS,
   },
   {
     id: 'customers',
@@ -91,7 +102,7 @@ const routesConfig = [
     type: 'item',
     icon: <PeopleAltIcon sx={{fontSize: 22}} />,
     url: '/admin/customers',
-    permittedPermission: 'view_customers',
+    permittedPermission: VIEW_CUSTOMERS,
   },
   {
     id: 'roles',
@@ -100,7 +111,7 @@ const routesConfig = [
     type: 'item',
     icon: <VerifiedUserIcon sx={{fontSize: 21}} />,
     url: '/admin/roles',
-    permittedPermission: 'view_roles',
+    permittedPermission: VIEW_ROLES,
   },
   {
     id: 'permissions',
@@ -109,7 +120,7 @@ const routesConfig = [
     type: 'item',
     icon: <ManageAccountsIcon sx={{fontSize: 22}} />,
     url: '/admin/permissions',
-    permittedPermission: 'view_permissions',
+    permittedPermission: VIEW_PERMISSIONS,
   },
   {
     id: 'locations',
@@ -118,25 +129,7 @@ const routesConfig = [
     type: 'item',
     icon: <LocationOnIcon sx={{fontSize: 22}} />,
     url: '/admin/locations',
-    permittedPermission: 'view_locations',
+    permittedPermission: VIEW_LOCATIONS,
   },
-  // {
-  //   id: 'makes',
-  //   title: 'Make List',
-  //   messageId: 'sidebar.makes',
-  //   type: 'item',
-  //   icon: <AutoAwesomeMosaicIcon sx={{fontSize: 22}} />,
-  //   url: '/admin/makes',
-  //   // permission: 'view_makes',
-  // },
-  // {
-  //   id: 'models',
-  //   title: 'Model List',
-  //   messageId: 'sidebar.models',
-  //   type: 'item',
-  //   icon: <AssistantIcon sx={{fontSize: 22}} />,
-  //   url: '/admin/models',
-  //   // permission: 'view_models',
-  // },
 ];
 export default routesConfig;

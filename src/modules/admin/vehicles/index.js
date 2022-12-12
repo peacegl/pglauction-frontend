@@ -1,14 +1,21 @@
+import CustomDataTable from '../../../components/CustomDataTable';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {useDispatch, useSelector} from 'react-redux';
+import SaleModal from '../sales/SaleModal';
 import {useEffect, useState} from 'react';
 import {onGetVehicleData, onDeleteVehicles} from 'redux/actions';
-import CustomDataTable from '../../../components/CustomDataTable';
-import {useDispatch, useSelector} from 'react-redux';
 import {filterContent, tableColumns} from '../../../configs/pages/vehicles';
 import VehicleModal from './VehicleModal';
-import IntlMessages from '@crema/utility/IntlMessages';
-import SaleModal from '../sales/SaleModal';
 import FilterModal from 'components/CustomModal/FilterModal';
+import PropTypes from 'prop-types';
+import {
+  ADD_VEHICLE,
+  DELETE_VEHICLE,
+  EDIT_VEHICLE,
+  ADD_SALE,
+} from 'shared/constants/Permissions';
 
-export default function VehicleList() {
+export default function VehicleList({user}) {
   const [openModal, setOpenModal] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
   const [showSaleModal, setShowSaleModal] = useState(false);
@@ -124,8 +131,16 @@ export default function VehicleList() {
         onEnterSearch={onEnterSearch}
         onExactChange={(value) => setExactMatch(value)}
         onSell={onSell}
-        showSell={true}
+        showSell={user?.permissions?.includes(ADD_SALE)}
         selectedItems={selectedItems}
+        showAddButton={user?.permissions?.includes(ADD_VEHICLE)}
+        showEditButton={user?.permissions?.includes(EDIT_VEHICLE)}
+        showDeleteButton={user?.permissions?.includes(DELETE_VEHICLE)}
+        selectableRows={
+          user?.permissions?.includes(EDIT_VEHICLE) ||
+          user?.permissions?.includes(DELETE_VEHICLE) ||
+          user?.permissions?.includes(ADD_SALE)
+        }
       />
       {openFilter && (
         <FilterModal
@@ -158,3 +173,6 @@ export default function VehicleList() {
     </>
   );
 }
+VehicleList.propTypes = {
+  user: PropTypes.any,
+};

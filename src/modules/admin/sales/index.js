@@ -1,9 +1,11 @@
 import CustomDataTable from '../../../components/CustomDataTable';
 import {filterContent, tableColumns} from '../../../configs/pages/sales';
+import {ADD_SALE, DELETE_SALE, EDIT_SALE} from 'shared/constants/Permissions';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect, useState} from 'react';
 import SaleModal from './SaleModal';
+import PropTypes from 'prop-types';
 import {
   onGetSaleList,
   onDeleteSales,
@@ -11,7 +13,7 @@ import {
 } from 'redux/actions';
 import FilterModal from 'components/CustomModal/FilterModal';
 
-export default function SaleList() {
+export default function SaleList({user}) {
   const [showSaleModal, setShowSaleModal] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
   const [recordId, setRecordId] = useState(null);
@@ -82,7 +84,7 @@ export default function SaleList() {
     setRecordId(data[selected[0]].id);
     setShowSaleModal(true);
   };
-  const onSell = () => {
+  const onAdd = () => {
     setRecordId(null);
     setShowSaleModal(true);
   };
@@ -152,9 +154,14 @@ export default function SaleList() {
         selected={selected}
         onEnterSearch={onEnterSearch}
         onExactChange={(value) => setExactMatch(value)}
-        hideAddButton
-        sellButton
-        onSell={onSell}
+        onAdd={onAdd}
+        showAddButton={user?.permissions?.includes(ADD_SALE)}
+        showEditButton={user?.permissions?.includes(EDIT_SALE)}
+        showDeleteButton={user?.permissions?.includes(DELETE_SALE)}
+        selectableRows={
+          user?.permissions?.includes(EDIT_SALE) ||
+          user?.permissions?.includes(DELETE_SALE)
+        }
       />
       {openFilter && (
         <FilterModal
@@ -180,3 +187,6 @@ export default function SaleList() {
     </>
   );
 }
+SaleList.propTypes = {
+  user: PropTypes.any,
+};

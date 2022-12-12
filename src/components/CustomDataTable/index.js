@@ -16,20 +16,22 @@ const CustomDataTable = ({
   data,
   columns,
   options,
-  hideAddButton,
   onAdd,
   onFilterClick,
   onEdit,
   onDelete,
+  showAddButton,
+  showDeleteButton,
+  showEditButton,
   deleteTitle,
   isLoading,
   selected,
   onEnterSearch,
   onExactChange,
   onSell,
-  showSell = false,
+  showSell,
   selectedItems = [],
-  sellButton = false,
+  selectableRows,
 }) => {
   return (
     <>
@@ -66,6 +68,7 @@ const CustomDataTable = ({
           fixedHeader: true,
           rowHover: true,
           filter: false,
+          selectableRows: selectableRows,
           tableBodyMaxHeight: options.tableBodyMaxHeight
             ? options.tableBodyMaxHeight
             : '73vh',
@@ -91,18 +94,11 @@ const CustomDataTable = ({
                   icon={<FilterListRoundedIcon />}
                 />
               )}
-              {!hideAddButton && (
+              {showAddButton && (
                 <BasicTooltip
                   onClick={onAdd}
                   title={<IntlMessages id='common.add' />}
                   icon={<AddCircleIcon />}
-                />
-              )}
-              {sellButton && (
-                <BasicTooltip
-                  onClick={onSell}
-                  title={<IntlMessages id='common.sell' />}
-                  icon={<SellIcon sx={{fontSize: '22px'}} />}
                 />
               )}
             </>
@@ -118,6 +114,8 @@ const CustomDataTable = ({
                   onSell={onSell}
                   showSell={showSell}
                   selectedItems={selectedItems}
+                  showEditButton={showEditButton}
+                  showDeleteButton={showDeleteButton}
                 />
               ),
           customSearchRender: options.customSearchRender
@@ -154,7 +152,9 @@ CustomDataTable.propTypes = {
   data: PropTypes.array.isRequired,
   columns: PropTypes.array.isRequired,
   options: PropTypes.object.isRequired,
-  hideAddButton: PropTypes.bool,
+  showAddButton: PropTypes.bool,
+  showDeleteButton: PropTypes.bool,
+  showEditButton: PropTypes.bool,
   onAdd: PropTypes.func,
   onFilterClick: PropTypes.func,
   onEdit: PropTypes.func,
@@ -167,5 +167,5 @@ CustomDataTable.propTypes = {
   onSell: PropTypes.func,
   showSell: PropTypes.bool,
   selectedItems: PropTypes.array,
-  sellButton: PropTypes.any,
+  selectableRows: PropTypes.bool,
 };

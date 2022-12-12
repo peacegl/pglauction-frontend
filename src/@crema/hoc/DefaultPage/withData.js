@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import Router, {useRouter} from 'next/router';
-import {initialUrl} from '../../../shared/constants/AppConst';
+import {userInitialUrl} from '../../../shared/constants/AppConst';
 import AppLoader from '../../core/AppLoader';
 import {useAuthUser} from '../../utility/AuthHooks';
 
@@ -10,7 +10,7 @@ const withData = (ComposedComponent) => (props) => {
   const queryParams = asPath.split('?')[1];
   useEffect(() => {
     if (user) {
-      Router.push(initialUrl + (queryParams ? '?' + queryParams : ''));
+      Router.push(userInitialUrl + (queryParams ? '?' + queryParams : ''));
     }
   }, [user]);
   if (isLoading) return <AppLoader />;
