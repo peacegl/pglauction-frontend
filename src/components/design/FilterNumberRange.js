@@ -3,14 +3,11 @@ import {Box, FormLabel, Stack, TextField} from '@mui/material';
 import IntlMessages from '@crema/utility/IntlMessages';
 import PropTypes from 'prop-types';
 
-export default function FilterNumberRange({
-  changeHandler,
-  values,
-  item,
-  ...rest
-}) {
-  const [numberRange, setNumberRange] = useState(values);
-
+export default function FilterNumberRange({changeHandler, values, item}) {
+  const [numberRange, setNumberRange] = useState({});
+  useEffect(() => {
+    setNumberRange(values);
+  }, [values]);
   return (
     <>
       <FormLabel>{item.label}</FormLabel>

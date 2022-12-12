@@ -8,13 +8,7 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 
-export default function FilterCheckbox({
-  label,
-  items,
-  changeHandler,
-  values,
-  ...rest
-}) {
+export default function FilterCheckbox({label, items, changeHandler, values}) {
   const [checkedItems, setCheckedItems] = useState([]);
 
   const onChange = (event) => {

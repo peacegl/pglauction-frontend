@@ -3,12 +3,7 @@ import {FormLabel, Stack, TextField} from '@mui/material';
 import {DatePicker} from '@mui/x-date-pickers';
 import IntlMessages from '@crema/utility/IntlMessages';
 import PropTypes from 'prop-types';
-export default function FilterDateRange({
-  label,
-  values,
-  changeHandler,
-  ...rest
-}) {
+export default function FilterDateRange({label, values, changeHandler}) {
   const [dateRange, setDateRange] = useState({});
   useEffect(() => {
     setDateRange(values);

@@ -1,5 +1,5 @@
 import AppAutoComplete from '@crema/core/AppFormComponents/AppAutoComplete';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {Box, Stack} from '@mui/material';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import PropTypes from 'prop-types';
@@ -29,7 +29,6 @@ export default function FilterAutocomplete({
   keyName,
   values,
   onChange,
-  ...rest
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);

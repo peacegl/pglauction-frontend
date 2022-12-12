@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
@@ -13,7 +13,6 @@ import {
   IconButton,
   Stack,
   TextField,
-  useTheme,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
