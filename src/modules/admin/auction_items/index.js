@@ -10,11 +10,7 @@ import {
   DELETE_AUCTION_ITEM,
   EDIT_AUCTION_ITEM,
 } from 'shared/constants/Permissions';
-import {
-  onGetAuctionItemData,
-  onDeleteAuctionItems,
-  getUserAutocompleteOptions,
-} from 'redux/actions';
+import {onGetAuctionItemData, onDeleteAuctionItems} from 'redux/actions';
 
 export default function AuctionItemList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -69,19 +65,6 @@ export default function AuctionItemList({user}) {
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
-    confirmFilters: true,
-    onFilterDialogOpen: () => {
-      dispatch(getUserAutocompleteOptions());
-    },
-    // callback that gets executed when filters are confirmed
-    onFilterConfirm: (filterList) => {
-      handleFilter(filterList);
-    },
-    onFilterChange: (column, filterList, type) => {
-      if (type === 'chip') {
-        handleFilter(filterList);
-      }
-    },
   };
   const onEdit = () => {
     setRecordId(data[selected[0]].id);
@@ -101,35 +84,6 @@ export default function AuctionItemList({user}) {
   const onEnterSearch = (value) => {
     setPage(0);
     fetchData(value);
-  };
-
-  const handleFilter = (filterList) => {
-    const filterData = {};
-    filterData['vehicles.vin'] = filterList[1].map((item) => item.vin);
-    filterData['vehicles.lot_number'] = filterList[2].map(
-      (item) => item.lot_number,
-    );
-    filterData['auction_items.status'] = filterList[9][0]
-      ? 'exact@@' + filterList[9][0].toLowerCase()
-      : undefined;
-    filterData['seller.username'] = filterList[10][0]
-      ? 'like@@' + filterList[10][0].trim()
-      : undefined;
-    filterData['auction_items.created_by'] = filterList[11].map(
-      (item) => item.id,
-    );
-    filterData['auction_items.updated_by'] = filterList[13].map(
-      (item) => item.id,
-    );
-    filterData['auction_items.created_at'] = {
-      from: filterList[12][0],
-      to: filterList[12][1],
-    };
-    filterData['auction_items.updated_at'] = {
-      from: filterList[14][0],
-      to: filterList[14][1],
-    };
-    setFilterData(filterData);
   };
 
   return (
