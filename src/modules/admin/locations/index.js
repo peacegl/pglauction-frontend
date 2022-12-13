@@ -1,4 +1,5 @@
 import {filterContent, tableColumns} from '../../../configs/pages/locations';
+import {onGetLocationList, onDeleteLocations} from 'redux/actions';
 import FilterModal from 'components/CustomModal/FilterModal';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
@@ -11,11 +12,6 @@ import {
   DELETE_LOCATION,
 } from 'shared/constants/Permissions';
 import PropTypes from 'prop-types';
-import {
-  onGetLocationList,
-  onDeleteLocations,
-  getUserAutocompleteOptions,
-} from 'redux/actions';
 
 export default function LocationList({user}) {
   const [openModal, setOpenModal] = useState(false);
