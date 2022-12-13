@@ -10,11 +10,7 @@ import {
   EDIT_LOCATION,
   DELETE_LOCATION,
 } from 'shared/constants/Permissions';
-import {
-  onGetLocationList,
-  onDeleteLocations,
-  getUserAutocompleteOptions,
-} from 'redux/actions';
+import {onGetLocationList, onDeleteLocations} from 'redux/actions';
 import FilterModal from 'components/CustomModal/FilterModal';
 
 export default function LocationList({user}) {
