@@ -151,7 +151,7 @@ const CustomModal = ({
                         height: height ? height : 380,
                         overflowY: 'auto',
                         px: 3,
-                        my: 5,
+                        py: 5,
                       }}
                     >
                       {React.cloneElement(steps[activeStep]?.children, {
