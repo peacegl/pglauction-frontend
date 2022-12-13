@@ -28,7 +28,7 @@ const Vehicles = () => {
             display: 'flex',
           }}
         >
-          <Box
+          {/* <Box
             sx={{
               flex: 1,
               display: {xs: 'none', md: 'block'},
@@ -42,7 +42,7 @@ const Vehicles = () => {
             >
               <AuctionsSidebar />
             </Card>
-          </Box>
+          </Box> */}
           <Box
             sx={{
               flex: {xs: 1, md: 2, lg: 3, xl: 3},

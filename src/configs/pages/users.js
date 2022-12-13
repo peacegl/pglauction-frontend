@@ -1,8 +1,8 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Avatar, Typography} from '@mui/material';
-import CommonConfigs, {createdBy, dateColumn, updatedBy} from '../index';
 import * as yup from 'yup';
+import CommonConfigs from 'configs';
 
 const phoneRegExp = CommonConfigs().phoneRegExp;
 const {messages = []} = appIntl() ? appIntl() : {};
@@ -13,9 +13,7 @@ export const tableColumns = function () {
       name: 'profile',
       label: messages['common.profile'],
       options: {
-        filter: false,
         download: false,
-        sort: false,
         customBodyRender: (value, tableMeta, updateValue) => (
           <Avatar alt={' profile picture.'} src={value} />
         ),
@@ -25,10 +23,9 @@ export const tableColumns = function () {
       name: 'code',
       label: messages['common.code'],
       options: {
-        filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            U{value.toString().padStart(5, '0')}
+            {value}
           </Typography>
         ),
       },
@@ -36,143 +33,136 @@ export const tableColumns = function () {
     {
       name: 'username',
       label: messages['common.username'],
-      options: {
-        display: true,
-        filterType: 'textField',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Username: ${v}`;
-            }
-            return false;
-          },
-        },
-      },
     },
     {
       name: 'firstname',
       label: messages['common.firstname'],
-      options: {
-        display: true,
-        filterType: 'textField',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `First Name: ${v}`;
-            }
-            return false;
-          },
-        },
-      },
     },
     {
       name: 'lastname',
       label: messages['common.lastname'],
-      options: {
-        display: true,
-        filterType: 'textField',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Last Name: ${v}`;
-            }
-            return false;
-          },
-        },
-      },
     },
     {
       name: 'phone',
       label: messages['common.phone'],
-      options: {
-        filter: false,
-      },
     },
     {
       name: 'whatsapp',
       label: messages['common.whatsapp'],
-      options: {
-        filter: false,
-      },
     },
     {
       name: 'gender',
       label: messages['common.gender'],
-      options: {
-        filter: true,
-        filterType: 'select',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Gender: ${v}`;
-            }
-            return false;
-          },
-        },
-        filterOptions: {
-          names: ['Male', 'Female'],
-        },
-      },
     },
     {
       name: 'email',
       label: messages['common.email'],
-      options: {
-        filter: false,
-      },
     },
     {
       name: 'status',
       label: messages['common.status'],
-      options: {
-        filter: true,
-        filterType: 'select',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Status: ${v}`;
-            }
-            return false;
-          },
-        },
-        filterOptions: {
-          names: ['Active', 'Pending', 'Inactive'],
-        },
-      },
     },
     {
       name: 'type',
       label: messages['common.type'],
-      options: {
-        filter: true,
-        filterType: 'select',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Type: ${v}`;
-            }
-            return false;
-          },
-        },
-        filterOptions: {
-          names: ['Employee', 'Seller'],
-        },
-      },
     },
     {
       name: 'birth_date',
       label: messages['common.birth_date'],
-      options: {
-        display: false,
-        filter: false,
-      },
     },
-    createdBy(),
-    dateColumn('created_at', messages['common.created_at']),
-    updatedBy(),
-    dateColumn('updated_at', messages['common.updated_at']),
+    {
+      name: 'created_by',
+      label: messages['common.created_by'],
+    },
+    {
+      name: 'updated_by',
+      label: messages['common.updated_by'],
+    },
+    {
+      name: 'created_at',
+      label: messages['common.created_at'],
+    },
+    {
+      name: 'updated_at',
+      label: messages['common.updated_at'],
+    },
   ];
 };
+
+export const filterContent = [
+  {
+    title: 'id_filtering',
+    items: [
+      {
+        name: 'users.code',
+        label: 'Code',
+        type: 'autocomplete',
+        url: '/codes/auto_complete?model=User',
+        keyName: 'code',
+      },
+      {
+        name: 'login.username',
+        label: 'Username',
+        type: 'autocomplete',
+        url: '/user/auto_complete',
+        keyName: 'username',
+      },
+      {
+        name: 'users.created_by',
+        label: 'Created By',
+        type: 'autocomplete',
+        url: '/user/auto_complete',
+        keyName: 'username',
+      },
+      {
+        name: 'users.updated_by',
+        label: 'Updated By',
+        type: 'autocomplete',
+        url: '/user/auto_complete',
+        keyName: 'username',
+      },
+    ],
+  },
+  {
+    title: 'data',
+    items: [
+      {
+        name: 'login.status',
+        label: 'Status',
+        type: 'checkbox',
+        items: ['active', 'inactive', 'pending'],
+      },
+
+      {
+        name: 'users.gender',
+        label: 'Gender',
+        type: 'checkbox',
+        items: ['male', 'female'],
+      },
+      {
+        name: 'login.type',
+        label: 'Type',
+        type: 'checkbox',
+        items: ['employee', 'seller'],
+      },
+    ],
+  },
+  {
+    title: 'date_range',
+    items: [
+      {
+        name: 'users.created_at',
+        label: 'Created At',
+        type: 'date_range',
+      },
+      {
+        name: 'users.updated_at',
+        label: 'Updated At',
+        type: 'date_range',
+      },
+    ],
+  },
+];
 
 export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
   const {messages = []} = appIntl() ? appIntl() : {};

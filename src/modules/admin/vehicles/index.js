@@ -1,10 +1,12 @@
 import CustomDataTable from '../../../components/CustomDataTable';
-import {tableColumns} from '../../../configs/pages/vehicles';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import SaleModal from '../sales/SaleModal';
 import {useEffect, useState} from 'react';
+import {onGetVehicleData, onDeleteVehicles} from 'redux/actions';
+import {filterContent, tableColumns} from '../../../configs/pages/vehicles';
 import VehicleModal from './VehicleModal';
+import FilterModal from 'components/CustomModal/FilterModal';
 import PropTypes from 'prop-types';
 import {
   ADD_VEHICLE,
@@ -12,13 +14,10 @@ import {
   EDIT_VEHICLE,
   ADD_SALE,
 } from 'shared/constants/Permissions';
-import {
-  onGetVehicleData,
-  onDeleteVehicles,
-  getUserAutocompleteOptions,
-} from 'redux/actions';
+
 export default function VehicleList({user}) {
   const [openModal, setOpenModal] = useState(false);
+  const [openFilter, setOpenFilter] = useState(false);
   const [showSaleModal, setShowSaleModal] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selected, setSelected] = useState([]);
@@ -73,19 +72,6 @@ export default function VehicleList({user}) {
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
-    confirmFilters: true,
-    onFilterDialogOpen: () => {
-      dispatch(getUserAutocompleteOptions());
-    },
-    // callback that gets executed when filters are confirmed
-    onFilterConfirm: (filterList) => {
-      handleFilter(filterList);
-    },
-    onFilterChange: (column, filterList, type) => {
-      if (type === 'chip') {
-        handleFilter(filterList);
-      }
-    },
   };
   const onAdd = () => {
     setRecordId(null);
@@ -114,43 +100,6 @@ export default function VehicleList({user}) {
     fetchData(value);
   };
 
-  const handleFilter = (filterList) => {
-    const filterData = {};
-    filterData['vehicles.year'] = filterList[1][0]
-      ? 'like@@' + filterList[1][0].trim()
-      : undefined;
-    filterData['vehicles.color'] = filterList[2][0]
-      ? 'like@@' + filterList[2][0].trim()
-      : undefined;
-    filterData['vehicles.model'] = filterList[3][0]
-      ? 'like@@' + filterList[3][0].trim()
-      : undefined;
-    filterData['vehicles.engine_type'] = filterList[4][0]
-      ? 'like@@' + filterList[4][0].trim()
-      : undefined;
-    filterData['vehicles.vin'] = filterList[5].map((item) => item.vin);
-    filterData['vehicles.lot_number'] = filterList[6].map(
-      (item) => item.lot_number,
-    );
-    filterData['vehicles.cylinder'] = filterList[7][0]
-      ? 'like@@' + filterList[7][0].trim()
-      : undefined;
-    filterData['vehicles.vehicle_type'] = filterList[8][0]
-      ? 'like@@' + filterList[8][0].trim()
-      : undefined;
-    filterData['vehicles.created_by'] = filterList[9].map((item) => item.id);
-    filterData['vehicles.updated_by'] = filterList[11].map((item) => item.id);
-    filterData['vehicles.created_at'] = {
-      from: filterList[10][0],
-      to: filterList[10][1],
-    };
-    filterData['vehicles.updated_at'] = {
-      from: filterList[12][0],
-      to: filterList[12][1],
-    };
-    setFilterData(filterData);
-  };
-
   return (
     <>
       <CustomDataTable
@@ -162,6 +111,7 @@ export default function VehicleList({user}) {
         onAdd={onAdd}
         onEdit={onEdit}
         onDelete={onDelete}
+        onFilterClick={() => setOpenFilter(true)}
         deleteTitle={<IntlMessages id='vehicle.deleteMessage' />}
         isLoading={loading}
         selected={selected}
@@ -179,6 +129,16 @@ export default function VehicleList({user}) {
           user?.permissions?.includes(ADD_SALE)
         }
       />
+      {openFilter && (
+        <FilterModal
+          open={openFilter}
+          toggleOpen={() => setOpenFilter((d) => !d)}
+          initialData={filterData}
+          updateFilterData={setFilterData}
+          title='Vehicle Filter'
+          content={filterContent}
+        />
+      )}
       {openModal && (
         <VehicleModal
           open={openModal}
