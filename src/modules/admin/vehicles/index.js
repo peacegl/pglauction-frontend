@@ -1,12 +1,12 @@
-import CustomDataTable from '../../../components/CustomDataTable';
+import {filterContent, tableColumns} from 'configs/pages/vehicles';
+import {onGetVehicleData, onDeleteVehicles} from 'redux/actions';
+import FilterModal from 'components/CustomModal/FilterModal';
+import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import SaleModal from '../sales/SaleModal';
 import {useEffect, useState} from 'react';
-import {onGetVehicleData, onDeleteVehicles} from 'redux/actions';
-import {filterContent, tableColumns} from '../../../configs/pages/vehicles';
 import VehicleModal from './VehicleModal';
-import FilterModal from 'components/CustomModal/FilterModal';
 import PropTypes from 'prop-types';
 import {
   ADD_VEHICLE,

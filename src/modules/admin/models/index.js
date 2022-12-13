@@ -1,14 +1,14 @@
+import CustomDataTable from 'components/CustomDataTable';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {useDispatch, useSelector} from 'react-redux';
+import {tableColumns} from 'configs/pages/models';
+import {useEffect, useState} from 'react';
+import ModelModal from './ModelModal';
 import {
   onGetModelList,
   onDeleteModels,
   getUserAutocompleteOptions,
 } from 'redux/actions';
-import {tableColumns} from '../../../configs/pages/models';
-import IntlMessages from '@crema/utility/IntlMessages';
-import {useDispatch, useSelector} from 'react-redux';
-import CustomDataTable from '../../../components/CustomDataTable';
-import ModelModal from './ModelModal';
-import {useEffect, useState} from 'react';
 
 export default function CustomerList() {
   const [openModal, setOpenModal] = useState(false);

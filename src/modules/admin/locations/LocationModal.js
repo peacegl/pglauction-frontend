@@ -1,15 +1,16 @@
-import IntlMessages from '@crema/utility/IntlMessages';
-import LocationConfigs from '../../../configs/pages/locations';
 import {onInsertLocation, onUpdateLocation} from 'redux/actions';
+import LocationConfigs from '../../../configs/pages/locations';
 import CustomModal from '../../../components/CustomModal';
+import IntlMessages from '@crema/utility/IntlMessages';
+import jwtAxios from '@crema/services/auth/jwt-auth';
 import {useState, useEffect} from 'react';
+import LocationForm from './LocationForm';
+import {getData} from '../../../configs';
 import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
-import LocationForm from './LocationForm';
-import jwtAxios from '@crema/services/auth/jwt-auth';
+
 const insertColumns = LocationConfigs().insertColumns;
 const validationSchema = LocationConfigs().validationSchema;
-import {getData} from '../../../configs';
 
 export default function LocationModal({
   open,

@@ -123,7 +123,7 @@ export const onDeleteVehicles = (data) => {
   };
 };
 
-export const setFilters = (filters) => {
+export const setVehicleFilters = (filters) => {
   return (dispatch) => {
     dispatch({type: SET_VEHICLE_FILTER_DATA, payload: filters});
   };
