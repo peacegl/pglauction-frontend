@@ -48,6 +48,9 @@ export default function FilterCheckbox({label, items, changeHandler, values}) {
       >
         {items.map((value, index) => (
           <FormControlLabel
+            sx={{
+              flex: '1 0 48%',
+            }}
             key={index + value}
             label={value.charAt(0).toUpperCase() + value.slice(1)}
             control={
