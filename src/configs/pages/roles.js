@@ -56,18 +56,12 @@ export default function conifgs() {
       },
     ],
     exportColumns: [],
-    validationSchema: [
-      yup.object({
-        name: yup
-          .string()
-          .min(3, <IntlMessages id='validation.min3Letter' />)
-          .max(64, <IntlMessages id='validation.max64Letter' />)
-          .required(<IntlMessages id='validation.nameRequired' />),
-        type: yup
-          .string()
-          .required(<IntlMessages id='validation.typeRequired' />),
-      }),
-      yup.object({}),
-    ],
+    validationSchema: yup.object({
+      name: yup
+        .string()
+        .min(3, <IntlMessages id='validation.min3Letter' />)
+        .max(64, <IntlMessages id='validation.max64Letter' />)
+        .required(<IntlMessages id='validation.nameRequired' />),
+    }),
   };
 }

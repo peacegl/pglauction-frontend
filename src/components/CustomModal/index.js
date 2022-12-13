@@ -83,17 +83,25 @@ const CustomModal = ({
         }}
       >
         {isLoading && <AppLoader />}
-        <IconButton
-          aria-label='close'
-          onClick={toggleOpen}
-          sx={{float: 'right'}}
-        >
-          <CloseIcon sx={{fontSize: 18}} />
-        </IconButton>
         {steps && (
-          <Paper variant='outlined' square sx={{py: 3}}>
-            <CustomStepper steps={steps} activeStep={activeStep} />
-          </Paper>
+          <>
+            <IconButton
+              aria-label='close'
+              onClick={toggleOpen}
+              sx={{float: 'right'}}
+            >
+              <CloseIcon sx={{fontSize: 18}} />
+            </IconButton>
+
+            <Box
+              sx={{
+                py: 3,
+                borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
+              }}
+            >
+              <CustomStepper steps={steps} activeStep={activeStep} />
+            </Box>
+          </>
         )}
         <Formik
           validateOnChange={true}
@@ -116,12 +124,7 @@ const CustomModal = ({
             return (
               <Form>
                 {steps && (
-                  <Box
-                    sx={{
-                      height: height ? height : 500,
-                      overflowY: 'auto',
-                    }}
-                  >
+                  <Box>
                     <Box
                       sx={{
                         pt: 2,
@@ -143,7 +146,14 @@ const CustomModal = ({
                         {steps[activeStep]?.label}
                       </Typography>
                     </Box>
-                    <Box sx={{mx: 3, my: 5}}>
+                    <Box
+                      sx={{
+                        height: height ? height : 380,
+                        overflowY: 'auto',
+                        px: 3,
+                        my: 5,
+                      }}
+                    >
                       {React.cloneElement(steps[activeStep]?.children, {
                         values: values,
                         setfieldvalue: setFieldValue,
@@ -153,47 +163,48 @@ const CustomModal = ({
                   </Box>
                 )}
                 {children && (
-                  <>
+                  <Box>
+                    <IconButton
+                      aria-label='close'
+                      onClick={toggleOpen}
+                      sx={{float: 'right', display: 'flex'}}
+                    >
+                      <CloseIcon sx={{fontSize: 18}} />
+                    </IconButton>
                     <Box
                       sx={{
-                        height: height ? height : 500,
-                        overflowY: 'auto',
+                        display: 'flex',
+                        justifyContent: 'center',
                       }}
                     >
-                      <Box
+                      <Typography
+                        variant='h3'
                         sx={{
-                          pt: 2,
-                          display: 'flex',
-                          justifyContent: 'center',
+                          textAlign: 'center',
+                          py: 3,
+                          borderBottom: (theme) =>
+                            `2px solid ${theme.palette.text.secondary}`,
+                          borderRadius: '1px',
+                          color: (theme) => theme.palette.primary.main,
                         }}
                       >
-                        <Typography
-                          variant='h3'
-                          sx={{
-                            textAlign: 'center',
-                            py: 3,
-                            borderBottom: (theme) =>
-                              `2px solid ${theme.palette.text.secondary}`,
-                            borderRadius: '1px',
-                            color: (theme) => theme.palette.primary.main,
-                          }}
-                        >
-                          {title ?? title}
-                        </Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          mx: 3,
-                          my: 5,
-                        }}
-                      >
-                        {React.cloneElement(children, {
-                          values: values,
-                          setfieldvalue: setFieldValue,
-                        })}
-                      </Box>
+                        {title ?? title}
+                      </Typography>
                     </Box>
-                  </>
+                    <Box
+                      sx={{
+                        height: height ? height : 400,
+                        overflowY: 'auto',
+                        px: 3,
+                        my: 5,
+                      }}
+                    >
+                      {React.cloneElement(children, {
+                        values: values,
+                        setfieldvalue: setFieldValue,
+                      })}
+                    </Box>
+                  </Box>
                 )}
                 <Paper
                   variant='outlined'
