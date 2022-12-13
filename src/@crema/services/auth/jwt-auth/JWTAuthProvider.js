@@ -5,8 +5,10 @@ import {
   FETCH_ERROR,
   FETCH_START,
   FETCH_SUCCESS,
+  SHOW_MESSAGE,
 } from 'shared/constants/ActionTypes';
 import jwtAxios, {setAuthToken} from './index';
+import {appIntl} from '@crema/utility/helper/Utils';
 
 const JWTAuthContext = createContext();
 const JWTAuthActionsContext = createContext();
@@ -70,6 +72,7 @@ const JWTAuthAuthProvider = ({children}) => {
   }, []);
 
   const signInUser = async ({email_or_username, password}) => {
+    const {messages} = appIntl();
     dispatch({type: FETCH_START});
     try {
       const {data} = await jwtAxios.post('login', {
@@ -79,27 +82,30 @@ const JWTAuthAuthProvider = ({children}) => {
       localStorage.setItem('token', data.token);
       setAuthToken(data.token);
       const res = await jwtAxios.get('/auth');
-      // const permissions = res?.data?.permissions;
-      // delete res?.data?.permissions;
-      // const roles = res?.data?.roles;
-      // delete res?.data?.roles;
       setJWTAuthData({
         user: res.data,
-        // permissions: permissions,
-        // roles: roles,
         isAuthenticated: true,
         isLoading: false,
       });
       dispatch({type: FETCH_SUCCESS});
-    } catch (error) {
-      setJWTAuthData({
-        ...firebaseData,
-        isAuthenticated: false,
-        isLoading: false,
+      dispatch({
+        type: SHOW_MESSAGE,
+        payload: messages['message.loginSuccess'],
       });
+    } catch (error) {
       dispatch({
         type: FETCH_ERROR,
-        payload: error?.response?.data?.error || 'Something went wrong',
+        payload:
+          error?.response?.data?.error == 1
+            ? messages['message.loginError1']
+            : error?.response?.data?.error == 2
+            ? messages['message.loginError2']
+            : messages['message.somethingWentWrong'],
+      });
+      setJWTAuthData({
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
       });
     }
   };

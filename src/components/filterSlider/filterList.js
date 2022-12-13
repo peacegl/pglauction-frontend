@@ -1,3 +1,4 @@
+import BorderedItems from './filterComponents/BorderedItems';
 import MinMaxFilter from './filterComponents/MinMaxFilter';
 import MinMaxSlider from './filterComponents/MinMaxSlider';
 import {setWebVehiclesFilter} from '../../redux/actions';
@@ -6,6 +7,7 @@ import ListItems from './filterComponents/ListItems';
 import VehicleConfigs from 'configs/pages/vehicles';
 import {Box, MenuItem} from '@mui/material';
 import NewlyAdded from './NewlyAdded';
+import BodyStyle from './BodyStyle';
 import {range} from 'configs';
 
 export default function filterList(filterData, messages, reset, setReset) {
@@ -60,20 +62,6 @@ export default function filterList(filterData, messages, reset, setReset) {
         ),
       },
       {
-        key: 4,
-        title: <IntlMessages id='vehicle.category' />,
-        name: 'category_id',
-        initialValue: [],
-        content: (
-          <ListItems
-            url='/category/auto_complete'
-            reduxReducer={setWebVehiclesFilter}
-            data={filterData}
-            columnName='category_id'
-          />
-        ),
-      },
-      {
         key: 5,
         title: <IntlMessages id='vehicle.odometer' />,
         name: 'between@@odometer',
@@ -117,14 +105,15 @@ export default function filterList(filterData, messages, reset, setReset) {
       {
         key: 7,
         title: <IntlMessages id='common.make' />,
-        name: 'model.make',
+        name: 'make',
         initialValue: [],
         content: (
           <ListItems
             url='/vehicleColumn/auto_complete?column=make'
             reduxReducer={setWebVehiclesFilter}
             data={filterData}
-            columnName='model.make'
+            columnName='make'
+            customColumn='make'
           />
         ),
       },
@@ -139,6 +128,7 @@ export default function filterList(filterData, messages, reset, setReset) {
             reduxReducer={setWebVehiclesFilter}
             data={filterData}
             columnName='model'
+            customColumn='model'
           />
         ),
       },
@@ -154,48 +144,6 @@ export default function filterList(filterData, messages, reset, setReset) {
             data={filterData}
             columnName='engine_type'
             customColumn='engine_type'
-          />
-        ),
-      },
-      {
-        key: 10,
-        title: <IntlMessages id='vehicle.transmission' />,
-        name: 'transmission',
-        initialValue: [],
-        content: (
-          <ListItems
-            reduxReducer={setWebVehiclesFilter}
-            data={filterData}
-            columnName='transmission'
-            hideSearch
-            items={VehicleConfigs().transmissions.map((transmission) => {
-              return {
-                id: transmission,
-                name: (
-                  <Box sx={{textTransform: 'capitalize'}}>{transmission}</Box>
-                ),
-              };
-            })}
-          />
-        ),
-      },
-      {
-        key: 11,
-        title: <IntlMessages id='vehicle.fuel' />,
-        name: 'fuel',
-        initialValue: [],
-        content: (
-          <ListItems
-            reduxReducer={setWebVehiclesFilter}
-            data={filterData}
-            columnName='fuel'
-            hideSearch
-            items={VehicleConfigs().fuels.map((fuel) => {
-              return {
-                id: fuel,
-                name: <Box sx={{textTransform: 'capitalize'}}>{fuel}</Box>,
-              };
-            })}
           />
         ),
       },
@@ -261,21 +209,6 @@ export default function filterList(filterData, messages, reset, setReset) {
       },
       {
         key: 16,
-        title: <IntlMessages id='vehicle.body_style' />,
-        name: 'body_style',
-        initialValue: [],
-        content: (
-          <ListItems
-            url='/vehicleColumn/auto_complete?column=body_style'
-            reduxReducer={setWebVehiclesFilter}
-            data={filterData}
-            columnName='body_style'
-            customColumn='body_style'
-          />
-        ),
-      },
-      {
-        key: 17,
         title: <IntlMessages id='vehicle.drive_type' />,
         name: 'drive_type',
         initialValue: [],
@@ -291,30 +224,6 @@ export default function filterList(filterData, messages, reset, setReset) {
       },
       {
         key: 18,
-        title: <IntlMessages id='common.status' />,
-        name: 'status',
-        initialValue: [],
-        content: (
-          <ListItems
-            reduxReducer={setWebVehiclesFilter}
-            data={filterData}
-            columnName='status'
-            hideSearch
-            items={[
-              {
-                id: 'active',
-                name: 'Future',
-              },
-              {
-                id: 'sold',
-                name: 'Sold',
-              },
-            ]}
-          />
-        ),
-      },
-      {
-        key: 19,
         title: <IntlMessages id='vehicle.keys' />,
         name: 'keys',
         initialValue: [],
@@ -338,7 +247,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         ),
       },
       {
-        key: 20,
+        key: 19,
         title: <IntlMessages id='vehicle.test_drive' />,
         name: 'test_drive',
         initialValue: [],
@@ -358,6 +267,107 @@ export default function filterList(filterData, messages, reset, setReset) {
                 name: <IntlMessages id='common.yes' />,
               },
             ]}
+          />
+        ),
+      },
+      {
+        key: 17,
+        hideAccordian: true,
+        title: <IntlMessages id='common.status' />,
+        name: 'status',
+        initialValue: [],
+        content: (
+          <BorderedItems
+            reduxReducer={setWebVehiclesFilter}
+            data={filterData}
+            columnName='status'
+            items={[
+              {
+                id: 'active',
+                name: 'Future',
+              },
+              {
+                id: 'sold',
+                name: 'Sold',
+              },
+            ]}
+          />
+        ),
+      },
+      {
+        key: 11,
+        hideAccordian: true,
+        title: <IntlMessages id='vehicle.fuel' />,
+        name: 'fuel',
+        initialValue: [],
+        content: (
+          <BorderedItems
+            reduxReducer={setWebVehiclesFilter}
+            data={filterData}
+            columnName='fuel'
+            items={VehicleConfigs().fuels.map((fuel) => {
+              return {
+                id: fuel,
+                name: <Box sx={{textTransform: 'capitalize'}}>{fuel}</Box>,
+              };
+            })}
+          />
+        ),
+      },
+      {
+        key: 10,
+        hideAccordian: true,
+        title: <IntlMessages id='vehicle.transmission' />,
+        name: 'transmission',
+        initialValue: [],
+        content: (
+          <BorderedItems
+            reduxReducer={setWebVehiclesFilter}
+            data={filterData}
+            columnName='transmission'
+            items={VehicleConfigs().transmissions.map((transmission) => {
+              return {
+                id: transmission,
+                name: (
+                  <Box sx={{textTransform: 'capitalize'}}>{transmission}</Box>
+                ),
+              };
+            })}
+          />
+        ),
+      },
+      {
+        key: 20,
+        hideAccordian: true,
+        title: <IntlMessages id='vehicle.body_style' />,
+        name: 'body_style',
+        initialValue: [],
+        content: (
+          <BodyStyle
+            reduxReducer={setWebVehiclesFilter}
+            data={filterData}
+            columnName='body_style'
+            items={VehicleConfigs().bodyStyles.map((style) => {
+              return {
+                id: style,
+                name: <Box sx={{textTransform: 'capitalize'}}>{style}</Box>,
+              };
+            })}
+          />
+        ),
+      },
+      {
+        key: 21,
+        hideAccordian: true,
+        title: <IntlMessages id='vehicle.features' />,
+        name: 'feature',
+        initialValue: [],
+        content: (
+          <BorderedItems
+            url='meta_table/auto_complete?type=feature'
+            reduxReducer={setWebVehiclesFilter}
+            data={filterData}
+            columnName='feature'
           />
         ),
       },

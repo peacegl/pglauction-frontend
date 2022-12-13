@@ -1,6 +1,6 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
-import {Typography} from '@mui/material';
+import {Box, Typography} from '@mui/material';
 const year = new Date().getFullYear();
 import * as yup from 'yup';
 import CommonConfigs, {
@@ -96,6 +96,24 @@ export const tableColumns = function () {
             return false;
           },
         },
+      },
+    },
+    {
+      name: 'status',
+      label: messages['vehicle.status'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Box sx={{display: 'flex'}}>
+            <Typography
+              sx={{
+                textTransform: 'capitalize',
+              }}
+            >
+              {value}
+            </Typography>
+          </Box>
+        ),
       },
     },
     {
@@ -241,8 +259,20 @@ export const tableColumns = function () {
 export default function configs(invalidYoutube) {
   return {
     fuels: ['petrol', 'diesel', 'etlectric', 'hybrid'],
-    statuses: ['active', 'inactive', 'sold', 'pending'],
+    statuses: ['available', 'inactive', 'sold', 'future'],
     transmissions: ['automatic', 'manual'],
+    bodyStyles: [
+      'sedan',
+      'suv',
+      'coupe',
+      'hatchback',
+      'convertible',
+      'wagon',
+      'pickup',
+      'minivan',
+      'van',
+    ],
+    priceGuidances: ['great_price', 'good_price', 'fair_price'],
     exportColumns: [],
     validationSchema: [
       yup.object({
@@ -277,9 +307,12 @@ export default function configs(invalidYoutube) {
         location_id: yup
           .string()
           .required(<IntlMessages id='validation.locationRequired' />),
-        category_id: yup
+        seller_id: yup
           .string()
-          .required(<IntlMessages id='validation.categoryRequired' />),
+          .required(<IntlMessages id='validation.sellerRequired' />),
+        odometer: yup
+          .number()
+          .typeError(<IntlMessages id='validation.numberError' />),
       }),
       yup.object({
         youtube_url: yup.string().matches(youtubeRegExp, invalidYoutube),

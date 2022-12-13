@@ -28,17 +28,17 @@ const VehicleStepTwo = (props) => {
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
           <AppAutocompleteField
-            placeholder={messages['vehicle.categoryPlaceholder']}
-            label={<IntlMessages id='vehicle.category' />}
-            name='category_id'
+            placeholder={messages['vehicle.sellerPlaceholder']}
+            label={<IntlMessages id='vehicle.seller' />}
+            name='seller_id'
             variant='outlined'
             size='small'
             sx={{flex: 1, width: '100%'}}
-            dataLoading={props.categoryLoading}
-            options={props.categories}
-            keyName='name'
-            onSearch={props.searchCategories}
-            value={props.values?.category_id}
+            dataLoading={props.sellerLoading}
+            options={props.sellers}
+            keyName='fullname'
+            onSearch={props.searchSellers}
+            value={props.values?.seller_id}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
         </Stack>
@@ -79,7 +79,7 @@ const VehicleStepTwo = (props) => {
             sx={{flex: 1}}
           >
             <MenuItem value=''>
-              <IntlMessages id='common.unknown' />
+              <IntlMessages id='common.none' />
             </MenuItem>
             {VehicleConfigs().fuels.map((fuel, index) => (
               <MenuItem key={index} value={fuel}>
@@ -98,13 +98,24 @@ const VehicleStepTwo = (props) => {
         </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppTextField
-            placeholder={messages['vehicle.body_stylePlaceholder']}
+            select
+            clearable
             label={<IntlMessages id='vehicle.body_style' />}
             name='body_style'
             variant='outlined'
             size='small'
+            value={props.values?.body_style}
             sx={{flex: 1}}
-          />
+          >
+            <MenuItem value=''>
+              <IntlMessages id='common.none' />
+            </MenuItem>
+            {VehicleConfigs().bodyStyles.map((bodyStyle, index) => (
+              <MenuItem key={index} value={bodyStyle}>
+                <Box sx={{textTransform: 'capitalize'}}>{bodyStyle}</Box>
+              </MenuItem>
+            ))}
+          </AppTextField>
           <AppTextField
             placeholder={messages['vehicle.drive_typePlaceholder']}
             label={<IntlMessages id='vehicle.drive_type' />}
@@ -134,7 +145,7 @@ const VehicleStepTwo = (props) => {
             sx={{flex: 1}}
           >
             <MenuItem value=''>
-              <IntlMessages id='common.unknown' />
+              <IntlMessages id='common.none' />
             </MenuItem>
             {VehicleConfigs().transmissions.map((transmission, key) => (
               <MenuItem key={key} value={transmission}>
@@ -180,7 +191,7 @@ VehicleStepTwo.propTypes = {
   locationLoading: PropTypes.bool,
   locations: PropTypes.array,
   searchLocations: PropTypes.func,
-  categoryLoading: PropTypes.bool,
-  categories: PropTypes.array,
-  searchCategories: PropTypes.func,
+  sellerLoading: PropTypes.bool,
+  sellers: PropTypes.array,
+  searchSellers: PropTypes.func,
 };

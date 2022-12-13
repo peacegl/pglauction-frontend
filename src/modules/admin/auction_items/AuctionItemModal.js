@@ -68,14 +68,6 @@ export default function AuctionItemModal({
       setLocations,
     );
   };
-  const searchCategories = (content, category_id = null) => {
-    getData(
-      `/category/auto_complete${category_id ? '?id=' + category_id : ''}`,
-      content,
-      setCategoryLoading,
-      setCategories,
-    );
-  };
   const searchSellers = (content, seller_id = null) => {
     getData(
       `/sellers/auto_complete${seller_id ? '?id=' + seller_id : ''}`,
@@ -88,7 +80,6 @@ export default function AuctionItemModal({
   useEffect(() => {
     if (!recordId) {
       searchLocations({});
-      searchCategories({});
       searchSellers({});
     }
   }, []);
@@ -120,7 +111,6 @@ export default function AuctionItemModal({
             setImages(oldImages);
             setInitialValues(values);
             searchLocations({}, values.location_id);
-            searchCategories({}, values.category_id);
             searchSellers({}, values.seller_id);
           }
           setIsLoading(false);
@@ -175,7 +165,6 @@ export default function AuctionItemModal({
           categoryLoading={categoryLoading}
           sellersLoading={sellersLoading}
           sellers={sellers}
-          searchCategories={searchCategories}
           searchLocations={searchLocations}
           searchSellers={searchSellers}
           setIsLoading={setIsLoading}

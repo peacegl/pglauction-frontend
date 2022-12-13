@@ -1,8 +1,11 @@
-import PropTypes from 'prop-types';
-import AddTooltip from './AddTooltip';
-import MUIDataTable from 'mui-datatables';
 import {Badge, Box, Button, Typography} from '@mui/material';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import IntlMessages from '@crema/utility/IntlMessages';
+import SellIcon from '@mui/icons-material/Sell';
 import AppLoader from '@crema/core/AppLoader';
+import BasicTooltip from './BasicTooltip';
+import MUIDataTable from 'mui-datatables';
+import PropTypes from 'prop-types';
 import Toolbar from './Toolbar';
 import Search from './Search';
 
@@ -12,15 +15,21 @@ const CustomDataTable = ({
   data,
   columns,
   options,
-  hideAddButton,
   onAdd,
   onEdit,
   onDelete,
+  showAddButton,
+  showDeleteButton,
+  showEditButton,
   deleteTitle,
   isLoading,
   selected,
   onEnterSearch,
   onExactChange,
+  onSell,
+  showSell,
+  selectedItems = [],
+  selectableRows,
 }) => {
   return (
     <>
@@ -56,6 +65,7 @@ const CustomDataTable = ({
           },
           fixedHeader: true,
           rowHover: true,
+          selectableRows: selectableRows,
           tableBodyMaxHeight: options.tableBodyMaxHeight
             ? options.tableBodyMaxHeight
             : '73vh',
@@ -73,7 +83,17 @@ const CustomDataTable = ({
               </div>
             );
           },
-          customToolbar: () => !hideAddButton && <AddTooltip onAdd={onAdd} />,
+          customToolbar: () => (
+            <>
+              {showAddButton && (
+                <BasicTooltip
+                  onClick={onAdd}
+                  title={<IntlMessages id='common.add' />}
+                  icon={<AddCircleIcon />}
+                />
+              )}
+            </>
+          ),
           customToolbarSelect: options.customToolbarSelect
             ? options.customToolbarSelect
             : () => (
@@ -82,6 +102,11 @@ const CustomDataTable = ({
                   deleteTitle={deleteTitle}
                   onDelete={onDelete}
                   onEdit={onEdit}
+                  onSell={onSell}
+                  showSell={showSell}
+                  selectedItems={selectedItems}
+                  showEditButton={showEditButton}
+                  showDeleteButton={showDeleteButton}
                 />
               ),
           customSearchRender: options.customSearchRender
@@ -118,7 +143,9 @@ CustomDataTable.propTypes = {
   data: PropTypes.array.isRequired,
   columns: PropTypes.array.isRequired,
   options: PropTypes.object.isRequired,
-  hideAddButton: PropTypes.bool,
+  showAddButton: PropTypes.bool,
+  showDeleteButton: PropTypes.bool,
+  showEditButton: PropTypes.bool,
   onAdd: PropTypes.func,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
@@ -127,4 +154,8 @@ CustomDataTable.propTypes = {
   onExactChange: PropTypes.func,
   selected: PropTypes.array,
   onEnterSearch: PropTypes.func,
+  onSell: PropTypes.func,
+  showSell: PropTypes.bool,
+  selectedItems: PropTypes.array,
+  selectableRows: PropTypes.bool,
 };

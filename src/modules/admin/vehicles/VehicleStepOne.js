@@ -12,17 +12,17 @@ import {useField} from 'formik';
 const VehicleStepOne = (props) => {
   const {messages} = useIntl();
   const [field] = useField('test');
-  useEffect(() => {
-    if (props.makes.length == 1) {
-      props.setfieldvalue('make', props.makes[0]?.id);
-    }
-  }, [props.makes]);
+  // useEffect(() => {
+  //   if (props.makes.length == 1) {
+  //     props.setfieldvalue('make', props.makes[0]?.id);
+  //   }
+  // }, [props.makes]);
 
   return (
     <Box>
       <Stack spacing={{xs: 5, md: 8}}>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
-          <AppAutocompleteField
+          {/* <AppAutocompleteField
             placeholder={messages['common.makePlaceholder']}
             label={<IntlMessages id='common.make' />}
             name='make'
@@ -58,6 +58,23 @@ const VehicleStepOne = (props) => {
               props.searchMakes({model: value});
               props.setfieldvalue(name, value);
             }}
+          /> */}
+
+          <AppTextField
+            placeholder={messages['vehicle.makePlaceholder']}
+            label={<IntlMessages id='common.make' />}
+            name='make'
+            variant='outlined'
+            size='small'
+            sx={{flex: 1}}
+          />
+          <AppTextField
+            placeholder={messages['vehicle.modelPlaceholder']}
+            label={<IntlMessages id='vehicle.model' />}
+            name='model'
+            variant='outlined'
+            size='small'
+            sx={{flex: 1}}
           />
         </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
@@ -118,8 +135,8 @@ const VehicleStepOne = (props) => {
           <Paper
             variant='outlined'
             sx={{
-              borderRadius: 2,
-              flex: 1,
+              borderRadius: 1,
+              flex: 2,
               display: 'flex',
               pl: 4,
             }}
@@ -141,34 +158,6 @@ const VehicleStepOne = (props) => {
                 />
               }
             />
-            <FormControlLabel
-              sx={{mx: 4}}
-              label={<IntlMessages id='vehicle.is_best_selling' />}
-              control={
-                <Checkbox
-                  size='small'
-                  name='is_best_selling'
-                  value={props.values.is_best_selling}
-                  checked={props.values.is_best_selling}
-                  onChange={() =>
-                    props.setfieldvalue(
-                      'is_best_selling',
-                      props.values.is_best_selling ? 0 : 1,
-                    )
-                  }
-                />
-              }
-            />
-          </Paper>
-          <Paper
-            variant='outlined'
-            sx={{
-              borderRadius: 2,
-              flex: 1,
-              display: 'flex',
-              pl: 4,
-            }}
-          >
             <FormControlLabel
               label={<IntlMessages id='vehicle.keys' />}
               control={
@@ -213,10 +202,10 @@ export default VehicleStepOne;
 VehicleStepOne.propTypes = {
   values: PropTypes.object,
   setfieldvalue: PropTypes.func,
-  makesLoading: PropTypes.bool,
-  makes: PropTypes.array,
-  searchMakes: PropTypes.func,
-  modelsLoading: PropTypes.bool,
-  models: PropTypes.array,
-  searchModels: PropTypes.func,
+  // makesLoading: PropTypes.bool,
+  // makes: PropTypes.array,
+  // searchMakes: PropTypes.func,
+  // modelsLoading: PropTypes.bool,
+  // models: PropTypes.array,
+  // searchModels: PropTypes.func,
 };

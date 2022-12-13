@@ -167,14 +167,6 @@ export const tableColumns = function () {
         filter: false,
       },
     },
-    {
-      name: 'address',
-      label: messages['common.address'],
-      options: {
-        display: false,
-        filter: false,
-      },
-    },
     createdBy(),
     dateColumn('created_at', messages['common.created_at']),
     updatedBy(),

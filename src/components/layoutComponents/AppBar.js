@@ -19,7 +19,7 @@ import {useTheme} from '@mui/material';
 import {setVehicleSearch} from 'redux/actions';
 
 export const pages = [
-  {title: <IntlMessages id='website.home' />, link: '/'},
+  {title: <IntlMessages id='website.home' />, link: '/home'},
   {title: <IntlMessages id='website.all_vehicles' />, link: '/all-vehicles'},
   // {title: <IntlMessages id='website.live_auctions' />, link: '/live-auctions'},
   {title: <IntlMessages id='website.services' />, link: '/services'},
@@ -28,7 +28,7 @@ export const pages = [
 ];
 
 const signOptions = [
-  {title: <IntlMessages id='common.signIn' />, link: 'signin'},
+  {title: <IntlMessages id='common.signIn' />, link: '/signin'},
   // {title: <IntlMessages id='common.signup' />, link: '/signup'},
 ];
 

@@ -35,9 +35,9 @@ export default function VehicleModal({
   const [isMinImagesValid, setMinImagesValid] = useState(true);
   const [isMaxImagesValid, setMaxImagesValid] = useState(true);
   const [locationLoading, setLocationLoading] = useState(false);
-  const [categoryLoading, setCategoryLoading] = useState(false);
   const [locations, setLocations] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [sellerLoading, setSellerLoading] = useState(false);
+  const [sellers, setSellers] = useState([]);
   const [makesLoading, setMakesLoading] = useState(false);
   const [makes, setMakes] = useState([]);
   const [modelsLoading, setModelsLoading] = useState(false);
@@ -56,7 +56,7 @@ export default function VehicleModal({
     transmission: '',
     status: '',
     location_id: '',
-    category_id: '',
+    seller_id: '',
     price: '',
     document_type: '',
     primary_damage: '',
@@ -87,12 +87,12 @@ export default function VehicleModal({
       setLocations,
     );
   };
-  const searchCategories = (content, category_id = null) => {
+  const searchSellers = (content, seller_id = null) => {
     getData(
-      `/category/auto_complete${category_id ? '?id=' + category_id : ''}`,
+      `/sellers/auto_complete${seller_id ? '?id=' + seller_id : ''}`,
       content,
-      setCategoryLoading,
-      setCategories,
+      setSellerLoading,
+      setSellers,
     );
   };
   const searchMakes = (content, make_id = null) => {
@@ -115,9 +115,9 @@ export default function VehicleModal({
   useEffect(() => {
     if (!recordId) {
       searchLocations({});
-      searchCategories({});
-      searchModels({});
-      searchMakes({});
+      searchSellers({});
+      // searchModels({});
+      // searchMakes({});
     }
   }, []);
 
@@ -154,9 +154,9 @@ export default function VehicleModal({
             setImages(oldImages);
             setInitialValues(values);
             searchLocations({}, values.location_id);
-            searchCategories({}, values.category_id);
-            searchMakes({}, values.make_id);
-            searchModels({make_id: values.make_id}, values.model_id);
+            searchSellers({}, values.seller_id);
+            // searchMakes({}, values.make_id);
+            // searchModels({make_id: values.make_id}, values.model_id);
           }
           setIsLoading(false);
         } catch (error) {
@@ -206,12 +206,12 @@ export default function VehicleModal({
       label: <IntlMessages id='vehicle.vehicleProperties' />,
       children: (
         <VehicleStepOne
-          makes={makes}
-          makesLoading={makesLoading}
-          models={models}
-          modelsLoading={modelsLoading}
-          searchModels={searchModels}
-          searchMakes={searchMakes}
+        // makes={makes}
+        // makesLoading={makesLoading}
+        // models={models}
+        // modelsLoading={modelsLoading}
+        // searchModels={searchModels}
+        // searchMakes={searchMakes}
         />
       ),
     },
@@ -223,10 +223,10 @@ export default function VehicleModal({
         <VehicleStepTwo
           locations={locations}
           locationLoading={locationLoading}
-          categories={categories}
-          categoryLoading={categoryLoading}
-          searchCategories={searchCategories}
           searchLocations={searchLocations}
+          sellers={sellers}
+          sellerLoading={sellerLoading}
+          searchSellers={searchSellers}
           setIsLoading={setIsLoading}
         />
       ),
@@ -240,7 +240,7 @@ export default function VehicleModal({
     {
       key: 4,
       icon: <CollectionsIcon />,
-      label: <IntlMessages id='auction.auctionItemImages' />,
+      label: <IntlMessages id='vehicle.images' />,
       children: (
         <AuctionImagesStep
           mainImage={mainImage}

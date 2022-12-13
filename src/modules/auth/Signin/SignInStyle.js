@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import {Checkbox} from '@mui/material';
@@ -6,7 +6,6 @@ import {Form, Formik} from 'formik';
 import GoogleIcon from '@mui/icons-material/Google';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import IconButton from '@mui/material/IconButton';
 import * as yup from 'yup';
 import IntlMessages from '../../../@crema/utility/IntlMessages';
 import {useIntl} from 'react-intl';
@@ -17,6 +16,10 @@ import AppAnimate from '../../../@crema/core/AppAnimate';
 import AppTextField from '../../../@crema/core/AppFormComponents/AppTextField';
 import {useAuthMethod} from '@crema/utility/AuthHooks';
 import {useRouter} from 'next/router';
+import {LoadingButton} from '@mui/lab';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import {InputAdornment, IconButton} from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
 
 const validationSchema = yup.object({
   email_or_username: yup
@@ -35,6 +38,12 @@ const Signin = () => {
     history.push('/forget-password', {tab: 'jwtAuth'});
   };
   const {messages} = useIntl();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => {
+    setShowPassword((d) => !d);
+  };
+
   return (
     <Box
       sx={{
@@ -95,9 +104,9 @@ const Signin = () => {
             password: '',
           }}
           validationSchema={validationSchema}
-          onSubmit={(data, {setSubmitting}) => {
+          onSubmit={async (data, {setSubmitting}) => {
             setSubmitting(true);
-            signInUser({
+            await signInUser({
               email_or_username: data.email_or_username,
               password: data.password,
             });
@@ -135,7 +144,7 @@ const Signin = () => {
                 }}
               >
                 <AppTextField
-                  type='password'
+                  type={showPassword ? 'text' : 'password'}
                   placeholder={messages['common.password']}
                   label={<IntlMessages id='common.password' />}
                   name='password'
@@ -143,6 +152,19 @@ const Signin = () => {
                   size='small'
                   sx={{
                     width: '100%',
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position='end'>
+                        <IconButton
+                          aria-label='toggle password visibility'
+                          onClick={handleClickShowPassword}
+                          edge='end'
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
                   }}
                 />
               </Box>
@@ -188,18 +210,18 @@ const Signin = () => {
                   <IntlMessages id='common.forgetPassword' />
                 </Box>
               </Box>
-              <Button
+              <LoadingButton
                 variant='contained'
                 color='primary'
                 type='submit'
-                disabled={isSubmitting}
+                loading={isSubmitting}
                 sx={{
                   width: '100%',
                   height: 35,
                 }}
               >
                 <IntlMessages id='common.login' />
-              </Button>
+              </LoadingButton>
             </Form>
           )}
         </Formik>

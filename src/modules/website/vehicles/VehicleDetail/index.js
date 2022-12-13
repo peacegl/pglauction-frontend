@@ -1,16 +1,16 @@
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-import {Box, Card, Container} from '@mui/material';
-import {useEffect, useState} from 'react';
-import {useRouter} from 'next/router';
-import ImageCarousel from './ImageCarousel';
-import Head from './Head';
 import {onGetWebSimilarVehicle, onGetWebVehicleView} from 'redux/actions';
-import {useDispatch, useSelector} from 'react-redux';
-import {AppLoader} from '@crema';
-import LotInfo from './LotInfo';
-import SaleInfo from './SaleInfo';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import CustomCarousel from 'components/CustomCarousel';
 import IntlMessages from '@crema/utility/IntlMessages';
+import {useDispatch, useSelector} from 'react-redux';
+import Error404 from 'modules/errorPages/Error404';
+import {Box, Container} from '@mui/material';
+import ImageCarousel from './ImageCarousel';
+import {useRouter} from 'next/router';
+import SaleInfo from './SaleInfo';
+import {useEffect} from 'react';
+import LotInfo from './LotInfo';
+import Head from './Head';
 
 const VehicleDetail = (props) => {
   const router = useRouter();
@@ -31,10 +31,8 @@ const VehicleDetail = (props) => {
   return (
     <>
       {loading ? (
-        <Box maxWidth='xl' sx={{height: 3 / 4}}>
-          <AppLoader />
-        </Box>
-      ) : (
+        <Box maxWidth='xl' sx={{height: '600px'}}></Box>
+      ) : vehicle.id ? (
         <>
           <Head />
           <Container maxWidth='xl' sx={{mt: 6}}>
@@ -50,7 +48,10 @@ const VehicleDetail = (props) => {
               }}
             >
               <Box flex={1.5}>
-                <ImageCarousel images={vehicle.images} />
+                <ImageCarousel
+                  images={vehicle.images}
+                  isSold={vehicle.status == 'sold'}
+                />
               </Box>
               <Box
                 flex={2}
@@ -80,6 +81,8 @@ const VehicleDetail = (props) => {
             )}
           </Container>
         </>
+      ) : (
+        <Error404 url='/' />
       )}
     </>
   );

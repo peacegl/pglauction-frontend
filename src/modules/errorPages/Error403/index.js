@@ -4,20 +4,21 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import {grey} from '@mui/material/colors';
 import {Fonts} from 'shared/constants/AppEnums';
-import {initialUrl} from 'shared/constants/AppConst';
+import {userInitialUrl} from 'shared/constants/AppConst';
 import AppAnimate from '@crema/core/AppAnimate';
 import IntlMessages from '@crema/utility/IntlMessages';
 import Logo from '../../../assets/icon/403.svg';
 import {useTheme} from '@mui/material';
 import {useRouter} from 'next/router';
 import AppPageMeta from '../../../@crema/core/AppPageMeta';
+import PropTypes from 'prop-types';
 
-const Error403 = () => {
+const Error403 = (props) => {
   const theme = useTheme();
   const history = useRouter();
 
   const onGoBackToHome = () => {
-    history.push(initialUrl);
+    history.push(props.url ? props.url : userInitialUrl);
   };
 
   return (
@@ -87,3 +88,6 @@ const Error403 = () => {
 };
 
 export default Error403;
+Error403.propTypes = {
+  url: PropTypes.string,
+};

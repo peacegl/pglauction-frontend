@@ -22,7 +22,7 @@ export default function Item({label, value, ...rest}) {
         }}
       >
         <Typography component='div' fontSize='14px' overflow='hidden'>
-          {label}
+          {label}:
         </Typography>
         <Typography
           component='div'

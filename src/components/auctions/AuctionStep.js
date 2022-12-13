@@ -44,20 +44,6 @@ const AuctionStep = (props) => {
             value={props.values?.location_id}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
-          <AppAutocompleteField
-            placeholder={messages['vehicle.categoryPlaceholder']}
-            label={<IntlMessages id='vehicle.category' />}
-            name='category_id'
-            variant='outlined'
-            size='small'
-            sx={{flex: 1, width: '100%'}}
-            dataLoading={props.categoryLoading}
-            options={props.categories}
-            keyName='name'
-            onSearch={props.searchCategories}
-            value={props.values?.category_id}
-            handleChange={({name, value}) => props.setfieldvalue(name, value)}
-          />
         </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppTextField

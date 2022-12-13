@@ -1,17 +1,26 @@
+import CustomDataTable from '../../../components/CustomDataTable';
+import {tableColumns} from '../../../configs/pages/vehicles';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {useDispatch, useSelector} from 'react-redux';
+import SaleModal from '../sales/SaleModal';
 import {useEffect, useState} from 'react';
+import VehicleModal from './VehicleModal';
+import PropTypes from 'prop-types';
+import {
+  ADD_VEHICLE,
+  DELETE_VEHICLE,
+  EDIT_VEHICLE,
+  ADD_SALE,
+} from 'shared/constants/Permissions';
 import {
   onGetVehicleData,
   onDeleteVehicles,
   getUserAutocompleteOptions,
 } from 'redux/actions';
-import CustomDataTable from '../../../components/CustomDataTable';
-import {useDispatch, useSelector} from 'react-redux';
-import {tableColumns} from '../../../configs/pages/vehicles';
-import VehicleModal from './VehicleModal';
-import IntlMessages from '@crema/utility/IntlMessages';
-
-export default function VehicleList() {
+export default function VehicleList({user}) {
   const [openModal, setOpenModal] = useState(false);
+  const [showSaleModal, setShowSaleModal] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
@@ -55,6 +64,7 @@ export default function VehicleList() {
       allRowsSelected,
       rowsSelected,
     ) => {
+      setSelectedItems(rowsSelected.map((item) => data[item]));
       setSelected(rowsSelected);
     },
     onSearchChange: (value) => {
@@ -95,6 +105,9 @@ export default function VehicleList() {
       }),
     );
     setSelected([]);
+  };
+  const onSell = () => {
+    setShowSaleModal(true);
   };
   const onEnterSearch = (value) => {
     setPage(0);
@@ -154,6 +167,17 @@ export default function VehicleList() {
         selected={selected}
         onEnterSearch={onEnterSearch}
         onExactChange={(value) => setExactMatch(value)}
+        onSell={onSell}
+        showSell={user?.permissions?.includes(ADD_SALE)}
+        selectedItems={selectedItems}
+        showAddButton={user?.permissions?.includes(ADD_VEHICLE)}
+        showEditButton={user?.permissions?.includes(EDIT_VEHICLE)}
+        showDeleteButton={user?.permissions?.includes(DELETE_VEHICLE)}
+        selectableRows={
+          user?.permissions?.includes(EDIT_VEHICLE) ||
+          user?.permissions?.includes(DELETE_VEHICLE) ||
+          user?.permissions?.includes(ADD_SALE)
+        }
       />
       {openModal && (
         <VehicleModal
@@ -163,6 +187,16 @@ export default function VehicleList() {
           edit={recordId ? true : false}
         />
       )}
+      {showSaleModal && (
+        <SaleModal
+          open={showSaleModal}
+          toggleOpen={() => setShowSaleModal((d) => !d)}
+          selectedItem={selectedItems[0]}
+        />
+      )}
     </>
   );
 }
+VehicleList.propTypes = {
+  user: PropTypes.any,
+};

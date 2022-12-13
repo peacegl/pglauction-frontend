@@ -1,5 +1,5 @@
 import IntlMessages from '@crema/utility/IntlMessages';
-import CategoryConfigs from '../../../configs/pages/categories';
+
 import {onInsertAuction, onUpdateAuction} from 'redux/actions';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import CustomModal from '../../../components/CustomModal';
@@ -9,8 +9,6 @@ import {getData} from '../../../configs';
 import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 
-const insertColumns = CategoryConfigs().insertColumns;
-const validationSchema = CategoryConfigs().validationSchema;
 export default function AuctionModal({
   open,
   toggleOpen,

@@ -42,7 +42,6 @@ export default function UserModal({
     whatsapp: '',
     gender: '',
     birth_date: '',
-    address: '',
     email: '',
     username: '',
     password: '',

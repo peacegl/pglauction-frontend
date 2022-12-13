@@ -81,25 +81,16 @@ const UserStepOne = (props) => {
             setfieldvalue={(name, value) =>
               props.setfieldvalue(
                 name,
-                value.getFullYear() +
-                  '/' +
-                  value.getMonth() +
-                  '/' +
-                  value.getDate(),
+                value
+                  ? value.getFullYear() +
+                      '/' +
+                      (value.getMonth() + 1) +
+                      '/' +
+                      value.getDate()
+                  : '',
               )
             }
             name='birth_date'
-            size='small'
-            sx={{flex: 1}}
-          />
-        </Stack>
-        <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
-          <AppTextField
-            multiline
-            placeholder={messages['common.addressPlaceholder']}
-            label={<IntlMessages id='common.address' />}
-            name='address'
-            variant='outlined'
             size='small'
             sx={{flex: 1}}
           />

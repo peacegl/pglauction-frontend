@@ -1,10 +1,10 @@
 import React from 'react';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import IconButton from '@mui/material/IconButton';
-import CommentIcon from '@mui/icons-material/Comment';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import {
   alpha,
+  Box,
+  Button,
   Card,
   CardContent,
   CardHeader,
@@ -14,26 +14,11 @@ import {
 import {useSelector} from 'react-redux';
 import Item from './Item';
 import {moneyFormater} from 'configs';
+import IntlMessages from '@crema/utility/IntlMessages';
 
 export default function LotInfo() {
   const theme = useTheme();
   const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
-
-  const ListItem = () => {
-    return (
-      <ListItem
-        key={value}
-        secondaryAction={
-          <IconButton edge='end' aria-label='comments'>
-            <CommentIcon />
-          </IconButton>
-        }
-        disablePadding
-      >
-        Heed
-      </ListItem>
-    );
-  };
 
   return (
     <Card sx={{borderRadius: 1, boxShadow: 1, m: 0}}>
@@ -50,20 +35,35 @@ export default function LotInfo() {
             fontWeight='bold'
             overflow='hidden'
           >
-            Sale Information
+            <IntlMessages id='common.sale_information' />
           </Typography>
         }
       />
       <CardContent sx={{px: 3, py: 0}}>
         <List sx={{width: '100%', bgcolor: 'background.paper', pb: 0}}>
-          <Item label='Location:' value={vehicle.location?.name} />
-          <Item label='Price:' value={moneyFormater(vehicle.price)} />
           <Item
-            label='Last Updated:'
+            label={<IntlMessages id='vehicle.location' />}
+            value={vehicle.location?.name}
+          />
+          <Item
+            label={<IntlMessages id='vehicle.price' />}
+            value={moneyFormater(vehicle.price)}
+          />
+          <Item
+            label={<IntlMessages id='common.last_updated' />}
             value={vehicle.updated_at}
-            sx={{borderBottom: 0}}
           />
         </List>
+        <Button
+          variant='outlined'
+          size='large'
+          sx={{mt: 4, width: '100%', borderRadius: 20}}
+          href={`https://wa.me/${vehicle.seller?.loginable?.whatsapp}`}
+          target='_blank'
+        >
+          <WhatsAppIcon />
+          <Box pt='2px'>{vehicle.seller?.loginable?.whatsapp}</Box>
+        </Button>
       </CardContent>
     </Card>
   );

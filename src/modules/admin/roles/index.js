@@ -1,14 +1,16 @@
-import RolesConfigs from '../../../configs/pages/roles';
-import {useDispatch, useSelector} from 'react-redux';
+import {ADD_ROLE, DELETE_ROLE, EDIT_ROLE} from 'shared/constants/Permissions';
 import CustomDataTable from '../../../components/CustomDataTable';
 import {onGetRoleList, onDeleteRoles} from 'redux/actions';
-import {useEffect, useState} from 'react';
+import RolesConfigs from '../../../configs/pages/roles';
 import IntlMessages from '@crema/utility/IntlMessages';
+import {useDispatch, useSelector} from 'react-redux';
+import {useEffect, useState} from 'react';
+const columns = RolesConfigs().columns;
 import {Button} from '@mui/material';
 import RoleModal from './RoleModal';
-const columns = RolesConfigs().columns;
+import PropTypes from 'prop-types';
 
-export default function UserList() {
+export default function RoleList({user}) {
   const [openModal, setOpenModal] = useState(false);
   const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
@@ -126,6 +128,13 @@ export default function UserList() {
         isLoading={loading}
         selected={selected}
         onEnterSearch={onEnterSearch}
+        showAddButton={user?.permissions?.includes(ADD_ROLE)}
+        showEditButton={user?.permissions?.includes(EDIT_ROLE)}
+        showDeleteButton={user?.permissions?.includes(DELETE_ROLE)}
+        selectableRows={
+          user?.permissions?.includes(EDIT_ROLE) ||
+          user?.permissions?.includes(DELETE_ROLE)
+        }
       />
       {openModal && (
         <RoleModal
@@ -138,3 +147,6 @@ export default function UserList() {
     </>
   );
 }
+RoleList.propTypes = {
+  user: PropTypes.any,
+};

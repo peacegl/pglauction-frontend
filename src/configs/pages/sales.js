@@ -1,0 +1,142 @@
+import IntlMessages from '@crema/utility/IntlMessages';
+import {appIntl} from '@crema/utility/helper/Utils';
+import {Typography} from '@mui/material';
+import {createdBy, dateColumn, updatedBy} from '../index';
+import * as yup from 'yup';
+
+const {messages = []} = appIntl() ? appIntl() : {};
+
+export const tableColumns = function () {
+  return [
+    {
+      name: 'code',
+      label: messages['common.code'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+            Sa{value?.toString()?.padStart(5, '0')}
+          </Typography>
+        ),
+      },
+    },
+    {
+      name: 'vin',
+      label: messages['common.vin'],
+      options: {
+        display: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `Vin: ${v}`;
+            }
+            return false;
+          },
+        },
+      },
+    },
+    {
+      name: 'lot_number',
+      label: messages['common.lot_number'],
+      options: {
+        display: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `Lot Number: ${v}`;
+            }
+            return false;
+          },
+        },
+      },
+    },
+    {
+      name: 'buyer',
+      label: messages['common.buyer'],
+      options: {
+        display: true,
+        filterType: 'textField',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `Buyer: ${v}`;
+            }
+            return false;
+          },
+        },
+      },
+    },
+    {
+      name: 'sale_price',
+      label: messages['sale.salePrice'],
+      options: {
+        filter: false,
+      },
+    },
+    {
+      name: 'sale_date',
+      label: messages['sale.saleDate'],
+      options: {
+        filter: false,
+      },
+    },
+    {
+      name: 'status',
+      label: messages['common.status'],
+      options: {
+        filter: true,
+        filterType: 'select',
+        customFilterListOptions: {
+          render: (v) => {
+            if (v) {
+              return `Status: ${v}`;
+            }
+            return false;
+          },
+        },
+        filterOptions: {
+          names: ['Sold', 'Cancelled', 'Pending'],
+        },
+      },
+    },
+    createdBy(),
+    dateColumn('created_at', messages['common.created_at']),
+    updatedBy(),
+    dateColumn('updated_at', messages['common.updated_at']),
+  ];
+};
+
+export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
+  return {
+    exportColumns: [],
+    validationSchemaWithVehicle: yup.object({
+      vehicle_id: yup
+        .string()
+        .required(<IntlMessages id='validation.vehicleRequired' />),
+      buyer_id: yup
+        .string()
+        .required(<IntlMessages id='validation.buyerRequired' />),
+      sale_price: yup
+        .number()
+        .typeError(<IntlMessages id='validation.priceError' />)
+        .required(<IntlMessages id='validation.priceRequired' />),
+      sale_date: yup
+        .string()
+        .required(<IntlMessages id='validation.dateRequired' />),
+    }),
+    validationSchema: yup.object({
+      buyer_id: yup
+        .string()
+        .required(<IntlMessages id='validation.buyerRequired' />),
+      sale_price: yup
+        .number()
+        .typeError(<IntlMessages id='validation.priceError' />)
+        .required(<IntlMessages id='validation.priceRequired' />),
+      sale_date: yup
+        .string()
+        .required(<IntlMessages id='validation.dateRequired' />),
+    }),
+  };
+}
