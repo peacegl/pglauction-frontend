@@ -1,4 +1,3 @@
-import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
 

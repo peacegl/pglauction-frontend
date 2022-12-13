@@ -3,6 +3,7 @@ import {appIntl} from '@crema/utility/helper/Utils';
 import {Box, Typography} from '@mui/material';
 const year = new Date().getFullYear();
 import * as yup from 'yup';
+import CommonConfigs from 'configs';
 
 const {messages = []} = appIntl() ? appIntl() : {};
 const youtubeRegExp = CommonConfigs().youtubeRegExp;

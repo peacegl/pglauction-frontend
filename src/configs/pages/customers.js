@@ -1,8 +1,9 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Avatar, Typography} from '@mui/material';
-const phoneRegExp = CommonConfigs().phoneRegExp;
 import * as yup from 'yup';
+import CommonConfigs from 'configs';
+const phoneRegExp = CommonConfigs().phoneRegExp;
 const {messages = []} = appIntl() ? appIntl() : {};
 
 export const tableColumns = function () {

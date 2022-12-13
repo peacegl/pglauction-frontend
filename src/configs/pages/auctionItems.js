@@ -1,18 +1,9 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
-import CommonConfigs, {
-  createdBy,
-  dateColumn,
-  updatedBy,
-  vehicleLot,
-  vehicleVin,
-} from '../index';
 import * as yup from 'yup';
-
 const youtubeRegExp = CommonConfigs().youtubeRegExp;
 const {messages = []} = appIntl() ? appIntl() : {};
-
 export const tableColumns = function () {
   return [
     {
