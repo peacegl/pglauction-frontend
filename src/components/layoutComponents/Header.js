@@ -59,7 +59,7 @@ function Header() {
             <ListItemButton onClick={() => router.push(item.link)}>
               <ListItemText
                 primary={item.title}
-                sx={{color: theme.palette.text.primary}}
+                sx={{color: (theme) => theme.palette.text.primary}}
               />
             </ListItemButton>
           </ListItem>
@@ -166,7 +166,7 @@ function Header() {
             zIndex='2'
           >
             <IconButton
-              sx={{color: theme.palette.text.primary}}
+              sx={{color: (theme) => theme.palette.text.primary}}
               onClick={toggleDrawer(true)}
             >
               <MenuIcon />
