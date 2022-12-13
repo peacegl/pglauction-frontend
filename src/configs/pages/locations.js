@@ -1,4 +1,5 @@
 import {appIntl} from '@crema/utility/helper/Utils';
+import {Typography} from '@mui/material';
 import * as yup from 'yup';
 const {messages = []} = appIntl() ? appIntl() : {};
 
@@ -6,7 +7,14 @@ export const tableColumns = function () {
   return [
     {
       name: 'code',
-      label: messages['common.code'],
+      label: 'Code',
+      options: {
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+            LOC{value.toString().padStart(3, '0')}
+          </Typography>
+        ),
+      },
     },
     {
       name: 'name',
