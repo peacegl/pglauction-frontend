@@ -67,28 +67,28 @@ export const filterContent = [
     title: 'id_filtering',
     items: [
       {
-        name: 'sales.code',
+        name: 'sales.id',
         label: 'Code',
         type: 'autocomplete',
         url: '/codes/auto_complete?model=Sale',
         keyName: 'code',
       },
       {
-        name: 'sales.lot_number',
+        name: 'sales.id',
         label: 'Lot Number',
         type: 'autocomplete',
         url: '/vehicle_lots/auto_complete',
         keyName: 'lot_number',
       },
       {
-        name: 'sales.vin',
+        name: 'sales.id',
         label: 'Vin',
         type: 'autocomplete',
         url: '/vehicle_vins/auto_complete',
         keyName: 'vin',
       },
       {
-        name: 'created_by',
+        name: 'sales.created_by',
         label: 'Created By',
         type: 'autocomplete',
         url: '/user/auto_complete',

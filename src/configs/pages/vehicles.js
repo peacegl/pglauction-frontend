@@ -138,28 +138,28 @@ export const filterContent = [
     title: 'id_filtering',
     items: [
       {
-        name: 'vehicles.code',
+        name: 'vehicles.id',
         label: 'Code',
         type: 'autocomplete',
         url: '/codes/auto_complete?model=Vehicle',
         keyName: 'code',
       },
       {
-        name: 'vehicles.lot_number',
+        name: 'vehicles.id',
         label: 'Lot Number',
         type: 'autocomplete',
         url: '/vehicle_lots/auto_complete',
         keyName: 'lot_number',
       },
       {
-        name: 'vehicles.vin',
+        name: 'vehicles.id',
         label: 'Vin',
         type: 'autocomplete',
         url: '/vehicle_vins/auto_complete',
         keyName: 'vin',
       },
       {
-        name: 'created_by',
+        name: 'vehicles.created_by',
         label: 'Created By',
         type: 'autocomplete',
         url: '/user/auto_complete',

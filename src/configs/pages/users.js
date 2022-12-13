@@ -94,14 +94,14 @@ export const filterContent = [
     title: 'id_filtering',
     items: [
       {
-        name: 'users.code',
+        name: 'users.id',
         label: 'Code',
         type: 'autocomplete',
         url: '/codes/auto_complete?model=User',
         keyName: 'code',
       },
       {
-        name: 'login.username',
+        name: 'login.id',
         label: 'Username',
         type: 'autocomplete',
         url: '/user/auto_complete',
