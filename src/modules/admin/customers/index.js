@@ -1,3 +1,6 @@
+import {filterContent, tableColumns} from '../../../configs/pages/customers';
+import {onGetCustomerList, onDeleteCustomers} from 'redux/actions';
+import FilterModal from 'components/CustomModal/FilterModal';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
@@ -9,9 +12,6 @@ import {
   EDIT_CUSTOMER,
   DELETE_CUSTOMER,
 } from 'shared/constants/Permissions';
-import {onGetCustomerList, onDeleteCustomers} from 'redux/actions';
-import {filterContent, tableColumns} from '../../../configs/pages/customers';
-import FilterModal from 'components/CustomModal/FilterModal';
 
 export default function CustomerList({user}) {
   const [openModal, setOpenModal] = useState(false);

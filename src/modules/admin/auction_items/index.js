@@ -1,3 +1,4 @@
+import {onGetAuctionItemData, onDeleteAuctionItems} from 'redux/actions';
 import CustomDataTable from 'components/CustomDataTable';
 import {tableColumns} from 'configs/pages/auctionItems';
 import IntlMessages from '@crema/utility/IntlMessages';
@@ -10,7 +11,6 @@ import {
   DELETE_AUCTION_ITEM,
   EDIT_AUCTION_ITEM,
 } from 'shared/constants/Permissions';
-import {onGetAuctionItemData, onDeleteAuctionItems} from 'redux/actions';
 
 export default function AuctionItemList({user}) {
   const [openModal, setOpenModal] = useState(false);

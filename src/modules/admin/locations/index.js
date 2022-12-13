@@ -1,17 +1,17 @@
 import {filterContent, tableColumns} from '../../../configs/pages/locations';
+import {onGetLocationList, onDeleteLocations} from 'redux/actions';
+import FilterModal from 'components/CustomModal/FilterModal';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import LocationModal from './LocationModal';
 import {useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
 import {
   ADD_LOCATION,
   EDIT_LOCATION,
   DELETE_LOCATION,
 } from 'shared/constants/Permissions';
-import {onGetLocationList, onDeleteLocations} from 'redux/actions';
-import FilterModal from 'components/CustomModal/FilterModal';
+import PropTypes from 'prop-types';
 
 export default function LocationList({user}) {
   const [openModal, setOpenModal] = useState(false);

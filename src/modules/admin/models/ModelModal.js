@@ -1,13 +1,13 @@
-import IntlMessages from '@crema/utility/IntlMessages';
-import ModelConfigs from '../../../configs/pages/models';
 import {onInsertModel, onUpdateModel} from 'redux/actions';
-import CustomModal from '../../../components/CustomModal';
+import IntlMessages from '@crema/utility/IntlMessages';
+import jwtAxios from '@crema/services/auth/jwt-auth';
+import CustomModal from 'components/CustomModal';
+import ModelConfigs from 'configs/pages/models';
 import {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import ModelForm from './ModelForm';
-import jwtAxios from '@crema/services/auth/jwt-auth';
-import {getData} from '../../../configs';
+import {getData} from 'configs';
 
 const insertColumns = ModelConfigs().insertColumns;
 const validationSchema = ModelConfigs().validationSchema;

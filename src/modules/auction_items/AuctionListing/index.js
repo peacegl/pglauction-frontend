@@ -8,7 +8,7 @@ import AuctionList from './AuctionList';
 import AppsContent from './AppsContent';
 import {alpha, Box, Hidden, Card} from '@mui/material';
 import {useThemeContext} from '../../../@crema/utility/AppContextProvider/ThemeContextProvider';
-import {onGetWebAuctionData, setFilters} from '../../../redux/actions';
+import {onGetWebAuctionData, setAuctionFilters} from '../../../redux/actions';
 import AppsPagination from '../../../@crema/core/AppsPagination';
 
 const AuctionListing = () => {
@@ -36,7 +36,7 @@ const AuctionListing = () => {
   };
 
   const searchProduct = (title) => {
-    dispatch(setFilters({...filterData, title}));
+    dispatch(setAuctionFilters({...filterData, title}));
   };
   return (
     <>
