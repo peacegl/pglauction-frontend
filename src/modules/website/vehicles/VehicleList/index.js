@@ -30,7 +30,7 @@ const VehicleList = () => {
   useEffect(() => {
     dispatch(
       onGetWebVehicleData({
-        filterData,
+        // filterData,
         per_page: perPage,
         page: page + 1,
         search,
