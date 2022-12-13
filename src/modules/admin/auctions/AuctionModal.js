@@ -1,11 +1,10 @@
-import IntlMessages from '@crema/utility/IntlMessages';
-
 import {onInsertAuction, onUpdateAuction} from 'redux/actions';
-import jwtAxios from '@crema/services/auth/jwt-auth';
 import CustomModal from '../../../components/CustomModal';
-import AuctionForm from './AuctionForm';
+import IntlMessages from '@crema/utility/IntlMessages';
+import jwtAxios from '@crema/services/auth/jwt-auth';
 import {useState, useEffect} from 'react';
 import {getData} from '../../../configs';
+import AuctionForm from './AuctionForm';
 import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 

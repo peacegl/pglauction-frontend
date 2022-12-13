@@ -11,7 +11,6 @@ import PropTypes from 'prop-types';
 import {green, grey} from '@mui/material/colors';
 import {Fonts} from '../../../../shared/constants/AppEnums';
 import {useDispatch} from 'react-redux';
-import {setCurrentProduct} from '../../../../redux/actions';
 import MediaSlider from './MediaSlider';
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 import {useRouter} from 'next/router';
@@ -40,7 +39,6 @@ const ListItem = (props) => {
       }}
       className='item-hover'
       onClick={() => {
-        dispatch(setCurrentProduct(item));
         history.push('/ecommerce/product_detail/' + item.id);
       }}
     >

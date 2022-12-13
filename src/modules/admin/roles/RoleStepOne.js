@@ -1,4 +1,9 @@
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
+import Permissions from 'components/permissions/Permissions';
+import IntlMessages from '@crema/utility/IntlMessages';
+import AppLoader from '@crema/core/AppLoader';
+import {useIntl} from 'react-intl';
+import PropTypes from 'prop-types';
 import {
   Box,
   Paper,
@@ -7,11 +12,6 @@ import {
   Typography,
   FormControlLabel,
 } from '@mui/material';
-import Permissions from '../../../components/permissions/Permissions';
-import IntlMessages from '@crema/utility/IntlMessages';
-import {useIntl} from 'react-intl';
-import PropTypes from 'prop-types';
-import AppLoader from '@crema/core/AppLoader';
 
 const RoleStepOne = (props) => {
   const {messages} = useIntl();

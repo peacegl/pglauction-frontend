@@ -186,7 +186,7 @@ export const setCurrentAuction = (product) => {
   };
 };
 
-export const setFilters = (filters) => {
+export const setAuctionItemFilters = (filters) => {
   return (dispatch) => {
     dispatch({type: SET_AUCTION_ITEM_FILTER_DATA, payload: filters});
   };

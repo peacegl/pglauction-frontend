@@ -10,7 +10,6 @@ import PropTypes from 'prop-types';
 import {green} from '@mui/material/colors';
 import {Fonts} from '../../../../shared/constants/AppEnums';
 import {useDispatch} from 'react-redux';
-import {setCurrentProduct} from '../../../../redux/actions';
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 import {useRouter} from 'next/router';
 
@@ -30,7 +29,6 @@ const GridItem = (props) => {
       }}
       className='item-hover'
       onClick={() => {
-        dispatch(setCurrentProduct(item));
         history.push('/ecommerce/product_detail/' + item.id);
       }}
     >

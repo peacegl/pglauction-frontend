@@ -1,12 +1,12 @@
+import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteField';
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
+import {convertToRaw, convertFromHTML, ContentState} from 'draft-js';
 import IntlMessages from '@crema/utility/IntlMessages';
+import {stateToHTML} from 'draft-js-export-html';
 import {Box, Stack} from '@mui/material';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
-import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteField';
-import {convertToRaw, convertFromHTML, ContentState} from 'draft-js';
-import {stateToHTML} from 'draft-js-export-html';
 
 const AppRichTextEditor = dynamic(
   () => import('@crema/core/AppFormComponents/AppRichTextEditor'),

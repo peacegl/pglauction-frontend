@@ -1,13 +1,13 @@
-import CustomDataTable from '../../../components/CustomDataTable';
-import {filterContent, tableColumns} from '../../../configs/pages/sales';
 import {ADD_SALE, DELETE_SALE, EDIT_SALE} from 'shared/constants/Permissions';
+import {filterContent, tableColumns} from 'configs/pages/sales';
+import FilterModal from 'components/CustomModal/FilterModal';
+import {onGetSaleList, onDeleteSales} from 'redux/actions';
+import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect, useState} from 'react';
 import SaleModal from './SaleModal';
 import PropTypes from 'prop-types';
-import {onGetSaleList, onDeleteSales} from 'redux/actions';
-import FilterModal from 'components/CustomModal/FilterModal';
 
 export default function SaleList({user}) {
   const [showSaleModal, setShowSaleModal] = useState(false);

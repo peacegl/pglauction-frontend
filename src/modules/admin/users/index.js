@@ -1,13 +1,13 @@
-import {filterContent, tableColumns} from '../../../configs/pages/users';
-import {useDispatch, useSelector} from 'react-redux';
 import {ADD_USER, DELETE_USER, EDIT_USER} from 'shared/constants/Permissions';
-import CustomDataTable from '../../../components/CustomDataTable';
+import {filterContent, tableColumns} from 'configs/pages/users';
+import FilterModal from 'components/CustomModal/FilterModal';
+import {onGetUserList, onDeleteUsers} from 'redux/actions';
+import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
+import {useDispatch, useSelector} from 'react-redux';
 import {useEffect, useState} from 'react';
 import UserModal from './UserModal';
 import PropTypes from 'prop-types';
-import {onGetUserList, onDeleteUsers} from 'redux/actions';
-import FilterModal from 'components/CustomModal/FilterModal';
 
 export default function UserList({user}) {
   const [openModal, setOpenModal] = useState(false);

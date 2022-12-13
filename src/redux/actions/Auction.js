@@ -128,7 +128,7 @@ export const onDeleteAuctions = (data) => {
   };
 };
 
-export const setFilters = (filters) => {
+export const setAuctionFilters = (filters) => {
   return (dispatch) => {
     dispatch({type: SET_AUCTION_FILTER_DATA, payload: filters});
   };
