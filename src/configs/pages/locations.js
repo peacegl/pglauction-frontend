@@ -43,7 +43,7 @@ export const filterContent = [
     title: 'id_filtering',
     items: [
       {
-        name: 'locations.code',
+        name: 'locations.id',
         label: 'Code',
         type: 'autocomplete',
         url: '/codes/auto_complete?model=Location',
