@@ -93,7 +93,7 @@ export const filterContent = [
         name: 'customers.code',
         label: 'Code',
         type: 'autocomplete',
-        url: '/user_codes/auto_complete',
+        url: '/codes/auto_complete?model=Customer',
         keyName: 'code',
       },
       {

@@ -13,9 +13,7 @@ export const tableColumns = function () {
       name: 'profile',
       label: messages['common.profile'],
       options: {
-        filter: false,
         download: false,
-        sort: false,
         customBodyRender: (value, tableMeta, updateValue) => (
           <Avatar alt={' profile picture.'} src={value} />
         ),
@@ -25,7 +23,6 @@ export const tableColumns = function () {
       name: 'code',
       label: messages['common.code'],
       options: {
-        filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
             {value}
@@ -48,16 +45,10 @@ export const tableColumns = function () {
     {
       name: 'phone',
       label: messages['common.phone'],
-      options: {
-        filter: false,
-      },
     },
     {
       name: 'whatsapp',
       label: messages['common.whatsapp'],
-      options: {
-        filter: false,
-      },
     },
     {
       name: 'gender',
@@ -66,9 +57,6 @@ export const tableColumns = function () {
     {
       name: 'email',
       label: messages['common.email'],
-      options: {
-        filter: false,
-      },
     },
     {
       name: 'status',
@@ -81,9 +69,6 @@ export const tableColumns = function () {
     {
       name: 'birth_date',
       label: messages['common.birth_date'],
-      options: {
-        display: false,
-      },
     },
     {
       name: 'created_by',
@@ -112,7 +97,7 @@ export const filterContent = [
         name: 'users.code',
         label: 'Code',
         type: 'autocomplete',
-        url: '/user_codes/auto_complete',
+        url: '/codes/auto_complete?model=User',
         keyName: 'code',
       },
       {

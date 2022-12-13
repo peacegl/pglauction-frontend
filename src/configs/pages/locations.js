@@ -46,15 +46,15 @@ export const filterContent = [
         name: 'locations.code',
         label: 'Code',
         type: 'autocomplete',
-        url: '/location_codes/auto_complete',
+        url: '/codes/auto_complete?model=Location',
         keyName: 'code',
       },
       {
         name: 'locations.parent_id',
         label: 'Parent',
         type: 'autocomplete',
-        url: '/user/auto_complete',
-        keyName: 'username',
+        url: '/location/auto_complete',
+        keyName: 'name',
       },
       {
         name: 'customers.created_by',

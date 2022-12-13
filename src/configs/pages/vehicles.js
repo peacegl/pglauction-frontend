@@ -14,7 +14,6 @@ export const tableColumns = function () {
       name: 'code',
       label: messages['common.code'],
       options: {
-        filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
             {value}
@@ -142,7 +141,7 @@ export const filterContent = [
         name: 'vehicles.code',
         label: 'Code',
         type: 'autocomplete',
-        url: '/vehicle_codes/auto_complete',
+        url: '/codes/auto_complete?model=Vehicle',
         keyName: 'code',
       },
       {

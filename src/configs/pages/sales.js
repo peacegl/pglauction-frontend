@@ -70,7 +70,7 @@ export const filterContent = [
         name: 'sales.code',
         label: 'Code',
         type: 'autocomplete',
-        url: '/sale_codes/auto_complete',
+        url: '/codes/auto_complete?model=Sale',
         keyName: 'code',
       },
       {
