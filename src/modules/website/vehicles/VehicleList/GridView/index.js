@@ -10,8 +10,8 @@ const AuctionGrid = ({list, loading}) => (
     responsive={{
       xs: 1,
       sm: 2,
-      lg: 3,
-      xl: 4,
+      lg: 4,
+      xl: 5,
     }}
     data={list}
     renderRow={(item) => <GridItem item={item} key={item.id} url='vehicles' />}

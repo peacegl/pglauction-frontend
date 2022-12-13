@@ -1,19 +1,17 @@
+import CustomDataTable from '../../../components/CustomDataTable';
+import {filterContent, tableColumns} from '../../../configs/pages/sales';
 import {ADD_SALE, DELETE_SALE, EDIT_SALE} from 'shared/constants/Permissions';
-import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
-import {tableColumns} from 'configs/pages/sales';
 import {useEffect, useState} from 'react';
 import SaleModal from './SaleModal';
 import PropTypes from 'prop-types';
-import {
-  onGetSaleList,
-  onDeleteSales,
-  getUserAutocompleteOptions,
-} from 'redux/actions';
+import {onGetSaleList, onDeleteSales} from 'redux/actions';
+import FilterModal from 'components/CustomModal/FilterModal';
 
 export default function SaleList({user}) {
   const [showSaleModal, setShowSaleModal] = useState(false);
+  const [openFilter, setOpenFilter] = useState(false);
   const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
@@ -64,19 +62,6 @@ export default function SaleList({user}) {
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
-    confirmFilters: true,
-    onFilterDialogOpen: () => {
-      dispatch(getUserAutocompleteOptions());
-    },
-    // callback that gets executed when filters are confirmed
-    onFilterConfirm: (filterList) => {
-      handleFilter(filterList);
-    },
-    onFilterChange: (column, filterList, type) => {
-      if (type === 'chip') {
-        handleFilter(filterList);
-      }
-    },
   };
   const onEdit = () => {
     setRecordId(data[selected[0]].id);
@@ -103,39 +88,6 @@ export default function SaleList({user}) {
     fetchData(value);
   };
 
-  const handleFilter = (filterList) => {
-    const filterData = {};
-    filterData['login.salename'] = filterList[2][0]
-      ? 'like@@' + filterList[2][0].trim()
-      : undefined;
-    filterData['sales.firstname'] = filterList[3][0]
-      ? 'like@@' + filterList[3][0].trim()
-      : undefined;
-    filterData['sales.lastname'] = filterList[4][0]
-      ? 'like@@' + filterList[4][0].trim()
-      : undefined;
-    filterData['sales.gender'] = filterList[7][0]
-      ? 'exact@@' + filterList[7][0].toLowerCase()
-      : undefined;
-    filterData['login.status'] = filterList[9][0]
-      ? 'exact@@' + filterList[9][0].toLowerCase()
-      : undefined;
-    filterData['login.type'] = filterList[10][0]
-      ? 'exact@@' + filterList[10][0].toLowerCase()
-      : undefined;
-    filterData['sales.created_by'] = filterList[13].map((item) => item.id);
-    filterData['sales.updated_by'] = filterList[15].map((item) => item.id);
-    filterData['sales.created_at'] = {
-      from: filterList[14][0],
-      to: filterList[14][1],
-    };
-    filterData['sales.updated_at'] = {
-      from: filterList[16][0],
-      to: filterList[16][1],
-    };
-    setFilterData(filterData);
-  };
-
   return (
     <>
       <CustomDataTable
@@ -144,6 +96,7 @@ export default function SaleList({user}) {
         data={data}
         columns={tableColumns()}
         options={options}
+        onFilterClick={() => setOpenFilter(true)}
         onEdit={onEdit}
         onDelete={onDelete}
         deleteTitle={<IntlMessages id='sale.deleteMessage' />}
@@ -160,6 +113,16 @@ export default function SaleList({user}) {
           user?.permissions?.includes(DELETE_SALE)
         }
       />
+      {openFilter && (
+        <FilterModal
+          open={openFilter}
+          toggleOpen={() => setOpenFilter((d) => !d)}
+          initialData={filterData}
+          updateFilterData={setFilterData}
+          title='Sales Filter'
+          content={filterContent}
+        />
+      )}
       {showSaleModal && (
         <SaleModal
           open={showSaleModal}

@@ -1,7 +1,6 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
-import CommonConfigs from '../index';
 import * as yup from 'yup';
 
 export default function conifgs() {

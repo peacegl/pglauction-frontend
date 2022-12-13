@@ -14,7 +14,7 @@ const VehicleList = () => {
   const dispatch = useDispatch();
   const {theme} = useThemeContext();
   const [page, setPage] = useState(0);
-  const perPage = 20;
+  const perPage = 200;
 
   const {data = [], total = 0} = useSelector(
     ({webVehicles}) => webVehicles.vehiclesData,

@@ -6,7 +6,6 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect, useState} from 'react';
 const columns = RolesConfigs().columns;
-import {Button} from '@mui/material';
 import RoleModal from './RoleModal';
 import PropTypes from 'prop-types';
 
@@ -59,31 +58,6 @@ export default function RoleList({user}) {
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
-    confirmFilters: true,
-    // Calling the applyNewFilters parameter applies the selected filters to the table
-    customFilterDialogFooter: (currentFilterList, applyNewFilters) => {
-      return (
-        <div style={{marginTop: '40px'}}>
-          <Button
-            variant='contained'
-            onClick={() => handleFilterSubmit(applyNewFilters)}
-          >
-            Apply Filters
-          </Button>
-        </div>
-      );
-    },
-    // callback that gets executed when filters are confirmed
-    onFilterConfirm: (filterList) => {
-      console.log('onFilterConfirm');
-    },
-    onFilterChange: (column, filterList, type) => {
-      if (type === 'chip') {
-        var newFilters = () => filterList;
-        console.log('updating filters via chip');
-        // handleFilterSubmit(newFilters);
-      }
-    },
   };
   const onAdd = () => {
     setRecordId(null);
@@ -107,10 +81,6 @@ export default function RoleList({user}) {
   const onEnterSearch = (value) => {
     setPage(0);
     fetchData(value);
-  };
-
-  const handleFilterSubmit = (applyFilters) => {
-    let filterList = applyFilters();
   };
 
   return (
