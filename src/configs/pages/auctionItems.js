@@ -2,6 +2,7 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
 import * as yup from 'yup';
+import {CommonConfigs} from 'configs';
 const youtubeRegExp = CommonConfigs().youtubeRegExp;
 const {messages = []} = appIntl() ? appIntl() : {};
 export const tableColumns = function () {
