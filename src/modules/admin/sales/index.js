@@ -168,10 +168,7 @@ export default function SaleList({user}) {
           open={openFilter}
           toggleOpen={() => setOpenFilter((d) => !d)}
           initialData={filterData}
-          onApply={(filterData) => {
-            setFilterData(filterData);
-            setOpenFilter(false);
-          }}
+          updateFilterData={setFilterData}
           title='Sales Filter'
           content={filterContent}
         />

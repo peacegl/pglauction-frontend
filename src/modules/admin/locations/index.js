@@ -161,10 +161,7 @@ export default function LocationList({user}) {
           open={openFilter}
           toggleOpen={() => setOpenFilter((d) => !d)}
           initialData={filterData}
-          onApply={(filterData) => {
-            setFilterData(filterData);
-            setOpenFilter(false);
-          }}
+          updateFilterData={setFilterData}
           title='Locations Filter'
           content={filterContent}
         />

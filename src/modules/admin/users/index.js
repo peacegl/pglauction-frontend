@@ -168,10 +168,7 @@ export default function UserList({user}) {
           open={openFilter}
           toggleOpen={() => setOpenFilter((d) => !d)}
           initialData={filterData}
-          onApply={(filterData) => {
-            setFilterData(filterData);
-            setOpenFilter(false);
-          }}
+          updateFilterData={setFilterData}
           title='Users Filter'
           content={filterContent}
         />

@@ -173,10 +173,7 @@ export default function CustomerList({user}) {
           open={openFilter}
           toggleOpen={() => setOpenFilter((d) => !d)}
           initialData={filterData}
-          onApply={(filterData) => {
-            setFilterData(filterData);
-            setOpenFilter(false);
-          }}
+          updateFilterData={setFilterData}
           title='Customers Filter'
           content={filterContent}
         />

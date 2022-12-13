@@ -31,6 +31,8 @@ const SectionItem = ({title, children, ...reset}) => {
         borderRadius: 1,
         width: '100%',
         maxWidth: '400px',
+        height: {md: '450px'},
+        overflow: 'auto',
       }}
       flex={1}
     >
@@ -55,9 +57,9 @@ export default function FilterModal({
   open = false,
   toggleOpen,
   title,
-  onApply,
   content,
   initialData,
+  updateFilterData,
   ...rest
 }) {
   const [filterData, setFilterData] = useState(initialData);
@@ -209,7 +211,10 @@ export default function FilterModal({
             <Button
               size='small'
               variant='contained'
-              onClick={() => onApply(filterData)}
+              onClick={() => {
+                updateFilterData(filterData);
+                toggleOpen();
+              }}
             >
               <IntlMessages id='common.apply' />
             </Button>
@@ -217,7 +222,10 @@ export default function FilterModal({
               size='small'
               variant='contained'
               color='warning'
-              onClick={() => setFilterData({})}
+              onClick={() => {
+                setFilterData({});
+                updateFilterData({});
+              }}
             >
               <IntlMessages id='common.reset' />
             </Button>
@@ -240,7 +248,7 @@ FilterModal.propTypes = {
   open: PropTypes.bool.isRequired,
   toggleOpen: PropTypes.func.isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  onApply: PropTypes.func.isRequired,
+  updateFilterData: PropTypes.func.isRequired,
   content: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   initialData: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
