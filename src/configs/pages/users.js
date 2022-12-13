@@ -1,7 +1,6 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Avatar, Typography} from '@mui/material';
-import CommonConfigs, {createdBy, dateColumn, updatedBy} from '../index';
 import * as yup from 'yup';
 
 const phoneRegExp = CommonConfigs().phoneRegExp;
@@ -28,7 +27,7 @@ export const tableColumns = function () {
         filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            U{value.toString().padStart(5, '0')}
+            {value}
           </Typography>
         ),
       },
@@ -36,50 +35,14 @@ export const tableColumns = function () {
     {
       name: 'username',
       label: messages['common.username'],
-      options: {
-        display: true,
-        filterType: 'textField',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Username: ${v}`;
-            }
-            return false;
-          },
-        },
-      },
     },
     {
       name: 'firstname',
       label: messages['common.firstname'],
-      options: {
-        display: true,
-        filterType: 'textField',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `First Name: ${v}`;
-            }
-            return false;
-          },
-        },
-      },
     },
     {
       name: 'lastname',
       label: messages['common.lastname'],
-      options: {
-        display: true,
-        filterType: 'textField',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Last Name: ${v}`;
-            }
-            return false;
-          },
-        },
-      },
     },
     {
       name: 'phone',
@@ -98,21 +61,6 @@ export const tableColumns = function () {
     {
       name: 'gender',
       label: messages['common.gender'],
-      options: {
-        filter: true,
-        filterType: 'select',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Gender: ${v}`;
-            }
-            return false;
-          },
-        },
-        filterOptions: {
-          names: ['Male', 'Female'],
-        },
-      },
     },
     {
       name: 'email',
@@ -124,53 +72,34 @@ export const tableColumns = function () {
     {
       name: 'status',
       label: messages['common.status'],
-      options: {
-        filter: true,
-        filterType: 'select',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Status: ${v}`;
-            }
-            return false;
-          },
-        },
-        filterOptions: {
-          names: ['Active', 'Pending', 'Inactive'],
-        },
-      },
     },
     {
       name: 'type',
       label: messages['common.type'],
-      options: {
-        filter: true,
-        filterType: 'select',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Type: ${v}`;
-            }
-            return false;
-          },
-        },
-        filterOptions: {
-          names: ['Employee', 'Seller'],
-        },
-      },
     },
     {
       name: 'birth_date',
       label: messages['common.birth_date'],
       options: {
         display: false,
-        filter: false,
       },
     },
-    createdBy(),
-    dateColumn('created_at', messages['common.created_at']),
-    updatedBy(),
-    dateColumn('updated_at', messages['common.updated_at']),
+    {
+      name: 'created_by',
+      label: messages['common.created_by'],
+    },
+    {
+      name: 'updated_by',
+      label: messages['common.updated_by'],
+    },
+    {
+      name: 'created_at',
+      label: messages['common.created_at'],
+    },
+    {
+      name: 'updated_at',
+      label: messages['common.updated_at'],
+    },
   ];
 };
 

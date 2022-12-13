@@ -1,7 +1,6 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
-import {createdBy, dateColumn, updatedBy} from '../index';
 import * as yup from 'yup';
 
 const {messages = []} = appIntl() ? appIntl() : {};
@@ -15,7 +14,7 @@ export const tableColumns = function () {
         filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            Sa{value?.toString()?.padStart(5, '0')}
+            {value}
           </Typography>
         ),
       },
@@ -23,88 +22,43 @@ export const tableColumns = function () {
     {
       name: 'vin',
       label: messages['common.vin'],
-      options: {
-        display: true,
-        filterType: 'textField',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Vin: ${v}`;
-            }
-            return false;
-          },
-        },
-      },
     },
     {
       name: 'lot_number',
       label: messages['common.lot_number'],
-      options: {
-        display: true,
-        filterType: 'textField',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Lot Number: ${v}`;
-            }
-            return false;
-          },
-        },
-      },
     },
     {
       name: 'buyer',
       label: messages['common.buyer'],
-      options: {
-        display: true,
-        filterType: 'textField',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Buyer: ${v}`;
-            }
-            return false;
-          },
-        },
-      },
     },
     {
       name: 'sale_price',
       label: messages['sale.salePrice'],
-      options: {
-        filter: false,
-      },
     },
     {
       name: 'sale_date',
       label: messages['sale.saleDate'],
-      options: {
-        filter: false,
-      },
     },
     {
       name: 'status',
       label: messages['common.status'],
-      options: {
-        filter: true,
-        filterType: 'select',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Status: ${v}`;
-            }
-            return false;
-          },
-        },
-        filterOptions: {
-          names: ['Sold', 'Cancelled', 'Pending'],
-        },
-      },
     },
-    createdBy(),
-    dateColumn('created_at', messages['common.created_at']),
-    updatedBy(),
-    dateColumn('updated_at', messages['common.updated_at']),
+    {
+      name: 'created_by',
+      label: messages['common.created_by'],
+    },
+    {
+      name: 'updated_by',
+      label: messages['common.updated_by'],
+    },
+    {
+      name: 'created_at',
+      label: messages['common.created_at'],
+    },
+    {
+      name: 'updated_at',
+      label: messages['common.updated_at'],
+    },
   ];
 };
 

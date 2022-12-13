@@ -22,27 +22,26 @@ export const tableColumns = function () {
         filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            AT
-            {value.toString().padStart(8, '0')}
+            {value}
           </Typography>
         ),
       },
     },
-    vehicleVin(),
-    vehicleLot(),
+    {
+      name: 'vin',
+      label: messages['common.year'],
+    },
+    {
+      name: 'lot_number',
+      label: messages['common.lot_number'],
+    },
     {
       name: 'title',
       label: messages['common.title'],
-      options: {
-        filter: false,
-      },
     },
     {
       name: 'subtitle',
       label: messages['common.subtitle'],
-      options: {
-        filter: false,
-      },
     },
     {
       name: 'interval',
@@ -57,64 +56,39 @@ export const tableColumns = function () {
     {
       name: 'minimum_bid',
       label: messages['common.minimum_bid'],
-      options: {
-        filter: false,
-      },
     },
     {
       name: 'buy_now_price',
       label: messages['common.buy_now_price'],
-      options: {
-        filter: false,
-      },
     },
     {
       name: 'note',
       label: messages['common.note'],
-      options: {
-        display: false,
-        filter: false,
-      },
     },
     {
       name: 'status',
       label: messages['common.status'],
-      options: {
-        filter: true,
-        filterType: 'select',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Status: ${v}`;
-            }
-            return false;
-          },
-        },
-        filterOptions: {
-          names: ['Active', 'Pending', 'Sold'],
-        },
-      },
     },
     {
       name: 'seller',
       label: messages['common.seller'],
-      options: {
-        display: true,
-        filterType: 'textField',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Seller: ${v}`;
-            }
-            return false;
-          },
-        },
-      },
     },
-    createdBy(),
-    dateColumn('created_at', messages['common.created_at']),
-    updatedBy(),
-    dateColumn('updated_at', messages['common.updated_at']),
+    {
+      name: 'created_by',
+      label: messages['common.created_by'],
+    },
+    {
+      name: 'updated_by',
+      label: messages['common.updated_by'],
+    },
+    {
+      name: 'created_at',
+      label: messages['common.created_at'],
+    },
+    {
+      name: 'updated_at',
+      label: messages['common.updated_at'],
+    },
   ];
 };
 

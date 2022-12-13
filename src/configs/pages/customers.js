@@ -1,7 +1,6 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Avatar, Typography} from '@mui/material';
-import CommonConfigs, {createdBy, dateColumn, updatedBy} from '../index';
 const phoneRegExp = CommonConfigs().phoneRegExp;
 import * as yup from 'yup';
 const {messages = []} = appIntl() ? appIntl() : {};
@@ -12,7 +11,6 @@ export const tableColumns = function () {
       name: 'profile',
       label: messages['common.profile'],
       options: {
-        filter: false,
         download: false,
         sort: false,
         customBodyRender: (value, tableMeta, updateValue) => (
@@ -24,10 +22,9 @@ export const tableColumns = function () {
       name: 'code',
       label: 'Code',
       options: {
-        filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            C{value.toString().padStart(5, '0')}
+            {value}
           </Typography>
         ),
       },
@@ -35,136 +32,55 @@ export const tableColumns = function () {
     {
       name: 'username',
       label: messages['common.username'],
-      options: {
-        display: true,
-        filterType: 'textField',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Username: ${v}`;
-            }
-            return false;
-          },
-        },
-      },
     },
     {
       name: 'firstname',
       label: messages['common.firstname'],
-      options: {
-        display: true,
-        filterType: 'textField',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `First Name: ${v}`;
-            }
-            return false;
-          },
-        },
-      },
     },
     {
       name: 'lastname',
       label: messages['common.lastname'],
-      options: {
-        display: true,
-        filterType: 'textField',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Last Name: ${v}`;
-            }
-            return false;
-          },
-        },
-      },
     },
     {
       name: 'phone',
       label: messages['common.phone'],
-      options: {
-        display: true,
-        filter: false,
-      },
     },
     {
       name: 'whatsapp',
       label: messages['common.whatsapp'],
-      options: {
-        display: true,
-        filter: false,
-      },
     },
     {
       name: 'gender',
       label: messages['common.gender'],
-      options: {
-        filter: true,
-        filterType: 'select',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Gender: ${v}`;
-            }
-            return false;
-          },
-        },
-        filterOptions: {
-          names: ['Male', 'Female'],
-        },
-      },
     },
     {
       name: 'email',
       label: messages['common.email'],
-      options: {
-        display: true,
-        filter: false,
-      },
     },
     {
       name: 'status',
       label: messages['common.status'],
-      options: {
-        filter: true,
-        filterType: 'select',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Status: ${v}`;
-            }
-            return false;
-          },
-        },
-        filterOptions: {
-          names: ['Active', 'Pending', 'Inactive'],
-        },
-      },
     },
     {
       name: 'type',
       label: messages['common.type'],
-      options: {
-        filter: true,
-        filterType: 'select',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Type: ${v}`;
-            }
-            return false;
-          },
-        },
-        filterOptions: {
-          names: ['Member', 'Seller'],
-        },
-      },
     },
-    createdBy(),
-    dateColumn('created_at', messages['common.created_at']),
-    updatedBy(),
-    dateColumn('updated_at', messages['common.updated_at']),
+    {
+      name: 'created_by',
+      label: messages['common.created_by'],
+    },
+    {
+      name: 'updated_by',
+      label: messages['common.updated_by'],
+    },
+    {
+      name: 'created_at',
+      label: messages['common.created_at'],
+    },
+    {
+      name: 'updated_at',
+      label: messages['common.updated_at'],
+    },
   ];
 };
 
