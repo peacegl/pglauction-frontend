@@ -72,19 +72,6 @@ export default function VehicleList({user}) {
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
-    // confirmFilters: true,
-    // onFilterDialogOpen: () => {
-    //   dispatch(getUserAutocompleteOptions());
-    // },
-    // // callback that gets executed when filters are confirmed
-    // onFilterConfirm: (filterList) => {
-    //   handleFilter(filterList);
-    // },
-    // onFilterChange: (column, filterList, type) => {
-    //   if (type === 'chip') {
-    //     handleFilter(filterList);
-    //   }
-    // },
   };
   const onAdd = () => {
     setRecordId(null);

@@ -9,11 +9,7 @@ import {
   EDIT_CUSTOMER,
   DELETE_CUSTOMER,
 } from 'shared/constants/Permissions';
-import {
-  onGetCustomerList,
-  onDeleteCustomers,
-  getUserAutocompleteOptions,
-} from 'redux/actions';
+import {onGetCustomerList, onDeleteCustomers} from 'redux/actions';
 import {filterContent, tableColumns} from '../../../configs/pages/customers';
 import FilterModal from 'components/CustomModal/FilterModal';
 
@@ -71,19 +67,6 @@ export default function CustomerList({user}) {
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
-    // confirmFilters: true,
-    // onFilterDialogOpen: () => {
-    //   dispatch(getUserAutocompleteOptions());
-    // },
-    // // callback that gets executed when filters are confirmed
-    // onFilterConfirm: (filterList) => {
-    //   handleFilter(filterList);
-    // },
-    // onFilterChange: (column, filterList, type) => {
-    //   if (type === 'chip') {
-    //     handleFilter(filterList);
-    //   }
-    // },
   };
   const onAdd = () => {
     setRecordId(null);
@@ -108,39 +91,6 @@ export default function CustomerList({user}) {
   const onEnterSearch = (value) => {
     setPage(0);
     fetchData(value);
-  };
-
-  const handleFilter = (filterList) => {
-    const filterData = {};
-    filterData['login.username'] = filterList[2][0]
-      ? 'like@@' + filterList[2][0].trim()
-      : undefined;
-    filterData['customers.firstname'] = filterList[3][0]
-      ? 'like@@' + filterList[3][0].trim()
-      : undefined;
-    filterData['customers.lastname'] = filterList[4][0]
-      ? 'like@@' + filterList[4][0].trim()
-      : undefined;
-    filterData['customers.gender'] = filterList[7][0]
-      ? 'exact@@' + filterList[7][0].toLowerCase()
-      : undefined;
-    filterData['login.status'] = filterList[9][0]
-      ? 'exact@@' + filterList[9][0].toLowerCase()
-      : undefined;
-    filterData['login.type'] = filterList[10][0]
-      ? 'exact@@' + filterList[10][0].toLowerCase()
-      : undefined;
-    filterData['customers.created_by'] = filterList[11].map((item) => item.id);
-    filterData['customers.updated_by'] = filterList[13].map((item) => item.id);
-    filterData['customers.created_at'] = {
-      from: filterList[12][0],
-      to: filterList[12][1],
-    };
-    filterData['customers.updated_at'] = {
-      from: filterList[14][0],
-      to: filterList[14][1],
-    };
-    setFilterData(filterData);
   };
 
   return (

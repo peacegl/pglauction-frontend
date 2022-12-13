@@ -71,19 +71,6 @@ export default function LocationList({user}) {
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
-    confirmFilters: true,
-    onFilterDialogOpen: () => {
-      dispatch(getUserAutocompleteOptions());
-    },
-    // callback that gets executed when filters are confirmed
-    onFilterConfirm: (filterList) => {
-      handleFilter(filterList);
-    },
-    onFilterChange: (column, filterList, type) => {
-      if (type === 'chip') {
-        handleFilter(filterList);
-      }
-    },
   };
   const onAdd = () => {
     setRecordId(null);
@@ -109,26 +96,6 @@ export default function LocationList({user}) {
   const onEnterSearch = (value) => {
     setPage(0);
     fetchData(value);
-  };
-  const handleFilter = (filterList) => {
-    const filterData = {};
-    filterData['locations.name'] = filterList[1][0]
-      ? 'like@@' + filterList[1][0].trim()
-      : undefined;
-    filterData['locations.parent_id'] = filterList[3][0]
-      ? 'exact@@' + filterList[3][0]['id']
-      : undefined;
-    filterData['locations.created_by'] = filterList[4].map((item) => item.id);
-    filterData['locations.updated_by'] = filterList[6].map((item) => item.id);
-    filterData['locations.created_at'] = {
-      from: filterList[5][0],
-      to: filterList[5][1],
-    };
-    filterData['locations.updated_at'] = {
-      from: filterList[7][0],
-      to: filterList[7][1],
-    };
-    setFilterData(filterData);
   };
 
   return (
