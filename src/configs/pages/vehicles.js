@@ -15,7 +15,7 @@ export const tableColumns = function () {
       options: {
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            {value}
+            V{value.toString().padStart(8, '0')}
           </Typography>
         ),
       },
