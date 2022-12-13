@@ -2,8 +2,7 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Avatar, Typography} from '@mui/material';
 import * as yup from 'yup';
-import CommonConfigs from 'configs';
-
+import {CommonConfigs} from 'configs';
 const phoneRegExp = CommonConfigs().phoneRegExp;
 const {messages = []} = appIntl() ? appIntl() : {};
 
