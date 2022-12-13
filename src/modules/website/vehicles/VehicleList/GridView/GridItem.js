@@ -11,6 +11,7 @@ import {useRouter} from 'next/router';
 import {moneyFormater} from 'configs';
 import PropTypes from 'prop-types';
 import {useState} from 'react';
+import DefaultCarImage from 'assets/default_car_image.png';
 
 export default function GridItem({item, ...props}) {
   const router = useRouter();
@@ -50,7 +51,11 @@ export default function GridItem({item, ...props}) {
         <CardMedia
           component='img'
           // height={height}
-          image={item.images.find((item) => item.type == 'main_image').path}
+          image={
+            item.images?.find((item) => item.type == 'main_image')?.path ??
+            DefaultCarImage.src
+          }
+          onError={(event) => (event.target.src = DefaultCarImage.src)}
           alt='preview'
           sx={{
             objectFit: 'cover',
