@@ -187,14 +187,10 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
           .min(3, <IntlMessages id='validation.min3Letter' />)
           .max(64, <IntlMessages id='validation.max64Letter' />)
           .required(<IntlMessages id='validation.fullnameRequired' />),
-        phone: yup
-          .string()
-          .matches(phoneRegExp, invalidPhone)
-          .required(<IntlMessages id='validation.phoneRequired' />),
-        whatsapp: yup
-          .string()
-          .matches(phoneRegExp, invalidWhatsapp)
-          .required(<IntlMessages id='validation.whatsappRequired' />),
+        phone: yup.string().matches(phoneRegExp, invalidPhone),
+        // .required(<IntlMessages id='validation.phoneRequired' />),
+        whatsapp: yup.string().matches(phoneRegExp, invalidWhatsapp),
+        // .required(<IntlMessages id='validation.whatsappRequired' />),
         gender: yup
           .string()
           .required(<IntlMessages id='validation.genderRequired' />),
