@@ -16,6 +16,7 @@ import {
   Button,
   Chip,
 } from '@mui/material';
+import {LoadingButton} from '@mui/lab';
 
 const ImageCropModal = ({
   open,
@@ -32,6 +33,7 @@ const ImageCropModal = ({
   const [rotation, setRotation] = useState(0);
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -47,6 +49,7 @@ const ImageCropModal = ({
 
   const showCroppedImage = useCallback(async () => {
     try {
+      setIsLoading(true);
       const croppedImage = await getCroppedImg(
         URL.createObjectURL(images[imageIndex]),
         croppedAreaPixels,
@@ -60,8 +63,10 @@ const ImageCropModal = ({
         setImageIndex(imageIndex + 1);
       }
       setCroppedImages((d) => [...d, croppedImage]);
+      setIsLoading(false);
     } catch (e) {
       console.error(e);
+      setIsLoading(false);
     }
   }, [croppedAreaPixels, rotation, imageIndex]);
 
@@ -174,20 +179,21 @@ const ImageCropModal = ({
                 mx: 3,
               }}
             >
-              <Button
+              <LoadingButton
                 onClick={showCroppedImage}
                 variant='contained'
                 sx={{
                   borderRadius: 1,
                   width: '100%',
                 }}
+                loading={isLoading}
               >
                 {images.length == imageIndex + 1 ? (
                   <IntlMessages id='common.save' />
                 ) : (
                   <IntlMessages id='common.next' />
                 )}
-              </Button>
+              </LoadingButton>
             </Box>
           </Paper>
         </Box>

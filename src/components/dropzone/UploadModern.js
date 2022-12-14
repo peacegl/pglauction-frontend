@@ -11,6 +11,7 @@ const UploadModern = ({
   dropzone,
   isMinImagesValid,
   isMaxImagesValid,
+  error,
 }) => {
   const {theme} = useThemeContext();
   return (
@@ -64,6 +65,11 @@ const UploadModern = ({
           <IntlMessages id='auction.max20ImageAllowed' />
         </Typography>
       )}
+      {error && (
+        <Typography color='error' sx={{ml: 1}}>
+          <IntlMessages id='common.oneOrMoreMaxSizeError' />
+        </Typography>
+      )}
     </Box>
   );
 };
@@ -75,4 +81,5 @@ UploadModern.propTypes = {
   dropzone: PropTypes.object,
   isMinImagesValid: PropTypes.bool,
   isMaxImagesValid: PropTypes.bool,
+  error: PropTypes.bool,
 };

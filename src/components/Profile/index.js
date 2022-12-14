@@ -14,15 +14,24 @@ const Profile = ({width, profileUrl, name, setfieldvalue}) => {
   const {getRootProps, getInputProps} = useDropzone({
     accept: 'image/*',
     onDrop: (acceptedFiles) => {
-      if (acceptedFiles[0].size > 8388608) {
+      if (acceptedFiles[0].size > 6291456) {
         setError(true);
       } else {
+        profileUrl.current = URL.createObjectURL(acceptedFiles[0]);
+        setfieldvalue(name, acceptedFiles[0]);
         setError(false);
       }
-      profileUrl.current = URL.createObjectURL(acceptedFiles[0]);
-      setfieldvalue(name, acceptedFiles[0]);
     },
   });
+
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
   return (
     <Box
       sx={{

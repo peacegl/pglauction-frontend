@@ -1085,5 +1085,6 @@
   "message.loginSuccess": "Successfully logged in!",
   "message.loginError2": "User account is blocked!",
   "message.loginError1": "Invalid credentials!",
-  "common.maxFileSize": "File size is more than max allowed size (8MB)!"
+  "common.maxFileSize": "File size is more than max allowed size (6MB)!",
+  "common.oneOrMoreMaxSizeError": "At least one file size is more than max allowed size (6MB)!"
 }

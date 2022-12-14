@@ -50,7 +50,7 @@ export default function ModelModal({
             let values = {};
             Object.entries(res.data.data).forEach(([key, value]) => {
               if (insertColumns.includes(key)) {
-                values[key] = value;
+                values[key] = value ? value : initialValues[key];
               }
             });
             setInitialValues(values);
