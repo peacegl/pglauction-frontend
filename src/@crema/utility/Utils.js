@@ -155,8 +155,7 @@ export const getUserFromJwtAuth = (user) => {
     return {
       id: 1,
       uid: user.id,
-      firstname: user.firstname,
-      lastname: user.lastname,
+      fullname: user.fullname,
       displayName: user.username,
       email: user.email,
       whiteSpace: user.whatsapp,

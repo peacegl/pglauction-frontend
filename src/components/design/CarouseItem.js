@@ -100,7 +100,7 @@ const CarouselItem = ({item}) => {
             color={theme.palette.primary.main}
             overflow='hidden'
           >
-            {item.odometer} <IntlMessages id='common.miles' />
+            {item.odometer_type}
           </Typography>
         </Box>
         <Box sx={{display: 'flex', mt: 1}}>

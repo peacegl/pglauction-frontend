@@ -31,8 +31,7 @@ export default function CustomerModal({
   const [timezonesLoading, setTimezonesLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     profile: '',
-    firstname: '',
-    lastname: '',
+    fullname: '',
     phone: '',
     whatsapp: '',
     gender: '',
@@ -183,7 +182,7 @@ export default function CustomerModal({
                 if (key == 'profile') {
                   profileUrl.current = value;
                 } else {
-                  values[key] = value;
+                  values[key] = value ? value : initialValues[key];
                 }
               }
               if (typeof value === 'object' && value != null) {

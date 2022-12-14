@@ -111,7 +111,7 @@ export default function RoleModal({
                     values.permissions.push(item.id);
                   });
                 } else {
-                  values[key] = value;
+                  values[key] = value ? value : initialValues[key];
                 }
               }
             });

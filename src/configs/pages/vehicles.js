@@ -106,8 +106,8 @@ export const tableColumns = function () {
       label: messages['vehicle.document_type'],
     },
     {
-      name: 'odometer',
-      label: messages['vehicle.odometer'],
+      name: 'odometer_type',
+      label: messages['vehicle.odometer_type'],
     },
     {
       name: 'transmission',
@@ -301,12 +301,6 @@ export default function configs(invalidYoutube) {
         location_id: yup
           .string()
           .required(<IntlMessages id='validation.locationRequired' />),
-        seller_id: yup
-          .string()
-          .required(<IntlMessages id='validation.sellerRequired' />),
-        odometer: yup
-          .number()
-          .typeError(<IntlMessages id='validation.numberError' />),
       }),
       yup.object({
         youtube_url: yup.string().matches(youtubeRegExp, invalidYoutube),

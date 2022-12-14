@@ -23,17 +23,9 @@ const UserStepOne = (props) => {
         </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppTextField
-            placeholder={messages['common.firstnamePlaceholder']}
-            label={<IntlMessages id='common.firstname' />}
-            name='firstname'
-            variant='outlined'
-            size='small'
-            sx={{flex: 1}}
-          />
-          <AppTextField
-            placeholder={messages['common.lastnamePlaceholder']}
-            label={<IntlMessages id='common.lastname' />}
-            name='lastname'
+            placeholder={messages['common.fullnamePlaceholder']}
+            label={<IntlMessages id='common.fullname' />}
+            name='fullname'
             variant='outlined'
             size='small'
             sx={{flex: 1}}

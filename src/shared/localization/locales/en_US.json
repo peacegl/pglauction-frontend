@@ -784,7 +784,7 @@
   "common.gender": "Gender",
   "common.username": "Username",
   "common.secondEmail": "Second Email",
-  "common.firstname": "Firstname",
+  "common.fullname": "Fullname",
   "common.lastname": "Lastname",
   "common.whatsapp": "Whatsapp",
   "common.male": "Male",
@@ -798,7 +798,7 @@
   "common.passwordConfirmation": "Password Confirmation",
   "common.parentName": "Parent Name",
 
-  "common.firstnamePlaceholder": "Type firstname",
+  "common.fullnamePlaceholder": "Type fullname",
   "common.lastnamePlaceholder": "Type lastname",
   "common.phonePlaceholder": "Type phone number",
   "common.whatsappPlaceholder": "Type whatsapp number",
@@ -856,7 +856,7 @@
   "message.location.created": "Location created successfully!",
   "message.location.updated": "Location updated successfully!",
 
-  "validation.firstnameRequired": "Firstname is required",
+  "validation.fullnameRequired": "Fullname is required",
   "validation.lastnameRequired": "Lastname is required",
   "validation.phoneRequired": "Phone is required",
   "validation.whatsappRequired": "Whatsapp is required",
@@ -1084,5 +1084,7 @@
   "vehicle.features": "Features",
   "message.loginSuccess": "Successfully logged in!",
   "message.loginError2": "User account is blocked!",
-  "message.loginError1": "Invalid credentials!"
+  "message.loginError1": "Invalid credentials!",
+  "common.maxFileSize": "File size is more than max allowed size (6MB)!",
+  "common.oneOrMoreMaxSizeError": "At least one file size is more than max allowed size (6MB)!"
 }
