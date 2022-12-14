@@ -96,7 +96,7 @@ export default function FilterModal({
           <Divider />
           <CardContent
             sx={{
-              maxHeight: {xs: '80vh', md: '75vh'},
+              maxHeight: {xs: '70vh', md: '75vh'},
               overflowY: 'auto',
               p: 3,
             }}
