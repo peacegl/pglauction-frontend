@@ -11,6 +11,7 @@ import {useRouter} from 'next/router';
 import IntlMessages from '@crema/utility/IntlMessages';
 import SoldIcon from '../../../../../assets/icon/sold.png';
 import {useState} from 'react';
+import DefaultCarImage from 'assets/default_car_image.png';
 
 const TextShow = ({value, label, extra = ''}) => {
   return (
@@ -101,7 +102,11 @@ export default function ListItem({item, ...props}) {
             )}
             <CardMedia
               component='img'
-              image={item.images.find((item) => item.type == 'main_image').path}
+              image={
+                item.images?.find((item) => item.type == 'main_image')?.path ??
+                DefaultCarImage.src
+              }
+              onError={(event) => (event.target.src = DefaultCarImage.src)}
               alt='preview'
               sx={{
                 flex: 1,
