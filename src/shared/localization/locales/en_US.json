@@ -1084,5 +1084,6 @@
   "vehicle.features": "Features",
   "message.loginSuccess": "Successfully logged in!",
   "message.loginError2": "User account is blocked!",
-  "message.loginError1": "Invalid credentials!"
+  "message.loginError1": "Invalid credentials!",
+  "common.maxFileSize": "File size is more than max allowed size (8MB)!"
 }

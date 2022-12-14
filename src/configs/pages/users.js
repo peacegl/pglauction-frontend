@@ -161,10 +161,27 @@ export const filterContent = [
 
 export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
   const {messages = []} = appIntl() ? appIntl() : {};
+  const SUPPORTED_FORMATS = [
+    'image/jpg',
+    'image/jpeg',
+    'image/gif',
+    'image/png',
+  ];
+  const FILE_SIZE = 10;
   return {
     exportColumns: [],
     validationSchema: [
       yup.object({
+        // profile: yup
+        //   .mixed()
+        //   .test(
+        //     'fileSize',
+        //     'File Size is too large',
+        //     (value) => value?.size <= FILE_SIZE,
+        //   )
+        //   .test('fileType', 'Unsupported File Format', (value) =>
+        //     SUPPORTED_FORMATS.includes(value?.type),
+        //   ),
         fullname: yup
           .string()
           .min(3, <IntlMessages id='validation.min3Letter' />)
