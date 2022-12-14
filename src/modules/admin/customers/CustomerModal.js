@@ -31,8 +31,7 @@ export default function CustomerModal({
   const [timezonesLoading, setTimezonesLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     profile: '',
-    firstname: '',
-    lastname: '',
+    fullname: '',
     phone: '',
     whatsapp: '',
     gender: '',

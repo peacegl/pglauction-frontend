@@ -38,9 +38,7 @@ const SaleForm = (props) => {
             sx={{flex: 1}}
             dataLoading={props.customersLoading}
             options={props.customers}
-            keyName='name'
-            keyName2='lastname'
-            keyName1='firstname'
+            keyName='fullname'
             onSearch={props.searchCustomers}
             value={props.values?.buyer_id}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}

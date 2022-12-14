@@ -35,12 +35,8 @@ export const tableColumns = function () {
       label: messages['common.username'],
     },
     {
-      name: 'firstname',
-      label: messages['common.firstname'],
-    },
-    {
-      name: 'lastname',
-      label: messages['common.lastname'],
+      name: 'fullname',
+      label: messages['common.fullname'],
     },
     {
       name: 'phone',
@@ -165,16 +161,11 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
     exportColumns: [],
     validationSchema: [
       yup.object({
-        firstname: yup
+        fullname: yup
           .string()
           .min(3, <IntlMessages id='validation.min3Letter' />)
           .max(64, <IntlMessages id='validation.max64Letter' />)
-          .required(<IntlMessages id='validation.firstnameRequired' />),
-        lastname: yup
-          .string()
-          .min(3, <IntlMessages id='validation.min3Letter' />)
-          .max(64, <IntlMessages id='validation.max64Letter' />)
-          .required(<IntlMessages id='validation.lastnameRequired' />),
+          .required(<IntlMessages id='validation.fullnameRequired' />),
         phone: yup
           .string()
           .matches(phoneRegExp, invalidPhone)

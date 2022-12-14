@@ -86,7 +86,7 @@ export default function GridItem({item, ...props}) {
             {moneyFormater(item.price)}
           </Typography>
           <Typography color={theme.palette.primary.main}>
-            {item.odometer} <IntlMessages id='common.miles' />
+            {item.odometer_type}
           </Typography>
         </Box>
         <Box sx={{mt: 1}}>

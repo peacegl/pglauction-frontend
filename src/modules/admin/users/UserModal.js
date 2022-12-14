@@ -36,8 +36,7 @@ export default function UserModal({
   const [permissionsLoading, setPermissionsLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     profile: '',
-    firstname: '',
-    lastname: '',
+    fullname: '',
     phone: '',
     whatsapp: '',
     gender: '',

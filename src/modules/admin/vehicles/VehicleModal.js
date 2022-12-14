@@ -60,7 +60,7 @@ export default function VehicleModal({
     price: '',
     document_type: '',
     primary_damage: '',
-    odometer: '',
+    odometer_type: '',
     fuel: '',
     body_style: '',
     drive_type: '',
