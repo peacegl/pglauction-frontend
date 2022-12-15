@@ -37,7 +37,12 @@ const MultipleImageDropzone = (props) => {
     }
   }, [error]);
   const addImages = (croptedImages) => {
-    props.setfieldvalue('images', [...props.values.images, ...croptedImages]);
+    props.setfieldvalue(
+      'images',
+      props.values.images?.length
+        ? [...props.values.images, ...croptedImages]
+        : [...croptedImages],
+    );
     let newImages = croptedImages.map((file) =>
       Object.assign(file, {
         preview: URL.createObjectURL(file),

@@ -70,11 +70,14 @@ export default function Footer() {
                   src={logoImage.src}
                 />
                 <Typography sx={{m: 4, ml: 0}} variant='body1'>
-                  Cum qui totam eligendi. Eos sed perferendis consequuntur
-                  cupiditate voluptas aut et. Deserunt neque nobis est numquam
-                  ut Cum qui totam eligendi. Eos sed perferendis consequuntur
-                  cupiditate voluptas aut et. Deserunt neque nobis est numquam
-                  ut. Cum qui totam eligendi.
+                  United Trading Company sells used cars with an affordable rate
+                  in Dubai, UAE. They have a showroom in Sharjah and an office
+                  in Dubai to provide comprehensive support and services to the
+                  customers. We have different affiliates to help provide
+                  shipping, clearance, and sell cars from USA in Dubai. Having
+                  sold over 1400 vehicles and keeping inventory of over 200
+                  vehicles , we are one of the leading used cars market in
+                  Sharjah, UAE.
                 </Typography>
               </Box>
             </Box>
@@ -111,7 +114,7 @@ export default function Footer() {
                 {title('About Us')}
                 {link('About Us', '/')}
                 {title('Support')}
-                {link('Support', '/')}
+                {link('Support', '/contact-us')}
                 {link('Terms & Condations', '/terms')}
                 {link('Privacy Policy', '/policy')}
               </Box>
@@ -155,11 +158,11 @@ export default function Footer() {
                     variant='body2'
                     fontSize='14px'
                     underline='none'
-                    href='tel:+976776655688'
+                    href='tel:+971565929272'
                     mx='5px'
                     color={theme.palette.text.secondary}
                   >
-                    (+97)6776655688
+                    +971 56 592 9272
                   </Link>
                 </Box>
                 <Box
@@ -172,11 +175,28 @@ export default function Footer() {
                     variant='body2'
                     fontSize='14px'
                     underline='none'
-                    href='mailto:email@example.com'
+                    href='mailto:utc@peacegl.com'
                     mx='5px'
                     color={theme.palette.text.secondary}
                   >
-                    email@example
+                    utc@peacegl.com
+                  </Link>
+                </Box>
+                <Box
+                  marginBottom='10px'
+                  display='flex'
+                  sx={{justifyContent: {xs: 'center', sm: 'flex-start'}}}
+                >
+                  <EmailOutlinedIcon />
+                  <Link
+                    variant='body2'
+                    fontSize='14px'
+                    underline='none'
+                    href='mailto:crm@peacegl.com'
+                    mx='5px'
+                    color={theme.palette.text.secondary}
+                  >
+                    crm@peacegl.com
                   </Link>
                 </Box>
               </Box>

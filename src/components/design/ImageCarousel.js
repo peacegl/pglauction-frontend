@@ -3,7 +3,7 @@ import {Box, Divider, Paper, Stack} from '@mui/material';
 import {Carousel} from 'react-responsive-carousel';
 import {SideBySideMagnifier} from 'react-image-magnifiers';
 import {PropTypes} from 'prop-types';
-import SoldIcon from '../../../../assets/icon/sold.png';
+import SoldIcon from 'assets/icon/sold.png';
 
 const ImageCarousel = ({images, isSold = false, ...rest}) => {
   const renderCustomThumbs = () => {
@@ -11,10 +11,10 @@ const ImageCarousel = ({images, isSold = false, ...rest}) => {
       <Box
         component='img'
         style={{objectFit: 'cover'}}
-        key={image._id}
+        key={index}
         src={image.path}
         alt={image.alternativeText}
-        height='70'
+        height={'70px'}
       />
       // <picture key={index}>
       //   <source data-srcSet={image.path} type='image/*' />
@@ -100,4 +100,5 @@ export default ImageCarousel;
 ImageCarousel.propTypes = {
   images: PropTypes.array,
   isSold: PropTypes.bool,
+  height: PropTypes.any,
 };
