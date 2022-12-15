@@ -1,7 +1,6 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
-import CommonConfigs from '../index';
 import * as yup from 'yup';
 
 export default function conifgs() {
@@ -56,18 +55,12 @@ export default function conifgs() {
       },
     ],
     exportColumns: [],
-    validationSchema: [
-      yup.object({
-        name: yup
-          .string()
-          .min(3, <IntlMessages id='validation.min3Letter' />)
-          .max(64, <IntlMessages id='validation.max64Letter' />)
-          .required(<IntlMessages id='validation.nameRequired' />),
-        type: yup
-          .string()
-          .required(<IntlMessages id='validation.typeRequired' />),
-      }),
-      yup.object({}),
-    ],
+    validationSchema: yup.object({
+      name: yup
+        .string()
+        .min(3, <IntlMessages id='validation.min3Letter' />)
+        .max(64, <IntlMessages id='validation.max64Letter' />)
+        .required(<IntlMessages id='validation.nameRequired' />),
+    }),
   };
 }

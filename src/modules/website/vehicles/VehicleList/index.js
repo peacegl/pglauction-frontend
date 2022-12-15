@@ -1,20 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import Header from '../Header';
-import {useDispatch, useSelector} from 'react-redux';
-import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
-import GridView from './GridView/index';
-import ListView from './ListView';
-import AppsContent from './AppsContent';
-import {alpha, Box, Hidden, Card} from '@mui/material';
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
-import {onGetWebVehicleData, setFilters} from '../../../../redux/actions';
 import AppsPagination from '@crema/core/AppsPagination';
+import {alpha, Box, Hidden, Card} from '@mui/material';
+import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
+import {useDispatch, useSelector} from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {onGetWebVehicleData} from 'redux/actions';
+import GridView from './GridView/index';
+import AppsContent from './AppsContent';
+import ListView from './ListView';
+import Header from '../Header';
 
 const VehicleList = () => {
   const dispatch = useDispatch();
   const {theme} = useThemeContext();
   const [page, setPage] = useState(0);
-  const perPage = 20;
+  const perPage = 200;
 
   const {data = [], total = 0} = useSelector(
     ({webVehicles}) => webVehicles.vehiclesData,
@@ -30,7 +30,7 @@ const VehicleList = () => {
   useEffect(() => {
     dispatch(
       onGetWebVehicleData({
-        filterData,
+        // filterData,
         per_page: perPage,
         page: page + 1,
         search,

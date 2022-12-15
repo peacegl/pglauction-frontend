@@ -11,6 +11,7 @@ import {useRouter} from 'next/router';
 import IntlMessages from '@crema/utility/IntlMessages';
 import SoldIcon from '../../../../../assets/icon/sold.png';
 import {useState} from 'react';
+import DefaultCarImage from 'assets/default_car_image.png';
 
 const TextShow = ({value, label, extra = ''}) => {
   return (
@@ -101,7 +102,11 @@ export default function ListItem({item, ...props}) {
             )}
             <CardMedia
               component='img'
-              image={item.images.find((item) => item.type == 'main_image').path}
+              image={
+                item.images?.find((item) => item.type == 'main_image')?.path ??
+                DefaultCarImage.src
+              }
+              onError={(event) => (event.target.src = DefaultCarImage.src)}
               alt='preview'
               sx={{
                 flex: 1,
@@ -172,7 +177,7 @@ export default function ListItem({item, ...props}) {
                     overflow='hidden'
                     sx={{display: {sm: 'block', lg: 'none'}, fontSize: '14px'}}
                   >
-                    {item.odometer} <IntlMessages id='common.miles' />
+                    {item.odometer_type}
                   </Typography>
 
                   <Box display='flex' columnGap='5px'>
@@ -225,8 +230,7 @@ export default function ListItem({item, ...props}) {
               <Box sx={{flex: 1.5, display: {xs: 'none', lg: 'block'}, px: 3}}>
                 <TextShow
                   label={<IntlMessages id='vehicle.odometer' />}
-                  value={item.odometer}
-                  extra={<IntlMessages id='common.miles' />}
+                  value={item.odometer_type}
                 />
                 <TextShow
                   label={<IntlMessages id='vehicle.test_drive' />}

@@ -103,7 +103,7 @@ export default function SaleInfo() {
             />
             <Item
               label={<IntlMessages id='vehicle.odometer' />}
-              value={vehicle.odometer}
+              value={vehicle.odometer_type}
             />
             <Item
               label={<IntlMessages id='vehicle.primary_damage' />}

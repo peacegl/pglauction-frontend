@@ -1,14 +1,14 @@
+import CustomDataTable from '../../../components/CustomDataTable';
+import {tableColumns} from '../../../configs/pages/makes';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {useDispatch, useSelector} from 'react-redux';
+import {useEffect, useState} from 'react';
+import MakeModal from './MakeModal';
 import {
   onGetMakeList,
   onDeleteMakes,
   getUserAutocompleteOptions,
 } from 'redux/actions';
-import {tableColumns} from '../../../configs/pages/makes';
-import IntlMessages from '@crema/utility/IntlMessages';
-import {useDispatch, useSelector} from 'react-redux';
-import CustomDataTable from '../../../components/CustomDataTable';
-import MakeModal from './MakeModal';
-import {useEffect, useState} from 'react';
 
 export default function MakeList() {
   const [openModal, setOpenModal] = useState(false);

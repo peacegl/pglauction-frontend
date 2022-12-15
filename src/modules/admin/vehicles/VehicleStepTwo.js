@@ -158,7 +158,7 @@ const VehicleStepTwo = (props) => {
           <AppTextField
             placeholder={messages['vehicle.odometerPlaceholder']}
             label={<IntlMessages id='vehicle.odometer' />}
-            name='odometer'
+            name='odometer_type'
             variant='outlined'
             size='small'
             sx={{flex: 1}}

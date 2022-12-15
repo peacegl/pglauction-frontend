@@ -1,13 +1,13 @@
-import IntlMessages from '@crema/utility/IntlMessages';
-import MakeConfigs from '../../../configs/pages/makes';
 import {onInsertMake, onUpdateMake} from 'redux/actions';
-import CustomModal from '../../../components/CustomModal';
+import IntlMessages from '@crema/utility/IntlMessages';
+import jwtAxios from '@crema/services/auth/jwt-auth';
+import CustomModal from 'components/CustomModal';
+import MakeConfigs from 'configs/pages/makes';
 import {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import MakeForm from './MakeForm';
-import jwtAxios from '@crema/services/auth/jwt-auth';
-import {getData} from '../../../configs';
+import {getData} from 'configs';
 
 const insertColumns = MakeConfigs().insertColumns;
 const validationSchema = MakeConfigs().validationSchema;
@@ -35,7 +35,7 @@ export default function MakeModal({
             let values = {};
             Object.entries(res.data.data).forEach(([key, value]) => {
               if (insertColumns.includes(key)) {
-                values[key] = value;
+                values[key] = value ? value : initialValues[key];
               }
             });
             setInitialValues(values);

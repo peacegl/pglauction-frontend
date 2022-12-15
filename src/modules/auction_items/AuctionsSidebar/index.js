@@ -17,7 +17,7 @@ import AppGrid from '../../../@crema/core/AppGrid';
 import ColorCell from './ColorCell';
 import RatingCell from './RatingCell';
 import {useDispatch, useSelector} from 'react-redux';
-import {setFilters} from '../../../redux/actions';
+import {setAuctionFilters} from '../../../redux/actions';
 import PropTypes from 'prop-types';
 
 const AuctionsSidebar = ({backgroundColor}) => {
@@ -31,7 +31,7 @@ const AuctionsSidebar = ({backgroundColor}) => {
 
   useEffect(() => {
     dispatch(
-      setFilters({
+      setAuctionFilters({
         title: filterData.title,
         brand: selectedBrand,
         ideaFor: selectedFor,

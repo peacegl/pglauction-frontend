@@ -20,13 +20,15 @@ export default function DefaultToolbar({
 }) {
   return (
     <Box style={{display: 'flex'}} sx={{mx: 4, my: 1.75}}>
-      {showSell && selected.length == 1 && selectedItems[0].status != 'sold' && (
-        <AppTooltip title={<IntlMessages id='common.sell' />}>
-          <IconButton color='info' onClick={onSell}>
-            <SellIcon sx={{fontSize: '22px'}} />
-          </IconButton>
-        </AppTooltip>
-      )}
+      {showSell &&
+        selected.length == 1 &&
+        selectedItems[0].status != 'sold' && (
+          <AppTooltip title={<IntlMessages id='common.sell' />}>
+            <IconButton color='info' onClick={onSell}>
+              <SellIcon sx={{fontSize: '22px'}} />
+            </IconButton>
+          </AppTooltip>
+        )}
       {showEditButton && selected.length == 1 && (
         <AppTooltip title={<IntlMessages id='common.edit' />}>
           <IconButton color='info' onClick={onEdit}>

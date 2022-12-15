@@ -1,15 +1,8 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
-import CommonConfigs, {
-  createdBy,
-  dateColumn,
-  updatedBy,
-  vehicleLot,
-  vehicleVin,
-} from '../index';
 import * as yup from 'yup';
-
+import {CommonConfigs} from 'configs';
 const youtubeRegExp = CommonConfigs().youtubeRegExp;
 const {messages = []} = appIntl() ? appIntl() : {};
 
@@ -22,7 +15,7 @@ export const tableColumns = function () {
         filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            A{value.toString().padStart(8, '0')}
+            AUC{value.toString().padStart(6, '0')}
           </Typography>
         ),
       },
@@ -30,42 +23,39 @@ export const tableColumns = function () {
     {
       name: 'name',
       label: messages['common.name'],
-      options: {
-        filter: false,
-      },
     },
-    dateColumn('start_date', messages['common.start_date']),
-    dateColumn('end_date', messages['common.end_date']),
+    {
+      name: 'start_date',
+      label: messages['common.start_date'],
+    },
+    {
+      name: 'end_date',
+      label: messages['common.end_date'],
+    },
     {
       name: 'items_count',
       label: messages['auction.VehiclesCount'],
-      options: {
-        filter: false,
-      },
     },
     {
       name: 'status',
       label: messages['common.status'],
-      options: {
-        filter: true,
-        filterType: 'select',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Status: ${v}`;
-            }
-            return false;
-          },
-        },
-        filterOptions: {
-          names: ['Active', 'Pending', 'Sold'],
-        },
-      },
     },
-    createdBy(),
-    dateColumn('created_at', messages['common.created_at']),
-    updatedBy(),
-    dateColumn('updated_at', messages['common.updated_at']),
+    {
+      name: 'created_by',
+      label: messages['common.created_by'],
+    },
+    {
+      name: 'updated_by',
+      label: messages['common.updated_by'],
+    },
+    {
+      name: 'created_at',
+      label: messages['common.created_at'],
+    },
+    {
+      name: 'updated_at',
+      label: messages['common.updated_at'],
+    },
   ];
 };
 

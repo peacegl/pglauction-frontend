@@ -8,15 +8,34 @@ import {Stack} from '@mui/material';
 import PropTypes from 'prop-types';
 
 const MultipleImageDropzone = (props) => {
+  const [error, setError] = useState(false);
   const [imagesForCrop, setImagesForCrop] = useState([]);
   const [openImageCrop, setOpenImageCrop] = useState(false);
   const dropzone = useDropzone({
     accept: 'image/*',
     onDrop: (acceptedFiles) => {
-      setImagesForCrop(acceptedFiles);
-      setOpenImageCrop(true);
+      let flag = false;
+      acceptedFiles.forEach((acceptedFile) => {
+        if (acceptedFile.size > 6291456) {
+          flag = true;
+          setError(true);
+        }
+      });
+      if (!flag) {
+        setError(false);
+        setImagesForCrop(acceptedFiles);
+        setOpenImageCrop(true);
+      }
     },
   });
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
   const addImages = (croptedImages) => {
     props.setfieldvalue('images', [...croptedImages]);
     let newImages = croptedImages.map((file) =>
@@ -62,6 +81,7 @@ const MultipleImageDropzone = (props) => {
         dropzone={dropzone}
         isMinImagesValid={props.isMinImagesValid}
         isMaxImagesValid={props.isMaxImagesValid}
+        error={error}
       />
       <Stack
         direction='row'

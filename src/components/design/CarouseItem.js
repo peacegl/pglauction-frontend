@@ -14,6 +14,7 @@ import AppTooltip from '@crema/core/AppTooltip';
 import {moneyFormater} from 'configs';
 import SoldIcon from '../../assets/icon/sold.png';
 import {useState} from 'react';
+import DefaultCarImage from 'assets/default_car_image.png';
 
 const CarouselItem = ({item}) => {
   const router = useRouter();
@@ -56,7 +57,11 @@ const CarouselItem = ({item}) => {
         )}
         <CardMedia
           component='img'
-          image={item.images?.find((item) => item.type == 'main_image').path}
+          image={
+            item.images?.find((item) => item.type == 'main_image')?.path ??
+            DefaultCarImage.src
+          }
+          onError={(event) => (event.target.src = DefaultCarImage.src)}
           alt='preview'
           sx={{
             objectFit: 'cover',
@@ -95,7 +100,7 @@ const CarouselItem = ({item}) => {
             color={theme.palette.primary.main}
             overflow='hidden'
           >
-            {item.odometer} <IntlMessages id='common.miles' />
+            {item.odometer_type}
           </Typography>
         </Box>
         <Box sx={{display: 'flex', mt: 1}}>

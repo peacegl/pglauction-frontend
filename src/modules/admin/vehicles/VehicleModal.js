@@ -1,24 +1,24 @@
 import AuctionDescriptionStep from 'components/auctions/AuctionDescriptionStep';
-import AuctionImagesStep from '../../../components/auctions/AuctionImagesStep';
-import AuctionStep from '../../../components/auctions/AuctionStep';
+import AuctionImagesStep from 'components/auctions/AuctionImagesStep';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import {onInsertVehicle, onUpdateVehicle} from 'redux/actions';
 import CollectionsIcon from '@mui/icons-material/Collections';
-import VehicleConfigs from '../../../configs/pages/vehicles';
+import AuctionStep from 'components/auctions/AuctionStep';
 import IntlMessages from '@crema/utility/IntlMessages';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
+import VehicleConfigs from 'configs/pages/vehicles';
+import VehicleStepThree from './VehicleStepThree';
+import CustomModal from 'components/CustomModal';
 import SellIcon from '@mui/icons-material/Sell';
 import InfoIcon from '@mui/icons-material/Info';
+import VehicleStepTwo from './VehicleStepTwo';
 import VehicleStepOne from './VehicleStepOne';
-import CustomModal from '../../../components/CustomModal';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import Helper from 'helpers/helpers';
 import PropTypes from 'prop-types';
-import {getData} from '../../../configs';
-import VehicleStepTwo from './VehicleStepTwo';
-import VehicleStepThree from './VehicleStepThree';
+import {getData} from 'configs';
 
 export default function VehicleModal({
   open,
@@ -60,7 +60,7 @@ export default function VehicleModal({
     price: '',
     document_type: '',
     primary_damage: '',
-    odometer: '',
+    odometer_type: '',
     fuel: '',
     body_style: '',
     drive_type: '',

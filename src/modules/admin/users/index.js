@@ -1,19 +1,17 @@
 import {ADD_USER, DELETE_USER, EDIT_USER} from 'shared/constants/Permissions';
-import CustomDataTable from '../../../components/CustomDataTable';
-import {tableColumns} from '../../../configs/pages/users';
+import {filterContent, tableColumns} from 'configs/pages/users';
+import FilterModal from 'components/CustomModal/FilterModal';
+import {onGetUserList, onDeleteUsers} from 'redux/actions';
+import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect, useState} from 'react';
 import UserModal from './UserModal';
 import PropTypes from 'prop-types';
-import {
-  onGetUserList,
-  onDeleteUsers,
-  getUserAutocompleteOptions,
-} from 'redux/actions';
 
 export default function UserList({user}) {
   const [openModal, setOpenModal] = useState(false);
+  const [openFilter, setOpenFilter] = useState(false);
   const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
@@ -64,19 +62,6 @@ export default function UserList({user}) {
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
-    confirmFilters: true,
-    onFilterDialogOpen: () => {
-      dispatch(getUserAutocompleteOptions());
-    },
-    // callback that gets executed when filters are confirmed
-    onFilterConfirm: (filterList) => {
-      handleFilter(filterList);
-    },
-    onFilterChange: (column, filterList, type) => {
-      if (type === 'chip') {
-        handleFilter(filterList);
-      }
-    },
   };
   const onAdd = () => {
     setRecordId(null);
@@ -103,39 +88,6 @@ export default function UserList({user}) {
     fetchData(value);
   };
 
-  const handleFilter = (filterList) => {
-    const filterData = {};
-    filterData['login.username'] = filterList[2][0]
-      ? 'like@@' + filterList[2][0].trim()
-      : undefined;
-    filterData['users.firstname'] = filterList[3][0]
-      ? 'like@@' + filterList[3][0].trim()
-      : undefined;
-    filterData['users.lastname'] = filterList[4][0]
-      ? 'like@@' + filterList[4][0].trim()
-      : undefined;
-    filterData['users.gender'] = filterList[7][0]
-      ? 'exact@@' + filterList[7][0].toLowerCase()
-      : undefined;
-    filterData['login.status'] = filterList[9][0]
-      ? 'exact@@' + filterList[9][0].toLowerCase()
-      : undefined;
-    filterData['login.type'] = filterList[10][0]
-      ? 'exact@@' + filterList[10][0].toLowerCase()
-      : undefined;
-    filterData['users.created_by'] = filterList[13].map((item) => item.id);
-    filterData['users.updated_by'] = filterList[15].map((item) => item.id);
-    filterData['users.created_at'] = {
-      from: filterList[14][0],
-      to: filterList[14][1],
-    };
-    filterData['users.updated_at'] = {
-      from: filterList[16][0],
-      to: filterList[16][1],
-    };
-    setFilterData(filterData);
-  };
-
   return (
     <>
       <CustomDataTable
@@ -147,6 +99,7 @@ export default function UserList({user}) {
         onAdd={onAdd}
         onEdit={onEdit}
         onDelete={onDelete}
+        onFilterClick={() => setOpenFilter(true)}
         deleteTitle={<IntlMessages id='user.deleteMessage' />}
         isLoading={loading}
         selected={selected}
@@ -160,6 +113,16 @@ export default function UserList({user}) {
           user?.permissions?.includes(DELETE_USER)
         }
       />
+      {openFilter && (
+        <FilterModal
+          open={openFilter}
+          toggleOpen={() => setOpenFilter((d) => !d)}
+          initialData={filterData}
+          updateFilterData={setFilterData}
+          title='Users Filter'
+          content={filterContent}
+        />
+      )}
       {openModal && (
         <UserModal
           open={openModal}

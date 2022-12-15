@@ -2,15 +2,14 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import {onInsertRole, onUpdateRole} from 'redux/actions';
 import IntlMessages from '@crema/utility/IntlMessages';
-import RoleConfigs from '../../../configs/pages/roles';
+import RoleConfigs from 'configs/pages/roles';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-import CustomModal from '../../../components/CustomModal';
+import CustomModal from 'components/CustomModal';
 import {useEffect, useState} from 'react';
-import RoleStepTwo from './RoleStepTwo';
 import {useDispatch} from 'react-redux';
 import RoleStepOne from './RoleStepOne';
 import PropTypes from 'prop-types';
-import {getData} from '../../../configs';
+import {getData} from 'configs';
 
 export default function RoleModal({
   open,
@@ -112,7 +111,7 @@ export default function RoleModal({
                     values.permissions.push(item.id);
                   });
                 } else {
-                  values[key] = value;
+                  values[key] = value ? value : initialValues[key];
                 }
               }
             });
@@ -134,39 +133,26 @@ export default function RoleModal({
     }
   };
 
-  const steps = [
-    {
-      key: 1,
-      icon: <VerifiedUserIcon />,
-      label: <IntlMessages id='role.roleInfo' />,
-      children: <RoleStepOne />,
-    },
-    {
-      key: 2,
-      icon: <ManageAccountsIcon />,
-      label: <IntlMessages id='role.permissions' />,
-      children: (
-        <RoleStepTwo
-          permissions={permissions}
-          permissionsLoading={permissionsLoading}
-          totalPermissions={totalPermissions}
-        />
-      ),
-    },
-  ];
   return (
     <CustomModal
       open={open}
       toggleOpen={toggleOpen}
       width={width}
-      steps={steps}
       onSave={onSave}
       validationSchema={validationSchema}
       initialValues={initialValues}
       isLoading={isLoading}
       customValidation={customValidation}
+      title={<IntlMessages id='role.roleInfo' />}
+      height={480}
       {...rest}
-    />
+    >
+      <RoleStepOne
+        permissions={permissions}
+        permissionsLoading={permissionsLoading}
+        totalPermissions={totalPermissions}
+      />
+    </CustomModal>
   );
 }
 RoleModal.propTypes = {

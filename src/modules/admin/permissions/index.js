@@ -4,7 +4,6 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import {onGetPermissionList} from 'redux/actions';
 import {useEffect, useState} from 'react';
-import {Button} from '@mui/material';
 
 export default function UserList() {
   const [page, setPage] = useState(0);
@@ -49,39 +48,10 @@ export default function UserList() {
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
-    confirmFilters: true,
-    // Calling the applyNewFilters parameter applies the selected filters to the table
-    customFilterDialogFooter: (currentFilterList, applyNewFilters) => {
-      return (
-        <div style={{marginTop: '40px'}}>
-          <Button
-            variant='contained'
-            onClick={() => handleFilterSubmit(applyNewFilters)}
-          >
-            Apply Filters
-          </Button>
-        </div>
-      );
-    },
-    // callback that gets executed when filters are confirmed
-    onFilterConfirm: (filterList) => {
-      console.log('onFilterConfirm');
-    },
-    onFilterChange: (column, filterList, type) => {
-      if (type === 'chip') {
-        var newFilters = () => filterList;
-        console.log('updating filters via chip');
-        // handleFilterSubmit(newFilters);
-      }
-    },
   };
   const onEnterSearch = (value) => {
     setPage(0);
     fetchData(value);
-  };
-
-  const handleFilterSubmit = (applyFilters) => {
-    let filterList = applyFilters();
   };
 
   return (

@@ -1,49 +1,17 @@
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
 import * as yup from 'yup';
-import {createdBy, dateColumn, updatedBy} from 'configs';
-import {useEffect, useState} from 'react';
-import AppAutoComplete from '@crema/core/AppFormComponents/AppAutoComplete';
-import jwtAxios from '@crema/services/auth/jwt-auth';
 const {messages = []} = appIntl() ? appIntl() : {};
 
 export const tableColumns = function () {
-  const [isLoading, setIsLoading] = useState(false);
-  const [locations, setLocations] = useState([]);
-
-  const fetchData = async (url, content, loading, setData) => {
-    try {
-      loading(true);
-      const res = await jwtAxios.get(url, {params: content});
-      if (res.status === 200 && res.data.result) {
-        setData(res.data.data);
-      } else {
-        setData([]);
-      }
-      loading(false);
-    } catch (error) {
-      setData([]);
-      loading(false);
-    }
-  };
-  const searchLocations = (content) => {
-    fetchData(`/location/auto_complete`, content, setIsLoading, setLocations);
-  };
-
-  useEffect(() => {
-    searchLocations({});
-  }, []);
-
   return [
     {
       name: 'code',
-      label: messages['common.code'],
+      label: 'Code',
       options: {
-        filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
-          <Typography sx={{textTransform: 'uppercase'}} noWrap={'true'}>
-            Loc
-            {value.toString().padStart(5, '0')}
+          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+            LOC{value.toString().padStart(3, '0')}
           </Typography>
         ),
       },
@@ -51,81 +19,83 @@ export const tableColumns = function () {
     {
       name: 'name',
       label: messages['common.name'],
-      options: {
-        display: true,
-        filterType: 'textField',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v) {
-              return `Name: ${v}`;
-            }
-            return false;
-          },
-        },
-      },
     },
     {
       name: 'slug',
       label: messages['common.slug'],
-      options: {
-        filter: false,
-      },
     },
     {
       name: 'parent_name',
       label: messages['common.parent_name'],
-      options: {
-        filter: true,
-        filterType: 'custom',
-        customFilterListOptions: {
-          render: (v) => {
-            if (v && v.length > 0) {
-              return v.map((item) => {
-                return `${messages['common.parentName']}: ${item.name}`;
-              });
-            }
-            return false;
-          },
-        },
-        filterOptions: {
-          display: (filterList, onChange, index, column) => {
-            return (
-              <>
-                <AppAutoComplete
-                  placeholder={messages['common.parentNamePlaceholder']}
-                  label={messages['common.parentName']}
-                  name='parent_id'
-                  variant='standard'
-                  size='small'
-                  sx={{flex: 1, width: '100%'}}
-                  dataLoading={isLoading}
-                  options={locations}
-                  error={false}
-                  returnObject={true}
-                  keyName='name'
-                  onSearch={searchLocations}
-                  value={
-                    filterList[index]
-                      ? filterList[index].map((item) => item.id)[0]
-                      : null
-                  }
-                  handleChange={({name, value}) => {
-                    filterList[index] = value ? [value] : [];
-                    onChange(filterList[index], index, column);
-                  }}
-                />
-              </>
-            );
-          },
-        },
-      },
     },
-    createdBy(),
-    dateColumn('created_at', messages['common.created_at']),
-    updatedBy(),
-    dateColumn('updated_at', messages['common.updated_at']),
+    {
+      name: 'created_by',
+      label: messages['common.created_by'],
+    },
+    {
+      name: 'updated_by',
+      label: messages['common.updated_by'],
+    },
+    {
+      name: 'created_at',
+      label: messages['common.created_at'],
+    },
+    {
+      name: 'updated_at',
+      label: messages['common.updated_at'],
+    },
   ];
 };
+export const filterContent = [
+  {
+    title: 'id_filtering',
+    items: [
+      {
+        name: 'locations.id',
+        label: 'Code',
+        type: 'autocomplete',
+        url: '/codes/auto_complete?model=Location',
+        keyName: 'code',
+      },
+      {
+        name: 'locations.parent_id',
+        label: 'Parent',
+        type: 'autocomplete',
+        url: '/location/auto_complete',
+        keyName: 'name',
+      },
+      {
+        name: 'customers.created_by',
+        label: 'Created By',
+        type: 'autocomplete',
+        url: '/user/auto_complete',
+        keyName: 'username',
+      },
+      {
+        name: 'customers.updated_by',
+        label: 'Updated By',
+        type: 'autocomplete',
+        url: '/user/auto_complete',
+        keyName: 'username',
+      },
+    ],
+  },
+  {
+    title: 'date_range',
+    items: [
+      {
+        name: 'customers.created_at',
+        label: 'Created At',
+        type: 'date_range',
+      },
+      {
+        name: 'customers.updated_at',
+        label: 'Updated At',
+        type: 'date_range',
+      },
+    ],
+  },
+];
 
 export default function conifgs() {
   return {

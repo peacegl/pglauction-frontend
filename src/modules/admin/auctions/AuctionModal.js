@@ -1,11 +1,10 @@
-import IntlMessages from '@crema/utility/IntlMessages';
-
 import {onInsertAuction, onUpdateAuction} from 'redux/actions';
-import jwtAxios from '@crema/services/auth/jwt-auth';
 import CustomModal from '../../../components/CustomModal';
-import AuctionForm from './AuctionForm';
+import IntlMessages from '@crema/utility/IntlMessages';
+import jwtAxios from '@crema/services/auth/jwt-auth';
 import {useState, useEffect} from 'react';
 import {getData} from '../../../configs';
+import AuctionForm from './AuctionForm';
 import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -54,7 +53,7 @@ export default function AuctionModal({
             let values = {};
             Object.entries(res.data.data).forEach(([key, value]) => {
               if (insertColumns.includes(key)) {
-                values[key] = value;
+                values[key] = value ? value : initialValues[key];
               }
             });
             setInitialValues(values);

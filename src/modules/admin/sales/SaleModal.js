@@ -72,7 +72,7 @@ export default function SellModal({
             let values = {};
             Object.entries(res.data.data).forEach(([key, value]) => {
               if (Object.keys(initialValues).includes(key)) {
-                values[key] = value;
+                values[key] = value ? value : initialValues[key];
               }
             });
             setInitialValues(values);

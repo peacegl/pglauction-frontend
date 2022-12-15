@@ -2,6 +2,7 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {onInsertCustomer, onUpdateCustomer} from 'redux/actions';
 import CustomerConfigs from '../../../configs/pages/customers';
+import CustomModal from '../../../components/CustomModal';
 import IntlMessages from '@crema/utility/IntlMessages';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
@@ -10,7 +11,6 @@ import CustomerStepThree from './CustomerStepThree';
 import {useEffect, useState, useRef} from 'react';
 import CustomerStepOne from './CustomerStepOne';
 import CustomerStepTwo from './CustomerStepTwo';
-import CustomModal from '../../../components/CustomModal';
 import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import Helper from 'helpers/helpers';
@@ -31,8 +31,7 @@ export default function CustomerModal({
   const [timezonesLoading, setTimezonesLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     profile: '',
-    firstname: '',
-    lastname: '',
+    fullname: '',
     phone: '',
     whatsapp: '',
     gender: '',
@@ -183,7 +182,7 @@ export default function CustomerModal({
                 if (key == 'profile') {
                   profileUrl.current = value;
                 } else {
-                  values[key] = value;
+                  values[key] = value ? value : initialValues[key];
                 }
               }
               if (typeof value === 'object' && value != null) {

@@ -21,9 +21,7 @@ const AuctionStep = (props) => {
             sx={{flex: 1, width: '100%'}}
             dataLoading={props.sellersLoading}
             options={props.sellers}
-            keyName='name'
-            keyName2='lastname'
-            keyName1='firstname'
+            keyName='fullname'
             onSearch={props.searchSellers}
             value={props.values?.seller_id}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
