@@ -31,6 +31,7 @@ const AuctionImagesStep = (props) => {
         </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <MultipleImageDropzone
+            values={props.values}
             setfieldvalue={props.setfieldvalue}
             isMinImagesValid={props.isMinImagesValid}
             setMinImagesValid={props.setMinImagesValid}
