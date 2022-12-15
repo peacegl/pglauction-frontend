@@ -60,7 +60,7 @@ const AboutUs = () => {
               Customers may ship cars via Peace Global Logistics LLC which is a
               shipping company based in United States having two branches
               located in Georgia and Texas. They are a well established company
-              which you may find more information in their website.
+              which you may find more information in their <span></span>
               <a
                 href='https://peacegl.com'
                 target='_blank'
@@ -70,14 +70,14 @@ const AboutUs = () => {
                 }}
                 rel='noreferrer'
               >
-                https://peacegl.com
+                 website.
               </a>
             </Typography>
             <Typography component='p' sx={{my: 3}}>
               Customers may use custom clearance and other services via our
               affiliate PGLC Shipping LLC. They are a well established company
               having branches in UAE and you may find more information in their
-              website.
+              <span> </span>
               <a
                 href='https://pglcshipping.com'
                 target='_blank'
@@ -87,7 +87,7 @@ const AboutUs = () => {
                 }}
                 rel='noreferrer'
               >
-                https://pglcshipping.com
+                website.
               </a>
             </Typography>
             <Typography component='p' variant='body1'>
