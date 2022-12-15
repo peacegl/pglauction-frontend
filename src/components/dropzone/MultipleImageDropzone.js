@@ -37,7 +37,7 @@ const MultipleImageDropzone = (props) => {
     }
   }, [error]);
   const addImages = (croptedImages) => {
-    props.setfieldvalue('images', [...croptedImages]);
+    props.setfieldvalue('images', [...props.values.images, ...croptedImages]);
     let newImages = croptedImages.map((file) =>
       Object.assign(file, {
         preview: URL.createObjectURL(file),
@@ -111,6 +111,7 @@ const MultipleImageDropzone = (props) => {
 export default MultipleImageDropzone;
 
 MultipleImageDropzone.propTypes = {
+  values: PropTypes.object,
   setfieldvalue: PropTypes.func,
   images: PropTypes.array,
   setImages: PropTypes.func,
