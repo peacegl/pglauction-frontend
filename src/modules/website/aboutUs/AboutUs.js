@@ -91,8 +91,7 @@ const AboutUs = () => {
               </a>
             </Typography>
             <Typography component='p' variant='body1'>
-              Having sold over 1400 vehicles and over 200 vehicles in inventory,
-              we are one of the leading used cars market in Sharjah, UAE. So
+              We are one of the leading used cars market in Sharjah, UAE. So
               give us a visit in our showroom located in Sharjah AL Qusais
               Industrial Area Fourth Al Saoud Building Room Number 804 P.O.Box:
               48551, Dubai-U.A.E.
