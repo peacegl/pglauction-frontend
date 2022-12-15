@@ -71,6 +71,7 @@ export default function VehicleModal({
     description: '',
     main_image: '',
     images: [],
+    image_order: [],
   });
   const {messages} = appIntl('');
   const validationSchema = VehicleConfigs(
@@ -135,7 +136,11 @@ export default function VehicleModal({
                 if (key == 'images') {
                   value?.forEach((item) => {
                     if (item.type == 'sub_image') {
-                      oldImages.push({preview: item.path, id: item.id});
+                      oldImages.push({
+                        preview: item.path,
+                        id: item.id,
+                        order: item.order,
+                      });
                     } else if (item.type == 'main_image') {
                       setMainImage({preview: item.path, id: item.id});
                     }
@@ -193,6 +198,7 @@ export default function VehicleModal({
   const onSave = (values) => {
     values.deleted_images = deletedImages;
     const vehicleFormData = Helper.getFormData(values);
+    console.log('sdfds', vehicleFormData);
     if (recordId) {
       dispatch(onUpdateVehicle(recordId, vehicleFormData, toggleOpen));
     } else {

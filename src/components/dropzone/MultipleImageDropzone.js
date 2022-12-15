@@ -40,15 +40,29 @@ const MultipleImageDropzone = (props) => {
     props.setfieldvalue(
       'images',
       props.values.images?.length
-        ? [...props.values.images, ...croptedImages]
-        : [...croptedImages],
+        ? [
+            ...props.values.images,
+            ...croptedImages.map((item, index) =>
+              Object.assign(item, {
+                order: props.images.length + index + 1,
+              }),
+            ),
+          ]
+        : [
+            ...croptedImages.map((item, index) =>
+              Object.assign(item, {
+                order: props.images.length + index + 1,
+              }),
+            ),
+          ],
     );
-    let newImages = croptedImages.map((file) =>
+    let newImages = croptedImages.map((file, index) =>
       Object.assign(file, {
         preview: URL.createObjectURL(file),
+        order: props.images.length + index + 1,
       }),
     );
-    const images = [...newImages, ...props.images];
+    const images = [...props.images, ...newImages];
     if (images.length > 20) {
       props.setMaxImagesValid(false);
     } else {
@@ -57,12 +71,6 @@ const MultipleImageDropzone = (props) => {
     }
     props.setImages(images);
   };
-
-  useEffect(() => {
-    if (props.images.length > 0) {
-    } else {
-    }
-  }, [props.images]);
 
   const onDeleteUploadFile = (file) => {
     props.setDeletedImages((d) => (file?.id ? [file.id, ...d] : d));
@@ -98,6 +106,10 @@ const MultipleImageDropzone = (props) => {
             onDeleteUploadFile={onDeleteUploadFile}
             file={item}
             key={index}
+            total={props.images.length}
+            setImages={props.setImages}
+            setfieldvalue={props.setfieldvalue}
+            images={props.images}
           />
         ))}
       </Stack>

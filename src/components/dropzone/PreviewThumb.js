@@ -1,9 +1,17 @@
-import React from 'react';
-import {Box} from '@mui/material';
-import PropsTypes from 'prop-types';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import OrderDropDown from './OrderDropDown';
+import PropsTypes from 'prop-types';
+import {Box} from '@mui/material';
+import React from 'react';
 
-const PreviewThumb = ({file, onDeleteUploadFile}) => {
+const PreviewThumb = ({
+  file,
+  onDeleteUploadFile,
+  total,
+  setImages,
+  setfieldvalue,
+  images,
+}) => {
   return (
     <Box
       sx={{
@@ -29,6 +37,32 @@ const PreviewThumb = ({file, onDeleteUploadFile}) => {
       <Box
         sx={{
           position: 'absolute',
+          left: 10,
+          top: 10,
+        }}
+      >
+        <OrderDropDown
+          total={total}
+          selectedItem={file.order ? file.order : 0}
+          onChanged={(order) => {
+            setImages((d) =>
+              d.map((image) => {
+                if (image.preview == file.preview) {
+                  image.order = order;
+                }
+                return image;
+              }),
+            );
+            // setfieldvalue('image_order');
+
+            // setfieldvalue;
+            // image_order;
+          }}
+        />
+      </Box>
+      <Box
+        sx={{
+          position: 'absolute',
           right: 10,
           top: 10,
         }}
@@ -45,7 +79,7 @@ const PreviewThumb = ({file, onDeleteUploadFile}) => {
           onClick={() => onDeleteUploadFile(file)}
         />
       </Box>
-      <img alt='preview' src={file.preview} />
+      <img alt='preview' src={file?.preview} />
     </Box>
   );
 };
@@ -54,4 +88,8 @@ export default PreviewThumb;
 PreviewThumb.propTypes = {
   file: PropsTypes.object,
   onDeleteUploadFile: PropsTypes.func,
+  total: PropsTypes.number,
+  setImages: PropsTypes.func,
+  setfieldvalue: PropsTypes.func,
+  images: PropsTypes.array,
 };
