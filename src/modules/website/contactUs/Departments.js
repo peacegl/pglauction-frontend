@@ -19,6 +19,11 @@ const departments = [
         url: 'mailto:crm@peacegl.com',
       },
       {
+        icon: <EmailIcon sx={{color: (theme) => theme.palette.info.main}} />,
+        content: 'utc@peacegl.com',
+        url: 'mailto:utc@peacegl.com',
+      },
+      {
         icon: <WhatsAppIcon sx={{color: (theme) => theme.palette.info.main}} />,
         content: '+971 56 683 3099',
         url: 'https://wa.me/+971566833099',
@@ -40,8 +45,8 @@ const departments = [
     details: [
       {
         icon: <EmailIcon sx={{color: (theme) => theme.palette.success.main}} />,
-        content: 'crm@peacegl.com',
-        url: 'mailto:crm@peacegl.com',
+        content: 'support@peacegl.com',
+        url: 'mailto:support@peacegl.com',
       },
       {
         icon: (
