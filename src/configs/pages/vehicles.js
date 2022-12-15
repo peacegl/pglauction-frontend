@@ -22,7 +22,7 @@ export const tableColumns = function () {
     },
     {
       name: 'vin',
-      label: messages['common.year'],
+      label: messages['common.vin'],
     },
     {
       name: 'lot_number',

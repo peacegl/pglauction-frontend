@@ -5,7 +5,7 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import Error404 from 'modules/errorPages/Error404';
 import {Box, Container} from '@mui/material';
-import ImageCarousel from './ImageCarousel';
+import ImageCarousel from '../../../../components/design/ImageCarousel';
 import {useRouter} from 'next/router';
 import SaleInfo from './SaleInfo';
 import {useEffect} from 'react';
