@@ -91,8 +91,8 @@ function Header() {
           <Box
             onClick={() => router.push('/home')}
             sx={{
-                '&:hover': {cursor: 'pointer'},
-                color: (theme) => theme.palette.text.primary
+              '&:hover': {cursor: 'pointer'},
+              color: (theme) => theme.palette.text.primary,
             }}
             fontWeight='bold'
             fontSize='18px'
@@ -140,7 +140,7 @@ function Header() {
               underline='none'
               href='https://www.facebook.com/TowingLoadingShipping'
               mx='5px'
-              color={(theme)=>theme.palette.text.secondary}
+              color={(theme) => theme.palette.text.secondary}
               target='_blank'
             >
               <FacebookIcon width='30' />
@@ -151,7 +151,7 @@ function Header() {
               underline='none'
               href='https://wa.me/+937669086'
               mx='5px'
-              color={(theme)=>theme.palette.text.secondary}
+              color={(theme) => theme.palette.text.secondary}
               target='_blank'
             >
               <WhatsAppIcon width='30' />
