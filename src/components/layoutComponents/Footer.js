@@ -74,10 +74,7 @@ export default function Footer() {
                   in Dubai, UAE. They have a showroom in Sharjah and an office
                   in Dubai to provide comprehensive support and services to the
                   customers. We have different affiliates to help provide
-                  shipping, clearance, and sell cars from USA in Dubai. Having
-                  sold over 1400 vehicles and keeping inventory of over 200
-                  vehicles , we are one of the leading used cars market in
-                  Sharjah, UAE.
+                  shipping, clearance, and sell cars from USA in Dubai. They are the leading cars showroom in Dubai, UAE having variety of cars.
                 </Typography>
               </Box>
             </Box>
