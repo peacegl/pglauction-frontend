@@ -1,12 +1,11 @@
+import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import {Box, Container, Link, Stack, Typography} from '@mui/material';
+import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import logoImage from '../../assets/united_logo.png';
 import {useRouter} from 'next/router';
 import {useTheme} from '@mui/styles';
 import {pages} from './AppBar';
-
-import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
-import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
-import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 
 export default function Footer() {
   const theme = useTheme();
@@ -74,7 +73,9 @@ export default function Footer() {
                   in Dubai, UAE. They have a showroom in Sharjah and an office
                   in Dubai to provide comprehensive support and services to the
                   customers. We have different affiliates to help provide
-                  shipping, clearance, and sell cars from USA in Dubai. They are the leading cars showroom in Dubai, UAE having variety of cars.
+                  shipping, clearance, and sell cars from USA in Dubai. They are
+                  the leading cars showroom in Dubai, UAE having variety of
+                  cars.
                 </Typography>
               </Box>
             </Box>

@@ -1,20 +1,13 @@
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import OrderDropDown from './OrderDropDown';
 import PropsTypes from 'prop-types';
 import {Box} from '@mui/material';
 import React from 'react';
 
-const PreviewThumb = ({
-  file,
-  onDeleteUploadFile,
-  total,
-  setImages,
-  setfieldvalue,
-  images,
-}) => {
+const PreviewThumb = ({file, onDeleteUploadFile}) => {
   return (
     <Box
       sx={{
+        zIndex: 100000,
         position: 'relative',
         display: 'inline-flex',
         borderRadius: 2,
@@ -37,32 +30,6 @@ const PreviewThumb = ({
       <Box
         sx={{
           position: 'absolute',
-          left: 10,
-          top: 10,
-        }}
-      >
-        <OrderDropDown
-          total={total}
-          selectedItem={file.order ? file.order : 0}
-          onChanged={(order) => {
-            setImages((d) =>
-              d.map((image) => {
-                if (image.preview == file.preview) {
-                  image.order = order;
-                }
-                return image;
-              }),
-            );
-            // setfieldvalue('image_order');
-
-            // setfieldvalue;
-            // image_order;
-          }}
-        />
-      </Box>
-      <Box
-        sx={{
-          position: 'absolute',
           right: 10,
           top: 10,
         }}
@@ -76,7 +43,11 @@ const PreviewThumb = ({
               backgroundColor: 'primary.contrastText',
             },
           }}
-          onClick={() => onDeleteUploadFile(file)}
+          onClick={(e) => {
+            e.stopPropagation();
+            console.log('esdfa', e);
+            onDeleteUploadFile(file);
+          }}
         />
       </Box>
       <img alt='preview' src={file?.preview} />
@@ -88,8 +59,4 @@ export default PreviewThumb;
 PreviewThumb.propTypes = {
   file: PropsTypes.object,
   onDeleteUploadFile: PropsTypes.func,
-  total: PropsTypes.number,
-  setImages: PropsTypes.func,
-  setfieldvalue: PropsTypes.func,
-  images: PropsTypes.array,
 };

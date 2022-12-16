@@ -1,3 +1,4 @@
+import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import IntlMessages from '@crema/utility/IntlMessages';
 import ImageCropModal from './ImageCropModal';
 import {useDropzone} from 'react-dropzone';
@@ -6,6 +7,44 @@ import PreviewThumb from './PreviewThumb';
 import {useEffect, useState} from 'react';
 import {Stack} from '@mui/material';
 import PropTypes from 'prop-types';
+
+const SortableListItem = SortableElement(
+  ({item, index, onDeleteUploadFile}) => {
+    return (
+      <PreviewThumb
+        onDeleteUploadFile={onDeleteUploadFile}
+        file={item}
+        key={index}
+      />
+    );
+  },
+);
+
+const SortableList = SortableContainer(({items, onDeleteUploadFile}) => {
+  return (
+    <Stack
+      direction='row'
+      spacing={0}
+      sx={{flexWrap: 'wrap', gap: 2, justifyContent: 'center'}}
+    >
+      {items.map((item, index) => {
+        return (
+          <SortableListItem
+            axis='xy'
+            key={index}
+            index={index}
+            item={item}
+            onDeleteUploadFile={(e, file) => {
+              console.log('e', e);
+              e.stopPropagation();
+              onDeleteUploadFile(file);
+            }}
+          />
+        );
+      })}
+    </Stack>
+  );
+});
 
 const MultipleImageDropzone = (props) => {
   const [error, setError] = useState(false);
@@ -73,6 +112,7 @@ const MultipleImageDropzone = (props) => {
   };
 
   const onDeleteUploadFile = (file) => {
+    console.log('sdf');
     props.setDeletedImages((d) => (file?.id ? [file.id, ...d] : d));
     dropzone.acceptedFiles.splice(dropzone.acceptedFiles.indexOf(file), 1);
     props.images.splice(props.images.indexOf(file), 1);
@@ -86,7 +126,19 @@ const MultipleImageDropzone = (props) => {
       props.setMinImagesValid(true);
     }
   };
-
+  const array_move = (arr, old_index, new_index) => {
+    if (new_index >= arr.length) {
+      var k = new_index - arr.length + 1;
+      while (k--) {
+        arr.push(undefined);
+      }
+    }
+    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+    return arr;
+  };
+  const onSortEnd = ({oldIndex, newIndex}) => {
+    props.setImages(array_move(props.images, oldIndex, newIndex));
+  };
   return (
     <section className='container' style={{cursor: 'pointer', width: '100%'}}>
       <UploadModern
@@ -96,23 +148,12 @@ const MultipleImageDropzone = (props) => {
         isMaxImagesValid={props.isMaxImagesValid}
         error={error}
       />
-      <Stack
-        direction='row'
-        spacing={0}
-        sx={{flexWrap: 'wrap', gap: 2, justifyContent: 'center'}}
-      >
-        {props.images.map((item, index) => (
-          <PreviewThumb
-            onDeleteUploadFile={onDeleteUploadFile}
-            file={item}
-            key={index}
-            total={props.images.length}
-            setImages={props.setImages}
-            setfieldvalue={props.setfieldvalue}
-            images={props.images}
-          />
-        ))}
-      </Stack>
+      <SortableList
+        axis={'xy'}
+        items={props.images}
+        onDeleteUploadFile={onDeleteUploadFile}
+        onSortEnd={onSortEnd}
+      />
       {openImageCrop && (
         <ImageCropModal
           open={openImageCrop}
