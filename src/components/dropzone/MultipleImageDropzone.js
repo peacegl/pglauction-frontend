@@ -34,11 +34,7 @@ const SortableList = SortableContainer(({items, onDeleteUploadFile}) => {
             key={index}
             index={index}
             item={item}
-            onDeleteUploadFile={(e, file) => {
-              console.log('e', e);
-              e.stopPropagation();
-              onDeleteUploadFile(file);
-            }}
+            onDeleteUploadFile={onDeleteUploadFile}
           />
         );
       })}
@@ -83,14 +79,14 @@ const MultipleImageDropzone = (props) => {
             ...props.values.images,
             ...croptedImages.map((item, index) =>
               Object.assign(item, {
-                order: props.images.length + index + 1,
+                preview: URL.createObjectURL(item),
               }),
             ),
           ]
         : [
             ...croptedImages.map((item, index) =>
               Object.assign(item, {
-                order: props.images.length + index + 1,
+                preview: URL.createObjectURL(item),
               }),
             ),
           ],
@@ -98,7 +94,6 @@ const MultipleImageDropzone = (props) => {
     let newImages = croptedImages.map((file, index) =>
       Object.assign(file, {
         preview: URL.createObjectURL(file),
-        order: props.images.length + index + 1,
       }),
     );
     const images = [...props.images, ...newImages];
@@ -112,7 +107,6 @@ const MultipleImageDropzone = (props) => {
   };
 
   const onDeleteUploadFile = (file) => {
-    console.log('sdf');
     props.setDeletedImages((d) => (file?.id ? [file.id, ...d] : d));
     dropzone.acceptedFiles.splice(dropzone.acceptedFiles.indexOf(file), 1);
     props.images.splice(props.images.indexOf(file), 1);
@@ -137,7 +131,20 @@ const MultipleImageDropzone = (props) => {
     return arr;
   };
   const onSortEnd = ({oldIndex, newIndex}) => {
-    props.setImages(array_move(props.images, oldIndex, newIndex));
+    let aranged_arr = array_move(props.images, oldIndex, newIndex);
+    props.setImages(aranged_arr);
+    props.setImageOrders(
+      aranged_arr.map((item, index) => {
+        return {
+          id: item.id
+            ? item.id
+            : props.values.images.findIndex(
+                (file) => file.preview == item.preview,
+              ),
+          order: index + 1,
+        };
+      }),
+    );
   };
   return (
     <section className='container' style={{cursor: 'pointer', width: '100%'}}>
@@ -153,6 +160,8 @@ const MultipleImageDropzone = (props) => {
         items={props.images}
         onDeleteUploadFile={onDeleteUploadFile}
         onSortEnd={onSortEnd}
+        useDragHandle
+        // pressDelay={100}
       />
       {openImageCrop && (
         <ImageCropModal
@@ -179,4 +188,6 @@ MultipleImageDropzone.propTypes = {
   setMaxImagesValid: PropTypes.func,
   setDeletedImages: PropTypes.func,
   isEdit: PropTypes.bool,
+  imageOrders: PropTypes.array,
+  setImageOrders: PropTypes.func,
 };

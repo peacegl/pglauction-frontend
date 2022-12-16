@@ -1,8 +1,32 @@
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import PropsTypes from 'prop-types';
-import {Box} from '@mui/material';
+import {alpha, Box} from '@mui/material';
 import React from 'react';
+import {sortableHandle} from 'react-sortable-hoc';
 
+const DragHandle = sortableHandle(() => (
+  <Box
+    sx={{
+      position: 'absolute',
+      left: 10,
+      top: 10,
+    }}
+  >
+    <DragIndicatorIcon
+      sx={{
+        fontSize: '20px',
+        color: 'primary.contrastText',
+        borderRadius: '50%',
+        backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.6),
+        padding: '3px',
+        '&:hover, &:focus': {
+          backgroundColor: 'info.main',
+        },
+      }}
+    />
+  </Box>
+));
 const PreviewThumb = ({file, onDeleteUploadFile}) => {
   return (
     <Box
@@ -19,6 +43,7 @@ const PreviewThumb = ({file, onDeleteUploadFile}) => {
         padding: 1,
         boxSizing: 'border-box',
         '& img': {
+          cursor: 'default',
           display: 'block',
           width: 'auto',
           objectFit: 'cover',
@@ -27,6 +52,7 @@ const PreviewThumb = ({file, onDeleteUploadFile}) => {
         },
       }}
     >
+      <DragHandle />
       <Box
         sx={{
           position: 'absolute',
@@ -43,11 +69,7 @@ const PreviewThumb = ({file, onDeleteUploadFile}) => {
               backgroundColor: 'primary.contrastText',
             },
           }}
-          onClick={(e) => {
-            e.stopPropagation();
-            console.log('esdfa', e);
-            onDeleteUploadFile(file);
-          }}
+          onClick={() => onDeleteUploadFile(file)}
         />
       </Box>
       <img alt='preview' src={file?.preview} />

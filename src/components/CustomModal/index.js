@@ -120,7 +120,6 @@ const CustomModal = ({
           }}
         >
           {({values, setFieldValue, isSubmitting, setFieldError, ...rest}) => {
-            console.log(isSubmitting);
             return (
               <Form>
                 {steps && (

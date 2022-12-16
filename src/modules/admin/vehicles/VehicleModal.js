@@ -30,6 +30,7 @@ export default function VehicleModal({
 }) {
   const [images, setImages] = useState([]);
   const [deletedImages, setDeletedImages] = useState([]);
+  const [imageOrders, setImageOrders] = useState([]);
   const [mainImage, setMainImage] = useState({});
   const [isMainImageValid, setIsMainImageValid] = useState(true);
   const [isMinImagesValid, setMinImagesValid] = useState(true);
@@ -38,10 +39,6 @@ export default function VehicleModal({
   const [locations, setLocations] = useState([]);
   const [sellerLoading, setSellerLoading] = useState(false);
   const [sellers, setSellers] = useState([]);
-  const [makesLoading, setMakesLoading] = useState(false);
-  const [makes, setMakes] = useState([]);
-  const [modelsLoading, setModelsLoading] = useState(false);
-  const [models, setModels] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     vin: '',
@@ -71,7 +68,6 @@ export default function VehicleModal({
     description: '',
     main_image: '',
     images: [],
-    image_order: [],
   });
   const {messages} = appIntl('');
   const validationSchema = VehicleConfigs(
@@ -96,29 +92,11 @@ export default function VehicleModal({
       setSellers,
     );
   };
-  const searchMakes = (content, make_id = null) => {
-    getData(
-      `/make/auto_complete${make_id ? '?id=' + make_id : ''}`,
-      content,
-      setMakesLoading,
-      setMakes,
-    );
-  };
-  const searchModels = (content, model_id = null) => {
-    getData(
-      `/model/auto_complete${model_id ? '?id=' + model_id : ''}`,
-      content,
-      setModelsLoading,
-      setModels,
-    );
-  };
 
   useEffect(() => {
     if (!recordId) {
       searchLocations({});
       searchSellers({});
-      // searchModels({});
-      // searchMakes({});
     }
   }, []);
 
@@ -139,7 +117,6 @@ export default function VehicleModal({
                       oldImages.push({
                         preview: item.path,
                         id: item.id,
-                        order: item.order,
                       });
                     } else if (item.type == 'main_image') {
                       setMainImage({preview: item.path, id: item.id});
@@ -160,8 +137,6 @@ export default function VehicleModal({
             setInitialValues(values);
             searchLocations({}, values.location_id);
             searchSellers({}, values.seller_id);
-            // searchMakes({}, values.make_id);
-            // searchModels({make_id: values.make_id}, values.model_id);
           }
           setIsLoading(false);
         } catch (error) {
@@ -197,8 +172,8 @@ export default function VehicleModal({
 
   const onSave = (values) => {
     values.deleted_images = deletedImages;
+    values.image_orders = imageOrders;
     const vehicleFormData = Helper.getFormData(values);
-    console.log('sdfds', vehicleFormData);
     if (recordId) {
       dispatch(onUpdateVehicle(recordId, vehicleFormData, toggleOpen));
     } else {
@@ -260,6 +235,8 @@ export default function VehicleModal({
           setIsMainImageValid={setIsMainImageValid}
           isMainImageValid={isMainImageValid}
           setDeletedImages={setDeletedImages}
+          imageOrders={imageOrders}
+          setImageOrders={setImageOrders}
           isEdit={edit}
         />
       ),
