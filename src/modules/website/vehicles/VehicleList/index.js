@@ -1,17 +1,5 @@
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
-import AppsPagination from '@crema/core/AppsPagination';
-import {
-  alpha,
-  Box,
-  Hidden,
-  Card,
-  Pagination,
-  TablePagination,
-  Typography,
-  Select,
-  MenuItem,
-  FormControl,
-} from '@mui/material';
+import IntlMessages from '@crema/utility/IntlMessages';
 import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
 import {useDispatch, useSelector} from 'react-redux';
 import React, {useEffect, useState} from 'react';
@@ -20,7 +8,15 @@ import GridView from './GridView/index';
 import AppsContent from './AppsContent';
 import ListView from './ListView';
 import Header from '../Header';
-import IntlMessages from '@crema/utility/IntlMessages';
+import {
+  alpha,
+  Box,
+  Card,
+  Pagination,
+  Typography,
+  Select,
+  MenuItem,
+} from '@mui/material';
 
 const VehicleList = () => {
   const dispatch = useDispatch();
