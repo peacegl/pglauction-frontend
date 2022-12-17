@@ -293,6 +293,9 @@ export default function configs(invalidYoutube) {
           .number()
           .typeError(<IntlMessages id='validation.priceError' />)
           .required(<IntlMessages id='validation.priceRequired' />),
+        sale_rate: yup
+          .number()
+          .typeError(<IntlMessages id='validation.saleRateError' />),
       }),
       yup.object({
         status: yup
