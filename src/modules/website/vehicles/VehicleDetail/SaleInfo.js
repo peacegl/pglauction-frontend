@@ -48,8 +48,8 @@ export default function LotInfo() {
           <Item
             label={<IntlMessages id='vehicle.price' />}
             value={moneyFormater(
-              parseInt(item.price) +
-                parseInt((item.price * item.sale_rate ?? 15) / 100),
+              parseInt(vehicle.price) +
+                parseInt((vehicle.price * vehicle.sale_rate ?? 15) / 100),
             )}
           />
           <Item
