@@ -26,17 +26,18 @@ const ColorButton = styled(Button)(({theme}) => ({
 const contents = [
   {
     icon: <EmojiEventsIcon sx={{fontSize: 35}} />,
-    title: "More than 200 vehicles Active Inventory",
+    title: "Leading Showroom with Variety of Cars",
     color: deepOrange[500],
     bgcolor: deepOrange[100],
     details: `We are one of the leading showrooms in Sharjah, UAE. Having started small, we are expanding quickly and providing more services to our customers so they can make profits stress-free!`,
   },
   {
     icon: <AdminPanelSettingsIcon sx={{fontSize: 35}} />,
-    title: "Sold over 1,400 Vehicles",
+    title: "Comprehensive Portfolia Services",
     color: (theme) => theme.palette.success.main,
     bgcolor: green[100],
-    details: `Our company is known for its customer service!`,
+    details: `We do not only provide you best selling cars but offer you our affiliates' portfolio where you can buy cars directly from USA and have a worry-free experience from dispatching, loading, shipping, clearance, and landtransport.`,
+    
   },
   {
     icon: <HighQualityIcon sx={{fontSize: 35}} />,
@@ -44,6 +45,7 @@ const contents = [
     color: (theme) => theme.palette.info.main,
     bgcolor: blue[100],
     details: `We have a CRM Department to take our customers' issues seriously and to provide a stress and hassle free experience.`,
+    link:'pglsystem.com'
   },
 ];
 
