@@ -1,17 +1,15 @@
 import IntlMessages from '@crema/utility/IntlMessages';
-import {appIntl} from '@crema/utility/helper/Utils';
 import {Box, Typography} from '@mui/material';
 const year = new Date().getFullYear();
 import * as yup from 'yup';
-import {CommonConfigs} from 'configs';
-const {messages = []} = appIntl() ? appIntl() : {};
+import {CommonConfigs, moneyFormater} from 'configs';
 const youtubeRegExp = CommonConfigs().youtubeRegExp;
 
 export const tableColumns = function () {
   return [
     {
       name: 'code',
-      label: messages['common.code'],
+      label: <IntlMessages id='common.code' />,
       options: {
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
@@ -22,38 +20,63 @@ export const tableColumns = function () {
     },
     {
       name: 'vin',
-      label: messages['common.vin'],
+      label: <IntlMessages id='common.vin' />,
     },
     {
       name: 'lot_number',
-      label: messages['common.lot_number'],
+      label: <IntlMessages id='common.lot_number' />,
     },
     {
       name: 'price',
-      label: messages['common.price'],
+      label: <IntlMessages id='common.totalCost' />,
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+            {moneyFormater(value)}
+          </Typography>
+        ),
+      },
+    },
+    {
+      name: 'sale_rate',
+      label: <IntlMessages id='common.saleRate' />,
       options: {
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            {value} DH
+            {value}%
+          </Typography>
+        ),
+      },
+    },
+    {
+      name: 'price',
+      label: <IntlMessages id='common.price' />,
+      options: {
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+            {moneyFormater(
+              parseInt(value) + parseInt((value * tableMeta?.rowData[4]) / 100),
+            )}
           </Typography>
         ),
       },
     },
     {
       name: 'year',
-      label: messages['common.year'],
+      label: <IntlMessages id='common.year' />,
     },
     {
       name: 'make',
-      label: messages['common.make'],
+      label: <IntlMessages id='common.make' />,
     },
     {
       name: 'model',
-      label: messages['vehicle.model'],
+      label: <IntlMessages id='vehicle.model' />,
     },
     {
       name: 'status',
-      label: messages['vehicle.status'],
+      label: <IntlMessages id='vehicle.status' />,
       options: {
         filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
@@ -71,63 +94,71 @@ export const tableColumns = function () {
     },
     {
       name: 'exterior_color',
-      label: messages['vehicle.exterior_color'],
+      label: <IntlMessages id='vehicle.exterior_color' />,
     },
     {
       name: 'interior_color',
-      label: messages['vehicle.interior_color'],
+      label: <IntlMessages id='vehicle.interior_color' />,
     },
     {
       name: 'primary_damage',
-      label: messages['vehicle.primary_damage'],
+      label: <IntlMessages id='vehicle.primary_damage' />,
     },
     {
       name: 'is_featured',
-      label: messages['vehicle.is_featured'],
+      label: <IntlMessages id='vehicle.is_featured' />,
       options: {
         customBodyRender: (value, tableMeta, updateValue) =>
-          value ? messages['common.yes'] : messages['common.no'],
+          value ? (
+            <IntlMessages id='common.yes' />
+          ) : (
+            <IntlMessages id='common.no' />
+          ),
       },
     },
     {
       name: 'is_best_selling',
-      label: messages['vehicle.is_best_selling'],
+      label: <IntlMessages id='vehicle.is_best_selling' />,
       options: {
         customBodyRender: (value, tableMeta, updateValue) =>
-          value ? messages['common.yes'] : messages['common.no'],
+          value ? (
+            <IntlMessages id='common.yes' />
+          ) : (
+            <IntlMessages id='common.no' />
+          ),
       },
     },
     {
       name: 'engine_type',
-      label: messages['common.engine_type'],
+      label: <IntlMessages id='common.engine_type' />,
     },
     {
       name: 'document_type',
-      label: messages['vehicle.document_type'],
+      label: <IntlMessages id='vehicle.document_type' />,
     },
     {
       name: 'odometer_type',
-      label: messages['vehicle.odometer_type'],
+      label: <IntlMessages id='vehicle.odometer_type' />,
     },
     {
       name: 'transmission',
-      label: messages['common.transmission'],
+      label: <IntlMessages id='common.transmission' />,
     },
     {
       name: 'created_by',
-      label: messages['common.created_by'],
+      label: <IntlMessages id='common.created_by' />,
     },
     {
       name: 'updated_by',
-      label: messages['common.updated_by'],
+      label: <IntlMessages id='common.updated_by' />,
     },
     {
       name: 'created_at',
-      label: messages['common.created_at'],
+      label: <IntlMessages id='common.created_at' />,
     },
     {
       name: 'updated_at',
-      label: messages['common.updated_at'],
+      label: <IntlMessages id='common.updated_at' />,
     },
   ];
 };
