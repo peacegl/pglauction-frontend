@@ -83,7 +83,10 @@ export default function GridItem({item, ...props}) {
         <Divider sx={{mb: 2}} />
         <Box display='flex' justifyContent='space-between'>
           <Typography color={theme.palette.primary.main} fontWeight='bold'>
-            {moneyFormater(item.price)}
+            {moneyFormater(
+              parseInt(item.price) +
+                parseInt((item.price * item.sale_rate ?? 15) / 100),
+            )}
           </Typography>
           <Typography color={theme.palette.primary.main}>
             {item.odometer_type}

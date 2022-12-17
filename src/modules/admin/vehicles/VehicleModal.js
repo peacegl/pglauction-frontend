@@ -55,6 +55,7 @@ export default function VehicleModal({
     location_id: '',
     seller_id: '',
     price: '',
+    sale_rate: 15,
     document_type: '',
     primary_damage: '',
     odometer_type: '',
