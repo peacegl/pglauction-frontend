@@ -49,12 +49,13 @@ const AboutUs = () => {
               sell cars from USA in Dubai and elsewhere.
             </Typography>
             <Typography component='p' variant='body1' sx={{mt: 1}}>
-              United Trading Cars LLC is one of the top companies in UAE selling
-              cars from ranging from different models and companies. It also
-              provides other services with its affiliates ranging from having
-              bidding rooms and computer labs in Sharjah office for you to buy
-              cars from USA auctions, shipping your cars, custom clearance for
-              your cars and selling your cars at its famous showroom in Sharjah.
+              United Trading Company LLC is one of the top companies in UAE
+              selling cars from ranging from different models and companies. It
+              also provides other services with its affiliates ranging from
+              having bidding rooms and computer labs in Sharjah office for you
+              to buy cars from USA auctions, shipping your cars, custom
+              clearance for your cars and selling your cars at its famous
+              showroom in Sharjah.
             </Typography>
             <Typography component='p' sx={{my: 1}}>
               Customers may ship cars via Peace Global Logistics LLC which is a
@@ -70,7 +71,7 @@ const AboutUs = () => {
                 }}
                 rel='noreferrer'
               >
-                 website.
+                website.
               </a>
             </Typography>
             <Typography component='p' sx={{my: 3}}>
