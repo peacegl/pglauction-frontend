@@ -1,6 +1,5 @@
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
-import AppsPagination from '@crema/core/AppsPagination';
-import {alpha, Box, Hidden, Card} from '@mui/material';
+import IntlMessages from '@crema/utility/IntlMessages';
 import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
 import {useDispatch, useSelector} from 'react-redux';
 import React, {useEffect, useState} from 'react';
@@ -9,12 +8,21 @@ import GridView from './GridView/index';
 import AppsContent from './AppsContent';
 import ListView from './ListView';
 import Header from '../Header';
+import {
+  alpha,
+  Box,
+  Card,
+  Pagination,
+  Typography,
+  Select,
+  MenuItem,
+} from '@mui/material';
 
 const VehicleList = () => {
   const dispatch = useDispatch();
   const {theme} = useThemeContext();
   const [page, setPage] = useState(0);
-  const perPage = 200;
+  const [perPage, setPerPage] = useState(50);
 
   const {data = [], total = 0} = useSelector(
     ({webVehicles}) => webVehicles.vehiclesData,
@@ -36,10 +44,13 @@ const VehicleList = () => {
         search,
       }),
     );
-  }, [dispatch, filterData, page, search]);
+  }, [dispatch, filterData, page, search, perPage]);
 
   const onPageChange = (event, value) => {
     setPage(value);
+  };
+  const onPageChange2 = (event, value) => {
+    setPage(value - 1);
   };
   return (
     <>
@@ -94,24 +105,65 @@ const VehicleList = () => {
             <ListView list={data} loading={loading} />
           )}
         </Box>
-      </AppsContent>
-      <Hidden smUp>
-        {data.length > 0 ? (
-          <Card
+        {data.length > 0 && (
+          <Box
             sx={{
-              m: 3,
-              borderRadius: 1,
+              m: 4,
+              display: 'flex',
+              justifyContent: 'center',
             }}
           >
-            <AppsPagination
-              count={total}
-              rowsPerPage={perPage}
-              page={page}
-              onPageChange={onPageChange}
-            />
-          </Card>
-        ) : null}
-      </Hidden>
+            <Card
+              sx={{
+                px: 3,
+                borderRadius: 1,
+                py: 1,
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Typography variant='body1' sx={{mr: 2}}>
+                  <IntlMessages id='common.rowsPerPage' />:
+                </Typography>
+                <Select
+                  value={perPage}
+                  onChange={(e) => {
+                    setPerPage(parseInt(e.target.value));
+                    setPage(0);
+                  }}
+                  autoWidth
+                  size='small'
+                  sx={{
+                    boxShadow: 'none',
+                    '.MuiOutlinedInput-notchedOutline': {border: 0},
+                  }}
+                >
+                  <MenuItem value={10}>10</MenuItem>
+                  <MenuItem value={25}>25</MenuItem>
+                  <MenuItem value={50}>50</MenuItem>
+                  <MenuItem value={100}>100</MenuItem>
+                  <MenuItem value={200}>200</MenuItem>
+                </Select>
+              </Box>
+              <Pagination
+                count={Math.ceil(total / perPage)}
+                page={page + 1}
+                onChange={onPageChange2}
+                color='primary'
+              />
+            </Card>
+          </Box>
+        )}
+      </AppsContent>
     </>
   );
 };
