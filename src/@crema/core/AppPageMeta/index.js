@@ -7,8 +7,8 @@ const SITE_URL =
     ? 'http://localhost:3000'
     : 'https://qa-blog.mastersindia.co';
 
-const defaultTitle = 'United Trading Company';
-const defaultDescription = 'Peace Global Logistics';
+const defaultTitle = 'UTC Live Auction';
+const defaultDescription = 'United Trading Company';
 const defaultImage = 'logo.png';
 const defaultTwitter = '@crema';
 const defaultSep = ' | ';

@@ -104,5 +104,5 @@ Profile.propTypes = {
   setfieldvalue: PropTypes.func,
   name: PropTypes.string,
   width: PropTypes.object,
-  profileUrl: PropTypes.string,
+  profileUrl: PropTypes.any,
 };

@@ -347,7 +347,6 @@
   "common.sendNewPassword": "Send password",
   "common.resetPassword": "Reset Password",
   "common.oldPassword": "Old Password",
-  "common.newPassword": "New Password",
   "common.resetMyPassword": "Reset My Password",
   "common.unlockScreen": "Unlock Screen",
   "common.unlockScreenTextOne": "Hey, John Doe! This screen is password protected.",
@@ -1088,5 +1087,9 @@
   "common.maxFileSize": "File size is more than max allowed size (6MB)!",
   "common.oneOrMoreMaxSizeError": "At least one file size is more than max allowed size (6MB)!",
   "common.scrollToTop": "Scroll to top",
-  "common.rowsPerPage": "Rows per page"
+  "common.rowsPerPage": "Rows per page",
+  "common.currentPasswordPlaceholder": "Type current password",
+  "common.currentPassword": "Current Password",
+  "common.newPassword": "New Password",
+  "common.newPasswordPlaceholder": "Type new password"
 }
