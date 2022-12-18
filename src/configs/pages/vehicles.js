@@ -3,13 +3,15 @@ import {Box, Typography} from '@mui/material';
 const year = new Date().getFullYear();
 import * as yup from 'yup';
 import {CommonConfigs, moneyFormater} from 'configs';
+import {appIntl} from '@crema/utility/helper/Utils';
 const youtubeRegExp = CommonConfigs().youtubeRegExp;
+const {messages = []} = appIntl() ? appIntl() : {};
 
 export const tableColumns = function () {
   return [
     {
       name: 'code',
-      label: <IntlMessages id='common.code' />,
+      label: messages['common.code'],
       options: {
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
@@ -20,15 +22,15 @@ export const tableColumns = function () {
     },
     {
       name: 'vin',
-      label: <IntlMessages id='common.vin' />,
+      label: messages['common.vin'],
     },
     {
       name: 'lot_number',
-      label: <IntlMessages id='common.lot_number' />,
+      label: messages['common.lot_number'],
     },
     {
       name: 'price',
-      label: <IntlMessages id='common.totalCost' />,
+      label: messages['common.totalCost'],
       options: {
         filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
@@ -40,7 +42,7 @@ export const tableColumns = function () {
     },
     {
       name: 'sale_rate',
-      label: <IntlMessages id='common.saleRate' />,
+      label: messages['common.saleRate'],
       options: {
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
@@ -51,7 +53,7 @@ export const tableColumns = function () {
     },
     {
       name: 'price',
-      label: <IntlMessages id='common.price' />,
+      label: messages['common.price'],
       options: {
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
@@ -64,19 +66,19 @@ export const tableColumns = function () {
     },
     {
       name: 'year',
-      label: <IntlMessages id='common.year' />,
+      label: messages['common.year'],
     },
     {
       name: 'make',
-      label: <IntlMessages id='common.make' />,
+      label: messages['common.make'],
     },
     {
       name: 'model',
-      label: <IntlMessages id='vehicle.model' />,
+      label: messages['vehicle.model'],
     },
     {
       name: 'status',
-      label: <IntlMessages id='vehicle.status' />,
+      label: messages['vehicle.status'],
       options: {
         filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
@@ -94,71 +96,63 @@ export const tableColumns = function () {
     },
     {
       name: 'exterior_color',
-      label: <IntlMessages id='vehicle.exterior_color' />,
+      label: messages['vehicle.exterior_color'],
     },
     {
       name: 'interior_color',
-      label: <IntlMessages id='vehicle.interior_color' />,
+      label: messages['vehicle.interior_color'],
     },
     {
       name: 'primary_damage',
-      label: <IntlMessages id='vehicle.primary_damage' />,
+      label: messages['vehicle.primary_damage'],
     },
     {
       name: 'is_featured',
-      label: <IntlMessages id='vehicle.is_featured' />,
+      label: messages['vehicle.is_featured'],
       options: {
         customBodyRender: (value, tableMeta, updateValue) =>
-          value ? (
-            <IntlMessages id='common.yes' />
-          ) : (
-            <IntlMessages id='common.no' />
-          ),
+          value ? messages['common.yes'] : messages['common.no'],
       },
     },
     {
       name: 'is_best_selling',
-      label: <IntlMessages id='vehicle.is_best_selling' />,
+      label: messages['vehicle.is_best_selling'],
       options: {
         customBodyRender: (value, tableMeta, updateValue) =>
-          value ? (
-            <IntlMessages id='common.yes' />
-          ) : (
-            <IntlMessages id='common.no' />
-          ),
+          value ? messages['common.yes'] : messages['common.no'],
       },
     },
     {
       name: 'engine_type',
-      label: <IntlMessages id='common.engine_type' />,
+      label: messages['common.engine_type'],
     },
     {
       name: 'document_type',
-      label: <IntlMessages id='vehicle.document_type' />,
+      label: messages['vehicle.document_type'],
     },
     {
       name: 'odometer_type',
-      label: <IntlMessages id='vehicle.odometer_type' />,
+      label: messages['vehicle.odometer_type'],
     },
     {
       name: 'transmission',
-      label: <IntlMessages id='common.transmission' />,
+      label: messages['common.transmission'],
     },
     {
       name: 'created_by',
-      label: <IntlMessages id='common.created_by' />,
+      label: messages['common.created_by'],
     },
     {
       name: 'updated_by',
-      label: <IntlMessages id='common.updated_by' />,
+      label: messages['common.updated_by'],
     },
     {
       name: 'created_at',
-      label: <IntlMessages id='common.created_at' />,
+      label: messages['common.created_at'],
     },
     {
       name: 'updated_at',
-      label: <IntlMessages id='common.updated_at' />,
+      label: messages['common.updated_at'],
     },
   ];
 };
@@ -171,35 +165,35 @@ export const filterContent = [
         name: 'vehicles.id',
         label: 'Code',
         type: 'autocomplete',
-        url: '/codes/auto_complete?model=Vehicle',
-        keyName: 'code',
+        url: '/codes/auto_complete?model=Vehicle&id=',
+        keyName: 'str_code',
       },
       {
         name: 'vehicles.id',
         label: 'Lot Number',
         type: 'autocomplete',
-        url: '/vehicle_lots/auto_complete',
+        url: '/vehicle_lots/auto_complete?id=',
         keyName: 'lot_number',
       },
       {
         name: 'vehicles.id',
         label: 'Vin',
         type: 'autocomplete',
-        url: '/vehicle_vins/auto_complete',
+        url: '/vehicle_vins/auto_complete?id=',
         keyName: 'vin',
       },
       {
         name: 'vehicles.created_by',
         label: 'Created By',
         type: 'autocomplete',
-        url: '/user/auto_complete',
+        url: '/user/auto_complete?id=',
         keyName: 'username',
       },
       {
         name: 'vehicles.updated_by',
         label: 'Updated By',
         type: 'autocomplete',
-        url: '/user/auto_complete',
+        url: '/user/auto_complete?id=',
         keyName: 'username',
       },
       {
