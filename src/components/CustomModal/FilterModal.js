@@ -31,7 +31,7 @@ const SectionItem = ({title, children, ...reset}) => {
         borderRadius: 1,
         width: '100%',
         maxWidth: '400px',
-        height: {md: '450px'},
+        height: {sm: '450px'},
         overflow: 'auto',
       }}
       flex={1}
@@ -69,7 +69,7 @@ export default function FilterModal({
       <Fade in={open} timeout={50}>
         <Card
           sx={{
-            mt: {xs: 5, sm: 15},
+            mt: {xs: 2, sm: 8, md: 15},
             borderRadius: 2,
             mx: 'auto',
             maxWidth: {xs: '400px', sm: 340 * content.length + 'px'},
@@ -96,7 +96,7 @@ export default function FilterModal({
           <Divider />
           <CardContent
             sx={{
-              maxHeight: {xs: '70vh', md: '75vh'},
+              maxHeight: {xs: '65vh'},
               overflowY: 'auto',
               p: 3,
             }}

@@ -1,5 +1,5 @@
 import AppAutoComplete from '@crema/core/AppFormComponents/AppAutoComplete';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Box, Stack} from '@mui/material';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import PropTypes from 'prop-types';
@@ -15,6 +15,7 @@ async function getData(url, content, loading, setData, options) {
       setData((state) =>
         options ? merge(options, res.data.data, 'id') : res.data.data,
       );
+      console.log(options, res.data.data);
     }
     loading(false);
   } catch (error) {
@@ -34,20 +35,29 @@ export default function FilterAutocomplete({
   const [options, setOptions] = useState([]);
   const [input, setInput] = useState('');
   const searchItems = (content) => {
-    if (content[keyName]) {
-      setInput(content[keyName]);
-      getData(url, content, setIsLoading, setOptions, options);
-    }
+    setInput(content[keyName]);
+    getData(url, content, setIsLoading, setOptions, options);
   };
 
+  useEffect(() => {
+    values.length > 0
+      ? getData(
+          url + encodeURIComponent(values),
+          {},
+          setIsLoading,
+          setOptions,
+          options,
+        )
+      : null;
+  }, []);
   return (
     <Stack direction='column' spacing={5}>
       <AppAutoComplete
-        onFocus={() =>
+        onFocus={() => {
           options.length == 0
             ? getData(url, {}, setIsLoading, setOptions, options)
-            : null
-        }
+            : null;
+        }}
         multiple={true}
         placeholder={label}
         label={label}
@@ -63,7 +73,6 @@ export default function FilterAutocomplete({
         error={false}
         handleChange={({name, value}) => {
           setInput('');
-          console.log(name, value);
           onChange(value);
         }}
       />
