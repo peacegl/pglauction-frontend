@@ -43,6 +43,9 @@ const ContactForm = () => {
       );
       if (resp.status === 200 && resp.data.result) {
         setOpen('success');
+        values.name = '';
+        values.email = '';
+        values.message = '';
       } else {
         setOpen('error');
       }
@@ -51,7 +54,7 @@ const ContactForm = () => {
     }
     setTimeout(function () {
       setOpen('false');
-    }, 12000);
+    }, 10000);
     actions.setSubmitting(false);
   };
   return (
