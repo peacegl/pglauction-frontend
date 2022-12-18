@@ -109,7 +109,7 @@ const AppHeader = () => {
             alignItems: 'center',
           }}
         >
-          <Hidden smDown>
+          {/* <Hidden smDown>
             <Box
               sx={{
                 position: 'relative',
@@ -134,7 +134,7 @@ const AppHeader = () => {
                 <AppMessages />
               </Box>
             </Box>
-          </Hidden>
+          </Hidden> */}
 
           <Box
             sx={{
@@ -152,7 +152,7 @@ const AppHeader = () => {
             <UserInfo />
           </Box>
 
-          <Hidden smUp>
+          {/* <Hidden smUp>
             <Box
               sx={{
                 position: 'relative',
@@ -194,7 +194,7 @@ const AppHeader = () => {
                 </AppTooltip>
               </Box>
             </Box>
-          </Hidden>
+          </Hidden> */}
           <Menu
             id='simple-menu'
             anchorEl={anchorEl}
