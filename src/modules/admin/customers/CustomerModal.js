@@ -204,7 +204,6 @@ export default function CustomerModal({
   }, [recordId]);
 
   const onSave = (values) => {
-    console.log('dfdsf');
     values.loginableId = customer?.login?.id;
     const userFormData = Helper.getFormData(values);
     if (recordId) {

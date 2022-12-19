@@ -7,8 +7,8 @@ const SITE_URL =
     ? 'http://localhost:3000'
     : 'https://qa-blog.mastersindia.co';
 
-const defaultTitle = 'PGL Live Auction';
-const defaultDescription = 'Peace Global Logistics';
+const defaultTitle = 'UTC Live Auction';
+const defaultDescription = 'United Trading Company';
 const defaultImage = 'logo.png';
 const defaultTwitter = '@crema';
 const defaultSep = ' | ';
@@ -46,18 +46,18 @@ const AppPage = ({children, ...rest}) => {
               url: theImage,
               width: 800,
               height: 600,
-              alt: 'PGL Live Auction',
+              alt: 'United Trading Company',
               type: 'image/jpeg',
             },
             {
               url: theImage,
               width: 900,
               height: 800,
-              alt: 'PGL Live Auction',
+              alt: 'United Trading Company',
               type: 'image/jpeg',
             },
           ],
-          site_name: 'PGL Live Auction',
+          site_name: 'United Trading Company',
         }}
         tags={tags}
         category={category}

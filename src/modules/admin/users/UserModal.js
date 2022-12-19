@@ -2,19 +2,19 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {onInsertUser, onUpdateUser} from 'redux/actions';
 import IntlMessages from '@crema/utility/IntlMessages';
-import UserConfigs from '../../../configs/pages/users';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
 import PersonIcon from '@mui/icons-material/Person';
 import {useEffect, useState, useRef} from 'react';
-import CustomModal from '../../../components/CustomModal';
+import CustomModal from 'components/CustomModal';
+import UserConfigs from 'configs/pages/users';
 import UserStepThree from './UserStepThree';
 import {useDispatch} from 'react-redux';
 import UserStepOne from './UserStepOne';
 import UserStepTwo from './UserStepTwo';
 import PropTypes from 'prop-types';
 import Helper from 'helpers/helpers';
-import {getData} from '../../../configs';
+import {getData} from 'configs';
 
 export default function UserModal({
   open,

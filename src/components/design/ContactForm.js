@@ -69,7 +69,7 @@ const ContactForm = () => {
         {open == 'success' && (
           <Alert severity='success'>
             <AlertTitle>Thank you for getting in touch!</AlertTitle>
-            We appreciate you contacting United Trading Cars . One of our
+            We appreciate you contacting United Trading Company . One of our
             colleagues will get back in touch with you soon!Have a great time!
           </Alert>
         )}
