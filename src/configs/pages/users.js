@@ -19,15 +19,8 @@ export const tableColumns = function () {
       },
     },
     {
-      name: 'code',
+      name: 'str_code',
       label: messages['common.code'],
-      options: {
-        customBodyRender: (value, tableMeta, updateValue) => (
-          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            U{value.toString().padStart(6, '0')}
-          </Typography>
-        ),
-      },
     },
     {
       name: 'username',

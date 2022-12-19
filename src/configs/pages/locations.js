@@ -6,15 +6,8 @@ const {messages = []} = appIntl() ? appIntl() : {};
 export const tableColumns = function () {
   return [
     {
-      name: 'code',
+      name: 'str_code',
       label: 'Code',
-      options: {
-        customBodyRender: (value, tableMeta, updateValue) => (
-          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            LOC{value.toString().padStart(3, '0')}
-          </Typography>
-        ),
-      },
     },
     {
       name: 'name',

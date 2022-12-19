@@ -20,15 +20,8 @@ export const tableColumns = function () {
       },
     },
     {
-      name: 'code',
+      name: 'str_code',
       label: 'Code',
-      options: {
-        customBodyRender: (value, tableMeta, updateValue) => (
-          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            C{value.toString().padStart(6, '0')}
-          </Typography>
-        ),
-      },
     },
     {
       name: 'username',
