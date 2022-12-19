@@ -47,7 +47,10 @@ export default function LotInfo() {
           />
           <Item
             label={<IntlMessages id='vehicle.price' />}
-            value={moneyFormater(vehicle.price)}
+            value={moneyFormater(
+              parseInt(vehicle.price) +
+                parseInt((vehicle.price * vehicle.sale_rate ?? 15) / 100),
+            )}
           />
           <Item
             label={<IntlMessages id='common.last_updated' />}

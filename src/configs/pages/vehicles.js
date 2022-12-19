@@ -1,11 +1,11 @@
 import IntlMessages from '@crema/utility/IntlMessages';
-import {appIntl} from '@crema/utility/helper/Utils';
 import {Box, Typography} from '@mui/material';
 const year = new Date().getFullYear();
 import * as yup from 'yup';
-import {CommonConfigs} from 'configs';
-const {messages = []} = appIntl() ? appIntl() : {};
+import {CommonConfigs, moneyFormater} from 'configs';
+import {appIntl} from '@crema/utility/helper/Utils';
 const youtubeRegExp = CommonConfigs().youtubeRegExp;
+const {messages = []} = appIntl() ? appIntl() : {};
 
 export const tableColumns = function () {
   return [
@@ -30,11 +30,36 @@ export const tableColumns = function () {
     },
     {
       name: 'price',
+      label: messages['common.totalCost'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+            {moneyFormater(value)}
+          </Typography>
+        ),
+      },
+    },
+    {
+      name: 'sale_rate',
+      label: messages['common.saleRate'],
+      options: {
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+            {value}%
+          </Typography>
+        ),
+      },
+    },
+    {
+      name: 'price',
       label: messages['common.price'],
       options: {
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            {value} DH
+            {moneyFormater(
+              parseInt(value) + parseInt((value * tableMeta?.rowData[4]) / 100),
+            )}
           </Typography>
         ),
       },
@@ -140,35 +165,35 @@ export const filterContent = [
         name: 'vehicles.id',
         label: 'Code',
         type: 'autocomplete',
-        url: '/codes/auto_complete?model=Vehicle',
-        keyName: 'code',
+        url: '/codes/auto_complete?model=Vehicle&id=',
+        keyName: 'str_code',
       },
       {
         name: 'vehicles.id',
         label: 'Lot Number',
         type: 'autocomplete',
-        url: '/vehicle_lots/auto_complete',
+        url: '/vehicle_lots/auto_complete?id=',
         keyName: 'lot_number',
       },
       {
         name: 'vehicles.id',
         label: 'Vin',
         type: 'autocomplete',
-        url: '/vehicle_vins/auto_complete',
+        url: '/vehicle_vins/auto_complete?id=',
         keyName: 'vin',
       },
       {
         name: 'vehicles.created_by',
         label: 'Created By',
         type: 'autocomplete',
-        url: '/user/auto_complete',
+        url: '/user/auto_complete?id=',
         keyName: 'username',
       },
       {
         name: 'vehicles.updated_by',
         label: 'Updated By',
         type: 'autocomplete',
-        url: '/user/auto_complete',
+        url: '/user/auto_complete?id=',
         keyName: 'username',
       },
       {
@@ -293,6 +318,9 @@ export default function configs(invalidYoutube) {
           .number()
           .typeError(<IntlMessages id='validation.priceError' />)
           .required(<IntlMessages id='validation.priceRequired' />),
+        sale_rate: yup
+          .number()
+          .typeError(<IntlMessages id='validation.saleRateError' />),
       }),
       yup.object({
         status: yup

@@ -169,7 +169,10 @@ export default function ListItem({item, ...props}) {
                     fontWeight='bold'
                     sx={{display: {xs: 'block', sm: 'none'}, fontSize: '14px'}}
                   >
-                    {moneyFormater(item.price)}
+                    {moneyFormater(
+                      parseInt(item.price) +
+                        parseInt((item.price * item.sale_rate ?? 15) / 100),
+                    )}
                   </Typography>
                   <Typography
                     component='div'
@@ -264,7 +267,10 @@ export default function ListItem({item, ...props}) {
                   fontSize='20px'
                   fontWeight='bold'
                 >
-                  {moneyFormater(item.price)}
+                  {moneyFormater(
+                    parseInt(item.price) +
+                      parseInt((item.price * item.sale_rate ?? 15) / 100),
+                  )}
                 </Typography>
                 <WhatsAppButton number={item.seller?.loginable?.whatsapp} />
               </Box>

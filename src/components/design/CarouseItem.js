@@ -90,7 +90,10 @@ const CarouselItem = ({item}) => {
             fontWeight='bold'
           >
             {item.price ? (
-              moneyFormater(item.price)
+              moneyFormater(
+                parseInt(item.price) +
+                  parseInt((item.price * item.sale_rate ?? 15) / 100),
+              )
             ) : (
               <IntlMessages id='common.not_available' />
             )}
