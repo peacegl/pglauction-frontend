@@ -5,26 +5,6 @@ import * as yup from 'yup';
 
 export default function conifgs(invalidPhone, invalidWhatsapp, misMatch) {
   return {
-    initialValues: [
-      {
-        profile: '',
-        fullname: '',
-        phone: '',
-        whatsapp: '',
-        email: '',
-        username: '',
-      },
-      {
-        current_password: '',
-        new_password: '',
-        password_confirmation: '',
-      },
-      {
-        timezone: '',
-        gender: '',
-        birth_date: '',
-      },
-    ],
     validationSchema: [
       yup.object({
         fullname: yup
