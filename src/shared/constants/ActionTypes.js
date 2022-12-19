@@ -145,6 +145,7 @@ export const GET_GALLERY_PHOTO = 'GET_GALLERY_PHOTO';
 export const GET_USER_LIST = 'GET_USER_LIST';
 export const ADD_NEW_USER = 'ADD_NEW_USER';
 export const UPDATE_USER = 'UPDATE_USER';
+export const AUTH_USER_UPDATE = 'AUTH_USER_UPDATE';
 
 //ROLE_LIST
 export const GET_ROLE_LIST = 'GET_ROLE_LIST';

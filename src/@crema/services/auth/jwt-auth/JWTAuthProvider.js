@@ -20,8 +20,6 @@ export const useJWTAuthActions = () => useContext(JWTAuthActionsContext);
 const JWTAuthAuthProvider = ({children}) => {
   const [firebaseData, setJWTAuthData] = useState({
     user: null,
-    // permissions: null,
-    // roles: null,
     isAuthenticated: false,
     isLoading: true,
   });
@@ -34,8 +32,6 @@ const JWTAuthAuthProvider = ({children}) => {
       if (!token) {
         setJWTAuthData({
           user: undefined,
-          // permissions: null,
-          // roles: null,
           isLoading: false,
           isAuthenticated: false,
         });
@@ -45,14 +41,8 @@ const JWTAuthAuthProvider = ({children}) => {
       jwtAxios
         .get('/auth')
         .then(({data}) => {
-          // const permissions = data.permissions;
-          // delete data.permissions;
-          // const roles = data.roles;
-          // delete data.roles;
           setJWTAuthData({
             user: data,
-            // permissions: permissions,
-            // roles: roles,
             isLoading: false,
             isAuthenticated: true,
           });
@@ -60,8 +50,6 @@ const JWTAuthAuthProvider = ({children}) => {
         .catch(() =>
           setJWTAuthData({
             user: undefined,
-            // permissions: null,
-            // roles: null,
             isLoading: false,
             isAuthenticated: false,
           }),
@@ -117,14 +105,8 @@ const JWTAuthAuthProvider = ({children}) => {
       localStorage.setItem('token', data.token);
       setAuthToken(data.token);
       const res = await jwtAxios.get('/auth');
-      // const permissions = res?.data?.permissions;
-      // delete res?.data?.permissions;
-      // const roles = res?.data?.roles;
-      // delete res?.data?.roles;
       setJWTAuthData({
         user: res.data,
-        // permissions: permissions,
-        // roles: roles,
         isAuthenticated: true,
         isLoading: false,
       });
@@ -150,14 +132,18 @@ const JWTAuthAuthProvider = ({children}) => {
       setAuthToken();
       setJWTAuthData({
         user: null,
-        // permissions: null,
-        // roles: null,
         isLoading: false,
         isAuthenticated: false,
       });
     }
   };
-
+  const updateAuthUser = (user) => {
+    setJWTAuthData({
+      user: user,
+      isLoading: false,
+      isAuthenticated: true,
+    });
+  };
   return (
     <JWTAuthContext.Provider
       value={{
@@ -169,6 +155,7 @@ const JWTAuthAuthProvider = ({children}) => {
           signUpUser,
           signInUser,
           logout,
+          updateAuthUser,
         }}
       >
         {children}
