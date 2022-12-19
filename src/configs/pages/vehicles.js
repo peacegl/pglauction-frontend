@@ -10,15 +10,8 @@ const {messages = []} = appIntl() ? appIntl() : {};
 export const tableColumns = function () {
   return [
     {
-      name: 'code',
+      name: 'str_code',
       label: messages['common.code'],
-      options: {
-        customBodyRender: (value, tableMeta, updateValue) => (
-          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            V{value.toString().padStart(8, '0')}
-          </Typography>
-        ),
-      },
     },
     {
       name: 'vin',

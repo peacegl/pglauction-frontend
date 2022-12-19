@@ -8,16 +8,8 @@ const {messages = []} = appIntl() ? appIntl() : {};
 export const tableColumns = function () {
   return [
     {
-      name: 'code',
+      name: 'str_code',
       label: messages['common.code'],
-      options: {
-        filter: false,
-        customBodyRender: (value, tableMeta, updateValue) => (
-          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            SA{value.toString().padStart(6, '0')}
-          </Typography>
-        ),
-      },
     },
     {
       name: 'vin',
