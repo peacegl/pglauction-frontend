@@ -8,9 +8,9 @@ const AppDateField = (props) => {
   const errorText = meta.error && meta.touched ? meta.error : '';
   return (
     <DatePicker
-      onChange={(value) =>
-        props.setfieldvalue ? props.setfieldvalue(props.name, value) : {}
-      }
+      onChange={(value) => {
+        if (props.setfieldvalue) props.setfieldvalue(props.name, value);
+      }}
       value={props.value}
       {...props}
       renderInput={(params) => {
@@ -34,5 +34,5 @@ AppDateField.propTypes = {
   className: PropTypes.string,
   name: PropTypes.string,
   value: PropTypes.string,
-  setfieldvalue: PropTypes.func,
+  setfieldvalue: PropTypes.any,
 };

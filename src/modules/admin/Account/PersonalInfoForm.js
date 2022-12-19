@@ -1,20 +1,32 @@
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
+import {useAuthMethod, useAuthUser} from '@crema/utility/AuthHooks';
 import MyAccountConfigs from 'configs/pages/my-account';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {Box, Stack, Typography} from '@mui/material';
 import {Fonts} from 'shared/constants/AppEnums';
 import SaveIcon from '@mui/icons-material/Save';
+import {onUpdateAuthUser} from 'redux/actions';
 import Profile from 'components/Profile';
+import {useDispatch} from 'react-redux';
 import {LoadingButton} from '@mui/lab';
 import {Button} from '@mui/material';
+import Helper from 'helpers/helpers';
 import {Form, Formik} from 'formik';
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
 
 const PersonalInfoForm = ({profileUrl, initialValues}) => {
+  const {updateAuthUser} = useAuthMethod();
   const {messages} = useIntl();
+  const dispatch = useDispatch();
+  const {user} = useAuthUser();
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
+  const handleSubmit = async (values) => {
+    const userFormData = Helper.getFormData(values);
+    dispatch(
+      onUpdateAuthUser(`/auth_user/`, userFormData, user, updateAuthUser),
+    );
+  };
   return (
     <Formik
       validateOnBlur={false}
@@ -30,7 +42,7 @@ const PersonalInfoForm = ({profileUrl, initialValues}) => {
       onSubmit={async (values, actions) => {
         actions.setSubmitting(true);
         await delay(0);
-        await handleSubmit(values, actions);
+        await handleSubmit(values);
         actions.setSubmitting(false);
       }}
     >

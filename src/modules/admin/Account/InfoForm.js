@@ -2,12 +2,15 @@ import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteF
 import {Box, Button, MenuItem, Stack, Typography} from '@mui/material';
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import AppDateField from '@crema/core/AppFormComponents/AppDateField';
-import IntlMessages from '../../../@crema/utility/IntlMessages';
+import {useAuthMethod, useAuthUser} from '@crema/utility/AuthHooks';
 import MyAccountConfigs from 'configs/pages/my-account';
+import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Fonts} from 'shared/constants/AppEnums';
 import SaveIcon from '@mui/icons-material/Save';
+import {onUpdateAuthUser} from 'redux/actions';
 import {useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
 import {LoadingButton} from '@mui/lab';
 import {Form, Formik} from 'formik';
 import PropTypes from 'prop-types';
@@ -15,6 +18,9 @@ import {getData} from 'configs';
 
 const InfoForm = ({initialValues}) => {
   const {messages} = appIntl('');
+  const {updateAuthUser} = useAuthMethod();
+  const dispatch = useDispatch();
+  const {user} = useAuthUser();
   const [timezones, setTimezones] = useState([]);
   const [timezonesLoading, setTimezonesLoading] = useState(false);
   useEffect(() => {
@@ -29,7 +35,13 @@ const InfoForm = ({initialValues}) => {
       setTimezones,
     );
   };
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+  const handleSubmit = async (values) => {
+    dispatch(
+      onUpdateAuthUser(`/auth_user_data/`, values, user, updateAuthUser),
+    );
+  };
   return (
     <Formik
       validateOnBlur={false}
@@ -45,7 +57,7 @@ const InfoForm = ({initialValues}) => {
       onSubmit={async (values, actions) => {
         actions.setSubmitting(true);
         await delay(0);
-        await handleSubmit(values, actions);
+        await handleSubmit(values);
         actions.setSubmitting(false);
       }}
     >
@@ -100,8 +112,10 @@ const InfoForm = ({initialValues}) => {
                 </AppTextField>
                 <AppDateField
                   label={<IntlMessages id='common.birthDate' />}
-                  value={values.birth_date}
-                  setFieldValue={(name, value) =>
+                  name='birth_date'
+                  value={values?.birth_date ? values?.birth_date : ''}
+                  setfieldvalue={(name, value) => {
+                    console.log(name, value);
                     setFieldValue(
                       name,
                       value
@@ -111,9 +125,8 @@ const InfoForm = ({initialValues}) => {
                             '/' +
                             value.getDate()
                         : '',
-                    )
-                  }
-                  name='birth_date'
+                    );
+                  }}
                   size='small'
                   sx={{flex: 1}}
                 />

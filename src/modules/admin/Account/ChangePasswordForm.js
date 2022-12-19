@@ -12,12 +12,15 @@ import {Form, Formik} from 'formik';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 import {useState} from 'react';
+import {onUpdateAuthUser} from 'redux/actions';
+import {useDispatch} from 'react-redux';
 
 const ChangePasswordForm = ({initialValues}) => {
   const [currentPasswor, setShowCurrentPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordC, setShowPasswordC] = useState(false);
   const {messages} = useIntl();
+  const dispatch = useDispatch();
 
   const handleClickShowCurrentPassword = () => {
     setShowCurrentPassword((d) => !d);
@@ -31,6 +34,9 @@ const ChangePasswordForm = ({initialValues}) => {
     setShowPasswordC((d) => !d);
   };
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const handleSubmit = async (values) => {
+    dispatch(onUpdateAuthUser(`/change_password/`, values, true));
+  };
 
   return (
     <Formik
