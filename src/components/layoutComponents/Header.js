@@ -155,7 +155,7 @@ function Header() {
               variant='body2'
               fontSize='14px'
               underline='none'
-              href='https://www.facebook.com/TowingLoadingShipping'
+              href='https://www.facebook.com/profile.php?id=100087054543656'
               mx='2px'
               color={(theme) => theme.palette.text.secondary}
               target='_blank'
@@ -166,7 +166,7 @@ function Header() {
               variant='body2'
               fontSize='14px'
               underline='none'
-              href='https://wa.me/+937669086'
+              href='https://www.instagram.com/utc_dubai'
               mx='2px'
               color={theme.palette.text.secondary}
               target='_blank'
@@ -177,7 +177,7 @@ function Header() {
               variant='body2'
               fontSize='14px'
               underline='none'
-              href='https://wa.me/+937669086'
+              href='https://wa.me/+971565929272'
               mx='2px'
               color={(theme) => theme.palette.text.secondary}
               target='_blank'
