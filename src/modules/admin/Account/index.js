@@ -1,24 +1,18 @@
 import {IoMdInformationCircleOutline} from 'react-icons/io';
-import MyAccountConfigs from 'configs/pages/my-account';
 import IntlMessages from '@crema/utility/IntlMessages';
 import AccountTabsWrapper from './AccountTabsWrapper';
 import ChangePasswordForm from './ChangePasswordForm';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-import {appIntl} from '@crema/utility/helper/Utils';
 import {useEffect, useRef, useState} from 'react';
 import AppPageMeta from '@crema/core/AppPageMeta';
 import PersonalInfoForm from './PersonalInfoForm';
 import {Fonts} from 'shared/constants/AppEnums';
-import SaveIcon from '@mui/icons-material/Save';
 import {AiOutlineLock} from 'react-icons/ai';
 import {AppAnimate, AppLoader} from '@crema';
-import {LoadingButton} from '@mui/lab';
 import {BiUser} from 'react-icons/bi';
 import Tabs from '@mui/material/Tabs';
-import {Button} from '@mui/material';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import {Form, Formik} from 'formik';
 import InfoForm from './InfoForm';
 
 function a11yProps(index) {
@@ -44,6 +38,7 @@ const tabs = [
 
 const Account = () => {
   const userValues = {
+    id: '',
     profile: '',
     fullname: '',
     phone: '',
@@ -54,43 +49,49 @@ const Account = () => {
     gender: '',
     birth_date: '',
   };
-  const {messages} = appIntl('');
   const profileUrl = useRef();
   const [values, setValues] = useState({});
   const [value, setValue] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [initialValues, setInitialValues] = useState(
-    MyAccountConfigs().initialValues[0],
-  );
-  const [validationSchema, setValidationSchema] = useState(
-    MyAccountConfigs(
-      messages['validation.invalidPhone'],
-      messages['validation.invalidWhatsapp'],
-      messages['validation.passwordMisMatch'],
-    ).validationSchema[0],
-  );
+  const [userInitialValues, setUserInitialValues] = useState({
+    profile: '',
+    fullname: '',
+    phone: '',
+    whatsapp: '',
+    email: '',
+    username: '',
+  });
+  const [infoInitialValues, setInfoInitialValues] = useState({
+    timezone: '',
+    gender: '',
+    birth_date: '',
+  });
+  const passwordInitialValues = {
+    current_password: '',
+    new_password: '',
+    password_confirmation: '',
+  };
 
   useEffect(() => {
-    setValidationSchema(
-      MyAccountConfigs(
-        messages['validation.invalidPhone'],
-        messages['validation.invalidWhatsapp'],
-        messages['validation.passwordMisMatch'],
-      ).validationSchema[value],
-    );
-  }, [value]);
-  useEffect(() => {
-    let initValues = {};
-    Object.entries(values).forEach(([key, v]) => {
-      if (Object.keys(MyAccountConfigs().initialValues[value])?.includes(key)) {
-        if (key == 'gender') {
-          console.log(v);
-        }
-        initValues[key] = v ? v : '';
+    if (values) {
+      if (value == 0) {
+        let initValues = userInitialValues;
+        Object.entries(values).forEach(([key, v]) => {
+          if (Object.keys(userInitialValues)?.includes(key)) {
+            initValues[key] = v ? v : userInitialValues[key];
+          }
+        });
+        setUserInitialValues(initValues);
+      } else if (value == 2) {
+        let initValues = infoInitialValues;
+        Object.entries(values).forEach(([key, v]) => {
+          if (Object.keys(infoInitialValues)?.includes(key)) {
+            initValues[key] = v ? v : infoInitialValues[key];
+          }
+        });
+        setInfoInitialValues(initValues);
       }
-    });
-    console.log(initValues);
-    setInitialValues(initValues);
+    }
   }, [values, value]);
 
   useEffect(() => {
@@ -105,7 +106,7 @@ const Account = () => {
               if (key == 'profile') {
                 profileUrl.current = value;
               } else {
-                values[key] = value ? value : userValues[key];
+                values[key] = value ? value : '';
               }
             }
           });
@@ -121,7 +122,6 @@ const Account = () => {
   const onTabsChange = (event, newValue) => {
     setValue(newValue);
   };
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   return (
     <>
@@ -168,81 +168,17 @@ const Account = () => {
               }}
             >
               {isLoading && <AppLoader />}
-              <Formik
-                validateOnBlur={true}
-                initialValues={initialValues}
-                enableReinitialize
-                validationSchema={validationSchema}
-                onSubmit={async (values, actions) => {
-                  actions.setSubmitting(true);
-                  await delay(0);
-                  await handleSubmit(values, actions);
-                  actions.setSubmitting(false);
-                }}
-              >
-                {({
-                  values,
-                  setFieldValue,
-                  isSubmitting,
-                  setFieldError,
-                  ...rest
-                }) => {
-                  return (
-                    <Form>
-                      {value === 0 && (
-                        <PersonalInfoForm
-                          values={values}
-                          setFieldValue={setFieldValue}
-                          profileUrl={profileUrl}
-                        />
-                      )}
-                      {value === 1 && (
-                        <ChangePasswordForm
-                          values={values}
-                          setFieldValue={setFieldValue}
-                        />
-                      )}
-                      {value === 2 && (
-                        <InfoForm
-                          values={values}
-                          setFieldValue={setFieldValue}
-                        />
-                      )}
-                      <Box
-                        sx={{
-                          mt: 5,
-                        }}
-                      >
-                        <LoadingButton
-                          loading={isSubmitting}
-                          loadingPosition='start'
-                          startIcon={<SaveIcon />}
-                          variant='contained'
-                          type='submit'
-                          sx={{
-                            position: 'relative',
-                            minWidth: 100,
-                          }}
-                        >
-                          <IntlMessages id='common.saveChanges' />
-                        </LoadingButton>
-                        <Button
-                          sx={{
-                            position: 'relative',
-                            minWidth: 100,
-                            ml: 2.5,
-                          }}
-                          color='primary'
-                          variant='outlined'
-                          type='cancel'
-                        >
-                          <IntlMessages id='common.cancel' />
-                        </Button>
-                      </Box>
-                    </Form>
-                  );
-                }}
-              </Formik>
+
+              {value === 0 && (
+                <PersonalInfoForm
+                  profileUrl={profileUrl}
+                  initialValues={userInitialValues}
+                />
+              )}
+              {value === 1 && (
+                <ChangePasswordForm initialValues={passwordInitialValues} />
+              )}
+              {value === 2 && <InfoForm initialValues={infoInitialValues} />}
             </Box>
           </Box>
         </AccountTabsWrapper>
