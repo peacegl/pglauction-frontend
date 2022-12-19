@@ -52,7 +52,7 @@ const AppHeader = () => {
           paddingRight: {xs: 5, md: 7.5, xl: 12.5},
         }}
       >
-        {/* <AppLogo /> */}
+        <AppLogo />
         <Hidden lgUp>
           <IconButton
             sx={{color: 'text.secondary'}}
