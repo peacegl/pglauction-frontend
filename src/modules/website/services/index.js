@@ -20,7 +20,7 @@ const contents = [
         company which has shipped over 66,000 vehicles shipped from USA to
         worldwide. For more information, please click
         <Link
-          href='https://pglsystem.com'
+          href='https://peacegl.com'
           target='_blank'
           style={{
             textDecoration: 'none',
