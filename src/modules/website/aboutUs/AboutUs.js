@@ -1,31 +1,35 @@
 import {Box, Button, Stack, Typography} from '@mui/material';
 import ImageCarousel from 'components/design/ImageCarousel';
 import IntlMessages from '@crema/utility/IntlMessages';
-import aboutus from 'assets/about-us/main_image.jpeg';
-import aboutus1 from 'assets/about-us/1.jpeg';
-import aboutus2 from 'assets/about-us/2.jpeg';
 import Title from 'components/design/Title';
 import {useRouter} from 'next/router';
 
 const AboutUs = () => {
-  const images = [
-    {
-      id: 1,
-      path: aboutus2.src,
-      alternativeText: 'About Us Image',
-    },
-    {
-      id: 2,
-      path: aboutus.src,
-      alternativeText: 'Second About Us Image',
-    },
-    {
-      id: 3,
-      path: aboutus1.src,
-      alternativeText: 'This About Us Image',
-    },
-  ];
   const router = useRouter();
+  // imports all images from assets folder
+  const importAll = (r) =>
+    r.keys().reduce((acc, item) => {
+      acc[item.replace('./', 'assets/about-us/carousel/')] = r(item);
+      return acc;
+    }, {});
+
+  const textureImports = importAll(
+    require.context(
+      '../../../assets/about-us/carousel',
+      false,
+      /\.(png|jpe?g|svg)$/,
+    ),
+  );
+
+  const images = [];
+  Object.values(textureImports).map((texture, index) => {
+    console.log(texture.default.src);
+    images.push({
+      id: index,
+      path: texture.default.src,
+      alternativeText: 'About Us Image',
+    });
+  });
 
   return (
     <>
