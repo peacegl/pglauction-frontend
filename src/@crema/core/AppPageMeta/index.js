@@ -7,10 +7,10 @@ const SITE_URL =
     ? 'http://localhost:3000'
     : 'https://qa-blog.mastersindia.co';
 
-const defaultTitle = 'UTC Live Auction';
+const defaultTitle = 'UTC Vehicles';
 const defaultDescription = 'United Trading Company';
 const defaultImage = 'logo.png';
-const defaultTwitter = '@crema';
+const defaultTwitter = '@utc';
 const defaultSep = ' | ';
 
 const AppPage = ({children, ...rest}) => {
@@ -19,7 +19,14 @@ const AppPage = ({children, ...rest}) => {
     description,
     image,
     category = 'Admin Panel',
-    tags = ['Live Auction', 'PGL', 'Vehicle', 'Vehicle Auction'],
+    tags = [
+      'Live Auction',
+      'PGL',
+      'Vehicle',
+      'Vehicle Auction',
+      'UTC',
+      'United Trading Company',
+    ],
   } = rest;
   const theTitle = title
     ? title?.length > 48
@@ -63,7 +70,7 @@ const AppPage = ({children, ...rest}) => {
         category={category}
         twitter={{
           handle: defaultTwitter,
-          site: '@crema',
+          site: '@utc',
           cardType: 'summary_large_image',
         }}
       />
