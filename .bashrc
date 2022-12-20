@@ -1,0 +1,1 @@
+export PATH=/opt/cpanel/ea-nodejs16/bin/:$PATH
