@@ -69,13 +69,13 @@ export default function Footer() {
                   src={logoImage.src}
                 />
                 <Typography sx={{m: 4, ml: 0}} variant='body1'>
-                  United Trading Company sells used cars with an affordable rate
-                  in Dubai, UAE. They have a showroom in Sharjah and an office
-                  in Dubai to provide comprehensive support and services to the
+                  United Trading Company sells used cars at an affordable rate
+                  in Dubai, UAE. We have a showroom in Sharjah and an office in
+                  Dubai to provide comprehensive support and services to
                   customers. We have different affiliates to help provide
-                  shipping, clearance, and sell cars from USA in Dubai. They are
-                  the leading cars showroom in Dubai, UAE having variety of
-                  cars.
+                  shipping, clearance, and sell cars from the USA in Dubai. We
+                  are the leading cars showroom in Dubai, UAE with various
+                  vehicles.
                 </Typography>
               </Box>
             </Box>
@@ -140,9 +140,9 @@ export default function Footer() {
                     underline='none'
                     mx='5px'
                   >
-                    AL Qusais Industrial Area Fourth Al Saoud Building
+                    Sharjah Industrial Area 2
                     <br />
-                    Room Number 804 P.O.Box: 48551, Dubai-U.A.E.
+                    Sharjah-U.A.E.
                   </Typography>
                 </Box>
                 <Box
