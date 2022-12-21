@@ -23,22 +23,21 @@ export default function Dashboard() {
             columnGap: 5,
             rowGap: 3,
             flexWrap: 'wrap',
-
+            flexDirection: {xs: 'column', sm: 'row'},
             pb: {xs: 5, md: 8},
           }}
         >
           {[1, 2, 3, 4, 5].map((item) => (
-            <Skeleton
-              key={item}
-              sx={{
-                flex: '1 1 15%',
-                backgroundColor: (theme) => theme.palette.primary.contrastText,
-                borderRadius: 5,
-              }}
-              animation='wave'
-              variant='rounded'
-              height={90}
-            />
+            <Box key={item} component='span' sx={{flex: '1 1 15%'}}>
+              <Skeleton
+                sx={{
+                  borderRadius: 5,
+                  height: {xs: '85px', md: '90px'},
+                }}
+                animation='wave'
+                variant='rounded'
+              />
+            </Box>
           ))}
         </Box>
       ) : (

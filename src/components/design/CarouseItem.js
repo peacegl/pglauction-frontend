@@ -106,7 +106,7 @@ const CarouselItem = ({item}) => {
             {item.odometer_type}
           </Typography>
         </Box>
-        <Box sx={{display: 'flex', mt: 1}}>
+        {/* <Box sx={{display: 'flex', mt: 1}}>
           <Typography sx={{mr: 1}}>
             <IntlMessages id='common.lot' />#
           </Typography>
@@ -123,7 +123,7 @@ const CarouselItem = ({item}) => {
             <IntlMessages id='common.location' />
           </Typography>
           <Typography color='primary'>{item.location?.name}</Typography>
-        </Box>
+        </Box> */}
         <Button
           variant='contained'
           sx={{mt: 2, px: 6, borderRadius: 1}}
