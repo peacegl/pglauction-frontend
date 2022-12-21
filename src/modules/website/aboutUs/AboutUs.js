@@ -47,14 +47,14 @@ const AboutUs = () => {
           <Box sx={{mt: 1}}>
             <Typography component='p' variant='body1'>
               United Trading Company sells used cars with an affordable rate in
-              Dubai, UAE. They have a showroom in Sharjah, an office in Dubai to
+              Dubai, UAE. We have a showroom in Sharjah, an office in Dubai to
               provide comprehensive support and services to the customers. We
               have different affiliates to help provide shipping, clearance, and
               sell cars from USA in Dubai and elsewhere.
             </Typography>
             <Typography component='p' variant='body1' sx={{mt: 1}}>
               United Trading Company LLC is one of the top companies in UAE
-              selling cars from ranging from different models and companies. It
+              selling cars from ranging from different models and companies. We
               also provides other services with its affiliates ranging from
               having bidding rooms and computer labs in Sharjah office for you
               to buy cars from USA auctions, shipping your cars, custom
@@ -64,7 +64,7 @@ const AboutUs = () => {
             <Typography component='p' sx={{my: 1}}>
               Customers may ship cars via Peace Global Logistics LLC which is a
               shipping company based in United States having two branches
-              located in Georgia and Texas. They are a well established company
+              located in Georgia and Texas. We are a well established company
               which you may find more information in their <span></span>
               <a
                 href='https://peacegl.com'
@@ -80,7 +80,7 @@ const AboutUs = () => {
             </Typography>
             <Typography component='p' sx={{my: 3}}>
               Customers may use custom clearance and other services via our
-              affiliate PGLC Shipping LLC. They are a well established company
+              affiliate PGLC Shipping LLC. We are a well established company
               having branches in UAE and you may find more information in their
               <span> </span>
               <a
@@ -97,9 +97,8 @@ const AboutUs = () => {
             </Typography>
             <Typography component='p' variant='body1'>
               We are one of the leading used cars market in Sharjah, UAE. So
-              give us a visit in our showroom located in Sharjah AL Qusais
-              Industrial Area Fourth Al Saoud Building Room Number 804 P.O.Box:
-              48551, Dubai-U.A.E.
+              give us a visit in our showroom located in Sharjah Industrial Area
+              2, Sharjah-U.A.E.
             </Typography>
 
             <Button
