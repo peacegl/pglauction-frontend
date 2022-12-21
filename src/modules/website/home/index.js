@@ -26,16 +26,20 @@ const ColorButton = styled(Button)(({theme}) => ({
 const contents = [
   {
     icon: <EmojiEventsIcon sx={{fontSize: 35}} />,
-    title: "Leading Showroom with Variety of Cars",
+    title: 'Leading Showroom with Variety of Cars',
     color: deepOrange[500],
     bgcolor: deepOrange[100],
     details: ``,
     details: (
       <Typography component='p'>
-        We are one of the leading showrooms in Sharjah, UAE. Having started small, we are expanding quickly and providing more services to our customers so they can make profits stress-free! You may check out our cars<span></span>
+        We are one of the leading showrooms in Sharjah, UAE. Having started
+        small, we are expanding quickly and providing more services to our
+        customers so they can make profits stress-free! You may check out our
+        cars<span></span>
         <a
           href='https://pglcshipping.com'
           target='_blank'
+          rel='noreferrer'
           style={{
             textDecoration: 'none',
             paddingLeft: 3,
@@ -48,15 +52,19 @@ const contents = [
   },
   {
     icon: <AdminPanelSettingsIcon sx={{fontSize: 35}} />,
-    title: "Comprehensive Portfolia Services",
+    title: 'Comprehensive Portfolia Services',
     color: (theme) => theme.palette.success.main,
     bgcolor: green[100],
     details: (
       <Typography component='p'>
-        We do not only provide you best selling cars but offer you our affiliates' portfolio where you can buy cars directly from USA and have a worry-free experience from dispatching, loading, shipping, clearance, and landtransport. You can learn more about them<span></span>
+        We do not only provide you best selling cars but offer you our
+        affiliates&apos; portfolio where you can buy cars directly from USA and
+        have a worry-free experience from dispatching, loading, shipping,
+        clearance, and landtransport. You can learn more about them<span></span>
         <a
           href='https://pglcshipping.com'
           target='_blank'
+          rel='noreferrer'
           style={{
             textDecoration: 'none',
             paddingLeft: 3,
@@ -73,7 +81,7 @@ const contents = [
     color: (theme) => theme.palette.info.main,
     bgcolor: blue[100],
     details: `We have a CRM Department to take our customers' issues seriously and to provide a stress and hassle free experience.`,
-    link:'pglsystem.com'
+    link: 'pglsystem.com',
   },
 ];
 
@@ -111,7 +119,7 @@ export default function Home() {
           contents={contents}
         />
       </Container>
-     
+
       <Container maxWidth='xl' sx={{mt: 10}}>
         {recentlyAddedVehicles.length > 0 && (
           <SecondCustomCarousel
