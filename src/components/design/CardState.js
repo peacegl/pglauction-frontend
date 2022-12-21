@@ -40,8 +40,8 @@ const CardState = ({item}) => {
         >
           <Avatar
             sx={{
-              width: {xs: 46, lg: 54, xl: 60},
-              height: {xs: 46, lg: 54, xl: 60},
+              width: {xs: 40, lg: 50, xl: 60},
+              height: {xs: 40, lg: 50, xl: 60},
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -83,7 +83,7 @@ const CardState = ({item}) => {
                 whiteSpace: 'nowrap',
               }}
             >
-              {item.title}
+              {item.title ?? '0'}
             </Box>
           </Box>
         </Box>
