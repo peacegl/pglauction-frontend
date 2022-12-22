@@ -47,13 +47,7 @@ const InfoForm = ({initialValues}) => {
       validateOnBlur={false}
       initialValues={initialValues}
       enableReinitialize
-      validationSchema={
-        MyAccountConfigs(
-          messages['validation.invalidPhone'],
-          messages['validation.invalidWhatsapp'],
-          messages['validation.passwordMisMatch'],
-        ).validationSchema[2]
-      }
+      validationSchema={MyAccountConfigs().validationSchema[2]}
       onSubmit={async (values, actions) => {
         actions.setSubmitting(true);
         await delay(0);
@@ -115,7 +109,6 @@ const InfoForm = ({initialValues}) => {
                   name='birth_date'
                   value={values?.birth_date ? values?.birth_date : ''}
                   setfieldvalue={(name, value) => {
-                    console.log(name, value);
                     setFieldValue(
                       name,
                       value
@@ -160,7 +153,7 @@ const InfoForm = ({initialValues}) => {
                 }}
                 color='primary'
                 variant='outlined'
-                type='cancel'
+                onClick={() => rest.setValues(initialValues)}
               >
                 <IntlMessages id='common.cancel' />
               </Button>
