@@ -81,6 +81,7 @@ const Account = () => {
             initValues[key] = v ? v : userInitialValues[key];
           }
         });
+        console.log('initValues', initValues);
         setUserInitialValues(initValues);
       } else if (value == 2) {
         let initValues = infoInitialValues;
