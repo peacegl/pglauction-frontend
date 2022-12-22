@@ -7,13 +7,13 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import IconButton from '@mui/material/IconButton';
 import SaveIcon from '@mui/icons-material/Save';
 import {Fonts} from 'shared/constants/AppEnums';
+import {onUpdateAuthUser} from 'redux/actions';
+import {useDispatch} from 'react-redux';
 import {LoadingButton} from '@mui/lab';
 import {Form, Formik} from 'formik';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 import {useState} from 'react';
-import {onUpdateAuthUser} from 'redux/actions';
-import {useDispatch} from 'react-redux';
 
 const ChangePasswordForm = ({initialValues}) => {
   const [currentPasswor, setShowCurrentPassword] = useState(false);
@@ -44,11 +44,8 @@ const ChangePasswordForm = ({initialValues}) => {
       initialValues={initialValues}
       enableReinitialize
       validationSchema={
-        MyAccountConfigs(
-          messages['validation.invalidPhone'],
-          messages['validation.invalidWhatsapp'],
-          messages['validation.passwordMisMatch'],
-        ).validationSchema[1]
+        MyAccountConfigs(messages['validation.passwordMisMatch'])
+          .validationSchema[1]
       }
       onSubmit={async (values, actions) => {
         actions.setSubmitting(true);
@@ -173,7 +170,9 @@ const ChangePasswordForm = ({initialValues}) => {
                 }}
                 color='primary'
                 variant='outlined'
-                type='cancel'
+                onClick={() => {
+                  rest.resetForm();
+                }}
               >
                 <IntlMessages id='common.cancel' />
               </Button>

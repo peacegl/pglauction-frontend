@@ -15,28 +15,33 @@ import {Form, Formik} from 'formik';
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
 
-const PersonalInfoForm = ({profileUrl, initialValues}) => {
+const PersonalInfoForm = ({initialValues, profileUrl}) => {
   const {updateAuthUser} = useAuthMethod();
   const {messages} = useIntl();
   const dispatch = useDispatch();
   const {user} = useAuthUser();
+
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
   const handleSubmit = async (values) => {
+    if (values.profile == '') {
+      delete values.profile;
+    }
     const userFormData = Helper.getFormData(values);
     await dispatch(
       onUpdateAuthUser(`/auth_user`, userFormData, false, user, updateAuthUser),
     );
   };
+
   return (
     <Formik
       validateOnBlur={false}
-      initialValues={initialValues}
       enableReinitialize
+      initialValues={initialValues}
       validationSchema={
         MyAccountConfigs(
           messages['validation.invalidPhone'],
           messages['validation.invalidWhatsapp'],
-          messages['validation.passwordMisMatch'],
         ).validationSchema[0]
       }
       onSubmit={async (values, actions) => {
@@ -145,7 +150,7 @@ const PersonalInfoForm = ({profileUrl, initialValues}) => {
                 }}
                 color='primary'
                 variant='outlined'
-                type='cancel'
+                onClick={() => rest.setValues(initialValues)}
               >
                 <IntlMessages id='common.cancel' />
               </Button>

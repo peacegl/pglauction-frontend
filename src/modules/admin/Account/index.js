@@ -73,25 +73,23 @@ const Account = () => {
   };
 
   useEffect(() => {
-    if (values) {
-      if (value == 0) {
-        let initValues = userInitialValues;
-        Object.entries(values).forEach(([key, v]) => {
-          if (Object.keys(userInitialValues)?.includes(key)) {
-            initValues[key] = v ? v : userInitialValues[key];
-          }
-        });
-        console.log('initValues', initValues);
-        setUserInitialValues(initValues);
-      } else if (value == 2) {
-        let initValues = infoInitialValues;
-        Object.entries(values).forEach(([key, v]) => {
-          if (Object.keys(infoInitialValues)?.includes(key)) {
-            initValues[key] = v ? v : infoInitialValues[key];
-          }
-        });
-        setInfoInitialValues(initValues);
-      }
+    if (value == 0) {
+      let initValues = userInitialValues;
+      Object.entries(values).forEach(([key, v]) => {
+        if (Object.keys(userInitialValues)?.includes(key)) {
+          initValues[key] = v ? v : userInitialValues[key];
+        }
+      });
+      console.log('initValues', initValues);
+      setUserInitialValues(initValues);
+    } else if (value == 2) {
+      let initValues = infoInitialValues;
+      Object.entries(values).forEach(([key, v]) => {
+        if (Object.keys(infoInitialValues)?.includes(key)) {
+          initValues[key] = v ? v : infoInitialValues[key];
+        }
+      });
+      setInfoInitialValues(initValues);
     }
   }, [values, value]);
 
@@ -172,8 +170,8 @@ const Account = () => {
 
               {value === 0 && (
                 <PersonalInfoForm
-                  profileUrl={profileUrl}
                   initialValues={userInitialValues}
+                  profileUrl={profileUrl}
                 />
               )}
               {value === 1 && (
