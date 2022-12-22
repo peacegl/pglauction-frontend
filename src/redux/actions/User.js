@@ -128,7 +128,7 @@ export const onUpdateAuthUser = (
   data,
   passwordChanged = false,
   user = {},
-  updateAuthUser = null,
+  updateAuthUser,
 ) => {
   return async (dispatch) => {
     dispatch({type: FETCH_START});
@@ -155,7 +155,7 @@ export const onUpdateAuthUser = (
       }
     } catch (error) {
       if (passwordChanged) {
-        if (error.request.status == 400) {
+        if (error?.request?.status == 400) {
           dispatch({
             type: FETCH_ERROR,
             payload: messages['message.wrongPassword'],
