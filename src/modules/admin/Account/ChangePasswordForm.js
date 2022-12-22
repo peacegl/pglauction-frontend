@@ -35,7 +35,7 @@ const ChangePasswordForm = ({initialValues}) => {
   };
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const handleSubmit = async (values) => {
-    dispatch(onUpdateAuthUser(`/change_password`, values, true));
+    await dispatch(onUpdateAuthUser(`/change_password`, values, true));
   };
 
   return (
@@ -55,6 +55,7 @@ const ChangePasswordForm = ({initialValues}) => {
         await delay(0);
         await handleSubmit(values, actions);
         actions.setSubmitting(false);
+        actions.resetForm();
       }}
     >
       {({values, setFieldValue, isSubmitting, setFieldError, ...rest}) => {

@@ -23,8 +23,8 @@ const PersonalInfoForm = ({profileUrl, initialValues}) => {
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const handleSubmit = async (values) => {
     const userFormData = Helper.getFormData(values);
-    dispatch(
-      onUpdateAuthUser(`/auth_user`, userFormData, user, updateAuthUser),
+    await dispatch(
+      onUpdateAuthUser(`/auth_user`, userFormData, false, user, updateAuthUser),
     );
   };
   return (
