@@ -24,7 +24,7 @@ const PersonalInfoForm = ({profileUrl, initialValues}) => {
   const handleSubmit = async (values) => {
     const userFormData = Helper.getFormData(values);
     dispatch(
-      onUpdateAuthUser(`/auth_user/`, userFormData, user, updateAuthUser),
+      onUpdateAuthUser(`/auth_user`, userFormData, user, updateAuthUser),
     );
   };
   return (

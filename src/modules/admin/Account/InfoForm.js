@@ -38,9 +38,7 @@ const InfoForm = ({initialValues}) => {
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const handleSubmit = async (values) => {
-    dispatch(
-      onUpdateAuthUser(`/auth_user_data/`, values, user, updateAuthUser),
-    );
+    dispatch(onUpdateAuthUser(`/auth_user_data`, values, user, updateAuthUser));
   };
   return (
     <Formik
