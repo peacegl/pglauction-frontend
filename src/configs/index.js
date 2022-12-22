@@ -74,3 +74,26 @@ export function range(start, end, step) {
     (x) => start + x * step,
   );
 }
+
+export async function availableChecking(
+  url,
+  params,
+  actions,
+  onSuccess,
+  onFail,
+) {
+  try {
+    const res = await jwtAxios.get(url, {
+      params: params,
+    });
+    if (res.status === 200) {
+      onSuccess(res, actions);
+      return res.data.result;
+    }
+    onFail(actions);
+    return false;
+  } catch (error) {
+    onFail(actions);
+    return false;
+  }
+}

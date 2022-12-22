@@ -8,6 +8,7 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
 import VehicleConfigs from 'configs/pages/vehicles';
+import {getData, availableChecking} from 'configs';
 import VehicleStepThree from './VehicleStepThree';
 import CustomModal from 'components/CustomModal';
 import SellIcon from '@mui/icons-material/Sell';
@@ -18,7 +19,6 @@ import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import Helper from 'helpers/helpers';
 import PropTypes from 'prop-types';
-import {getData} from 'configs';
 
 export default function VehicleModal({
   open,
@@ -147,6 +147,48 @@ export default function VehicleModal({
     }
   }, [recordId]);
 
+  const onStepOneSuccess = (res, actions) => {
+    if (!res.data.result) {
+      if (res.data.message == 2) {
+        actions.setErrors({
+          lot_number: <IntlMessages id='validation.notUniqueLotNumber' />,
+        });
+      } else if (res.data.message == 1) {
+        actions.setErrors({
+          vin: <IntlMessages id='validation.notUniqueVin' />,
+        });
+      } else {
+        actions.setErrors({
+          vin: <IntlMessages id='validation.notUniqueVin' />,
+          lot_number: <IntlMessages id='validation.notUniqueLotNumber' />,
+        });
+      }
+    }
+  };
+  const onStepOneFail = (actions) => {
+    actions.setErrors({
+      vin: <IntlMessages id='validation.notUniqueVin' />,
+      lot_number: <IntlMessages id='validation.notUniqueLotNumber' />,
+    });
+  };
+  const stepOneValidation = async (values, actions) => {
+    const params = {
+      vin: values.vin,
+      lot_number: values.lot_number,
+      id: recordId ? recordId : null,
+    };
+    if (values.vin && values.lot_number) {
+      return availableChecking(
+        '/vehicle/valid_credential',
+        params,
+        actions,
+        onStepOneSuccess,
+        onStepOneFail,
+      );
+    }
+    return true;
+  };
+
   const stepFourValidation = (values, actions) => {
     if (!mainImage.preview) {
       setIsMainImageValid(false);
@@ -165,8 +207,10 @@ export default function VehicleModal({
   };
 
   const customValidation = async (values, actions, activeStep) => {
-    if (activeStep == 4) {
-      return await stepFourValidation(values, actions);
+    if (activeStep == 1) {
+      return await stepOneValidation(values, actions);
+    } else if (activeStep == 4) {
+      return stepFourValidation(values, actions);
     }
     return true;
   };

@@ -2,14 +2,14 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import {onInsertRole, onUpdateRole} from 'redux/actions';
 import IntlMessages from '@crema/utility/IntlMessages';
-import RoleConfigs from 'configs/pages/roles';
 import jwtAxios from '@crema/services/auth/jwt-auth';
+import {getData, availableChecking} from 'configs';
 import CustomModal from 'components/CustomModal';
+import RoleConfigs from 'configs/pages/roles';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import RoleStepOne from './RoleStepOne';
 import PropTypes from 'prop-types';
-import {getData} from 'configs';
 
 export default function RoleModal({
   open,
@@ -32,23 +32,6 @@ export default function RoleModal({
   const dispatch = useDispatch();
   const validationSchema = RoleConfigs().validationSchema;
 
-  const availableChecking = async (url, params, actions, onSuccess, onFail) => {
-    try {
-      const res = await jwtAxios.get(url, {
-        params: params,
-      });
-      if (res.status === 200) {
-        onSuccess(res, actions);
-        return res.data.result;
-      }
-      onFail(actions);
-      return false;
-    } catch (error) {
-      onFail(actions);
-      return false;
-    }
-  };
-
   const onStepOneSuccess = (res, actions) => {
     if (!res.data.result) {
       actions.setErrors({
@@ -68,13 +51,16 @@ export default function RoleModal({
       name: values.name,
       id: role ? role.id : null,
     };
-    return availableChecking(
-      'role/valid_credential',
-      params,
-      actions,
-      onStepOneSuccess,
-      onStepOneFail,
-    );
+    if (values.name) {
+      return availableChecking(
+        'role/valid_credential',
+        params,
+        actions,
+        onStepOneSuccess,
+        onStepOneFail,
+      );
+    }
+    return true;
   };
 
   const customValidation = async (values, actions, activeStep) => {
