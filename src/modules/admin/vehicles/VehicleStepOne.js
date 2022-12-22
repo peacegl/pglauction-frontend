@@ -141,67 +141,68 @@ const VehicleStepOne = (props) => {
             name='year'
             variant='outlined'
             size='small'
-            sx={{flex: 2}}
+            sx={{flex: 1}}
           />
-          <Paper
-            variant='outlined'
-            sx={{
-              borderRadius: 2,
-              flex: 2,
-              display: 'flex',
-            }}
-          >
-            <FormControlLabel
-              label={<IntlMessages id='vehicle.is_featured' />}
-              control={
-                <Checkbox
-                  size='small'
-                  name='is_featured'
-                  sx={{ml: 4}}
-                  value={props.values.is_featured}
-                  checked={props.values.is_featured}
-                  onChange={() =>
-                    props.setfieldvalue(
-                      'is_featured',
-                      props.values.is_featured ? 0 : 1,
-                    )
-                  }
-                />
-              }
-            />
-            <FormControlLabel
-              label={<IntlMessages id='vehicle.keys' />}
-              control={
-                <Checkbox
-                  size='small'
-                  name='keys'
-                  value={props.values.keys}
-                  checked={props.values.keys}
-                  onChange={() =>
-                    props.setfieldvalue('keys', props.values.keys ? 0 : 1)
-                  }
-                />
-              }
-            />
-            <FormControlLabel
-              sx={{mx: 4}}
-              label={<IntlMessages id='vehicle.test_drive' />}
-              control={
-                <Checkbox
-                  size='small'
-                  name='test_drive'
-                  value={props.values.test_drive}
-                  checked={props.values.test_drive}
-                  onChange={() =>
-                    props.setfieldvalue(
-                      'test_drive',
-                      props.values.test_drive ? 0 : 1,
-                    )
-                  }
-                />
-              }
-            />
-          </Paper>
+          <Box sx={{flex: 1}}>
+            <Paper
+              variant='outlined'
+              sx={{
+                borderRadius: 2,
+                display: 'flex',
+              }}
+            >
+              <FormControlLabel
+                label={<IntlMessages id='vehicle.is_featured' />}
+                control={
+                  <Checkbox
+                    size='small'
+                    name='is_featured'
+                    sx={{ml: 4}}
+                    value={props.values.is_featured}
+                    checked={props.values.is_featured}
+                    onChange={() =>
+                      props.setfieldvalue(
+                        'is_featured',
+                        props.values.is_featured ? 0 : 1,
+                      )
+                    }
+                  />
+                }
+              />
+              <FormControlLabel
+                label={<IntlMessages id='vehicle.keys' />}
+                control={
+                  <Checkbox
+                    size='small'
+                    name='keys'
+                    value={props.values.keys}
+                    checked={props.values.keys}
+                    onChange={() =>
+                      props.setfieldvalue('keys', props.values.keys ? 0 : 1)
+                    }
+                  />
+                }
+              />
+              <FormControlLabel
+                sx={{mx: 4}}
+                label={<IntlMessages id='vehicle.test_drive' />}
+                control={
+                  <Checkbox
+                    size='small'
+                    name='test_drive'
+                    value={props.values.test_drive}
+                    checked={props.values.test_drive}
+                    onChange={() =>
+                      props.setfieldvalue(
+                        'test_drive',
+                        props.values.test_drive ? 0 : 1,
+                      )
+                    }
+                  />
+                }
+              />
+            </Paper>
+          </Box>
         </Stack>
       </Stack>
     </Box>

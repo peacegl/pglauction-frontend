@@ -1098,5 +1098,7 @@
   "common.newPasswordPlaceholder": "Type new password",
   "message.profileUpdated": "Profile updated successfully!",
   "message.passwordChanged": "Password changed successfully",
-  "message.wrongPassword": "Current password is incorrect!"
+  "message.wrongPassword": "Current password is incorrect!",
+  "validation.notUniqueLotNumber": "This lot number is taken",
+  "validation.notUniqueVin": "This vin is taken"
 }

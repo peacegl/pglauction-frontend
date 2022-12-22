@@ -83,26 +83,7 @@ const CustomModal = ({
         }}
       >
         {isLoading && <AppLoader />}
-        {steps && (
-          <>
-            <IconButton
-              aria-label='close'
-              onClick={toggleOpen}
-              sx={{float: 'right'}}
-            >
-              <CloseIcon sx={{fontSize: 18}} />
-            </IconButton>
 
-            <Box
-              sx={{
-                py: 3,
-                borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
-              }}
-            >
-              <CustomStepper steps={steps} activeStep={activeStep} />
-            </Box>
-          </>
-        )}
         <Formik
           validateOnChange={true}
           initialValues={initialValues}
@@ -119,9 +100,38 @@ const CustomModal = ({
             actions.setSubmitting(false);
           }}
         >
-          {({values, setFieldValue, isSubmitting, setFieldError, ...rest}) => {
+          {({values, ...actions}) => {
             return (
               <Form>
+                {steps && (
+                  <>
+                    <IconButton
+                      aria-label='close'
+                      onClick={toggleOpen}
+                      sx={{float: 'right'}}
+                    >
+                      <CloseIcon sx={{fontSize: 18}} />
+                    </IconButton>
+
+                    <Box
+                      sx={{
+                        py: 3,
+                        borderBottom: (theme) =>
+                          `1px solid ${theme.palette.divider}`,
+                      }}
+                    >
+                      <CustomStepper
+                        steps={steps}
+                        activeStep={activeStep}
+                        setActiveStep={setActiveStep}
+                        customValidation={customValidation}
+                        values={values}
+                        actions={actions}
+                        validationSchema={validationSchema}
+                      />
+                    </Box>
+                  </>
+                )}
                 {steps && (
                   <Box>
                     <Box
@@ -155,8 +165,8 @@ const CustomModal = ({
                     >
                       {React.cloneElement(steps[activeStep]?.children, {
                         values: values,
-                        setfieldvalue: setFieldValue,
-                        setFieldError: setFieldError,
+                        setfieldvalue: actions.setFieldValue,
+                        setFieldError: actions.setFieldError,
                       })}
                     </Box>
                   </Box>
@@ -180,7 +190,7 @@ const CustomModal = ({
                         variant='h3'
                         sx={{
                           textAlign: 'center',
-                          py: 3,
+                          py: 4,
                           borderBottom: (theme) =>
                             `2px solid ${theme.palette.text.secondary}`,
                           borderRadius: '1px',
@@ -195,12 +205,13 @@ const CustomModal = ({
                         height: height ? height : 400,
                         overflowY: 'auto',
                         px: 3,
-                        my: 5,
+                        pt: 3,
+                        my: 3,
                       }}
                     >
                       {React.cloneElement(children, {
                         values: values,
-                        setfieldvalue: setFieldValue,
+                        setfieldvalue: actions.setFieldValue,
                       })}
                     </Box>
                   </Box>
@@ -227,14 +238,14 @@ const CustomModal = ({
                       variant='contained'
                       sx={{px: 6, mx: 3}}
                       type='submit'
-                      loading={isSubmitting}
+                      loading={actions.isSubmitting}
                     >
                       <IntlMessages id='common.next' />
                     </LoadingButton>
                   )}
                   {(activeStep === steps?.length - 1 || children) && (
                     <LoadingButton
-                      loading={isSubmitting}
+                      loading={actions.isSubmitting}
                       loadingPosition='start'
                       startIcon={<SaveIcon />}
                       variant='contained'
