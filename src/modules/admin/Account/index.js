@@ -98,7 +98,7 @@ const Account = () => {
     (async function () {
       try {
         setIsLoading(true);
-        const res = await jwtAxios.get(`/auth/`);
+        const res = await jwtAxios.get(`/auth`);
         if (res.status === 200) {
           let values = {};
           Object.entries(res.data).forEach(([key, value]) => {

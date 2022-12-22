@@ -271,7 +271,7 @@ const Signin = () => {
           </Box>
         </Box> */}
 
-        <Box
+        {/* <Box
           sx={{
             mt: {xs: 3, xl: 4},
             color: grey[700],
@@ -297,7 +297,7 @@ const Signin = () => {
           >
             <IntlMessages id='common.signup' />
           </Box>
-        </Box>
+        </Box> */}
       </Card>
     </Box>
   );
