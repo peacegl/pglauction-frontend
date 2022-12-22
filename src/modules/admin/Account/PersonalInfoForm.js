@@ -119,7 +119,9 @@ const PersonalInfoForm = ({profileUrl, initialValues}) => {
             </Box>
             <Box
               sx={{
-                mt: 5,
+                mt: 3,
+                display: 'flex',
+                flexWrap: 'wrap',
               }}
             >
               <LoadingButton
@@ -129,17 +131,17 @@ const PersonalInfoForm = ({profileUrl, initialValues}) => {
                 variant='contained'
                 type='submit'
                 sx={{
-                  position: 'relative',
                   minWidth: 100,
+                  mr: 2,
+                  mt: 2,
                 }}
               >
                 <IntlMessages id='common.saveChanges' />
               </LoadingButton>
               <Button
                 sx={{
-                  position: 'relative',
                   minWidth: 100,
-                  ml: 2.5,
+                  mt: 2,
                 }}
                 color='primary'
                 variant='outlined'
