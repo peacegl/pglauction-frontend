@@ -1,5 +1,6 @@
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import AvatarViewWrapper from '../main/AvatarViewWrapper';
+import IntlMessages from '@crema/utility/IntlMessages';
 import ImageIcon from '@mui/icons-material/Image';
 import ImageCropModal from './ImageCropModal';
 import {useDropzone} from 'react-dropzone';
@@ -7,7 +8,6 @@ import {Typography} from '@mui/material';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 import {useState, useEffect} from 'react';
-import IntlMessages from '@crema/utility/IntlMessages';
 
 const SingleImageDropzone = ({
   width,

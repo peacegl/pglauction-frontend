@@ -19,15 +19,8 @@ export const tableColumns = function () {
       },
     },
     {
-      name: 'code',
+      name: 'str_code',
       label: messages['common.code'],
-      options: {
-        customBodyRender: (value, tableMeta, updateValue) => (
-          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            U{value.toString().padStart(6, '0')}
-          </Typography>
-        ),
-      },
     },
     {
       name: 'username',
@@ -92,28 +85,28 @@ export const filterContent = [
         name: 'users.id',
         label: 'Code',
         type: 'autocomplete',
-        url: '/codes/auto_complete?model=User',
-        keyName: 'code',
+        url: '/codes/auto_complete?model=User&id=',
+        keyName: 'str_code',
       },
       {
         name: 'login.id',
         label: 'Username',
         type: 'autocomplete',
-        url: '/user/auto_complete',
+        url: '/user/auto_complete?id=',
         keyName: 'username',
       },
       {
         name: 'users.created_by',
         label: 'Created By',
         type: 'autocomplete',
-        url: '/user/auto_complete',
+        url: '/user/auto_complete?id=',
         keyName: 'username',
       },
       {
         name: 'users.updated_by',
         label: 'Updated By',
         type: 'autocomplete',
-        url: '/user/auto_complete',
+        url: '/user/auto_complete?id=',
         keyName: 'username',
       },
     ],

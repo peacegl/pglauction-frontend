@@ -49,7 +49,7 @@ export const getUserFromJwtAuth = (user) => {
       fullname: user.fullname,
       displayName: user.username,
       email: user.email,
-      whiteSpace: user.whatsapp,
+      whatsapp: user.whatsapp,
       photoURL: user.profile,
       roles: user.roles,
       permissions: user.permissions,

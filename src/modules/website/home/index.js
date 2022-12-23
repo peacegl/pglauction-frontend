@@ -26,24 +26,62 @@ const ColorButton = styled(Button)(({theme}) => ({
 const contents = [
   {
     icon: <EmojiEventsIcon sx={{fontSize: 35}} />,
-    title: <IntlMessages id='website.moreThan500Vehicle' />,
+    title: 'Leading Showroom with Variety of Cars',
     color: deepOrange[500],
     bgcolor: deepOrange[100],
-    details: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.`,
+    details: ``,
+    details: (
+      <Typography component='p'>
+        We are one of the leading showrooms in Sharjah, UAE. Having started
+        small, we are expanding quickly and providing more services to our
+        customers so they can make profits stress-free! You may check out our
+        cars<span></span>
+        <a
+          href='https://pglcshipping.com'
+          target='_blank'
+          rel='noreferrer'
+          style={{
+            textDecoration: 'none',
+            paddingLeft: 3,
+          }}
+        >
+          in here.
+        </a>
+      </Typography>
+    ),
   },
   {
     icon: <AdminPanelSettingsIcon sx={{fontSize: 35}} />,
-    title: <IntlMessages id='website.simple_fast_secure' />,
+    title: 'Comprehensive Portfolia Services',
     color: (theme) => theme.palette.success.main,
     bgcolor: green[100],
-    details: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
+    details: (
+      <Typography component='p'>
+        We do not only provide you best selling cars but offer you our
+        affiliates&apos; portfolio where you can buy cars directly from USA and
+        have a worry-free experience from dispatching, loading, shipping,
+        clearance, and landtransport. You can learn more about them<span></span>
+        <a
+          href='https://pglcshipping.com'
+          target='_blank'
+          rel='noreferrer'
+          style={{
+            textDecoration: 'none',
+            paddingLeft: 3,
+          }}
+        >
+          in here.
+        </a>
+      </Typography>
+    ),
   },
   {
     icon: <HighQualityIcon sx={{fontSize: 35}} />,
     title: <IntlMessages id='website.quality' />,
     color: (theme) => theme.palette.info.main,
     bgcolor: blue[100],
-    details: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's`,
+    details: `We have a CRM Department to take our customers' issues seriously and to provide a stress and hassle free experience.`,
+    link: 'pglsystem.com',
   },
 ];
 
@@ -81,52 +119,7 @@ export default function Home() {
           contents={contents}
         />
       </Container>
-      <Box
-        sx={{
-          my: 10,
-          py: 10,
-          px: 10,
-          backgroundColor: (theme) => theme.palette.primary.main,
-          color: (theme) => theme.palette.primary.contrastText,
-        }}
-      >
-        <Container maxWidth='xl'>
-          <Box
-            sx={{
-              mx: 6,
-              display: 'flex',
-              flexDirection: {xs: 'column', sm: 'row'},
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: {
-                  xs: '22px',
-                  sm: '24px',
-                  md: '26px',
-                  lg: '28px',
-                },
-                textTransform: 'capitalize',
-                textAlign: 'center',
-              }}
-            >
-              <IntlMessages id='website.contact_on_whatsapp' />
-            </Typography>
-            <ColorButton
-              sx={{mt: {xs: 5, sm: 'inherit'}}}
-              variant='contained'
-              size='small'
-              href={`https://wa.me/0785785785`}
-              target='_blank'
-            >
-              <WhatsAppIcon sx={{mx: 2}} />
-              0785785785
-            </ColorButton>
-          </Box>
-        </Container>
-      </Box>
+
       <Container maxWidth='xl' sx={{mt: 10}}>
         {recentlyAddedVehicles.length > 0 && (
           <SecondCustomCarousel

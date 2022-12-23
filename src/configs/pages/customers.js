@@ -20,15 +20,8 @@ export const tableColumns = function () {
       },
     },
     {
-      name: 'code',
+      name: 'str_code',
       label: 'Code',
-      options: {
-        customBodyRender: (value, tableMeta, updateValue) => (
-          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            C{value.toString().padStart(6, '0')}
-          </Typography>
-        ),
-      },
     },
     {
       name: 'username',
@@ -89,28 +82,28 @@ export const filterContent = [
         name: 'customers.id',
         label: 'Code',
         type: 'autocomplete',
-        url: '/codes/auto_complete?model=Customer',
-        keyName: 'code',
+        url: '/codes/auto_complete?model=Customer&id=',
+        keyName: 'str_code',
       },
       {
         name: 'login.id',
         label: 'Username',
         type: 'autocomplete',
-        url: '/user/auto_complete',
+        url: '/user/auto_complete?id=',
         keyName: 'username',
       },
       {
         name: 'customers.created_by',
         label: 'Created By',
         type: 'autocomplete',
-        url: '/user/auto_complete',
+        url: '/user/auto_complete?id=',
         keyName: 'username',
       },
       {
         name: 'customers.updated_by',
         label: 'Updated By',
         type: 'autocomplete',
-        url: '/user/auto_complete',
+        url: '/user/auto_complete?id=',
         keyName: 'username',
       },
     ],

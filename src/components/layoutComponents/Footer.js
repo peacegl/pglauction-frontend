@@ -1,12 +1,11 @@
+import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import {Box, Container, Link, Stack, Typography} from '@mui/material';
+import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import logoImage from '../../assets/united_logo.png';
 import {useRouter} from 'next/router';
 import {useTheme} from '@mui/styles';
 import {pages} from './AppBar';
-
-import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
-import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
-import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 
 export default function Footer() {
   const theme = useTheme();
@@ -70,11 +69,13 @@ export default function Footer() {
                   src={logoImage.src}
                 />
                 <Typography sx={{m: 4, ml: 0}} variant='body1'>
-                  Cum qui totam eligendi. Eos sed perferendis consequuntur
-                  cupiditate voluptas aut et. Deserunt neque nobis est numquam
-                  ut Cum qui totam eligendi. Eos sed perferendis consequuntur
-                  cupiditate voluptas aut et. Deserunt neque nobis est numquam
-                  ut. Cum qui totam eligendi.
+                  United Trading Company sells used cars at an affordable rate
+                  in Dubai, UAE. We have a showroom in Sharjah and an office in
+                  Dubai to provide comprehensive support and services to
+                  customers. We have different affiliates to help provide
+                  shipping, clearance, and sell cars from the USA in Dubai. We
+                  are the leading cars showroom in Dubai, UAE with various
+                  vehicles.
                 </Typography>
               </Box>
             </Box>
@@ -111,7 +112,7 @@ export default function Footer() {
                 {title('About Us')}
                 {link('About Us', '/')}
                 {title('Support')}
-                {link('Support', '/')}
+                {link('Support', '/contact-us')}
                 {link('Terms & Condations', '/terms')}
                 {link('Privacy Policy', '/policy')}
               </Box>
@@ -139,9 +140,9 @@ export default function Footer() {
                     underline='none'
                     mx='5px'
                   >
-                    AL Qusais Industrial Area Fourth Al Saoud Building
+                    Sharjah Industrial Area 2
                     <br />
-                    Room Number 804 P.O.Box: 48551, Dubai-U.A.E.
+                    Sharjah-U.A.E.
                   </Typography>
                 </Box>
                 <Box
@@ -155,11 +156,11 @@ export default function Footer() {
                     variant='body2'
                     fontSize='14px'
                     underline='none'
-                    href='tel:+976776655688'
+                    href='tel:+971565929272'
                     mx='5px'
                     color={theme.palette.text.secondary}
                   >
-                    (+97)6776655688
+                    +971 56 592 9272
                   </Link>
                 </Box>
                 <Box
@@ -172,11 +173,28 @@ export default function Footer() {
                     variant='body2'
                     fontSize='14px'
                     underline='none'
-                    href='mailto:email@example.com'
+                    href='mailto:utc@peacegl.com'
                     mx='5px'
                     color={theme.palette.text.secondary}
                   >
-                    email@example
+                    utc@peacegl.com
+                  </Link>
+                </Box>
+                <Box
+                  marginBottom='10px'
+                  display='flex'
+                  sx={{justifyContent: {xs: 'center', sm: 'flex-start'}}}
+                >
+                  <EmailOutlinedIcon />
+                  <Link
+                    variant='body2'
+                    fontSize='14px'
+                    underline='none'
+                    href='mailto:crm@peacegl.com'
+                    mx='5px'
+                    color={theme.palette.text.secondary}
+                  >
+                    crm@peacegl.com
                   </Link>
                 </Box>
               </Box>

@@ -1,10 +1,10 @@
-import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Avatar from '@mui/material/Avatar';
-import {styled} from '@mui/material/styles';
 import StepConnector, {stepConnectorClasses} from '@mui/material/StepConnector';
+import StepLabel from '@mui/material/StepLabel';
+import Stepper from '@mui/material/Stepper';
+import {styled} from '@mui/material/styles';
+import Avatar from '@mui/material/Avatar';
+import Step from '@mui/material/Step';
+import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 
 const ColorlibConnector = styled(StepConnector)(({theme}) => ({
@@ -29,6 +29,41 @@ const ColorlibConnector = styled(StepConnector)(({theme}) => ({
   },
 }));
 export default function CustomStepper(props) {
+  const handleActiveStep = async (index) => {
+    for (let i = 0; i <= index; i++) {
+      try {
+        await props.validationSchema[i].validate(props.values);
+      } catch (err) {
+        props.setActiveStep(i);
+        if (i == props.activeStep) {
+          let validationErrors = await props.actions.validateForm();
+          if (Object.keys(validationErrors).length > 0) {
+            let errors = {};
+            Object.keys(validationErrors).forEach((key) => {
+              errors[key] = true;
+            });
+            if (Object.keys(errors).length) props.actions.setTouched(errors);
+          }
+        }
+        return;
+      }
+      if (props.customValidation) {
+        const isCustomValid = await props.customValidation(
+          props.values,
+          props.actions,
+          props.activeStep + i + 1,
+        );
+        if (!isCustomValid) return;
+      }
+    }
+    let validationErrors = await props.actions.validateForm();
+    if (props.activeStep > index) {
+      props.setActiveStep(index);
+    } else if (Object.keys(validationErrors).length === 0) {
+      props.setActiveStep(index);
+    }
+  };
+
   return (
     <Stepper
       activeStep={props.activeStep}
@@ -39,9 +74,14 @@ export default function CustomStepper(props) {
       {props.steps.map((step, index) => (
         <Step key={step.id}>
           <StepLabel
+            sx={{
+              cursor: 'pointer',
+            }}
+            onClick={() => handleActiveStep(index)}
             StepIconComponent={() => (
               <Avatar
                 sx={{
+                  cursor: 'pointer',
                   bgcolor: (theme) => {
                     return props.activeStep >= index
                       ? theme.palette.primary.main
@@ -55,6 +95,7 @@ export default function CustomStepper(props) {
           >
             <Box
               sx={{
+                cursor: 'pointer',
                 color: (theme) => {
                   return props.activeStep >= index
                     ? theme.palette.primary.main
@@ -73,4 +114,9 @@ export default function CustomStepper(props) {
 CustomStepper.propTypes = {
   activeStep: PropTypes.number.isRequired,
   steps: PropTypes.array.isRequired,
+  setActiveStep: PropTypes.func.isRequired,
+  customValidation: PropTypes.func,
+  actions: PropTypes.actions,
+  values: PropTypes.values,
+  validationSchema: PropTypes.array,
 };

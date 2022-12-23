@@ -90,7 +90,10 @@ const CarouselItem = ({item}) => {
             fontWeight='bold'
           >
             {item.price ? (
-              moneyFormater(item.price)
+              moneyFormater(
+                parseInt(item.price) +
+                  parseInt((item.price * item.sale_rate ?? 15) / 100),
+              )
             ) : (
               <IntlMessages id='common.not_available' />
             )}
@@ -103,7 +106,7 @@ const CarouselItem = ({item}) => {
             {item.odometer_type}
           </Typography>
         </Box>
-        <Box sx={{display: 'flex', mt: 1}}>
+        {/* <Box sx={{display: 'flex', mt: 1}}>
           <Typography sx={{mr: 1}}>
             <IntlMessages id='common.lot' />#
           </Typography>
@@ -120,7 +123,7 @@ const CarouselItem = ({item}) => {
             <IntlMessages id='common.location' />
           </Typography>
           <Typography color='primary'>{item.location?.name}</Typography>
-        </Box>
+        </Box> */}
         <Button
           variant='contained'
           sx={{mt: 2, px: 6, borderRadius: 1}}

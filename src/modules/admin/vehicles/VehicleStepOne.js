@@ -2,7 +2,7 @@ import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteF
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {Box, Stack, Paper} from '@mui/material';
+import {Box, Stack, Paper, InputAdornment} from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
@@ -97,19 +97,22 @@ const VehicleStepOne = (props) => {
         </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppTextField
-            placeholder={messages['vehicle.yearPlaceholder']}
-            label={<IntlMessages id='common.year' />}
-            name='year'
-            variant='outlined'
-            size='small'
-            sx={{flex: 1}}
-          />
-          <AppTextField
             placeholder={messages['common.pricePlaceholder']}
             label={<IntlMessages id='common.price' />}
             name='price'
             variant='outlined'
             size='small'
+            sx={{flex: 1}}
+          />
+          <AppTextField
+            placeholder={messages['common.saleRatePlaceholder']}
+            label={<IntlMessages id='common.saleRate' />}
+            name='sale_rate'
+            variant='outlined'
+            size='small'
+            InputProps={{
+              endAdornment: <InputAdornment position='end'>%</InputAdornment>,
+            }}
             sx={{flex: 1}}
           />
         </Stack>
@@ -132,65 +135,74 @@ const VehicleStepOne = (props) => {
           />
         </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
-          <Paper
+          <AppTextField
+            placeholder={messages['vehicle.yearPlaceholder']}
+            label={<IntlMessages id='common.year' />}
+            name='year'
             variant='outlined'
-            sx={{
-              borderRadius: 1,
-              flex: 2,
-              display: 'flex',
-              pl: 4,
-            }}
-          >
-            <FormControlLabel
-              label={<IntlMessages id='vehicle.is_featured' />}
-              control={
-                <Checkbox
-                  size='small'
-                  name='is_featured'
-                  value={props.values.is_featured}
-                  checked={props.values.is_featured}
-                  onChange={() =>
-                    props.setfieldvalue(
-                      'is_featured',
-                      props.values.is_featured ? 0 : 1,
-                    )
-                  }
-                />
-              }
-            />
-            <FormControlLabel
-              label={<IntlMessages id='vehicle.keys' />}
-              control={
-                <Checkbox
-                  size='small'
-                  name='keys'
-                  value={props.values.keys}
-                  checked={props.values.keys}
-                  onChange={() =>
-                    props.setfieldvalue('keys', props.values.keys ? 0 : 1)
-                  }
-                />
-              }
-            />
-            <FormControlLabel
-              sx={{mx: 4}}
-              label={<IntlMessages id='vehicle.test_drive' />}
-              control={
-                <Checkbox
-                  size='small'
-                  name='test_drive'
-                  value={props.values.test_drive}
-                  checked={props.values.test_drive}
-                  onChange={() =>
-                    props.setfieldvalue(
-                      'test_drive',
-                      props.values.test_drive ? 0 : 1,
-                    )
-                  }
-                />
-              }
-            />
-          </Paper>
+            size='small'
+            sx={{flex: 1}}
+          />
+          <Box sx={{flex: 1}}>
+            <Paper
+              variant='outlined'
+              sx={{
+                borderRadius: 2,
+                display: 'flex',
+              }}
+            >
+              <FormControlLabel
+                label={<IntlMessages id='vehicle.is_featured' />}
+                control={
+                  <Checkbox
+                    size='small'
+                    name='is_featured'
+                    sx={{ml: 4}}
+                    value={props.values.is_featured}
+                    checked={props.values.is_featured}
+                    onChange={() =>
+                      props.setfieldvalue(
+                        'is_featured',
+                        props.values.is_featured ? 0 : 1,
+                      )
+                    }
+                  />
+                }
+              />
+              <FormControlLabel
+                label={<IntlMessages id='vehicle.keys' />}
+                control={
+                  <Checkbox
+                    size='small'
+                    name='keys'
+                    value={props.values.keys}
+                    checked={props.values.keys}
+                    onChange={() =>
+                      props.setfieldvalue('keys', props.values.keys ? 0 : 1)
+                    }
+                  />
+                }
+              />
+              <FormControlLabel
+                sx={{mx: 4}}
+                label={<IntlMessages id='vehicle.test_drive' />}
+                control={
+                  <Checkbox
+                    size='small'
+                    name='test_drive'
+                    value={props.values.test_drive}
+                    checked={props.values.test_drive}
+                    onChange={() =>
+                      props.setfieldvalue(
+                        'test_drive',
+                        props.values.test_drive ? 0 : 1,
+                      )
+                    }
+                  />
+                }
+              />
+            </Paper>
+          </Box>
         </Stack>
       </Stack>
     </Box>

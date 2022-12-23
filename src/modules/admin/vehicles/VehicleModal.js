@@ -8,6 +8,7 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
 import VehicleConfigs from 'configs/pages/vehicles';
+import {getData, availableChecking} from 'configs';
 import VehicleStepThree from './VehicleStepThree';
 import CustomModal from 'components/CustomModal';
 import SellIcon from '@mui/icons-material/Sell';
@@ -18,7 +19,6 @@ import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import Helper from 'helpers/helpers';
 import PropTypes from 'prop-types';
-import {getData} from 'configs';
 
 export default function VehicleModal({
   open,
@@ -30,6 +30,7 @@ export default function VehicleModal({
 }) {
   const [images, setImages] = useState([]);
   const [deletedImages, setDeletedImages] = useState([]);
+  const [imageOrders, setImageOrders] = useState([]);
   const [mainImage, setMainImage] = useState({});
   const [isMainImageValid, setIsMainImageValid] = useState(true);
   const [isMinImagesValid, setMinImagesValid] = useState(true);
@@ -38,10 +39,6 @@ export default function VehicleModal({
   const [locations, setLocations] = useState([]);
   const [sellerLoading, setSellerLoading] = useState(false);
   const [sellers, setSellers] = useState([]);
-  const [makesLoading, setMakesLoading] = useState(false);
-  const [makes, setMakes] = useState([]);
-  const [modelsLoading, setModelsLoading] = useState(false);
-  const [models, setModels] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     vin: '',
@@ -58,6 +55,7 @@ export default function VehicleModal({
     location_id: '',
     seller_id: '',
     price: '',
+    sale_rate: 15,
     document_type: '',
     primary_damage: '',
     odometer_type: '',
@@ -95,29 +93,11 @@ export default function VehicleModal({
       setSellers,
     );
   };
-  const searchMakes = (content, make_id = null) => {
-    getData(
-      `/make/auto_complete${make_id ? '?id=' + make_id : ''}`,
-      content,
-      setMakesLoading,
-      setMakes,
-    );
-  };
-  const searchModels = (content, model_id = null) => {
-    getData(
-      `/model/auto_complete${model_id ? '?id=' + model_id : ''}`,
-      content,
-      setModelsLoading,
-      setModels,
-    );
-  };
 
   useEffect(() => {
     if (!recordId) {
       searchLocations({});
       searchSellers({});
-      // searchModels({});
-      // searchMakes({});
     }
   }, []);
 
@@ -135,7 +115,10 @@ export default function VehicleModal({
                 if (key == 'images') {
                   value?.forEach((item) => {
                     if (item.type == 'sub_image') {
-                      oldImages.push({preview: item.path, id: item.id});
+                      oldImages.push({
+                        preview: item.path,
+                        id: item.id,
+                      });
                     } else if (item.type == 'main_image') {
                       setMainImage({preview: item.path, id: item.id});
                     }
@@ -155,8 +138,6 @@ export default function VehicleModal({
             setInitialValues(values);
             searchLocations({}, values.location_id);
             searchSellers({}, values.seller_id);
-            // searchMakes({}, values.make_id);
-            // searchModels({make_id: values.make_id}, values.model_id);
           }
           setIsLoading(false);
         } catch (error) {
@@ -165,6 +146,48 @@ export default function VehicleModal({
       })();
     }
   }, [recordId]);
+
+  const onStepOneSuccess = (res, actions) => {
+    if (!res.data.result) {
+      if (res.data.message == 2) {
+        actions.setErrors({
+          lot_number: <IntlMessages id='validation.notUniqueLotNumber' />,
+        });
+      } else if (res.data.message == 1) {
+        actions.setErrors({
+          vin: <IntlMessages id='validation.notUniqueVin' />,
+        });
+      } else {
+        actions.setErrors({
+          vin: <IntlMessages id='validation.notUniqueVin' />,
+          lot_number: <IntlMessages id='validation.notUniqueLotNumber' />,
+        });
+      }
+    }
+  };
+  const onStepOneFail = (actions) => {
+    actions.setErrors({
+      vin: <IntlMessages id='validation.notUniqueVin' />,
+      lot_number: <IntlMessages id='validation.notUniqueLotNumber' />,
+    });
+  };
+  const stepOneValidation = async (values, actions) => {
+    const params = {
+      vin: values.vin,
+      lot_number: values.lot_number,
+      id: recordId ? recordId : null,
+    };
+    if (values.vin && values.lot_number) {
+      return availableChecking(
+        '/vehicle/valid_credential',
+        params,
+        actions,
+        onStepOneSuccess,
+        onStepOneFail,
+      );
+    }
+    return true;
+  };
 
   const stepFourValidation = (values, actions) => {
     if (!mainImage.preview) {
@@ -184,14 +207,17 @@ export default function VehicleModal({
   };
 
   const customValidation = async (values, actions, activeStep) => {
-    if (activeStep == 4) {
-      return await stepFourValidation(values, actions);
+    if (activeStep == 1) {
+      return await stepOneValidation(values, actions);
+    } else if (activeStep == 4) {
+      return stepFourValidation(values, actions);
     }
     return true;
   };
 
   const onSave = (values) => {
     values.deleted_images = deletedImages;
+    values.image_orders = imageOrders;
     const vehicleFormData = Helper.getFormData(values);
     if (recordId) {
       dispatch(onUpdateVehicle(recordId, vehicleFormData, toggleOpen));
@@ -254,6 +280,8 @@ export default function VehicleModal({
           setIsMainImageValid={setIsMainImageValid}
           isMainImageValid={isMainImageValid}
           setDeletedImages={setDeletedImages}
+          imageOrders={imageOrders}
+          setImageOrders={setImageOrders}
           isEdit={edit}
         />
       ),

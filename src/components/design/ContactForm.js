@@ -43,6 +43,9 @@ const ContactForm = () => {
       );
       if (resp.status === 200 && resp.data.result) {
         setOpen('success');
+        values.name = '';
+        values.email = '';
+        values.message = '';
       } else {
         setOpen('error');
       }
@@ -51,7 +54,7 @@ const ContactForm = () => {
     }
     setTimeout(function () {
       setOpen('false');
-    }, 12000);
+    }, 10000);
     actions.setSubmitting(false);
   };
   return (
@@ -66,7 +69,7 @@ const ContactForm = () => {
         {open == 'success' && (
           <Alert severity='success'>
             <AlertTitle>Thank you for getting in touch!</AlertTitle>
-            We appreciate you contacting United Trading Cars . One of our
+            We appreciate you contacting United Trading Company . One of our
             colleagues will get back in touch with you soon!Have a great time!
           </Alert>
         )}

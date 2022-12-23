@@ -1,9 +1,7 @@
-import React from 'react';
-import {useThemeContext} from '../../../../utility/AppContextProvider/ThemeContextProvider';
+import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
+import logoImage from 'assets/united_logo.png';
 import PropTypes from 'prop-types';
-import {alpha, Box} from '@mui/material';
-import Logo from '../../../../../assets/icon/logo.svg';
-import LogoText from '../../../../../assets/icon/logo_text.svg';
+import {Box} from '@mui/material';
 
 const AppLogo = () => {
   const {theme} = useThemeContext();
@@ -24,17 +22,14 @@ const AppLogo = () => {
       }}
       className='app-logo'
     >
-      <Logo fill={theme.palette.primary.main} />
       <Box
+        component='img'
         sx={{
-          mt: 1,
-          '& svg': {
-            height: {xs: 25, sm: 30},
-          },
+          width: '130px',
         }}
-      >
-        <LogoText fill={alpha(theme.palette.text.primary, 0.8)} />
-      </Box>
+        alt='united logo'
+        src={logoImage.src}
+      />
     </Box>
   );
 };

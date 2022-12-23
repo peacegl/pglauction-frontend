@@ -20,14 +20,14 @@ const contents = [
         company which has shipped over 66,000 vehicles shipped from USA to
         worldwide. For more information, please click
         <Link
-          href='https://pglsystem.com'
+          href='https://peacegl.com'
           target='_blank'
           style={{
             textDecoration: 'none',
             paddingLeft: 3,
           }}
         >
-          here
+          here.
         </Link>
       </Typography>
     ),
@@ -48,7 +48,7 @@ const contents = [
             paddingLeft: 3,
           }}
         >
-          here
+          here.
         </Link>
       </Typography>
     ),
@@ -64,7 +64,17 @@ const contents = [
         has its own unique computer lab for customers to come and bid on cars in
         USA auctions for their convenience. The computer lab is equipped with
         computers, internet and they provide the auction account where you can
-        buy your favorite car from USA and PGL will ship it for you!
+        buy your favorite car from USA and PGL will ship it for you! You can learn more about them<span></span>
+        <Link
+          href='https://pglcshipping.com'
+          target='_blank'
+          style={{
+            textDecoration: 'none',
+            paddingLeft: 3,
+          }}
+        >
+          in here.
+        </Link>
       </Typography>
     ),
   },

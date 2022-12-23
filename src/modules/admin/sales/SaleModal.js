@@ -58,7 +58,7 @@ export default function SellModal({
   useEffect(() => {
     if (!recordId) {
       searchCustomers({});
-      searchVehicles({});
+      showVehicle && searchVehicles({});
     }
   }, []);
 

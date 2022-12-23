@@ -8,16 +8,8 @@ const {messages = []} = appIntl() ? appIntl() : {};
 export const tableColumns = function () {
   return [
     {
-      name: 'code',
+      name: 'str_code',
       label: messages['common.code'],
-      options: {
-        filter: false,
-        customBodyRender: (value, tableMeta, updateValue) => (
-          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            SA{value.toString().padStart(6, '0')}
-          </Typography>
-        ),
-      },
     },
     {
       name: 'vin',
@@ -70,21 +62,21 @@ export const filterContent = [
         name: 'sales.id',
         label: 'Code',
         type: 'autocomplete',
-        url: '/codes/auto_complete?model=Sale',
-        keyName: 'code',
+        url: '/codes/auto_complete?model=Sale&id=',
+        keyName: 'str_code',
       },
       {
-        name: 'sales.id',
+        name: 'sales.vehicle_id',
         label: 'Lot Number',
         type: 'autocomplete',
-        url: '/vehicle_lots/auto_complete',
+        url: '/vehicle_lots/auto_complete?status=sold&id=',
         keyName: 'lot_number',
       },
       {
-        name: 'sales.id',
+        name: 'sales.vehicle_id',
         label: 'Vin',
         type: 'autocomplete',
-        url: '/vehicle_vins/auto_complete',
+        url: '/vehicle_vins/auto_complete?status=sold&id=',
         keyName: 'vin',
       },
       {

@@ -123,3 +123,49 @@ export const onDeleteUsers = (data) => {
     }
   };
 };
+export const onUpdateAuthUser = (
+  url,
+  data,
+  passwordChanged = false,
+  user = {},
+  updateAuthUser,
+) => {
+  return async (dispatch) => {
+    dispatch({type: FETCH_START});
+    const {messages} = appIntl();
+    try {
+      const res = await jwtAxios.post(url, data);
+      if (res.status === 202 && res.data.result) {
+        dispatch({type: FETCH_SUCCESS});
+        if (updateAuthUser) updateAuthUser({...user, ...res.data.data});
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload:
+            messages[
+              passwordChanged
+                ? 'message.passwordChanged'
+                : 'message.profileUpdated'
+            ],
+        });
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: messages['message.somethingWentWrong'],
+        });
+      }
+    } catch (error) {
+      if (passwordChanged) {
+        if (error?.request?.status == 400) {
+          dispatch({
+            type: FETCH_ERROR,
+            payload: messages['message.wrongPassword'],
+          });
+        } else {
+          dispatch({type: FETCH_ERROR, payload: error.message});
+        }
+      } else {
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
+    }
+  };
+};

@@ -18,6 +18,7 @@ import {pages} from './AppBar';
 import FacebookIcon from '../../assets/icon/facebook.svg';
 import WhatsAppIcon from '../../assets/icon/whatsapp.svg';
 import InstagramIcon from '../../assets/icon/instagram.svg';
+import TiktokIcon from '../../assets/icon/tiktok.png';
 import VehicleSearchBar from './VehicleSearchBar';
 import {useDispatch, useSelector} from 'react-redux';
 import {setVehicleSearch} from '../../redux/actions';
@@ -91,8 +92,8 @@ function Header() {
           <Box
             onClick={() => router.push('/home')}
             sx={{
-                '&:hover': {cursor: 'pointer'},
-                color: (theme) => theme.palette.text.primary
+              '&:hover': {cursor: 'pointer'},
+              color: (theme) => theme.palette.text.primary,
             }}
             fontWeight='bold'
             fontSize='18px'
@@ -115,7 +116,7 @@ function Header() {
                 fontWeight: 'bold',
               }}
             >
-              United Trading Cars
+              United Trading Company
             </Typography>
           </Box>
 
@@ -138,23 +139,50 @@ function Header() {
               variant='body2'
               fontSize='14px'
               underline='none'
-              href='https://www.facebook.com/TowingLoadingShipping'
-              mx='5px'
-              color={(theme)=>theme.palette.text.secondary}
+              href='https://www.tiktok.com/@united.used.car.llc'
+              mx='2px'
+              color={(theme) => theme.palette.text.secondary}
               target='_blank'
             >
-              <FacebookIcon width='30' />
+              <Box
+                component='img'
+                mt='2px'
+                width='26px'
+                src={TiktokIcon.src}
+              ></Box>
             </Link>
             <Link
               variant='body2'
               fontSize='14px'
               underline='none'
-              href='https://wa.me/+937669086'
-              mx='5px'
-              color={(theme)=>theme.palette.text.secondary}
+              href='https://www.facebook.com/profile.php?id=100087054543656'
+              mx='2px'
+              color={(theme) => theme.palette.text.secondary}
               target='_blank'
             >
-              <WhatsAppIcon width='30' />
+              <FacebookIcon width='30px' />
+            </Link>
+            <Link
+              variant='body2'
+              fontSize='14px'
+              underline='none'
+              href='https://www.instagram.com/utc_dubai'
+              mx='2px'
+              color={theme.palette.text.secondary}
+              target='_blank'
+            >
+              <InstagramIcon width='30px' />
+            </Link>
+            <Link
+              variant='body2'
+              fontSize='14px'
+              underline='none'
+              href='https://wa.me/+19122395061'
+              mx='2px'
+              color={(theme) => theme.palette.text.secondary}
+              target='_blank'
+            >
+              <WhatsAppIcon width='30px' />
             </Link>
           </Box>
           <Box

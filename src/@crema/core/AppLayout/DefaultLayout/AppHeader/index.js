@@ -80,7 +80,7 @@ const AppHeader = () => {
         <AppLngSwitcher iconOnly={true} tooltipPosition='bottom' />
 
         <Box sx={{ml: 4}}>
-          <Hidden smDown>
+          {/* <Hidden smDown>
             <Box
               sx={{
                 position: 'relative',
@@ -105,9 +105,9 @@ const AppHeader = () => {
                 <AppMessages />
               </Box>
             </Box>
-          </Hidden>
+          </Hidden> */}
 
-          <Hidden smUp>
+          {/* <Hidden smUp>
             <Box
               sx={{
                 position: 'relative',
@@ -149,7 +149,7 @@ const AppHeader = () => {
                 </AppTooltip>
               </Box>
             </Box>
-          </Hidden>
+          </Hidden> */}
           <Menu
             id='simple-menu'
             anchorEl={anchorEl}

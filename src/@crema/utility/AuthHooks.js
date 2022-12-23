@@ -15,12 +15,13 @@ export const useAuthUser = () => {
 };
 
 export const useAuthMethod = () => {
-  const {signInUser, signUpUser, logout} = useJWTAuthActions();
+  const {signInUser, signUpUser, logout, updateAuthUser} = useJWTAuthActions();
 
   return {
     signInUser,
     logout,
     signUpUser,
+    updateAuthUser,
   };
 };
 // For Firebase Auth

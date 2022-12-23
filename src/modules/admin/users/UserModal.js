@@ -2,19 +2,19 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {onInsertUser, onUpdateUser} from 'redux/actions';
 import IntlMessages from '@crema/utility/IntlMessages';
-import UserConfigs from '../../../configs/pages/users';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
 import PersonIcon from '@mui/icons-material/Person';
+import {getData, availableChecking} from 'configs';
 import {useEffect, useState, useRef} from 'react';
-import CustomModal from '../../../components/CustomModal';
+import CustomModal from 'components/CustomModal';
+import UserConfigs from 'configs/pages/users';
 import UserStepThree from './UserStepThree';
 import {useDispatch} from 'react-redux';
 import UserStepOne from './UserStepOne';
 import UserStepTwo from './UserStepTwo';
 import PropTypes from 'prop-types';
 import Helper from 'helpers/helpers';
-import {getData} from '../../../configs';
 
 export default function UserModal({
   open,
@@ -60,22 +60,6 @@ export default function UserModal({
     edit,
   ).validationSchema;
 
-  const availableChecking = async (url, params, actions, onSuccess, onFail) => {
-    try {
-      const res = await jwtAxios.get(url, {
-        params: params,
-      });
-      if (res.status === 200) {
-        onSuccess(res, actions);
-        return res.data.result;
-      }
-      onFail(actions);
-      return false;
-    } catch (error) {
-      onFail(actions);
-      return false;
-    }
-  };
   const onStepOneSuccess = (res, actions) => {
     if (!res.data.result) {
       if (res.data.message == 2) {
@@ -106,13 +90,16 @@ export default function UserModal({
       phone: values.phone,
       id: user?.login?.id ? user?.id : null,
     };
-    return availableChecking(
-      'user/valid_credential',
-      params,
-      actions,
-      onStepOneSuccess,
-      onStepOneFail,
-    );
+    if (values.whatsapp && values.phone) {
+      return availableChecking(
+        'user/valid_credential',
+        params,
+        actions,
+        onStepOneSuccess,
+        onStepOneFail,
+      );
+    }
+    return true;
   };
   const onStepTwoSuccess = (res, actions) => {
     if (!res.data.result) {
@@ -145,19 +132,21 @@ export default function UserModal({
       email: values.email,
       id: user?.login?.id ? user?.login?.id : null,
     };
-    return availableChecking(
-      'loginables/valid_credential',
-      params,
-      actions,
-      onStepTwoSuccess,
-      onStepTwoFail,
-    );
+    if (values.username && values.email) {
+      return availableChecking(
+        'loginables/valid_credential',
+        params,
+        actions,
+        onStepTwoSuccess,
+        onStepTwoFail,
+      );
+    }
+    return true;
   };
   const customValidation = async (values, actions, activeStep) => {
     if (activeStep == 1) {
       return await stepOneValidation(values, actions);
-    }
-    if (activeStep == 2) {
+    } else if (activeStep == 2) {
       return await stepTwoValidation(values, actions);
     }
     return true;
