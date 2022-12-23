@@ -27,9 +27,8 @@ export default function LotInfo() {
       typeof window !== 'undefined' && window.location.origin
         ? window.location.origin
         : '';
-    setAddressUrl(origin + router.asPath);
+    setAddressUrl(origin + router.asPath + `/${item.id}`);
   }, []);
-
   return (
     <Card sx={{borderRadius: 1, boxShadow: 1, m: 0}}>
       <CardHeader
@@ -71,7 +70,7 @@ export default function LotInfo() {
           variant='outlined'
           size='large'
           sx={{mt: 4, width: '100%', borderRadius: 20}}
-          href={`https://wa.me/93749740202?text=${addressUrl}`}
+          href={`https://wa.me/${vehicle.seller?.loginable?.whatsapp}&text=${addressUrl}`}
           target='_blank'
         >
           <WhatsAppIcon />
