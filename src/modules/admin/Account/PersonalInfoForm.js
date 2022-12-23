@@ -24,9 +24,6 @@ const PersonalInfoForm = ({initialValues, profileUrl}) => {
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const handleSubmit = async (values) => {
-    if (values.profile == '') {
-      delete values.profile;
-    }
     const userFormData = Helper.getFormData(values);
     await dispatch(
       onUpdateAuthUser(`/auth_user`, userFormData, false, user, updateAuthUser),
