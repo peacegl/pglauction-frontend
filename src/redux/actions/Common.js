@@ -36,7 +36,6 @@ export const onToggleAppDrawer = () => {
 export const hideMessage = () => {
   return (dispatch) => dispatch({type: HIDE_MESSAGE});
 };
-
 export const getAdminCounts = () => {
   return async (dispatch) => {
     const {messages} = appIntl();

@@ -153,7 +153,7 @@ AppAutoComplete.propTypes = {
   disabled: PropTypes.bool,
   multiple: PropTypes.bool,
   dataLoading: PropTypes.bool,
-  helperText: PropTypes.string,
+  helperText: PropTypes.any,
   inputValue: PropTypes.string,
   error: PropTypes.bool,
   disabledId: PropTypes.bool,

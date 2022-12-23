@@ -1,13 +1,13 @@
 import {onSaleVehicle, onAddSale, onUpdateSale} from 'redux/actions';
-import CustomModal from '../../../components/CustomModal';
 import IntlMessages from '@crema/utility/IntlMessages';
-import SaleConfigs from '../../../configs/pages/sales';
 import jwtAxios from '@crema/services/auth/jwt-auth';
+import CustomModal from 'components/CustomModal';
+import SaleConfigs from 'configs/pages/sales';
 import {useState, useEffect} from 'react';
-import {getData} from '../../../configs';
 import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import SaleForm from './SaleForm';
+import {getData} from 'configs';
 
 export default function SellModal({
   open,
