@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import List from '@mui/material/List';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import {
@@ -15,10 +15,20 @@ import {useSelector} from 'react-redux';
 import Item from './Item';
 import {moneyFormater} from 'configs';
 import IntlMessages from '@crema/utility/IntlMessages';
+import {useRouter} from 'next/router';
 
 export default function LotInfo() {
   const theme = useTheme();
   const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
+  const router = useRouter();
+  const [addressUrl, setAddressUrl] = useState('');
+  useEffect(() => {
+    const origin =
+      typeof window !== 'undefined' && window.location.origin
+        ? window.location.origin
+        : '';
+    setAddressUrl(origin + router.asPath);
+  }, []);
 
   return (
     <Card sx={{borderRadius: 1, boxShadow: 1, m: 0}}>
@@ -45,13 +55,13 @@ export default function LotInfo() {
             label={<IntlMessages id='vehicle.location' />}
             value={vehicle.location?.name}
           />
-          <Item
+          {/* <Item
             label={<IntlMessages id='vehicle.price' />}
             value={moneyFormater(
               parseInt(vehicle.price) +
                 parseInt((vehicle.price * vehicle.sale_rate ?? 15) / 100),
             )}
-          />
+          /> */}
           <Item
             label={<IntlMessages id='common.last_updated' />}
             value={vehicle.updated_at}
@@ -61,7 +71,7 @@ export default function LotInfo() {
           variant='outlined'
           size='large'
           sx={{mt: 4, width: '100%', borderRadius: 20}}
-          href={`https://wa.me/${vehicle.seller?.loginable?.whatsapp}`}
+          href={`https://wa.me/93749740202?text=${addressUrl}`}
           target='_blank'
         >
           <WhatsAppIcon />

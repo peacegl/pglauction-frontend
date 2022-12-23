@@ -44,7 +44,7 @@ function HorizontalItem(props) {
     <Link href={item.url} as={item.as} legacyBehavior>
       <ListItem
         className={clsx('navItemSubmenu', dense && 'dense', {
-          active: item.url === props.router.pathname,
+          active: item.url === props.router.basePath,
         })}
         exact={item.exact}
         sx={{

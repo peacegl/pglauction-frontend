@@ -10,7 +10,7 @@ import {moneyFormater} from 'configs';
 import {useRouter} from 'next/router';
 import IntlMessages from '@crema/utility/IntlMessages';
 import SoldIcon from '../../../../../assets/icon/sold.png';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import DefaultCarImage from 'assets/default_car_image.png';
 
 const TextShow = ({value, label, extra = ''}) => {
@@ -32,7 +32,7 @@ const WhatsAppButton = (props) => {
       size='small'
       sx={{mt: 2, px: {xs: 2, md: 4}}}
       p='0px'
-      href={`https://wa.me/${props.number}`}
+      href={`https://wa.me/${props.number}?text=${props.url}`}
       target='_blank'
     >
       <WhatsAppIcon />
@@ -44,6 +44,14 @@ export default function ListItem({item, ...props}) {
   const router = useRouter();
   const theme = useTheme();
   const [hoverImage, setHoverImage] = useState(false);
+  const [addressUrl, setAddressUrl] = useState('');
+  useEffect(() => {
+    const origin =
+      typeof window !== 'undefined' && window.location.origin
+        ? window.location.origin
+        : '';
+    setAddressUrl(origin + router.asPath + `/${item.id}`);
+  }, []);
 
   const viewPage = () => {
     router.push(`/all-vehicles/${item.id}`);
@@ -161,7 +169,7 @@ export default function ListItem({item, ...props}) {
                     label={item.status}
                     size='small'
                   />
-                  <Typography
+                  {/* <Typography
                     component='div'
                     color={theme.palette.primary.main}
                     overflow='hidden'
@@ -173,7 +181,7 @@ export default function ListItem({item, ...props}) {
                       parseInt(item.price) +
                         parseInt((item.price * item.sale_rate ?? 15) / 100),
                     )}
-                  </Typography>
+                  </Typography> */}
                   <Typography
                     component='div'
                     color={theme.palette.primary.main}
@@ -227,7 +235,10 @@ export default function ListItem({item, ...props}) {
                     display: {xs: 'inline', sm: 'none'},
                   }}
                 >
-                  <WhatsAppButton number={item.seller?.loginable?.whatsapp} />
+                  <WhatsAppButton
+                    number={item.seller?.loginable?.whatsapp}
+                    url={addressUrl}
+                  />
                 </Box>
               </Box>
               <Box sx={{flex: 1.5, display: {xs: 'none', lg: 'block'}, px: 3}}>
@@ -259,7 +270,7 @@ export default function ListItem({item, ...props}) {
                 />
               </Box>
               <Box sx={{flex: 1, display: {xs: 'none', sm: 'block'}, px: 2}}>
-                <Typography
+                {/* <Typography
                   component='div'
                   color={theme.palette.primary.main}
                   overflow='hidden'
@@ -271,8 +282,11 @@ export default function ListItem({item, ...props}) {
                     parseInt(item.price) +
                       parseInt((item.price * item.sale_rate ?? 15) / 100),
                   )}
-                </Typography>
-                <WhatsAppButton number={item.seller?.loginable?.whatsapp} />
+                </Typography> */}
+                <WhatsAppButton
+                  number={item.seller?.loginable?.whatsapp}
+                  url={addressUrl}
+                />
               </Box>
               {/* <Divider orientation='vertical' flexItem /> */}
             </Stack>
@@ -293,4 +307,5 @@ TextShow.propTypes = {
 };
 WhatsAppButton.propTypes = {
   number: PropTypes.string,
+  url: PropTypes.string,
 };

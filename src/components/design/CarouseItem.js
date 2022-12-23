@@ -1,3 +1,11 @@
+import DefaultCarImage from 'assets/default_car_image.png';
+import IntlMessages from '@crema/utility/IntlMessages';
+import SoldIcon from '../../assets/icon/sold.png';
+import AppTooltip from '@crema/core/AppTooltip';
+import {useRouter} from 'next/router';
+import {moneyFormater} from 'configs';
+import PropTypes from 'prop-types';
+import {useState} from 'react';
 import {
   Card,
   CardContent,
@@ -7,14 +15,6 @@ import {
   Button,
   useTheme,
 } from '@mui/material';
-import IntlMessages from '@crema/utility/IntlMessages';
-import PropTypes from 'prop-types';
-import {useRouter} from 'next/router';
-import AppTooltip from '@crema/core/AppTooltip';
-import {moneyFormater} from 'configs';
-import SoldIcon from '../../assets/icon/sold.png';
-import {useState} from 'react';
-import DefaultCarImage from 'assets/default_car_image.png';
 
 const CarouselItem = ({item}) => {
   const router = useRouter();
@@ -83,7 +83,7 @@ const CarouselItem = ({item}) => {
           </Typography>
         </AppTooltip>
         <Box sx={{display: 'flex', mt: 1, justifyContent: 'space-between'}}>
-          <Typography
+          {/* <Typography
             component='div'
             color={theme.palette.primary.main}
             overflow='hidden'
@@ -97,7 +97,7 @@ const CarouselItem = ({item}) => {
             ) : (
               <IntlMessages id='common.not_available' />
             )}
-          </Typography>
+          </Typography> */}
           <Typography
             component='div'
             color={theme.palette.primary.main}
