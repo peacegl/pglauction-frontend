@@ -27,7 +27,7 @@ export default function LotInfo() {
       typeof window !== 'undefined' && window.location.origin
         ? window.location.origin
         : '';
-    setAddressUrl(origin + router.asPath + `/${item.id}`);
+    setAddressUrl(origin + router.asPath);
   }, []);
   return (
     <Card sx={{borderRadius: 1, boxShadow: 1, m: 0}}>
