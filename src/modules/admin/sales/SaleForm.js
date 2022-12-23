@@ -72,7 +72,7 @@ const SaleForm = (props) => {
           <AppDateField
             label={<IntlMessages id='sale.saleDate' />}
             value={props.values?.sale_date}
-            setfieldvalue={(name, value) =>
+            setfieldvalue={(name, value) => {
               props.setfieldvalue(
                 name,
                 value
@@ -82,8 +82,8 @@ const SaleForm = (props) => {
                       '/' +
                       value.getDate()
                   : '',
-              )
-            }
+              );
+            }}
             name='sale_date'
             size='small'
             sx={{flex: 1}}

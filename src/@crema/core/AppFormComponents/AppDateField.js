@@ -2,6 +2,8 @@ import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
 import PropTypes from 'prop-types';
 import {useField} from 'formik';
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 
 const AppDateField = (props) => {
   const [field, meta] = useField(props);
@@ -18,7 +20,6 @@ const AppDateField = (props) => {
           <TextField
             {...params}
             {...props}
-            {...field}
             helperText={errorText}
             error={!!errorText}
           />
@@ -33,6 +34,6 @@ export default AppDateField;
 AppDateField.propTypes = {
   className: PropTypes.string,
   name: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.any,
   setfieldvalue: PropTypes.any,
 };

@@ -142,7 +142,10 @@ export default function VehicleList({user}) {
       {openModal && (
         <VehicleModal
           open={openModal}
-          toggleOpen={() => setOpenModal((d) => !d)}
+          toggleOpen={() => {
+            setOpenModal((d) => !d);
+            setSelected([]);
+          }}
           recordId={recordId}
           edit={recordId ? true : false}
         />
@@ -150,7 +153,10 @@ export default function VehicleList({user}) {
       {showSaleModal && (
         <SaleModal
           open={showSaleModal}
-          toggleOpen={() => setShowSaleModal((d) => !d)}
+          toggleOpen={() => {
+            setShowSaleModal((d) => !d);
+            setSelected([]);
+          }}
           selectedItem={selectedItems[0]}
         />
       )}
