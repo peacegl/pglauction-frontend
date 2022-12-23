@@ -10,7 +10,7 @@ import Card from '@mui/material/Card';
 import {useRouter} from 'next/router';
 import {moneyFormater} from 'configs';
 import PropTypes from 'prop-types';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import DefaultCarImage from 'assets/default_car_image.png';
 
 export default function GridItem({item, ...props}) {
@@ -22,6 +22,14 @@ export default function GridItem({item, ...props}) {
   // useLayoutEffect(() => {
   //   setHeight((cardRef.current?.clientWidth / 4) * 3 + 'px');
   // });
+  const [addressUrl, setAddressUrl] = useState('');
+  useEffect(() => {
+    const origin =
+      typeof window !== 'undefined' && window.location.origin
+        ? window.location.origin
+        : '';
+    setAddressUrl(origin + router.asPath + `/${item.id}`);
+  }, []);
 
   return (
     <Card sx={{borderRadius: 1}}>
@@ -82,12 +90,12 @@ export default function GridItem({item, ...props}) {
         </Box>
         <Divider sx={{mb: 2}} />
         <Box display='flex' justifyContent='space-between'>
-          <Typography color={theme.palette.primary.main} fontWeight='bold'>
+          {/* <Typography color={theme.palette.primary.main} fontWeight='bold'>
             {moneyFormater(
               parseInt(item.price) +
                 parseInt((item.price * item.sale_rate ?? 15) / 100),
             )}
-          </Typography>
+          </Typography> */}
           <Typography color={theme.palette.primary.main}>
             {item.odometer_type}
           </Typography>
@@ -149,11 +157,18 @@ export default function GridItem({item, ...props}) {
             variant='contained'
             size='small'
             sx={{mt: 2, width: '100%'}}
-            href={`https://wa.me/${item.seller?.loginable?.whatsapp}`}
+            href={`https://wa.me/${item.seller?.loginable?.whatsapp}?text=${addressUrl}`}
             target='_blank'
           >
-            <WhatsAppIcon sx={{mx: 1}} />
-            {item.seller?.loginable?.whatsapp}
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <WhatsAppIcon sx={{mx: 1}} />
+              <Box>{item.seller?.loginable?.whatsapp}</Box>
+            </Box>
           </Button>
         </Box>
       </CardContent>

@@ -9,7 +9,6 @@ import Card from '@mui/material/Card';
 import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-
 export default function AuctionGridItem(props) {
   const router = useRouter();
 
