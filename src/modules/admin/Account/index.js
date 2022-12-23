@@ -74,14 +74,7 @@ const Account = () => {
 
   useEffect(() => {
     if (value == 0) {
-      let initValues = userInitialValues;
-      Object.entries(values).forEach(([key, v]) => {
-        if (Object.keys(userInitialValues)?.includes(key)) {
-          initValues[key] = v ? v : userInitialValues[key];
-        }
-      });
-      delete initValues.profile;
-      setUserInitialValues(initValues);
+      personalInfoDataSetter();
     } else if (value == 2) {
       let initValues = infoInitialValues;
       Object.entries(values).forEach(([key, v]) => {
@@ -92,6 +85,17 @@ const Account = () => {
       setInfoInitialValues(initValues);
     }
   }, [values, value]);
+
+  const personalInfoDataSetter = () => {
+    let initValues = userInitialValues;
+    Object.entries(values).forEach(([key, v]) => {
+      if (Object.keys(userInitialValues)?.includes(key)) {
+        initValues[key] = v ? v : userInitialValues[key];
+      }
+    });
+    delete initValues.profile;
+    setUserInitialValues(initValues);
+  };
 
   useEffect(() => {
     (async function () {
@@ -110,6 +114,7 @@ const Account = () => {
             }
           });
           setValues(values);
+          personalInfoDataSetter();
         }
         setIsLoading(false);
       } catch (error) {
