@@ -3,7 +3,7 @@ import {useTheme} from '@mui/styles';
 import {useSelector} from 'react-redux';
 import IntlMessages from '@crema/utility/IntlMessages';
 
-function Head({}) {
+function Header({}) {
   const theme = useTheme();
   const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
 
@@ -64,4 +64,4 @@ function Head({}) {
   );
 }
 
-export default Head;
+export default Header;

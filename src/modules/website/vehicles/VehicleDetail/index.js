@@ -1,18 +1,18 @@
 import {onGetWebSimilarVehicle, onGetWebVehicleView} from 'redux/actions';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+import ImageCarousel from 'components/design/ImageCarousel';
 import CustomCarousel from 'components/CustomCarousel';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import Error404 from 'modules/errorPages/Error404';
 import {Box, Container} from '@mui/material';
-import ImageCarousel from '../../../../components/design/ImageCarousel';
 import {useRouter} from 'next/router';
 import SaleInfo from './SaleInfo';
 import {useEffect} from 'react';
 import LotInfo from './LotInfo';
-import Head from './Head';
+import Header from './Header';
 
-const VehicleDetail = (props) => {
+const VehicleDetail = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const {id} = router.query;
@@ -34,7 +34,7 @@ const VehicleDetail = (props) => {
         <Box maxWidth='xl' sx={{height: '600px'}}></Box>
       ) : vehicle.id ? (
         <>
-          <Head />
+          <Header />
           <Container maxWidth='xl' sx={{mt: 6}}>
             <Box
               sx={{
