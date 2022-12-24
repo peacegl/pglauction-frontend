@@ -21,7 +21,7 @@ export default function LotInfo() {
   const theme = useTheme();
   const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
   const router = useRouter();
-  const [addressUrl, setAddressUrl] = useState('');
+  // const [addressUrl, setAddressUrl] = useState('');
   // useEffect(() => {
   //   const origin =
   //     typeof window !== 'undefined' && window.location.origin
