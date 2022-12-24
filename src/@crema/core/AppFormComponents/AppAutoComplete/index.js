@@ -1,9 +1,9 @@
-import React from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 import {Autocomplete} from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
 import PropTypes from 'prop-types';
 import {Chip} from '@mui/material';
+import React from 'react';
 
 export default function AppAutoComplete({
   options = [],
