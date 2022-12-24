@@ -35,7 +35,7 @@ const Signin = () => {
   const history = useRouter();
   const {signInUser} = useAuthMethod();
   const onGoToForgetPassword = () => {
-    history.push('/forget-password', {tab: 'jwtAuth'});
+    history.push('/forget-password');
   };
   const {messages} = useIntl();
   const [showPassword, setShowPassword] = useState(false);

@@ -11,6 +11,7 @@ import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import {Fonts} from '../../../shared/constants/AppEnums';
 import AuthWrapper from '../AuthWrapper';
 import AppLogo from '../../../@crema/core/AppLayout/components/AppLogo';
+import jwtAxios from '@crema/services/auth/jwt-auth';
 
 const validationSchema = yup.object({
   email: yup
@@ -58,9 +59,10 @@ const ForgetPasswordJwtAuth = () => {
                 email: '',
               }}
               validationSchema={validationSchema}
-              onSubmit={(data, {setSubmitting, resetForm}) => {
+              onSubmit={async (data, {setSubmitting, resetForm}) => {
                 setSubmitting(true);
                 //reset password api goes here
+                const resp = await jwtAxios.post('/forget_password', {...data});
                 setSubmitting(false);
                 resetForm();
               }}
