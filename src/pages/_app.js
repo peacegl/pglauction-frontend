@@ -25,27 +25,27 @@ export default function MyApp(props) {
   const store = useStore(pageProps.initialReduxState);
 
   return (
-    <EchoProvider>
-      <CacheProvider value={emotionCache}>
-        <AppContextProvider>
-          <Provider store={store}>
-            <AppThemeProvider>
-              <AppStyleProvider>
-                <AppLocaleProvider>
-                  <JWTAuthProvider>
-                    <AuthRoutes>
-                      <CssBaseline />
-                      <AppPageMeta />
-                      <Component {...pageProps} />
-                    </AuthRoutes>
-                  </JWTAuthProvider>
-                </AppLocaleProvider>
-              </AppStyleProvider>
-            </AppThemeProvider>
-          </Provider>
-        </AppContextProvider>
-      </CacheProvider>
-    </EchoProvider>
+    // <EchoProvider>
+    <CacheProvider value={emotionCache}>
+      <AppContextProvider>
+        <Provider store={store}>
+          <AppThemeProvider>
+            <AppStyleProvider>
+              <AppLocaleProvider>
+                <JWTAuthProvider>
+                  <AuthRoutes>
+                    <CssBaseline />
+                    <AppPageMeta />
+                    <Component {...pageProps} />
+                  </AuthRoutes>
+                </JWTAuthProvider>
+              </AppLocaleProvider>
+            </AppStyleProvider>
+          </AppThemeProvider>
+        </Provider>
+      </AppContextProvider>
+    </CacheProvider>
+    // </EchoProvider>
   );
 }
 
