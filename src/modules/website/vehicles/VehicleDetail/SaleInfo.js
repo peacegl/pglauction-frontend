@@ -70,7 +70,7 @@ export default function LotInfo() {
           variant='outlined'
           size='large'
           sx={{mt: 4, width: '100%', borderRadius: 20}}
-          href={`https://wa.me/${vehicle.seller?.loginable?.whatsapp}?text=${window.location.origin}${router.asPath}/${vehicle.id}`}
+          href={`https://wa.me/${vehicle.seller?.loginable?.whatsapp}?text=${window.location.origin}/all-vehicles/${vehicle.id}`}
           target='_blank'
         >
           <WhatsAppIcon />

@@ -226,7 +226,7 @@ export default function ListItem({item, ...props}) {
                 >
                   <WhatsAppButton
                     number={item.seller?.loginable?.whatsapp}
-                    url={window.location.origin + router.asPath + '/' + item.id}
+                    url={window.location.origin + '/all-vehicles/' + item.id}
                   />
                 </Box>
               </Box>
@@ -274,7 +274,7 @@ export default function ListItem({item, ...props}) {
                 </Typography> */}
                 <WhatsAppButton
                   number={item.seller?.loginable?.whatsapp}
-                  url={window.location.origin + router.asPath + '/' + item.id}
+                  url={window.location.origin + '/all-vehicles/' + item.id}
                 />
               </Box>
               {/* <Divider orientation='vertical' flexItem /> */}
