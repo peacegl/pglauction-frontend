@@ -10,7 +10,8 @@ import {useRouter} from 'next/router';
 import SaleInfo from './SaleInfo';
 import {useEffect} from 'react';
 import LotInfo from './LotInfo';
-import Head from './Head';
+import Header from './Header';
+import Head from 'next/head';
 
 const VehicleDetail = (props) => {
   const router = useRouter();
@@ -30,11 +31,26 @@ const VehicleDetail = (props) => {
 
   return (
     <>
+      <Head>
+        <meta
+          property='og:title'
+          content={`${vehicle.year} ${vehicle?.make} ${vehicle.model}`}
+        />
+        <meta
+          property='og:url'
+          content={`https://www.unitedtradingcars.com/all-vehicles/${vehicle.id}`}
+        />
+        <meta property='og:description' content='United Trading Company' />
+        <meta
+          property='og:image'
+          content={vehicle?.images && vehicle?.images[0]?.path}
+        />
+      </Head>
       {loading ? (
         <Box maxWidth='xl' sx={{height: '600px'}}></Box>
       ) : vehicle.id ? (
         <>
-          <Head />
+          <Header />
           <Container maxWidth='xl' sx={{mt: 6}}>
             <Box
               sx={{

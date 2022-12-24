@@ -68,6 +68,7 @@ const UserStepOne = (props) => {
             </MenuItem>
           </AppTextField>
           <AppDateField
+            disableFuture
             label={<IntlMessages id='common.birthDate' />}
             value={props.values?.birth_date}
             setfieldvalue={(name, value) =>
