@@ -1,19 +1,18 @@
 import {onGetWebSimilarVehicle, onGetWebVehicleView} from 'redux/actions';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+import ImageCarousel from 'components/design/ImageCarousel';
 import CustomCarousel from 'components/CustomCarousel';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import Error404 from 'modules/errorPages/Error404';
 import {Box, Container} from '@mui/material';
-import ImageCarousel from '../../../../components/design/ImageCarousel';
 import {useRouter} from 'next/router';
 import SaleInfo from './SaleInfo';
 import {useEffect} from 'react';
 import LotInfo from './LotInfo';
 import Header from './Header';
-import Head from 'next/head';
 
-const VehicleDetail = (props) => {
+const VehicleDetail = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const {id} = router.query;
@@ -31,21 +30,6 @@ const VehicleDetail = (props) => {
 
   return (
     <>
-      <Head>
-        <meta
-          property='og:title'
-          content={`${vehicle.year} ${vehicle?.make} ${vehicle.model}`}
-        />
-        <meta
-          property='og:url'
-          content={`https://www.unitedtradingcars.com/all-vehicles/${vehicle.id}`}
-        />
-        <meta property='og:description' content='United Trading Company' />
-        <meta
-          property='og:image'
-          content={vehicle?.images && vehicle?.images[0]?.path}
-        />
-      </Head>
       {loading ? (
         <Box maxWidth='xl' sx={{height: '600px'}}></Box>
       ) : vehicle.id ? (
