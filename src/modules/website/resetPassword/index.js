@@ -23,7 +23,7 @@ const validationSchema = yup.object({
     .required(<IntlMessages id='validation.reTypePassword' />),
 });
 
-const ResetPasswordAwsCognito = () => {
+const ResetPassword = () => {
   const dispatch = useDispatch();
 
   const [pin, setPin] = useState('');
@@ -126,8 +126,8 @@ const ResetPasswordAwsCognito = () => {
   );
 };
 
-export default ResetPasswordAwsCognito;
+export default ResetPassword;
 
-ResetPasswordAwsCognito.propTypes = {
+ResetPassword.propTypes = {
   location: PropTypes.object,
 };
