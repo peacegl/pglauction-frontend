@@ -30,7 +30,7 @@ const withLayout = (ComposedComponent) => (props) => {
   return (
     <div>
       <Header />
-      <AppBar />
+      {/* <AppBar /> */}
       <ComposedComponent {...props} />
       <AppInfoView />
       <Footer />
