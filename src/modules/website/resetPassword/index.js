@@ -72,6 +72,15 @@ const ResetPassword = () => {
     }
   }
 
+  useEffect(() => {
+    if (errorMessage != '') {
+      const timeout = setTimeout(() => {
+        setErrorMessage('');
+      }, 4000);
+      clearInterval(timeout);
+    }
+  }, [errorMessage]);
+
   return (
     <Box sx={{width: '100%', mt: 7}}>
       {pageState == 1 ? (
@@ -146,7 +155,8 @@ const ResetPassword = () => {
                   }
                 } catch (err) {
                   setErrorMessage(
-                    'Something went wrong, please try again later',
+                    err.response?.data?.message ??
+                      'Something went wrong, please try again later',
                   );
                   console.log(err);
                 }
