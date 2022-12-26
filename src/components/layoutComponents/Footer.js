@@ -24,11 +24,11 @@ export default function Footer() {
     </Typography>
   );
 
-  const link = (text, link, external = false) => (
+  const link = (text, link, target = false) => (
     <Box marginBottom='10px' key={link}>
       <Link
         href={link}
-        target={external ? '_blank' : '_self'}
+        target={target ? '_blank' : '_self'}
         style={{
           alignItems: 'center',
           textDecoration: 'none',
@@ -106,7 +106,7 @@ export default function Footer() {
                 }}
               >
                 {title('Quick Links')}
-                {pages.map((page) => link(page.title, page.link, external))}
+                {pages.map((page) => link(page.title, page.link, page?.target))}
               </Box>
               <Box
                 sx={{

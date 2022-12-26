@@ -33,7 +33,7 @@ const withLayout = (ComposedComponent) => (props) => {
       {/* <AppBar /> */}
       <ComposedComponent {...props} />
       <AppInfoView />
-      <Footer />
+      {/* <Footer /> */}
       <Tooltip title={<IntlMessages id='common.scrollToTop' />} placement='top'>
         <Fab
           onClick={scrollToTop}
