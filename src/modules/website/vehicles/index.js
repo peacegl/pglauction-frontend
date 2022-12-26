@@ -11,7 +11,7 @@ const Vehicles = () => {
   return (
     <>
       <Container maxWidth='xl' sx={{mt: 6}}>
-        <Hidden mdUp>
+        {/* <Hidden mdUp>
           <Button
             sx={{mx: 3}}
             variant='outlined'
@@ -21,7 +21,7 @@ const Vehicles = () => {
           >
             <IntlMessages id='common.filter' />
           </Button>
-        </Hidden>
+        </Hidden> */}
 
         <Box
           sx={{
