@@ -135,7 +135,7 @@ function TopMenu() {
               >
                 <Link
                   href={page.link}
-                  target={page.external ? '_blank' : '_self'}
+                  target={page.target}
                   style={{
                     color: 'white',
                     alignItems: 'center',
