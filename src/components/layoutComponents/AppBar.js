@@ -199,7 +199,6 @@ function TopMenu() {
                 <Button
                   key={index}
                   onClick={() => changePage(page.link)}
-                  alignItems='center'
                   sx={{my: 2, color: 'white', display: 'block'}}
                 >
                   {page.title}

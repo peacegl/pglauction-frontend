@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '@mui/material/Button';
 import {Form, Formik} from 'formik';
 import * as yup from 'yup';
 import Link from 'next/link';
@@ -10,8 +9,12 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import {Fonts} from '../../../shared/constants/AppEnums';
 import AuthWrapper from '../AuthWrapper';
-import AppLogo from '../../../@crema/core/AppLayout/components/AppLogo';
 import jwtAxios from '@crema/services/auth/jwt-auth';
+import {showMessage} from 'redux/actions';
+import {LoadingButton} from '@mui/lab';
+import {useDispatch} from 'react-redux';
+import {appIntl} from '@crema/utility/helper/Utils';
+const {messages = []} = appIntl() ? appIntl() : {};
 
 const validationSchema = yup.object({
   email: yup
@@ -21,22 +24,11 @@ const validationSchema = yup.object({
 });
 
 const ForgetPasswordJwtAuth = () => {
+  const dispatch = useDispatch();
   return (
     <AuthWrapper>
       <Box sx={{width: '100%'}}>
         <Box sx={{mb: {xs: 8, xl: 10}}}>
-          <Box
-            sx={{
-              mb: 5,
-              display: 'flex',
-              alignItems: 'center',
-              '& .logo': {
-                height: 40,
-              },
-            }}
-          >
-            <AppLogo />
-          </Box>
           <Typography
             variant='h2'
             component='h2'
@@ -61,8 +53,30 @@ const ForgetPasswordJwtAuth = () => {
               validationSchema={validationSchema}
               onSubmit={async (data, {setSubmitting, resetForm}) => {
                 setSubmitting(true);
-                //reset password api goes here
-                const resp = await jwtAxios.post('/forget_password', {...data});
+                try {
+                  //reset password api goes here
+                  const resp = await jwtAxios.post('/forget_password', {
+                    ...data,
+                  });
+                  if (
+                    (resp.status === 200 || resp.status === 202) &&
+                    resp.data.result
+                  ) {
+                    dispatch(
+                      showMessage(messages['message.resetPasswordMailSent']),
+                    );
+                  } else {
+                    setErrorMessage(
+                      JSON.stringify(resp.data?.message) ??
+                        'Something went wrong',
+                    );
+                  }
+                } catch (err) {
+                  setErrorMessage(
+                    'Something went wrong, please try again later',
+                  );
+                  console.log(err);
+                }
                 setSubmitting(false);
                 resetForm();
               }}
@@ -84,22 +98,20 @@ const ForgetPasswordJwtAuth = () => {
                     />
                   </Box>
 
-                  <div>
-                    <Button
-                      variant='contained'
-                      color='primary'
-                      disabled={isSubmitting}
-                      sx={{
-                        fontWeight: Fonts.REGULAR,
-                        textTransform: 'capitalize',
-                        fontSize: 16,
-                        minWidth: 160,
-                      }}
-                      type='submit'
-                    >
-                      <IntlMessages id='common.sendNewPassword' />
-                    </Button>
-                  </div>
+                  <LoadingButton
+                    loading={isSubmitting}
+                    loadingPosition='center'
+                    variant='contained'
+                    type='submit'
+                    sx={{
+                      fontWeight: Fonts.REGULAR,
+                      textTransform: 'capitalize',
+                      fontSize: 16,
+                      minWidth: 160,
+                    }}
+                  >
+                    <IntlMessages id='common.sendNewPassword' />
+                  </LoadingButton>
                 </Form>
               )}
             </Formik>
@@ -129,10 +141,9 @@ const ForgetPasswordJwtAuth = () => {
               </Box>
             </Typography>
           </Box>
-
-          <AppInfoView />
         </Box>
       </Box>
+      <AppInfoView />
     </AuthWrapper>
   );
 };
