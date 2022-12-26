@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Form, Formik} from 'formik';
 import * as yup from 'yup';
 import Link from 'next/link';
@@ -11,7 +11,7 @@ import {Fonts} from '../../../shared/constants/AppEnums';
 import AuthWrapper from '../AuthWrapper';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {showMessage} from 'redux/actions';
-import {LoadingButton} from '@mui/lab';
+import {Alert, LoadingButton} from '@mui/lab';
 import {useDispatch} from 'react-redux';
 import {appIntl} from '@crema/utility/helper/Utils';
 const {messages = []} = appIntl() ? appIntl() : {};
@@ -25,9 +25,24 @@ const validationSchema = yup.object({
 
 const ForgetPasswordJwtAuth = () => {
   const dispatch = useDispatch();
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (errorMessage != '') {
+      const timeout = setTimeout(() => {
+        setErrorMessage('');
+      }, 4000);
+      clearInterval(timeout);
+    }
+  }, [errorMessage]);
   return (
     <AuthWrapper>
       <Box sx={{width: '100%'}}>
+        {errorMessage && (
+          <Box mb={3}>
+            <Alert severity='error'>{errorMessage}</Alert>
+          </Box>
+        )}
         <Box sx={{mb: {xs: 8, xl: 10}}}>
           <Typography
             variant='h2'
@@ -53,6 +68,7 @@ const ForgetPasswordJwtAuth = () => {
               validationSchema={validationSchema}
               onSubmit={async (data, {setSubmitting, resetForm}) => {
                 setSubmitting(true);
+                setErrorMessage('');
                 try {
                   //reset password api goes here
                   const resp = await jwtAxios.post('/forget_password', {
@@ -67,15 +83,15 @@ const ForgetPasswordJwtAuth = () => {
                     );
                   } else {
                     setErrorMessage(
-                      JSON.stringify(resp.data?.message) ??
-                        'Something went wrong',
+                      resp.data?.message ??
+                        'Something went wrong, please try again later',
                     );
                   }
                 } catch (err) {
                   setErrorMessage(
-                    'Something went wrong, please try again later',
+                    err.response?.data?.message ??
+                      'Something went wrong, please try again later',
                   );
-                  console.log(err);
                 }
                 setSubmitting(false);
                 resetForm();
