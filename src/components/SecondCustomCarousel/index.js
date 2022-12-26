@@ -65,5 +65,5 @@ export default CustomCarousel;
 
 CustomCarousel.propTypes = {
   items: PropTypes.array,
-  title: PropTypes.string || PropTypes.object,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };

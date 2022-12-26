@@ -80,7 +80,7 @@ const Departments = () => {
       <Title title={<IntlMessages id='website.contact_us' />} />
       <Box sx={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap'}}>
         {departments.map((department, index) => (
-          <Department department={department} key={index} />
+          <Department department={department} key={'depart_' + index} />
         ))}
       </Box>
     </>

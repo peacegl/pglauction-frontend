@@ -39,6 +39,10 @@ export default function Item({label, value, ...rest}) {
 }
 
 Item.propTypes = {
-  label: PropTypes.string,
-  value: PropTypes.number,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  value: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+    PropTypes.object,
+  ]),
 };

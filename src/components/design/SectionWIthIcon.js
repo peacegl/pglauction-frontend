@@ -32,7 +32,7 @@ const SectionWIthIcon = (props) => {
       </Typography>
       {props.details && (
         <Box sx={{m: 2, p: 3}}>
-          <Typography variant='body1'>{props.details}</Typography>
+          <Typography variant='p'>{props.details}</Typography>
         </Box>
       )}
     </Box>
@@ -44,7 +44,7 @@ SectionWIthIcon.propTypes = {
   icon: PropTypes.any,
   title: PropTypes.any,
   details: PropTypes.any,
-  color: PropTypes.string,
-  bgcolor: PropTypes.string,
+  color: PropTypes.any,
+  bgcolor: PropTypes.any,
   hideIcon: PropTypes.bool,
 };

@@ -21,7 +21,7 @@ import Link from 'next/link';
 
 export const pages = [
   {title: <IntlMessages id='website.home' />, link: '/home'},
-  {title: <IntlMessages id='website.all_vehicles' />, link: '/all-vehicles'},
+  {title: <IntlMessages id='website.all_vehicles' />, link: '/'},
   // {title: <IntlMessages id='website.live_auctions' />, link: '/live-auctions'},
   {
     title: <IntlMessages id='website.shipping' />,
@@ -108,9 +108,9 @@ function TopMenu() {
           </Box>
 
           <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
-            {pages.map((page) => (
+            {pages.map((page, index) => (
               <Button
-                key={page.link}
+                key={index}
                 sx={{my: 2, color: 'white', display: 'block'}}
               >
                 <Link
@@ -159,10 +159,10 @@ function TopMenu() {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map(
-                  (setting) =>
+                  (setting, index) =>
                     setting && (
                       <MenuItem
-                        key={setting.title}
+                        key={index}
                         onClick={() => changePage(setting.link)}
                       >
                         <Typography textAlign='center'>
@@ -175,9 +175,9 @@ function TopMenu() {
             </Box>
           ) : (
             <Box sx={{flexGrow: 0, display: 'flex'}}>
-              {signOptions.map((page) => (
+              {signOptions.map((page, index) => (
                 <Button
-                  key={page.link}
+                  key={index}
                   onClick={() => changePage(page.link)}
                   alignItems='center'
                   sx={{my: 2, color: 'white', display: 'block'}}
