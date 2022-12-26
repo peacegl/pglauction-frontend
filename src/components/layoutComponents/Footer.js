@@ -24,11 +24,11 @@ export default function Footer() {
     </Typography>
   );
 
-  const link = (text, link, target = false) => (
+  const link = (text, link, target = '_self') => (
     <Box marginBottom='10px' key={link}>
       <Link
         href={link}
-        target={target ? '_blank' : '_self'}
+        target={target}
         style={{
           alignItems: 'center',
           textDecoration: 'none',
