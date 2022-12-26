@@ -47,7 +47,7 @@ const VehicleDetail = () => {
                 flexDirection: {xs: 'column', lg: 'row'},
               }}
             >
-              <Box flex={1.5}>
+              <Box flex={1.5} sx={{mr: 2}}>
                 <ImageCarousel
                   images={vehicle.images}
                   isSold={vehicle.status == 'sold'}

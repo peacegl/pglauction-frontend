@@ -23,7 +23,6 @@ const AboutUs = () => {
 
   const images = [];
   Object.values(textureImports).map((texture, index) => {
-    console.log(texture.default.src);
     images.push({
       id: index,
       path: texture.default.src,
@@ -40,7 +39,7 @@ const AboutUs = () => {
         spacing={8}
       >
         <Box>
-          <ImageCarousel images={images} height='100px' />
+          <ImageCarousel images={images} hideMagnifier />
         </Box>
         <Box sx={{flex: 1}}>
           <Title title={<IntlMessages id='website.about_us' />} />

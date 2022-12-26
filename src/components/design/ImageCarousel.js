@@ -1,36 +1,54 @@
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-import {Box, Divider, Paper, Stack} from '@mui/material';
-import {Carousel} from 'react-responsive-carousel';
-import {SideBySideMagnifier} from 'react-image-magnifiers';
-import {PropTypes} from 'prop-types';
+import {Box, Paper, Stack} from '@mui/material';
 import SoldIcon from 'assets/icon/sold.png';
+import {PropTypes} from 'prop-types';
+import ImageMagnifier from './ImageMagnifier';
+import {useRef, useState} from 'react';
+import Slider from 'react-slick';
+import CustomSlider from './Slider';
 
 const ImageCarousel = ({images, isSold = false, ...rest}) => {
-  const renderCustomThumbs = () => {
-    const thumbList = images?.map((image, index) => (
-      <Box
-        component='img'
-        style={{objectFit: 'cover'}}
-        key={index}
-        src={image.path}
-        alt={image.alternativeText}
-        height={'70px'}
-      />
-      // <picture key={index}>
-      //   <source data-srcSet={image.path} type='image/*' />
-      //   <img
-      //     style={{objectFit: 'cover'}}
-      //     key={image._id}
-      //     src={image.path}
-      //     alt={image.alternativeText}
-      //     height='70'
-      //   />
-      // </picture>
-    ));
+  const [activeImage, setActiveImage] = useState(0);
+  const sliderRef = useRef(null);
 
-    return thumbList;
+  const settings = {
+    dots: false,
+    infinite: false,
+    lazyLoad: true,
+    speed: 500,
+    slidesToShow: 6,
+    slidesToScroll: 3,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 6,
+          slidesToScroll: 3,
+        },
+      },
+      {
+        breakpoint: 900,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 400,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
-
   return (
     <Stack direction={{xs: 'column', md: 'row'}} spacing={{xs: 5, md: 8}}>
       <Stack direction='row' spacing={5}>
@@ -65,29 +83,42 @@ const ImageCarousel = ({images, isSold = false, ...rest}) => {
                 />
               </Box>
             )}
-            <Carousel
-              showStatus={false}
-              showIndicators={false}
-              emulateTouch={true}
-              renderThumbs={renderCustomThumbs}
-            >
-              {images?.map((item) => (
-                // <div key={item.id}>
-                <SideBySideMagnifier
-                  key={item.id}
-                  imageSrc={item.path}
-                  alwaysInPlace={true}
-                  fillAvailableSpace={true}
-                  imageAlt='Image'
+            <Box>
+              {!rest.hideMagnifier ? (
+                <ImageMagnifier
+                  src={images[activeImage].path}
+                  showPrev={activeImage != 0}
+                  showNext={images.length - 1 != activeImage}
+                  onPrev={() =>
+                    activeImage != 0 && setActiveImage((d) => d - 1)
+                  }
+                  onNext={() =>
+                    images.length - 1 != activeImage &&
+                    setActiveImage((d) => d + 1)
+                  }
                 />
-                //   <img
-                //     src={item.path}
-                //     alt='Auction Item'
-                //     className='carousel-image'
-                //   />
-                // </div>
-              ))}
-            </Carousel>
+              ) : (
+                <Box
+                  component='img'
+                  src={images[activeImage].path}
+                  alt='img'
+                  width='100%'
+                />
+              )}
+            </Box>
+            <CustomSlider>
+              <Slider ref={sliderRef} className='slideRoot' {...settings}>
+                {images.map((item, index) => (
+                  <Box
+                    onClick={() => setActiveImage(index)}
+                    key={item.id}
+                    component='img'
+                    src={item.path}
+                    alt='Image'
+                  />
+                ))}
+              </Slider>
+            </CustomSlider>
           </Paper>
         </Stack>
       </Stack>
@@ -100,5 +131,5 @@ export default ImageCarousel;
 ImageCarousel.propTypes = {
   images: PropTypes.array,
   isSold: PropTypes.bool,
-  height: PropTypes.any,
+  hideMagnifier: PropTypes.bool,
 };
