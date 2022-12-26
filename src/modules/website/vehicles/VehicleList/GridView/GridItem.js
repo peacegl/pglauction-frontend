@@ -23,13 +23,13 @@ export default function GridItem({item, ...props}) {
   //   setHeight((cardRef.current?.clientWidth / 4) * 3 + 'px');
   // });
   const [addressUrl, setAddressUrl] = useState('');
-  useEffect(() => {
-    const origin =
-      typeof window !== 'undefined' && window.location.origin
-        ? window.location.origin
-        : '';
-    setAddressUrl(origin + router.asPath + `/${item.id}`);
-  }, []);
+  // useEffect(() => {
+  //   const origin =
+  //     typeof window !== 'undefined' && window.location.origin
+  //       ? window.location.origin
+  //       : '';
+  //   setAddressUrl(origin + router.asPath + `/${item.id}`);
+  // }, []);
 
   return (
     <Card sx={{borderRadius: 1}}>
@@ -157,7 +157,7 @@ export default function GridItem({item, ...props}) {
             variant='contained'
             size='small'
             sx={{mt: 2, width: '100%'}}
-            href={`https://wa.me/${item.seller?.loginable?.whatsapp}?text=${addressUrl}`}
+            href={`https://wa.me/${item.seller?.loginable?.whatsapp}?text=${window.location.origin}/all-vehicles/${item.id}`}
             target='_blank'
           >
             <Box

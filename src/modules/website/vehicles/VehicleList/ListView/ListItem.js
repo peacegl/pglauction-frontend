@@ -43,15 +43,6 @@ const WhatsAppButton = (props) => {
 export default function ListItem({item, ...props}) {
   const router = useRouter();
   const theme = useTheme();
-  const [hoverImage, setHoverImage] = useState(false);
-  const [addressUrl, setAddressUrl] = useState('');
-  useEffect(() => {
-    const origin =
-      typeof window !== 'undefined' && window.location.origin
-        ? window.location.origin
-        : '';
-    setAddressUrl(origin + router.asPath + `/${item.id}`);
-  }, []);
 
   const viewPage = () => {
     router.push(`/all-vehicles/${item.id}`);
@@ -89,8 +80,6 @@ export default function ListItem({item, ...props}) {
             }}
             minWidth='140px'
             onClick={() => viewPage()}
-            onMouseEnter={() => setHoverImage(true)}
-            onMouseLeave={() => setHoverImage(false)}
           >
             {item.status == 'sold' && (
               <Box position='relative' zIndex='100'>
@@ -237,7 +226,7 @@ export default function ListItem({item, ...props}) {
                 >
                   <WhatsAppButton
                     number={item.seller?.loginable?.whatsapp}
-                    url={addressUrl}
+                    url={window.location.origin + '/all-vehicles/' + item.id}
                   />
                 </Box>
               </Box>
@@ -285,7 +274,7 @@ export default function ListItem({item, ...props}) {
                 </Typography> */}
                 <WhatsAppButton
                   number={item.seller?.loginable?.whatsapp}
-                  url={addressUrl}
+                  url={window.location.origin + '/all-vehicles/' + item.id}
                 />
               </Box>
               {/* <Divider orientation='vertical' flexItem /> */}

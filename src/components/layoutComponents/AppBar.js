@@ -17,11 +17,17 @@ import VehicleSearchBar from './VehicleSearchBar';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTheme} from '@mui/material';
 import {setVehicleSearch} from 'redux/actions';
+import Link from 'next/link';
 
 export const pages = [
   {title: <IntlMessages id='website.home' />, link: '/home'},
   {title: <IntlMessages id='website.all_vehicles' />, link: '/all-vehicles'},
   // {title: <IntlMessages id='website.live_auctions' />, link: '/live-auctions'},
+  {
+    title: <IntlMessages id='website.shipping' />,
+    link: 'https://peacegl.com/',
+    external: true,
+  },
   {title: <IntlMessages id='website.services' />, link: '/services'},
   {title: <IntlMessages id='website.contact_us' />, link: '/contact-us'},
   {title: <IntlMessages id='website.about_us' />, link: '/about-us'},
@@ -105,11 +111,19 @@ function TopMenu() {
             {pages.map((page) => (
               <Button
                 key={page.link}
-                onClick={() => changePage(page.link)}
-                alignItems='center'
                 sx={{my: 2, color: 'white', display: 'block'}}
               >
-                {page.title}
+                <Link
+                  href={page.link}
+                  target={page.external ? '_blank' : '_self'}
+                  style={{
+                    color: 'white',
+                    alignItems: 'center',
+                    textDecoration: 'none',
+                  }}
+                >
+                  {page.title}
+                </Link>
               </Button>
             ))}
           </Box>
