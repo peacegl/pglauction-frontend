@@ -24,7 +24,7 @@ export default function Footer() {
     </Typography>
   );
 
-  const link = (text, link, external) => (
+  const link = (text, link, external = false) => (
     <Box marginBottom='10px' key={link}>
       <Link
         href={link}
