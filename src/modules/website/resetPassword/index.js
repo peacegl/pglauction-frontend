@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Form, Formik} from 'formik';
 import * as yup from 'yup';
 import {useDispatch} from 'react-redux';
@@ -13,115 +13,126 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import AppInfoView from '@crema/core/AppInfoView';
 import AuthWrapper from '../../auth/AuthWrapper';
+import {useRouter} from 'next/router';
+import jwtAxios from '@crema/services/auth/jwt-auth';
 
 const validationSchema = yup.object({
-  newPassword: yup
+  password: yup
     .string()
-    .required(<IntlMessages id='validation.enterNewPassword' />),
-  confirmPassword: yup
+    .min(8, <IntlMessages id='validation.min8Letter' />)
+    .required(<IntlMessages id='validation.enterPassword' />),
+  password_confirmation: yup
     .string()
-    .required(<IntlMessages id='validation.reTypePassword' />),
+    .min(8, <IntlMessages id='validation.min8Letter' />)
+    .required(<IntlMessages id='validation.passwordConfrimationRequired' />)
+    .oneOf(
+      [yup.ref('password'), null],
+      <IntlMessages id='validation.passwordMisMatch' />,
+    ),
 });
 
 const ResetPassword = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
-  const [pin, setPin] = useState('');
-
-  const {messages} = useIntl();
+  // useEffect(() => {
+  //   if (router.query?.token) {
+  //     setLoading(true);
+  //     jwtAxios.get('/reset-password/' + router.query.token);
+  //     console.log(resp.status, resp.data);
+  //     setLoading(false);
+  //   }
+  // }, []);
 
   return (
     <Box sx={{width: '100%', mt: 7}}>
-      <AuthWrapper>
-        <Typography
-          variant='h2'
-          component='h2'
-          sx={{
-            mb: 3,
-            color: (theme) => theme.palette.text.primary,
-            fontWeight: Fonts.SEMI_BOLD,
-            fontSize: {xs: 14, xl: 16},
-          }}
-        >
-          <IntlMessages id='common.resetPassword' />
-        </Typography>
-        <Formik
-          validateOnChange={true}
-          initialValues={{
-            oldPassword: '',
-            newPassword: '',
-            confirmPassword: '',
-          }}
-          validationSchema={validationSchema}
-          onSubmit={(data, {setErrors, resetForm, setSubmitting}) => {
-            if (pin.length !== 6) {
-              dispatch(fetchError(messages['validation.pinLength']));
-            } else if (data.newPassword !== data.confirmPassword) {
-              setErrors({
-                confirmPassword: (
-                  <IntlMessages id='validation.passwordMisMatch' />
-                ),
-              });
-            } else {
+      {loading ? (
+        <div>{router.query.token} Loading ...</div>
+      ) : (
+        <AuthWrapper>
+          <Typography
+            variant='h2'
+            component='h2'
+            sx={{
+              mb: 3,
+              color: (theme) => theme.palette.text.primary,
+              fontWeight: Fonts.SEMI_BOLD,
+              fontSize: {xs: 14, xl: 16},
+            }}
+          >
+            <IntlMessages id='common.resetPassword' />
+          </Typography>
+          <Formik
+            validateOnChange={true}
+            initialValues={{
+              password: '',
+              password_confirmation: '',
+            }}
+            validationSchema={validationSchema}
+            onSubmit={async (data, {setSubmitting}) => {
               setSubmitting(true);
-              resetForm();
+              await signInUser({
+                password: data.password,
+                password_confirmation: data.password_confirmation,
+              });
               setSubmitting(false);
-            }
-          }}
-        >
-          {({isSubmitting}) => (
-            <Form noValidate autoComplete='off'>
-              <Box
-                sx={{
-                  mb: {xs: 4, lg: 6},
-                }}
-              >
-                <AppTextField
-                  name='newPassword'
-                  label={<IntlMessages id='common.newPassword' />}
+            }}
+          >
+            {({isSubmitting}) => (
+              <Form noValidate autoComplete='off'>
+                <Box
                   sx={{
-                    width: '100%',
+                    mb: {xs: 4, lg: 6},
                   }}
-                  variant='outlined'
-                  type='password'
-                />
-              </Box>
+                >
+                  <AppTextField
+                    name='password'
+                    label={<IntlMessages id='common.password' />}
+                    sx={{
+                      width: '100%',
+                    }}
+                    variant='outlined'
+                    type='password'
+                  />
+                </Box>
 
-              <Box
-                sx={{
-                  mb: {xs: 4, lg: 6},
-                }}
-              >
-                <AppTextField
-                  name='confirmPassword'
-                  label={<IntlMessages id='common.retypePassword' />}
+                <Box
                   sx={{
-                    width: '100%',
+                    mb: {xs: 4, lg: 6},
                   }}
-                  variant='outlined'
-                  type='password'
-                />
-              </Box>
+                >
+                  <AppTextField
+                    name='password_confirmation'
+                    label={<IntlMessages id='common.retypePassword' />}
+                    sx={{
+                      width: '100%',
+                    }}
+                    variant='outlined'
+                    type='password'
+                  />
+                </Box>
 
-              <Button
-                variant='contained'
-                disabled={isSubmitting}
-                color='primary'
-                type='submit'
-                sx={{
-                  fontWeight: Fonts.REGULAR,
-                  textTransform: 'capitalize',
-                  fontSize: 16,
-                  minWidth: 160,
-                }}
-              >
-                <IntlMessages id='common.resetMyPassword' />
-              </Button>
-            </Form>
-          )}
-        </Formik>
-        <AppInfoView />
-      </AuthWrapper>
+                <Button
+                  variant='contained'
+                  disabled={isSubmitting}
+                  color='primary'
+                  type='submit'
+                  sx={{
+                    fontWeight: Fonts.REGULAR,
+                    textTransform: 'capitalize',
+                    fontSize: 16,
+                    minWidth: 160,
+                  }}
+                >
+                  <IntlMessages id='common.resetMyPassword' />
+                </Button>
+              </Form>
+            )}
+          </Formik>
+          <AppInfoView />
+        </AuthWrapper>
+      )}
     </Box>
   );
 };
