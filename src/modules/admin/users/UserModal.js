@@ -13,8 +13,8 @@ import UserStepThree from './UserStepThree';
 import {useDispatch} from 'react-redux';
 import UserStepOne from './UserStepOne';
 import UserStepTwo from './UserStepTwo';
-import PropTypes from 'prop-types';
 import Helper from 'helpers/helpers';
+import PropTypes from 'prop-types';
 
 export default function UserModal({
   open,
@@ -88,7 +88,7 @@ export default function UserModal({
     const params = {
       whatsapp: values.whatsapp,
       phone: values.phone,
-      id: user?.login?.id ? user?.id : null,
+      id: recordId ? recordId : null,
     };
     if (values.whatsapp && values.phone) {
       return availableChecking(

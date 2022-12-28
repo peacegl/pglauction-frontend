@@ -2,9 +2,11 @@ import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextPro
 import logoImage from 'assets/united_logo.png';
 import PropTypes from 'prop-types';
 import {Box} from '@mui/material';
+import {useRouter} from 'next/router';
 
 const AppLogo = () => {
   const {theme} = useThemeContext();
+  const router = useRouter();
 
   return (
     <Box
@@ -23,6 +25,7 @@ const AppLogo = () => {
       className='app-logo'
     >
       <Box
+        onClick={() => router.push('/')}
         component='img'
         sx={{
           width: '130px',
