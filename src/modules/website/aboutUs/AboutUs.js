@@ -38,7 +38,7 @@ const AboutUs = () => {
         alignItems='center'
         spacing={8}
       >
-        <Box>
+        <Box sx={{flex: 1}}>
           <ImageCarousel images={images} hideMagnifier />
         </Box>
         <Box sx={{flex: 1}}>
