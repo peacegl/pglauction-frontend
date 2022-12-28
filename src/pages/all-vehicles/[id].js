@@ -16,7 +16,7 @@ export default AppPage((props) => (
       />
       <meta
         property='og:url'
-        content={`https://www.unitedtradingcars.com/all-vehicles/${props.vehicle.id}`}
+        content={`https://unitedtradingcars.com/all-vehicles/${props.vehicle.id}`}
       />
       <meta property='og:description' content='United Trading Company' />
       <meta
