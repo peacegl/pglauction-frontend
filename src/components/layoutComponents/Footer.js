@@ -1,11 +1,18 @@
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
-import {Box, Container, Link, Stack, Typography} from '@mui/material';
+import {
+  Box,
+  Container,
+  Link as MuiLink,
+  Stack,
+  Typography,
+} from '@mui/material';
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import logoImage from '../../assets/united_logo.png';
 import {useRouter} from 'next/router';
 import {useTheme} from '@mui/styles';
 import {pages} from './AppBar';
+import Link from 'next/link';
 
 export default function Footer() {
   const theme = useTheme();
@@ -17,16 +24,17 @@ export default function Footer() {
     </Typography>
   );
 
-  const link = (text, link, index) => (
-    <Box marginBottom='10px' key={index}>
+  const link = (text, link, target = '_self') => (
+    <Box marginBottom='10px' key={link}>
       <Link
-        component='button'
-        variant='body2'
-        display='block'
-        fontSize='14px'
-        underline='none'
-        onClick={() => router.push(link)}
-        color={theme.palette.text.secondary}
+        href={link}
+        target={target}
+        style={{
+          alignItems: 'center',
+          textDecoration: 'none',
+          fontSize: '14px',
+          color: theme.palette.text.secondary,
+        }}
       >
         {text}
       </Link>
@@ -98,7 +106,7 @@ export default function Footer() {
                 }}
               >
                 {title('Quick Links')}
-                {pages.map((page, index) => link(page.title, page.link, index))}
+                {pages.map((page) => link(page.title, page.link, page?.target))}
               </Box>
               <Box
                 sx={{
@@ -110,9 +118,9 @@ export default function Footer() {
                 }}
               >
                 {title('About Us')}
-                {link('About Us', '/')}
+                {link('About Us', '/contact-us')}
                 {title('Support')}
-                {link('Support', '/contact-us')}
+                {link('Support', '/')}
                 {link('Terms & Condations', '/terms')}
                 {link('Privacy Policy', '/policy')}
               </Box>
@@ -152,7 +160,7 @@ export default function Footer() {
                   sx={{justifyContent: {xs: 'center', sm: 'flex-start'}}}
                 >
                   <PhoneOutlinedIcon />
-                  <Link
+                  <MuiLink
                     variant='body2'
                     fontSize='14px'
                     underline='none'
@@ -161,7 +169,7 @@ export default function Footer() {
                     color={theme.palette.text.secondary}
                   >
                     +971 56 592 9272
-                  </Link>
+                  </MuiLink>
                 </Box>
                 <Box
                   marginBottom='10px'
@@ -169,7 +177,7 @@ export default function Footer() {
                   sx={{justifyContent: {xs: 'center', sm: 'flex-start'}}}
                 >
                   <EmailOutlinedIcon />
-                  <Link
+                  <MuiLink
                     variant='body2'
                     fontSize='14px'
                     underline='none'
@@ -178,7 +186,7 @@ export default function Footer() {
                     color={theme.palette.text.secondary}
                   >
                     utc@peacegl.com
-                  </Link>
+                  </MuiLink>
                 </Box>
                 <Box
                   marginBottom='10px'
@@ -186,7 +194,7 @@ export default function Footer() {
                   sx={{justifyContent: {xs: 'center', sm: 'flex-start'}}}
                 >
                   <EmailOutlinedIcon />
-                  <Link
+                  <MuiLink
                     variant='body2'
                     fontSize='14px'
                     underline='none'
@@ -195,7 +203,7 @@ export default function Footer() {
                     color={theme.palette.text.secondary}
                   >
                     crm@peacegl.com
-                  </Link>
+                  </MuiLink>
                 </Box>
               </Box>
             </Box>

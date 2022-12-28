@@ -23,7 +23,6 @@ const AboutUs = () => {
 
   const images = [];
   Object.values(textureImports).map((texture, index) => {
-    console.log(texture.default.src);
     images.push({
       id: index,
       path: texture.default.src,

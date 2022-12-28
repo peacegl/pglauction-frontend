@@ -1037,6 +1037,7 @@
   "website.home": "Home",
   "website.all_vehicles": "All Vehicles",
   "website.live_auctions": "Live Auctions",
+  "website.shipping": "Shipping",
   "website.services": "Services",
   "website.about_us": "About Us",
   "website.send_message": "Send Message",
@@ -1099,6 +1100,8 @@
   "message.profileUpdated": "Profile updated successfully!",
   "message.passwordChanged": "Password changed successfully",
   "message.wrongPassword": "Current password is incorrect!",
+  "message.resetPasswordSuccess": "Your password reset successfully!",
+  "message.resetPasswordMailSent": "We sent a link through your email, please check inbox and reset your password!",
   "validation.notUniqueLotNumber": "This lot number is taken",
   "validation.notUniqueVin": "This vin is taken"
 }

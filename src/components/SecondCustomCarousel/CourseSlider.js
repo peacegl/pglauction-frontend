@@ -81,5 +81,5 @@ export default CourseSlider;
 
 CourseSlider.propTypes = {
   children: PropTypes.node.isRequired,
-  title: PropTypes.string || PropTypes.object,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };

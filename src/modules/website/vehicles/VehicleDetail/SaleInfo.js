@@ -21,14 +21,14 @@ export default function LotInfo() {
   const theme = useTheme();
   const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
   const router = useRouter();
-  const [addressUrl, setAddressUrl] = useState('');
-  useEffect(() => {
-    const origin =
-      typeof window !== 'undefined' && window.location.origin
-        ? window.location.origin
-        : '';
-    setAddressUrl(origin + router.asPath);
-  }, []);
+  // const [addressUrl, setAddressUrl] = useState('');
+  // useEffect(() => {
+  //   const origin =
+  //     typeof window !== 'undefined' && window.location.origin
+  //       ? window.location.origin
+  //       : '';
+  //   setAddressUrl(origin + router.asPath);
+  // }, []);
   return (
     <Card sx={{borderRadius: 1, boxShadow: 1, m: 0}}>
       <CardHeader
@@ -70,7 +70,7 @@ export default function LotInfo() {
           variant='outlined'
           size='large'
           sx={{mt: 4, width: '100%', borderRadius: 20}}
-          href={`https://wa.me/${vehicle.seller?.loginable?.whatsapp}?text=${addressUrl}`}
+          href={`https://wa.me/${vehicle.seller?.loginable?.whatsapp}?text=${window.location.origin}/all-vehicles/${vehicle.id}`}
           target='_blank'
         >
           <WhatsAppIcon />
