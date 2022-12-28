@@ -117,7 +117,6 @@ const JWTAuthAuthProvider = ({children}) => {
         isAuthenticated: false,
         isLoading: false,
       });
-      console.log('error:', error.response.data.error);
       dispatch({
         type: FETCH_ERROR,
         payload: error?.response?.data?.error || 'Something went wrong',
