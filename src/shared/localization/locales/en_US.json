@@ -1100,6 +1100,8 @@
   "message.profileUpdated": "Profile updated successfully!",
   "message.passwordChanged": "Password changed successfully",
   "message.wrongPassword": "Current password is incorrect!",
+  "message.resetPasswordSuccess": "Your password reset successfully!",
+  "message.resetPasswordMailSent": "We sent a link through your email, please check inbox and reset your password!",
   "validation.notUniqueLotNumber": "This lot number is taken",
   "validation.notUniqueVin": "This vin is taken"
 }

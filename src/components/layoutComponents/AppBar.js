@@ -20,21 +20,41 @@ import {setVehicleSearch} from 'redux/actions';
 import Link from 'next/link';
 
 export const pages = [
-  {title: <IntlMessages id='website.home' />, link: '/home'},
-  {title: <IntlMessages id='website.all_vehicles' />, link: '/all-vehicles'},
+  {title: <IntlMessages id='website.home' />, link: '/home', target: '_self'},
+  {
+    title: <IntlMessages id='website.all_vehicles' />,
+    link: '/',
+    target: '_self',
+  },
   // {title: <IntlMessages id='website.live_auctions' />, link: '/live-auctions'},
   {
     title: <IntlMessages id='website.shipping' />,
     link: 'https://peacegl.com/',
-    external: true,
+    target: '_blank',
   },
-  {title: <IntlMessages id='website.services' />, link: '/services'},
-  {title: <IntlMessages id='website.contact_us' />, link: '/contact-us'},
-  {title: <IntlMessages id='website.about_us' />, link: '/about-us'},
+  {
+    title: <IntlMessages id='website.services' />,
+    link: '/services',
+    target: '_self',
+  },
+  {
+    title: <IntlMessages id='website.contact_us' />,
+    link: '/contact-us',
+    target: '_self',
+  },
+  {
+    title: <IntlMessages id='website.about_us' />,
+    link: '/about-us',
+    target: '_self',
+  },
 ];
 
 const signOptions = [
-  {title: <IntlMessages id='common.signIn' />, link: '/signin'},
+  {
+    title: <IntlMessages id='common.signIn' />,
+    link: '/signin',
+    target: '_self',
+  },
   // {title: <IntlMessages id='common.signup' />, link: '/signup'},
 ];
 
@@ -108,14 +128,14 @@ function TopMenu() {
           </Box>
 
           <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
-            {pages.map((page) => (
+            {pages.map((page, index) => (
               <Button
-                key={page.link}
+                key={index}
                 sx={{my: 2, color: 'white', display: 'block'}}
               >
                 <Link
                   href={page.link}
-                  target={page.external ? '_blank' : '_self'}
+                  target={page.target}
                   style={{
                     color: 'white',
                     alignItems: 'center',
@@ -159,10 +179,10 @@ function TopMenu() {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map(
-                  (setting) =>
+                  (setting, index) =>
                     setting && (
                       <MenuItem
-                        key={setting.title}
+                        key={index}
                         onClick={() => changePage(setting.link)}
                       >
                         <Typography textAlign='center'>
@@ -175,11 +195,10 @@ function TopMenu() {
             </Box>
           ) : (
             <Box sx={{flexGrow: 0, display: 'flex'}}>
-              {signOptions.map((page) => (
+              {signOptions.map((page, index) => (
                 <Button
-                  key={page.link}
+                  key={index}
                   onClick={() => changePage(page.link)}
-                  alignItems='center'
                   sx={{my: 2, color: 'white', display: 'block'}}
                 >
                   {page.title}
