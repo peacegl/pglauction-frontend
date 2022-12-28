@@ -121,7 +121,7 @@ export default function CustomerModal({
     const params = {
       username: values.username,
       email: values.email,
-      id: recordId ? recordId : null,
+      id: customer?.login?.id ? customer?.login?.id : null,
     };
     if (values.username && values.email) {
       return availableChecking(
