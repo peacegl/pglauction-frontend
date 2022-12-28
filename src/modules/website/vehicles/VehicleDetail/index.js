@@ -44,29 +44,29 @@ const VehicleDetail = () => {
                 columnGap: '10px',
                 rowGap: '20px',
                 backgroundColor: 'transparent',
-                flexDirection: {xs: 'column', lg: 'row'},
+                flexDirection: {xs: 'column', md: 'row'},
               }}
             >
-              <Box flex={1.5}>
+              <Box sx={{mr: 2, flex: 1.5}}>
                 <ImageCarousel
                   images={vehicle.images}
                   isSold={vehicle.status == 'sold'}
                 />
               </Box>
               <Box
-                flex={2}
                 sx={{
                   display: 'flex',
+                  flex: 2,
                   alignContent: 'space-between',
                   columnGap: '10px',
                   rowGap: '20px',
                   flexDirection: {xs: 'column', sm: 'row'},
                 }}
               >
-                <Box flex={1.5}>
+                <Box sx={{flex: 1.5}}>
                   <LotInfo />
                 </Box>
-                <Box flex={1}>
+                <Box sx={{flex: 1}}>
                   <SaleInfo />
                 </Box>
               </Box>

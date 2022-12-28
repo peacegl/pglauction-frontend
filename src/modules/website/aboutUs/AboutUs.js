@@ -38,8 +38,8 @@ const AboutUs = () => {
         alignItems='center'
         spacing={8}
       >
-        <Box>
-          <ImageCarousel images={images} height='100px' />
+        <Box sx={{flex: 1}}>
+          <ImageCarousel images={images} hideMagnifier />
         </Box>
         <Box sx={{flex: 1}}>
           <Title title={<IntlMessages id='website.about_us' />} />

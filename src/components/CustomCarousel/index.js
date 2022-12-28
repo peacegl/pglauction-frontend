@@ -1,8 +1,7 @@
-import VehicleGridCard from 'components/vehicles/VehicleGridCard';
-import {Grid, IconButton, Box} from '@mui/material';
-import CourseSlider from './CourseSlider';
 import CarouselItem from '../design/CarouseItem';
+import CourseSlider from './CustomSlider';
 import PropTypes from 'prop-types';
+import {Box} from '@mui/material';
 import Slider from 'react-slick';
 
 const CustomCarousel = ({title, items}) => {
@@ -13,8 +12,6 @@ const CustomCarousel = ({title, items}) => {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 3,
-
-    // arrows: false,
     responsive: [
       {
         breakpoint: 1280,

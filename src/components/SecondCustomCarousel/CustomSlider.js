@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FaChevronLeft, FaChevronRight} from 'react-icons/fa';
-import {Box, Paper, IconButton, Typography} from '@mui/material';
+import {Box, Typography} from '@mui/material';
 
-const CourseSlider = ({title, children}) => {
+const CustomSlider = ({title, children}) => {
   return (
     <Box
       sx={{
@@ -50,36 +49,14 @@ const CourseSlider = ({title, children}) => {
           {title}
         </Typography>
       )}
-      {/* <Stack direction='row' alignItems='center'>
-        <Box>
-          <IconButton
-            variant='contained'
-            onClick={sliderRef?.current?.slickPrev}
-            sx={{fontSize: {xs: '20px', md: '30px'}}}
-          >
-            <FaChevronLeft />
-          </IconButton>
-        </Box>
-        <Box sx={{flex: 1, width: '100%'}}> */}
       {children}
-      {/*  </Box>
-         <Box>
-          <IconButton
-            variant='contained'
-            onClick={sliderRef?.current?.slickNext}
-            sx={{fontSize: {xs: '20px', md: '30px'}}}
-          >
-            <FaChevronRight />
-          </IconButton>
-        </Box>
-      </Stack> */}
     </Box>
   );
 };
 
-export default CourseSlider;
+export default CustomSlider;
 
-CourseSlider.propTypes = {
+CustomSlider.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };

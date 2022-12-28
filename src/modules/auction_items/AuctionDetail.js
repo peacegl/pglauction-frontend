@@ -4,7 +4,6 @@ import {Carousel} from 'react-responsive-carousel';
 import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 import {getData} from '../../configs';
-import {SideBySideMagnifier} from 'react-image-magnifiers';
 
 const AuctionDetail = (props) => {
   const [auction, setAuction] = useState({});
@@ -65,24 +64,7 @@ const AuctionDetail = (props) => {
               emulateTouch={true}
               renderThumbs={renderCustomThumbs}
               // dynamicHeight={true}
-            >
-              {auction.images?.map((item) => (
-                // <div key={item.id}>
-                <SideBySideMagnifier
-                  key={item.id}
-                  imageSrc={item.path}
-                  alwaysInPlace={true}
-                  fillAvailableSpace={true}
-                  imageAlt='Image'
-                />
-                //   <img
-                //     src={item.path}
-                //     alt='Auction Item'
-                //     className='carousel-image'
-                //   />
-                // </div>
-              ))}
-            </Carousel>
+            ></Carousel>
             {/* <Divider
               sx={{
                 mb: 2,

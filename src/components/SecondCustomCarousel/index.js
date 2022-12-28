@@ -1,15 +1,9 @@
-import VehicleGridCard from 'components/vehicles/VehicleGridCard';
-import {Grid, IconButton, Box} from '@mui/material';
-import CourseSlider from './CourseSlider';
 import CarouselItem from '../design/CarouseItem';
+import CourseSlider from './CustomSlider';
 import PropTypes from 'prop-types';
 import Slider from 'react-slick';
-import {useRef} from 'react';
-import {IndeterminateCheckBox} from '@mui/icons-material';
 
 const CustomCarousel = ({title, items}) => {
-  const sliderRef = useRef(null);
-
   const settings = {
     dots: false,
     infinite: false,
@@ -17,7 +11,6 @@ const CustomCarousel = ({title, items}) => {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 3,
-    // arrows: false,
     responsive: [
       {
         breakpoint: 1280,
@@ -52,7 +45,7 @@ const CustomCarousel = ({title, items}) => {
 
   return (
     <CourseSlider title={title}>
-      <Slider ref={sliderRef} className='slideRoot' {...settings}>
+      <Slider className='slideRoot' {...settings}>
         {items.map((data, index) => (
           <CarouselItem item={data} key={index} />
         ))}
