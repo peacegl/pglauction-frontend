@@ -1,7 +1,7 @@
-import React from 'react';
+import {Box, Container} from '@mui/material';
 
 const index = () => {
-  return <div></div>;
+  return <Container maxWidth='xl' sx={{mt: 6}}></Container>;
 };
 
 export default index;
