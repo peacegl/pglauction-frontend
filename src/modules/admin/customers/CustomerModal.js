@@ -79,7 +79,7 @@ export default function CustomerModal({
     const params = {
       whatsapp: values.whatsapp,
       phone: values.phone,
-      id: customer?.login?.id ? customer?.id : null,
+      id: recordId ? recordId : null,
     };
     if (values.whatsapp && values.phone) {
       return availableChecking(
@@ -121,7 +121,7 @@ export default function CustomerModal({
     const params = {
       username: values.username,
       email: values.email,
-      id: customer?.login?.id ? customer?.login?.id : null,
+      id: recordId ? recordId : null,
     };
     if (values.username && values.email) {
       return availableChecking(
