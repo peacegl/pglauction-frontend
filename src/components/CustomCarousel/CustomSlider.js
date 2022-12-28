@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FaChevronLeft, FaChevronRight} from 'react-icons/fa';
-import {Box, Paper, IconButton, Typography} from '@mui/material';
+import {Paper, Typography} from '@mui/material';
 
-const CourseSlider = ({title, children}) => {
+const CustomSlider = ({title, children}) => {
   return (
     <Paper
       sx={{
@@ -79,9 +78,9 @@ const CourseSlider = ({title, children}) => {
   );
 };
 
-export default CourseSlider;
+export default CustomSlider;
 
-CourseSlider.propTypes = {
+CustomSlider.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {alpha, Box} from '@mui/material';
 
-const Slider = ({children}) => {
+const CustomSlider = ({children}) => {
   return (
     <Box
       sx={{
@@ -41,8 +41,8 @@ const Slider = ({children}) => {
   );
 };
 
-export default Slider;
+export default CustomSlider;
 
-Slider.propTypes = {
+CustomSlider.propTypes = {
   children: PropTypes.node.isRequired,
 };

@@ -13,7 +13,8 @@ const EchoProvider = ({children}) => {
     setEcho(
       new Echo({
         broadcaster: 'pusher',
-        key: '7c0143f9866ec960230b',
+        key: '7c34c103432b342343d3434',
+        cluster: 'ap1',
         wsHost: 'localhost',
         wsPort: 6001,
         forceTLS: false,
