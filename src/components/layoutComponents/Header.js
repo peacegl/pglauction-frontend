@@ -116,7 +116,7 @@ function Header() {
                 fontWeight: 'bold',
               }}
             >
-              United Trading Company
+              United Trading Cars
             </Typography>
           </Box>
 

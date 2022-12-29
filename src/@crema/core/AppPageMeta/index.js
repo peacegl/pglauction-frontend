@@ -8,7 +8,7 @@ const SITE_URL =
     : 'https://qa-blog.mastersindia.co';
 
 const defaultTitle = 'UTC Vehicles';
-const defaultDescription = 'United Trading Company';
+const defaultDescription = 'United Trading Cars';
 const defaultImage = 'logo.png';
 const defaultTwitter = '@utc';
 const defaultSep = ' | ';
@@ -25,7 +25,7 @@ const AppPage = ({children, ...rest}) => {
       'Vehicle',
       'Vehicle Auction',
       'UTC',
-      'United Trading Company',
+      'United Trading Cars',
     ],
   } = rest;
   const theTitle = title
@@ -53,18 +53,18 @@ const AppPage = ({children, ...rest}) => {
               url: theImage,
               width: 800,
               height: 600,
-              alt: 'United Trading Company',
+              alt: 'United Trading Cars',
               type: 'image/jpeg',
             },
             {
               url: theImage,
               width: 900,
               height: 800,
-              alt: 'United Trading Company',
+              alt: 'United Trading Cars',
               type: 'image/jpeg',
             },
           ],
-          site_name: 'United Trading Company',
+          site_name: 'United Trading Cars',
         }}
         tags={tags}
         category={category}

@@ -1,4 +1,7 @@
 import {Box, Divider, Button, useTheme, Chip} from '@mui/material';
+import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import DefaultCarImage from 'assets/default_car_image.png';
 import SoldIcon from '../../../../../assets/icon/sold.png';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import IntlMessages from '@crema/utility/IntlMessages';
@@ -6,18 +9,17 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import AppTooltip from '@crema/core/AppTooltip';
+import {useEffect, useState} from 'react';
 import Card from '@mui/material/Card';
 import {useRouter} from 'next/router';
 import {moneyFormater} from 'configs';
 import PropTypes from 'prop-types';
-import {useEffect, useState} from 'react';
-import DefaultCarImage from 'assets/default_car_image.png';
-
 export default function GridItem({item, ...props}) {
   const router = useRouter();
   const theme = useTheme();
   // const [height, setHeight] = useState('260px');
   const [hoverImage, setHoverImage] = useState(false);
+  const [addedToWatchList, setAddedToWatchList] = useState(false);
 
   // useLayoutEffect(() => {
   //   setHeight((cardRef.current?.clientWidth / 4) * 3 + 'px');
@@ -30,7 +32,7 @@ export default function GridItem({item, ...props}) {
   //       : '';
   //   setAddressUrl(origin + router.asPath + `/${item.id}`);
   // }, []);
-
+  const addToWarchList = () => {};
   return (
     <Card sx={{borderRadius: 1}}>
       <Box
@@ -137,26 +139,26 @@ export default function GridItem({item, ...props}) {
           </Box>
         </Box>
         <Box
-        // display='flex'
-        // justifyContent='space-between'
-        // alignItems='center'
+          display='flex'
+          justifyContent='space-between'
+          alignItems='center'
+          sx={{flexWrap: 'wrap'}}
         >
-          {/* <Button
-              flex='1'
-              variant='outlined'
-              borderRadius='28'
-              size='small'
-              sx={{mt: 2, px: 2}}
-              href=''
-            >
-              <BookmarkAddIcon />
-              Watch
-            </Button> */}
+          <Button
+            variant='outlined'
+            borderRadius='28'
+            size='small'
+            sx={{mt: 2, px: 2}}
+            onClick={addToWarchList}
+          >
+            <BookmarkAddIcon />
+            Watch
+          </Button>
           <Button
             onClick={(e) => e.stopPropagation()}
             variant='contained'
             size='small'
-            sx={{mt: 2, width: '100%'}}
+            sx={{mt: 2}}
             href={`https://wa.me/${item.seller?.loginable?.whatsapp}?text=${window.location.origin}/all-vehicles/${item.id}`}
             target='_blank'
           >

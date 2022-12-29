@@ -1104,5 +1104,8 @@
   "message.resetPasswordMailSent": "We sent a link through your email, please check inbox and reset your password!",
   "validation.notUniqueLotNumber": "This lot number is taken",
   "validation.notUniqueVin": "This vin is taken",
-  "message.customerUpdated": "Customer updated successfully!"
+  "message.customerUpdated": "Customer updated successfully!",
+  "common.dashboard": "Dashboard",
+  "common.myWatchlist": "My Watchlist",
+  "common.purchaseHistory": "Purchase History"
 }

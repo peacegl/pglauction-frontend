@@ -1,7 +1,7 @@
-import {Box, Container} from '@mui/material';
+import CustomerAdminPanel from './CustomerAdminPanel';
 
 const index = () => {
-  return <Container maxWidth='xl' sx={{mt: 6}}></Container>;
+  return <CustomerAdminPanel />;
 };
 
 export default index;
