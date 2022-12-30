@@ -1107,5 +1107,8 @@
   "message.customerUpdated": "Customer updated successfully!",
   "common.dashboard": "Dashboard",
   "common.myWatchlist": "My Watchlist",
-  "common.purchaseHistory": "Purchase History"
+  "common.purchaseHistory": "Purchase History",
+  "common.timezone": "Timezone",
+  "common.timezonePlaceholder": "Select your timezone",
+  "validation.requiredField": "This field is required"
 }

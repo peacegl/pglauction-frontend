@@ -42,11 +42,11 @@ const CustomerAdminPanel = () => {
   const {messages} = useIntl();
 
   const tabs = [
-    {
-      key: 1,
-      title: messages['common.dashboard'],
-      child: <Dashboard />,
-    },
+    // {
+    //   key: 1,
+    //   title: messages['common.dashboard'],
+    //   child: <Dashboard />,
+    // },
     {
       key: 2,
       title: messages['common.profile'],

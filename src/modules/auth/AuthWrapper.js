@@ -2,14 +2,16 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
-import {Typography} from '@mui/material';
+import {alpha, Typography} from '@mui/material';
 import {Fonts} from '../../shared/constants/AppEnums';
 import AppPageMeta from '../../@crema/core/AppPageMeta';
+import AppLogo from '@crema/core/AppLayout/components/AppLogo';
 
 const AuthWrapper = ({children}) => {
   return (
     <Box
       sx={{
+        mt: 10,
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
@@ -19,7 +21,7 @@ const AuthWrapper = ({children}) => {
     >
       <Card
         sx={{
-          maxWidth: 900,
+          maxWidth: 1000,
           minHeight: {xs: 320, sm: 450},
           width: '100%',
           overflow: 'hidden',
@@ -29,7 +31,7 @@ const AuthWrapper = ({children}) => {
       >
         <Box
           sx={{
-            width: {xs: '100%', sm: '50%', lg: '40%'},
+            width: {xs: '100%', sm: '60%'},
             padding: {xs: 5, lg: 10},
             display: 'flex',
             flexDirection: 'column',
@@ -41,15 +43,15 @@ const AuthWrapper = ({children}) => {
         </Box>
         <Box
           sx={{
-            width: {xs: '100%', sm: '50%', lg: '60%'},
+            width: {xs: '100%', sm: '40%'},
             position: 'relative',
             padding: {xs: 5, lg: 10},
             display: {xs: 'none', sm: 'flex'},
             alignItems: {sm: 'center'},
             justifyContent: {sm: 'center'},
             flexDirection: {sm: 'column'},
-            backgroundColor: (theme) => theme.palette.grey[900],
-            color: (theme) => theme.palette.common.white,
+            backgroundColor: (theme) => theme.palette.primary.main,
+            color: (theme) => theme.palette.primary.contrastText,
             fontSize: 14,
           }}
         >
@@ -58,6 +60,15 @@ const AuthWrapper = ({children}) => {
               maxWidth: 320,
             }}
           >
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <AppLogo />
+            </Box>
             <Typography
               component='h2'
               sx={{

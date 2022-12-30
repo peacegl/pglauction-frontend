@@ -1,22 +1,22 @@
 import {useAuthMethod, useAuthUser} from '@crema/utility/AuthHooks';
 import IntlMessages from '@crema/utility/IntlMessages';
+import {useDispatch, useSelector} from 'react-redux';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import VehicleSearchBar from './VehicleSearchBar';
 import Container from '@mui/material/Container';
+import {setVehicleSearch} from 'redux/actions';
 import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
+import {useTheme} from '@mui/material';
 import Menu from '@mui/material/Menu';
 import {useRouter} from 'next/router';
 import Box from '@mui/material/Box';
 import {useState} from 'react';
-import VehicleSearchBar from './VehicleSearchBar';
-import {useDispatch, useSelector} from 'react-redux';
-import {useTheme} from '@mui/material';
-import {setVehicleSearch} from 'redux/actions';
 import Link from 'next/link';
 
 export const pages = [
@@ -55,7 +55,7 @@ const signOptions = [
     link: '/signin',
     target: '_self',
   },
-  // {title: <IntlMessages id='common.signup' />, link: '/signup'},
+  {title: <IntlMessages id='common.signup' />, link: '/signup'},
 ];
 
 function TopMenu() {
@@ -109,8 +109,23 @@ function TopMenu() {
   return (
     <AppBar position='static'>
       <Container maxWidth='xl'>
-        <Toolbar disableGutters>
-          <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
+        <Toolbar
+          disableGutters
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: {xs: 'flex', md: 'none'},
+              justifyContent: 'center',
+              my: {xs: 2, sm: 0},
+            }}
+          >
             <VehicleSearchBar
               placeholder='Search Inventory By Make, Model, Vin, and More...'
               onEnter={onSearch}
@@ -118,7 +133,7 @@ function TopMenu() {
               defaultValue={search}
               sx={{
                 width: {xs: '60vw'},
-                margin: 'auto',
+                mx: 'auto',
                 backgroundColor: 'white',
                 borderColor: 'white',
                 color: theme.palette.primary.main,

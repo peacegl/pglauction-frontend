@@ -1,43 +1,48 @@
-import React from 'react';
-import {Form, Formik} from 'formik';
-import * as yup from 'yup';
-import AppTextField from '../../../@crema/core/AppFormComponents/AppTextField';
-import IntlMessages from '../../../@crema/utility/IntlMessages';
-import {useAuthMethod} from '../../../@crema/utility/AuthHooks';
-import Box from '@mui/material/Box';
-import Checkbox from '@mui/material/Checkbox';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import AppInfoView from '../../../@crema/core/AppInfoView';
-import {Fonts} from '../../../shared/constants/AppEnums';
-import Link from 'next/link';
 import {AiOutlineGoogle, AiOutlineTwitter} from 'react-icons/ai';
-import {BsGithub} from 'react-icons/bs';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {useAuthMethod} from '@crema/utility/AuthHooks';
+import CustomerConfigs from 'configs/pages/customers';
+import IconButton from '@mui/material/IconButton';
+import {Fonts} from 'shared/constants/AppEnums';
+import Checkbox from '@mui/material/Checkbox';
 import {FaFacebookF} from 'react-icons/fa';
-
-const validationSchema = yup.object({
-  name: yup.string().required(<IntlMessages id='validation.nameRequired' />),
-  email: yup
-    .string()
-    .email(<IntlMessages id='validation.emailFormat' />)
-    .required(<IntlMessages id='validation.emailRequired' />),
-  password: yup
-    .string()
-    .required(<IntlMessages id='validation.passwordRequired' />),
-});
+import Button from '@mui/material/Button';
+import {BsGithub} from 'react-icons/bs';
+import SignUpModal from './SignUpModal';
+import {useRef, useState} from 'react';
+import {Form, Formik} from 'formik';
+import Box from '@mui/material/Box';
+import {useIntl} from 'react-intl';
+import Link from 'next/link';
 
 const SignupFirebase = () => {
   const {createUserWithEmailAndPassword, signInWithPopup} = useAuthMethod();
+  const [showTermsError, setShowTermsError] = useState(false);
+  const profileUrl = useRef();
+  const {messages} = useIntl();
 
+  const validationSchema = CustomerConfigs(
+    messages['validation.invalidPhone'],
+    messages['validation.invalidWhatsapp'],
+    messages['validation.passwordMisMatch'],
+  ).signupSchema;
   return (
     <Box sx={{flex: 1, display: 'flex', flexDirection: 'column'}}>
       <Box sx={{flex: 1, display: 'flex', flexDirection: 'column', mb: 5}}>
         <Formik
           validateOnChange={true}
           initialValues={{
-            name: '',
+            profile: '',
+            fullname: '',
+            phone: '',
+            whatsapp: '',
+            gender: '',
             email: '',
+            username: '',
             password: '',
+            password_confirmation: '',
+            timezone: '',
+            terms: false,
           }}
           validationSchema={validationSchema}
           onSubmit={(data, {setSubmitting}) => {
@@ -51,108 +56,95 @@ const SignupFirebase = () => {
             setSubmitting(false);
           }}
         >
-          {({isSubmitting}) => (
+          {({values, isSubmitting, ...actions}) => (
             <Form style={{textAlign: 'left'}} noValidate autoComplete='off'>
-              <Box sx={{mb: {xs: 4, xl: 5}}}>
-                <AppTextField
-                  label={<IntlMessages id='common.name' />}
-                  name='name'
-                  variant='outlined'
-                  sx={{
-                    width: '100%',
-                    '& .MuiInputBase-input': {
-                      fontSize: 14,
-                    },
-                  }}
-                />
-              </Box>
-
-              <Box sx={{mb: {xs: 4, xl: 5}}}>
-                <AppTextField
-                  label={<IntlMessages id='common.email' />}
-                  name='email'
-                  variant='outlined'
-                  sx={{
-                    width: '100%',
-                    '& .MuiInputBase-input': {
-                      fontSize: 14,
-                    },
-                  }}
-                />
-              </Box>
-
-              <Box sx={{mb: {xs: 4, xl: 5}}}>
-                <AppTextField
-                  label={<IntlMessages id='common.password' />}
-                  name='password'
-                  type='password'
-                  variant='outlined'
-                  sx={{
-                    width: '100%',
-                    '& .MuiInputBase-input': {
-                      fontSize: 14,
-                    },
-                  }}
-                />
-              </Box>
-
-              <Box
-                sx={{
-                  mb: {xs: 3, xl: 4},
-                  display: 'flex',
-                  alignItems: 'center',
-                  flexWrap: 'wrap',
-                }}
-              >
+              <SignUpModal
+                profileUrl={profileUrl}
+                values={values}
+                setfieldvalue={actions.setFieldValue}
+              />
+              <Box>
                 <Box
                   sx={{
+                    mt: 2,
                     display: 'flex',
                     alignItems: 'center',
+                    flexWrap: 'wrap',
                   }}
                 >
-                  <Checkbox
+                  <Box
                     sx={{
-                      ml: -3,
+                      display: 'flex',
+                      alignItems: 'center',
                     }}
-                  />
+                  >
+                    <Checkbox
+                      sx={{
+                        ml: -3,
+                      }}
+                      name='terms'
+                      value={values.terms}
+                      checked={values.terms}
+                      onChange={() => {
+                        setShowTermsError(values.terms);
+                        actions.setFieldValue('terms', values.terms ? 0 : 1);
+                      }}
+                    />
+                    <Box
+                      component='span'
+                      sx={{
+                        mr: 2,
+                        color: 'grey.500',
+                      }}
+                    >
+                      <IntlMessages id='common.iAgreeTo' />
+                    </Box>
+                  </Box>
                   <Box
                     component='span'
                     sx={{
-                      mr: 2,
-                      color: 'grey.500',
+                      color: (theme) => theme.palette.primary.main,
+                      cursor: 'pointer',
                     }}
                   >
-                    <IntlMessages id='common.iAgreeTo' />
+                    <Link href='/terms' target='_blank'>
+                      <IntlMessages id='common.termConditions' />
+                    </Link>
                   </Box>
                 </Box>
-                <Box
-                  component='span'
-                  sx={{
-                    color: (theme) => theme.palette.primary.main,
-                    cursor: 'pointer',
-                  }}
-                >
-                  <IntlMessages id='common.termConditions' />
-                </Box>
+                {showTermsError == true && (
+                  <Box
+                    component='span'
+                    sx={{
+                      color: (theme) => theme.palette.error.main,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <IntlMessages id='validation.requiredField' />
+                  </Box>
+                )}
               </Box>
-
-              <div>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  disabled={isSubmitting}
-                  sx={{
-                    minWidth: 160,
-                    fontWeight: Fonts.REGULAR,
-                    fontSize: 16,
-                    textTransform: 'capitalize',
-                    padding: '4px 16px 8px',
-                  }}
-                  type='submit'
-                >
-                  <IntlMessages id='common.signup' />
-                </Button>
-              </div>
+              <Button
+                onClick={() => {
+                  if (!values.terms) {
+                    setShowTermsError(true);
+                  }
+                }}
+                variant='contained'
+                color='primary'
+                disabled={isSubmitting}
+                sx={{
+                  mt: {xs: 3, xl: 4},
+                  minWidth: 160,
+                  fontWeight: Fonts.REGULAR,
+                  fontSize: 16,
+                  textTransform: 'capitalize',
+                  padding: '4px 16px 8px',
+                }}
+                type='submit'
+              >
+                <IntlMessages id='common.signup' />
+              </Button>
             </Form>
           )}
         </Formik>
@@ -183,7 +175,7 @@ const SignupFirebase = () => {
         </Box>
       </Box>
 
-      <Box
+      {/* <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
@@ -243,9 +235,7 @@ const SignupFirebase = () => {
             <AiOutlineTwitter />
           </IconButton>
         </Box>
-      </Box>
-
-      <AppInfoView />
+      </Box> */}
     </Box>
   );
 };
