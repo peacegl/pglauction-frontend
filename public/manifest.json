@@ -1,9 +1,9 @@
 {
-  "short_name": "UTC",
-  "name": "United Trading Company",
+  "short_name": "UUC",
+  "name": "United Used Car's",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "united_logo.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
