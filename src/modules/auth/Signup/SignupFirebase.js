@@ -14,9 +14,9 @@ import {Form, Formik} from 'formik';
 import Box from '@mui/material/Box';
 import {useIntl} from 'react-intl';
 import Link from 'next/link';
+import {availableChecking} from 'configs';
 
 const SignupFirebase = () => {
-  const {createUserWithEmailAndPassword, signInWithPopup} = useAuthMethod();
   const [showTermsError, setShowTermsError] = useState(false);
   const profileUrl = useRef();
   const {messages} = useIntl();
@@ -26,6 +26,62 @@ const SignupFirebase = () => {
     messages['validation.invalidWhatsapp'],
     messages['validation.passwordMisMatch'],
   ).signupSchema;
+
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  const handleSubmit = async (values, actions) => {
+    if (await stepTwoValidation(values, actions)) {
+      await onSave(values);
+      actions.setTouched({});
+    }
+  };
+
+  const stepTwoValidation = async (values, actions) => {
+    const params = {
+      username: values.username,
+      email: values.email,
+      whatsapp: values.whatsapp,
+      phone: values.phone,
+    };
+    if (values.username && values.email) {
+      return availableChecking(
+        'loginables/valid_credential_all',
+        params,
+        actions,
+        onSuccess,
+        onFail,
+      );
+    }
+    return true;
+  };
+
+  const onSuccess = (res, actions) => {
+    let errors = {};
+    if (!res.data.result) {
+      if (res.data.message?.includes(1)) {
+        errors.email = <IntlMessages id='validation.notUniqueEmail' />;
+      }
+      if (res.data.message?.includes(2)) {
+        errors.username = <IntlMessages id='validation.notUniqueUsername' />;
+      }
+      if (res.data.message?.includes(3)) {
+        errors.phone = <IntlMessages id='validation.notUniquePhone' />;
+      }
+      if (res.data.message?.includes(4)) {
+        errors.whatsapp = <IntlMessages id='validation.notUniqueWhatsapp' />;
+      }
+      actions.setErrors(errors);
+    }
+  };
+  const onFail = (actions) => {
+    actions.setErrors({
+      username: <IntlMessages id='validation.notUniqueUsername' />,
+      email: <IntlMessages id='validation.notUniqueEmail' />,
+      whatsapp: <IntlMessages id='validation.notUniqueWhatsapp' />,
+      phone: <IntlMessages id='validation.notUniquePhone' />,
+    });
+  };
+
   return (
     <Box sx={{flex: 1, display: 'flex', flexDirection: 'column'}}>
       <Box sx={{flex: 1, display: 'flex', flexDirection: 'column', mb: 5}}>
@@ -45,15 +101,11 @@ const SignupFirebase = () => {
             terms: false,
           }}
           validationSchema={validationSchema}
-          onSubmit={(data, {setSubmitting}) => {
-            setSubmitting(true);
-            console.log('data', data);
-            createUserWithEmailAndPassword(data);
-            console.log(
-              'createUserWithEmailAndPassword',
-              createUserWithEmailAndPassword,
-            );
-            setSubmitting(false);
+          onSubmit={async (data, actions) => {
+            actions.setSubmitting(true);
+            await delay(0);
+            await handleSubmit(data, actions);
+            actions.setSubmitting(false);
           }}
         >
           {({values, isSubmitting, ...actions}) => (
