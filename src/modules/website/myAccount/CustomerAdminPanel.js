@@ -1,15 +1,14 @@
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
 import {Box, Container, Typography} from '@mui/material';
-import AdminPanelHeader from './AdminPanelHeader';
 import SwipeableViews from 'react-swipeable-views';
+import AdminPanelHeader from './AdminPanelHeader';
 import PurchaseHistory from './PurchaseHistory';
+import Account from 'modules/admin/Account';
 import Dashboard from './dashboard';
 import WatchList from './WatchList';
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
 import {useState} from 'react';
-import Profile from './Profile';
-import Account from 'modules/admin/Account';
 
 function TabPanel(props) {
   const {children, value, index, ...other} = props;
