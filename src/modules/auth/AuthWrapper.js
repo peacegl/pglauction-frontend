@@ -66,10 +66,10 @@ const AuthWrapper = ({children}) => {
                 mb: 4,
               }}
             >
-              Welcome to United Trading Company!
+              Welcome to United Used Car&apos;s!
             </Typography>
             <Typography>
-              United Trading Company sells used cars at an affordable rate in
+              United Used Car&apos;s sells used cars at an affordable rate in
               Dubai, UAE. We have a showroom in Sharjah and an office in Dubai
               to provide comprehensive support and services to customers. We
               have different affiliates to help provide shipping, clearance, and

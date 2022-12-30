@@ -116,7 +116,7 @@ export default function GridItem({item, ...props}) {
                   ? theme.palette.success.main
                   : '#ffa834',
             }}
-            label={item.status}
+            label={item.status == 'future' ? 'On The Way' : item.status}
             size='small'
           />
           <Box display='flex' columnGap='5px'>

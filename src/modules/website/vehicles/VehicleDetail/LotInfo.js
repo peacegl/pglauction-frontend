@@ -88,7 +88,9 @@ export default function SaleInfo() {
                         ? theme.palette.success.main
                         : '#ffa834',
                   }}
-                  label={vehicle.status}
+                  label={
+                    vehicle.status == 'future' ? 'On The Way' : vehicle.status
+                  }
                   size='small'
                 />
               }

@@ -39,7 +39,7 @@ const contents = [
     bgcolor: green[100],
     details: (
       <Typography component='p'>
-        United Trading Company presents used cars with affordable rate which you
+        United Used Car&apos;s presents used cars with affordable rate which you
         can check out in
         <Link
           href='/all-vehicles'
@@ -64,7 +64,8 @@ const contents = [
         has its own unique computer lab for customers to come and bid on cars in
         USA auctions for their convenience. The computer lab is equipped with
         computers, internet and they provide the auction account where you can
-        buy your favorite car from USA and PGL will ship it for you! You can learn more about them<span></span>
+        buy your favorite car from USA and PGL will ship it for you! You can
+        learn more about them<span></span>
         <Link
           href='https://pglcshipping.com'
           target='_blank'
