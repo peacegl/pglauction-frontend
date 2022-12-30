@@ -155,7 +155,7 @@ export default function ListItem({item, ...props}) {
                           ? theme.palette.success.main
                           : '#ffa834',
                     }}
-                    label={item.status}
+                    label={item.status == 'future' ? 'On The Way' : item.status}
                     size='small'
                   />
                   {/* <Typography
