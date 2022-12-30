@@ -50,7 +50,7 @@ export default function LotInfo() {
       />
       <CardContent sx={{px: 3, py: 0}}>
         <List sx={{width: '100%', bgcolor: 'background.paper', pb: 0}}>
-          {vehicle.location?.name && (
+          {vehicle.location?.name && vehicle.status != 'future' && (
             <Item
               label={<IntlMessages id='vehicle.location' />}
               value={vehicle.location?.name}
