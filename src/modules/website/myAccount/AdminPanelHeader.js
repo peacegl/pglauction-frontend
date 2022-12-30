@@ -15,7 +15,6 @@ const AdminPanelHeader = (props) => {
       <Tabs
         value={props.value}
         onChange={props.handleChange}
-        centered
         variant='scrollable'
         scrollButtons
         allowScrollButtonsMobile

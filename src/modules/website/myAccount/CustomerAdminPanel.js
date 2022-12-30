@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
 import {useState} from 'react';
 import Profile from './Profile';
+import Account from 'modules/admin/Account';
 
 function TabPanel(props) {
   const {children, value, index, ...other} = props;
@@ -50,7 +51,7 @@ const CustomerAdminPanel = () => {
     {
       key: 2,
       title: messages['common.profile'],
-      child: <Profile />,
+      child: <Account />,
     },
     {
       key: 3,
@@ -86,7 +87,7 @@ const CustomerAdminPanel = () => {
         >
           {tabs.map((tab, i) => (
             <TabPanel value={value} index={i} key={i} dir={theme.direction}>
-              {tab.child}
+              <Box sx={{mb: 20}}>{tab.child}</Box>
             </TabPanel>
           ))}
         </SwipeableViews>

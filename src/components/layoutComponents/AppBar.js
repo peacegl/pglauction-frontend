@@ -106,7 +106,6 @@ function TopMenu() {
     router.push('/all-vehicles');
     dispatch(setVehicleSearch(value));
   };
-
   return (
     <AppBar position='static'>
       <Container maxWidth='xl'>
