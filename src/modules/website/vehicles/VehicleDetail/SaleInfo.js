@@ -50,10 +50,12 @@ export default function LotInfo() {
       />
       <CardContent sx={{px: 3, py: 0}}>
         <List sx={{width: '100%', bgcolor: 'background.paper', pb: 0}}>
-          <Item
-            label={<IntlMessages id='vehicle.location' />}
-            value={vehicle.location?.name}
-          />
+          {vehicle.location?.name && (
+            <Item
+              label={<IntlMessages id='vehicle.location' />}
+              value={vehicle.location?.name}
+            />
+          )}
           {/* <Item
             label={<IntlMessages id='vehicle.price' />}
             value={moneyFormater(
