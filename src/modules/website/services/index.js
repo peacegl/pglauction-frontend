@@ -39,8 +39,8 @@ const contents = [
     bgcolor: green[100],
     details: (
       <Typography component='p'>
-        United Used Car&apos;s presents used cars with affordable rate which you
-        can check out in
+        United Used Cars presents used cars with affordable rate which you can
+        check out in
         <Link
           href='/all-vehicles'
           style={{
