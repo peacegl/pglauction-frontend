@@ -1110,5 +1110,6 @@
   "common.purchaseHistory": "Purchase History",
   "common.timezone": "Timezone",
   "common.timezonePlaceholder": "Select your timezone",
-  "validation.requiredField": "This field is required"
+  "validation.requiredField": "This field is required",
+  "message.signupSuccessfully": "Your account has been successfully created"
 }

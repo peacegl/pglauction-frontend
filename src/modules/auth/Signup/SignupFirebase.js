@@ -2,24 +2,33 @@ import {AiOutlineGoogle, AiOutlineTwitter} from 'react-icons/ai';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useAuthMethod} from '@crema/utility/AuthHooks';
 import CustomerConfigs from 'configs/pages/customers';
+import {useDispatch} from 'react-redux/es/exports';
 import IconButton from '@mui/material/IconButton';
 import {Fonts} from 'shared/constants/AppEnums';
+import SaveIcon from '@mui/icons-material/Save';
+import {onSignUpCustomer} from 'redux/actions';
 import Checkbox from '@mui/material/Checkbox';
 import {FaFacebookF} from 'react-icons/fa';
 import Button from '@mui/material/Button';
+import {availableChecking} from 'configs';
 import {BsGithub} from 'react-icons/bs';
 import SignUpModal from './SignUpModal';
 import {useRef, useState} from 'react';
+import {LoadingButton} from '@mui/lab';
+import helpers from 'helpers/helpers';
+import {useRouter} from 'next/router';
 import {Form, Formik} from 'formik';
 import Box from '@mui/material/Box';
 import {useIntl} from 'react-intl';
 import Link from 'next/link';
-import {availableChecking} from 'configs';
 
 const SignupFirebase = () => {
   const [showTermsError, setShowTermsError] = useState(false);
   const profileUrl = useRef();
   const {messages} = useIntl();
+  const dispatch = useDispatch();
+  const {signInUser} = useAuthMethod();
+  const router = useRouter();
 
   const validationSchema = CustomerConfigs(
     messages['validation.invalidPhone'],
@@ -31,7 +40,9 @@ const SignupFirebase = () => {
 
   const handleSubmit = async (values, actions) => {
     if (await stepTwoValidation(values, actions)) {
-      await onSave(values);
+      const userFormData = helpers.getFormData(values);
+      dispatch(onSignUpCustomer(userFormData, values, signInUser));
+      router.push('/my-account');
       actions.setTouched({});
     }
   };
@@ -176,15 +187,17 @@ const SignupFirebase = () => {
                   </Box>
                 )}
               </Box>
-              <Button
+              <LoadingButton
                 onClick={() => {
                   if (!values.terms) {
                     setShowTermsError(true);
                   }
                 }}
+                loading={isSubmitting}
+                loadingPosition='start'
+                startIcon={<SaveIcon />}
                 variant='contained'
-                color='primary'
-                disabled={isSubmitting}
+                type='submit'
                 sx={{
                   mt: {xs: 3, xl: 4},
                   minWidth: 160,
@@ -193,10 +206,9 @@ const SignupFirebase = () => {
                   textTransform: 'capitalize',
                   padding: '4px 16px 8px',
                 }}
-                type='submit'
               >
                 <IntlMessages id='common.signup' />
-              </Button>
+              </LoadingButton>
             </Form>
           )}
         </Formik>
