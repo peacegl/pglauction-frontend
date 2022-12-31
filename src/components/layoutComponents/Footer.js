@@ -77,8 +77,8 @@ export default function Footer() {
                   src={logoImage.src}
                 />
                 <Typography sx={{m: 4, ml: 0}} variant='body1'>
-                  United Used Car&apos;s sells used cars at an affordable rate
-                  in Dubai, UAE. We have a showroom in Sharjah and an office in
+                  United Used Cars sells used cars at an affordable rate in
+                  Dubai, UAE. We have a showroom in Sharjah and an office in
                   Dubai to provide comprehensive support and services to
                   customers. We have different affiliates to help provide
                   shipping, clearance, and sell cars from the USA in Dubai. We

@@ -116,7 +116,7 @@ function Header() {
                 fontWeight: 'bold',
               }}
             >
-              United Used Car&apos;s
+              United Used Cars
             </Typography>
           </Box>
 

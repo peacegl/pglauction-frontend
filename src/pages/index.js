@@ -7,9 +7,9 @@ const Vehicles = asyncComponent(() => import('../modules/website/vehicles'));
 export default AppPage(() => (
   <>
     <Head>
-      <meta property='og:title' content="United Used Car's" />
+      <meta property='og:title' content='United Used Cars' />
       <meta property='og:url' content='https://unitedtradingcars.com' />
-      <meta property='og:description' content="United Used Car's" />
+      <meta property='og:description' content='United Used Cars' />
       <meta
         property='og:image'
         content='https://unitedtradingcars.com/logo.png'

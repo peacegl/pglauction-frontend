@@ -45,20 +45,19 @@ const AboutUs = () => {
           <Title title={<IntlMessages id='website.about_us' />} />
           <Box sx={{mt: 1}}>
             <Typography component='p' variant='body1'>
-              United Used Car&apos;s sells used cars with an affordable rate in
-              Dubai, UAE. We have a showroom in Sharjah, an office in Dubai to
-              provide comprehensive support and services to the customers. We
-              have different affiliates to help provide shipping, clearance, and
-              sell cars from USA in Dubai and elsewhere.
+              United Used Cars sells used cars with an affordable rate in Dubai,
+              UAE. We have a showroom in Sharjah, an office in Dubai to provide
+              comprehensive support and services to the customers. We have
+              different affiliates to help provide shipping, clearance, and sell
+              cars from USA in Dubai and elsewhere.
             </Typography>
             <Typography component='p' variant='body1' sx={{mt: 1}}>
-              United Used Car&apos;s LLC is one of the top companies in UAE
-              selling cars from ranging from different models and companies. We
-              also provides other services with its affiliates ranging from
-              having bidding rooms and computer labs in Sharjah office for you
-              to buy cars from USA auctions, shipping your cars, custom
-              clearance for your cars and selling your cars at its famous
-              showroom in Sharjah.
+              United Used Cars LLC is one of the top companies in UAE selling
+              cars from ranging from different models and companies. We also
+              provides other services with its affiliates ranging from having
+              bidding rooms and computer labs in Sharjah office for you to buy
+              cars from USA auctions, shipping your cars, custom clearance for
+              your cars and selling your cars at its famous showroom in Sharjah.
             </Typography>
             <Typography component='p' sx={{my: 1}}>
               Customers may ship cars via Peace Global Logistics LLC which is a
