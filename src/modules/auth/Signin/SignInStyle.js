@@ -272,33 +272,37 @@ const Signin = (props) => {
           </Box>
         </Box> */}
 
-          {/* <Box
-          sx={{
-            mt: {xs: 3, xl: 4},
-            color: grey[700],
-            fontSize: 14,
-            fontWeight: Fonts.BOLD,
-          }}
-        >
           <Box
-            component='span'
             sx={{
-              mr: 2,
+              mt: {xs: 3, xl: 4},
+              color: grey[700],
+              fontSize: 14,
+              fontWeight: Fonts.BOLD,
             }}
           >
-            <IntlMessages id='common.dontHaveAccount' />
+            <Box
+              component='span'
+              sx={{
+                mr: 2,
+              }}
+            >
+              <IntlMessages id='common.dontHaveAccount' />
+            </Box>
+            <Box
+              component='span'
+              color='primary.main'
+              onClick={() => {
+                history.push('/signup');
+              }}
+              sx={{
+                cursor: 'pointer',
+                width: '100%',
+                height: 44,
+              }}
+            >
+              <IntlMessages id='common.signup' />
+            </Box>
           </Box>
-          <Box
-            component='span'
-            color='primary.main'
-            sx={{
-              width: '100%',
-              height: 44,
-            }}
-          >
-            <IntlMessages id='common.signup' />
-          </Box>
-        </Box> */}
         </Box>
       </Card>
     </Box>

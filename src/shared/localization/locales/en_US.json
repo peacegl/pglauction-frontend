@@ -1111,5 +1111,7 @@
   "common.timezone": "Timezone",
   "common.timezonePlaceholder": "Select your timezone",
   "validation.requiredField": "This field is required",
-  "message.signupSuccessfully": "Your account has been successfully created"
+  "message.signupSuccessfully": "Your account has been successfully created",
+  "common.watch": "Watch",
+  "common.remove": "Remove"
 }

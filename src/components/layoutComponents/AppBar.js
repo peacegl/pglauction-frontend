@@ -16,8 +16,9 @@ import {useTheme} from '@mui/material';
 import Menu from '@mui/material/Menu';
 import {useRouter} from 'next/router';
 import Box from '@mui/material/Box';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Link from 'next/link';
+import {fi} from 'date-fns/locale';
 
 export const pages = [
   {title: <IntlMessages id='website.home' />, link: '/home', target: '_self'},
@@ -68,23 +69,7 @@ function TopMenu() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [settings, setSettings] = useState([
-    user?.type == 'User'
-      ? {
-          title: <IntlMessages id='common.admin_panel' />,
-          link: '/admin/vehicles',
-        }
-      : user?.type == 'Customer'
-      ? {
-          title: <IntlMessages id='common.my_account' />,
-          link: '/my-account',
-        }
-      : null,
-    {
-      title: <IntlMessages id='common.logout' />,
-      link: 'logout',
-    },
-  ]);
+  const [settings, setSettings] = useState([]);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -98,14 +83,37 @@ function TopMenu() {
     }
     router.push(link);
   };
-  const openAdminPanel = () => {
-    router.push('/admin/vehicles');
-  };
-
   const onSearch = (value) => {
     router.push('/all-vehicles');
     dispatch(setVehicleSearch(value));
   };
+  useEffect(() => {
+    const sets = [];
+    if (user?.type == 'User') {
+      sets.push(
+        {
+          title: <IntlMessages id='common.admin_panel' />,
+          link: '/admin/vehicles',
+        },
+        {
+          title: <IntlMessages id='common.logout' />,
+          link: 'logout',
+        },
+      );
+    } else if (user?.type == 'Customer') {
+      sets.push(
+        {
+          title: <IntlMessages id='common.my_account' />,
+          link: '/my-account',
+        },
+        {
+          title: <IntlMessages id='common.logout' />,
+          link: 'logout',
+        },
+      );
+    }
+    setSettings(sets);
+  }, [user]);
   return (
     <AppBar position='static'>
       <Container maxWidth='xl'>
@@ -161,14 +169,6 @@ function TopMenu() {
               </Button>
             ))}
           </Box>
-
-          {/* <Button
-            onClick={openAdminPanel}
-            alignItems='center'
-            sx={{my: 2, color: 'white', display: 'block'}}
-          >
-            Admin Panel
-          </Button> */}
           {user ? (
             <Box sx={{flexGrow: 0}}>
               <Tooltip title='Open settings'>
