@@ -2,8 +2,9 @@ import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextPro
 import IntlMessages from '@crema/utility/IntlMessages';
 import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
 import {useDispatch, useSelector} from 'react-redux';
-import React, {useEffect, useState} from 'react';
+import {useAuthUser} from '@crema/utility/AuthHooks';
 import {onGetWebVehicleData} from 'redux/actions';
+import React, {useEffect, useState} from 'react';
 import GridView from './GridView/index';
 import AppsContent from './AppsContent';
 import ListView from './ListView';
@@ -23,6 +24,7 @@ const VehicleList = () => {
   const {theme} = useThemeContext();
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(50);
+  const {user} = useAuthUser();
 
   const {data = [], total = 0} = useSelector(
     ({webVehicles}) => webVehicles.vehiclesData,
@@ -44,7 +46,7 @@ const VehicleList = () => {
         search,
       }),
     );
-  }, [dispatch, filterData, page, search, perPage]);
+  }, [dispatch, filterData, page, search, perPage, user]);
 
   const onPageChange = (event, value) => {
     setPage(value);
