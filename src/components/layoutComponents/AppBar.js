@@ -12,13 +12,12 @@ import Tooltip from '@mui/material/Tooltip';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
+import {useMemo, useState} from 'react';
 import {useTheme} from '@mui/material';
 import Menu from '@mui/material/Menu';
 import {useRouter} from 'next/router';
 import Box from '@mui/material/Box';
-import {useEffect, useState} from 'react';
 import Link from 'next/link';
-import {fi} from 'date-fns/locale';
 
 export const pages = [
   {title: <IntlMessages id='website.home' />, link: '/home', target: '_self'},
@@ -69,7 +68,6 @@ function TopMenu() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [settings, setSettings] = useState([]);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -87,33 +85,31 @@ function TopMenu() {
     router.push('/all-vehicles');
     dispatch(setVehicleSearch(value));
   };
-  useEffect(() => {
-    const sets = [];
+
+  const settings = useMemo(() => {
+    const sets = [
+      {
+        key: 1,
+        title: <IntlMessages id='common.logout' />,
+        link: 'logout',
+      },
+    ];
     if (user?.type == 'User') {
-      sets.push(
-        {
-          title: <IntlMessages id='common.admin_panel' />,
-          link: '/admin/vehicles',
-        },
-        {
-          title: <IntlMessages id='common.logout' />,
-          link: 'logout',
-        },
-      );
+      sets.unshift({
+        key: 2,
+        title: <IntlMessages id='common.admin_panel' />,
+        link: '/admin/vehicles',
+      });
     } else if (user?.type == 'Customer') {
-      sets.push(
-        {
-          title: <IntlMessages id='common.my_account' />,
-          link: '/my-account',
-        },
-        {
-          title: <IntlMessages id='common.logout' />,
-          link: 'logout',
-        },
-      );
+      sets.unshift({
+        key: 3,
+        title: <IntlMessages id='common.my_account' />,
+        link: '/my-account',
+      });
     }
-    setSettings(sets);
-  }, [user]);
+    return sets;
+  }, [user?.type]);
+
   return (
     <AppBar position='static'>
       <Container maxWidth='xl'>

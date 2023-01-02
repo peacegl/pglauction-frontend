@@ -134,7 +134,6 @@ const Account = () => {
     <>
       <AppPageMeta />
       <Box
-        component='h2'
         variant='h2'
         sx={{
           fontSize: 16,

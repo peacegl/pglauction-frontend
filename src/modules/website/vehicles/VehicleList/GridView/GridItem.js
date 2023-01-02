@@ -4,22 +4,23 @@ import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import DefaultCarImage from 'assets/default_car_image.png';
 import SoldIcon from '../../../../../assets/icon/sold.png';
 import SignInModal from 'modules/auth/Signin/SignInModal';
+import {FETCH_ERROR} from 'shared/constants/ActionTypes';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useAuthUser} from '@crema/utility/AuthHooks';
+import jwtAxios from '@crema/services/auth/jwt-auth';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import AppTooltip from '@crema/core/AppTooltip';
 import {useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {LoadingButton} from '@mui/lab';
 import Card from '@mui/material/Card';
 import {useRouter} from 'next/router';
-import {jwtMethod, moneyFormater} from 'configs';
+import {moneyFormater} from 'configs';
 import PropTypes from 'prop-types';
-import jwtAxios from '@crema/services/auth/jwt-auth';
-import {LoadingButton} from '@mui/lab';
-import {FETCH_ERROR} from 'shared/constants/ActionTypes';
-import {useDispatch} from 'react-redux/es/exports';
+
 export default function GridItem({item, ...props}) {
   const router = useRouter();
   const theme = useTheme();
@@ -193,7 +194,6 @@ export default function GridItem({item, ...props}) {
                 !addedToWatchList ? <BookmarkAddIcon /> : <BookmarkAddedIcon />
               }
               variant='outlined'
-              borderRadius='28'
               size='small'
               sx={{mt: 2, px: 2}}
               onClick={() => addToWarchList(item.id)}
@@ -228,7 +228,7 @@ export default function GridItem({item, ...props}) {
       {showSignInModal && (
         <SignInModal
           open={showSignInModal}
-          toggleOpen={() => setShowSignInModl((d) => !d)}
+          toggleopen={() => setShowSignInModl((d) => !d)}
           width={500}
         />
       )}

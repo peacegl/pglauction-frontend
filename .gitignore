@@ -16,6 +16,9 @@
 /.idea/*
 .env
 /.env
+/yarn.lock
+yarn.lock
+/package-lock.json
 
 # Backend project
 /api.unitedtradingcars.com

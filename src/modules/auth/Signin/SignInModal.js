@@ -2,9 +2,9 @@ import {Box, Modal} from '@mui/material';
 import SignInStyle from './SignInStyle';
 import PropTypes from 'prop-types';
 
-export default function SignInModal({open, toggleOpen}) {
+export default function SignInModal({open, toggleopen}) {
   return (
-    <Modal open={open} toggleOpen={toggleOpen}>
+    <Modal open={open} toggleOpen={toggleopen}>
       <Box
         sx={{
           position: 'absolute',
@@ -13,12 +13,12 @@ export default function SignInModal({open, toggleOpen}) {
           transform: 'translate(-50%, -50%)',
         }}
       >
-        <SignInStyle showClose toggleOpen={toggleOpen} />
+        <SignInStyle showClose toggleOpen={toggleopen} />
       </Box>
     </Modal>
   );
 }
 SignInModal.propTypes = {
   open: PropTypes.bool.isRequired,
-  toggleOpen: PropTypes.func,
+  toggleopen: PropTypes.func,
 };

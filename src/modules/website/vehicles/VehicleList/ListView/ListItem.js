@@ -211,12 +211,7 @@ export default function ListItem({item, ...props}) {
                     </Typography>
                   </Box>
                 </Box>
-                <Button
-                  variant='outlined'
-                  borderRadius='28'
-                  size='small'
-                  sx={{mt: 2, px: 2}}
-                >
+                <Button variant='outlined' size='small' sx={{mt: 2, px: 2}}>
                   <BookmarkAddIcon />
                   Watch
                 </Button>

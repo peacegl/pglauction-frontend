@@ -14,11 +14,13 @@ export default AppPage(() => {
   const queryParams = asPath.split('?')[1];
 
   useEffect(() => {
-    if (!user && !isLoading) {
-      Router.push('/signin' + (queryParams ? '?' + queryParams : ''));
-    }
-    if (user && user.type != 'Customer') {
-      Router.push(userInitialUrl + (queryParams ? '?' + queryParams : ''));
+    if (!isLoading) {
+      if (!user) {
+        Router.push('/signin' + (queryParams ? '?' + queryParams : ''));
+      }
+      if (user && user.type != 'Customer') {
+        Router.push(userInitialUrl + (queryParams ? '?' + queryParams : ''));
+      }
     }
   }, [user, isLoading]);
   if (!user || isLoading) return <AppLoader />;
