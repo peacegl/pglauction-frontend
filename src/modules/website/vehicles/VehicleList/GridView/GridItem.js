@@ -1,20 +1,17 @@
 import {Box, Divider, Button, useTheme, Chip} from '@mui/material';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
+import useAddToWatchList from 'customHooks/useAddToWatchList';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import DefaultCarImage from 'assets/default_car_image.png';
 import SoldIcon from '../../../../../assets/icon/sold.png';
 import SignInModal from 'modules/auth/Signin/SignInModal';
-import {FETCH_ERROR} from 'shared/constants/ActionTypes';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {useAuthUser} from '@crema/utility/AuthHooks';
-import jwtAxios from '@crema/services/auth/jwt-auth';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import AppTooltip from '@crema/core/AppTooltip';
 import {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import {LoadingButton} from '@mui/lab';
 import Card from '@mui/material/Card';
 import {useRouter} from 'next/router';
@@ -24,14 +21,11 @@ import PropTypes from 'prop-types';
 export default function GridItem({item, ...props}) {
   const router = useRouter();
   const theme = useTheme();
-  const {user} = useAuthUser();
-  const dispatch = useDispatch();
-
   // const [height, setHeight] = useState('260px');
   const [hoverImage, setHoverImage] = useState(false);
   const [showSignInModal, setShowSignInModl] = useState(false);
-  const [addedToWatchList, setAddedToWatchList] = useState(false);
-  const [watchlistLoading, setWatchlistLoading] = useState(false);
+  const {addToWatchList, watchlistLoading, addedToWatchList} =
+    useAddToWatchList(item, setShowSignInModl);
   // useLayoutEffect(() => {
   //   setHeight((cardRef.current?.clientWidth / 4) * 3 + 'px');
   // });
@@ -43,33 +37,6 @@ export default function GridItem({item, ...props}) {
   //       : '';
   //   setAddressUrl(origin + router.asPath + `/${item.id}`);
   // }, []);
-
-  const addToWarchList = async (vehicle_id) => {
-    if (user?.email) {
-      try {
-        setWatchlistLoading(true);
-        const res = await jwtAxios.post('/add_remove_watchlist', {
-          vehicle_id: vehicle_id,
-        });
-        if (res.status === 201 && res.data.result) {
-          setAddedToWatchList(true);
-        } else if (res.status === 202 && res.data.result) {
-          setAddedToWatchList(false);
-        }
-        setWatchlistLoading(false);
-      } catch (error) {
-        dispatch({type: FETCH_ERROR, payload: error.message});
-
-        setWatchlistLoading(false);
-      }
-    } else {
-      setShowSignInModl(true);
-    }
-  };
-
-  useEffect(() => {
-    setAddedToWatchList(item?.is_added_to_watchlist);
-  }, [item]);
 
   return (
     <>
@@ -196,7 +163,7 @@ export default function GridItem({item, ...props}) {
               variant='outlined'
               size='small'
               sx={{mt: 2, px: 2}}
-              onClick={() => addToWarchList(item.id)}
+              onClick={() => addToWatchList(item.id)}
             >
               {!addedToWatchList ? (
                 <IntlMessages id='common.watch' />

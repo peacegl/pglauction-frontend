@@ -46,7 +46,7 @@ const VehicleList = () => {
         search,
       }),
     );
-  }, [dispatch, filterData, page, search, perPage, user]);
+  }, [dispatch, filterData, page, search, perPage, user?.type]);
 
   const onPageChange = (event, value) => {
     setPage(value);
