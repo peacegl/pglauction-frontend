@@ -1,8 +1,7 @@
-import {Badge, Box, Button, Typography} from '@mui/material';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import IntlMessages from '@crema/utility/IntlMessages';
-import SellIcon from '@mui/icons-material/Sell';
+import {Badge, Box, Typography} from '@mui/material';
 import AppLoader from '@crema/core/AppLoader';
 import BasicTooltip from './BasicTooltip';
 import MUIDataTable from 'mui-datatables';

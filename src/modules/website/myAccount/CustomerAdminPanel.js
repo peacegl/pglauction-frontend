@@ -57,11 +57,11 @@ const CustomerAdminPanel = () => {
       title: messages['common.myWatchlist'],
       child: <WatchList />,
     },
-    {
-      key: 4,
-      title: messages['common.purchaseHistory'],
-      child: <PurchaseHistory />,
-    },
+    // {
+    //   key: 4,
+    //   title: messages['common.purchaseHistory'],
+    //   child: <PurchaseHistory />,
+    // },
   ];
   const handleChange = (event, newValue) => {
     setValue(newValue);

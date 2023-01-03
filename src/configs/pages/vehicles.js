@@ -125,11 +125,22 @@ export const tableColumns = function () {
     },
     {
       name: 'odometer_type',
-      label: messages['vehicle.odometer_type'],
+      label: messages['vehicle.odometer'],
     },
     {
       name: 'transmission',
       label: messages['common.transmission'],
+      options: {
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography
+            sx={{
+              textTransform: 'capitalize',
+            }}
+          >
+            {value}
+          </Typography>
+        ),
+      },
     },
     {
       name: 'created_by',
