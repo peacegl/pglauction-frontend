@@ -1122,5 +1122,14 @@
   "common.address_line_2": "Address Line 2",
   "common.city": "City",
   "common.state": "State",
-  "common.zipCode": "Zip/Postal Code"
+  "common.zipCode": "Zip/Postal Code",
+  "common.companyPlaceholder": "Type company name",
+  "validation.addressLine1Required": "Address line 1 is required",
+  "common.countryPlaceholder": "Select country",
+  "validation.countryRequired": "Country is required",
+  "common.statePlaceholder": "Select state",
+  "validation.stateRequired": "State is required",
+  "common.cityPlaceholder": "Type city name",
+  "validation.cityRequired": "City is required",
+  "common.zipCodePlaceholder": "Type zip code"
 }
