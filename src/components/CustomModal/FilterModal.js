@@ -72,10 +72,7 @@ export default function FilterModal({
             mt: {xs: 2, sm: 8, md: 15},
             borderRadius: 2,
             mx: 'auto',
-            maxWidth: {
-              xs: '400px',
-              sm: (content.length == 2 ? 400 : 340) * content.length + 'px',
-            },
+            maxWidth: {xs: '400px', sm: 340 * content.length + 'px'},
             bgcolor: 'background.paper',
             boxShadow: 24,
             position: 'relative',

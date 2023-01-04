@@ -1,22 +1,17 @@
 import {Box, Divider, Stack, Button, useTheme, Chip} from '@mui/material';
-import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
-import useAddToWatchList from 'customHooks/useAddToWatchList';
-import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-import DefaultCarImage from 'assets/default_car_image.png';
-import SoldIcon from '../../../../../assets/icon/sold.png';
-import SignInModal from 'modules/auth/Signin/SignInModal';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import IntlMessages from '@crema/utility/IntlMessages';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
-import AppTooltip from '@crema/core/AppTooltip';
-import {useEffect, useState} from 'react';
-import {LoadingButton} from '@mui/lab';
 import Card from '@mui/material/Card';
+import PropTypes from 'prop-types';
+import AppTooltip from '@crema/core/AppTooltip';
 import {moneyFormater} from 'configs';
 import {useRouter} from 'next/router';
-import PropTypes from 'prop-types';
+import IntlMessages from '@crema/utility/IntlMessages';
+import SoldIcon from '../../../../../assets/icon/sold.png';
+import {useEffect, useState} from 'react';
+import DefaultCarImage from 'assets/default_car_image.png';
 
 const TextShow = ({value, label, extra = ''}) => {
   return (
@@ -48,9 +43,6 @@ const WhatsAppButton = (props) => {
 export default function ListItem({item, ...props}) {
   const router = useRouter();
   const theme = useTheme();
-  const [showSignInModal, setShowSignInModl] = useState(false);
-  const {addToWatchList, watchlistLoading, addedToWatchList} =
-    useAddToWatchList(item, setShowSignInModl);
 
   const viewPage = () => {
     router.push(`/all-vehicles/${item.id}`);
@@ -217,27 +209,16 @@ export default function ListItem({item, ...props}) {
                     </Typography>
                   </Box>
                 </Box>
-                <LoadingButton
-                  loading={watchlistLoading}
-                  loadingPosition='start'
-                  startIcon={
-                    !addedToWatchList ? (
-                      <BookmarkAddIcon />
-                    ) : (
-                      <BookmarkAddedIcon />
-                    )
-                  }
+                {/* <Button
                   variant='outlined'
+                  borderRadius='28'
                   size='small'
                   sx={{mt: 2, px: 2}}
-                  onClick={() => addToWatchList(item.id)}
+                  href=''
                 >
-                  {!addedToWatchList ? (
-                    <IntlMessages id='common.watch' />
-                  ) : (
-                    <IntlMessages id='common.remove' />
-                  )}
-                </LoadingButton>
+                  <BookmarkAddIcon />
+                  Watch
+                </Button> */}
                 <Box
                   sx={{
                     display: {xs: 'inline', sm: 'none'},
@@ -301,13 +282,6 @@ export default function ListItem({item, ...props}) {
           </CardContent>
         </Box>
       </Card>
-      {showSignInModal && (
-        <SignInModal
-          open={showSignInModal}
-          toggleopen={() => setShowSignInModl((d) => !d)}
-          width={500}
-        />
-      )}
     </>
   );
 }

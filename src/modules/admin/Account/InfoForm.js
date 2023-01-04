@@ -104,27 +104,25 @@ const InfoForm = ({initialValues}) => {
                     <IntlMessages id='common.female' />
                   </MenuItem>
                 </AppTextField>
-                {user.type == 'User' && (
-                  <AppDateField
-                    label={<IntlMessages id='common.birthDate' />}
-                    name='birth_date'
-                    value={values?.birth_date ? values?.birth_date : ''}
-                    setfieldvalue={(name, value) => {
-                      setFieldValue(
-                        name,
-                        value
-                          ? value.getFullYear() +
-                              '/' +
-                              (value.getMonth() + 1) +
-                              '/' +
-                              value.getDate()
-                          : '',
-                      );
-                    }}
-                    size='small'
-                    sx={{flex: 1}}
-                  />
-                )}
+                <AppDateField
+                  label={<IntlMessages id='common.birthDate' />}
+                  name='birth_date'
+                  value={values?.birth_date ? values?.birth_date : ''}
+                  setfieldvalue={(name, value) => {
+                    setFieldValue(
+                      name,
+                      value
+                        ? value.getFullYear() +
+                            '/' +
+                            (value.getMonth() + 1) +
+                            '/' +
+                            value.getDate()
+                        : '',
+                    );
+                  }}
+                  size='small'
+                  sx={{flex: 1}}
+                />
               </Stack>
             </Stack>
             <Box

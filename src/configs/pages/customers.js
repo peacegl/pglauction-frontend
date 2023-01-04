@@ -15,7 +15,7 @@ export const tableColumns = function () {
         download: false,
         sort: false,
         customBodyRender: (value, tableMeta, updateValue) => (
-          <Avatar alt={'Profile picture'} src={value} />
+          <Avatar alt={' profile picture.'} src={value} />
         ),
       },
     },
@@ -149,13 +149,7 @@ export const filterContent = [
   },
 ];
 
-export default function conifgs(
-  invalidPhone,
-  invalidWhatsapp,
-  misMatch,
-  edit,
-  hideStatus = false,
-) {
+export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
   return {
     exportColumns: [],
     validationSchema: [
@@ -176,18 +170,6 @@ export default function conifgs(
         gender: yup
           .string()
           .required(<IntlMessages id='validation.genderRequired' />),
-        address_line_1: yup
-          .string()
-          .required(<IntlMessages id='validation.addressLine1Required' />),
-        country_id: yup
-          .string()
-          .required(<IntlMessages id='validation.countryRequired' />),
-        state_id: yup
-          .string()
-          .required(<IntlMessages id='validation.stateRequired' />),
-        city: yup
-          .string()
-          .required(<IntlMessages id='validation.cityRequired' />),
       }),
       yup.object({
         email: yup
@@ -216,11 +198,9 @@ export default function conifgs(
               .required(
                 <IntlMessages id='validation.passwordConfrimationRequired' />,
               ),
-        status: hideStatus
-          ? yup.string().nullable()
-          : yup
-              .string()
-              .required(<IntlMessages id='validation.statusRequired' />),
+        status: yup
+          .string()
+          .required(<IntlMessages id='validation.statusRequired' />),
         timezone: yup
           .string()
           .required(<IntlMessages id='validation.timezoneRequired' />),

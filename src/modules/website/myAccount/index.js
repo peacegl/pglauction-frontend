@@ -1,11 +1,7 @@
-import CustomerAdminPanel from './CustomerAdminPanel';
-import PropTypes from 'prop-types';
+import React from 'react';
 
-const MyAccount = (user) => {
-  return <CustomerAdminPanel user={user} />;
+const index = () => {
+  return <div></div>;
 };
 
-export default MyAccount;
-MyAccount.propTypes = {
-  user: PropTypes.any,
-};
+export default index;

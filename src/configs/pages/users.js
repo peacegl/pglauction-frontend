@@ -14,7 +14,7 @@ export const tableColumns = function () {
       options: {
         download: false,
         customBodyRender: (value, tableMeta, updateValue) => (
-          <Avatar alt={'Profile picture'} src={value} />
+          <Avatar alt={' profile picture.'} src={value} />
         ),
       },
     },

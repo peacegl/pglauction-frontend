@@ -97,25 +97,3 @@ export async function availableChecking(
     return false;
   }
 }
-
-export async function jwtMethod(
-  method,
-  url,
-  content,
-  successStatus,
-  loading,
-  setData,
-  setExtra = undefined,
-) {
-  try {
-    loading(true);
-    const res = await jwtAxios[method](url, content);
-    if (res.status === successStatus && res.data.result) {
-      setData(res.data.data);
-      if (setExtra) setExtra(res.data);
-    }
-    loading(false);
-  } catch (error) {
-    loading(false);
-  }
-}

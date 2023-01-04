@@ -135,7 +135,7 @@ export default function VehicleList({user}) {
           toggleOpen={() => setOpenFilter((d) => !d)}
           initialData={filterData}
           updateFilterData={setFilterData}
-          title={<IntlMessages id='vehicle.filter' />}
+          title='Vehicle Filter'
           content={filterContent}
         />
       )}

@@ -1,21 +1,12 @@
 import {alpha, Box, colors, Container, Typography} from '@mui/material';
-import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
-import useAddToWatchList from 'customHooks/useAddToWatchList';
-import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-import SignInModal from 'modules/auth/Signin/SignInModal';
-import IntlMessages from '@crema/utility/IntlMessages';
-import {useSelector} from 'react-redux';
-import {LoadingButton} from '@mui/lab';
 import {useTheme} from '@mui/styles';
-import PropTypes from 'prop-types';
-import {useState} from 'react';
+import {useSelector} from 'react-redux';
+import IntlMessages from '@crema/utility/IntlMessages';
 
-function Header({item}) {
+function Header({}) {
   const theme = useTheme();
   const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
-  const [showSignInModal, setShowSignInModl] = useState(false);
-  const {addToWatchList, watchlistLoading, addedToWatchList} =
-    useAddToWatchList(item, setShowSignInModl);
+
   return (
     <Box
       display='flex'
@@ -66,39 +57,11 @@ function Header({item}) {
               </Typography>
             </Box>
           </Box>
-          <Box>
-            <LoadingButton
-              loading={watchlistLoading}
-              loadingPosition='start'
-              startIcon={
-                !addedToWatchList ? <BookmarkAddIcon /> : <BookmarkAddedIcon />
-              }
-              variant='outlined'
-              size='small'
-              sx={{mt: 2, px: 2}}
-              onClick={() => addToWatchList(item.id)}
-            >
-              {!addedToWatchList ? (
-                <IntlMessages id='common.watch' />
-              ) : (
-                <IntlMessages id='common.remove' />
-              )}
-            </LoadingButton>
-          </Box>
+          <Box></Box>
         </Box>
       </Container>
-      {showSignInModal && (
-        <SignInModal
-          open={showSignInModal}
-          toggleopen={() => setShowSignInModl((d) => !d)}
-          width={500}
-        />
-      )}
     </Box>
   );
 }
 
 export default Header;
-Header.propTypes = {
-  item: PropTypes.any,
-};
