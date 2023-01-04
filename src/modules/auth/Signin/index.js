@@ -9,6 +9,7 @@ import {
   userInitialUrl,
   customerInitialUrl,
 } from '../../../shared/constants/AppConst';
+import {AppLoader} from '@crema';
 
 const Signin = () => {
   const {user, isLoading} = useAuthUser();
@@ -31,7 +32,7 @@ const Signin = () => {
       alignItems='center'
       spacing={7}
     >
-      <Box>
+      <Box sx={{mt: 9, mb: 10}}>
         <SignInStyle />
       </Box>
       {/* <Box sx={{maxWidth: {xs: '550px', lg: '650px'}, px: 5}}>

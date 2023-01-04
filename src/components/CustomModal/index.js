@@ -278,6 +278,5 @@ CustomModal.propTypes = {
   initialValues: PropTypes.object,
   customValidation: PropTypes.func,
   isLoading: PropTypes.bool,
-  setValues: PropTypes.func,
   height: PropTypes.number || PropTypes.string,
 };

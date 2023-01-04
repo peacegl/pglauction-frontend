@@ -1,8 +1,8 @@
 import {onGetWebSimilarVehicle, onGetWebVehicleView} from 'redux/actions';
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import ImageCarousel from 'components/design/ImageCarousel';
 import CustomCarousel from 'components/CustomCarousel';
 import IntlMessages from '@crema/utility/IntlMessages';
+import {useAuthUser} from '@crema/utility/AuthHooks';
 import {useDispatch, useSelector} from 'react-redux';
 import Error404 from 'modules/errorPages/Error404';
 import {Box, Container} from '@mui/material';
@@ -20,6 +20,7 @@ const VehicleDetail = () => {
   const loading = useSelector(({common}) => common.loading);
   const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
   const {similarVehicles = []} = useSelector(({webVehicles}) => webVehicles);
+  const {user} = useAuthUser();
 
   useEffect(() => {
     if (id) {
@@ -28,13 +29,16 @@ const VehicleDetail = () => {
     }
   }, [id]);
 
+  useEffect(() => {
+    if (id) {
+      dispatch(onGetWebVehicleView(id));
+    }
+  }, [user?.type]);
   return (
     <>
-      {loading ? (
-        <Box maxWidth='xl' sx={{height: '600px'}}></Box>
-      ) : vehicle.id ? (
+      {vehicle.id ? (
         <>
-          <Header />
+          <Header item={vehicle} />
           <Container maxWidth='xl' sx={{mt: 6}}>
             <Box
               sx={{
@@ -82,7 +86,7 @@ const VehicleDetail = () => {
           </Container>
         </>
       ) : (
-        <Error404 url='/' />
+        !loading && <Error404 url='/' />
       )}
     </>
   );

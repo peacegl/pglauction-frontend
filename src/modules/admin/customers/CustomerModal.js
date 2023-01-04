@@ -29,6 +29,10 @@ export default function CustomerModal({
   const [isLoading, setIsLoading] = useState(false);
   const [timezones, setTimezones] = useState([]);
   const [timezonesLoading, setTimezonesLoading] = useState(false);
+  const [countries, setCountries] = useState([]);
+  const [countriesLoading, setCountriesLoading] = useState(false);
+  const [states, setStates] = useState([]);
+  const [statesLoading, setStatesLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     profile: '',
     fullname: '',
@@ -38,7 +42,16 @@ export default function CustomerModal({
     email: '',
     username: '',
     password: '',
+    password_confirmation: '',
     timezone: '',
+    accept_terms: true,
+    address_line_1: '',
+    address_line_2: '',
+    company: '',
+    country_id: '',
+    state_id: '',
+    city: '',
+    zip_code: '',
     status: '',
   });
   const {messages} = appIntl('');
@@ -145,8 +158,16 @@ export default function CustomerModal({
   };
 
   useEffect(() => {
-    // getData('/role/auto_complete?type=customer', {}, setRolesLoading, setRoles);
     getData(`/timezones/auto_complete`, {}, setTimezonesLoading, setTimezones);
+    if (!recordId) {
+      getData(
+        `/countries/auto_complete`,
+        {},
+        setCountriesLoading,
+        setCountries,
+      );
+      getData(`/states/auto_complete`, {}, setStatesLoading, setStates);
+    }
   }, []);
 
   const searchTimezones = (content) => {
@@ -158,6 +179,18 @@ export default function CustomerModal({
     );
   };
 
+  const searchCountries = (content) => {
+    getData(
+      `/countries/auto_complete`,
+      content,
+      setCountriesLoading,
+      setCountries,
+    );
+  };
+
+  const searchStates = (content) => {
+    getData(`/states/auto_complete`, content, setStatesLoading, setStates);
+  };
   useEffect(() => {
     if (recordId) {
       (async function () {
@@ -184,6 +217,8 @@ export default function CustomerModal({
               }
             });
             setInitialValues(values);
+            searchCountries({state_id: values.state_id}, values.country_id);
+            searchStates({country_id: values.country_id}, values.state_id);
           }
           setIsLoading(false);
         } catch (error) {
@@ -207,7 +242,17 @@ export default function CustomerModal({
       key: 1,
       icon: <PersonIcon />,
       label: <IntlMessages id='common.customerInfo' />,
-      children: <CustomerStepOne profileUrl={profileUrl} />,
+      children: (
+        <CustomerStepOne
+          profileUrl={profileUrl}
+          countries={countries}
+          countriesLoading={countriesLoading}
+          searchCountries={searchCountries}
+          states={states}
+          statesLoading={statesLoading}
+          searchStates={searchStates}
+        />
+      ),
     },
     {
       key: 2,
@@ -231,6 +276,7 @@ export default function CustomerModal({
       width={width}
       steps={steps}
       onSave={onSave}
+      height={500}
       validationSchema={validationSchema}
       initialValues={initialValues}
       isLoading={isLoading}
