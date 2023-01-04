@@ -152,8 +152,15 @@ export default function UserModal({
     return true;
   };
   useEffect(() => {
+    if (!recordId) {
+      getData(
+        `/timezones/auto_complete`,
+        {},
+        setTimezonesLoading,
+        setTimezones,
+      );
+    }
     getData(`/role/auto_complete?type=user`, {}, setRolesLoading, setRoles);
-    getData(`/timezones/auto_complete`, {}, setTimezonesLoading, setTimezones);
     getData(
       `/grouped_permissions`,
       {},
@@ -163,9 +170,9 @@ export default function UserModal({
     );
   }, []);
 
-  const searchTimezones = (content) => {
+  const searchTimezones = (content, name = null) => {
     getData(
-      `/timezones/auto_complete`,
+      `/timezones/auto_complete${name ? '?name=' + name : ''}`,
       content,
       setTimezonesLoading,
       setTimezones,
@@ -210,6 +217,7 @@ export default function UserModal({
               }
             });
             setInitialValues(values);
+            searchTimezones({}, values.timezone);
           }
           setIsLoading(false);
         } catch (error) {

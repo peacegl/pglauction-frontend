@@ -8,6 +8,7 @@ const AccountTabsWrapper = ({children}) => {
       sx={{
         display: 'flex',
         flexDirection: {xs: 'column', sm: 'row'},
+        justifyContent: 'center',
         '& .account-tabs': {
           minWidth: {xs: 200, lg: 280},
           backgroundColor: (theme) => theme.palette.background.paper,
@@ -51,6 +52,7 @@ const AccountTabsWrapper = ({children}) => {
           },
         },
         '& .account-tabs-content': {
+          maxWidth: '800px',
           backgroundColor: (theme) => theme.palette.background.paper,
           backgroundImage: (theme) =>
             `linear-gradient(${alpha(

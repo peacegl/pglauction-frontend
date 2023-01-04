@@ -14,6 +14,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import InfoForm from './InfoForm';
+import {getData} from 'configs';
 
 function a11yProps(index) {
   return {
@@ -48,11 +49,24 @@ const Account = () => {
     timezone: '',
     gender: '',
     birth_date: '',
+    address_line_1: '',
+    address_line_2: '',
+    company: '',
+    country_id: '',
+    state_id: '',
+    city: '',
+    zip_code: '',
   };
   const profileUrl = useRef();
   const [values, setValues] = useState({});
   const [value, setValue] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [timezones, setTimezones] = useState([]);
+  const [timezonesLoading, setTimezonesLoading] = useState(false);
+  const [countries, setCountries] = useState([]);
+  const [countriesLoading, setCountriesLoading] = useState(false);
+  const [states, setStates] = useState([]);
+  const [statesLoading, setStatesLoading] = useState(false);
   const [userInitialValues, setUserInitialValues] = useState({
     profile: '',
     fullname: '',
@@ -60,11 +74,18 @@ const Account = () => {
     whatsapp: '',
     email: '',
     username: '',
+    address_line_1: '',
+    address_line_2: '',
+    company: '',
   });
   const [infoInitialValues, setInfoInitialValues] = useState({
     timezone: '',
     gender: '',
     birth_date: '',
+    country_id: '',
+    state_id: '',
+    city: '',
+    zip_code: '',
   });
   const passwordInitialValues = {
     current_password: '',
@@ -93,6 +114,33 @@ const Account = () => {
     }
   }, [values, value]);
 
+  const searchTimezones = (content, name = null) => {
+    getData(
+      `/timezones/auto_complete${name ? '?name=' + name : ''}`,
+      content,
+      setTimezonesLoading,
+      setTimezones,
+    );
+  };
+
+  const searchCountries = (content, country_id = null) => {
+    getData(
+      `/countries/auto_complete${country_id ? '?id=' + country_id : ''}`,
+      content,
+      setCountriesLoading,
+      setCountries,
+    );
+  };
+
+  const searchStates = (content, state_id) => {
+    getData(
+      `/states/auto_complete${state_id ? '?id=' + state_id : ''}`,
+      content,
+      setStatesLoading,
+      setStates,
+    );
+  };
+
   useEffect(() => {
     (async function () {
       try {
@@ -118,6 +166,9 @@ const Account = () => {
           });
           delete initValues.profile;
           setUserInitialValues(initValues);
+          searchTimezones({}, values.timezone);
+          searchCountries({state_id: values.state_id}, values.country_id);
+          searchStates({country_id: values.country_id}, values.state_id);
         }
         setIsLoading(false);
       } catch (error) {
@@ -133,62 +184,58 @@ const Account = () => {
   return (
     <>
       <AppPageMeta />
-      <Box
-        variant='h2'
-        sx={{
-          fontSize: 16,
-          color: 'text.primary',
-          fontWeight: Fonts.SEMI_BOLD,
-          mb: {
-            xs: 2,
-            lg: 4,
-          },
-        }}
-      >
-        My Account
-      </Box>
-      <AppAnimate animation='transition.slideUpIn' delay={200}>
-        <AccountTabsWrapper>
-          <Tabs
-            className='account-tabs'
-            value={value}
-            onChange={onTabsChange}
-            aria-label='basic tabs example'
-            orientation='vertical'
-          >
-            {tabs.map((tab, index) => (
-              <Tab
-                className='account-tab'
-                label={tab.name}
-                icon={tab.icon}
-                key={index}
-                {...a11yProps(index)}
-              />
-            ))}
-          </Tabs>
-          <Box className='account-tabs-content'>
-            <Box
-              sx={{
-                position: 'relative',
-                maxWidth: 600,
-              }}
+      <Box sx={{mt: 8}}>
+        <AppAnimate animation='transition.slideUpIn' delay={200}>
+          <AccountTabsWrapper>
+            <Tabs
+              className='account-tabs'
+              value={value}
+              onChange={onTabsChange}
+              aria-label='basic tabs example'
+              orientation='vertical'
             >
-              {isLoading && <AppLoader />}
-
-              {value === 0 && (
-                <PersonalInfoForm
-                  initialValues={userInitialValues}
-                  profileUrl={profileUrl}
+              {tabs.map((tab, index) => (
+                <Tab
+                  className='account-tab'
+                  label={tab.name}
+                  icon={tab.icon}
+                  key={index}
+                  {...a11yProps(index)}
                 />
-              )}
-              {value === 1 && (
-                <ChangePasswordForm initialValues={passwordInitialValues} />
-              )}
-              {value === 2 && <InfoForm initialValues={infoInitialValues} />}
+              ))}
+            </Tabs>
+            <Box className='account-tabs-content'>
+              <Box sx={{position: 'relative', maxWidth: '95%', mx: 'auto'}}>
+                {isLoading && <AppLoader />}
+
+                {value === 0 && (
+                  <PersonalInfoForm
+                    initialValues={userInitialValues}
+                    profileUrl={profileUrl}
+                  />
+                )}
+                {value === 1 && (
+                  <ChangePasswordForm initialValues={passwordInitialValues} />
+                )}
+                {value === 2 && (
+                  <InfoForm
+                    initialValues={infoInitialValues}
+                    countries={countries}
+                    countriesLoading={countriesLoading}
+                    searchCountries={searchCountries}
+                    states={states}
+                    statesLoading={statesLoading}
+                    searchStates={searchStates}
+                    timezones={timezones}
+                    timezonesLoading={timezonesLoading}
+                    searchTimezones={searchTimezones}
+                  />
+                )}
+              </Box>
             </Box>
-          </Box>
-        </AccountTabsWrapper>
-      </AppAnimate>
+          </AccountTabsWrapper>
+        </AppAnimate>
+      </Box>
     </>
   );
 };
