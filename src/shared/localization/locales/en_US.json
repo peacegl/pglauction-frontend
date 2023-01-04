@@ -1117,5 +1117,10 @@
   "watchlist.filterWatchList": "Watch List Filter",
   "vehicle.filter": "Vehicle Filter",
   "watchlist.message.deleted": "WatchList(s) deleted successfully",
-  "watchlist.deleteMessage": "Are you sure, you want to delete the selected WatchList(s)?"
+  "watchlist.deleteMessage": "Are you sure, you want to delete the selected WatchList(s)?",
+  "common.address_line_1": "Address Line 1",
+  "common.address_line_2": "Address Line 2",
+  "common.city": "City",
+  "common.state": "State",
+  "common.zipCode": "Zip/Postal Code"
 }

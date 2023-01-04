@@ -1,219 +1,245 @@
+import CustomerStepOne from 'modules/admin/customers/CustomerStepOne';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {AiOutlineGoogle, AiOutlineTwitter} from 'react-icons/ai';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useAuthMethod} from '@crema/utility/AuthHooks';
 import CustomerConfigs from 'configs/pages/customers';
+import SignUpStepperModal from './SignUpStepperModal';
+import PersonIcon from '@mui/icons-material/Person';
+import {availableChecking, getData} from 'configs';
+import {useEffect, useRef, useState} from 'react';
 import IconButton from '@mui/material/IconButton';
 import {Fonts} from 'shared/constants/AppEnums';
 import SaveIcon from '@mui/icons-material/Save';
 import {onSignUpCustomer} from 'redux/actions';
 import Checkbox from '@mui/material/Checkbox';
+import SignUpStepTwo from './SignUpStepTwo';
 import {FaFacebookF} from 'react-icons/fa';
 import Button from '@mui/material/Button';
-import {availableChecking} from 'configs';
 import {BsGithub} from 'react-icons/bs';
-import SignUpModal from './SignUpModal';
 import {useDispatch} from 'react-redux';
-import {useRef, useState} from 'react';
-import {LoadingButton} from '@mui/lab';
 import helpers from 'helpers/helpers';
-import {useRouter} from 'next/router';
-import {Form, Formik} from 'formik';
 import Box from '@mui/material/Box';
 import {useIntl} from 'react-intl';
 import Link from 'next/link';
 
 const SignupFirebase = () => {
+  const [timezones, setTimezones] = useState([]);
+  const [timezonesLoading, setTimezonesLoading] = useState(false);
+  const [countries, setCountries] = useState([]);
+  const [countriesLoading, setCountriesLoading] = useState(false);
+  const [states, setStates] = useState([]);
+  const [statesLoading, setStatesLoading] = useState(false);
   const [showTermsError, setShowTermsError] = useState(false);
+
   const profileUrl = useRef();
   const {messages} = useIntl();
   const dispatch = useDispatch();
   const {signInUser} = useAuthMethod();
-  const router = useRouter();
 
   const validationSchema = CustomerConfigs(
     messages['validation.invalidPhone'],
     messages['validation.invalidWhatsapp'],
     messages['validation.passwordMisMatch'],
-  ).signupSchema;
+    false,
+    true,
+  ).validationSchema;
 
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const customValidation = async (values, actions, activeStep) => {
+    if (activeStep == 1) {
+      return await stepOneValidation(values, actions);
+    }
+    if (activeStep == 2) {
+      return await stepTwoValidation(values, actions);
+    }
+    return true;
+  };
 
-  const handleSubmit = async (values, actions) => {
-    if (await stepTwoValidation(values, actions)) {
+  const onSave = async (values, actions) => {
+    if (values.accept_terms) {
       const userFormData = helpers.getFormData(values);
       dispatch(onSignUpCustomer(userFormData, values, signInUser));
-      router.push('/my-account');
       actions.setTouched({});
+    } else {
+      setShowTermsError(true);
     }
+  };
+  const onStepOneSuccess = (res, actions) => {
+    if (!res.data.result) {
+      if (res.data.message == 2) {
+        actions.setErrors({
+          phone: <IntlMessages id='validation.notUniquePhone' />,
+        });
+      } else if (res.data.message == 1) {
+        actions.setErrors({
+          whatsapp: <IntlMessages id='validation.notUniqueWhatsapp' />,
+        });
+      } else {
+        actions.setErrors({
+          whatsapp: <IntlMessages id='validation.notUniqueWhatsapp' />,
+          phone: <IntlMessages id='validation.notUniquePhone' />,
+        });
+      }
+    }
+  };
+  const onStepOneFail = (actions) => {
+    actions.setErrors({
+      whatsapp: <IntlMessages id='validation.notUniqueWhatsapp' />,
+      phone: <IntlMessages id='validation.notUniquePhone' />,
+    });
+  };
+  const stepOneValidation = async (values, actions) => {
+    const params = {
+      whatsapp: values.whatsapp,
+      phone: values.phone,
+    };
+    if (values.whatsapp && values.phone) {
+      return availableChecking(
+        'customer/valid_credential',
+        params,
+        actions,
+        onStepOneSuccess,
+        onStepOneFail,
+      );
+    }
+    return true;
+  };
+  const onStepTwoSuccess = (res, actions) => {
+    if (!res.data.result) {
+      if (res.data.message == 1) {
+        actions.setErrors({
+          email: <IntlMessages id='validation.notUniqueEmail' />,
+        });
+      } else if (res.data.message == 2) {
+        actions.setErrors({
+          username: <IntlMessages id='validation.notUniqueUsername' />,
+        });
+      } else {
+        actions.setErrors({
+          username: <IntlMessages id='validation.notUniqueUsername' />,
+          email: <IntlMessages id='validation.notUniqueEmail' />,
+        });
+      }
+    }
+  };
+  const onStepTwoFail = (actions) => {
+    actions.setErrors({
+      username: <IntlMessages id='validation.notUniqueUsername' />,
+      email: <IntlMessages id='validation.notUniqueEmail' />,
+    });
   };
 
   const stepTwoValidation = async (values, actions) => {
     const params = {
       username: values.username,
       email: values.email,
-      whatsapp: values.whatsapp,
-      phone: values.phone,
     };
+    if (!values.accept_terms) {
+      setShowTermsError(true);
+    }
     if (values.username && values.email) {
       return availableChecking(
-        'loginables/valid_credential_all',
+        'loginables/valid_credential',
         params,
         actions,
-        onSuccess,
-        onFail,
+        onStepTwoSuccess,
+        onStepTwoFail,
       );
     }
     return true;
   };
 
-  const onSuccess = (res, actions) => {
-    let errors = {};
-    if (!res.data.result) {
-      if (res.data.message?.includes(1)) {
-        errors.email = <IntlMessages id='validation.notUniqueEmail' />;
-      }
-      if (res.data.message?.includes(2)) {
-        errors.username = <IntlMessages id='validation.notUniqueUsername' />;
-      }
-      if (res.data.message?.includes(3)) {
-        errors.phone = <IntlMessages id='validation.notUniquePhone' />;
-      }
-      if (res.data.message?.includes(4)) {
-        errors.whatsapp = <IntlMessages id='validation.notUniqueWhatsapp' />;
-      }
-      actions.setErrors(errors);
-    }
-  };
-  const onFail = (actions) => {
-    actions.setErrors({
-      username: <IntlMessages id='validation.notUniqueUsername' />,
-      email: <IntlMessages id='validation.notUniqueEmail' />,
-      whatsapp: <IntlMessages id='validation.notUniqueWhatsapp' />,
-      phone: <IntlMessages id='validation.notUniquePhone' />,
-    });
+  useEffect(() => {
+    getData(`/timezones/auto_complete`, {}, setTimezonesLoading, setTimezones);
+    getData(`/countries/auto_complete`, {}, setCountriesLoading, setCountries);
+    getData(`/states/auto_complete`, {}, setStatesLoading, setStates);
+  }, []);
+
+  const searchTimezones = (content) => {
+    getData(
+      `/timezones/auto_complete`,
+      content,
+      setTimezonesLoading,
+      setTimezones,
+    );
   };
 
+  const searchCountries = (content) => {
+    getData(
+      `/countries/auto_complete`,
+      content,
+      setCountriesLoading,
+      setCountries,
+    );
+  };
+
+  const searchStates = (content) => {
+    getData(`/states/auto_complete`, content, setStatesLoading, setStates);
+  };
+
+  const steps = [
+    {
+      key: 1,
+      icon: <PersonIcon />,
+      label: <IntlMessages id='common.customerInfo' />,
+      children: (
+        <CustomerStepOne
+          profileUrl={profileUrl}
+          countries={countries}
+          countriesLoading={countriesLoading}
+          searchCountries={searchCountries}
+          states={states}
+          statesLoading={statesLoading}
+          searchStates={searchStates}
+        />
+      ),
+    },
+    {
+      key: 2,
+      icon: <AccountCircleIcon />,
+      label: <IntlMessages id='common.accountInfo' />,
+      children: (
+        <SignUpStepTwo
+          timezones={timezones}
+          timezonesLoading={timezonesLoading}
+          searchTimezones={searchTimezones}
+          showTermsError={showTermsError}
+          setShowTermsError={setShowTermsError}
+        />
+      ),
+    },
+  ];
+  const initialValues = {
+    profile: '',
+    fullname: '',
+    phone: '',
+    whatsapp: '',
+    gender: '',
+    email: '',
+    username: '',
+    password: '',
+    password_confirmation: '',
+    timezone: '',
+    accept_terms: false,
+    address_line_1: '',
+    address_line_2: '',
+    company: '',
+    country_id: '',
+    state_id: '',
+    city: '',
+    zip_code: '',
+  };
   return (
     <Box sx={{flex: 1, display: 'flex', flexDirection: 'column'}}>
       <Box sx={{flex: 1, display: 'flex', flexDirection: 'column', mb: 5}}>
-        <Formik
-          validateOnChange={true}
-          initialValues={{
-            profile: '',
-            fullname: '',
-            phone: '',
-            whatsapp: '',
-            gender: '',
-            email: '',
-            username: '',
-            password: '',
-            password_confirmation: '',
-            timezone: '',
-            terms: false,
-          }}
+        <SignUpStepperModal
+          steps={steps}
+          onSave={onSave}
           validationSchema={validationSchema}
-          onSubmit={async (data, actions) => {
-            actions.setSubmitting(true);
-            await delay(0);
-            await handleSubmit(data, actions);
-            actions.setSubmitting(false);
-          }}
-        >
-          {({values, isSubmitting, ...actions}) => (
-            <Form style={{textAlign: 'left'}} noValidate autoComplete='off'>
-              <SignUpModal
-                profileUrl={profileUrl}
-                values={values}
-                setfieldvalue={actions.setFieldValue}
-              />
-              <Box>
-                <Box
-                  sx={{
-                    mt: 2,
-                    display: 'flex',
-                    alignItems: 'center',
-                    flexWrap: 'wrap',
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Checkbox
-                      sx={{
-                        ml: -3,
-                      }}
-                      name='terms'
-                      value={values.terms}
-                      checked={values.terms}
-                      onChange={() => {
-                        setShowTermsError(values.terms);
-                        actions.setFieldValue('terms', values.terms ? 0 : 1);
-                      }}
-                    />
-                    <Box
-                      component='span'
-                      sx={{
-                        mr: 2,
-                        color: 'grey.500',
-                      }}
-                    >
-                      <IntlMessages id='common.iAgreeTo' />
-                    </Box>
-                  </Box>
-                  <Box
-                    component='span'
-                    sx={{
-                      color: (theme) => theme.palette.primary.main,
-                      cursor: 'pointer',
-                    }}
-                  >
-                    <Link href='/terms' target='_blank'>
-                      <IntlMessages id='common.termConditions' />
-                    </Link>
-                  </Box>
-                </Box>
-                {showTermsError == true && (
-                  <Box
-                    component='span'
-                    sx={{
-                      color: (theme) => theme.palette.error.main,
-                      cursor: 'pointer',
-                    }}
-                  >
-                    <IntlMessages id='validation.requiredField' />
-                  </Box>
-                )}
-              </Box>
-              <LoadingButton
-                onClick={() => {
-                  if (!values.terms) {
-                    setShowTermsError(true);
-                  }
-                }}
-                loading={isSubmitting}
-                loadingPosition='start'
-                startIcon={<SaveIcon />}
-                variant='contained'
-                type='submit'
-                sx={{
-                  mt: {xs: 3, xl: 4},
-                  minWidth: 160,
-                  fontWeight: Fonts.REGULAR,
-                  fontSize: 16,
-                  textTransform: 'capitalize',
-                  padding: '4px 16px 8px',
-                }}
-              >
-                <IntlMessages id='common.signup' />
-              </LoadingButton>
-            </Form>
-          )}
-        </Formik>
+          initialValues={initialValues}
+          customValidation={customValidation}
+        />
       </Box>
-
       <Box
         sx={{
           color: 'grey.500',

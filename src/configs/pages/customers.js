@@ -149,52 +149,15 @@ export const filterContent = [
   },
 ];
 
-export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
+export default function conifgs(
+  invalidPhone,
+  invalidWhatsapp,
+  misMatch,
+  edit,
+  hideStatus = false,
+) {
   return {
     exportColumns: [],
-    signupSchema: yup.object({
-      fullname: yup
-        .string()
-        .min(3, <IntlMessages id='validation.min3Letter' />)
-        .max(64, <IntlMessages id='validation.max64Letter' />)
-        .required(<IntlMessages id='validation.fullnameRequired' />),
-      phone: yup
-        .string()
-        .matches(phoneRegExp, invalidPhone)
-        .required(<IntlMessages id='validation.phoneRequired' />),
-      whatsapp: yup
-        .string()
-        .matches(phoneRegExp, invalidWhatsapp)
-        .required(<IntlMessages id='validation.whatsappRequired' />),
-      email: yup
-        .string()
-        .email(<IntlMessages id='validation.invalidEmail' />)
-        .required(<IntlMessages id='validation.eamilRequired' />),
-      username: yup
-        .string()
-        .min(3, <IntlMessages id='validation.min3Letter' />)
-        .max(64, <IntlMessages id='validation.max64Letter' />)
-        .required(<IntlMessages id='validation.usernameRequired' />),
-      password: yup
-        .string()
-        .min(8, <IntlMessages id='validation.min8Letter' />)
-        .max(64, <IntlMessages id='validation.max64Letter' />)
-        .required(<IntlMessages id='validation.passwordRequired' />),
-      password_confirmation: yup
-        .string()
-        .min(8, <IntlMessages id='validation.min8Letter' />)
-        .max(64, <IntlMessages id='validation.max64Letter' />)
-        .oneOf([yup.ref('password'), null], misMatch)
-        .required(
-          <IntlMessages id='validation.passwordConfrimationRequired' />,
-        ),
-      timezone: yup
-        .string()
-        .required(<IntlMessages id='validation.timezoneRequired' />),
-      terms: yup
-        .bool()
-        .required(<IntlMessages id='validation.timezoneRequired' />),
-    }),
     validationSchema: [
       yup.object({
         fullname: yup
@@ -213,6 +176,18 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
         gender: yup
           .string()
           .required(<IntlMessages id='validation.genderRequired' />),
+        address_line_1: yup
+          .string()
+          .required(<IntlMessages id='validation.addressLine1Required' />),
+        country_id: yup
+          .string()
+          .required(<IntlMessages id='validation.countryRequired' />),
+        state_id: yup
+          .string()
+          .required(<IntlMessages id='validation.stateRequired' />),
+        city: yup
+          .string()
+          .required(<IntlMessages id='validation.cityRequired' />),
       }),
       yup.object({
         email: yup
@@ -241,9 +216,11 @@ export default function conifgs(invalidPhone, invalidWhatsapp, misMatch, edit) {
               .required(
                 <IntlMessages id='validation.passwordConfrimationRequired' />,
               ),
-        status: yup
-          .string()
-          .required(<IntlMessages id='validation.statusRequired' />),
+        status: hideStatus
+          ? yup.string().nullable()
+          : yup
+              .string()
+              .required(<IntlMessages id='validation.statusRequired' />),
         timezone: yup
           .string()
           .required(<IntlMessages id='validation.timezoneRequired' />),

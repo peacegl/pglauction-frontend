@@ -21,7 +21,7 @@ const AuthWrapper = ({children}) => {
     >
       <Card
         sx={{
-          maxWidth: 1000,
+          maxWidth: 1200,
           minHeight: {xs: 320, sm: 450},
           width: '100%',
           overflow: 'hidden',
@@ -32,7 +32,7 @@ const AuthWrapper = ({children}) => {
         <Box
           sx={{
             width: {xs: '100%', sm: '60%'},
-            padding: {xs: 5, lg: 10},
+            px: 5,
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
