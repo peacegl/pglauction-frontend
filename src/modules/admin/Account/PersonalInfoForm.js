@@ -1,3 +1,4 @@
+import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteField';
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import {useAuthMethod, useAuthUser} from '@crema/utility/AuthHooks';
 import MyAccountConfigs from 'configs/pages/my-account';
@@ -68,7 +69,7 @@ const PersonalInfoForm = ({initialValues, profileUrl}) => {
                     width={{xs: 70, lg: 100}}
                     profileUrl={profileUrl}
                     name='profile'
-                    setfieldvalue={setFieldValue}
+                    setFieldValue={setFieldValue}
                   />
                 </Stack>
                 <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
@@ -80,6 +81,16 @@ const PersonalInfoForm = ({initialValues, profileUrl}) => {
                     size='small'
                     sx={{flex: 1}}
                   />
+                  {user.type == 'Customer' && (
+                    <AppTextField
+                      placeholder={messages['common.companyPlaceholder']}
+                      label={<IntlMessages id='common.company' />}
+                      name='company'
+                      variant='outlined'
+                      size='small'
+                      sx={{flex: 1}}
+                    />
+                  )}
                 </Stack>
                 <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
                   <AppTextField
@@ -117,6 +128,26 @@ const PersonalInfoForm = ({initialValues, profileUrl}) => {
                     sx={{flex: 1}}
                   />
                 </Stack>
+                {user.type == 'Customer' && (
+                  <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+                    <AppTextField
+                      placeholder={messages['common.address_line_1']}
+                      label={<IntlMessages id='common.address_line_1' />}
+                      name='address_line_1'
+                      variant='outlined'
+                      size='small'
+                      sx={{flex: 1}}
+                    />
+                    <AppTextField
+                      placeholder={messages['common.address_line_2']}
+                      label={<IntlMessages id='common.address_line_2' />}
+                      name='address_line_2'
+                      variant='outlined'
+                      size='small'
+                      sx={{flex: 1}}
+                    />
+                  </Stack>
+                )}
               </Stack>
             </Box>
             <Box

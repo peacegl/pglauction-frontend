@@ -158,8 +158,13 @@ export default function CustomerModal({
   };
 
   useEffect(() => {
-    getData(`/timezones/auto_complete`, {}, setTimezonesLoading, setTimezones);
     if (!recordId) {
+      getData(
+        `/timezones/auto_complete`,
+        {},
+        setTimezonesLoading,
+        setTimezones,
+      );
       getData(
         `/countries/auto_complete`,
         {},
@@ -170,26 +175,31 @@ export default function CustomerModal({
     }
   }, []);
 
-  const searchTimezones = (content) => {
+  const searchTimezones = (content, name = null) => {
     getData(
-      `/timezones/auto_complete`,
+      `/timezones/auto_complete${name ? '?name=' + name : ''}`,
       content,
       setTimezonesLoading,
       setTimezones,
     );
   };
 
-  const searchCountries = (content) => {
+  const searchCountries = (content, country_id = null) => {
     getData(
-      `/countries/auto_complete`,
+      `/countries/auto_complete${country_id ? '?id=' + country_id : ''}`,
       content,
       setCountriesLoading,
       setCountries,
     );
   };
 
-  const searchStates = (content) => {
-    getData(`/states/auto_complete`, content, setStatesLoading, setStates);
+  const searchStates = (content, state_id = null) => {
+    getData(
+      `/states/auto_complete${state_id ? '?id=' + state_id : ''}`,
+      content,
+      setStatesLoading,
+      setStates,
+    );
   };
   useEffect(() => {
     if (recordId) {
@@ -217,6 +227,7 @@ export default function CustomerModal({
               }
             });
             setInitialValues(values);
+            searchTimezones({}, values.timezone);
             searchCountries({state_id: values.state_id}, values.country_id);
             searchStates({country_id: values.country_id}, values.state_id);
           }

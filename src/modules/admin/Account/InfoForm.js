@@ -9,32 +9,16 @@ import {appIntl} from '@crema/utility/helper/Utils';
 import {Fonts} from 'shared/constants/AppEnums';
 import SaveIcon from '@mui/icons-material/Save';
 import {onUpdateAuthUser} from 'redux/actions';
-import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {LoadingButton} from '@mui/lab';
 import {Form, Formik} from 'formik';
 import PropTypes from 'prop-types';
-import {getData} from 'configs';
 
-const InfoForm = ({initialValues}) => {
+const InfoForm = ({initialValues, ...props}) => {
   const {messages} = appIntl('');
   const {updateAuthUser} = useAuthMethod();
   const dispatch = useDispatch();
   const {user} = useAuthUser();
-  const [timezones, setTimezones] = useState([]);
-  const [timezonesLoading, setTimezonesLoading] = useState(false);
-  useEffect(() => {
-    getData(`/timezones/auto_complete`, {}, setTimezonesLoading, setTimezones);
-  }, []);
-
-  const searchTimezones = (content) => {
-    getData(
-      `/timezones/auto_complete`,
-      content,
-      setTimezonesLoading,
-      setTimezones,
-    );
-  };
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const handleSubmit = async (values) => {
@@ -69,42 +53,8 @@ const InfoForm = ({initialValues}) => {
               <IntlMessages id='common.information' />
             </Typography>
             <Stack spacing={{xs: 5, md: 8}}>
-              <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
-                <AppAutocompleteField
-                  placeholder={messages['user.timezonePlaceholder']}
-                  label={<IntlMessages id='user.timezone' />}
-                  name='timezone'
-                  variant='outlined'
-                  size='small'
-                  sx={{flex: 1}}
-                  dataLoading={timezonesLoading}
-                  options={timezones}
-                  keyName='name'
-                  idField='name'
-                  onSearch={searchTimezones}
-                  value={values?.timezone}
-                  handleChange={({name, value}) => setFieldValue(name, value)}
-                />
-              </Stack>
-              <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
-                <AppTextField
-                  select
-                  placeholder={messages['common.genderPlaceholder']}
-                  label={<IntlMessages id='common.gender' />}
-                  name='gender'
-                  variant='outlined'
-                  size='small'
-                  value={values?.gender}
-                  sx={{flex: 1}}
-                >
-                  <MenuItem value='male'>
-                    <IntlMessages id='common.male' />
-                  </MenuItem>
-                  <MenuItem value='female'>
-                    <IntlMessages id='common.female' />
-                  </MenuItem>
-                </AppTextField>
-                {user.type == 'User' && (
+              {user.type == 'User' && (
+                <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
                   <AppDateField
                     label={<IntlMessages id='common.birthDate' />}
                     name='birth_date'
@@ -124,8 +74,106 @@ const InfoForm = ({initialValues}) => {
                     size='small'
                     sx={{flex: 1}}
                   />
-                )}
+                </Stack>
+              )}
+              <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+                <AppAutocompleteField
+                  placeholder={messages['user.timezonePlaceholder']}
+                  label={<IntlMessages id='user.timezone' />}
+                  name='timezone'
+                  variant='outlined'
+                  size='small'
+                  sx={{flex: 1}}
+                  dataLoading={props.timezonesLoading}
+                  options={props.timezones}
+                  keyName='name'
+                  idField='name'
+                  onSearch={props.searchTimezones}
+                  value={values?.timezone}
+                  handleChange={({name, value}) => setFieldValue(name, value)}
+                />
+                <AppTextField
+                  select
+                  placeholder={messages['common.genderPlaceholder']}
+                  label={<IntlMessages id='common.gender' />}
+                  name='gender'
+                  variant='outlined'
+                  size='small'
+                  value={values?.gender}
+                  sx={{flex: 1}}
+                >
+                  <MenuItem value='male'>
+                    <IntlMessages id='common.male' />
+                  </MenuItem>
+                  <MenuItem value='female'>
+                    <IntlMessages id='common.female' />
+                  </MenuItem>
+                </AppTextField>
               </Stack>
+              {user.type == 'Customer' && (
+                <>
+                  <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+                    <AppAutocompleteField
+                      placeholder={messages['common.countryPlaceholder']}
+                      label={<IntlMessages id='common.country' />}
+                      name='country_id'
+                      variant='outlined'
+                      size='small'
+                      sx={{flex: 1}}
+                      dataLoading={props.countriesLoading}
+                      options={props.countries}
+                      keyName='name'
+                      onSearch={props.searchCountries}
+                      value={values?.country_id}
+                      handleChange={({name, value}) => {
+                        setFieldValue(name, value);
+                        setFieldValue('state_id', '');
+                        props.searchStates({country_id: value});
+                      }}
+                    />
+                    <AppAutocompleteField
+                      placeholder={messages['common.statePlaceholder']}
+                      label={<IntlMessages id='common.state' />}
+                      name='state_id'
+                      variant='outlined'
+                      size='small'
+                      sx={{flex: 1}}
+                      dataLoading={props.statesLoading}
+                      options={props.states}
+                      keyName='name'
+                      onSearch={(content) =>
+                        props.searchStates({
+                          country_id: values.country_id,
+                          ...content,
+                        })
+                      }
+                      value={values?.state_id}
+                      handleChange={({name, value}) => {
+                        props.searchCountries({state_id: value});
+                        setFieldValue(name, value);
+                      }}
+                    />
+                  </Stack>
+                  <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+                    <AppTextField
+                      placeholder={messages['common.cityPlaceholder']}
+                      label={<IntlMessages id='common.city' />}
+                      name='city'
+                      variant='outlined'
+                      size='small'
+                      sx={{flex: 1}}
+                    />
+                    <AppTextField
+                      placeholder={messages['common.zipCodePlaceholder']}
+                      label={<IntlMessages id='common.zipCode' />}
+                      name='zip_code'
+                      variant='outlined'
+                      size='small'
+                      sx={{flex: 1}}
+                    />
+                  </Stack>
+                </>
+              )}
             </Stack>
             <Box
               sx={{
@@ -170,4 +218,13 @@ const InfoForm = ({initialValues}) => {
 export default InfoForm;
 InfoForm.propTypes = {
   initialValues: PropTypes.object,
+  countries: PropTypes.array,
+  countriesLoading: PropTypes.bool,
+  searchCountries: PropTypes.func,
+  states: PropTypes.array,
+  statesLoading: PropTypes.bool,
+  searchStates: PropTypes.func,
+  timezones: PropTypes.array,
+  timezonesLoading: PropTypes.bool,
+  searchTimezones: PropTypes.func,
 };
