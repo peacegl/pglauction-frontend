@@ -50,23 +50,13 @@ const VehicleStepTwo = (props) => {
             variant='outlined'
             size='small'
             value={props.values?.status}
-            disabled={props.values?.status == 'sold'}
             sx={{flex: 1}}
           >
-            {props.values?.status == 'sold'
-              ? VehicleConfigs().statuses.map((status, index) => (
-                  <MenuItem value={status} key={index}>
-                    <Box sx={{textTransform: 'capitalize'}}>{status}</Box>
-                  </MenuItem>
-                ))
-              : VehicleConfigs().statuses.map(
-                  (status, index) =>
-                    status != 'sold' && (
-                      <MenuItem value={status} key={index}>
-                        <Box sx={{textTransform: 'capitalize'}}>{status}</Box>
-                      </MenuItem>
-                    ),
-                )}
+            {VehicleConfigs().statuses.map((status, index) => (
+              <MenuItem value={status} key={index}>
+                <Box sx={{textTransform: 'capitalize'}}>{status}</Box>
+              </MenuItem>
+            ))}
           </AppTextField>
           <AppTextField
             placeholder={messages['vehicle.primary_damagePlaceholder']}

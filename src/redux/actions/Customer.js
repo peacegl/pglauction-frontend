@@ -45,7 +45,7 @@ export const onInsertCustomer = (data, toggleOpen) => {
       if (res.status === 201 && res.data.result) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: ADD_NEW_CUSTOMER, payload: res.data.data});
-        if (toggleOpen) toggleOpen(false);
+        toggleOpen(false);
         dispatch({
           type: SHOW_MESSAGE,
           payload: messages['message.customerCreated'],
@@ -57,7 +57,7 @@ export const onInsertCustomer = (data, toggleOpen) => {
         });
       }
     } catch (error) {
-      if (error?.request?.status == 422) {
+      if (error.request.status == 422) {
         const res = JSON.parse(error.request.response);
         console.log('fff', res.errors);
         // res.errors?.forEach((element) => {
@@ -112,33 +112,6 @@ export const onDeleteCustomers = (data) => {
         dispatch({
           type: SHOW_MESSAGE,
           payload: messages['user.message.deleted'],
-        });
-      } else {
-        dispatch({
-          type: FETCH_ERROR,
-          payload: messages['message.somethingWentWrong'],
-        });
-      }
-    } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-    }
-  };
-};
-export const onSignUpCustomer = (data, values, signInUser) => {
-  return async (dispatch) => {
-    dispatch({type: FETCH_START});
-    const {messages} = appIntl();
-    try {
-      const res = await jwtAxios.post(`/customer_create_account`, data);
-      if (res.status === 201 && res.data.result) {
-        dispatch({type: FETCH_SUCCESS});
-        dispatch({
-          type: SHOW_MESSAGE,
-          payload: messages['message.signupSuccessfully'],
-        });
-        await signInUser({
-          email_or_username: values.email,
-          password: values.password,
         });
       } else {
         dispatch({

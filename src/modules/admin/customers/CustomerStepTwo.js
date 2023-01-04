@@ -44,7 +44,7 @@ const CustomerStepTwo = (props) => {
             sx={{flex: 1}}
           />
         </Stack>
-        {!props.customer?.login && (
+        {!props.customer.login && (
           <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
             <AppTextField
               placeholder={messages['common.passwordPlaceholder']}

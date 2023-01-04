@@ -11,8 +11,6 @@ import {
   GET_BEST_SELLING_VEHICLE_LIST,
   GET_FEATURED_VEHICLE_LIST,
   GET_RECENTLY_ADDED_VEHICLE_LIST,
-  GET_MY_WATCH_LIST,
-  SHOW_MESSAGE,
 } from '../../shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '../../@crema/utility/helper/Utils';
@@ -162,53 +160,6 @@ export const onGetRecentlyAddedVehicles = () => {
         dispatch({
           type: GET_RECENTLY_ADDED_VEHICLE_LIST,
           payload: res.data.data,
-        });
-      } else {
-        dispatch({
-          type: FETCH_ERROR,
-          payload: messages['message.somethingWentWrong'],
-        });
-      }
-    } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-    }
-  };
-};
-export const onGetMyWatchList = (data) => {
-  return (dispatch) => {
-    dispatch({type: FETCH_START});
-    jwtAxios
-      .get(`/website/my_watch_list`, {
-        params: {...data},
-      })
-      .then((data) => {
-        if (data.status === 200) {
-          dispatch({type: GET_MY_WATCH_LIST, payload: data.data});
-          dispatch({type: FETCH_SUCCESS});
-        } else {
-          dispatch({
-            type: FETCH_ERROR,
-            payload: 'Something went wrong, Please try again!',
-          });
-        }
-      })
-      .catch((error) => {
-        dispatch({type: FETCH_ERROR, payload: error.message});
-      });
-  };
-};
-
-export const onDeleteMyWatchList = (data) => {
-  return async (dispatch) => {
-    const {messages} = appIntl();
-    dispatch({type: FETCH_START});
-    try {
-      const res = await jwtAxios.put(`website/delete_my_watch_list`, data);
-      if (res.status === 200 && res.data.result) {
-        dispatch({type: GET_MY_WATCH_LIST, payload: res.data});
-        dispatch({
-          type: SHOW_MESSAGE,
-          payload: messages['watchlist.message.deleted'],
         });
       } else {
         dispatch({
