@@ -7,7 +7,7 @@ const SITE_URL =
     ? 'http://localhost:3000'
     : 'https://qa-blog.mastersindia.co';
 
-const defaultTitle = 'UUC Vehicles';
+const defaultTitle = 'UTC Vehicles';
 const defaultDescription = 'United Used Cars';
 const defaultImage = 'logo.png';
 const defaultTwitter = '@utc';
