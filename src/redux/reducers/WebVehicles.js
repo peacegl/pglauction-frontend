@@ -9,12 +9,14 @@ import {
   GET_BEST_SELLING_VEHICLE_LIST,
   GET_RECENTLY_ADDED_VEHICLE_LIST,
   GET_MY_WATCH_LIST,
+  GET_MY_PURCHASE_LIST,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
 const initialState = {
   vehiclesData: {},
   myWatchList: {},
+  myPurchaseList: {},
   similarVehicles: [],
   vehicle: {},
   search: '',
@@ -102,6 +104,11 @@ const WebVehicleReducer = (state = initialState, action) => {
       return {
         ...state,
         myWatchList: action.payload,
+      };
+    case GET_MY_PURCHASE_LIST:
+      return {
+        ...state,
+        myPurchaseList: action.payload,
       };
     default:
       return state;

@@ -12,6 +12,7 @@ import {
   GET_FEATURED_VEHICLE_LIST,
   GET_RECENTLY_ADDED_VEHICLE_LIST,
   GET_MY_WATCH_LIST,
+  GET_MY_PURCHASE_LIST,
   SHOW_MESSAGE,
 } from '../../shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
@@ -219,5 +220,29 @@ export const onDeleteMyWatchList = (data) => {
     } catch (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
     }
+  };
+};
+
+export const onGetMyPurchaseList = (data) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    jwtAxios
+      .get(`/website/my_purchase_list`, {
+        params: {...data},
+      })
+      .then((data) => {
+        if (data.status === 200) {
+          dispatch({type: GET_MY_PURCHASE_LIST, payload: data.data});
+          dispatch({type: FETCH_SUCCESS});
+        } else {
+          dispatch({
+            type: FETCH_ERROR,
+            payload: 'Something went wrong, Please try again!',
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      });
   };
 };

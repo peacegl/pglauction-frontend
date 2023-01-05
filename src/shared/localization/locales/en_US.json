@@ -1131,5 +1131,8 @@
   "validation.stateRequired": "State is required",
   "common.cityPlaceholder": "Type city name",
   "validation.cityRequired": "City is required",
-  "common.zipCodePlaceholder": "Type zip code"
+  "common.zipCodePlaceholder": "Type zip code",
+  "common.myPurchaselist": "My Purchase List",
+  "purchaselist.deleteMessage": "Are you sure, you want to delete the selected PurchaseList(s)?",
+  "common.image": "Image"
 }

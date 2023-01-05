@@ -67,6 +67,7 @@ const CustomDataTable = ({
           fixedHeader: true,
           rowHover: true,
           filter: false,
+          enableNestedDataAccess: '.',
           selectableRows: selectableRows,
           tableBodyMaxHeight: options.tableBodyMaxHeight
             ? options.tableBodyMaxHeight
