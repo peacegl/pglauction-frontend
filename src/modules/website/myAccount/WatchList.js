@@ -1,9 +1,9 @@
 import {filterContent, tableColumns} from 'configs/webpages/watchList';
+import {onDeleteMyWatchList, onGetMyWatchList} from 'redux/actions';
 import FilterModal from 'components/CustomModal/FilterModal';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
-import {onDeleteMyWatchList, onGetMyWatchList} from 'redux/actions';
 import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 import {Box} from '@mui/material';

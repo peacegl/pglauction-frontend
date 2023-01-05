@@ -69,7 +69,7 @@ const PersonalInfoForm = ({initialValues, profileUrl}) => {
                     width={{xs: 70, lg: 100}}
                     profileUrl={profileUrl}
                     name='profile'
-                    setFieldValue={setFieldValue}
+                    setfieldvalue={setFieldValue}
                   />
                 </Stack>
                 <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
