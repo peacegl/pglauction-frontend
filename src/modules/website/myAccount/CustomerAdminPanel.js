@@ -4,7 +4,7 @@ import SwipeableViews from 'react-swipeable-views';
 import AdminPanelHeader from './AdminPanelHeader';
 import PurchaseHistory from './PurchaseHistory';
 import Account from 'modules/admin/Account';
-import Dashboard from './dashboard';
+import Dashboard from './Dashboard';
 import WatchList from './WatchList';
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
