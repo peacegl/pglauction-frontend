@@ -56,6 +56,22 @@ export const tableColumns = function () {
       label: messages['common.type'],
     },
     {
+      name: 'company',
+      label: messages['common.company'],
+    },
+    {
+      name: 'country',
+      label: messages['common.country'],
+    },
+    {
+      name: 'state',
+      label: messages['common.state'],
+    },
+    {
+      name: 'city',
+      label: messages['common.city'],
+    },
+    {
       name: 'created_by',
       label: messages['common.created_by'],
     },
