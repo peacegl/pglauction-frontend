@@ -43,7 +43,7 @@ const SignupFirebase = () => {
     messages['validation.passwordMisMatch'],
     false,
     true,
-  ).validationSchema;
+  ).signUpValidation;
 
   const customValidation = async (values, actions, activeStep) => {
     if (activeStep == 1) {
