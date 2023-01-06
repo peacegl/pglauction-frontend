@@ -1,3 +1,16 @@
+import InstagramIcon from '../../assets/icon/instagram.svg';
+import WhatsAppIcon from '../../assets/icon/whatsapp.svg';
+import FacebookIcon from '../../assets/icon/facebook.svg';
+import {useDispatch, useSelector} from 'react-redux';
+import VehicleSearchBar from './VehicleSearchBar';
+import TiktokIcon from 'assets/icon/tiktok.png';
+import MenuIcon from '@mui/icons-material/Menu';
+import {setVehicleSearch} from 'redux/actions';
+import logoImage from 'assets/united_logo.png';
+import {useRouter} from 'next/router';
+import {useTheme} from '@mui/styles';
+import {useState} from 'react';
+import {pages} from 'configs';
 import {
   Box,
   Container,
@@ -10,19 +23,6 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material';
-import {useRouter} from 'next/router';
-import {useTheme} from '@mui/styles';
-import MenuIcon from '@mui/icons-material/Menu';
-import {useState} from 'react';
-import {pages} from './AppBar';
-import FacebookIcon from '../../assets/icon/facebook.svg';
-import WhatsAppIcon from '../../assets/icon/whatsapp.svg';
-import InstagramIcon from '../../assets/icon/instagram.svg';
-import TiktokIcon from '../../assets/icon/tiktok.png';
-import VehicleSearchBar from './VehicleSearchBar';
-import {useDispatch, useSelector} from 'react-redux';
-import {setVehicleSearch} from '../../redux/actions';
-import logoImage from '../../assets/united_logo.png';
 
 function Header() {
   const router = useRouter();

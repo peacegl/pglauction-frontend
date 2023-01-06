@@ -1,4 +1,5 @@
 import {useAuthMethod, useAuthUser} from '@crema/utility/AuthHooks';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import IconButton from '@mui/material/IconButton';
@@ -12,42 +13,12 @@ import Tooltip from '@mui/material/Tooltip';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import {useMemo, useState} from 'react';
 import {useTheme} from '@mui/material';
 import Menu from '@mui/material/Menu';
 import {useRouter} from 'next/router';
 import Box from '@mui/material/Box';
 import Link from 'next/link';
-
-export const pages = [
-  {title: <IntlMessages id='website.home' />, link: '/home', target: '_self'},
-  {
-    title: <IntlMessages id='website.all_vehicles' />,
-    link: '/',
-    target: '_self',
-  },
-  // {title: <IntlMessages id='website.live_auctions' />, link: '/live-auctions'},
-  {
-    title: <IntlMessages id='website.shipping' />,
-    link: 'https://peacegl.com/',
-    target: '_blank',
-  },
-  {
-    title: <IntlMessages id='website.services' />,
-    link: '/services',
-    target: '_self',
-  },
-  {
-    title: <IntlMessages id='website.contact_us' />,
-    link: '/contact-us',
-    target: '_self',
-  },
-  {
-    title: <IntlMessages id='website.about_us' />,
-    link: '/about-us',
-    target: '_self',
-  },
-];
+import {pages} from 'configs';
 
 const signOptions = [
   {
@@ -109,6 +80,22 @@ function TopMenu() {
     }
     return sets;
   }, [user?.type]);
+
+  const addTodo = useCallback(() => {
+    if (user?.type == 'Customer') {
+      if (pages.filter((item) => item.link == '/dashboard').length == 0) {
+        pages.unshift({
+          title: <IntlMessages id='sidebar.dashboard' />,
+          link: '/dashboard',
+          target: '_self',
+        });
+      }
+    }
+  }, [user?.type]);
+
+  useEffect(() => {
+    addTodo();
+  }, []);
 
   return (
     <AppBar position='static'>

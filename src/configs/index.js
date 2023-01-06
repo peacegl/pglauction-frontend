@@ -1,5 +1,6 @@
 import {appIntl} from '@crema/utility/helper/Utils';
 import jwtAxios from '@crema/services/auth/jwt-auth';
+import IntlMessages from '@crema/utility/IntlMessages';
 const merge = (a, b, p) =>
   a.filter((aa) => !b.find((bb) => aa[p] === bb[p])).concat(b);
 
@@ -119,3 +120,33 @@ export async function jwtMethod(
     loading(false);
   }
 }
+
+export let pages = [
+  {title: <IntlMessages id='website.home' />, link: '/home', target: '_self'},
+  {
+    title: <IntlMessages id='website.all_vehicles' />,
+    link: '/',
+    target: '_self',
+  },
+  // {title: <IntlMessages id='website.live_auctions' />, link: '/live-auctions'},
+  {
+    title: <IntlMessages id='website.shipping' />,
+    link: 'https://peacegl.com/',
+    target: '_blank',
+  },
+  {
+    title: <IntlMessages id='website.services' />,
+    link: '/services',
+    target: '_self',
+  },
+  {
+    title: <IntlMessages id='website.contact_us' />,
+    link: '/contact-us',
+    target: '_self',
+  },
+  {
+    title: <IntlMessages id='website.about_us' />,
+    link: '/about-us',
+    target: '_self',
+  },
+];

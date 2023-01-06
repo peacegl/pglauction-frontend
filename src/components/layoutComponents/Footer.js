@@ -1,4 +1,11 @@
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import logoImage from '../../assets/united_logo.png';
+import {useRouter} from 'next/router';
+import {useTheme} from '@mui/styles';
+import {pages} from 'configs';
+import Link from 'next/link';
 import {
   Box,
   Container,
@@ -6,13 +13,6 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
-import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
-import logoImage from '../../assets/united_logo.png';
-import {useRouter} from 'next/router';
-import {useTheme} from '@mui/styles';
-import {pages} from './AppBar';
-import Link from 'next/link';
 
 export default function Footer() {
   const theme = useTheme();
