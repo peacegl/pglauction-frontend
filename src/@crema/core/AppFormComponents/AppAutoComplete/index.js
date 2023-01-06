@@ -16,7 +16,7 @@ export default function AppAutoComplete({
   disabled,
   disabledId = [],
   value,
-  helperText = '',
+  helpertext = '',
   error,
   multiple = false,
   onSearch,
@@ -115,8 +115,6 @@ export default function AppAutoComplete({
           />
         ))
       }
-      helperText={helperText}
-      error={error.toString()}
       renderInput={(params) => (
         <TextField
           placeholder={placeholder}
@@ -134,7 +132,7 @@ export default function AppAutoComplete({
               </React.Fragment>
             ),
           }}
-          helperText={helperText}
+          helperText={helpertext}
           error={error}
         />
       )}
@@ -153,7 +151,7 @@ AppAutoComplete.propTypes = {
   disabled: PropTypes.bool,
   multiple: PropTypes.bool,
   dataLoading: PropTypes.bool,
-  helperText: PropTypes.any,
+  helpertext: PropTypes.any,
   inputValue: PropTypes.string,
   error: PropTypes.bool,
   disabledId: PropTypes.bool,

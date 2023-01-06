@@ -1107,7 +1107,7 @@
   "message.customerUpdated": "Customer updated successfully!",
   "common.dashboard": "Dashboard",
   "common.myWatchlist": "My Watchlist",
-  "common.purchaseHistory": "Purchase History",
+  "common.myPurchaseList": "My Purchase List",
   "common.timezone": "Timezone",
   "common.timezonePlaceholder": "Select your timezone",
   "validation.requiredField": "This field is required",
@@ -1134,5 +1134,7 @@
   "common.zipCodePlaceholder": "Type zip code",
   "common.myPurchaselist": "My Purchase List",
   "purchaselist.deleteMessage": "Are you sure, you want to delete the selected PurchaseList(s)?",
-  "common.image": "Image"
+  "common.image": "Image",
+  "watchList.filterWatchList": "My Watchlist Filter",
+  "purchaseList.filterPurchaseList": "Filter My Purchase List"
 }

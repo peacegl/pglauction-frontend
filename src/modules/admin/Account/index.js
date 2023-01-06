@@ -98,7 +98,7 @@ const Account = () => {
       let initValues = userInitialValues;
       Object.entries(values).forEach(([key, v]) => {
         if (Object.keys(userInitialValues)?.includes(key)) {
-          initValues[key] = v ? v : userInitialValues[key];
+          initValues[key] = v ? v : '';
         }
       });
       delete initValues.profile;
@@ -107,7 +107,7 @@ const Account = () => {
       let initValues = infoInitialValues;
       Object.entries(values).forEach(([key, v]) => {
         if (Object.keys(infoInitialValues)?.includes(key)) {
-          initValues[key] = v ? v : infoInitialValues[key];
+          initValues[key] = v ? v : '';
         }
       });
       setInfoInitialValues(initValues);
@@ -223,6 +223,7 @@ const Account = () => {
                   <PersonalInfoForm
                     initialValues={userInitialValues}
                     profileUrl={profileUrl}
+                    setValues={setValues}
                   />
                 )}
                 {value === 1 && (
@@ -240,6 +241,7 @@ const Account = () => {
                     timezones={timezones}
                     timezonesLoading={timezonesLoading}
                     searchTimezones={searchTimezones}
+                    setValues={setValues}
                   />
                 )}
               </Box>

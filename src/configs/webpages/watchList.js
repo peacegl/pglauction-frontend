@@ -161,7 +161,7 @@ export const filterContent = [
         name: 'vehicles.status',
         label: 'Status',
         type: 'checkbox',
-        items: ['available', 'sold', 'inactive', 'future'],
+        items: ['available', 'sold', 'future'],
       },
     ],
   },

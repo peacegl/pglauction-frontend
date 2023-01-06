@@ -22,6 +22,10 @@ const InfoForm = ({initialValues, ...props}) => {
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const handleSubmit = async (values) => {
+    let newvalues = values;
+    props.setValues((d) => {
+      return {...d, ...newvalues};
+    });
     await dispatch(
       onUpdateAuthUser(`/auth_user_data`, values, false, user, updateAuthUser),
     );
@@ -227,4 +231,5 @@ InfoForm.propTypes = {
   timezones: PropTypes.array,
   timezonesLoading: PropTypes.bool,
   searchTimezones: PropTypes.func,
+  setValues: PropTypes.func,
 };

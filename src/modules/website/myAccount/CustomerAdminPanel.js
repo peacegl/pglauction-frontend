@@ -59,7 +59,7 @@ const CustomerAdminPanel = () => {
     },
     {
       key: 4,
-      title: messages['common.purchaseHistory'],
+      title: messages['common.myPurchaseList'],
       child: <PurchaseHistory />,
     },
   ];
