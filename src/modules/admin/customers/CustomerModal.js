@@ -44,7 +44,7 @@ export default function CustomerModal({
     password: '',
     password_confirmation: '',
     timezone: '',
-    accept_terms: true,
+    accept_terms: 1,
     address_line_1: '',
     address_line_2: '',
     company: '',
