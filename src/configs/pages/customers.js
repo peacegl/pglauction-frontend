@@ -158,7 +158,7 @@ export default function conifgs(
 ) {
   return {
     exportColumns: [],
-    validationSchema: [
+    signUpValidation: [
       yup.object({
         fullname: yup
           .string()
@@ -221,6 +221,72 @@ export default function conifgs(
           : yup
               .string()
               .required(<IntlMessages id='validation.statusRequired' />),
+        timezone: yup
+          .string()
+          .required(<IntlMessages id='validation.timezoneRequired' />),
+      }),
+    ],
+    validationSchema: [
+      yup.object({
+        fullname: yup
+          .string()
+          .min(3, <IntlMessages id='validation.min3Letter' />)
+          .max(64, <IntlMessages id='validation.max64Letter' />)
+          .required(<IntlMessages id='validation.fullnameRequired' />),
+        phone: yup
+          .string()
+          .matches(phoneRegExp, invalidPhone)
+          .required(<IntlMessages id='validation.phoneRequired' />),
+        whatsapp: yup
+          .string()
+          .matches(phoneRegExp, invalidWhatsapp)
+          .required(<IntlMessages id='validation.whatsappRequired' />),
+        gender: yup
+          .string()
+          .required(<IntlMessages id='validation.genderRequired' />),
+        // address_line_1: yup
+        //   .string()
+        //   .required(<IntlMessages id='validation.addressLine1Required' />),
+        // country_id: yup
+        //   .string()
+        //   .required(<IntlMessages id='validation.countryRequired' />),
+        // state_id: yup
+        //   .string()
+        //   .required(<IntlMessages id='validation.stateRequired' />),
+        // city: yup
+        //   .string()
+        //   .required(<IntlMessages id='validation.cityRequired' />),
+      }),
+      yup.object({
+        email: yup
+          .string()
+          .email(<IntlMessages id='validation.invalidEmail' />)
+          .required(<IntlMessages id='validation.eamilRequired' />),
+        username: yup
+          .string()
+          .min(3, <IntlMessages id='validation.min3Letter' />)
+          .max(64, <IntlMessages id='validation.max64Letter' />)
+          .required(<IntlMessages id='validation.usernameRequired' />),
+        password: edit
+          ? yup.string().nullable()
+          : yup
+              .string()
+              .min(8, <IntlMessages id='validation.min8Letter' />)
+              .max(64, <IntlMessages id='validation.max64Letter' />)
+              .required(<IntlMessages id='validation.passwordRequired' />),
+        password_confirmation: edit
+          ? yup.string().nullable()
+          : yup
+              .string()
+              .min(8, <IntlMessages id='validation.min8Letter' />)
+              .max(64, <IntlMessages id='validation.max64Letter' />)
+              .oneOf([yup.ref('password'), null], misMatch)
+              .required(
+                <IntlMessages id='validation.passwordConfrimationRequired' />,
+              ),
+        status: yup
+          .string()
+          .required(<IntlMessages id='validation.statusRequired' />),
         timezone: yup
           .string()
           .required(<IntlMessages id='validation.timezoneRequired' />),

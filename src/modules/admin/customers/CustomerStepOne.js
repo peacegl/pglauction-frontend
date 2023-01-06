@@ -49,6 +49,33 @@ const CustomerStepOne = (props) => {
       </Stack>
       <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
         <AppTextField
+          select
+          placeholder={messages['common.genderPlaceholder']}
+          label={<IntlMessages id='common.gender' />}
+          name='gender'
+          variant='outlined'
+          size='small'
+          value={props.values?.gender}
+          sx={{flex: 1}}
+        >
+          <MenuItem value='male'>
+            <IntlMessages id='common.male' />
+          </MenuItem>
+          <MenuItem value='female'>
+            <IntlMessages id='common.female' />
+          </MenuItem>
+        </AppTextField>
+        <AppTextField
+          placeholder={messages['common.companyPlaceholder']}
+          label={<IntlMessages id='common.company' />}
+          name='company'
+          variant='outlined'
+          size='small'
+          sx={{flex: 1}}
+        />
+      </Stack>
+      <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+        <AppTextField
           placeholder={messages['common.address_line_1']}
           label={<IntlMessages id='common.address_line_1' />}
           name='address_line_1'
@@ -66,14 +93,6 @@ const CustomerStepOne = (props) => {
         />
       </Stack>
       <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
-        <AppTextField
-          placeholder={messages['common.companyPlaceholder']}
-          label={<IntlMessages id='common.company' />}
-          name='company'
-          variant='outlined'
-          size='small'
-          sx={{flex: 1}}
-        />
         <AppAutocompleteField
           placeholder={messages['common.countryPlaceholder']}
           label={<IntlMessages id='common.country' />}
@@ -92,8 +111,6 @@ const CustomerStepOne = (props) => {
             props.searchStates({country_id: value});
           }}
         />
-      </Stack>
-      <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
         <AppAutocompleteField
           placeholder={messages['common.statePlaceholder']}
           label={<IntlMessages id='common.state' />}
@@ -116,6 +133,8 @@ const CustomerStepOne = (props) => {
             props.setfieldvalue(name, value);
           }}
         />
+      </Stack>
+      <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
         <AppTextField
           placeholder={messages['common.cityPlaceholder']}
           label={<IntlMessages id='common.city' />}
@@ -124,8 +143,6 @@ const CustomerStepOne = (props) => {
           size='small'
           sx={{flex: 1}}
         />
-      </Stack>
-      <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
         <AppTextField
           placeholder={messages['common.zipCodePlaceholder']}
           label={<IntlMessages id='common.zipCode' />}
@@ -134,23 +151,6 @@ const CustomerStepOne = (props) => {
           size='small'
           sx={{flex: 1}}
         />
-        <AppTextField
-          select
-          placeholder={messages['common.genderPlaceholder']}
-          label={<IntlMessages id='common.gender' />}
-          name='gender'
-          variant='outlined'
-          size='small'
-          value={props.values?.gender}
-          sx={{flex: 1}}
-        >
-          <MenuItem value='male'>
-            <IntlMessages id='common.male' />
-          </MenuItem>
-          <MenuItem value='female'>
-            <IntlMessages id='common.female' />
-          </MenuItem>
-        </AppTextField>
       </Stack>
     </Stack>
   );
