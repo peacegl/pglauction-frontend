@@ -162,7 +162,7 @@ export default function GridItem({item, ...props}) {
               }
               variant='outlined'
               size='small'
-              sx={{mt: 2, px: 2}}
+              sx={{mt: 2}}
               onClick={() => addToWatchList(item.id)}
             >
               {!addedToWatchList ? (
@@ -178,16 +178,9 @@ export default function GridItem({item, ...props}) {
               sx={{mt: 2}}
               href={`https://wa.me/${item.seller?.loginable?.whatsapp}?text=${window.location.origin}/all-vehicles/${item.id}`}
               target='_blank'
+              startIcon={<WhatsAppIcon />}
             >
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <WhatsAppIcon sx={{mx: 1}} />
-                <Box>{item.seller?.loginable?.whatsapp}</Box>
-              </Box>
+              {item.seller?.loginable?.whatsapp}
             </Button>
           </Box>
         </CardContent>
