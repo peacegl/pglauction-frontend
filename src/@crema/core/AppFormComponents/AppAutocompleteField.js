@@ -14,7 +14,7 @@ const AppAutocompleteField = (props) => {
     <AppAutoComplete
       {...props}
       {...field}
-      helperText={errorText}
+      helpertext={errorText}
       error={!!errorText}
     />
   );

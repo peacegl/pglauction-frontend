@@ -2,6 +2,7 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 import {Typography} from '@mui/material';
 import * as yup from 'yup';
+import {moneyFormater} from 'configs';
 
 const {messages = []} = appIntl() ? appIntl() : {};
 
@@ -26,6 +27,18 @@ export const tableColumns = function () {
     {
       name: 'sale_price',
       label: messages['sale.salePrice'],
+    },
+    {
+      name: 'sale_price',
+      label: messages['common.sale_price'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+            {moneyFormater(value)}
+          </Typography>
+        ),
+      },
     },
     {
       name: 'sale_date',
@@ -99,8 +112,8 @@ export const filterContent = [
     title: 'data',
     items: [
       {
-        name: 'sales.price',
-        label: 'Price',
+        name: 'sales.sale_price',
+        label: 'Sale Price',
         type: 'number_range',
       },
       {
@@ -114,7 +127,7 @@ export const filterContent = [
         name: 'sales.status',
         label: 'Status',
         type: 'checkbox',
-        items: ['sold', 'cancelled', 'pending'],
+        items: ['sold', 'cancelled'],
       },
     ],
   },

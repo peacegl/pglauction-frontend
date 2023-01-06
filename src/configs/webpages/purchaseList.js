@@ -2,6 +2,7 @@ import {Avatar, Box, Typography} from '@mui/material';
 import {appIntl} from '@crema/utility/helper/Utils';
 const {messages = []} = appIntl() ? appIntl() : {};
 import ImageIcon from '@mui/icons-material/Image';
+import {moneyFormater} from 'configs';
 
 export const tableColumns = function (router) {
   return [
@@ -14,18 +15,26 @@ export const tableColumns = function (router) {
       },
     },
     {
-      name: 'images',
+      name: 'vehicle.id',
+      label: messages['common.id'],
+      options: {
+        display: false,
+        viewColumns: false,
+      },
+    },
+    {
+      name: 'vehicle.images',
       label: messages['common.image'],
       options: {
         download: false,
         customBodyRender: (value, tableMeta, updateValue) =>
-          value[0]?.path ? (
-            <Box component='img' src={value[0]?.path} width={60} height={45} />
+          value?.length && value[0]?.path ? (
+            <Box component='img' src={value[0]?.path} width={80} height={60} />
           ) : (
             <Avatar
               alt='Vehicle Image'
               variant='square'
-              sx={{width: 60, height: 45}}
+              sx={{width: 80, height: 60}}
             >
               <ImageIcon />
             </Avatar>
@@ -33,7 +42,7 @@ export const tableColumns = function (router) {
       },
     },
     {
-      name: 'vin',
+      name: 'vehicle.vin',
       label: messages['common.vin'],
       options: {
         filter: false,
@@ -47,7 +56,7 @@ export const tableColumns = function (router) {
             }}
             onClick={() => {
               router.push(
-                `all-vehicles/${tableMeta.tableData[tableMeta.rowIndex][0]}`,
+                `all-vehicles/${tableMeta.tableData[tableMeta.rowIndex][1]}`,
               );
             }}
             noWrap={true}
@@ -58,19 +67,19 @@ export const tableColumns = function (router) {
       },
     },
     {
-      name: 'lot_number',
+      name: 'vehicle.lot_number',
       label: messages['common.lot_number'],
     },
     {
-      name: 'year',
+      name: 'vehicle.year',
       label: messages['common.year'],
     },
     {
-      name: 'make',
+      name: 'vehicle.make',
       label: messages['common.make'],
     },
     {
-      name: 'model',
+      name: 'vehicle.model',
       label: messages['vehicle.model'],
     },
     {
@@ -85,56 +94,24 @@ export const tableColumns = function (router) {
       },
     },
     {
-      name: 'exterior_color',
-      label: messages['vehicle.exterior_color'],
-    },
-    {
-      name: 'interior_color',
-      label: messages['vehicle.interior_color'],
-    },
-    {
-      name: 'primary_damage',
-      label: messages['vehicle.primary_damage'],
-    },
-    {
-      name: 'keys',
-      label: messages['common.keys'],
+      name: 'sale_price',
+      label: messages['sale.salePrice'],
       options: {
-        customBodyRender: (value, tableMeta, updateValue) =>
-          value ? messages['common.yes'] : messages['common.no'],
-      },
-    },
-    {
-      name: 'fuel',
-      label: messages['common.fuel'],
-      options: {
+        filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
-          <Typography sx={{textTransform: 'capitalize'}}>{value}</Typography>
-        ),
-      },
-    },
-    {
-      name: 'odometer_type',
-      label: messages['vehicle.odometer'],
-    },
-    {
-      name: 'transmission',
-      label: messages['common.transmission'],
-      options: {
-        customBodyRender: (value, tableMeta, updateValue) => (
-          <Typography sx={{textTransform: 'capitalize'}} noWrap={true}>
-            {value}
+          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+            {moneyFormater(value)}
           </Typography>
         ),
       },
     },
     {
-      name: 'engine_type',
-      label: messages['common.engine_type'],
+      name: 'sale_date',
+      label: messages['sale.saleData'],
     },
     {
-      name: 'document_type',
-      label: messages['vehicle.document_type'],
+      name: 'description',
+      label: messages['common.description'],
     },
   ];
 };
@@ -144,24 +121,29 @@ export const filterContent = [
     title: 'id_filtering',
     items: [
       {
-        name: 'vehicles.id',
+        name: 'relation@@vehicle.id',
         label: 'Lot Number',
         type: 'autocomplete',
         url: '/vehicle_lots/auto_complete?id=',
         keyName: 'lot_number',
       },
       {
-        name: 'vehicles.id',
+        name: 'relation@@vehicle.id',
         label: 'Vin',
         type: 'autocomplete',
         url: '/vehicle_vins/auto_complete?id=',
         keyName: 'vin',
       },
       {
-        name: 'vehicles.status',
+        name: 'sales.status',
         label: 'Status',
         type: 'checkbox',
-        items: ['available', 'sold', 'future'],
+        items: ['sold', 'cancelled', 'pending'],
+      },
+      {
+        name: 'sales.sale_date',
+        label: 'Sale Date',
+        type: 'date_range',
       },
     ],
   },
@@ -169,48 +151,26 @@ export const filterContent = [
     title: 'data',
     items: [
       {
-        name: 'vehicles.make',
+        name: 'sales.sale_price',
+        label: 'Sale Price',
+        type: 'number_range',
+      },
+      {
+        name: 'vehicle.make',
         label: 'Make',
         type: 'textfield',
       },
       {
-        name: 'vehicles.model',
+        name: 'vehicle.model',
         label: 'model',
         type: 'textfield',
       },
       {
-        name: 'vehicles.year',
+        name: 'relation@@vehicle.year',
         label: 'Year',
         min: 'Start',
         max: 'End',
         type: 'number_range',
-      },
-      {
-        name: 'vehicles.odometer',
-        label: 'Odometer',
-        type: 'number_range',
-      },
-      {
-        name: 'vehicles.body_style',
-        label: 'Body Styles',
-        type: 'checkbox',
-        items: [
-          'sedan',
-          'suv',
-          'coupe',
-          'hatchback',
-          'convertible',
-          'wagon',
-          'pickup',
-          'minivan',
-          'van',
-        ],
-      },
-      {
-        name: 'vehicles.transmission',
-        label: 'Transmission',
-        type: 'checkbox',
-        items: ['automatic', 'manual'],
       },
     ],
   },

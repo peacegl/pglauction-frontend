@@ -16,7 +16,7 @@ import {Form, Formik} from 'formik';
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
 
-const PersonalInfoForm = ({initialValues, profileUrl}) => {
+const PersonalInfoForm = ({initialValues, profileUrl, setValues}) => {
   const {updateAuthUser} = useAuthMethod();
   const {messages} = useIntl();
   const dispatch = useDispatch();
@@ -25,6 +25,11 @@ const PersonalInfoForm = ({initialValues, profileUrl}) => {
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const handleSubmit = async (values) => {
+    let newvalues = values;
+    delete newvalues.profile;
+    setValues((d) => {
+      return {...d, ...newvalues};
+    });
     const userFormData = Helper.getFormData(values);
     await dispatch(
       onUpdateAuthUser(`/auth_user`, userFormData, false, user, updateAuthUser),
@@ -194,4 +199,5 @@ export default PersonalInfoForm;
 PersonalInfoForm.propTypes = {
   profileUrl: PropTypes.any,
   initialValues: PropTypes.object,
+  setValues: PropTypes.func,
 };

@@ -229,7 +229,7 @@ export default function ListItem({item, ...props}) {
                   }
                   variant='outlined'
                   size='small'
-                  sx={{mt: 2, px: 2}}
+                  sx={{mt: 2}}
                   onClick={() => addToWatchList(item.id)}
                 >
                   {!addedToWatchList ? (
