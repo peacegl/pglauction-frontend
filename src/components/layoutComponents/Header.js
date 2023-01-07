@@ -1,6 +1,8 @@
 import InstagramIcon from '../../assets/icon/instagram.svg';
 import WhatsAppIcon from '../../assets/icon/whatsapp.svg';
 import FacebookIcon from '../../assets/icon/facebook.svg';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 import {useDispatch, useSelector} from 'react-redux';
 import VehicleSearchBar from './VehicleSearchBar';
 import TiktokIcon from 'assets/icon/tiktok.png';
@@ -25,9 +27,6 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material';
-import CustomMenu from './CustomMenu';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
 
 function Header() {
   const router = useRouter();
