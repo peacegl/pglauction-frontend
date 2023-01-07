@@ -1,9 +1,12 @@
 import {useAuthMethod, useAuthUser} from '@crema/utility/AuthHooks';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import VehicleSearchBar from './VehicleSearchBar';
+import ShopIcon from '@mui/icons-material/Shop';
 import Container from '@mui/material/Container';
 import {setVehicleSearch} from 'redux/actions';
 import MenuItem from '@mui/material/MenuItem';
@@ -12,42 +15,12 @@ import Tooltip from '@mui/material/Tooltip';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import {useMemo, useState} from 'react';
 import {useTheme} from '@mui/material';
 import Menu from '@mui/material/Menu';
 import {useRouter} from 'next/router';
+import CustomMenu from './CustomMenu';
 import Box from '@mui/material/Box';
-import Link from 'next/link';
-
-export const pages = [
-  {title: <IntlMessages id='website.home' />, link: '/home', target: '_self'},
-  {
-    title: <IntlMessages id='website.all_vehicles' />,
-    link: '/',
-    target: '_self',
-  },
-  // {title: <IntlMessages id='website.live_auctions' />, link: '/live-auctions'},
-  {
-    title: <IntlMessages id='website.shipping' />,
-    link: 'https://peacegl.com/',
-    target: '_blank',
-  },
-  {
-    title: <IntlMessages id='website.services' />,
-    link: '/services',
-    target: '_self',
-  },
-  {
-    title: <IntlMessages id='website.contact_us' />,
-    link: '/contact-us',
-    target: '_self',
-  },
-  {
-    title: <IntlMessages id='website.about_us' />,
-    link: '/about-us',
-    target: '_self',
-  },
-];
+import {pages} from 'configs';
 
 const signOptions = [
   {
@@ -65,7 +38,7 @@ function TopMenu() {
 
   const dispatch = useDispatch();
   const theme = useTheme();
-  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [active, setActive] = useState(null);
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const handleOpenUserMenu = (event) => {
@@ -110,6 +83,43 @@ function TopMenu() {
     return sets;
   }, [user?.type]);
 
+  const addTodo = useCallback(() => {
+    if (user?.type == 'Customer') {
+      if (pages.filter((item) => item.key == 8).length == 0) {
+        pages.unshift({
+          key: 8,
+          title: <IntlMessages id='sidebar.dashboard' />,
+          children: [
+            {
+              title: <IntlMessages id='common.myWatchlist' />,
+              link: '/dashboard/my-watchlist',
+              target: '_self',
+              icon: <BookmarksIcon />,
+            },
+            {
+              title: <IntlMessages id='common.myPurchaseList' />,
+              link: '/dashboard/my-purchaselist',
+              target: '_self',
+              icon: <ShopIcon />,
+            },
+          ],
+        });
+      }
+    }
+  }, [user?.type]);
+
+  useEffect(() => {
+    addTodo();
+  }, []);
+
+  useEffect(() => {
+    pages.forEach((item, index) => {
+      if (router.asPath == item.link) {
+        setActive(index);
+      }
+    });
+  }, [router?.asPath]);
+
   return (
     <AppBar position='static'>
       <Container maxWidth='xl'>
@@ -124,6 +134,7 @@ function TopMenu() {
         >
           <Box
             sx={{
+              height: '100%',
               flexGrow: 1,
               display: {xs: 'flex', md: 'none'},
               justifyContent: 'center',
@@ -144,26 +155,36 @@ function TopMenu() {
               }}
             />
           </Box>
-
-          <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
-            {pages.map((page, index) => (
-              <Button
-                key={index}
-                sx={{my: 2, color: 'white', display: 'block'}}
-              >
-                <Link
-                  href={page.link}
-                  target={page.target}
-                  style={{
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: {xs: 'none', md: 'flex'},
+            }}
+          >
+            {pages.map((page, index) =>
+              page.children ? (
+                <CustomMenu
+                  page={page}
+                  key={index}
+                  index={index}
+                  active={active}
+                />
+              ) : (
+                <Button
+                  key={index}
+                  sx={{
+                    py: 2,
                     color: 'white',
-                    alignItems: 'center',
-                    textDecoration: 'none',
+                    display: 'block',
+                    bgcolor: (theme) =>
+                      index == active && theme.palette.primary.dark,
                   }}
+                  onClick={() => router.push(page.link)}
                 >
                   {page.title}
-                </Link>
-              </Button>
-            ))}
+                </Button>
+              ),
+            )}
           </Box>
           {user ? (
             <Box sx={{flexGrow: 0}}>

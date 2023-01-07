@@ -4,9 +4,9 @@ import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import {onGetMyPurchaseList} from 'redux/actions';
+import {Box, Container} from '@mui/material';
 import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
-import {Box} from '@mui/material';
 
 const PurchaseHistory = () => {
   const router = useRouter();
@@ -63,34 +63,36 @@ const PurchaseHistory = () => {
   };
 
   return (
-    <Box sx={{mt: 8}}>
-      <CustomDataTable
-        title={<IntlMessages id='common.myPurchaselist' />}
-        total={total}
-        data={data}
-        columns={tableColumns(router)}
-        options={options}
-        onFilterClick={() => setOpenFilter(true)}
-        deleteTitle={<IntlMessages id='purchaselist.deleteMessage' />}
-        isLoading={loading}
-        onEnterSearch={onEnterSearch}
-        onExactChange={(value) => setExactMatch(value)}
-        showAddButton={false}
-        showEditButton={false}
-        showDeleteButton={false}
-        selectableRows={false}
-      />
-      {openFilter && (
-        <FilterModal
-          open={openFilter}
-          toggleOpen={() => setOpenFilter((d) => !d)}
-          initialData={filterData}
-          updateFilterData={setFilterData}
-          title={<IntlMessages id='purchaseList.filterPurchaseList' />}
-          content={filterContent}
+    <Container maxWidth='xl'>
+      <Box sx={{mt: 8}}>
+        <CustomDataTable
+          title={<IntlMessages id='common.myPurchaselist' />}
+          total={total}
+          data={data}
+          columns={tableColumns(router)}
+          options={options}
+          onFilterClick={() => setOpenFilter(true)}
+          deleteTitle={<IntlMessages id='purchaselist.deleteMessage' />}
+          isLoading={loading}
+          onEnterSearch={onEnterSearch}
+          onExactChange={(value) => setExactMatch(value)}
+          showAddButton={false}
+          showEditButton={false}
+          showDeleteButton={false}
+          selectableRows={false}
         />
-      )}
-    </Box>
+        {openFilter && (
+          <FilterModal
+            open={openFilter}
+            toggleOpen={() => setOpenFilter((d) => !d)}
+            initialData={filterData}
+            updateFilterData={setFilterData}
+            title={<IntlMessages id='purchaseList.filterPurchaseList' />}
+            content={filterContent}
+          />
+        )}
+      </Box>
+    </Container>
   );
 };
 

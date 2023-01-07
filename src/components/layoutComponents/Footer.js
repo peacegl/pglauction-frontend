@@ -1,4 +1,11 @@
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import logoImage from '../../assets/united_logo.png';
+import {useRouter} from 'next/router';
+import {useTheme} from '@mui/styles';
+import {pages} from 'configs';
+import Link from 'next/link';
 import {
   Box,
   Container,
@@ -6,13 +13,6 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
-import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
-import logoImage from '../../assets/united_logo.png';
-import {useRouter} from 'next/router';
-import {useTheme} from '@mui/styles';
-import {pages} from './AppBar';
-import Link from 'next/link';
 
 export default function Footer() {
   const theme = useTheme();
@@ -23,9 +23,8 @@ export default function Footer() {
       {title}
     </Typography>
   );
-
-  const link = (text, link, target = '_self') => (
-    <Box marginBottom='10px' key={link}>
+  const link = (text, link, target = '_self', key) => (
+    <Box marginBottom='10px' key={key}>
       <Link
         href={link}
         target={target}
@@ -106,7 +105,11 @@ export default function Footer() {
                 }}
               >
                 {title('Quick Links')}
-                {pages.map((page) => link(page.title, page.link, page?.target))}
+                {pages.map((page, index) => {
+                  if (page.link) {
+                    return link(page.title, page.link, page?.target, index);
+                  }
+                })}
               </Box>
               <Box
                 sx={{

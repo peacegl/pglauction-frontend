@@ -1,5 +1,21 @@
+import InstagramIcon from '../../assets/icon/instagram.svg';
+import WhatsAppIcon from '../../assets/icon/whatsapp.svg';
+import FacebookIcon from '../../assets/icon/facebook.svg';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import {useDispatch, useSelector} from 'react-redux';
+import VehicleSearchBar from './VehicleSearchBar';
+import TiktokIcon from 'assets/icon/tiktok.png';
+import MenuIcon from '@mui/icons-material/Menu';
+import {setVehicleSearch} from 'redux/actions';
+import logoImage from 'assets/united_logo.png';
+import {useRouter} from 'next/router';
+import {useTheme} from '@mui/styles';
+import {useState} from 'react';
+import {pages} from 'configs';
 import {
   Box,
+  Collapse,
   Container,
   Drawer,
   IconButton,
@@ -7,29 +23,21 @@ import {
   List,
   ListItem,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
   Typography,
 } from '@mui/material';
-import {useRouter} from 'next/router';
-import {useTheme} from '@mui/styles';
-import MenuIcon from '@mui/icons-material/Menu';
-import {useState} from 'react';
-import {pages} from './AppBar';
-import FacebookIcon from '../../assets/icon/facebook.svg';
-import WhatsAppIcon from '../../assets/icon/whatsapp.svg';
-import InstagramIcon from '../../assets/icon/instagram.svg';
-import TiktokIcon from '../../assets/icon/tiktok.png';
-import VehicleSearchBar from './VehicleSearchBar';
-import {useDispatch, useSelector} from 'react-redux';
-import {setVehicleSearch} from '../../redux/actions';
-import logoImage from '../../assets/united_logo.png';
 
 function Header() {
   const router = useRouter();
   const theme = useTheme();
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [open, setOpen] = React.useState(true);
 
+  const handleClick = () => {
+    setOpen(!open);
+  };
   const toggleDrawer = (open) => (event) => {
     if (
       event.type === 'keydown' &&
@@ -51,18 +59,57 @@ function Header() {
     <Box
       sx={{width: 250}}
       role='presentation'
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
+      // onKeyDown={toggleDrawer(false)}
     >
       <List>
         {pages.map((item, index) => (
-          <ListItem key={item.title} disablePadding>
-            <ListItemButton onClick={() => router.push(item.link)}>
-              <ListItemText
-                primary={item.title}
-                sx={{color: (theme) => theme.palette.text.primary}}
-              />
-            </ListItemButton>
+          <ListItem key={index} disablePadding>
+            {item.children ? (
+              <Box sx={{width: '100%'}}>
+                <ListItemButton onClick={handleClick}>
+                  {/* <ListItemIcon>
+                    <InboxIcon />
+                  </ListItemIcon> */}
+                  <ListItemText
+                    primary={item.title}
+                    sx={{color: (theme) => theme.palette.text.primary}}
+                  />
+                  {open ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                <Collapse in={open} timeout='auto' unmountOnExit>
+                  <List component='div' disablePadding>
+                    {item.children.map((child, index) => (
+                      <ListItemButton
+                        sx={{px: 4}}
+                        key={index}
+                        onClick={() => {
+                          router.push(child.link);
+                          toggleDrawer(false);
+                        }}
+                      >
+                        <ListItemIcon>{child.icon}</ListItemIcon>
+                        <ListItemText
+                          primary={child.title}
+                          sx={{color: (theme) => theme.palette.text.primary}}
+                        />
+                      </ListItemButton>
+                    ))}
+                  </List>
+                </Collapse>
+              </Box>
+            ) : (
+              <ListItemButton
+                onClick={() => {
+                  router.push(item.link);
+                  toggleDrawer(false);
+                }}
+              >
+                <ListItemText
+                  primary={item.title}
+                  sx={{color: (theme) => theme.palette.text.primary}}
+                />
+              </ListItemButton>
+            )}
           </ListItem>
         ))}
       </List>
