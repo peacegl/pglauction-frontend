@@ -7,7 +7,7 @@ import {useLayoutContext} from '../../../utility/AppContextProvider/LayoutContex
 import AppThemeSetting from '../../AppThemeSetting';
 import DefaultLayoutWrapper from './DefaultLayoutWrapper';
 import MainContent from './MainContent';
-import {LayoutType} from '../../../../shared/constants/AppEnums';
+import {LayoutType} from 'shared/constants/AppEnums';
 import AppSidebar from './AppSidebar';
 import DefaultLayoutContainer from './DefaultLayoutContainer';
 import PropsTypes from 'prop-types';

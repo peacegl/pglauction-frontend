@@ -6,7 +6,7 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
-import {Box} from '@mui/material';
+import {Box, Container} from '@mui/material';
 
 const WatchList = () => {
   const router = useRouter();
@@ -82,36 +82,38 @@ const WatchList = () => {
   };
 
   return (
-    <Box sx={{mt: 8}}>
-      <CustomDataTable
-        title={<IntlMessages id='common.myWatchlist' />}
-        total={total}
-        data={data}
-        columns={tableColumns(router)}
-        options={options}
-        onDelete={onDelete}
-        onFilterClick={() => setOpenFilter(true)}
-        deleteTitle={<IntlMessages id='watchlist.deleteMessage' />}
-        isLoading={loading}
-        selected={selected}
-        onEnterSearch={onEnterSearch}
-        onExactChange={(value) => setExactMatch(value)}
-        showAddButton={false}
-        showEditButton={false}
-        showDeleteButton={true}
-        selectableRows={true}
-      />
-      {openFilter && (
-        <FilterModal
-          open={openFilter}
-          toggleOpen={() => setOpenFilter((d) => !d)}
-          initialData={filterData}
-          updateFilterData={setFilterData}
-          title={<IntlMessages id='watchList.filterWatchList' />}
-          content={filterContent}
+    <Container maxWidth='xl'>
+      <Box sx={{mt: 8}}>
+        <CustomDataTable
+          title={<IntlMessages id='common.myWatchlist' />}
+          total={total}
+          data={data}
+          columns={tableColumns(router)}
+          options={options}
+          onDelete={onDelete}
+          onFilterClick={() => setOpenFilter(true)}
+          deleteTitle={<IntlMessages id='watchlist.deleteMessage' />}
+          isLoading={loading}
+          selected={selected}
+          onEnterSearch={onEnterSearch}
+          onExactChange={(value) => setExactMatch(value)}
+          showAddButton={false}
+          showEditButton={false}
+          showDeleteButton={true}
+          selectableRows={true}
         />
-      )}
-    </Box>
+        {openFilter && (
+          <FilterModal
+            open={openFilter}
+            toggleOpen={() => setOpenFilter((d) => !d)}
+            initialData={filterData}
+            updateFilterData={setFilterData}
+            title={<IntlMessages id='watchList.filterWatchList' />}
+            content={filterContent}
+          />
+        )}
+      </Box>
+    </Container>
   );
 };
 

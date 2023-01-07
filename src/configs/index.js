@@ -122,29 +122,43 @@ export async function jwtMethod(
 }
 
 export let pages = [
-  {title: <IntlMessages id='website.home' />, link: '/home', target: '_self'},
   {
+    key: 1,
+    title: <IntlMessages id='website.home' />,
+    link: '/home',
+    target: '_self',
+  },
+  {
+    key: 2,
     title: <IntlMessages id='website.all_vehicles' />,
     link: '/',
     target: '_self',
   },
-  // {title: <IntlMessages id='website.live_auctions' />, link: '/live-auctions'},
+  // {
+  //   key: 3,
+  //   title: <IntlMessages id='website.live_auctions' />,
+  //   link: '/live-auctions',
+  // },
   {
+    key: 4,
     title: <IntlMessages id='website.shipping' />,
     link: 'https://peacegl.com/',
     target: '_blank',
   },
   {
+    key: 5,
     title: <IntlMessages id='website.services' />,
     link: '/services',
     target: '_self',
   },
   {
+    key: 6,
     title: <IntlMessages id='website.contact_us' />,
     link: '/contact-us',
     target: '_self',
   },
   {
+    key: 7,
     title: <IntlMessages id='website.about_us' />,
     link: '/about-us',
     target: '_self',

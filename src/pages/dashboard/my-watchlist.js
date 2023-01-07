@@ -1,12 +1,14 @@
-import asyncComponent from '../@crema/utility/asyncComponent';
+import asyncComponent from '@crema/utility/asyncComponent';
 import {userInitialUrl} from 'shared/constants/AppConst';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import AppLoader from '@crema/core/AppLoader';
 import Router, {useRouter} from 'next/router';
-import AppPage from '../@crema/hoc/WebPage';
+import AppPage from '@crema/hoc/WebPage';
 import React, {useEffect} from 'react';
 
-const Dashboard = asyncComponent(() => import('../modules/customer/Dashboard'));
+const MyWatchList = asyncComponent(() =>
+  import('modules/customer/Dashboard/MyWatchList'),
+);
 export default AppPage(() => {
   const {user, isLoading} = useAuthUser();
   const {asPath} = useRouter();
@@ -23,5 +25,5 @@ export default AppPage(() => {
     }
   }, [user, isLoading]);
   if (!user || isLoading) return <AppLoader />;
-  return <Dashboard />;
+  return <MyWatchList />;
 });
