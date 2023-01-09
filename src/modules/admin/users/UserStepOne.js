@@ -15,10 +15,11 @@ const UserStepOne = (props) => {
       <Stack spacing={{xs: 5, md: 8}}>
         <Stack direction='row' spacing={5} sx={{mx: 'auto'}}>
           <Profile
-            width={{xs: 70, lg: 100}}
+            width={{xs: 80, md: 100}}
             profileUrl={props.profileUrl}
             name='profile'
             setfieldvalue={props.setfieldvalue}
+            title={<IntlMessages id='common.profile' />}
           />
         </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>

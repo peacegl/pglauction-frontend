@@ -71,10 +71,11 @@ const PersonalInfoForm = ({initialValues, profileUrl, setValues}) => {
               <Stack spacing={{xs: 5, md: 8}}>
                 <Stack direction='row' spacing={5} sx={{mx: 'auto'}}>
                   <Profile
-                    width={{xs: 70, lg: 100}}
+                    width={{xs: 80, md: 100}}
                     profileUrl={profileUrl}
                     name='profile'
                     setfieldvalue={setFieldValue}
+                    title={<IntlMessages id='common.profile' />}
                   />
                 </Stack>
                 <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>

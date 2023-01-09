@@ -21,21 +21,34 @@ const SingleImageDropzone = ({
   setIsImageValid,
   errorMessage,
   deleteImage,
+  disableCrop = false,
 }) => {
   const [error, setError] = useState(false);
   const [imagesForCrop, setImagesForCrop] = useState([]);
   const [openImageCrop, setOpenImageCrop] = useState(false);
+  const [isPdf, setIsPdf] = useState(false);
   const {getRootProps, getInputProps} = useDropzone({
-    accept: 'image/*',
+    accept: 'image/*,.pdf',
     multiple: false,
     onDrop: (acceptedFiles) => {
       if (acceptedFiles[0].size > 6291456) {
         setError(true);
-        setIsImageValid(false);
+        if (setIsImageValid) setIsImageValid(false);
       } else {
         setError(false);
-        setImagesForCrop(acceptedFiles);
-        setOpenImageCrop(true);
+        if (!disableCrop) {
+          setImagesForCrop(acceptedFiles);
+          setOpenImageCrop(true);
+        } else {
+          if (acceptedFiles[0].type.includes('pdf')) {
+            setIsPdf(true);
+            setImage(acceptedFiles[0]);
+          } else {
+            setImage({preview: URL.createObjectURL(acceptedFiles[0])});
+          }
+          setfieldvalue(name, acceptedFiles[0]);
+          if (setIsImageValid) setIsImageValid(true);
+        }
       }
     },
   });
@@ -48,7 +61,11 @@ const SingleImageDropzone = ({
     }
   }, [error]);
   const addImage = (croptedImages) => {
-    setImage({preview: URL.createObjectURL(croptedImages[0])});
+    if (acceptedFiles[0].type.includes('pdf')) {
+      setIsPdf(true);
+    } else {
+      setImage({preview: URL.createObjectURL(acceptedFiles[0])});
+    }
     setfieldvalue(name, croptedImages[0]);
     if (setIsImageValid) setIsImageValid(true);
   };
@@ -91,9 +108,10 @@ const SingleImageDropzone = ({
                 },
               }}
             >
-              {!image.preview && (
+              {!image?.preview && !isPdf && (
                 <Box
                   sx={{
+                    p: 2,
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
@@ -111,7 +129,7 @@ const SingleImageDropzone = ({
                   <Typography>{text}</Typography>
                 </Box>
               )}
-              {image.preview && (
+              {!isPdf && image?.preview && (
                 <>
                   <Box
                     sx={{
@@ -134,6 +152,7 @@ const SingleImageDropzone = ({
                         if (setIsImageValid) setIsImageValid(false);
                         if (deleteImage) deleteImage(image.id);
                         setImage({});
+                        setIsPdf(false);
                         setError(false);
                         setfieldvalue(name, '');
                       }}
@@ -142,11 +161,44 @@ const SingleImageDropzone = ({
                   <img alt='preview' src={image.preview} />
                 </>
               )}
+              {isPdf && (
+                <Box>
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      right: 10,
+                      top: 10,
+                    }}
+                  >
+                    <DeleteOutlineOutlinedIcon
+                      sx={{
+                        color: 'warning.main',
+                        borderRadius: '50%',
+                        padding: 1,
+                        '&:hover, &:focus': {
+                          backgroundColor: 'primary.contrastText',
+                        },
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (setIsImageValid) setIsImageValid(false);
+                        if (deleteImage) deleteImage(image.id);
+                        setImage({});
+                        setIsPdf(false);
+                        setError(false);
+                        setfieldvalue(name, '');
+                      }}
+                    />
+                  </Box>
+                  <Box>{image?.name}</Box>
+                  <Box>{image?.size}</Box>
+                </Box>
+              )}
             </Box>
           </label>
         </AvatarViewWrapper>
 
-        {openImageCrop && (
+        {disableCrop && openImageCrop && (
           <ImageCropModal
             open={openImageCrop}
             toggleOpen={() => setOpenImageCrop((d) => !d)}
@@ -182,4 +234,5 @@ SingleImageDropzone.propTypes = {
   errorMessage: PropTypes.string,
   setImage: PropTypes.func,
   deleteImage: PropTypes.func,
+  disableCrop: PropTypes.bool,
 };

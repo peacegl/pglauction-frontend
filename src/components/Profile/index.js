@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import {useEffect, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
 
-const Profile = ({width, profileUrl, name, setfieldvalue}) => {
+const Profile = ({width, profileUrl, name, setfieldvalue, title}) => {
   const [error, setError] = useState(false);
   const {getRootProps, getInputProps} = useDropzone({
     accept: 'image/*',
@@ -41,6 +41,7 @@ const Profile = ({width, profileUrl, name, setfieldvalue}) => {
         alignItems: 'center',
       }}
     >
+      <Typography sx={{mb: 1}}>{title}</Typography>
       <Box sx={{position: 'relative'}}>
         <AvatarViewWrapper {...getRootProps({className: 'dropzone'})}>
           <input {...getInputProps()} />
@@ -105,4 +106,5 @@ Profile.propTypes = {
   name: PropTypes.string,
   width: PropTypes.object,
   profileUrl: PropTypes.any,
+  title: PropTypes.any,
 };

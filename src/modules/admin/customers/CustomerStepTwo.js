@@ -136,7 +136,7 @@ const CustomerStepTwo = (props) => {
             variant='outlined'
             size='small'
             value={props.values?.type}
-            sx={{width: {xs: '100%', md: '49%'}}}
+            sx={{flex: 1}}
           >
             <MenuItem value='member'>
               <IntlMessages id='common.member' />
@@ -145,6 +145,7 @@ const CustomerStepTwo = (props) => {
               <IntlMessages id='common.seller' />
             </MenuItem>
           </AppTextField>
+          <Box sx={{flex: 1}}></Box>
         </Stack> */}
       </Stack>
     </Box>
