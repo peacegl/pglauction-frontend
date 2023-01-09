@@ -9,11 +9,12 @@ import TiktokIcon from 'assets/icon/tiktok.png';
 import MenuIcon from '@mui/icons-material/Menu';
 import {setVehicleSearch} from 'redux/actions';
 import logoImage from 'assets/united_logo.png';
+import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 import {useTheme} from '@mui/styles';
-import {useState} from 'react';
 import {pages} from 'configs';
 import {
+  alpha,
   Box,
   Collapse,
   Container,
@@ -33,7 +34,18 @@ function Header() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
+  const [active, setActive] = useState(true);
+
+  useEffect(() => {
+    pages.forEach((item, index) => {
+      if (item.key == 8) {
+        setActive(index);
+      } else if (router.asPath == item.link) {
+        setActive(index);
+      }
+    });
+  }, [router?.asPath]);
 
   const handleClick = () => {
     setOpen(!open);
@@ -72,16 +84,26 @@ function Header() {
                   </ListItemIcon> */}
                   <ListItemText
                     primary={item.title}
-                    sx={{color: (theme) => theme.palette.text.primary}}
+                    sx={{
+                      color: (theme) => theme.palette.text.primary,
+                    }}
                   />
                   {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItemButton>
                 <Collapse in={open} timeout='auto' unmountOnExit>
                   <List component='div' disablePadding>
-                    {item.children.map((child, index) => (
+                    {item.children.map((child, i) => (
                       <ListItemButton
-                        sx={{px: 4}}
-                        key={index}
+                        sx={{
+                          px: 4,
+                          bgcolor: (theme) =>
+                            router.asPath == child.link &&
+                            alpha(
+                              theme.palette.primary.main,
+                              theme.palette.action.selectedOpacity,
+                            ),
+                        }}
+                        key={i}
                         onClick={() => {
                           router.push(child.link);
                           toggleDrawer(false);
@@ -103,10 +125,20 @@ function Header() {
                   router.push(item.link);
                   toggleDrawer(false);
                 }}
+                sx={{
+                  bgcolor: (theme) =>
+                    index == active &&
+                    alpha(
+                      theme.palette.primary.main,
+                      theme.palette.action.selectedOpacity,
+                    ),
+                }}
               >
                 <ListItemText
                   primary={item.title}
-                  sx={{color: (theme) => theme.palette.text.primary}}
+                  sx={{
+                    color: (theme) => theme.palette.text.primary,
+                  }}
                 />
               </ListItemButton>
             )}

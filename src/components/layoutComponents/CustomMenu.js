@@ -2,10 +2,10 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {styled, alpha} from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
+import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 import Menu from '@mui/material/Menu';
 import PropTypes from 'prop-types';
-import {useState} from 'react';
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -52,6 +52,7 @@ const StyledMenu = styled((props) => (
 
 export default function CustomMenu(props) {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [active, setActive] = useState(null);
   const open = Boolean(anchorEl);
   const router = useRouter();
 
@@ -61,6 +62,14 @@ export default function CustomMenu(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    props?.page?.children?.forEach((item, index) => {
+      if (router.asPath == item.link) {
+        setActive(index);
+      }
+    });
+  }, [router?.asPath]);
 
   return (
     <div>
@@ -73,6 +82,7 @@ export default function CustomMenu(props) {
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
         sx={{
+          py: 2,
           color: 'white',
           bgcolor: (theme) =>
             props.index == props.active && theme.palette.primary.dark,
@@ -93,7 +103,15 @@ export default function CustomMenu(props) {
           <MenuItem
             key={index}
             onClick={() => router.push(item.link)}
-            sx={{color: (theme) => theme.palette.text.secondary}}
+            sx={{
+              color: (theme) => theme.palette.text.secondary,
+              bgcolor: (theme) =>
+                index == active &&
+                alpha(
+                  theme.palette.primary.main,
+                  theme.palette.action.selectedOpacity,
+                ),
+            }}
           >
             {item.icon}
             {item.title}

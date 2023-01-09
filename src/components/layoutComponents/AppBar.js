@@ -114,7 +114,9 @@ function TopMenu() {
 
   useEffect(() => {
     pages.forEach((item, index) => {
-      if (router.asPath == item.link) {
+      if (item.key == 8) {
+        setActive(index);
+      } else if (router.asPath == item.link) {
         setActive(index);
       }
     });
