@@ -1,10 +1,10 @@
+import {customerInitialUrl, userInitialUrl} from 'shared/constants/AppConst';
 import asyncComponent from '../@crema/utility/asyncComponent';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import AppLoader from '@crema/core/AppLoader';
 import Router, {useRouter} from 'next/router';
 import AppPage from '../@crema/hoc/WebPage';
 import React, {useEffect} from 'react';
-import {customerInitialUrl, userInitialUrl} from 'shared/constants/AppConst';
 
 const SignUP = asyncComponent(() => import('../modules/auth/Signup/index'));
 export default AppPage(() => {
