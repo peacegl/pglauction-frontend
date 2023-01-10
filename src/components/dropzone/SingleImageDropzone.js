@@ -8,6 +8,8 @@ import {Typography} from '@mui/material';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 import {useState, useEffect} from 'react';
+import {BsFillFilePdfFill} from 'react-icons/bs';
+import AppTooltip from '@crema/core/AppTooltip';
 
 const SingleImageDropzone = ({
   width,
@@ -22,11 +24,11 @@ const SingleImageDropzone = ({
   errorMessage,
   deleteImage,
   disableCrop = false,
+  isDocument = false,
 }) => {
   const [error, setError] = useState(false);
   const [imagesForCrop, setImagesForCrop] = useState([]);
   const [openImageCrop, setOpenImageCrop] = useState(false);
-  const [isPdf, setIsPdf] = useState(false);
   const {getRootProps, getInputProps} = useDropzone({
     accept: 'image/*,.pdf',
     multiple: false,
@@ -40,8 +42,7 @@ const SingleImageDropzone = ({
           setImagesForCrop(acceptedFiles);
           setOpenImageCrop(true);
         } else {
-          if (acceptedFiles[0].type.includes('pdf')) {
-            setIsPdf(true);
+          if (isDocument) {
             setImage(acceptedFiles[0]);
           } else {
             setImage({preview: URL.createObjectURL(acceptedFiles[0])});
@@ -61,9 +62,7 @@ const SingleImageDropzone = ({
     }
   }, [error]);
   const addImage = (croptedImages) => {
-    if (acceptedFiles[0].type.includes('pdf')) {
-      setIsPdf(true);
-    } else {
+    if (!isDocument) {
       setImage({preview: URL.createObjectURL(acceptedFiles[0])});
     }
     setfieldvalue(name, croptedImages[0]);
@@ -108,7 +107,7 @@ const SingleImageDropzone = ({
                 },
               }}
             >
-              {!image?.preview && !isPdf && (
+              {!image?.preview && (
                 <Box
                   sx={{
                     p: 2,
@@ -129,7 +128,7 @@ const SingleImageDropzone = ({
                   <Typography>{text}</Typography>
                 </Box>
               )}
-              {!isPdf && image?.preview && (
+              {!isDocument && (
                 <>
                   <Box
                     sx={{
@@ -152,7 +151,6 @@ const SingleImageDropzone = ({
                         if (setIsImageValid) setIsImageValid(false);
                         if (deleteImage) deleteImage(image.id);
                         setImage({});
-                        setIsPdf(false);
                         setError(false);
                         setfieldvalue(name, '');
                       }}
@@ -161,7 +159,7 @@ const SingleImageDropzone = ({
                   <img alt='preview' src={image.preview} />
                 </>
               )}
-              {isPdf && (
+              {isDocument && (
                 <Box>
                   <Box
                     sx={{
@@ -184,14 +182,41 @@ const SingleImageDropzone = ({
                         if (setIsImageValid) setIsImageValid(false);
                         if (deleteImage) deleteImage(image.id);
                         setImage({});
-                        setIsPdf(false);
                         setError(false);
                         setfieldvalue(name, '');
                       }}
                     />
                   </Box>
-                  <Box>{image?.name}</Box>
-                  <Box>{image?.size}</Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      p: 2,
+                    }}
+                  >
+                    <BsFillFilePdfFill style={{fontSize: '25px'}} />
+                    <Box sx={{mx: 2}}>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          width: width ? width - 80 : '200px',
+                        }}
+                      >
+                        <AppTooltip
+                          title={
+                            image?.name ? image?.name : 'Identification Proof'
+                          }
+                        >
+                          <Typography noWrap>
+                            {image?.name ? image?.name : 'Identification Proof'}
+                          </Typography>
+                        </AppTooltip>
+                      </Box>
+                      {image?.size && (
+                        <Box>{Math.ceil(image?.size / 1024)}KB</Box>
+                      )}
+                    </Box>
+                  </Box>
                 </Box>
               )}
             </Box>
@@ -235,4 +260,5 @@ SingleImageDropzone.propTypes = {
   setImage: PropTypes.func,
   deleteImage: PropTypes.func,
   disableCrop: PropTypes.bool,
+  isDocument: PropTypes.bool,
 };

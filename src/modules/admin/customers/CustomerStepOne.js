@@ -1,4 +1,5 @@
 import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteField';
+import SingleImageDropzone from 'components/dropzone/SingleImageDropzone';
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import IntlMessages from '@crema/utility/IntlMessages';
 import Profile from 'components/Profile';
@@ -14,7 +15,6 @@ import {
   RadioGroup,
   Stack,
 } from '@mui/material';
-import SingleImageDropzone from 'components/dropzone/SingleImageDropzone';
 
 const CustomerStepOne = (props) => {
   const {messages} = useIntl();
@@ -181,7 +181,7 @@ const CustomerStepOne = (props) => {
       <Stack
         direction={{xs: 'column', md: 'row'}}
         spacing={5}
-        alignItems='center'
+        alignItems={{md: 'center'}}
       >
         <AppTextField
           placeholder={messages['common.companyPlaceholder']}
@@ -191,7 +191,7 @@ const CustomerStepOne = (props) => {
           size='small'
           sx={{flex: 1}}
         />
-        <Box sx={{flex: 1, display: 'flex'}}>
+        <Box sx={{flex: 1}}>
           <SingleImageDropzone
             text={
               <>
@@ -210,7 +210,7 @@ const CustomerStepOne = (props) => {
                 </Box>
               </>
             }
-            width={220}
+            width={250}
             height={'auto'}
             image={props.identificationProof}
             name='identification_proof'
@@ -218,6 +218,7 @@ const CustomerStepOne = (props) => {
             setImage={props.setIdentificationProof}
             isImageValid={true}
             disableCrop
+            isDocument={props.isDocument}
           />
         </Box>
       </Stack>
@@ -238,4 +239,5 @@ CustomerStepOne.propTypes = {
   searchStates: PropTypes.func,
   identificationProof: PropTypes.object,
   setIdentificationProof: PropTypes.func,
+  isDocument: PropTypes.bool,
 };

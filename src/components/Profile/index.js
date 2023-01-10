@@ -1,14 +1,14 @@
 import AvatarViewWrapper from '../main/AvatarViewWrapper';
+import IntlMessages from '@crema/utility/IntlMessages';
 import CloseIcon from '@mui/icons-material/Close';
+import {alpha, Typography} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import AvatarCropper from './AvatarCropper';
 import {useDropzone} from 'react-dropzone';
 import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
-import {alpha, Typography} from '@mui/material';
-import PropTypes from 'prop-types';
 import {useEffect, useState} from 'react';
-import IntlMessages from '@crema/utility/IntlMessages';
-import AvatarCropper from './AvatarCropper';
+import Box from '@mui/material/Box';
+import PropTypes from 'prop-types';
 
 const Profile = ({width, profileUrl, name, setfieldvalue, title}) => {
   const [error, setError] = useState(false);

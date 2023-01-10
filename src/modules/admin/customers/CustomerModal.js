@@ -217,8 +217,6 @@ export default function CustomerModal({
               if (Object.keys(initialValues).includes(key)) {
                 if (key == 'profile') {
                   profileUrl.current = value;
-                } else if (key == 'identification_proof') {
-                  setIdentificationProof({preview: value});
                 } else {
                   values[key] = value ? value : initialValues[key];
                 }
@@ -269,6 +267,7 @@ export default function CustomerModal({
           searchStates={searchStates}
           identificationProof={identificationProof}
           setIdentificationProof={setIdentificationProof}
+          isDocument
         />
       ),
     },
