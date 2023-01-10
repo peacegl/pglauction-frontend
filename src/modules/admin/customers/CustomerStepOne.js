@@ -219,6 +219,7 @@ const CustomerStepOne = (props) => {
             isImageValid={true}
             disableCrop
             isDocument={props.isDocument}
+            edit={props.edit}
           />
         </Box>
       </Stack>
@@ -240,4 +241,5 @@ CustomerStepOne.propTypes = {
   identificationProof: PropTypes.object,
   setIdentificationProof: PropTypes.func,
   isDocument: PropTypes.bool,
+  edit: PropTypes.bool,
 };

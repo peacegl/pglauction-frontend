@@ -25,6 +25,7 @@ const SingleImageDropzone = ({
   deleteImage,
   disableCrop = false,
   isDocument = false,
+  edit = false,
 }) => {
   const [error, setError] = useState(false);
   const [imagesForCrop, setImagesForCrop] = useState([]);
@@ -107,27 +108,28 @@ const SingleImageDropzone = ({
                 },
               }}
             >
-              {!image?.preview && (
-                <Box
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    mx: 'auto',
-                    alignItems: 'center',
-                  }}
-                >
-                  <ImageIcon
-                    style={{
-                      fontSize: 40,
-                      marginBottom: 4,
-                      color: (theme) => theme.palette.primary.main,
+              {!image?.preview ||
+                (isDocument && edit && (
+                  <Box
+                    sx={{
+                      p: 2,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      mx: 'auto',
+                      alignItems: 'center',
                     }}
-                  />
-                  <Typography>{text}</Typography>
-                </Box>
-              )}
+                  >
+                    <ImageIcon
+                      style={{
+                        fontSize: 40,
+                        marginBottom: 4,
+                        color: (theme) => theme.palette.primary.main,
+                      }}
+                    />
+                    <Typography>{text}</Typography>
+                  </Box>
+                ))}
               {!isDocument && (
                 <>
                   <Box
@@ -159,7 +161,7 @@ const SingleImageDropzone = ({
                   <img alt='preview' src={image.preview} />
                 </>
               )}
-              {isDocument && (
+              {isDocument && edit && (
                 <Box>
                   <Box
                     sx={{
@@ -261,4 +263,5 @@ SingleImageDropzone.propTypes = {
   deleteImage: PropTypes.func,
   disableCrop: PropTypes.bool,
   isDocument: PropTypes.bool,
+  edit: PropTypes.bool,
 };

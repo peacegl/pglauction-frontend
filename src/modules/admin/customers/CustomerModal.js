@@ -268,6 +268,7 @@ export default function CustomerModal({
           identificationProof={identificationProof}
           setIdentificationProof={setIdentificationProof}
           isDocument
+          edit={edit}
         />
       ),
     },
