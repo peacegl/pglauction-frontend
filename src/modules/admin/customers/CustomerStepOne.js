@@ -1,5 +1,4 @@
 import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteField';
-import SingleImageDropzone from 'components/dropzone/SingleImageDropzone';
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import IntlMessages from '@crema/utility/IntlMessages';
 import Profile from 'components/Profile';
@@ -15,6 +14,7 @@ import {
   RadioGroup,
   Stack,
 } from '@mui/material';
+import SingleFileDropzone from 'components/dropzone/SingleFileDropzone';
 
 const CustomerStepOne = (props) => {
   const {messages} = useIntl();
@@ -183,16 +183,18 @@ const CustomerStepOne = (props) => {
         spacing={5}
         alignItems={{md: 'center'}}
       >
-        <AppTextField
-          placeholder={messages['common.companyPlaceholder']}
-          label={<IntlMessages id='common.company' />}
-          name='company'
-          variant='outlined'
-          size='small'
-          sx={{flex: 1}}
-        />
+        {props.values?.is_business == 1 && (
+          <AppTextField
+            placeholder={messages['common.companyPlaceholder']}
+            label={<IntlMessages id='common.company' />}
+            name='company'
+            variant='outlined'
+            size='small'
+            sx={{flex: 1}}
+          />
+        )}
         <Box sx={{flex: 1}}>
-          <SingleImageDropzone
+          <SingleFileDropzone
             text={
               <>
                 <IntlMessages id='common.identificationProof' />
@@ -217,9 +219,6 @@ const CustomerStepOne = (props) => {
             setfieldvalue={props.setfieldvalue}
             setImage={props.setIdentificationProof}
             isImageValid={true}
-            disableCrop
-            isDocument={props.isDocument}
-            edit={props.edit}
           />
         </Box>
       </Stack>
@@ -231,7 +230,7 @@ export default CustomerStepOne;
 CustomerStepOne.propTypes = {
   values: PropTypes.object,
   setfieldvalue: PropTypes.func,
-  profileUrl: PropTypes.string,
+  profileUrl: PropTypes.any,
   countries: PropTypes.array,
   countriesLoading: PropTypes.bool,
   searchCountries: PropTypes.func,

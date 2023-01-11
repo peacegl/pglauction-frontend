@@ -34,7 +34,7 @@ const SignupFirebase = () => {
   const [showTermsError, setShowTermsError] = useState(false);
   const [identificationProof, setIdentificationProof] = useState({});
 
-  const profileUrl = useRef();
+  const profileUrl = useRef('');
   const {messages} = useIntl();
   const dispatch = useDispatch();
   const {signInUser} = useAuthMethod();
@@ -232,7 +232,7 @@ const SignupFirebase = () => {
     state_id: '',
     city: '',
     zip_code: '',
-    is_business: 1,
+    is_business: 0,
     identification_proof: '',
   };
   return (

@@ -72,7 +72,7 @@ export default function CustomStepper(props) {
       sx={{overflowX: 'auto'}}
     >
       {props.steps.map((step, index) => (
-        <Step key={step.id}>
+        <Step key={index}>
           <StepLabel
             sx={{
               cursor: 'pointer',
@@ -116,7 +116,7 @@ CustomStepper.propTypes = {
   steps: PropTypes.array.isRequired,
   setActiveStep: PropTypes.func.isRequired,
   customValidation: PropTypes.func,
-  actions: PropTypes.actions,
-  values: PropTypes.values,
+  actions: PropTypes.any,
+  values: PropTypes.any,
   validationSchema: PropTypes.array,
 };

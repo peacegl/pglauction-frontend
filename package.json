@@ -82,6 +82,7 @@
     "react-swipeable-views": "^0.14.0",
     "react-tooltip": "^4.2.21",
     "react-trello": "^2.2.11",
+    "react-use-downloader": "^1.2.1",
     "react-window": "^1.8.6",
     "recharts": "^2.1.2",
     "redux": "^4.1.1",

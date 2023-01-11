@@ -1,6 +1,7 @@
 import {useState, useLayoutEffect, useCallback} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
 import CloseIcon from '@mui/icons-material/Close';
+import useDownloader from 'react-use-downloader';
 import Slider from '@mui/material/Slider';
 import Stack from '@mui/material/Stack';
 import getCroppedImg from './cropImage';

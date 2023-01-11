@@ -4,12 +4,10 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import ImageIcon from '@mui/icons-material/Image';
 import ImageCropModal from './ImageCropModal';
 import {useDropzone} from 'react-dropzone';
+import {useState, useEffect} from 'react';
 import {Typography} from '@mui/material';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
-import {useState, useEffect} from 'react';
-import {BsFillFilePdfFill} from 'react-icons/bs';
-import AppTooltip from '@crema/core/AppTooltip';
 
 const SingleImageDropzone = ({
   width,
@@ -23,34 +21,21 @@ const SingleImageDropzone = ({
   setIsImageValid,
   errorMessage,
   deleteImage,
-  disableCrop = false,
-  isDocument = false,
-  edit = false,
 }) => {
   const [error, setError] = useState(false);
   const [imagesForCrop, setImagesForCrop] = useState([]);
   const [openImageCrop, setOpenImageCrop] = useState(false);
   const {getRootProps, getInputProps} = useDropzone({
-    accept: 'image/*,.pdf',
+    accept: 'image/*',
     multiple: false,
     onDrop: (acceptedFiles) => {
       if (acceptedFiles[0].size > 6291456) {
         setError(true);
-        if (setIsImageValid) setIsImageValid(false);
+        setIsImageValid(false);
       } else {
         setError(false);
-        if (!disableCrop) {
-          setImagesForCrop(acceptedFiles);
-          setOpenImageCrop(true);
-        } else {
-          if (isDocument) {
-            setImage(acceptedFiles[0]);
-          } else {
-            setImage({preview: URL.createObjectURL(acceptedFiles[0])});
-          }
-          setfieldvalue(name, acceptedFiles[0]);
-          if (setIsImageValid) setIsImageValid(true);
-        }
+        setImagesForCrop(acceptedFiles);
+        setOpenImageCrop(true);
       }
     },
   });
@@ -63,9 +48,7 @@ const SingleImageDropzone = ({
     }
   }, [error]);
   const addImage = (croptedImages) => {
-    if (!isDocument) {
-      setImage({preview: URL.createObjectURL(acceptedFiles[0])});
-    }
+    setImage({preview: URL.createObjectURL(croptedImages[0])});
     setfieldvalue(name, croptedImages[0]);
     if (setIsImageValid) setIsImageValid(true);
   };
@@ -108,29 +91,27 @@ const SingleImageDropzone = ({
                 },
               }}
             >
-              {!image?.preview ||
-                (isDocument && edit && (
-                  <Box
-                    sx={{
-                      p: 2,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      mx: 'auto',
-                      alignItems: 'center',
+              {!image.preview && (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    mx: 'auto',
+                    alignItems: 'center',
+                  }}
+                >
+                  <ImageIcon
+                    style={{
+                      fontSize: 40,
+                      marginBottom: 4,
+                      color: (theme) => theme.palette.primary.main,
                     }}
-                  >
-                    <ImageIcon
-                      style={{
-                        fontSize: 40,
-                        marginBottom: 4,
-                        color: (theme) => theme.palette.primary.main,
-                      }}
-                    />
-                    <Typography>{text}</Typography>
-                  </Box>
-                ))}
-              {!isDocument && (
+                  />
+                  <Typography>{text}</Typography>
+                </Box>
+              )}
+              {image.preview && (
                 <>
                   <Box
                     sx={{
@@ -161,71 +142,11 @@ const SingleImageDropzone = ({
                   <img alt='preview' src={image.preview} />
                 </>
               )}
-              {isDocument && edit && (
-                <Box>
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      right: 10,
-                      top: 10,
-                    }}
-                  >
-                    <DeleteOutlineOutlinedIcon
-                      sx={{
-                        color: 'warning.main',
-                        borderRadius: '50%',
-                        padding: 1,
-                        '&:hover, &:focus': {
-                          backgroundColor: 'primary.contrastText',
-                        },
-                      }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (setIsImageValid) setIsImageValid(false);
-                        if (deleteImage) deleteImage(image.id);
-                        setImage({});
-                        setError(false);
-                        setfieldvalue(name, '');
-                      }}
-                    />
-                  </Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      p: 2,
-                    }}
-                  >
-                    <BsFillFilePdfFill style={{fontSize: '25px'}} />
-                    <Box sx={{mx: 2}}>
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          width: width ? width - 80 : '200px',
-                        }}
-                      >
-                        <AppTooltip
-                          title={
-                            image?.name ? image?.name : 'Identification Proof'
-                          }
-                        >
-                          <Typography noWrap>
-                            {image?.name ? image?.name : 'Identification Proof'}
-                          </Typography>
-                        </AppTooltip>
-                      </Box>
-                      {image?.size && (
-                        <Box>{Math.ceil(image?.size / 1024)}KB</Box>
-                      )}
-                    </Box>
-                  </Box>
-                </Box>
-              )}
             </Box>
           </label>
         </AvatarViewWrapper>
 
-        {disableCrop && openImageCrop && (
+        {openImageCrop && (
           <ImageCropModal
             open={openImageCrop}
             toggleOpen={() => setOpenImageCrop((d) => !d)}
@@ -261,7 +182,4 @@ SingleImageDropzone.propTypes = {
   errorMessage: PropTypes.string,
   setImage: PropTypes.func,
   deleteImage: PropTypes.func,
-  disableCrop: PropTypes.bool,
-  isDocument: PropTypes.bool,
-  edit: PropTypes.bool,
 };

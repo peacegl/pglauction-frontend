@@ -1143,5 +1143,8 @@
   "common.individual": "Individual",
   "common.identificationProof": "Identification Proof",
   "customer.companyLicense": "Company License",
-  "customer.passport_id": "Passport / ID"
+  "customer.passport_id": "Passport / ID",
+  "common.accountVerification": "Account Verification",
+  "common.verifiedMessage": "Your account is verified!",
+  "common.pendingVerificationMessage": "Your account is in pending for verification"
 }

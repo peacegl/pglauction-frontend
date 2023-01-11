@@ -54,7 +54,7 @@ export default function CustomerModal({
     city: '',
     zip_code: '',
     status: '',
-    is_business: 1,
+    is_business: 0,
     identification_proof: '',
   });
   const {messages} = appIntl('');
@@ -217,6 +217,12 @@ export default function CustomerModal({
               if (Object.keys(initialValues).includes(key)) {
                 if (key == 'profile') {
                   profileUrl.current = value;
+                } else if (key == 'identification_proof') {
+                  setIdentificationProof({
+                    name: res.data.data.identification_proof_name,
+                    url: res.data.data.identification_proof,
+                    size: res.data.data.identification_proof_size,
+                  });
                 } else {
                   values[key] = value ? value : initialValues[key];
                 }
@@ -267,8 +273,6 @@ export default function CustomerModal({
           searchStates={searchStates}
           identificationProof={identificationProof}
           setIdentificationProof={setIdentificationProof}
-          isDocument
-          edit={edit}
         />
       ),
     },
