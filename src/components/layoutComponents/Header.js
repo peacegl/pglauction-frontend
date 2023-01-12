@@ -13,6 +13,7 @@ import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 import {useTheme} from '@mui/styles';
 import {pages} from 'configs';
+import Link from 'next/link';
 import {
   alpha,
   Box,
@@ -20,7 +21,6 @@ import {
   Container,
   Drawer,
   IconButton,
-  Link,
   List,
   ListItem,
   ListItemButton,
@@ -122,7 +122,6 @@ function Header() {
             ) : (
               <ListItemButton
                 onClick={() => {
-                  router.push(item.link);
                   toggleDrawer(false);
                 }}
                 sx={{
@@ -134,12 +133,23 @@ function Header() {
                     ),
                 }}
               >
-                <ListItemText
-                  primary={item.title}
-                  sx={{
-                    color: (theme) => theme.palette.text.primary,
+                <Link
+                  href={item.link}
+                  target={item.target}
+                  style={{
+                    width: '100%',
+                    color: 'white',
+                    alignItems: 'center',
+                    textDecoration: 'none',
                   }}
-                />
+                >
+                  <ListItemText
+                    primary={item.title}
+                    sx={{
+                      color: (theme) => theme.palette.text.primary,
+                    }}
+                  />
+                </Link>
               </ListItemButton>
             )}
           </ListItem>
