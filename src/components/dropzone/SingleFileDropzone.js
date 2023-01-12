@@ -2,15 +2,15 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import AvatarViewWrapper from '../main/AvatarViewWrapper';
 import IntlMessages from '@crema/utility/IntlMessages';
+import {IconButton, Typography} from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
 import {BsFillFilePdfFill} from 'react-icons/bs';
+import useDownloader from 'react-use-downloader';
 import AppTooltip from '@crema/core/AppTooltip';
 import {useDropzone} from 'react-dropzone';
 import {useState, useEffect} from 'react';
-import {IconButton, Typography} from '@mui/material';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
-import useDownloader from 'react-use-downloader';
 
 const SingleFileDropzone = ({
   width,

@@ -1146,5 +1146,10 @@
   "customer.passport_id": "Passport / ID",
   "common.accountVerification": "Account Verification",
   "common.verifiedMessage": "Your account is verified!",
-  "common.pendingVerificationMessage": "Your account is in pending for verification"
+  "common.pendingVerificationMessage": "Your account is in pending for verification",
+  "customer.customer_status": "Customer Status",
+  "customer.individual_account": "Individual Account",
+  "customer.business_account": "Business Account",
+  "common.account_type": "Account Type",
+  "customer.verifyCustomer": "Verify Customer"
 }
