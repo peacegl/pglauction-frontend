@@ -60,6 +60,7 @@ const Account = () => {
   const [countriesLoading, setCountriesLoading] = useState(false);
   const [states, setStates] = useState([]);
   const [statesLoading, setStatesLoading] = useState(false);
+  const [pendingVerification, setPendingVerification] = useState(false);
   const [identificationProof, setIdentificationProof] = useState({});
   const [userInitialValues, setUserInitialValues] = useState({
     profile: '',
@@ -290,6 +291,8 @@ const Account = () => {
                     setValues={setValues}
                     identificationProof={identificationProof}
                     setIdentificationProof={setIdentificationProof}
+                    setPendingVerification={setPendingVerification}
+                    pendingVerification={pendingVerification}
                   />
                 )}
               </Box>

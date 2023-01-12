@@ -26,18 +26,21 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import {useEffect, useState} from 'react';
 
 const AccountVerification = ({
   initialValues,
   setValues,
   identificationProof,
   setIdentificationProof,
+  pendingVerification,
+  setPendingVerification,
 }) => {
   const {updateAuthUser} = useAuthMethod();
   const {messages} = useIntl();
   const dispatch = useDispatch();
   const {user} = useAuthUser();
-
+  const [customerStatus, setCustomerStatus] = useState('');
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const handleSubmit = async (values) => {
@@ -53,9 +56,20 @@ const AccountVerification = ({
         false,
         user,
         updateAuthUser,
+        setPendingVerification,
       ),
     );
   };
+
+  useEffect(() => {
+    if (pendingVerification) {
+      setCustomerStatus('pending verification');
+    }
+  }, [pendingVerification]);
+
+  useEffect(() => {
+    setCustomerStatus(initialValues.customer_status);
+  }, [initialValues.customer_status]);
 
   return (
     <Formik
@@ -90,20 +104,20 @@ const AccountVerification = ({
                 <IntlMessages id='common.accountInfo' />
               </Typography>
               <Chip
-                label={values?.customer_status}
+                label={customerStatus}
                 color={
-                  values?.customer_status == 'verified'
+                  customerStatus == 'verified'
                     ? 'success'
-                    : values?.customer_status == 'pending verification'
+                    : customerStatus == 'pending verification'
                     ? 'primary'
                     : 'default'
                 }
                 variant='outlined'
                 sx={{textTransform: 'capitalize'}}
                 icon={
-                  values?.customer_status == 'verified' ? (
+                  customerStatus == 'verified' ? (
                     <MdVerified style={{fontSize: '18px'}} />
-                  ) : values?.customer_status == 'pending verification' ? (
+                  ) : customerStatus == 'pending verification' ? (
                     <BsPatchExclamationFill style={{fontSize: '18px'}} />
                   ) : (
                     <GoUnverified style={{fontSize: '18px'}} />
@@ -111,7 +125,7 @@ const AccountVerification = ({
                 }
               />
             </Box>
-            {values?.customer_status == 'verified' ? (
+            {customerStatus == 'verified' ? (
               <Stack spacing={{xs: 5, md: 8}}>
                 <Typography
                   component='h3'
@@ -122,7 +136,8 @@ const AccountVerification = ({
                   <IntlMessages id='common.verifiedMessage' />
                 </Typography>
               </Stack>
-            ) : values?.customer_status == 'pending verification' ? (
+            ) : customerStatus == 'pending verification' ||
+              pendingVerification ? (
               <Stack spacing={{xs: 5, md: 8}}>
                 <Typography
                   component='h3'
@@ -266,4 +281,6 @@ AccountVerification.propTypes = {
   setValues: PropTypes.func,
   identificationProof: PropTypes.object,
   setIdentificationProof: PropTypes.func,
+  pendingVerification: PropTypes.bool,
+  setPendingVerification: PropTypes.func,
 };
