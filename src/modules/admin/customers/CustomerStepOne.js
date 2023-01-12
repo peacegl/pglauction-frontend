@@ -1,23 +1,59 @@
 import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteField';
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {MenuItem, Stack} from '@mui/material';
 import Profile from 'components/Profile';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
+import {
+  Box,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  Stack,
+} from '@mui/material';
+import SingleFileDropzone from 'components/dropzone/SingleFileDropzone';
 
 const CustomerStepOne = (props) => {
   const {messages} = useIntl();
 
   return (
     <Stack spacing={{xs: 5, md: 8}}>
-      <Stack direction='row' spacing={5} sx={{mx: 'auto'}}>
-        <Profile
-          width={{xs: 70, lg: 100}}
-          profileUrl={props.profileUrl}
-          name='profile'
-          setfieldvalue={props.setfieldvalue}
-        />
+      <Stack direction='row' spacing={5} alignItems='center'>
+        <Box sx={{flex: 1}}>
+          <Profile
+            width={{xs: 80, md: 100}}
+            profileUrl={props.profileUrl}
+            name='profile'
+            setfieldvalue={props.setfieldvalue}
+            title={<IntlMessages id='common.profile' />}
+          />
+        </Box>
+        <FormControl sx={{flex: 1}}>
+          <FormLabel id='demo-row-radio-buttons-group-label'>
+            <IntlMessages id='customer.business_type' />
+          </FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby='demo-row-radio-buttons-group-label'
+            name='row-radio-buttons-group'
+            value={props.values?.is_business}
+            onChange={(e) => props.setfieldvalue('is_business', e.target.value)}
+          >
+            <FormControlLabel
+              value={1}
+              control={<Radio />}
+              label={<IntlMessages id='common.business' />}
+            />
+            <FormControlLabel
+              value={0}
+              control={<Radio />}
+              label={<IntlMessages id='common.individual' />}
+            />
+          </RadioGroup>
+        </FormControl>
       </Stack>
       <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
         <AppTextField
@@ -28,8 +64,6 @@ const CustomerStepOne = (props) => {
           size='small'
           sx={{flex: 1}}
         />
-      </Stack>
-      <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
         <AppTextField
           placeholder={messages['common.phonePlaceholder']}
           label={<IntlMessages id='common.phone' />}
@@ -38,6 +72,8 @@ const CustomerStepOne = (props) => {
           size='small'
           sx={{flex: 1}}
         />
+      </Stack>
+      <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
         <AppTextField
           placeholder={messages['common.whatsappPlaceholder']}
           label={<IntlMessages id='common.whatsapp' />}
@@ -46,8 +82,6 @@ const CustomerStepOne = (props) => {
           size='small'
           sx={{flex: 1}}
         />
-      </Stack>
-      <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
         <AppTextField
           select
           placeholder={messages['common.genderPlaceholder']}
@@ -65,32 +99,6 @@ const CustomerStepOne = (props) => {
             <IntlMessages id='common.female' />
           </MenuItem>
         </AppTextField>
-        <AppTextField
-          placeholder={messages['common.companyPlaceholder']}
-          label={<IntlMessages id='common.company' />}
-          name='company'
-          variant='outlined'
-          size='small'
-          sx={{flex: 1}}
-        />
-      </Stack>
-      <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
-        <AppTextField
-          placeholder={messages['common.address_line_1']}
-          label={<IntlMessages id='common.address_line_1' />}
-          name='address_line_1'
-          variant='outlined'
-          size='small'
-          sx={{flex: 1}}
-        />
-        <AppTextField
-          placeholder={messages['common.address_line_2']}
-          label={<IntlMessages id='common.address_line_2' />}
-          name='address_line_2'
-          variant='outlined'
-          size='small'
-          sx={{flex: 1}}
-        />
       </Stack>
       <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
         <AppAutocompleteField
@@ -152,6 +160,68 @@ const CustomerStepOne = (props) => {
           sx={{flex: 1}}
         />
       </Stack>
+      <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+        <AppTextField
+          placeholder={messages['common.address_line_1']}
+          label={<IntlMessages id='common.address_line_1' />}
+          name='address_line_1'
+          variant='outlined'
+          size='small'
+          sx={{flex: 1}}
+        />
+        <AppTextField
+          placeholder={messages['common.address_line_2']}
+          label={<IntlMessages id='common.address_line_2' />}
+          name='address_line_2'
+          variant='outlined'
+          size='small'
+          sx={{flex: 1}}
+        />
+      </Stack>
+      <Stack
+        direction={{xs: 'column', md: 'row'}}
+        spacing={5}
+        alignItems={{md: 'center'}}
+      >
+        {props.values?.is_business == 1 && (
+          <AppTextField
+            placeholder={messages['common.companyPlaceholder']}
+            label={<IntlMessages id='common.company' />}
+            name='company'
+            variant='outlined'
+            size='small'
+            sx={{flex: 1}}
+          />
+        )}
+        <Box sx={{flex: 1}}>
+          <SingleFileDropzone
+            text={
+              <>
+                <IntlMessages id='common.identificationProof' />
+                <Box sx={{textAlign: 'center'}}>
+                  {props.values?.is_business == 1 && (
+                    <>
+                      (<IntlMessages id='customer.companyLicense' />)
+                    </>
+                  )}
+                  {props.values?.is_business == 0 && (
+                    <>
+                      (<IntlMessages id='customer.passport_id' />)
+                    </>
+                  )}
+                </Box>
+              </>
+            }
+            width={250}
+            height={'auto'}
+            image={props.identificationProof}
+            name='identification_proof'
+            setfieldvalue={props.setfieldvalue}
+            setImage={props.setIdentificationProof}
+            isImageValid={true}
+          />
+        </Box>
+      </Stack>
     </Stack>
   );
 };
@@ -160,11 +230,15 @@ export default CustomerStepOne;
 CustomerStepOne.propTypes = {
   values: PropTypes.object,
   setfieldvalue: PropTypes.func,
-  profileUrl: PropTypes.string,
+  profileUrl: PropTypes.any,
   countries: PropTypes.array,
   countriesLoading: PropTypes.bool,
   searchCountries: PropTypes.func,
   states: PropTypes.array,
   statesLoading: PropTypes.bool,
   searchStates: PropTypes.func,
+  identificationProof: PropTypes.object,
+  setIdentificationProof: PropTypes.func,
+  isDocument: PropTypes.bool,
+  edit: PropTypes.bool,
 };

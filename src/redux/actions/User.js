@@ -129,6 +129,7 @@ export const onUpdateAuthUser = (
   passwordChanged = false,
   user = {},
   updateAuthUser,
+  setPendingVerification,
 ) => {
   return async (dispatch) => {
     dispatch({type: FETCH_START});
@@ -138,6 +139,12 @@ export const onUpdateAuthUser = (
       if (res.status === 202 && res.data.result) {
         dispatch({type: FETCH_SUCCESS});
         if (updateAuthUser) updateAuthUser({...user, ...res.data.data});
+        if (
+          setPendingVerification &&
+          res.data.data.customer_status == 'pending verification'
+        ) {
+          setPendingVerification(true);
+        }
         dispatch({
           type: SHOW_MESSAGE,
           payload:

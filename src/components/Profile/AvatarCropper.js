@@ -1,11 +1,10 @@
-import {useState, useLayoutEffect, useCallback} from 'react';
+import {useState, useLayoutEffect, useRef} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
 import CloseIcon from '@mui/icons-material/Close';
-import useDownloader from 'react-use-downloader';
+import AvatarEditor from 'react-avatar-editor';
 import Slider from '@mui/material/Slider';
 import Stack from '@mui/material/Stack';
-import getCroppedImg from './cropImage';
-import Cropper from 'react-easy-crop';
+import {LoadingButton} from '@mui/lab';
 import PropTypes from 'prop-types';
 import {
   Card,
@@ -14,12 +13,10 @@ import {
   Typography,
   Paper,
   IconButton,
-  Button,
   Chip,
 } from '@mui/material';
-import {LoadingButton} from '@mui/lab';
 
-const ImageCropModal = ({
+const AvatarCropper = ({
   open,
   toggleOpen,
   width,
@@ -30,15 +27,11 @@ const ImageCropModal = ({
   const [croppedImages, setCroppedImages] = useState([]);
   const [imageIndex, setImageIndex] = useState(0);
   const [size, setSize] = useState([0]);
-  const [crop, setCrop] = useState({x: 0, y: 0});
   const [rotation, setRotation] = useState(0);
   const [zoom, setZoom] = useState(1);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const imageRef = useRef();
 
-  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
-    setCroppedAreaPixels(croppedAreaPixels);
-  }, []);
   useLayoutEffect(() => {
     function updateSize() {
       setSize([window.innerWidth]);
@@ -48,15 +41,23 @@ const ImageCropModal = ({
     return () => window.removeEventListener('resize', updateSize);
   }, []);
 
-  const showCroppedImage = useCallback(async () => {
+  const convasToBlob = async (canvas, filename) => {
+    return new Promise((resolve, reject) => {
+      canvas.toBlob(
+        (blob) => {
+          resolve(new File([blob], filename, {type: 'image/jpeg'}));
+        },
+        'image/jpeg',
+        0.8,
+      );
+    });
+  };
+
+  const showCroppedImage = async () => {
     try {
       setIsLoading(true);
-      const croppedImage = await getCroppedImg(
-        URL.createObjectURL(images[imageIndex]),
-        croppedAreaPixels,
-        rotation,
-        images[imageIndex].name,
-      );
+      const canvas = imageRef.current.getImage();
+      const croppedImage = await convasToBlob(canvas, images[imageIndex].name);
       if (images.length - 1 == imageIndex) {
         saveImages([...croppedImages, croppedImage]);
         toggleOpen(false);
@@ -69,7 +70,7 @@ const ImageCropModal = ({
       console.error(e);
       setIsLoading(false);
     }
-  }, [croppedAreaPixels, rotation, imageIndex]);
+  };
 
   return (
     <Modal {...rest} open={open}>
@@ -89,7 +90,7 @@ const ImageCropModal = ({
           borderRadius: 2,
         }}
       >
-        <Box sx={{float: 'right'}}>
+        <Box sx={{display: 'flex', flexDirection: 'row-reverse'}}>
           <IconButton aria-label='close' onClick={toggleOpen}>
             <CloseIcon sx={{fontSize: 18}} />
           </IconButton>
@@ -116,18 +117,24 @@ const ImageCropModal = ({
               borderRadius: 3,
               width: size >= 500 ? '500px' : size - 20,
               height: size >= 500 ? '500px' : size - 20,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
-            <Cropper
-              image={URL.createObjectURL(images[imageIndex])}
-              crop={crop}
-              zoom={zoom}
-              rotation={rotation}
-              aspect={4 / 3}
-              onCropChange={setCrop}
-              onRotationChange={setRotation}
-              onCropComplete={onCropComplete}
-              onZoomChange={setZoom}
+            <AvatarEditor
+              ref={imageRef}
+              image={
+                typeof images[imageIndex] == 'object'
+                  ? URL.createObjectURL(images[imageIndex])
+                  : images[imageIndex]
+              }
+              width={size > 500 ? 450 : size - 100}
+              height={size > 500 ? 450 : size - 100}
+              color={[0, 0, 0, 0.6]} // RGBA
+              scale={zoom}
+              rotate={rotation}
+              borderRadius={(size > 500 ? 450 : size - 100) / 2}
             />
           </Box>
           <Paper
@@ -203,9 +210,9 @@ const ImageCropModal = ({
   );
 };
 
-export default ImageCropModal;
+export default AvatarCropper;
 
-ImageCropModal.propTypes = {
+AvatarCropper.propTypes = {
   open: PropTypes.bool.isRequired,
   width: PropTypes.number,
   toggleOpen: PropTypes.func.isRequired,

@@ -7,7 +7,7 @@ import React, {useState} from 'react';
 import {Form, Formik} from 'formik';
 import PropTypes from 'prop-types';
 
-const SignUpStepperModal = ({
+const SignupStepperModal = ({
   steps,
   onSave,
   validationSchema,
@@ -133,11 +133,11 @@ const SignUpStepperModal = ({
   );
 };
 
-export default SignUpStepperModal;
-SignUpStepperModal.propTypes = {
+export default SignupStepperModal;
+SignupStepperModal.propTypes = {
   steps: PropTypes.array,
   onSave: PropTypes.func.isRequired,
-  validationSchema: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  validationSchema: PropTypes.any,
   initialValues: PropTypes.object,
   customValidation: PropTypes.func,
 };

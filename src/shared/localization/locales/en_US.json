@@ -1136,5 +1136,20 @@
   "purchaselist.deleteMessage": "Are you sure, you want to delete the selected PurchaseList(s)?",
   "common.image": "Image",
   "watchList.filterWatchList": "My Watchlist Filter",
-  "purchaseList.filterPurchaseList": "Filter My Purchase List"
+  "purchaseList.filterPurchaseList": "Filter My Purchase List",
+  "common.identificationStep": "Identification Step",
+  "customer.business_type": "Business Type",
+  "common.business": "Business",
+  "common.individual": "Individual",
+  "common.identificationProof": "Identification Proof",
+  "customer.companyLicense": "Company License",
+  "customer.passport_id": "Passport / ID",
+  "common.accountVerification": "Account Verification",
+  "common.verifiedMessage": "Your account is verified!",
+  "common.pendingVerificationMessage": "Your account is in pending for verification",
+  "customer.customer_status": "Customer Status",
+  "customer.individual_account": "Individual Account",
+  "customer.business_account": "Business Account",
+  "common.account_type": "Account Type",
+  "customer.verifyCustomer": "Verify Customer"
 }

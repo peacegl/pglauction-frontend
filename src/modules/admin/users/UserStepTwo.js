@@ -136,7 +136,7 @@ const UserStepTwo = (props) => {
             name='timezone'
             variant='outlined'
             size='small'
-            sx={{width: {xs: '100%', md: '49%'}}}
+            sx={{flex: 1}}
             dataLoading={props.timezonesLoading}
             options={props.timezones}
             keyName='name'
@@ -145,6 +145,7 @@ const UserStepTwo = (props) => {
             value={props.values?.timezone}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
+          <Box sx={{flex: 1}}></Box>
         </Stack>
       </Stack>
     </Box>

@@ -26,7 +26,6 @@ const PersonalInfoForm = ({initialValues, profileUrl, setValues}) => {
 
   const handleSubmit = async (values) => {
     let newvalues = values;
-    delete newvalues.profile;
     setValues((d) => {
       return {...d, ...newvalues};
     });
@@ -71,10 +70,11 @@ const PersonalInfoForm = ({initialValues, profileUrl, setValues}) => {
               <Stack spacing={{xs: 5, md: 8}}>
                 <Stack direction='row' spacing={5} sx={{mx: 'auto'}}>
                   <Profile
-                    width={{xs: 70, lg: 100}}
+                    width={{xs: 80, md: 100}}
                     profileUrl={profileUrl}
                     name='profile'
                     setfieldvalue={setFieldValue}
+                    title={<IntlMessages id='common.profile' />}
                   />
                 </Stack>
                 <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
@@ -86,16 +86,6 @@ const PersonalInfoForm = ({initialValues, profileUrl, setValues}) => {
                     size='small'
                     sx={{flex: 1}}
                   />
-                  {user.type == 'Customer' && (
-                    <AppTextField
-                      placeholder={messages['common.companyPlaceholder']}
-                      label={<IntlMessages id='common.company' />}
-                      name='company'
-                      variant='outlined'
-                      size='small'
-                      sx={{flex: 1}}
-                    />
-                  )}
                 </Stack>
                 <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
                   <AppTextField

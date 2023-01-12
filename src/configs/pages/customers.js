@@ -1,13 +1,24 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
-import {Avatar, Typography} from '@mui/material';
+import {Avatar, Chip, Typography} from '@mui/material';
 import * as yup from 'yup';
 import {CommonConfigs} from 'configs';
 const phoneRegExp = CommonConfigs().phoneRegExp;
 const {messages = []} = appIntl() ? appIntl() : {};
+import {GoUnverified} from 'react-icons/go';
+import {MdVerified} from 'react-icons/md';
+import {BsPatchExclamationFill} from 'react-icons/bs';
 
-export const tableColumns = function () {
+export const tableColumns = function (setRecordId, setOpenVerifyModal) {
   return [
+    {
+      name: 'id',
+      label: messages['common.id'],
+      options: {
+        display: false,
+        viewColumns: false,
+      },
+    },
     {
       name: 'profile',
       label: messages['common.profile'],
@@ -48,12 +59,75 @@ export const tableColumns = function () {
       label: messages['common.email'],
     },
     {
-      name: 'status',
-      label: messages['common.status'],
+      name: 'is_business',
+      label: messages['common.account_type'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography
+            sx={{
+              textTransform: 'capitalize',
+            }}
+          >
+            {value == 0
+              ? messages['customer.business_account']
+              : messages['customer.individual_account']}
+          </Typography>
+        ),
+      },
     },
     {
-      name: 'type',
-      label: messages['common.type'],
+      name: 'customer_status',
+      label: messages['customer.customer_status'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Chip
+            label={value}
+            onClick={(e) => {
+              e.preventDefault();
+              if (value == 'pending verification') {
+                setRecordId(tableMeta.tableData[tableMeta.rowIndex][0]);
+                setOpenVerifyModal(true);
+              }
+            }}
+            color={
+              value == 'verified'
+                ? 'success'
+                : value == 'pending verification'
+                ? 'primary'
+                : 'default'
+            }
+            variant='outlined'
+            size='small'
+            icon={
+              value == 'verified' ? (
+                <MdVerified style={{fontSize: '14px'}} />
+              ) : value == 'pending verification' ? (
+                <BsPatchExclamationFill style={{fontSize: '14px'}} />
+              ) : (
+                <GoUnverified style={{fontSize: '14px'}} />
+              )
+            }
+          />
+        ),
+      },
+    },
+    {
+      name: 'status',
+      label: messages['common.status'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography
+            sx={{
+              textTransform: 'capitalize',
+            }}
+          >
+            {value}
+          </Typography>
+        ),
+      },
     },
     {
       name: 'company',
@@ -133,7 +207,12 @@ export const filterContent = [
         type: 'checkbox',
         items: ['active', 'inactive', 'pending'],
       },
-
+      {
+        name: 'customers.customer_status',
+        label: 'Customer Status',
+        type: 'checkbox',
+        items: ['verified', 'unverified', 'pending verification'],
+      },
       {
         name: 'customers.gender',
         label: 'Gender',
@@ -174,6 +253,11 @@ export default function conifgs(
 ) {
   return {
     exportColumns: [],
+    verifySchema: yup.object({
+      customer_status: yup
+        .string()
+        .required(<IntlMessages id='validation.statusRequired' />),
+    }),
     signUpValidation: [
       yup.object({
         fullname: yup

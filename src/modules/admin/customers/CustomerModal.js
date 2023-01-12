@@ -3,18 +3,18 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {onInsertCustomer, onUpdateCustomer} from 'redux/actions';
 import IntlMessages from '@crema/utility/IntlMessages';
 import CustomerConfigs from 'configs/pages/customers';
+import GppGoodIcon from '@mui/icons-material/GppGood';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
 import PersonIcon from '@mui/icons-material/Person';
-import CustomerStepThree from './CustomerStepThree';
 import {getData, availableChecking} from 'configs';
 import {useEffect, useState, useRef} from 'react';
 import CustomModal from 'components/CustomModal';
 import CustomerStepOne from './CustomerStepOne';
 import CustomerStepTwo from './CustomerStepTwo';
 import {useDispatch} from 'react-redux';
-import PropTypes from 'prop-types';
 import Helper from 'helpers/helpers';
+import PropTypes from 'prop-types';
 
 export default function CustomerModal({
   open,
@@ -33,6 +33,7 @@ export default function CustomerModal({
   const [countriesLoading, setCountriesLoading] = useState(false);
   const [states, setStates] = useState([]);
   const [statesLoading, setStatesLoading] = useState(false);
+  const [identificationProof, setIdentificationProof] = useState({});
   const [initialValues, setInitialValues] = useState({
     profile: '',
     fullname: '',
@@ -53,6 +54,8 @@ export default function CustomerModal({
     city: '',
     zip_code: '',
     status: '',
+    is_business: 0,
+    identification_proof: '',
   });
   const {messages} = appIntl('');
   const dispatch = useDispatch();
@@ -214,6 +217,12 @@ export default function CustomerModal({
               if (Object.keys(initialValues).includes(key)) {
                 if (key == 'profile') {
                   profileUrl.current = value;
+                } else if (key == 'identification_proof') {
+                  setIdentificationProof({
+                    name: res.data.data.identification_proof_name,
+                    url: res.data.data.identification_proof,
+                    size: res.data.data.identification_proof_size,
+                  });
                 } else {
                   values[key] = value ? value : initialValues[key];
                 }
@@ -262,11 +271,13 @@ export default function CustomerModal({
           states={states}
           statesLoading={statesLoading}
           searchStates={searchStates}
+          identificationProof={identificationProof}
+          setIdentificationProof={setIdentificationProof}
         />
       ),
     },
     {
-      key: 2,
+      key: 3,
       icon: <AccountCircleIcon />,
       label: <IntlMessages id='common.accountInfo' />,
       children: (

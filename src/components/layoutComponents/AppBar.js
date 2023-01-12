@@ -112,15 +112,15 @@ function TopMenu() {
     addTodo();
   }, []);
 
-  useEffect(() => {
-    pages.forEach((item, index) => {
-      if (item.key == 8) {
-        setActive(index);
-      } else if (router.asPath == item.link) {
-        setActive(index);
-      }
-    });
-  }, [router?.asPath]);
+  // useEffect(() => {
+  //   pages.forEach((item, index) => {
+  //     if (item.key == 8) {
+  //       setActive(index);
+  //     } else if (router.asPath == item.link) {
+  //       setActive(index);
+  //     }
+  //   });
+  // }, [router?.asPath]);
 
   return (
     <AppBar position='static'>

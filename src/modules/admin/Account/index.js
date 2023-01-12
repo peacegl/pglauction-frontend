@@ -1,9 +1,12 @@
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {IoMdInformationCircleOutline} from 'react-icons/io';
+import {useEffect, useMemo, useRef, useState} from 'react';
+import AccountVerification from './AccountVerification';
 import IntlMessages from '@crema/utility/IntlMessages';
 import AccountTabsWrapper from './AccountTabsWrapper';
 import ChangePasswordForm from './ChangePasswordForm';
+import {useAuthUser} from '@crema/utility/AuthHooks';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-import {useEffect, useRef, useState} from 'react';
 import AppPageMeta from '@crema/core/AppPageMeta';
 import PersonalInfoForm from './PersonalInfoForm';
 import {Fonts} from 'shared/constants/AppEnums';
@@ -22,20 +25,6 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-
-const tabs = [
-  {id: 1, icon: <BiUser />, name: <IntlMessages id='common.personalInfo' />},
-  {
-    id: 2,
-    icon: <AiOutlineLock />,
-    name: <IntlMessages id='common.changePassword' />,
-  },
-  {
-    id: 3,
-    icon: <IoMdInformationCircleOutline />,
-    name: <IntlMessages id='common.information' />,
-  },
-];
 
 const Account = () => {
   const userValues = {
@@ -56,7 +45,11 @@ const Account = () => {
     state_id: '',
     city: '',
     zip_code: '',
+    is_business: 0,
+    identification_proof: '',
+    customer_status: '',
   };
+  const {user} = useAuthUser();
   const profileUrl = useRef();
   const [values, setValues] = useState({});
   const [value, setValue] = useState(0);
@@ -67,6 +60,8 @@ const Account = () => {
   const [countriesLoading, setCountriesLoading] = useState(false);
   const [states, setStates] = useState([]);
   const [statesLoading, setStatesLoading] = useState(false);
+  const [pendingVerification, setPendingVerification] = useState(false);
+  const [identificationProof, setIdentificationProof] = useState({});
   const [userInitialValues, setUserInitialValues] = useState({
     profile: '',
     fullname: '',
@@ -76,7 +71,6 @@ const Account = () => {
     username: '',
     address_line_1: '',
     address_line_2: '',
-    company: '',
   });
   const [infoInitialValues, setInfoInitialValues] = useState({
     timezone: '',
@@ -92,6 +86,39 @@ const Account = () => {
     new_password: '',
     password_confirmation: '',
   };
+  const [verifyData, setVerifyData] = useState({
+    is_business: 0,
+    company: '',
+    identification_proof: '',
+    customer_status: '',
+  });
+  const tabs = useMemo(() => {
+    const sets = [
+      {
+        id: 1,
+        icon: <BiUser />,
+        name: <IntlMessages id='common.personalInfo' />,
+      },
+      {
+        id: 2,
+        icon: <AiOutlineLock />,
+        name: <IntlMessages id='common.changePassword' />,
+      },
+      {
+        id: 3,
+        icon: <IoMdInformationCircleOutline />,
+        name: <IntlMessages id='common.information' />,
+      },
+    ];
+    if (user?.type == 'Customer') {
+      sets.push({
+        id: 4,
+        icon: <AccountCircleIcon />,
+        name: <IntlMessages id='common.accountVerification' />,
+      });
+    }
+    return sets;
+  }, [user?.type]);
 
   useEffect(() => {
     if (value == 0) {
@@ -111,6 +138,14 @@ const Account = () => {
         }
       });
       setInfoInitialValues(initValues);
+    } else if (value == 3) {
+      let initValues = verifyData;
+      Object.entries(values).forEach(([key, v]) => {
+        if (Object.keys(verifyData)?.includes(key)) {
+          initValues[key] = v ? v : values[key];
+        }
+      });
+      setVerifyData(initValues);
     }
   }, [values, value]);
 
@@ -153,7 +188,7 @@ const Account = () => {
               if (key == 'profile') {
                 profileUrl.current = value;
               } else {
-                values[key] = value ? value : '';
+                values[key] = value ? value : userValues[key];
               }
             }
             if (typeof value === 'object' && value != null) {
@@ -161,8 +196,14 @@ const Account = () => {
                 if (Object.keys(userValues).includes(ikey)) {
                   if (ikey == 'profile') {
                     profileUrl.current = ivalue;
+                  } else if (ikey == 'identification_proof') {
+                    setIdentificationProof({
+                      name: value.identification_proof_name,
+                      url: value.identification_proof,
+                      size: value.identification_proof_size,
+                    });
                   } else {
-                    values[ikey] = ivalue ? ivalue : '';
+                    values[ikey] = ivalue ? ivalue : userValues[ikey];
                   }
                 }
               });
@@ -242,6 +283,16 @@ const Account = () => {
                     timezonesLoading={timezonesLoading}
                     searchTimezones={searchTimezones}
                     setValues={setValues}
+                  />
+                )}
+                {value === 3 && (
+                  <AccountVerification
+                    initialValues={verifyData}
+                    setValues={setValues}
+                    identificationProof={identificationProof}
+                    setIdentificationProof={setIdentificationProof}
+                    setPendingVerification={setPendingVerification}
+                    pendingVerification={pendingVerification}
                   />
                 )}
               </Box>

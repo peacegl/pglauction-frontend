@@ -12,6 +12,7 @@ import {
   EDIT_CUSTOMER,
   DELETE_CUSTOMER,
 } from 'shared/constants/Permissions';
+import AccountVerification from './AccountVerificationModal';
 
 export default function CustomerList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -23,6 +24,7 @@ export default function CustomerList({user}) {
   const [search, setSearch] = useState('');
   const [exactMatch, setExactMatch] = useState(false);
   const [filterData, setFilterData] = useState({});
+  const [openVerifyModal, setOpenVerifyModal] = useState(false);
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(
     ({customers}) => customers.customerData,
@@ -99,7 +101,7 @@ export default function CustomerList({user}) {
         title='Customer List'
         total={total}
         data={data}
-        columns={tableColumns()}
+        columns={tableColumns(setRecordId, setOpenVerifyModal)}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}
@@ -134,6 +136,13 @@ export default function CustomerList({user}) {
           toggleOpen={() => setOpenModal((d) => !d)}
           recordId={recordId}
           edit={recordId ? true : false}
+        />
+      )}
+      {openVerifyModal && (
+        <AccountVerification
+          open={openVerifyModal}
+          toggleOpen={() => setOpenVerifyModal((d) => !d)}
+          recordId={recordId}
         />
       )}
     </>

@@ -187,7 +187,6 @@ MultipleImageDropzone.propTypes = {
   isMaxImagesValid: PropTypes.bool,
   setMaxImagesValid: PropTypes.func,
   setDeletedImages: PropTypes.func,
-  isEdit: PropTypes.bool,
   imageOrders: PropTypes.array,
   setImageOrders: PropTypes.func,
 };

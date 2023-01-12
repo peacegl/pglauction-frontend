@@ -194,6 +194,7 @@ export default function AuctionItemModal({
           setIsMainImageValid={setIsMainImageValid}
           isMainImageValid={isMainImageValid}
           setDeletedImages={setDeletedImages}
+          edit={edit}
         />
       ),
     },

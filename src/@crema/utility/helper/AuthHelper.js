@@ -54,6 +54,10 @@ export const getUserFromJwtAuth = (user) => {
       roles: user.roles,
       permissions: user.permissions,
       type: user.type,
+      customer_status: user?.customer_status,
+      identification_proof: user?.identification_proof,
+      identification_proof_name: user?.identification_proof_name,
+      is_business: user?.is_business,
     };
   }
   return user;

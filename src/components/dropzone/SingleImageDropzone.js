@@ -4,10 +4,10 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import ImageIcon from '@mui/icons-material/Image';
 import ImageCropModal from './ImageCropModal';
 import {useDropzone} from 'react-dropzone';
+import {useState, useEffect} from 'react';
 import {Typography} from '@mui/material';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
-import {useState, useEffect} from 'react';
 
 const SingleImageDropzone = ({
   width,

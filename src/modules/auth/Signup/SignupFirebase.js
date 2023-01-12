@@ -3,8 +3,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {AiOutlineGoogle, AiOutlineTwitter} from 'react-icons/ai';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useAuthMethod} from '@crema/utility/AuthHooks';
+import GppGoodIcon from '@mui/icons-material/GppGood';
 import CustomerConfigs from 'configs/pages/customers';
-import SignUpStepperModal from './SignUpStepperModal';
+import SignupStepperModal from './SignupStepperModal';
 import PersonIcon from '@mui/icons-material/Person';
 import {availableChecking, getData} from 'configs';
 import {useEffect, useRef, useState} from 'react';
@@ -13,7 +14,7 @@ import {Fonts} from 'shared/constants/AppEnums';
 import SaveIcon from '@mui/icons-material/Save';
 import {onSignUpCustomer} from 'redux/actions';
 import Checkbox from '@mui/material/Checkbox';
-import SignUpStepTwo from './SignUpStepTwo';
+import SignupStepTwo from './SignupStepTwo';
 import {FaFacebookF} from 'react-icons/fa';
 import Button from '@mui/material/Button';
 import {BsGithub} from 'react-icons/bs';
@@ -31,8 +32,9 @@ const SignupFirebase = () => {
   const [states, setStates] = useState([]);
   const [statesLoading, setStatesLoading] = useState(false);
   const [showTermsError, setShowTermsError] = useState(false);
+  const [identificationProof, setIdentificationProof] = useState({});
 
-  const profileUrl = useRef();
+  const profileUrl = useRef('');
   const {messages} = useIntl();
   const dispatch = useDispatch();
   const {signInUser} = useAuthMethod();
@@ -191,6 +193,8 @@ const SignupFirebase = () => {
           states={states}
           statesLoading={statesLoading}
           searchStates={searchStates}
+          identificationProof={identificationProof}
+          setIdentificationProof={setIdentificationProof}
         />
       ),
     },
@@ -199,7 +203,7 @@ const SignupFirebase = () => {
       icon: <AccountCircleIcon />,
       label: <IntlMessages id='common.accountInfo' />,
       children: (
-        <SignUpStepTwo
+        <SignupStepTwo
           timezones={timezones}
           timezonesLoading={timezonesLoading}
           searchTimezones={searchTimezones}
@@ -228,11 +232,13 @@ const SignupFirebase = () => {
     state_id: '',
     city: '',
     zip_code: '',
+    is_business: 0,
+    identification_proof: '',
   };
   return (
     <Box sx={{flex: 1, display: 'flex', flexDirection: 'column'}}>
       <Box sx={{flex: 1, display: 'flex', flexDirection: 'column', mb: 5}}>
-        <SignUpStepperModal
+        <SignupStepperModal
           steps={steps}
           onSave={onSave}
           validationSchema={validationSchema}

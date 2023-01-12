@@ -282,7 +282,7 @@ export default function VehicleModal({
           setDeletedImages={setDeletedImages}
           imageOrders={imageOrders}
           setImageOrders={setImageOrders}
-          isEdit={edit}
+          edit={edit}
         />
       ),
     },

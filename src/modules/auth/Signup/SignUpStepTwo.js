@@ -1,15 +1,15 @@
-import AppTextField from '@crema/core/AppFormComponents/AppTextField';
+import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteField';
 import {Stack, IconButton, InputAdornment, Box, Checkbox} from '@mui/material';
+import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
 import IntlMessages from '@crema/utility/IntlMessages';
 import React, {useState} from 'react';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
-import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteField';
 import Link from 'next/link';
 
-const SignUpStepTwo = (props) => {
+const SignupStepTwo = (props) => {
   const {messages} = useIntl();
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordC, setShowPasswordC] = useState(false);
@@ -95,7 +95,7 @@ const SignUpStepTwo = (props) => {
           name='timezone'
           variant='outlined'
           size='small'
-          sx={{width: {xs: '100%', md: '49%'}}}
+          sx={{flex: 1}}
           dataLoading={props.timezonesLoading}
           options={props.timezones}
           keyName='name'
@@ -104,6 +104,7 @@ const SignUpStepTwo = (props) => {
           value={props.values?.timezone}
           handleChange={({name, value}) => props.setfieldvalue(name, value)}
         />
+        <Box sx={{flex: 1}}></Box>
       </Stack>
       <Stack>
         <Box>
@@ -175,8 +176,8 @@ const SignUpStepTwo = (props) => {
   );
 };
 
-export default SignUpStepTwo;
-SignUpStepTwo.propTypes = {
+export default SignupStepTwo;
+SignupStepTwo.propTypes = {
   values: PropTypes.object,
   setfieldvalue: PropTypes.func,
   timezones: PropTypes.array,

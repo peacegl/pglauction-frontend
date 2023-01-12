@@ -1,28 +1,36 @@
 import AvatarViewWrapper from '../main/AvatarViewWrapper';
+import IntlMessages from '@crema/utility/IntlMessages';
 import CloseIcon from '@mui/icons-material/Close';
+import {alpha, Typography} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import AvatarCropper from './AvatarCropper';
 import {useDropzone} from 'react-dropzone';
 import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
-import {alpha, Typography} from '@mui/material';
-import PropTypes from 'prop-types';
 import {useEffect, useState} from 'react';
-import IntlMessages from '@crema/utility/IntlMessages';
+import Box from '@mui/material/Box';
+import PropTypes from 'prop-types';
 
-const Profile = ({width, profileUrl, name, setfieldvalue}) => {
+const Profile = ({width, profileUrl, name, setfieldvalue, title}) => {
   const [error, setError] = useState(false);
+  const [avatarCropper, setAvatarCropper] = useState(false);
+  const [imagesForCrop, setImagesForCrop] = useState([]);
   const {getRootProps, getInputProps} = useDropzone({
     accept: 'image/*',
     onDrop: (acceptedFiles) => {
       if (acceptedFiles[0].size > 6291456) {
         setError(true);
       } else {
-        profileUrl.current = URL.createObjectURL(acceptedFiles[0]);
-        setfieldvalue(name, acceptedFiles[0]);
-        setError(false);
+        setAvatarCropper(true);
+        setImagesForCrop(acceptedFiles);
       }
     },
   });
+
+  const addImage = (croptedImages) => {
+    profileUrl.current = URL.createObjectURL(croptedImages[0]);
+    setfieldvalue(name, croptedImages[0]);
+    setError(false);
+  };
 
   useEffect(() => {
     if (error) {
@@ -41,6 +49,7 @@ const Profile = ({width, profileUrl, name, setfieldvalue}) => {
         alignItems: 'center',
       }}
     >
+      <Typography sx={{mb: 1}}>{title}</Typography>
       <Box sx={{position: 'relative'}}>
         <AvatarViewWrapper {...getRootProps({className: 'dropzone'})}>
           <input {...getInputProps()} />
@@ -95,6 +104,14 @@ const Profile = ({width, profileUrl, name, setfieldvalue}) => {
           <IntlMessages id='common.maxFileSize' />
         </Typography>
       )}
+      {avatarCropper && (
+        <AvatarCropper
+          open={avatarCropper}
+          toggleOpen={() => setAvatarCropper((d) => !d)}
+          images={imagesForCrop}
+          saveImages={addImage}
+        />
+      )}
     </Box>
   );
 };
@@ -105,4 +122,5 @@ Profile.propTypes = {
   name: PropTypes.string,
   width: PropTypes.object,
   profileUrl: PropTypes.any,
+  title: PropTypes.any,
 };
