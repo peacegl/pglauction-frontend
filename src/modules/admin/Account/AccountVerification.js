@@ -149,124 +149,130 @@ const AccountVerification = ({
                 </Typography>
               </Stack>
             ) : (
-              <>
-                <Box>
-                  <Stack spacing={{xs: 5, md: 8}}>
-                    <Stack
-                      direction={{xs: 'column', md: 'row'}}
-                      spacing={5}
-                      sx={{mx: 'auto'}}
-                    >
-                      <FormControl sx={{flex: 1}}>
-                        <FormLabel id='demo-row-radio-buttons-group-label'>
-                          <IntlMessages id='customer.business_type' />
-                        </FormLabel>
-                        <RadioGroup
-                          row
-                          aria-labelledby='demo-row-radio-buttons-group-label'
-                          name='row-radio-buttons-group'
-                          value={values?.is_business}
-                          onChange={(e) =>
-                            setFieldValue('is_business', e.target.value)
-                          }
-                        >
-                          <FormControlLabel
-                            value={1}
-                            control={<Radio />}
-                            label={<IntlMessages id='common.business' />}
+              customerStatus == 'verified' && (
+                <>
+                  <Box>
+                    <Stack spacing={{xs: 5, md: 8}}>
+                      <Stack
+                        direction={{xs: 'column', md: 'row'}}
+                        spacing={5}
+                        sx={{mx: 'auto'}}
+                      >
+                        <FormControl sx={{flex: 1}}>
+                          <FormLabel id='demo-row-radio-buttons-group-label'>
+                            <IntlMessages id='customer.business_type' />
+                          </FormLabel>
+                          <RadioGroup
+                            row
+                            aria-labelledby='demo-row-radio-buttons-group-label'
+                            name='row-radio-buttons-group'
+                            value={values?.is_business}
+                            onChange={(e) =>
+                              setFieldValue('is_business', e.target.value)
+                            }
+                          >
+                            <FormControlLabel
+                              value={1}
+                              control={<Radio />}
+                              label={<IntlMessages id='common.business' />}
+                            />
+                            <FormControlLabel
+                              value={0}
+                              control={<Radio />}
+                              label={<IntlMessages id='common.individual' />}
+                            />
+                          </RadioGroup>
+                        </FormControl>
+                      </Stack>
+                      <Stack
+                        direction={{xs: 'column', md: 'row'}}
+                        spacing={5}
+                        alignItems='center'
+                      >
+                        <Box sx={{flex: 1}}>
+                          <SingleFileDropzone
+                            text={
+                              <>
+                                <IntlMessages id='common.identificationProof' />
+                                <Box sx={{textAlign: 'center'}}>
+                                  {values?.is_business == 1 && (
+                                    <>
+                                      (
+                                      <IntlMessages id='customer.companyLicense' />
+                                      )
+                                    </>
+                                  )}
+                                  {values?.is_business == 0 && (
+                                    <>
+                                      (
+                                      <IntlMessages id='customer.passport_id' />
+                                      )
+                                    </>
+                                  )}
+                                </Box>
+                              </>
+                            }
+                            width={250}
+                            height={'auto'}
+                            image={identificationProof}
+                            name='identification_proof'
+                            setfieldvalue={setFieldValue}
+                            setImage={setIdentificationProof}
+                            isImageValid={true}
                           />
-                          <FormControlLabel
-                            value={0}
-                            control={<Radio />}
-                            label={<IntlMessages id='common.individual' />}
-                          />
-                        </RadioGroup>
-                      </FormControl>
+                        </Box>
+                        <Box sx={{flex: 1}}>
+                          {values?.is_business == 1 && (
+                            <AppTextField
+                              placeholder={
+                                messages['common.companyPlaceholder']
+                              }
+                              label={<IntlMessages id='common.company' />}
+                              name='company'
+                              variant='outlined'
+                              size='small'
+                              sx={{width: '100%'}}
+                            />
+                          )}
+                        </Box>
+                      </Stack>
                     </Stack>
-                    <Stack
-                      direction={{xs: 'column', md: 'row'}}
-                      spacing={5}
-                      alignItems='center'
-                    >
-                      <Box sx={{flex: 1}}>
-                        <SingleFileDropzone
-                          text={
-                            <>
-                              <IntlMessages id='common.identificationProof' />
-                              <Box sx={{textAlign: 'center'}}>
-                                {values?.is_business == 1 && (
-                                  <>
-                                    (
-                                    <IntlMessages id='customer.companyLicense' />
-                                    )
-                                  </>
-                                )}
-                                {values?.is_business == 0 && (
-                                  <>
-                                    (<IntlMessages id='customer.passport_id' />)
-                                  </>
-                                )}
-                              </Box>
-                            </>
-                          }
-                          width={250}
-                          height={'auto'}
-                          image={identificationProof}
-                          name='identification_proof'
-                          setfieldvalue={setFieldValue}
-                          setImage={setIdentificationProof}
-                          isImageValid={true}
-                        />
-                      </Box>
-                      <Box sx={{flex: 1}}>
-                        {values?.is_business == 1 && (
-                          <AppTextField
-                            placeholder={messages['common.companyPlaceholder']}
-                            label={<IntlMessages id='common.company' />}
-                            name='company'
-                            variant='outlined'
-                            size='small'
-                            sx={{width: '100%'}}
-                          />
-                        )}
-                      </Box>
-                    </Stack>
-                  </Stack>
-                </Box>
-                <Box
-                  sx={{
-                    mt: 3,
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                  }}
-                >
-                  <LoadingButton
-                    loading={isSubmitting}
-                    loadingPosition='start'
-                    startIcon={<SaveIcon />}
-                    variant='contained'
-                    type='submit'
+                  </Box>
+                  <Box
                     sx={{
-                      minWidth: 100,
-                      mr: 2,
-                      mt: 2,
+                      mt: 3,
+                      display: 'flex',
+                      flexWrap: 'wrap',
                     }}
                   >
-                    <IntlMessages id='common.saveChanges' />
-                  </LoadingButton>
-                  <Button
-                    sx={{
-                      minWidth: 100,
-                      mt: 2,
-                    }}
-                    color='primary'
-                    variant='outlined'
-                    onClick={() => rest.setValues(initialValues)}
-                  >
-                    <IntlMessages id='common.cancel' />
-                  </Button>
-                </Box>
-              </>
+                    <LoadingButton
+                      loading={isSubmitting}
+                      loadingPosition='start'
+                      startIcon={<SaveIcon />}
+                      variant='contained'
+                      type='submit'
+                      sx={{
+                        minWidth: 100,
+                        mr: 2,
+                        mt: 2,
+                      }}
+                    >
+                      <IntlMessages id='common.saveChanges' />
+                    </LoadingButton>
+                    <Button
+                      sx={{
+                        minWidth: 100,
+                        mt: 2,
+                      }}
+                      color='primary'
+                      variant='outlined'
+                      onClick={() => rest.setValues(initialValues)}
+                    >
+                      <IntlMessages id='common.cancel' />
+                    </Button>
+                  </Box>
+                </>
+              )
             )}
           </Form>
         );
