@@ -21,6 +21,7 @@ import {useRouter} from 'next/router';
 import CustomMenu from './CustomMenu';
 import Box from '@mui/material/Box';
 import {pages} from 'configs';
+import Link from 'next/link';
 
 const signOptions = [
   {
@@ -172,18 +173,20 @@ function TopMenu() {
                   active={active}
                 />
               ) : (
-                <Button
-                  key={index}
-                  sx={{
-                    py: 2,
-                    color: 'white',
-                    display: 'block',
-                    bgcolor: (theme) =>
-                      index == active && theme.palette.primary.dark,
-                  }}
-                  onClick={() => router.push(page.link)}
-                >
-                  {page.title}
+                <Button key={index} sx={{color: 'white', display: 'block'}}>
+                  <Link
+                    href={page.link}
+                    target={page.target}
+                    style={{
+                      display: 'block',
+                      width: '100%',
+                      height: '100%',
+                      color: 'white',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    {page.title}
+                  </Link>
                 </Button>
               ),
             )}
