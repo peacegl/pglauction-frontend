@@ -149,7 +149,7 @@ const AccountVerification = ({
                 </Typography>
               </Stack>
             ) : (
-              customerStatus == 'verified' && (
+              customerStatus == 'unverified' && (
                 <>
                   <Box>
                     <Stack spacing={{xs: 5, md: 8}}>
