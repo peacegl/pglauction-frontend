@@ -10,8 +10,11 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 const VerificationForm = (props) => {
   const {messages} = useIntl();
+  const token = localStorage.getItem('token');
   const {size, elapsed, percentage, download, cancel, error, isInProgress} =
-    useDownloader();
+    useDownloader({
+      mode: 'no-cors',
+    });
 
   return (
     <Box sx={{mt: 10}}>
