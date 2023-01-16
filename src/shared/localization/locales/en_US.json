@@ -1151,5 +1151,13 @@
   "customer.individual_account": "Individual Account",
   "customer.business_account": "Business Account",
   "common.account_type": "Account Type",
-  "customer.verifyCustomer": "Verify Customer"
+  "customer.verifyCustomer": "Verify Customer",
+  "common.emailNotVerified": "Email is not verified!",
+  "common.verifyItNow": "Verify it now!",
+  "message.emailSentToYou": "An email has been sent to you, please check your inbox!",
+  "message.emailAlreadySent": "Email has already been sent, please check your inbox!",
+  "common.verifyEmail": "Verify your email",
+  "common.emailVerified": "You have successfully verified your email!",
+  "common.sendAgain": "Send again",
+  "common.notRecieved": "Didn't receive email?"
 }
