@@ -58,7 +58,7 @@ export default function Footer() {
             alignItems={{xs: 'center', sm: 'start'}}
             color={theme.palette.text.secondary}
           >
-            <Box
+            {/* <Box
               sx={{
                 flex: 1,
                 display: 'flex',
@@ -85,7 +85,7 @@ export default function Footer() {
                   vehicles.
                 </Typography>
               </Box>
-            </Box>
+            </Box> */}
             <Box
               sx={{
                 flex: 2,
