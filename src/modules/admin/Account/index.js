@@ -62,6 +62,8 @@ const Account = () => {
   const [statesLoading, setStatesLoading] = useState(false);
   const [pendingVerification, setPendingVerification] = useState(false);
   const [identificationProof, setIdentificationProof] = useState({});
+  const [isEmailVerified, setIsEmailVerified] = useState(true);
+  const [showSendAgain, setShowSendAgain] = useState(false);
   const [userInitialValues, setUserInitialValues] = useState({
     profile: '',
     fullname: '',
@@ -183,6 +185,7 @@ const Account = () => {
         const res = await jwtAxios.get(`/auth2`);
         if (res.status === 200) {
           let values = {};
+          setIsEmailVerified(res.data?.email_verified_at ? true : false);
           Object.entries(res.data).forEach(([key, value]) => {
             if (Object.keys(userValues).includes(key)) {
               if (key == 'profile') {
@@ -233,6 +236,10 @@ const Account = () => {
     setValue(newValue);
   };
 
+  useEffect(() => {
+    setIsEmailVerified(user?.email_verified_at ? true : false);
+  }, [user?.email_verified_at]);
+
   return (
     <>
       <AppPageMeta />
@@ -265,6 +272,10 @@ const Account = () => {
                     initialValues={userInitialValues}
                     profileUrl={profileUrl}
                     setValues={setValues}
+                    isEmailVerified={isEmailVerified}
+                    setIsEmailVerified={setIsEmailVerified}
+                    showSendAgain={showSendAgain}
+                    setShowSendAgain={setShowSendAgain}
                   />
                 )}
                 {value === 1 && (

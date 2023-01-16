@@ -58,6 +58,7 @@ export const getUserFromJwtAuth = (user) => {
       identification_proof: user?.identification_proof,
       identification_proof_name: user?.identification_proof_name,
       is_business: user?.is_business,
+      email_verified_at: user?.email_verified_at,
     };
   }
   return user;

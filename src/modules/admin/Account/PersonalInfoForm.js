@@ -15,8 +15,21 @@ import Helper from 'helpers/helpers';
 import {Form, Formik} from 'formik';
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
+import AppTooltip from '@crema/core/AppTooltip';
+import {useEffect, useState} from 'react';
+import {FETCH_ERROR, SHOW_MESSAGE} from 'shared/constants/ActionTypes';
+import jwtAxios from '@crema/services/auth/jwt-auth';
 
-const PersonalInfoForm = ({initialValues, profileUrl, setValues}) => {
+const PersonalInfoForm = ({
+  initialValues,
+  profileUrl,
+  setValues,
+  isEmailVerified,
+  setIsEmailVerified,
+  setShowSendAgain,
+  showSendAgain,
+}) => {
+  const [isLoading, setIsLoading] = useState(false);
   const {updateAuthUser} = useAuthMethod();
   const {messages} = useIntl();
   const dispatch = useDispatch();
@@ -33,6 +46,39 @@ const PersonalInfoForm = ({initialValues, profileUrl, setValues}) => {
     await dispatch(
       onUpdateAuthUser(`/auth_user`, userFormData, false, user, updateAuthUser),
     );
+  };
+  const verifyItNow = async (sendAgain = false) => {
+    try {
+      setIsLoading(true);
+      const res = await jwtAxios.get(
+        `/verify_email?send_again=${sendAgain ? 1 : 0}`,
+      );
+      if (res.status === 200 && res.data.result) {
+        setShowSendAgain(sendAgain ? false : true);
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: messages['message.emailSentToYou'],
+        });
+      } else if (res.status === 202 && res.data.result) {
+        setShowSendAgain(true);
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: messages['message.emailAlreadySent'],
+        });
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: messages['message.somethingWentWrong'],
+        });
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      dispatch({
+        type: FETCH_ERROR,
+        payload: messages['message.somethingWentWrong'],
+      });
+    }
   };
 
   return (
@@ -88,14 +134,29 @@ const PersonalInfoForm = ({initialValues, profileUrl, setValues}) => {
                   />
                 </Stack>
                 <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
-                  <AppTextField
-                    placeholder={messages['common.emailPlaceholder']}
-                    label={<IntlMessages id='common.email' />}
-                    name='email'
-                    variant='outlined'
-                    size='small'
-                    sx={{flex: 1}}
-                  />
+                  <Box sx={{flex: 1}}>
+                    <AppTextField
+                      placeholder={messages['common.emailPlaceholder']}
+                      label={<IntlMessages id='common.email' />}
+                      name='email'
+                      variant='outlined'
+                      size='small'
+                      sx={{flex: 1, width: '100%'}}
+                    />
+                    {!isEmailVerified && (
+                      <Typography
+                        sx={{
+                          mt: 1,
+                          mx: 1,
+                          fontSize: '13px',
+                        }}
+                        color='error'
+                        component='p'
+                      >
+                        <IntlMessages id='common.emailNotVerified' />
+                      </Typography>
+                    )}
+                  </Box>
                   <AppTextField
                     placeholder={messages['common.usernamePlaceholder']}
                     label={<IntlMessages id='common.username' />}
@@ -166,6 +227,21 @@ const PersonalInfoForm = ({initialValues, profileUrl, setValues}) => {
               >
                 <IntlMessages id='common.saveChanges' />
               </LoadingButton>
+              {!isEmailVerified && (
+                <LoadingButton
+                  onClick={() => verifyItNow()}
+                  loading={isLoading}
+                  variant='contained'
+                  color='secondary'
+                  sx={{
+                    minWidth: 100,
+                    mr: 2,
+                    mt: 2,
+                  }}
+                >
+                  <IntlMessages id='common.verifyEmail' />
+                </LoadingButton>
+              )}
               <Button
                 sx={{
                   minWidth: 100,
@@ -178,6 +254,29 @@ const PersonalInfoForm = ({initialValues, profileUrl, setValues}) => {
                 <IntlMessages id='common.cancel' />
               </Button>
             </Box>
+            {showSendAgain && (
+              <Typography
+                sx={{
+                  m: 2,
+                  fontSize: '13px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+                component='p'
+              >
+                <Typography component='span' sx={{px: 1}}>
+                  <IntlMessages id='common.notRecieved' />
+                </Typography>
+                <Button
+                  color='primary'
+                  variant='text'
+                  onClick={() => verifyItNow(true)}
+                >
+                  <IntlMessages id='common.sendAgain' />
+                </Button>
+              </Typography>
+            )}
           </Form>
         );
       }}
@@ -190,4 +289,8 @@ PersonalInfoForm.propTypes = {
   profileUrl: PropTypes.any,
   initialValues: PropTypes.object,
   setValues: PropTypes.func,
+  isEmailVerified: PropTypes.bool,
+  setIsEmailVerified: PropTypes.bool,
+  setShowSendAgain: PropTypes.func,
+  showSendAgain: PropTypes.bool,
 };
