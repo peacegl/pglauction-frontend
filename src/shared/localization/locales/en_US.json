@@ -1159,5 +1159,6 @@
   "common.verifyEmail": "Verify your email",
   "common.emailVerified": "You have successfully verified your email!",
   "common.sendAgain": "Send again",
-  "common.notRecieved": "Didn't receive email?"
+  "common.notRecieved": "Didn't receive email?",
+  "auction.bidsCount": "Bids count"
 }

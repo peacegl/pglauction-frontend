@@ -13,29 +13,15 @@ export const tableColumns = function () {
     },
     {
       name: 'vin',
-      label: messages['common.year'],
+      label: messages['common.vin'],
     },
     {
       name: 'lot_number',
       label: messages['common.lot_number'],
     },
     {
-      name: 'title',
-      label: messages['common.title'],
-    },
-    {
-      name: 'subtitle',
-      label: messages['common.subtitle'],
-    },
-    {
-      name: 'interval',
-      label: messages['common.interval'],
-      options: {
-        filter: false,
-        customBodyRender: (value, tableMeta, updateValue) => (
-          <Typography noWrap={true}>{value} Hours</Typography>
-        ),
-      },
+      name: 'bids_count',
+      label: messages['auction.bidsCount'],
     },
     {
       name: 'minimum_bid',
@@ -44,10 +30,6 @@ export const tableColumns = function () {
     {
       name: 'buy_now_price',
       label: messages['common.buy_now_price'],
-    },
-    {
-      name: 'note',
-      label: messages['common.note'],
     },
     {
       name: 'status',
@@ -81,29 +63,6 @@ export default function configs(invalidYoutube) {
     exportColumns: [],
     validationSchema: [
       yup.object({
-        seller_id: yup
-          .string()
-          .required(<IntlMessages id='validation.sellerRequired' />),
-        location_id: yup
-          .string()
-          .required(<IntlMessages id='validation.locationRequired' />),
-        category_id: yup
-          .string()
-          .required(<IntlMessages id='validation.categoryRequired' />),
-        title: yup
-          .string()
-          .required(<IntlMessages id='validation.titleRequired' />),
-        subtitle: yup
-          .string()
-          .required(<IntlMessages id='validation.subtitleRequired' />),
-        start_date: yup
-          .date()
-          .typeError(<IntlMessages id='validation.dateValidation' />)
-          .nullable(),
-        end_date: yup
-          .date()
-          .typeError(<IntlMessages id='validation.dateValidation' />)
-          .nullable(),
         minimum_bid: yup
           .number()
           .typeError(<IntlMessages id='validation.priceError' />),
@@ -113,9 +72,7 @@ export default function configs(invalidYoutube) {
           .typeError(<IntlMessages id='validation.priceError' />)
           .required(<IntlMessages id='validation.buyNowPriceRequired' />),
       }),
-      yup.object({
-        youtube_url: yup.string().matches(youtubeRegExp, invalidYoutube),
-      }),
+      yup.object({}),
     ],
   };
 }
