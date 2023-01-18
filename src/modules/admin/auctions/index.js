@@ -11,6 +11,7 @@ import {
   DELETE_AUCTION,
   EDIT_AUCTION,
 } from 'shared/constants/Permissions';
+import CustomerConfigs from 'configs/pages/customers';
 
 export default function AuctionList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -66,6 +67,10 @@ export default function AuctionList({user}) {
       setOrderBy({column, order});
     },
   };
+  const onAdd = () => {
+    setRecordId(null);
+    setOpenModal(true);
+  };
   const onEdit = () => {
     setRecordId(data[selected[0]].id);
     setOpenModal(true);
@@ -94,6 +99,7 @@ export default function AuctionList({user}) {
         data={data}
         columns={tableColumns()}
         options={options}
+        onAdd={onAdd}
         onEdit={onEdit}
         onDelete={onDelete}
         deleteTitle={<IntlMessages id='auction.deleteMessage' />}

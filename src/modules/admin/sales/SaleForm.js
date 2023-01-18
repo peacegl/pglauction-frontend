@@ -23,10 +23,18 @@ const SaleForm = (props) => {
               sx={{flex: 1}}
               dataLoading={props.vehiclesLoading}
               options={props.vehicles}
-              keyName='vin'
+              keyName='lot_number'
+              renderOption={(props, option) => (
+                <Box component='li' {...props}>
+                  {option.lot_number} - {option.vin}
+                </Box>
+              )}
               onSearch={props.searchVehicles}
               value={props.values?.vehicle_id}
               handleChange={({name, value}) => props.setfieldvalue(name, value)}
+              keyName1='lot_number'
+              keyName2='vin'
+              hideKeyName2
             />
           )}
           <AppAutocompleteField

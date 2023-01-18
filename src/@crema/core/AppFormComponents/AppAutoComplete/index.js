@@ -83,9 +83,9 @@ export default function AppAutoComplete({
       loading={loading}
       getOptionLabel={(option) => {
         if (rest.keyName1 && rest.keyName2) {
-          return option?.[rest.keyName1] + ' ' + option?.[rest.keyName2];
+          return option?.[rest.keyName1] + ' - ' + option?.[rest.keyName2];
         }
-        return option?.[keyName];
+        return `${option?.[keyName]}`;
       }}
       {...rest}
       onChange={onSelectValue}

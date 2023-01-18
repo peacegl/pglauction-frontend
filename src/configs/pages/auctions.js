@@ -18,11 +18,11 @@ export const tableColumns = function () {
     },
     {
       name: 'start_date',
-      label: messages['common.start_date'],
+      label: messages['common.startDate'],
     },
     {
       name: 'end_date',
-      label: messages['common.end_date'],
+      label: messages['common.endDate'],
     },
     {
       name: 'items_count',
