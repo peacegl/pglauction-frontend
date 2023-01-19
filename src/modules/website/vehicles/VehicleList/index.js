@@ -102,9 +102,9 @@ const VehicleList = () => {
           }}
         >
           {viewType === VIEW_TYPE.GRID ? (
-            <GridView list={data} loading={loading} />
+            <GridView list={data} loading={loading} perPage={perPage} />
           ) : (
-            <ListView list={data} loading={loading} />
+            <ListView list={data} loading={loading} perPage={perPage} />
           )}
         </Box>
         {data.length > 0 && (

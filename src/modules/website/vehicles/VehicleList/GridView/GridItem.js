@@ -1,4 +1,4 @@
-import {Box, Divider, Button, useTheme, Chip} from '@mui/material';
+import {Box, Divider, Button, useTheme, Chip, Skeleton} from '@mui/material';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import useAddToWatchList from 'customHooks/useAddToWatchList';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
@@ -20,9 +20,9 @@ import PropTypes from 'prop-types';
 
 export default function GridItem({item, ...props}) {
   const router = useRouter();
-  const theme = useTheme();
   // const [height, setHeight] = useState('260px');
   const [hoverImage, setHoverImage] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const [showSignInModal, setShowSignInModl] = useState(false);
   const {addToWatchList, watchlistLoading, addedToWatchList} =
     useAddToWatchList(item, setShowSignInModl);
@@ -37,65 +37,94 @@ export default function GridItem({item, ...props}) {
   //       : '';
   //   setAddressUrl(origin + router.asPath + `/${item.id}`);
   // }, []);
-
   return (
     <>
       <Card sx={{borderRadius: 1}}>
-        <Box
-          sx={{cursor: 'pointer'}}
-          overflow='hidden'
-          onClick={() => router.push(`/all-vehicles/${item.id}`)}
-          onMouseEnter={() => setHoverImage(true)}
-          onMouseLeave={() => setHoverImage(false)}
-        >
-          {item.status == 'sold' && (
-            <Box position='relative' zIndex='100'>
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: 5,
-                  left: 5,
-                  transform: 'rotate(-40deg)',
-                }}
-                width='45px'
+        {!item && (
+          <Skeleton
+            variant='rectangular'
+            animation='wave'
+            width='100%'
+            height={200}
+          />
+        )}
+        {item && (
+          <Box
+            sx={{cursor: 'pointer'}}
+            overflow='hidden'
+            onClick={() => router.push(`/all-vehicles/${item?.id}`)}
+            onMouseEnter={() => setHoverImage(true)}
+            onMouseLeave={() => setHoverImage(false)}
+          >
+            {item?.status == 'sold' && (
+              <Box position='relative' zIndex='100'>
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: 5,
+                    left: 5,
+                    transform: 'rotate(-40deg)',
+                  }}
+                  width='45px'
+                  component='img'
+                  src={SoldIcon.src}
+                  alt={item?.name}
+                />
+              </Box>
+            )}
+            {!imageLoaded && (
+              <Skeleton
+                variant='rectangular'
+                animation='wave'
+                width='100%'
+                height={200}
+              />
+            )}
+            <Box sx={imageLoaded ? {} : {display: 'none'}}>
+              <CardMedia
                 component='img'
-                src={SoldIcon.src}
-                alt={item.name}
+                // height={height}
+                image={
+                  item.images?.find((item) => item.type == 'main_image')
+                    ?.path ?? DefaultCarImage.src
+                }
+                onLoad={() => setImageLoaded(true)}
+                onError={(event) => (event.target.src = DefaultCarImage.src)}
+                alt='preview'
+                sx={{
+                  objectFit: 'cover',
+                  transition: 'all 450ms ease-out',
+                  transform: hoverImage ? 'scale(1.2)' : 'scale(1)',
+                }}
               />
             </Box>
-          )}
-          <CardMedia
-            component='img'
-            // height={height}
-            image={
-              item.images?.find((item) => item.type == 'main_image')?.path ??
-              DefaultCarImage.src
-            }
-            onError={(event) => (event.target.src = DefaultCarImage.src)}
-            alt='preview'
-            sx={{
-              objectFit: 'cover',
-              transition: 'all 450ms ease-out',
-              transform: hoverImage ? 'scale(1.2)' : 'scale(1)',
-            }}
-          />
-        </Box>
-        <CardContent>
-          <Box sx={{display: 'flex'}}>
-            <AppTooltip title={`${item.year} ${item.make} ${item.model}`}>
-              <Typography
-                onClick={() => router.push(`/all-vehicles/${item.id}`)}
-                noWrap
-                gutterBottom
-                variant='h4'
-                component='h4'
-                color={theme.palette.primary.main}
-                sx={{cursor: 'pointer'}}
-              >
-                {item.year} {item.make} {item.model}
-              </Typography>
-            </AppTooltip>
           </Box>
+        )}
+        <CardContent>
+          {!item ? (
+            <Typography gutterBottom variant='h4' component='h4'>
+              <Skeleton animation='wave' />
+            </Typography>
+          ) : (
+            <Box sx={{display: 'flex'}}>
+              <AppTooltip title={`${item.year} ${item.make} ${item.model}`}>
+                <Typography
+                  onClick={() => router.push(`/all-vehicles/${item.id}`)}
+                  noWrap
+                  gutterBottom
+                  variant='h4'
+                  component='h4'
+                  sx={{
+                    cursor: 'pointer',
+                    color: (theme) => theme.palette.primary.main,
+                  }}
+                >
+                  {item.year} {item.make} {item.model}
+                </Typography>
+              </AppTooltip>
+            </Box>
+          )}
+
           <Divider sx={{mb: 2}} />
           <Box display='flex' justifyContent='space-between'>
             {/* <Typography color={theme.palette.primary.main} fontWeight='bold'>
@@ -103,50 +132,83 @@ export default function GridItem({item, ...props}) {
               parseInt(item.price) +
                 parseInt((item.price * item.sale_rate ?? 15) / 100),
             )}
-          </Typography> */}
+            </Typography> */}
+            {/* {item && (
             <Typography color={theme.palette.primary.main}>
               {item.odometer_type}
             </Typography>
+            )} */}
           </Box>
+
           <Box sx={{mt: 1}}>
-            <Chip
-              sx={{
-                float: 'right',
-                textTransform: 'capitalize',
-                fontWeight: 'bold',
-                color: (theme) => theme.palette.primary.contrastText,
-                bgcolor: (theme) =>
-                  item.status == 'sold'
-                    ? theme.palette.error.main
-                    : item.status == 'available'
-                    ? theme.palette.success.main
-                    : '#ffa834',
-              }}
-              label={item.status == 'future' ? 'On The Way' : item.status}
-              size='small'
-            />
-            <Box display='flex' columnGap='5px'>
-              <IntlMessages id='common.lot' />#
-              <Typography color={theme.palette.primary.main}>
-                {item.lot_number}
-              </Typography>
-            </Box>
-            <Box display='flex' columnGap='5px'>
-              <IntlMessages id='common.vin' />
-              <Typography color={theme.palette.primary.main}>
-                {item.vin}
-              </Typography>
-            </Box>
-            <Box display='flex' columnGap='5px'>
-              <IntlMessages id='common.location' />
-              <Typography
-                noWrap
-                gutterBottom
-                color={theme.palette.primary.main}
-              >
-                {item.location?.name}
-              </Typography>
-            </Box>
+            {!item ? (
+              <Chip sx={{width: 80, float: 'right', ml: 4}} size='small'>
+                <Skeleton animation='wave' variant='rounded' />
+              </Chip>
+            ) : (
+              <Chip
+                sx={{
+                  float: 'right',
+                  textTransform: 'capitalize',
+                  fontWeight: 'bold',
+                  color: (theme) => theme.palette.primary.contrastText,
+                  bgcolor: (theme) =>
+                    item.status == 'sold'
+                      ? theme.palette.error.main
+                      : item.status == 'available'
+                      ? theme.palette.success.main
+                      : '#ffa834',
+                }}
+                label={item.status == 'future' ? 'On The Way' : item.status}
+                size='small'
+              />
+            )}
+            <>
+              <Box display='flex' columnGap='5px'>
+                <IntlMessages id='common.lot' />#
+                {!item ? (
+                  <Typography sx={{flex: 1}}>
+                    <Skeleton animation='wave' />
+                  </Typography>
+                ) : (
+                  <Typography
+                    sx={{color: (theme) => theme.palette.primary.main}}
+                  >
+                    {item.lot_number}
+                  </Typography>
+                )}
+              </Box>
+              <Box display='flex' columnGap='5px'>
+                <IntlMessages id='common.vin' />
+                {!item ? (
+                  <Typography sx={{flex: 1}}>
+                    <Skeleton animation='wave' />
+                  </Typography>
+                ) : (
+                  <Typography
+                    sx={{color: (theme) => theme.palette.primary.main}}
+                  >
+                    {item.vin}
+                  </Typography>
+                )}
+              </Box>
+              <Box display='flex' columnGap='5px'>
+                <IntlMessages id='common.location' />
+                {!item ? (
+                  <Typography sx={{flex: 1}}>
+                    <Skeleton animation='wave' />
+                  </Typography>
+                ) : (
+                  <Typography
+                    noWrap
+                    gutterBottom
+                    sx={{color: (theme) => theme.palette.primary.main}}
+                  >
+                    {item.location?.name}
+                  </Typography>
+                )}
+              </Box>
+            </>
           </Box>
           <Box
             display='flex'
@@ -154,34 +216,50 @@ export default function GridItem({item, ...props}) {
             alignItems='center'
             sx={{flexWrap: 'wrap'}}
           >
-            <LoadingButton
-              loading={watchlistLoading}
-              loadingPosition='start'
-              startIcon={
-                !addedToWatchList ? <BookmarkAddIcon /> : <BookmarkAddedIcon />
-              }
-              variant='outlined'
-              size='small'
-              sx={{mt: 2}}
-              onClick={() => addToWatchList(item.id)}
-            >
-              {!addedToWatchList ? (
-                <IntlMessages id='common.watch' />
-              ) : (
-                <IntlMessages id='common.remove' />
-              )}
-            </LoadingButton>
-            <Button
-              onClick={(e) => e.stopPropagation()}
-              variant='contained'
-              size='small'
-              sx={{mt: 2}}
-              href={`https://wa.me/${item.seller?.loginable?.whatsapp}?text=${window.location.origin}/all-vehicles/${item.id}`}
-              target='_blank'
-              startIcon={<WhatsAppIcon />}
-            >
-              {item.seller?.loginable?.whatsapp}
-            </Button>
+            {!item ? (
+              <Button size='small' sx={{mt: 2}}>
+                <Skeleton animation='wave' sx={{width: 90, py: 3}} />
+              </Button>
+            ) : (
+              <LoadingButton
+                loading={watchlistLoading}
+                loadingPosition='start'
+                startIcon={
+                  !addedToWatchList ? (
+                    <BookmarkAddIcon />
+                  ) : (
+                    <BookmarkAddedIcon />
+                  )
+                }
+                variant='outlined'
+                size='small'
+                sx={{mt: 2}}
+                onClick={() => addToWatchList(item.id)}
+              >
+                {!addedToWatchList ? (
+                  <IntlMessages id='common.watch' />
+                ) : (
+                  <IntlMessages id='common.remove' />
+                )}
+              </LoadingButton>
+            )}
+            {!item ? (
+              <Button size='small' sx={{mt: 2}}>
+                <Skeleton animation='wave' sx={{width: 100, py: 3}} />
+              </Button>
+            ) : (
+              <Button
+                onClick={(e) => e.stopPropagation()}
+                variant='contained'
+                size='small'
+                sx={{mt: 2}}
+                href={`https://wa.me/${item?.seller?.loginable?.whatsapp}?text=${window.location.origin}/all-vehicles/${item?.id}`}
+                target='_blank'
+                startIcon={<WhatsAppIcon />}
+              >
+                {item?.seller?.loginable?.whatsapp}
+              </Button>
+            )}
           </Box>
         </CardContent>
       </Card>

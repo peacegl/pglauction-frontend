@@ -17,7 +17,7 @@ const AppInfoView = () => {
 
   return (
     <>
-      {/* {loading && <AppLoader />} */}
+      {loading && <AppLoader />}
 
       {message && showMessage()}
       {error && showError()}

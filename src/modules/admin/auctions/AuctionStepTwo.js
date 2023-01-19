@@ -1,5 +1,5 @@
-import CircularProgress from '@mui/material/CircularProgress';
 import {Box, Button, Chip, Stack, Typography} from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import IntlMessages from '@crema/utility/IntlMessages';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';

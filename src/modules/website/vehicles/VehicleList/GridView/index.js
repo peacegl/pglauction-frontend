@@ -5,7 +5,7 @@ import ListEmptyResult from '@crema/core/AppList/ListEmptyResult';
 import PropTypes from 'prop-types';
 import {Grid} from '@mui/material';
 
-const AuctionGrid = ({list, loading}) => (
+const AuctionGrid = ({list, loading, perPage}) => (
   <AppGrid
     responsive={{
       xs: 1,
@@ -14,7 +14,10 @@ const AuctionGrid = ({list, loading}) => (
       xl: 5,
     }}
     data={list}
-    renderRow={(item) => <GridItem item={item} key={item.id} url='vehicles' />}
+    renderRow={(item, index) => (
+      <GridItem item={item} key={index} url='vehicles' />
+    )}
+    perPage={perPage}
     ListEmptyComponent={
       <ListEmptyResult
         content={loading ? 'Loading...' : 'No Vehicle Found'}
@@ -33,4 +36,5 @@ export default AuctionGrid;
 AuctionGrid.propTypes = {
   list: PropTypes.array,
   loading: PropTypes.bool,
+  perPage: PropTypes.number,
 };
