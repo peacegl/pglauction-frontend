@@ -1,13 +1,12 @@
-import React from 'react';
-import ListItem from './ListItem';
+import ListEmptyResult from '@crema/core/AppList/ListEmptyResult';
+import {Box, Card, CardContent, Stack} from '@mui/material';
+import IntlMessages from '@crema/utility/IntlMessages';
 import AppList from '@crema/core/AppList';
 import PropTypes from 'prop-types';
-import {Box, Card, CardContent, Stack, Typography} from '@mui/material';
-import IntlMessages from '@crema/utility/IntlMessages';
-import {useTheme} from '@mui/material';
-import ListEmptyResult from '@crema/core/AppList/ListEmptyResult';
+import ListItem from './ListItem';
+import React from 'react';
+
 const Head = () => {
-  const theme = useTheme();
   return (
     <Card
       sx={{
@@ -42,7 +41,7 @@ const Head = () => {
   );
 };
 
-const ListView = ({list, loading}) => {
+const ListView = ({list, loading, perPage}) => {
   return (
     <>
       <AppList
@@ -50,9 +49,10 @@ const ListView = ({list, loading}) => {
         renderRow={(item, index) => (
           <>
             {index == 0 && <Head />}
-            <ListItem item={item} key={item.id} />
+            <ListItem item={item} key={index} />
           </>
         )}
+        perPage={perPage}
         ListEmptyComponent={
           <ListEmptyResult
             content={loading ? 'Loading...' : 'No Vehicle Found'}
@@ -69,4 +69,5 @@ export default ListView;
 ListView.propTypes = {
   list: PropTypes.array,
   loading: PropTypes.bool,
+  perPage: PropTypes.number,
 };

@@ -75,7 +75,7 @@ const routesConfig = [
   //   type: 'item',
   //   icon: <StorefrontIcon sx={{fontSize: 22}} />,
   //   url: '/admin/auctions',
-  //   permittedPermission: VIEW_AUCTIONS',
+  //   permittedPermission: VIEW_AUCTIONS,
   // },
   // {
   //   id: 'auction_items',

@@ -1,4 +1,12 @@
-import {Box, Divider, Stack, Button, useTheme, Chip} from '@mui/material';
+import {
+  Box,
+  Divider,
+  Stack,
+  Button,
+  useTheme,
+  Chip,
+  Skeleton,
+} from '@mui/material';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import useAddToWatchList from 'customHooks/useAddToWatchList';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
@@ -49,11 +57,12 @@ export default function ListItem({item, ...props}) {
   const router = useRouter();
   const theme = useTheme();
   const [showSignInModal, setShowSignInModl] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const {addToWatchList, watchlistLoading, addedToWatchList} =
     useAddToWatchList(item, setShowSignInModl);
 
   const viewPage = () => {
-    router.push(`/all-vehicles/${item.id}`);
+    item?.id && router.push(`/all-vehicles/${item?.id}`);
   };
   return (
     <>
@@ -65,14 +74,20 @@ export default function ListItem({item, ...props}) {
         }}
       >
         <Box sx={{display: {xs: 'block', sm: 'none'}}}>
-          <Typography
-            p='8px'
-            gutterBottom
-            component='div'
-            color={theme.palette.primary.main}
-          >
-            {item.year} {item.make} {item.model}
-          </Typography>
+          {!item ? (
+            <Typography p='8px' gutterBottom component='div'>
+              <Skeleton animation='wave' />
+            </Typography>
+          ) : (
+            <Typography
+              p='8px'
+              gutterBottom
+              component='div'
+              color={theme.palette.primary.main}
+            >
+              {item.year} {item.make} {item.model}
+            </Typography>
+          )}
           <Divider />
         </Box>
         <Box
@@ -89,7 +104,7 @@ export default function ListItem({item, ...props}) {
             minWidth='140px'
             onClick={() => viewPage()}
           >
-            {item.status == 'sold' && (
+            {item?.status == 'sold' && (
               <Box position='relative' zIndex='100'>
                 <Box
                   sx={{
@@ -101,71 +116,98 @@ export default function ListItem({item, ...props}) {
                   width='35px'
                   component='img'
                   src={SoldIcon.src}
-                  alt={item.name}
+                  alt={item?.name}
                 />
               </Box>
             )}
-            <CardMedia
-              component='img'
-              image={
-                item.images?.find((item) => item.type == 'main_image')?.path ??
-                DefaultCarImage.src
-              }
-              onError={(event) => (event.target.src = DefaultCarImage.src)}
-              alt='preview'
-              sx={{
-                flex: 1,
-                cursor: 'pointer',
-                transition: 'all 450ms ease-out',
-                '&:hover': {
-                  transform: 'scale(1.2)',
-                },
-              }}
-            />
+            {(!imageLoaded || !item) && (
+              <Skeleton
+                variant='rectangular'
+                animation='wave'
+                width='100%'
+                height='100%'
+              />
+            )}
+            {item && (
+              <Box sx={imageLoaded ? {} : {display: 'none'}}>
+                <CardMedia
+                  component='img'
+                  image={
+                    item.images?.find((item) => item.type == 'main_image')
+                      ?.path ?? DefaultCarImage.src
+                  }
+                  onLoad={() => setImageLoaded(true)}
+                  onError={(event) => (event.target.src = DefaultCarImage.src)}
+                  alt='preview'
+                  sx={{
+                    flex: 1,
+                    cursor: 'pointer',
+                    transition: 'all 450ms ease-out',
+                    '&:hover': {
+                      transform: 'scale(1.2)',
+                    },
+                  }}
+                />
+              </Box>
+            )}
           </Box>
           <CardContent sx={{flex: {xs: 1, sm: 4, md: 4}}}>
             <Stack direction='row' spacing={0}>
               <Box sx={{flex: 2}}>
                 <Box sx={{display: {xs: 'none', sm: 'block'}}}>
-                  <Box sx={{display: 'flex'}}>
-                    <AppTooltip
-                      title={`${item.year} ${item.make} ${item.model}`}
-                    >
-                      <Typography
-                        gutterBottom
-                        variant='h4'
-                        color={theme.palette.primary.main}
-                        component='div'
-                        overflow='hidden'
-                        sx={{
-                          fontSize: {xs: '14px', sm: '16px'},
-                          cursor: 'pointer',
-                        }}
-                        onClick={() => viewPage()}
+                  {!item ? (
+                    <Typography gutterBottom variant='h4' component='div'>
+                      <Skeleton animation='wave' />
+                    </Typography>
+                  ) : (
+                    <Box sx={{display: 'flex'}}>
+                      <AppTooltip
+                        title={`${item.year} ${item.make} ${item.model}`}
                       >
-                        {item.year} {item.make} {item.model}
-                      </Typography>
-                    </AppTooltip>
-                  </Box>
+                        <Typography
+                          gutterBottom
+                          variant='h4'
+                          color={theme.palette.primary.main}
+                          component='div'
+                          overflow='hidden'
+                          sx={{
+                            fontSize: {xs: '14px', sm: '16px'},
+                            cursor: 'pointer',
+                          }}
+                          onClick={() => viewPage()}
+                        >
+                          {item.year} {item.make} {item.model}
+                        </Typography>
+                      </AppTooltip>
+                    </Box>
+                  )}
                   <Divider sx={{mb: 2}} />
                 </Box>
                 <Box>
-                  <Chip
-                    sx={{
-                      float: 'right',
-                      textTransform: 'capitalize',
-                      fontWeight: 'bold',
-                      color: (theme) => theme.palette.primary.contrastText,
-                      bgcolor: (theme) =>
-                        item.status == 'sold'
-                          ? theme.palette.error.main
-                          : item.status == 'available'
-                          ? theme.palette.success.main
-                          : '#ffa834',
-                    }}
-                    label={item.status == 'future' ? 'On The Way' : item.status}
-                    size='small'
-                  />
+                  {!item ? (
+                    <Chip sx={{width: 80, float: 'right', ml: 4}} size='small'>
+                      <Skeleton animation='wave' variant='rounded' />
+                    </Chip>
+                  ) : (
+                    <Chip
+                      sx={{
+                        float: 'right',
+                        textTransform: 'capitalize',
+                        fontWeight: 'bold',
+                        color: (theme) => theme.palette.primary.contrastText,
+                        bgcolor: (theme) =>
+                          item.status == 'sold'
+                            ? theme.palette.error.main
+                            : item.status == 'available'
+                            ? theme.palette.success.main
+                            : '#ffa834',
+                      }}
+                      label={
+                        item.status == 'future' ? 'On The Way' : item.status
+                      }
+                      size='small'
+                    />
+                  )}
                   {/* <Typography
                     component='div'
                     color={theme.palette.primary.main}
@@ -179,123 +221,208 @@ export default function ListItem({item, ...props}) {
                         parseInt((item.price * item.sale_rate ?? 15) / 100),
                     )}
                   </Typography> */}
-                  <Typography
-                    component='div'
-                    color={theme.palette.primary.main}
-                    overflow='hidden'
-                    sx={{display: {sm: 'block', lg: 'none'}, fontSize: '14px'}}
-                  >
-                    {item.odometer_type}
-                  </Typography>
+                  {item && (
+                    <Typography
+                      component='div'
+                      color={theme.palette.primary.main}
+                      overflow='hidden'
+                      sx={{
+                        display: {sm: 'block', lg: 'none'},
+                        fontSize: '14px',
+                      }}
+                    >
+                      {item.odometer_type}
+                    </Typography>
+                  )}
 
                   <Box display='flex' columnGap='5px'>
                     <IntlMessages id='common.lot' />#
-                    <Typography
-                      color={theme.palette.primary.main}
-                      display='inline'
-                    >
-                      {item.lot_number}
-                    </Typography>
+                    {!item ? (
+                      <Typography sx={{flex: 1}}>
+                        <Skeleton animation='wave' />
+                      </Typography>
+                    ) : (
+                      <Typography
+                        sx={{color: (theme) => theme.palette.primary.main}}
+                        display='inline'
+                      >
+                        {item.lot_number}
+                      </Typography>
+                    )}
                   </Box>
                   <Box display='flex' columnGap='5px'>
                     <IntlMessages id='common.vin' />
-                    <Typography
-                      color={theme.palette.primary.main}
-                      display='inline'
-                    >
-                      {item.vin}
-                    </Typography>
+                    {!item ? (
+                      <Typography sx={{flex: 1}}>
+                        <Skeleton animation='wave' />
+                      </Typography>
+                    ) : (
+                      <Typography
+                        sx={{color: (theme) => theme.palette.primary.main}}
+                        display='inline'
+                      >
+                        {item.vin}
+                      </Typography>
+                    )}
                   </Box>
                   <Box display='flex' columnGap='5px'>
                     <IntlMessages id='common.location' />
-                    <Typography
-                      noWrap
-                      gutterBottom
-                      color={theme.palette.primary.main}
-                    >
-                      {item.location?.name}
-                    </Typography>
+                    {!item ? (
+                      <Typography sx={{flex: 1}}>
+                        <Skeleton animation='wave' />
+                      </Typography>
+                    ) : (
+                      <Typography
+                        sx={{color: (theme) => theme.palette.primary.main}}
+                        noWrap
+                        gutterBottom
+                      >
+                        {item.location?.name}
+                      </Typography>
+                    )}
                   </Box>
                 </Box>
-                <LoadingButton
-                  loading={watchlistLoading}
-                  loadingPosition='start'
-                  startIcon={
-                    !addedToWatchList ? (
-                      <BookmarkAddIcon />
+                {!item ? (
+                  <Button size='small' sx={{mt: 2}}>
+                    <Skeleton animation='wave' sx={{width: 90, py: 3}} />
+                  </Button>
+                ) : (
+                  <LoadingButton
+                    loading={watchlistLoading}
+                    loadingPosition='start'
+                    startIcon={
+                      !addedToWatchList ? (
+                        <BookmarkAddIcon />
+                      ) : (
+                        <BookmarkAddedIcon />
+                      )
+                    }
+                    variant='outlined'
+                    size='small'
+                    sx={{mt: 2}}
+                    onClick={() => addToWatchList(item.id)}
+                  >
+                    {!addedToWatchList ? (
+                      <IntlMessages id='common.watch' />
                     ) : (
-                      <BookmarkAddedIcon />
-                    )
-                  }
-                  variant='outlined'
-                  size='small'
-                  sx={{mt: 2}}
-                  onClick={() => addToWatchList(item.id)}
-                >
-                  {!addedToWatchList ? (
-                    <IntlMessages id='common.watch' />
-                  ) : (
-                    <IntlMessages id='common.remove' />
-                  )}
-                </LoadingButton>
-                <Box
-                  sx={{
-                    display: {xs: 'inline', sm: 'none'},
-                  }}
-                >
+                      <IntlMessages id='common.remove' />
+                    )}
+                  </LoadingButton>
+                )}
+                {!item ? (
+                  <Button
+                    size='small'
+                    sx={{mt: 2, display: {xs: 'inline', sm: 'none'}}}
+                  >
+                    <Skeleton animation='wave' sx={{width: 100, py: 3}} />
+                  </Button>
+                ) : (
+                  <Box
+                    sx={{
+                      display: {xs: 'inline', sm: 'none'},
+                    }}
+                  >
+                    <WhatsAppButton
+                      number={item.seller?.loginable?.whatsapp}
+                      url={window.location.origin + '/all-vehicles/' + item.id}
+                    />
+                  </Box>
+                )}
+              </Box>
+              <Box sx={{flex: 1.5, display: {xs: 'none', lg: 'block'}, px: 3}}>
+                {!item ? (
+                  <Typography variant='body1'>
+                    <Box display='inline' fontWeight='bold' columnGap='5px'>
+                      <Skeleton animation='wave' />
+                    </Box>
+                  </Typography>
+                ) : (
+                  <TextShow
+                    label={<IntlMessages id='vehicle.odometer' />}
+                    value={item.odometer_type}
+                  />
+                )}
+                {!item ? (
+                  <Typography variant='body1'>
+                    <Box display='inline' fontWeight='bold' columnGap='5px'>
+                      <Skeleton animation='wave' />
+                    </Box>
+                  </Typography>
+                ) : (
+                  <TextShow
+                    label={<IntlMessages id='vehicle.test_drive' />}
+                    value={
+                      item.test_drive ? (
+                        <IntlMessages id='common.yes' />
+                      ) : (
+                        <IntlMessages id='common.no' />
+                      )
+                    }
+                  />
+                )}
+                {!item ? (
+                  <Typography variant='body1'>
+                    <Box display='inline' fontWeight='bold' columnGap='5px'>
+                      <Skeleton animation='wave' />
+                    </Box>
+                  </Typography>
+                ) : (
+                  <TextShow
+                    label={<IntlMessages id='vehicle.exterior_color' />}
+                    value={item.exterior_color}
+                  />
+                )}
+                {!item ? (
+                  <Typography variant='body1'>
+                    <Box display='inline' fontWeight='bold' columnGap='5px'>
+                      <Skeleton animation='wave' />
+                    </Box>
+                  </Typography>
+                ) : (
+                  <TextShow
+                    label={<IntlMessages id='vehicle.interior_color' />}
+                    value={item.interior_color}
+                  />
+                )}
+                {!item ? (
+                  <Typography variant='body1'>
+                    <Box display='inline' fontWeight='bold' columnGap='5px'>
+                      <Skeleton animation='wave' />
+                    </Box>
+                  </Typography>
+                ) : (
+                  <TextShow
+                    label={<IntlMessages id='vehicle.keys' />}
+                    value={item.keys ? 'Available' : 'Not Available'}
+                  />
+                )}
+              </Box>
+              {!item ? (
+                <Box sx={{flex: 1, display: {xs: 'none', sm: 'block'}, px: 2}}>
+                  <Skeleton animation='wave' sx={{py: 3}} />
+                </Box>
+              ) : (
+                <Box sx={{flex: 1, display: {xs: 'none', sm: 'block'}, px: 2}}>
+                  {/* <Typography
+                    component='div'
+                    color={theme.palette.primary.main}
+                    overflow='hidden'
+                    mb='10px'
+                    fontSize='20px'
+                    fontWeight='bold'
+                  >
+                    {moneyFormater(
+                      parseInt(item.price) +
+                        parseInt((item.price * item.sale_rate ?? 15) / 100),
+                    )}
+                  </Typography> */}
                   <WhatsAppButton
                     number={item.seller?.loginable?.whatsapp}
                     url={window.location.origin + '/all-vehicles/' + item.id}
                   />
                 </Box>
-              </Box>
-              <Box sx={{flex: 1.5, display: {xs: 'none', lg: 'block'}, px: 3}}>
-                <TextShow
-                  label={<IntlMessages id='vehicle.odometer' />}
-                  value={item.odometer_type}
-                />
-                <TextShow
-                  label={<IntlMessages id='vehicle.test_drive' />}
-                  value={
-                    item.test_drive ? (
-                      <IntlMessages id='common.yes' />
-                    ) : (
-                      <IntlMessages id='common.no' />
-                    )
-                  }
-                />
-                <TextShow
-                  label={<IntlMessages id='vehicle.exterior_color' />}
-                  value={item.exterior_color}
-                />
-                <TextShow
-                  label={<IntlMessages id='vehicle.interior_color' />}
-                  value={item.interior_color}
-                />
-                <TextShow
-                  label={<IntlMessages id='vehicle.keys' />}
-                  value={item.keys ? 'Available' : 'Not Available'}
-                />
-              </Box>
-              <Box sx={{flex: 1, display: {xs: 'none', sm: 'block'}, px: 2}}>
-                {/* <Typography
-                  component='div'
-                  color={theme.palette.primary.main}
-                  overflow='hidden'
-                  mb='10px'
-                  fontSize='20px'
-                  fontWeight='bold'
-                >
-                  {moneyFormater(
-                    parseInt(item.price) +
-                      parseInt((item.price * item.sale_rate ?? 15) / 100),
-                  )}
-                </Typography> */}
-                <WhatsAppButton
-                  number={item.seller?.loginable?.whatsapp}
-                  url={window.location.origin + '/all-vehicles/' + item.id}
-                />
-              </Box>
+              )}
+
               {/* <Divider orientation='vertical' flexItem /> */}
             </Stack>
           </CardContent>

@@ -6,12 +6,32 @@ import AppAnimateGroup from '../AppAnimateGroup';
 import PropTypes from 'prop-types';
 import {Box} from '@mui/material';
 
-const getEmptyContainer = (ListEmptyComponent) => {
+const getEmptyContainer = (ListEmptyComponent, displayColumn, itemPadding) => {
   if (ListEmptyComponent) {
     return React.isValidElement(ListEmptyComponent) ? (
-      ListEmptyComponent
+      <Box
+        style={{
+          flexGrow: 0,
+          maxWidth: `${100 / displayColumn}%`,
+          flexBasis: `${100 / displayColumn}%`,
+          padding: itemPadding,
+          boxSizing: 'border-box',
+        }}
+      >
+        {ListEmptyComponent}
+      </Box>
     ) : (
-      <ListEmptyComponent />
+      <Box
+        style={{
+          flexGrow: 0,
+          maxWidth: `${100 / displayColumn}%`,
+          flexBasis: `${100 / displayColumn}%`,
+          padding: itemPadding,
+          boxSizing: 'border-box',
+        }}
+      >
+        <ListEmptyComponent />
+      </Box>
     );
   }
   return null;
@@ -41,6 +61,7 @@ const GridView = ({
   border,
   ListFooterComponent,
   ListEmptyComponent,
+  perPage,
 }) => {
   const {theme} = useThemeContext();
 
@@ -135,8 +156,24 @@ const GridView = ({
               </Box>
             ))
           : null}
+        {data.length === 0
+          ? Array.from(new Array(perPage)).map((item, index) => (
+              <Box
+                style={{
+                  flexGrow: 0,
+                  maxWidth: `${100 / displayColumn}%`,
+                  flexBasis: `${100 / displayColumn}%`,
+                  padding: itemPadding,
+                  boxSizing: 'border-box',
+                }}
+                key={'grid-' + index}
+              >
+                {renderRow(item, index)}
+              </Box>
+            ))
+          : // getEmptyContainer(ListEmptyComponent, displayColumn, itemPadding)
+            null}
       </AppAnimateGroup>
-      {data.length === 0 ? getEmptyContainer(ListEmptyComponent) : null}
       {getFooterContainer(ListFooterComponent)}
     </Box>
   );
@@ -158,11 +195,12 @@ GridView.propTypes = {
   ListFooterComponent: PropTypes.node,
   data: PropTypes.array.isRequired,
   onEndReached: PropTypes.func,
+  perPage: PropTypes.number,
 };
 GridView.defaultProps = {
   border: false,
   data: [],
-  column: 3,
+  column: 5,
   animation: 'transition.expandIn',
   itemPadding: 12,
   // responsive: {

@@ -32,6 +32,7 @@ AppGrid.propTypes = {
   ListFooterComponent: PropTypes.node,
   data: PropTypes.array.isRequired,
   onEndReached: PropTypes.func,
+  perPage: PropTypes.number,
 };
 AppGrid.defaultProps = {
   loading: false,

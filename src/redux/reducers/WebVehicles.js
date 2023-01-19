@@ -10,6 +10,7 @@ import {
   GET_RECENTLY_ADDED_VEHICLE_LIST,
   GET_MY_WATCH_LIST,
   GET_MY_PURCHASE_LIST,
+  EMPTY_WEB_VEHICLE_LIST,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -20,7 +21,7 @@ const initialState = {
   similarVehicles: [],
   vehicle: {},
   search: '',
-  viewType: VIEW_TYPE.GRID,
+  viewType: VIEW_TYPE.LIST,
   featuredVehicles: [],
   bestSellingVehicles: [],
   recentlyAddedVehicles: [],
@@ -59,7 +60,14 @@ const WebVehicleReducer = (state = initialState, action) => {
         ...state,
         vehiclesData: action.payload,
       };
-
+    case EMPTY_WEB_VEHICLE_LIST:
+      return {
+        ...state,
+        vehiclesData: {
+          ...state.vehiclesData,
+          data: [],
+        },
+      };
     case GET_WEB_VEHICLE_VIEW:
       return {
         ...state,

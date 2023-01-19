@@ -75,7 +75,7 @@ const ImageCarousel = ({images, isSold = false, ...rest}) => {
         </Box>
       )}
       <Box>
-        {!rest.hideMagnifier && images.length ? (
+        {!rest.hideMagnifier && images?.length ? (
           <ImageMagnifier
             src={
               images[activeImage]?.path
@@ -107,7 +107,7 @@ const ImageCarousel = ({images, isSold = false, ...rest}) => {
           container
           spacing={{xs: 2, md: 3}}
           columns={{xs: 12, sm: 12, md: 12, lg: 10}}
-          sx={{px: 1}}
+          sx={{px: 1, maxHeight: 220, overflowY: 'auto'}}
         >
           {images.map((item, index) => (
             <Grid item xs={3} sm={2} md={3} lg={2} key={index}>

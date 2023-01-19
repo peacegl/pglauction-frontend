@@ -36,6 +36,7 @@ const ListView = ({
   border,
   ListFooterComponent,
   ListEmptyComponent,
+  perPage,
   ...rest
 }) => {
   const theme = useTheme();
@@ -61,9 +62,14 @@ const ListView = ({
       {...rest}
       enter={{delay, duration, animation}}
     >
-      {data.length > 0
-        ? data.map((item, index) => renderRow(item, index))
-        : getEmptyContainer(ListEmptyComponent)}
+      {
+        data.length > 0
+          ? data.map((item, index) => renderRow(item, index))
+          : Array.from(new Array(perPage)).map((item, index) =>
+              renderRow(item, index),
+            )
+        // getEmptyContainer(ListEmptyComponent)
+      }
       {getFooterContainer(ListFooterComponent)}
     </AppAnimateGroup>
   );
@@ -81,6 +87,7 @@ ListView.propTypes = {
   ListFooterComponent: PropTypes.node,
   data: PropTypes.array.isRequired,
   onEndReached: PropTypes.func,
+  perPage: PropTypes.number,
 };
 ListView.defaultProps = {
   border: false,

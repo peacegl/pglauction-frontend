@@ -82,7 +82,7 @@ const AuctionStep = (props) => {
         {/* <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppDateTimeField
             placeholder={messages['vehicle.startDatePlaceholder']}
-            label={<IntlMessages id='vehicle.startDate' />}
+            label={<IntlMessages id='common.startDate' />}
             value={props.values?.start_date}
             setfieldvalue={props.setfieldvalue}
             name='start_date'
@@ -91,7 +91,7 @@ const AuctionStep = (props) => {
           />
           <AppDateTimeField
             placeholder={messages['vehicle.endDatePlaceholder']}
-            label={<IntlMessages id='vehicle.endDate' />}
+            label={<IntlMessages id='common.endDate' />}
             value={props.values?.end_date}
             setfieldvalue={props.setfieldvalue}
             name='end_date'

@@ -18,11 +18,11 @@ export const tableColumns = function () {
     },
     {
       name: 'start_date',
-      label: messages['common.start_date'],
+      label: messages['common.startDate'],
     },
     {
       name: 'end_date',
-      label: messages['common.end_date'],
+      label: messages['common.endDate'],
     },
     {
       name: 'items_count',
@@ -56,21 +56,6 @@ export default function configs(invalidYoutube) {
     exportColumns: [],
     validationSchema: [
       yup.object({
-        seller_id: yup
-          .string()
-          .required(<IntlMessages id='validation.sellerRequired' />),
-        location_id: yup
-          .string()
-          .required(<IntlMessages id='validation.locationRequired' />),
-        category_id: yup
-          .string()
-          .required(<IntlMessages id='validation.categoryRequired' />),
-        title: yup
-          .string()
-          .required(<IntlMessages id='validation.titleRequired' />),
-        subtitle: yup
-          .string()
-          .required(<IntlMessages id='validation.subtitleRequired' />),
         start_date: yup
           .date()
           .typeError(<IntlMessages id='validation.dateValidation' />)
@@ -79,18 +64,8 @@ export default function configs(invalidYoutube) {
           .date()
           .typeError(<IntlMessages id='validation.dateValidation' />)
           .nullable(),
-        minimum_bid: yup
-          .number()
-          .typeError(<IntlMessages id='validation.priceError' />),
-        // .required(<IntlMessages id='validation.mbidRequired' />),
-        buy_now_price: yup
-          .number()
-          .typeError(<IntlMessages id='validation.priceError' />)
-          .required(<IntlMessages id='validation.buyNowPriceRequired' />),
       }),
-      yup.object({
-        youtube_url: yup.string().matches(youtubeRegExp, invalidYoutube),
-      }),
+      yup.object({}),
     ],
   };
 }

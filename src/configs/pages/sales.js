@@ -27,10 +27,6 @@ export const tableColumns = function () {
     {
       name: 'sale_price',
       label: messages['sale.salePrice'],
-    },
-    {
-      name: 'sale_price',
-      label: messages['common.sale_price'],
       options: {
         filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (

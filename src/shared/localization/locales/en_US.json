@@ -817,8 +817,8 @@
   "common.vin": "Vin",
   "common.lot_number": "Lot Number",
   "common.lot": "Lot",
-  "common.start_date": "Start Date",
-  "common.end_date": "End Date",
+  "common.startDate": "Start Date",
+  "common.endDate": "End Date",
   "common.minimum_bid": "Minimum Bid",
   "common.buy_now_price": "Buy Now Price",
   "common.slug": "Slug",
@@ -928,9 +928,7 @@
   "vehicle.titlePlaceholder": "Type title",
   "common.subtitle": "Subtitle",
   "vehicle.subtitlePlaceholder": "Type subtitle",
-  "vehicle.startDate": "Start Date",
   "vehicle.startDatePlaceholder": "Type start date",
-  "vehicle.endDate": "End Date",
   "vehicle.endDatePlaceholder": "Type end date",
   "vehicle.minimumBid": "Minimum Bid",
   "vehicle.minimumBidPlaceholder": "Type minimum bid price",
@@ -1159,5 +1157,9 @@
   "common.verifyEmail": "Verify your email",
   "common.emailVerified": "You have successfully verified your email!",
   "common.sendAgain": "Send again",
-  "common.notRecieved": "Didn't receive email?"
+  "common.notRecieved": "Didn't receive email?",
+  "auction.bidsCount": "Bids count",
+  "auction.auctionInfo": "Auction Info",
+  "auction.auctionItems": "Auction Items",
+  "vehicle.totalVehicles": "Total Vehicles"
 }

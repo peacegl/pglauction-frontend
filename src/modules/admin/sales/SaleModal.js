@@ -37,7 +37,7 @@ export default function SellModal({
 
   const searchVehicles = (content, vehicle_id = null) => {
     getData(
-      `/vehicleColumn/auto_complete?column=vin&status=!sold${
+      `/vehicleColumn/auto_complete?column[]=vin&column[]=lot_number&status=!sold${
         vehicle_id ? '&id=' + vehicle_id : ''
       }`,
       content,

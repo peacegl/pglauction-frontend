@@ -1,12 +1,16 @@
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import {onInsertAuction, onUpdateAuction} from 'redux/actions';
-import CustomModal from '../../../components/CustomModal';
 import IntlMessages from '@crema/utility/IntlMessages';
 import jwtAxios from '@crema/services/auth/jwt-auth';
+import AuctionConfigs from 'configs/pages/auctions';
+import CustomModal from 'components/CustomModal';
+import AuctionStepTwo from './AuctionStepTwo';
+import AuctionStepOne from './AuctionStepOne';
 import {useState, useEffect} from 'react';
-import {getData} from '../../../configs';
-import AuctionForm from './AuctionForm';
 import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
+import {getData} from 'configs';
 
 export default function AuctionModal({
   open,
@@ -17,14 +21,28 @@ export default function AuctionModal({
   ...rest
 }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [auctionItemsLoading, setAuctionItemLoading] = useState(false);
-  const [auctionItems, setAuctionItems] = useState([]);
+  const [vehiclesLoading, setVehiclesLoading] = useState(false);
+  const [vehicles, setVehicles] = useState([]);
   const [initialValues, setInitialValues] = useState({
     name: '',
     start_date: '',
     end_date: '',
     status: '',
+    items: [],
   });
+
+  const validationSchema = AuctionConfigs().validationSchema;
+  const searchVehicles = (content, vehicle_id = null) => {
+    getData(
+      `/vehicleColumn/auto_complete?column[]=vin&column[]=lot_number&status=!sold${
+        vehicle_id ? '&id=' + vehicle_id : ''
+      }`,
+      content,
+      setVehiclesLoading,
+      setVehicles,
+    );
+  };
+
   const searchItems = (content) => {
     getData(
       `/auction_items/auto_complete`,
@@ -35,13 +53,15 @@ export default function AuctionModal({
   };
 
   useEffect(() => {
-    getData(
-      `/auction_items/auto_complete`,
-      {},
-      setAuctionItemLoading,
-      setAuctionItems,
-    );
+    // getData(
+    //   `/auction_items/auto_complete`,
+    //   {},
+    //   setAuctionItemLoading,
+    //   setAuctionItems,
+    // );
+    searchVehicles({});
   }, []);
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (recordId) {
@@ -73,24 +93,38 @@ export default function AuctionModal({
       dispatch(onInsertAuction(values, toggleOpen));
     }
   };
+  const steps = [
+    {
+      key: 1,
+      icon: <BusinessCenterIcon />,
+      label: <IntlMessages id='auction.auctionInfo' />,
+      children: <AuctionStepOne />,
+    },
+    {
+      key: 3,
+      icon: <DirectionsCarIcon />,
+      label: <IntlMessages id='auction.auctionItems' />,
+      children: (
+        <AuctionStepTwo
+          vehicles={vehicles}
+          vehiclesLoading={vehiclesLoading}
+          searchVehicles={searchVehicles}
+        />
+      ),
+    },
+  ];
   return (
     <CustomModal
       open={open}
       toggleOpen={toggleOpen}
       width={width}
+      steps={steps}
       onSave={onSave}
-      title={<IntlMessages id='auction.auctionInfo' />}
       validationSchema={validationSchema}
       initialValues={initialValues}
       isLoading={isLoading}
       {...rest}
-    >
-      <AuctionForm
-        auctionItems={auctionItems}
-        auctionItemsLoading={auctionItemsLoading}
-        searchItems={searchItems}
-      />
-    </CustomModal>
+    />
   );
 }
 AuctionModal.propTypes = {

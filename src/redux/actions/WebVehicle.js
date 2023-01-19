@@ -14,12 +14,14 @@ import {
   GET_MY_WATCH_LIST,
   GET_MY_PURCHASE_LIST,
   SHOW_MESSAGE,
+  EMPTY_WEB_VEHICLE_LIST,
 } from '../../shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '../../@crema/utility/helper/Utils';
 
 export const onGetWebVehicleData = (data) => {
   return (dispatch) => {
+    dispatch({type: EMPTY_WEB_VEHICLE_LIST, payload: {}});
     dispatch({type: FETCH_START});
     jwtAxios
       .get(`/website/vehicles`, {
