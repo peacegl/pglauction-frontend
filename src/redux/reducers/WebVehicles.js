@@ -21,7 +21,7 @@ const initialState = {
   similarVehicles: [],
   vehicle: {},
   search: '',
-  viewType: VIEW_TYPE.LIST,
+  viewType: VIEW_TYPE.GRID,
   featuredVehicles: [],
   bestSellingVehicles: [],
   recentlyAddedVehicles: [],
