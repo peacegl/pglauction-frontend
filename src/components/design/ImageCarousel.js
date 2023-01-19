@@ -1,5 +1,5 @@
 import DefaultCarImage from 'assets/default_car_image.png';
-import {Box, Card, Grid, Paper} from '@mui/material';
+import {Box, Card, Grid, Paper, Skeleton} from '@mui/material';
 import ImageMagnifier from './ImageMagnifier';
 import SoldIcon from 'assets/icon/sold.png';
 import CustomSlider from './CustomSlider';
@@ -75,7 +75,9 @@ const ImageCarousel = ({images, isSold = false, ...rest}) => {
         </Box>
       )}
       <Box>
-        {!rest.hideMagnifier && images?.length ? (
+        {!images?.length ? (
+          <Skeleton animation='wave' width='100%' height={700} />
+        ) : !rest.hideMagnifier ? (
           <ImageMagnifier
             src={
               images[activeImage]?.path
@@ -109,18 +111,24 @@ const ImageCarousel = ({images, isSold = false, ...rest}) => {
           columns={{xs: 12, sm: 12, md: 12, lg: 10}}
           sx={{px: 1, maxHeight: 220, overflowY: 'auto'}}
         >
-          {images.map((item, index) => (
-            <Grid item xs={3} sm={2} md={3} lg={2} key={index}>
-              <Box
-                sx={{maxWidth: '100%'}}
-                onClick={() => setActiveImage(index)}
-                key={item.id}
-                component='img'
-                src={item.path}
-                alt='Image'
-              />
-            </Grid>
-          ))}
+          {!images?.length
+            ? Array.from(new Array(10)).map((item, index) => (
+                <Grid item xs={3} sm={2} md={3} lg={2} key={index}>
+                  <Skeleton animation='wave' width='100%' height={120} />
+                </Grid>
+              ))
+            : images?.map((item, index) => (
+                <Grid item xs={3} sm={2} md={3} lg={2} key={index}>
+                  <Box
+                    sx={{maxWidth: '100%'}}
+                    onClick={() => setActiveImage(index)}
+                    key={item.id}
+                    component='img'
+                    src={item.path}
+                    alt='Image'
+                  />
+                </Grid>
+              ))}
         </Grid>
 
         {/* <CustomSlider>

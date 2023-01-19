@@ -36,7 +36,7 @@ const VehicleDetail = () => {
   }, [user?.type]);
   return (
     <>
-      {vehicle.id ? (
+      {loading || vehicle.id ? (
         <>
           <Header item={vehicle} />
           <Container maxWidth='xl' sx={{mt: 6}}>
