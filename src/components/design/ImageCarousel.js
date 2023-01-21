@@ -53,6 +53,7 @@ const ImageCarousel = ({images, isSold = false, ...rest}) => {
     <Paper
       variant='outlined'
       sx={{
+        position: 'relative',
         '& .control-arrow': {
           backgroundColor: (theme) => theme.palette.info.main,
         },
@@ -76,7 +77,12 @@ const ImageCarousel = ({images, isSold = false, ...rest}) => {
       )}
       <Box>
         {!images?.length ? (
-          <Skeleton animation='wave' width='100%' height={700} />
+          <Skeleton
+            animation='wave'
+            width='100%'
+            height={700}
+            sx={{my: 0, py: 0}}
+          />
         ) : !rest.hideMagnifier ? (
           <ImageMagnifier
             src={
@@ -114,7 +120,7 @@ const ImageCarousel = ({images, isSold = false, ...rest}) => {
           {!images?.length
             ? Array.from(new Array(10)).map((item, index) => (
                 <Grid item xs={3} sm={2} md={3} lg={2} key={index}>
-                  <Skeleton animation='wave' width='100%' height={120} />
+                  <Skeleton animation='wave' height={120} />
                 </Grid>
               ))
             : images?.map((item, index) => (
