@@ -1,13 +1,11 @@
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import DriveEtaIcon from '@mui/icons-material/DriveEta';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import DriveEtaIcon from '@mui/icons-material/DriveEta';
+import StoreIcon from '@mui/icons-material/Store';
 import SellIcon from '@mui/icons-material/Sell';
-import StorefrontIcon from '@mui/icons-material/Storefront';
-import AutoAwesomeMosaicIcon from '@mui/icons-material/AutoAwesomeMosaic';
-import AssistantIcon from '@mui/icons-material/Assistant';
 import HomeIcon from '@mui/icons-material/Home';
 import {
   VIEW_VEHICLES,
@@ -68,24 +66,24 @@ const routesConfig = [
     url: '/admin/sales',
     permittedPermission: VIEW_SALES,
   },
-  // {
-  //   id: 'auctions',
-  //   title: 'Auction List',
-  //   messageId: 'sidebar.auctions',
-  //   type: 'item',
-  //   icon: <StorefrontIcon sx={{fontSize: 22}} />,
-  //   url: '/admin/auctions',
-  //   permittedPermission: VIEW_AUCTIONS,
-  // },
-  // {
-  //   id: 'auction_items',
-  //   title: 'Auction Item List',
-  //   messageId: 'sidebar.auctionItems',
-  //   type: 'item',
-  //   icon: <SellIcon sx={{fontSize: 22}} />,
-  //   url: '/admin/auction_items',
-  //   permittedPermission: VIEW_AUCTION_ITEMS,
-  // },
+  {
+    id: 'auctions',
+    title: 'Auction List',
+    messageId: 'sidebar.auctions',
+    type: 'item',
+    icon: <StoreIcon sx={{fontSize: 22}} />,
+    url: '/admin/auctions',
+    permittedPermission: VIEW_AUCTIONS,
+  },
+  {
+    id: 'auction_items',
+    title: 'Auction Item List',
+    messageId: 'sidebar.auctionItems',
+    type: 'item',
+    icon: <SellIcon sx={{fontSize: 22}} />,
+    url: '/admin/auction_items',
+    permittedPermission: VIEW_AUCTION_ITEMS,
+  },
   {
     id: 'users',
     title: 'User List',

@@ -1161,5 +1161,8 @@
   "auction.bidsCount": "Bids count",
   "auction.auctionInfo": "Auction Info",
   "auction.auctionItems": "Auction Items",
-  "vehicle.totalVehicles": "Total Vehicles"
+  "vehicle.totalVehicles": "Total Vehicles",
+  "validation.startDateRequired": "Start date is required",
+  "validation.endDateRequired": "End date is required",
+  "validation.vehiclesRequired": "At least one vehicle is required"
 }

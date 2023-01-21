@@ -6,7 +6,8 @@ import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {fi} from 'date-fns/locale';
 
 const AuctionStepTwo = (props) => {
   const {messages} = useIntl();
@@ -23,50 +24,65 @@ const AuctionStepTwo = (props) => {
     object.content = value;
     return object;
   };
+
+  useEffect(() => {
+    if (props.values?.items?.length) {
+      props.setVehiclesValidationError(false);
+    }
+  }, [props.values?.items]);
+
   return (
     <Box>
       <Stack spacing={{xs: 5, md: 8}}>
-        <Stack direction='row' spacing={5} alignItems='center'>
-          <Autocomplete
-            sx={{flex: 1}}
-            size='small'
-            value={vehicle}
-            onChange={(event, newValue) => {
-              setVehicle(newValue);
-            }}
-            loading={props.vehiclesLoading}
-            options={props.vehicles}
-            getOptionLabel={(option) =>
-              option.lot_number ? option.lot_number + ' - ' + option.vin : ''
-            }
-            renderOption={(props, option) => (
-              <Box component='li' {...props}>
-                {option.lot_number} - {option.vin}
-              </Box>
+        <Stack direction='row' spacing={5}>
+          <Box sx={{flex: 1}}>
+            <Autocomplete
+              sx={{width: '100%'}}
+              size='small'
+              value={vehicle}
+              onChange={(event, newValue) => {
+                setVehicle(newValue);
+              }}
+              loading={props.vehiclesLoading}
+              options={props.vehicles}
+              getOptionLabel={(option) =>
+                option.lot_number ? option.lot_number + ' - ' + option.vin : ''
+              }
+              renderOption={(props, option) => (
+                <Box component='li' {...props}>
+                  {option.lot_number} - {option.vin}
+                </Box>
+              )}
+              onInputChange={onInputChange}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={<IntlMessages id='common.vehicle' />}
+                  placeholder={messages['common.vehiclePlaceholder']}
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <>
+                        {props.vehiclesLoading ? (
+                          <CircularProgress color='inherit' size={20} />
+                        ) : null}
+                        {params.InputProps.endAdornment}
+                      </>
+                    ),
+                  }}
+                />
+              )}
+            />
+            {props.vehiclesValidationError && (
+              <Typography sx={{mx: 2}} component='p' variant='p' color='error'>
+                <IntlMessages id='validation.vehiclesRequired' />
+              </Typography>
             )}
-            onInputChange={onInputChange}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={<IntlMessages id='common.vehicle' />}
-                placeholder={messages['common.vehiclePlaceholder']}
-                InputProps={{
-                  ...params.InputProps,
-                  endAdornment: (
-                    <>
-                      {props.vehiclesLoading ? (
-                        <CircularProgress color='inherit' size={20} />
-                      ) : null}
-                      {params.InputProps.endAdornment}
-                    </>
-                  ),
-                }}
-              />
-            )}
-          />
+          </Box>
           <Button
             sx={{
               minWidth: 100,
+              alignSelf: 'self-start',
             }}
             color='primary'
             variant='outlined'
@@ -84,7 +100,7 @@ const AuctionStepTwo = (props) => {
             <IntlMessages id='common.add' />
           </Button>
         </Stack>
-        <Typography component='p' sx={{fontWeight: 'bold'}}>
+        <Typography component='p' sx={{fontWeight: 'bold', px: 1}}>
           <IntlMessages id='vehicle.totalVehicles' />:{' '}
           {props.values.items.length}
         </Typography>
@@ -100,12 +116,15 @@ const AuctionStepTwo = (props) => {
               key={index}
               label={`${item.lot_number} - ${item.vin}`}
               variant='outlined'
-              onDelete={() =>
-                props.setfieldvalue(
-                  'items',
-                  props.values.items.filter((veh) => veh.id != item.id),
-                )
-              }
+              onDelete={() => {
+                let items = props.values.items.filter(
+                  (veh) => veh.id != item.id,
+                );
+                props.setfieldvalue('items', items);
+                props.setVehiclesValidationError(
+                  items?.length == 0 ? true : false,
+                );
+              }}
             />
           ))}
         </Box>
@@ -121,4 +140,6 @@ AuctionStepTwo.propTypes = {
   searchVehicles: PropTypes.func,
   vehiclesLoading: PropTypes.bool,
   vehicles: PropTypes.array,
+  vehiclesValidationError: PropTypes.string,
+  setVehiclesValidationError: PropTypes.func,
 };

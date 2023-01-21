@@ -56,14 +56,23 @@ export default function configs(invalidYoutube) {
     exportColumns: [],
     validationSchema: [
       yup.object({
+        name: yup
+          .string()
+          .min(3, <IntlMessages id='validation.min3Letter' />)
+          .max(64, <IntlMessages id='validation.max64Letter' />)
+          .required(<IntlMessages id='validation.nameRequired' />),
+        status: yup
+          .string()
+          .required(<IntlMessages id='validation.statusRequired' />),
         start_date: yup
           .date()
           .typeError(<IntlMessages id='validation.dateValidation' />)
-          .nullable(),
+          .required(<IntlMessages id='validation.startDateRequired' />),
+
         end_date: yup
           .date()
           .typeError(<IntlMessages id='validation.dateValidation' />)
-          .nullable(),
+          .required(<IntlMessages id='validation.endDateRequired' />),
       }),
       yup.object({}),
     ],

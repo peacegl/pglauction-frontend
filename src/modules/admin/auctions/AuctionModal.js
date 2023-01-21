@@ -1,9 +1,9 @@
-import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import {onInsertAuction, onUpdateAuction} from 'redux/actions';
 import IntlMessages from '@crema/utility/IntlMessages';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import AuctionConfigs from 'configs/pages/auctions';
+import StoreIcon from '@mui/icons-material/Store';
 import CustomModal from 'components/CustomModal';
 import AuctionStepTwo from './AuctionStepTwo';
 import AuctionStepOne from './AuctionStepOne';
@@ -20,9 +20,11 @@ export default function AuctionModal({
   edit,
   ...rest
 }) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [vehiclesValidationError, setVehiclesValidationError] = useState(false);
   const [vehiclesLoading, setVehiclesLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [vehicles, setVehicles] = useState([]);
+  const dispatch = useDispatch();
   const [initialValues, setInitialValues] = useState({
     name: '',
     start_date: '',
@@ -30,7 +32,6 @@ export default function AuctionModal({
     status: '',
     items: [],
   });
-
   const validationSchema = AuctionConfigs().validationSchema;
   const searchVehicles = (content, vehicle_id = null) => {
     getData(
@@ -42,27 +43,10 @@ export default function AuctionModal({
       setVehicles,
     );
   };
-
-  const searchItems = (content) => {
-    getData(
-      `/auction_items/auto_complete`,
-      content,
-      setAuctionItemLoading,
-      setAuctionItems,
-    );
-  };
-
   useEffect(() => {
-    // getData(
-    //   `/auction_items/auto_complete`,
-    //   {},
-    //   setAuctionItemLoading,
-    //   setAuctionItems,
-    // );
     searchVehicles({});
   }, []);
 
-  const dispatch = useDispatch();
   useEffect(() => {
     if (recordId) {
       (async function () {
@@ -86,6 +70,21 @@ export default function AuctionModal({
     }
   }, [recordId]);
 
+  const stepTwoValidation = async (values, actions) => {
+    if (values.items.length == 0) {
+      setVehiclesValidationError(true);
+      return false;
+    }
+    return true;
+  };
+
+  const customValidation = async (values, actions, activeStep) => {
+    if (activeStep == 2) {
+      return await stepTwoValidation(values, actions);
+    }
+    return true;
+  };
+
   const onSave = (values) => {
     if (recordId) {
       dispatch(onUpdateAuction(recordId, values, toggleOpen));
@@ -96,7 +95,7 @@ export default function AuctionModal({
   const steps = [
     {
       key: 1,
-      icon: <BusinessCenterIcon />,
+      icon: <StoreIcon />,
       label: <IntlMessages id='auction.auctionInfo' />,
       children: <AuctionStepOne />,
     },
@@ -109,6 +108,8 @@ export default function AuctionModal({
           vehicles={vehicles}
           vehiclesLoading={vehiclesLoading}
           searchVehicles={searchVehicles}
+          setVehiclesValidationError={setVehiclesValidationError}
+          vehiclesValidationError={vehiclesValidationError}
         />
       ),
     },
@@ -123,6 +124,7 @@ export default function AuctionModal({
       validationSchema={validationSchema}
       initialValues={initialValues}
       isLoading={isLoading}
+      customValidation={customValidation}
       {...rest}
     />
   );

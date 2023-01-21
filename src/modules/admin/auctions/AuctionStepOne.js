@@ -1,3 +1,4 @@
+import AppDateTimeField from '@crema/core/AppFormComponents/AppDateTimeField';
 import AppDateField from '@crema/core/AppFormComponents/AppDateField';
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import IntlMessages from '@crema/utility/IntlMessages';
@@ -41,41 +42,22 @@ const AuctionStepOne = (props) => {
           </AppTextField>
         </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
-          <AppDateField
+          <AppDateTimeField
+            placeholder={messages['vehicle.startDatePlaceholder']}
             label={<IntlMessages id='common.startDate' />}
             value={props.values?.start_date}
-            setfieldvalue={(name, value) =>
-              props.setfieldvalue(
-                name,
-                value
-                  ? value.getFullYear() +
-                      '/' +
-                      (value.getMonth() + 1) +
-                      '/' +
-                      value.getDate()
-                  : '',
-              )
-            }
+            setfieldvalue={props.setfieldvalue}
             name='start_date'
             size='small'
             sx={{flex: 1}}
           />
-          <AppDateField
+          <AppDateTimeField
+            placeholder={messages['vehicle.endDatePlaceholder']}
             label={<IntlMessages id='common.endDate' />}
             value={props.values?.end_date}
-            setfieldvalue={(name, value) =>
-              props.setfieldvalue(
-                name,
-                value
-                  ? value.getFullYear() +
-                      '/' +
-                      (value.getMonth() + 1) +
-                      '/' +
-                      value.getDate()
-                  : '',
-              )
-            }
+            setfieldvalue={props.setfieldvalue}
             name='end_date'
+            variant='outlined'
             size='small'
             sx={{flex: 1}}
           />
