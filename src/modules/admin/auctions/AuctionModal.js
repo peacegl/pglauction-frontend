@@ -35,7 +35,7 @@ export default function AuctionModal({
   const validationSchema = AuctionConfigs().validationSchema;
   const searchVehicles = (content, vehicle_id = null) => {
     getData(
-      `/vehicleColumn/auto_complete?column[]=vin&column[]=lot_number&status=!sold${
+      `/vehicleColumn/auto_complete?column[]=vin&column[]=lot_number&mainImage=1&status=!sold${
         vehicle_id ? '&id=' + vehicle_id : ''
       }`,
       content,
@@ -80,7 +80,7 @@ export default function AuctionModal({
 
   const customValidation = async (values, actions, activeStep) => {
     if (activeStep == 2) {
-      return await stepTwoValidation(values, actions);
+      return stepTwoValidation(values, actions);
     }
     return true;
   };

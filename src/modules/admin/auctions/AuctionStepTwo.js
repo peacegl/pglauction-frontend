@@ -1,17 +1,18 @@
-import {Box, Button, Chip, Stack, Typography} from '@mui/material';
+import {Avatar, Box, Button, Chip, Stack, Typography} from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import IntlMessages from '@crema/utility/IntlMessages';
 import Autocomplete from '@mui/material/Autocomplete';
+import AuctionItemModal from './AuctionItemModal';
 import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
+import {useEffect, useState} from 'react';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
-import {useEffect, useState} from 'react';
-import {fi} from 'date-fns/locale';
 
 const AuctionStepTwo = (props) => {
   const {messages} = useIntl();
   const [vehicle, setVehicle] = useState('');
+  const [auctionItemModal, setAuctionItemModal] = useState(false);
 
   const onInputChange = (event, value, reason) => {
     if (reason == 'input') {
@@ -49,7 +50,19 @@ const AuctionStepTwo = (props) => {
                 option.lot_number ? option.lot_number + ' - ' + option.vin : ''
               }
               renderOption={(props, option) => (
-                <Box component='li' {...props}>
+                <Box
+                  component='li'
+                  sx={{'& > img': {mr: 2, flexShrink: 0}}}
+                  {...props}
+                >
+                  {option?.images?.length > 0 && (
+                    <img
+                      loading='lazy'
+                      width='30'
+                      src={option?.images[0]?.path}
+                      alt=''
+                    />
+                  )}
                   {option.lot_number} - {option.vin}
                 </Box>
               )}
@@ -88,13 +101,16 @@ const AuctionStepTwo = (props) => {
             variant='outlined'
             startIcon={<AddIcon />}
             onClick={() => {
-              let index = props.values.items.findIndex(
-                (item) => item.id == vehicle.id,
-              );
-              if (index == -1) {
-                props.setfieldvalue('items', [vehicle, ...props.values.items]);
+              if (!vehicle?.id) {
+                props.setVehiclesValidationError(true);
+              } else {
+                let index = props.values.items.findIndex(
+                  (item) => item.id == vehicle.id,
+                );
+                if (index == -1) {
+                  setAuctionItemModal(true);
+                }
               }
-              setVehicle('');
             }}
           >
             <IntlMessages id='common.add' />
@@ -129,6 +145,16 @@ const AuctionStepTwo = (props) => {
           ))}
         </Box>
       </Stack>
+      {auctionItemModal && (
+        <AuctionItemModal
+          open={auctionItemModal}
+          toggleOpen={() => setAuctionItemModal((d) => !d)}
+          vehicle={vehicle}
+          setVehicle={setVehicle}
+          setfieldvalue={props.setfieldvalue}
+          items={props.values?.items}
+        />
+      )}
     </Box>
   );
 };
