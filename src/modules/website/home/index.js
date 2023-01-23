@@ -15,6 +15,7 @@ import CarouselBanur from './CarouselBanur';
 import {styled} from '@mui/material/styles';
 import {useEffect, useState} from 'react';
 import Button from '@mui/material/Button';
+import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
 
 const ColorButton = styled(Button)(({theme}) => ({
   color: (theme) => theme.palette.primary.contrastText('success'),
@@ -112,21 +113,17 @@ export default function Home() {
             items={featuredVehicles}
           />
         )}
-      </Container>
-      <Container maxWidth='xl' sx={{mt: 10}}>
         <MultipleContentSection
           title={<IntlMessages id='website.why_choose_us' />}
           contents={contents}
         />
-      </Container>
-
-      <Container maxWidth='xl' sx={{mt: 10}}>
         {recentlyAddedVehicles.length > 0 && (
           <SecondCustomCarousel
             title={<IntlMessages id='vehicle.recentlyAddedVehicles' />}
             items={recentlyAddedVehicles}
           />
         )}
+        <PopularBrandsList />
       </Container>
     </>
   );
