@@ -117,6 +117,8 @@ export default function LocationList({user}) {
         selectableRows={
           user?.permissions?.includes(EDIT_LOCATION) ||
           user?.permissions?.includes(DELETE_LOCATION)
+            ? 'multiple'
+            : 'none'
         }
       />
       {openFilter && (

@@ -180,6 +180,7 @@ const CustomModal = ({
                     >
                       <CloseIcon sx={{fontSize: 18}} />
                     </IconButton>
+                    <Box sx={{clear: 'both'}}></Box>
                     <Box
                       sx={{
                         display: 'flex',
@@ -190,7 +191,8 @@ const CustomModal = ({
                         variant='h3'
                         sx={{
                           textAlign: 'center',
-                          py: 4,
+                          pb: 4,
+                          mt: -5,
                           borderBottom: (theme) =>
                             `2px solid ${theme.palette.text.secondary}`,
                           borderRadius: '1px',

@@ -104,6 +104,8 @@ export default function RoleList({user}) {
         selectableRows={
           user?.permissions?.includes(EDIT_ROLE) ||
           user?.permissions?.includes(DELETE_ROLE)
+            ? 'multiple'
+            : 'none'
         }
       />
       {openModal && (

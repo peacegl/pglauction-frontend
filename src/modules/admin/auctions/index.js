@@ -113,6 +113,8 @@ export default function AuctionList({user}) {
         selectableRows={
           user?.permissions?.includes(EDIT_AUCTION) ||
           user?.permissions?.includes(DELETE_AUCTION)
+            ? 'multiple'
+            : 'none'
         }
       />
       {openModal && (

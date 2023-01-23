@@ -54,6 +54,23 @@ export const tableColumns = function () {
 export default function configs(invalidYoutube) {
   return {
     exportColumns: [],
+    itemSchema: yup.object({
+      minimum_bid: yup
+        .number()
+        .typeError(<IntlMessages id='validation.priceError' />)
+        .required(<IntlMessages id='validation.minimumBidRequired' />),
+      buy_now_price: yup
+        .number()
+        .when('minimum_bid', (minimum_bid, schema) => {
+          return schema.test({
+            test: (buy_now_price) =>
+              !!minimum_bid && buy_now_price > minimum_bid,
+            message: <IntlMessages id='validation.buyNowPriceMustBeBigger' />,
+          });
+        })
+        .typeError(<IntlMessages id='validation.priceError' />)
+        .required(<IntlMessages id='validation.minimumBidRequired' />),
+    }),
     validationSchema: [
       yup.object({
         name: yup
@@ -74,7 +91,6 @@ export default function configs(invalidYoutube) {
           .typeError(<IntlMessages id='validation.dateValidation' />)
           .required(<IntlMessages id='validation.endDateRequired' />),
       }),
-      yup.object({}),
     ],
   };
 }

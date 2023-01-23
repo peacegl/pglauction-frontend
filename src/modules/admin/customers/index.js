@@ -118,6 +118,8 @@ export default function CustomerList({user}) {
         selectableRows={
           user?.permissions?.includes(EDIT_CUSTOMER) ||
           user?.permissions?.includes(DELETE_CUSTOMER)
+            ? 'multiple'
+            : 'none'
         }
       />
       {openFilter && (

@@ -127,6 +127,8 @@ export default function VehicleList({user}) {
           user?.permissions?.includes(EDIT_VEHICLE) ||
           user?.permissions?.includes(DELETE_VEHICLE) ||
           user?.permissions?.includes(ADD_SALE)
+            ? 'multiple'
+            : 'none'
         }
       />
       {openFilter && (

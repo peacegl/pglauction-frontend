@@ -111,6 +111,8 @@ export default function UserList({user}) {
         selectableRows={
           user?.permissions?.includes(EDIT_USER) ||
           user?.permissions?.includes(DELETE_USER)
+            ? 'multiple'
+            : 'none'
         }
       />
       {openFilter && (

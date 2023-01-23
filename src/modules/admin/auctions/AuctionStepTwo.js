@@ -38,6 +38,9 @@ const AuctionStepTwo = (props) => {
         <Stack direction='row' spacing={5}>
           <Box sx={{flex: 1}}>
             <Autocomplete
+              // isOptionEqualToValue={(option, value) =>
+              //   value === undefined || value === '' || option.id === value.id
+              // }
               sx={{width: '100%'}}
               size='small'
               value={vehicle}
@@ -148,9 +151,11 @@ const AuctionStepTwo = (props) => {
       {auctionItemModal && (
         <AuctionItemModal
           open={auctionItemModal}
-          toggleOpen={() => setAuctionItemModal((d) => !d)}
+          toggleOpen={() => {
+            setAuctionItemModal((d) => !d);
+            setVehicle('');
+          }}
           vehicle={vehicle}
-          setVehicle={setVehicle}
           setfieldvalue={props.setfieldvalue}
           items={props.values?.items}
         />
