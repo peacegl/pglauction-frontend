@@ -12,9 +12,7 @@ const VerificationForm = (props) => {
   const {messages} = useIntl();
   const token = localStorage.getItem('token');
   const {size, elapsed, percentage, download, cancel, error, isInProgress} =
-    useDownloader({
-      mode: 'no-cors',
-    });
+    useDownloader();
 
   return (
     <Box sx={{mt: 10}}>
