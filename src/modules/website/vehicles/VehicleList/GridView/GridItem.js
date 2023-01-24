@@ -133,11 +133,7 @@ export default function GridItem({item, ...props}) {
                 parseInt((item.price * item.sale_rate ?? 15) / 100),
             )}
             </Typography> */}
-            {/* {item && (
-            <Typography color={theme.palette.primary.main}>
-              {item.odometer_type}
-            </Typography>
-            )} */}
+            {/* {item && <Typography>{item.odometer_type}</Typography>} */}
           </Box>
 
           <Box sx={{mt: 1}}>
