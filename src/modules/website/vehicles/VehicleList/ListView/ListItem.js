@@ -1,12 +1,3 @@
-import {
-  Box,
-  Divider,
-  Stack,
-  Button,
-  useTheme,
-  Chip,
-  Skeleton,
-} from '@mui/material';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import useAddToWatchList from 'customHooks/useAddToWatchList';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
@@ -25,11 +16,20 @@ import Card from '@mui/material/Card';
 import {moneyFormater} from 'configs';
 import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
+import {
+  Box,
+  Divider,
+  Stack,
+  Button,
+  useTheme,
+  Chip,
+  Skeleton,
+} from '@mui/material';
 
 const TextShow = ({value, label, extra = ''}) => {
   return (
     <Typography variant='body1'>
-      <Box display='inline' fontWeight='bold' columnGap='5px'>
+      <Box component='span' display='inline' fontWeight='bold' columnGap='5px'>
         {label}
       </Box>{' '}
       {value} {extra}

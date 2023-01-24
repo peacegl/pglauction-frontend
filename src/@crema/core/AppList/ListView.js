@@ -63,16 +63,18 @@ const ListView = ({
       {...rest}
       enter={{delay, duration, animation}}
     >
-      {data.length > 0
-        ? data.map((item, index) => (
-            <Box key={index}>{renderRow(item, index)}</Box>
-          ))
-        : loading
-        ? Array.from(new Array(perPage)).map((item, index) => (
-            <Box key={index}>{renderRow(item, index)}</Box>
-          ))
-        : !loading ?? getEmptyContainer(ListEmptyComponent)}
-      {getFooterContainer(ListFooterComponent)}
+      <>
+        {data.length > 0
+          ? data.map((item, index) => (
+              <Box key={index}>{renderRow(item, index)}</Box>
+            ))
+          : loading
+          ? Array.from(new Array(perPage)).map((item, index) => (
+              <Box key={index}>{renderRow(item, index)}</Box>
+            ))
+          : !loading ?? getEmptyContainer(ListEmptyComponent)}
+        {getFooterContainer(ListFooterComponent)}
+      </>
     </AppAnimateGroup>
   );
 };
