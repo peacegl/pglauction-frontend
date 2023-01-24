@@ -11,6 +11,7 @@ import SaleInfo from './SaleInfo';
 import {useEffect} from 'react';
 import LotInfo from './LotInfo';
 import Header from './Header';
+import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
 
 const VehicleDetail = () => {
   const router = useRouter();
@@ -21,7 +22,9 @@ const VehicleDetail = () => {
   const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
   const {similarVehicles = []} = useSelector(({webVehicles}) => webVehicles);
   const {user} = useAuthUser();
-
+  const popularBrandsCount = useSelector(
+    ({webVehicles}) => webVehicles.popularBrandsCount,
+  );
   useEffect(() => {
     if (id) {
       dispatch(onGetWebVehicleView(id));
@@ -75,14 +78,15 @@ const VehicleDetail = () => {
                 </Box>
               </Box>
             </Box>
-          </Container>
-          <Container maxWidth='xl' sx={{mt: 12}}>
-            {similarVehicles.length > 0 && (
-              <CustomCarousel
-                title={<IntlMessages id='website.vehicle.similarVehicles' />}
-                items={similarVehicles}
-              />
-            )}
+            <Box sx={{mt: 12}}>
+              {similarVehicles.length > 0 && (
+                <CustomCarousel
+                  title={<IntlMessages id='website.vehicle.similarVehicles' />}
+                  items={similarVehicles}
+                />
+              )}
+            </Box>
+            <PopularBrandsList popularBrandsCount={popularBrandsCount} />
           </Container>
         </>
       ) : (
