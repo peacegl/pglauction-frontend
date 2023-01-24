@@ -118,7 +118,7 @@ const PopularBrandsList = (props) => {
     // },
   ];
   return (
-    <Box sx={{my: 8}}>
+    <Box sx={{my: props.small ? 5 : 8}}>
       {props.small ? (
         <Box
           sx={{
@@ -166,7 +166,7 @@ const PopularBrandsList = (props) => {
         {popularBrands.map((brand, index) => (
           <ButtonBase
             key={index}
-            sx={{m: props.small ? 1 : 2}}
+            sx={{mx: 2, my: props.small ? 1 : 2}}
             onClick={() => {
               router.push(`/?make=${brand.name}`);
               filterBrand(brand.name);
