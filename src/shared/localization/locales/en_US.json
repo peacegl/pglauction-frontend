@@ -1033,7 +1033,7 @@
   "website.simple_fast_secure": "Simple, Fast & Secure",
   "website.quality": "Quality Compliance",
   "website.home": "Home",
-  "website.all_vehicles": "All Vehicles",
+  "website.allVehicles": "All Vehicles",
   "website.live_auctions": "Live Auctions",
   "website.shipping": "Shipping",
   "website.services": "Services",
@@ -1161,5 +1161,8 @@
   "auction.bidsCount": "Bids count",
   "auction.auctionInfo": "Auction Info",
   "auction.auctionItems": "Auction Items",
-  "vehicle.totalVehicles": "Total Vehicles"
+  "vehicle.totalVehicles": "Total Vehicles",
+
+  "website.popularBrands": "Popular Brands",
+  "website.inStock": "In Stock"
 }

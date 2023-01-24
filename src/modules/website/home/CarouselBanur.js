@@ -130,7 +130,7 @@ const CarouselBanur = () => {
                 }}
                 onClick={() => router.push('/all-vehicles')}
               >
-                <IntlMessages id='website.all_vehicles' />
+                <IntlMessages id='website.allVehicles' />
               </Button>
             </Box>
           </Box>

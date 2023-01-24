@@ -133,18 +133,14 @@ export default function GridItem({item, ...props}) {
                 parseInt((item.price * item.sale_rate ?? 15) / 100),
             )}
             </Typography> */}
-            {/* {item && (
-            <Typography color={theme.palette.primary.main}>
-              {item.odometer_type}
-            </Typography>
-            )} */}
+            {/* {item && <Typography>{item.odometer_type}</Typography>} */}
           </Box>
 
           <Box sx={{mt: 1}}>
             {!item ? (
-              <Chip sx={{width: 80, float: 'right', ml: 4}} size='small'>
-                <Skeleton animation='wave' variant='rounded' />
-              </Chip>
+              <Skeleton animation='wave' variant='rounded'>
+                <Chip sx={{width: 80, float: 'right', ml: 4}} size='small' />
+              </Skeleton>
             ) : (
               <Chip
                 sx={{
@@ -274,5 +270,5 @@ export default function GridItem({item, ...props}) {
   );
 }
 GridItem.propTypes = {
-  item: PropTypes.object.isRequired,
+  item: PropTypes.any,
 };

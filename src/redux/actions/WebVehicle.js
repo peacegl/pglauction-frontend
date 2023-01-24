@@ -15,6 +15,8 @@ import {
   GET_MY_PURCHASE_LIST,
   SHOW_MESSAGE,
   EMPTY_WEB_VEHICLE_LIST,
+  GET_POPULAR_BRANDS_COUNT,
+  SET_BRAND_FILTER_DATA,
 } from '../../shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '../../@crema/utility/helper/Utils';
@@ -112,6 +114,12 @@ export const setWebVehiclesFilter = (filters) => {
   };
 };
 
+export const setBrandFilter = (filters) => {
+  return (dispatch) => {
+    dispatch({type: SET_BRAND_FILTER_DATA, payload: filters});
+  };
+};
+
 export const onGetFeaturedVehicles = () => {
   return async (dispatch) => {
     dispatch({type: FETCH_START});
@@ -121,6 +129,27 @@ export const onGetFeaturedVehicles = () => {
       if (res.status === 200 && res.data.result) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_FEATURED_VEHICLE_LIST, payload: res.data.data});
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: messages['message.somethingWentWrong'],
+        });
+      }
+    } catch (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+    }
+  };
+};
+
+export const onCountPopularBrands = () => {
+  return async (dispatch) => {
+    dispatch({type: FETCH_START});
+    const {messages} = appIntl();
+    try {
+      const res = await jwtAxios.get(`/count_populars`);
+      if (res.status === 200 && res.data.result) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_POPULAR_BRANDS_COUNT, payload: res.data.data});
       } else {
         dispatch({
           type: FETCH_ERROR,
