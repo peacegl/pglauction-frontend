@@ -33,6 +33,7 @@ AppGrid.propTypes = {
   data: PropTypes.array.isRequired,
   onEndReached: PropTypes.func,
   perPage: PropTypes.number,
+  loading: PropTypes.bool,
 };
 AppGrid.defaultProps = {
   loading: false,
