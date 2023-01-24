@@ -63,7 +63,7 @@ function Header() {
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
 
   const onSearch = (value) => {
-    router.push('/all-vehicles');
+    router.push('/');
     dispatch(setVehicleSearch(value));
   };
 

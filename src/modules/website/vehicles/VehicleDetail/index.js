@@ -1,4 +1,8 @@
-import {onGetWebSimilarVehicle, onGetWebVehicleView} from 'redux/actions';
+import {
+  onCountPopularBrands,
+  onGetWebSimilarVehicle,
+  onGetWebVehicleView,
+} from 'redux/actions';
 import ImageCarousel from 'components/design/ImageCarousel';
 import CustomCarousel from 'components/CustomCarousel';
 import IntlMessages from '@crema/utility/IntlMessages';
@@ -25,6 +29,11 @@ const VehicleDetail = () => {
   const popularBrandsCount = useSelector(
     ({webVehicles}) => webVehicles.popularBrandsCount,
   );
+  useEffect(() => {
+    (async function () {
+      await dispatch(onCountPopularBrands());
+    })();
+  }, []);
   useEffect(() => {
     if (id) {
       dispatch(onGetWebVehicleView(id));

@@ -4,7 +4,7 @@ import LandRover from 'assets/vehicle_logos/land_rover.png';
 import Chevrolet from 'assets/vehicle_logos/chevrolet.png';
 import Hyundai from 'assets/vehicle_logos/hyundai.png';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {Box, Paper, Typography} from '@mui/material';
+import {Box, Divider, Paper, Typography} from '@mui/material';
 import Toyota from 'assets/vehicle_logos/toyota.png';
 import Nissan from 'assets/vehicle_logos/nissan.png';
 import Honda from 'assets/vehicle_logos/honda.png';
@@ -118,22 +118,55 @@ const PopularBrandsList = (props) => {
     // },
   ];
   return (
-    <Box sx={{my: 8}}>
-      <Title title={<IntlMessages id='website.popularBrands' />} />
+    <Box sx={{my: props.small ? 5 : 8}}>
+      {props.small ? (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <Typography
+            component='h2'
+            sx={{
+              fontSize: {
+                xs: '16px',
+                xl: '20px',
+              },
+              textAlign: 'center',
+              fontWeight: 'bold',
+              textTransform: 'capitalize',
+            }}
+          >
+            <IntlMessages id='website.popularBrands' />
+            <Divider
+              sx={{
+                my: 2,
+                mx: 4,
+                backgroundColor: (theme) => theme.palette.primary.main,
+                borderRadius: 10,
+                height: '3px',
+              }}
+            />
+          </Typography>
+        </Box>
+      ) : (
+        <Title title={<IntlMessages id='website.popularBrands' />} />
+      )}
       <Box
         sx={{
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           flexWrap: 'wrap',
-          mx: 10,
-          mt: 4,
+          mx: props.small ? 8 : 10,
+          mt: props.small ? 2 : 4,
         }}
       >
         {popularBrands.map((brand, index) => (
           <ButtonBase
             key={index}
-            sx={{m: 2}}
+            sx={{mx: 2, my: props.small ? 1 : 2}}
             onClick={() => {
               router.push(`/?make=${brand.name}`);
               filterBrand(brand.name);
@@ -142,7 +175,7 @@ const PopularBrandsList = (props) => {
             <Paper
               variant='outlined'
               sx={{
-                pb: 2,
+                pb: props.small ? 1 : 2,
               }}
             >
               <Box
@@ -151,14 +184,18 @@ const PopularBrandsList = (props) => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  height: 90,
-                  px: 3,
+                  height: props.small ? 70 : 90,
+                  px: props.small ? 1 : 3,
                   m: 1,
                 }}
               >
-                <Box component='img' src={brand.logo} width={70}></Box>
+                <Box
+                  component='img'
+                  src={brand.logo}
+                  width={props.small ? 50 : 70}
+                ></Box>
               </Box>
-              <Typography sx={{textAlign: 'center'}}>
+              <Typography sx={{textAlign: 'center', px: 1}}>
                 <IntlMessages id='website.inStock' />{' '}
                 <Typography component='span' sx={{fontWeight: 'bold'}}>
                   {props.popularBrandsCount[brand.name]}
@@ -176,4 +213,5 @@ export default PopularBrandsList;
 PopularBrandsList.propTypes = {
   popularBrandsCount: PropTypes.object,
   filterBrands: PropTypes.any,
+  small: PropTypes.bool,
 };
