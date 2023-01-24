@@ -9,29 +9,9 @@ import {Box} from '@mui/material';
 const getEmptyContainer = (ListEmptyComponent, displayColumn, itemPadding) => {
   if (ListEmptyComponent) {
     return React.isValidElement(ListEmptyComponent) ? (
-      <Box
-        style={{
-          flexGrow: 0,
-          maxWidth: `${100 / displayColumn}%`,
-          flexBasis: `${100 / displayColumn}%`,
-          padding: itemPadding,
-          boxSizing: 'border-box',
-        }}
-      >
-        {ListEmptyComponent}
-      </Box>
+      ListEmptyComponent
     ) : (
-      <Box
-        style={{
-          flexGrow: 0,
-          maxWidth: `${100 / displayColumn}%`,
-          flexBasis: `${100 / displayColumn}%`,
-          padding: itemPadding,
-          boxSizing: 'border-box',
-        }}
-      >
-        <ListEmptyComponent />
-      </Box>
+      <ListEmptyComponent />
     );
   }
   return null;
@@ -62,6 +42,7 @@ const GridView = ({
   ListFooterComponent,
   ListEmptyComponent,
   perPage,
+  loading,
 }) => {
   const {theme} = useThemeContext();
 
@@ -156,23 +137,26 @@ const GridView = ({
               </Box>
             ))
           : null}
-        {data.length === 0
-          ? Array.from(new Array(perPage)).map((item, index) => (
-              <Box
-                style={{
-                  flexGrow: 0,
-                  maxWidth: `${100 / displayColumn}%`,
-                  flexBasis: `${100 / displayColumn}%`,
-                  padding: itemPadding,
-                  boxSizing: 'border-box',
-                }}
-                key={'grid-' + index}
-              >
-                {renderRow(item, index)}
-              </Box>
-            ))
-          : // getEmptyContainer(ListEmptyComponent, displayColumn, itemPadding)
-            null}
+        {
+          data.length === 0 && loading
+            ? Array.from(new Array(perPage)).map((item, index) => (
+                <Box
+                  style={{
+                    flexGrow: 0,
+                    maxWidth: `${100 / displayColumn}%`,
+                    flexBasis: `${100 / displayColumn}%`,
+                    padding: itemPadding,
+                    boxSizing: 'border-box',
+                  }}
+                  key={'grid-' + index}
+                >
+                  {renderRow(item, index)}
+                </Box>
+              ))
+            : !loading ??
+              getEmptyContainer(ListEmptyComponent, displayColumn, itemPadding)
+          // null
+        }
       </AppAnimateGroup>
       {getFooterContainer(ListFooterComponent)}
     </Box>
@@ -196,6 +180,7 @@ GridView.propTypes = {
   data: PropTypes.array.isRequired,
   onEndReached: PropTypes.func,
   perPage: PropTypes.number,
+  loading: PropTypes.bool,
 };
 GridView.defaultProps = {
   border: false,

@@ -138,9 +138,11 @@ export default function GridItem({item, ...props}) {
 
           <Box sx={{mt: 1}}>
             {!item ? (
-              <Skeleton animation='wave' variant='rounded'>
-                <Chip sx={{width: 80, float: 'right', ml: 4}} size='small' />
-              </Skeleton>
+              <Chip
+                sx={{width: 80, float: 'right', ml: 4}}
+                label={<Skeleton animation='wave' variant='rounded' />}
+                size='small'
+              />
             ) : (
               <Chip
                 sx={{

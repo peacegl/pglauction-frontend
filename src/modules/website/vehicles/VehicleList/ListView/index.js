@@ -48,11 +48,12 @@ const ListView = ({list, loading, perPage}) => {
         data={list}
         renderRow={(item, index) => (
           <>
-            {index == 0 && <Head />}
-            <ListItem item={item} key={index} />
+            {index == 0 && <Head key={index} />}
+            <ListItem item={item} key={index + 1} />
           </>
         )}
         perPage={perPage}
+        loading={loading}
         ListEmptyComponent={
           <ListEmptyResult
             content={loading ? 'Loading...' : 'No Vehicle Found'}

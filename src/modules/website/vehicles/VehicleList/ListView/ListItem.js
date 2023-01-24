@@ -185,12 +185,11 @@ export default function ListItem({item, ...props}) {
                 </Box>
                 <Box>
                   {!item ? (
-                    <Skeleton animation='wave' variant='rounded'>
-                      <Chip
-                        sx={{width: 80, float: 'right', ml: 4}}
-                        size='small'
-                      />
-                    </Skeleton>
+                    <Chip
+                      sx={{width: 80, float: 'right', ml: 4}}
+                      size='small'
+                      label={<Skeleton animation='wave' variant='rounded' />}
+                    />
                   ) : (
                     <Chip
                       sx={{
@@ -442,12 +441,12 @@ export default function ListItem({item, ...props}) {
   );
 }
 ListItem.propTypes = {
-  item: PropTypes.object.isRequired,
+  item: PropTypes.object,
 };
 
 TextShow.propTypes = {
-  value: PropTypes.string,
-  label: PropTypes.string,
+  value: PropTypes.any,
+  label: PropTypes.any,
   extra: PropTypes.any,
 };
 WhatsAppButton.propTypes = {
