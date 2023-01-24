@@ -128,7 +128,7 @@ const CarouselBanur = () => {
                     color: theme.palette.primary.main,
                   },
                 }}
-                onClick={() => router.push('/all-vehicles')}
+                onClick={() => router.push('/')}
               >
                 <IntlMessages id='website.allVehicles' />
               </Button>

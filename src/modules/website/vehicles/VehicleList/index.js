@@ -44,14 +44,8 @@ const VehicleList = () => {
   }, [search, filterData]);
 
   useEffect(() => {
-    (async function () {
-      await dispatch(onCountPopularBrands());
-    })();
-  }, []);
-
-  useEffect(() => {
     let filterBrands = {};
-    if (make) {
+    if (make && !search) {
       filterBrands = {
         brand: make,
         status: ['available', 'future'],
