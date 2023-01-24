@@ -19,6 +19,7 @@ import {styled} from '@mui/material/styles';
 import clsx from 'clsx';
 import AppsPagination from '@crema/core/AppsPagination';
 import {useTheme} from '@mui/material';
+import IntlMessages from '@crema/utility/IntlMessages';
 
 const IconBtn = styled(IconButton)(({theme}) => {
   return {
@@ -41,6 +42,7 @@ const Header = ({
   perPage,
   totalProducts,
   onPageChange,
+  make,
 }) => {
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
   const {total = 0} = useSelector(({webVehicles}) => webVehicles.vehiclesData);
@@ -67,7 +69,11 @@ const Header = ({
         }}
       >
         <Typography variant='h2' color='primary'>
-          All Vehicles
+          {make ? (
+            make.charAt(0).toUpperCase() + make.slice(1)
+          ) : (
+            <IntlMessages id='website.allVehicles' />
+          )}
         </Typography>
         <Badge
           badgeContent={total}
@@ -145,4 +151,5 @@ Header.propTypes = {
   perPage: PropTypes.number,
   totalProducts: PropTypes.number,
   onPageChange: PropTypes.func,
+  make: PropTypes.any,
 };

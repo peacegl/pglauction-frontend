@@ -65,7 +65,6 @@ const AppCard = ({
               <span {...actionStyle}>
                 <Link
                   href='#'
-                  color='secondary'
                   underline='none'
                   sx={{
                     fontSize: 14,

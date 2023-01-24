@@ -11,6 +11,8 @@ import {
   GET_MY_WATCH_LIST,
   GET_MY_PURCHASE_LIST,
   EMPTY_WEB_VEHICLE_LIST,
+  GET_POPULAR_BRANDS_COUNT,
+  SET_BRAND_FILTER_DATA,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -23,8 +25,10 @@ const initialState = {
   search: '',
   viewType: VIEW_TYPE.GRID,
   featuredVehicles: [],
+  popularBrandsCount: {},
   bestSellingVehicles: [],
   recentlyAddedVehicles: [],
+  filterBrands: {},
   filterData: {
     newly_added: {
       newly_added_duration: 24,
@@ -93,11 +97,22 @@ const WebVehicleReducer = (state = initialState, action) => {
         ...state,
         filterData: action.payload,
       };
+    case SET_BRAND_FILTER_DATA:
+      return {
+        ...state,
+        filterBrands: action.payload,
+      };
     case GET_FEATURED_VEHICLE_LIST:
       return {
         ...state,
         featuredVehicles: action.payload,
       };
+    case GET_POPULAR_BRANDS_COUNT:
+      return {
+        ...state,
+        popularBrandsCount: action.payload,
+      };
+
     case GET_BEST_SELLING_VEHICLE_LIST:
       return {
         ...state,

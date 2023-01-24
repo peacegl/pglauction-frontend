@@ -1,94 +1,121 @@
-import IntlMessages from '@crema/utility/IntlMessages';
-import {Box, Paper, Typography} from '@mui/material';
-import Benz from 'assets/vehicle_logos/benz.png';
-import BMW from 'assets/vehicle_logos/bmw.png';
-import Chevrolet from 'assets/vehicle_logos/chevrolet.png';
-import Ford from 'assets/vehicle_logos/ford.png';
-import Hyundai from 'assets/vehicle_logos/hyundai.png';
-import Honda from 'assets/vehicle_logos/honda.png';
-import Toyota from 'assets/vehicle_logos/toyota.png';
-import Nissan from 'assets/vehicle_logos/nissan.png';
-import Lexus from 'assets/vehicle_logos/lexus.png';
-import Dodge from 'assets/vehicle_logos/dodge.png';
-import GMC from 'assets/vehicle_logos/gmc.png';
-import LandRover from 'assets/vehicle_logos/land_rover.png';
-import Kia from 'assets/vehicle_logos/kia.png';
-import Jeep from 'assets/vehicle_logos/jeep.png';
-import Mazda from 'assets/vehicle_logos/mazda.png';
 import MiniCooper from 'assets/vehicle_logos/mini_cooper.png';
 import Volkswagen from 'assets/vehicle_logos/volkswagen.png';
+import LandRover from 'assets/vehicle_logos/land_rover.png';
+import Chevrolet from 'assets/vehicle_logos/chevrolet.png';
+import Hyundai from 'assets/vehicle_logos/hyundai.png';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {Box, Paper, Typography} from '@mui/material';
+import Toyota from 'assets/vehicle_logos/toyota.png';
+import Nissan from 'assets/vehicle_logos/nissan.png';
+import Honda from 'assets/vehicle_logos/honda.png';
+import Lexus from 'assets/vehicle_logos/lexus.png';
+import Dodge from 'assets/vehicle_logos/dodge.png';
+import Mazda from 'assets/vehicle_logos/mazda.png';
+import Jeep from 'assets/vehicle_logos/jeep.png';
+import Benz from 'assets/vehicle_logos/benz.png';
+import Ford from 'assets/vehicle_logos/ford.png';
+import BMW from 'assets/vehicle_logos/bmw.png';
+import GMC from 'assets/vehicle_logos/gmc.png';
+import Kia from 'assets/vehicle_logos/kia.png';
+import {setBrandFilter} from 'redux/actions';
 import Title from 'components/design/Title';
+import {ButtonBase} from '@mui/material';
+import {useDispatch} from 'react-redux';
+import {useRouter} from 'next/router';
+import PropTypes from 'prop-types';
 
-const PopularBrandsList = () => {
+const PopularBrandsList = (props) => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const filterBrand = (name) => {
+    dispatch(
+      setBrandFilter({
+        brand: name,
+        status: ['available', 'future'],
+      }),
+    );
+  };
+
   const popularBrands = [
     {
       key: 1,
-      logo: Benz.src,
+      logo: Nissan.src,
+      name: 'nissan',
     },
     {
       key: 2,
-      logo: BMW.src,
+      logo: Toyota.src,
+      name: 'toyota',
     },
     {
       key: 3,
-      logo: Chevrolet.src,
+      logo: Lexus.src,
+      name: 'lexus',
     },
     {
       key: 4,
-      logo: Ford.src,
+      logo: Hyundai.src,
+      name: 'hyundai',
     },
     {
       key: 5,
-      logo: Toyota.src,
+      logo: Ford.src,
+      name: 'ford',
     },
     {
       key: 6,
-      logo: Hyundai.src,
+      logo: Benz.src,
+      name: 'benz',
     },
     {
       key: 7,
-      logo: Honda.src,
+      logo: BMW.src,
+      name: 'bmw',
     },
     {
       key: 8,
-      logo: Nissan.src,
+      logo: Dodge.src,
+      name: 'dodge',
     },
     {
       key: 9,
-      logo: Lexus.src,
+      logo: Kia.src,
+      name: 'kia',
     },
     {
       key: 10,
-      logo: Dodge.src,
+      logo: Honda.src,
+      name: 'honda',
     },
-    {
-      key: 11,
-      logo: GMC.src,
-    },
-    {
-      key: 12,
-      logo: Jeep.src,
-    },
-    {
-      key: 13,
-      logo: LandRover.src,
-    },
-    {
-      key: 14,
-      logo: Kia.src,
-    },
-    {
-      key: 15,
-      logo: Mazda.src,
-    },
-    {
-      key: 16,
-      logo: MiniCooper.src,
-    },
-    {
-      key: 17,
-      logo: Volkswagen.src,
-    },
+    // {
+    //   key: 10,
+    //   logo: GMC.src,
+    //   name: 'gmc',
+    // },
+    // {
+    //   key: 3,
+    //   logo: Chevrolet.src,
+    // },
+    // {
+    //   key: 12,
+    //   logo: Jeep.src,
+    // },
+    // {
+    //   key: 13,
+    //   logo: LandRover.src,
+    // },
+    // {
+    //   key: 15,
+    //   logo: Mazda.src,
+    // },
+    // {
+    //   key: 16,
+    //   logo: MiniCooper.src,
+    // },
+    // {
+    //   key: 17,
+    //   logo: Volkswagen.src,
+    // },
   ];
   return (
     <Box sx={{my: 8}}>
@@ -104,27 +131,41 @@ const PopularBrandsList = () => {
         }}
       >
         {popularBrands.map((brand, index) => (
-          <Paper variant='outlined' key={index} sx={{m: 2, pb: 2}}>
-            <Box
+          <ButtonBase
+            key={index}
+            sx={{m: 2}}
+            onClick={() => {
+              router.push(`/?make=${brand.name}`);
+              filterBrand(brand.name);
+            }}
+          >
+            <Paper
+              variant='outlined'
               sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: 90,
-                px: 3,
-                m: 1,
+                pb: 2,
               }}
             >
-              <Box component='img' src={brand.logo} width={70}></Box>
-            </Box>
-            <Typography sx={{textAlign: 'center'}}>
-              <IntlMessages id='website.inStock' />{' '}
-              <Typography component='span' sx={{fontWeight: 'bold'}}>
-                72
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: 90,
+                  px: 3,
+                  m: 1,
+                }}
+              >
+                <Box component='img' src={brand.logo} width={70}></Box>
+              </Box>
+              <Typography sx={{textAlign: 'center'}}>
+                <IntlMessages id='website.inStock' />{' '}
+                <Typography component='span' sx={{fontWeight: 'bold'}}>
+                  {props.popularBrandsCount[brand.name]}
+                </Typography>
               </Typography>
-            </Typography>
-          </Paper>
+            </Paper>
+          </ButtonBase>
         ))}
       </Box>
     </Box>
@@ -132,3 +173,7 @@ const PopularBrandsList = () => {
 };
 
 export default PopularBrandsList;
+PopularBrandsList.propTypes = {
+  popularBrandsCount: PropTypes.object,
+  filterBrands: PropTypes.any,
+};

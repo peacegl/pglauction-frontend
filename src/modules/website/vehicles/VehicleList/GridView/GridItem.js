@@ -274,5 +274,5 @@ export default function GridItem({item, ...props}) {
   );
 }
 GridItem.propTypes = {
-  item: PropTypes.object.isRequired,
+  item: PropTypes.any,
 };

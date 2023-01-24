@@ -1,13 +1,18 @@
+import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
 import {Box, Card, Container, Button, Drawer} from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import IntlMessages from '@crema/utility/IntlMessages';
 import AuctionsSidebar from 'components/filterSlider';
 import Hidden from '@mui/material/Hidden';
 import VehicleList from './VehicleList';
+import {useSelector} from 'react-redux';
 import {useState} from 'react';
 
 const Vehicles = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
+  const popularBrandsCount = useSelector(
+    ({webVehicles}) => webVehicles.popularBrandsCount,
+  );
   return (
     <>
       <Container maxWidth='xl' sx={{mt: 6}}>
@@ -51,6 +56,7 @@ const Vehicles = () => {
             <VehicleList />
           </Box>
         </Box>
+        <PopularBrandsList popularBrandsCount={popularBrandsCount} />
       </Container>
       <Drawer
         anchor='left'
