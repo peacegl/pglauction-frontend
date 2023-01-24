@@ -185,9 +185,12 @@ export default function ListItem({item, ...props}) {
                 </Box>
                 <Box>
                   {!item ? (
-                    <Chip sx={{width: 80, float: 'right', ml: 4}} size='small'>
-                      <Skeleton animation='wave' variant='rounded' />
-                    </Chip>
+                    <Skeleton animation='wave' variant='rounded'>
+                      <Chip
+                        sx={{width: 80, float: 'right', ml: 4}}
+                        size='small'
+                      />
+                    </Skeleton>
                   ) : (
                     <Chip
                       sx={{
