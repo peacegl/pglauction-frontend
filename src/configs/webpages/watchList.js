@@ -47,7 +47,7 @@ export const tableColumns = function (router) {
             }}
             onClick={() => {
               router.push(
-                `all-vehicles/${tableMeta.tableData[tableMeta.rowIndex][0]}`,
+                `/all-vehicles/${tableMeta.tableData[tableMeta.rowIndex][0]}`,
               );
             }}
             noWrap={true}
