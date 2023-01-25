@@ -37,11 +37,16 @@ const VehicleList = () => {
   );
   const viewType = useSelector(({webVehicles}) => webVehicles.viewType);
   const filterData = useSelector(({webVehicles}) => webVehicles.filterData);
+  const filterBrands = useSelector(({webVehicles}) => webVehicles.filterBrands);
   const loading = useSelector(({common}) => common.loading);
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
   useEffect(() => {
     setPage(0);
   }, [search, filterData]);
+
+  useEffect(() => {
+    setPage(0);
+  }, [filterBrands]);
 
   useEffect(() => {
     let filterBrands = {};
