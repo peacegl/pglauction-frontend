@@ -150,7 +150,7 @@ const ImageCropModal = ({
                   value={zoom}
                   min={1}
                   max={3}
-                  step={0.1}
+                  step={0.02}
                   aria-labelledby='Zoom'
                   onChange={(e) => {
                     setZoom(e.target.value);
