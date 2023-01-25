@@ -276,7 +276,7 @@ CustomModal.propTypes = {
   children: PropTypes.node,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   onSave: PropTypes.func.isRequired,
-  validationSchema: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  validationSchema: PropTypes.any,
   initialValues: PropTypes.object,
   customValidation: PropTypes.func,
   isLoading: PropTypes.bool,
