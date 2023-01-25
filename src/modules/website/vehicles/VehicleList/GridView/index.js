@@ -1,9 +1,8 @@
-import React from 'react';
+import ListEmptyResult from '@crema/core/AppList/ListEmptyResult';
 import AppGrid from '@crema/core/AppGrid';
 import GridItem from './GridItem';
-import ListEmptyResult from '@crema/core/AppList/ListEmptyResult';
 import PropTypes from 'prop-types';
-import {Grid} from '@mui/material';
+import React from 'react';
 
 const AuctionGrid = ({list, loading, perPage}) => (
   <AppGrid
@@ -18,6 +17,7 @@ const AuctionGrid = ({list, loading, perPage}) => (
       <GridItem item={item} key={index} url='vehicles' />
     )}
     perPage={perPage}
+    loading={loading}
     ListEmptyComponent={
       <ListEmptyResult
         content={loading ? 'Loading...' : 'No Vehicle Found'}

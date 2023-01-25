@@ -58,16 +58,16 @@ const BorderedItems = ({
               cursor: 'pointer',
               border: (theme) =>
                 `1px solid ${
-                  data[columnName].includes(item.id)
+                  data[columnName]?.includes(item.id)
                     ? theme.palette.primary.main
                     : theme.palette.divider
                 }`,
               color: (theme) =>
-                data[columnName].includes(item.id)
+                data[columnName]?.includes(item.id)
                   ? theme.palette.primary.main
                   : 'inherit',
               bgcolor: (theme) =>
-                data[columnName].includes(item.id)
+                data[columnName]?.includes(item.id)
                   ? alpha(theme.palette.primary.main, 0.1)
                   : 'inherit',
               px: 3,

@@ -1033,7 +1033,7 @@
   "website.simple_fast_secure": "Simple, Fast & Secure",
   "website.quality": "Quality Compliance",
   "website.home": "Home",
-  "website.all_vehicles": "All Vehicles",
+  "website.allVehicles": "All Vehicles",
   "website.live_auctions": "Live Auctions",
   "website.shipping": "Shipping",
   "website.services": "Services",
@@ -1166,5 +1166,8 @@
   "validation.endDateRequired": "End date is required",
   "validation.vehiclesRequired": "At least one vehicle is required",
   "validation.minimumBidRequired": "Minimum bid is required",
-  "validation.buyNowPriceMustBeBigger": "Buy now price must be bigger than minimum bid"
+  "validation.buyNowPriceMustBeBigger": "Buy now price must be bigger than minimum bid",
+
+  "website.popularBrands": "Popular Brands",
+  "website.inStock": "In Stock"
 }

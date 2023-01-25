@@ -130,7 +130,7 @@ export let pages = [
   },
   {
     key: 2,
-    title: <IntlMessages id='website.all_vehicles' />,
+    title: <IntlMessages id='website.allVehicles' />,
     link: '/',
     target: '_self',
   },

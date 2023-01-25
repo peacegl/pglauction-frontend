@@ -24,9 +24,9 @@ const BodyStyle = ({reduxReducer, data, columnName}) => {
       icon: (
         <SedanIcon
           fill={
-            data[columnName].includes('sedan')
+            data[columnName]?.includes('sedan')
               ? theme.palette.primary.main
-              : data[columnName].includes('sedan')
+              : data[columnName]?.includes('sedan')
               ? theme.palette.primary.main
               : theme.palette.text.secondary
           }
@@ -40,7 +40,7 @@ const BodyStyle = ({reduxReducer, data, columnName}) => {
       icon: (
         <SuvIcon
           fill={
-            data[columnName].includes('suv')
+            data[columnName]?.includes('suv')
               ? theme.palette.primary.main
               : theme.palette.text.secondary
           }
@@ -54,7 +54,7 @@ const BodyStyle = ({reduxReducer, data, columnName}) => {
       icon: (
         <CoupeIcon
           fill={
-            data[columnName].includes('coupe')
+            data[columnName]?.includes('coupe')
               ? theme.palette.primary.main
               : theme.palette.text.secondary
           }
@@ -68,7 +68,7 @@ const BodyStyle = ({reduxReducer, data, columnName}) => {
       icon: (
         <HatchBackIcon
           fill={
-            data[columnName].includes('hatchback')
+            data[columnName]?.includes('hatchback')
               ? theme.palette.primary.main
               : theme.palette.text.secondary
           }
@@ -82,7 +82,7 @@ const BodyStyle = ({reduxReducer, data, columnName}) => {
       icon: (
         <ConvertibleIcon
           fill={
-            data[columnName].includes('convertible')
+            data[columnName]?.includes('convertible')
               ? theme.palette.primary.main
               : theme.palette.text.secondary
           }
@@ -96,7 +96,7 @@ const BodyStyle = ({reduxReducer, data, columnName}) => {
       icon: (
         <WagonIcon
           fill={
-            data[columnName].includes('wagon')
+            data[columnName]?.includes('wagon')
               ? theme.palette.primary.main
               : theme.palette.text.secondary
           }
@@ -110,7 +110,7 @@ const BodyStyle = ({reduxReducer, data, columnName}) => {
       icon: (
         <PickupIcon
           fill={
-            data[columnName].includes('pickup')
+            data[columnName]?.includes('pickup')
               ? theme.palette.primary.main
               : theme.palette.text.secondary
           }
@@ -124,7 +124,7 @@ const BodyStyle = ({reduxReducer, data, columnName}) => {
       icon: (
         <MinivanIcon
           fill={
-            data[columnName].includes('minivan')
+            data[columnName]?.includes('minivan')
               ? theme.palette.primary.main
               : theme.palette.text.secondary
           }
@@ -138,7 +138,7 @@ const BodyStyle = ({reduxReducer, data, columnName}) => {
       icon: (
         <VanIcon
           fill={
-            data[columnName].includes('van')
+            data[columnName]?.includes('van')
               ? theme.palette.primary.main
               : theme.palette.text.secondary
           }
@@ -148,7 +148,7 @@ const BodyStyle = ({reduxReducer, data, columnName}) => {
   ];
 
   const handleClick = (value) => {
-    !data[columnName].includes(value)
+    !data[columnName]?.includes(value)
       ? dispatch(
           reduxReducer({
             ...data,
@@ -179,7 +179,7 @@ const BodyStyle = ({reduxReducer, data, columnName}) => {
               flex: '0 1 33%',
               display: 'flex',
               justifyContent: 'center',
-              color: data[columnName].includes(item.value)
+              color: data[columnName]?.includes(item.value)
                 ? theme.palette.primary.main
                 : theme.palette.text.secondary,
             }}

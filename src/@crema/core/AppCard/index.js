@@ -65,7 +65,6 @@ const AppCard = ({
               <span {...actionStyle}>
                 <Link
                   href='#'
-                  color='secondary'
                   underline='none'
                   sx={{
                     fontSize: 14,
@@ -107,7 +106,7 @@ const AppCard = ({
               sx={{ml: footerPosition === 'right' ? 'auto' : 0}}
             >
               <Link
-                color='secondary'
+                // color='secondary'
                 component='button'
                 underline='none'
                 sx={{

@@ -63,7 +63,7 @@ function Header() {
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
 
   const onSearch = (value) => {
-    router.push('/all-vehicles');
+    router.push('/');
     dispatch(setVehicleSearch(value));
   };
 
@@ -230,7 +230,6 @@ function Header() {
               underline='none'
               href='https://www.tiktok.com/@united.used.car.llc'
               mx='2px'
-              color={(theme) => theme.palette.text.secondary}
               target='_blank'
             >
               <Box
@@ -246,7 +245,6 @@ function Header() {
               underline='none'
               href='https://www.facebook.com/profile.php?id=100087054543656'
               mx='2px'
-              color={(theme) => theme.palette.text.secondary}
               target='_blank'
             >
               <FacebookIcon width='30px' />
@@ -257,7 +255,6 @@ function Header() {
               underline='none'
               href='https://www.instagram.com/united.used.cars/'
               mx='2px'
-              color={theme.palette.text.secondary}
               target='_blank'
             >
               <InstagramIcon width='30px' />
@@ -268,7 +265,6 @@ function Header() {
               underline='none'
               href='https://wa.me/+19122395061'
               mx='2px'
-              color={(theme) => theme.palette.text.secondary}
               target='_blank'
             >
               <WhatsAppIcon width='30px' />
