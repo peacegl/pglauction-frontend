@@ -1,5 +1,5 @@
 import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
-import DownloadIcon from '@mui/icons-material/Download';
+import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {Badge, Box, Typography} from '@mui/material';
@@ -131,8 +131,8 @@ const CustomDataTable = forwardRef(
                 {onDownloadClick && (
                   <BasicTooltip
                     onClick={onDownloadClick}
-                    title='Download'
-                    icon={<DownloadIcon />}
+                    title={<IntlMessages id='common.getAReport' />}
+                    icon={<SimCardDownloadIcon />}
                   />
                 )}
 
