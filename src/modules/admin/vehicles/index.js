@@ -5,7 +5,7 @@ import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import SaleModal from '../sales/SaleModal';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import VehicleModal from './VehicleModal';
 import PropTypes from 'prop-types';
 import {
@@ -14,7 +14,6 @@ import {
   EDIT_VEHICLE,
   ADD_SALE,
 } from 'shared/constants/Permissions';
-
 export default function VehicleList({user}) {
   const [openModal, setOpenModal] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
@@ -32,6 +31,7 @@ export default function VehicleList({user}) {
     ({vehicles}) => vehicles.vehiclesData,
   );
   const {loading} = useSelector(({common}) => common);
+
   const dispatch = useDispatch();
   useEffect(() => {
     fetchData(search);

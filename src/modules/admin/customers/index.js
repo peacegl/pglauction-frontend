@@ -98,7 +98,7 @@ export default function CustomerList({user}) {
   return (
     <>
       <CustomDataTable
-        title='Customer List'
+        title={<IntlMessages id='customer.customerList' />}
         total={total}
         data={data}
         columns={tableColumns(setRecordId, setOpenVerifyModal)}

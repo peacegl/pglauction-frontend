@@ -8,6 +8,10 @@ import MUIDataTable from 'mui-datatables';
 import PropTypes from 'prop-types';
 import Toolbar from './Toolbar';
 import Search from './Search';
+import ExcelExportComponent from 'components/exports/exportExcel';
+import ExportPdf from 'components/exports/exportPdf';
+import {useRef} from 'react';
+import {useIntl} from 'react-intl';
 
 const CustomDataTable = ({
   title,
@@ -32,6 +36,10 @@ const CustomDataTable = ({
   selectedItems = [],
   selectableRows,
 }) => {
+  const childRef = useRef();
+  const childRefPdf = useRef();
+  const {messages} = useIntl();
+
   return (
     <>
       <MUIDataTable
@@ -52,6 +60,18 @@ const CustomDataTable = ({
         columns={columns}
         options={{
           ...options,
+          onViewColumnsChange: (changedColumn, action) => {
+            console.log(changedColumn);
+            console.log(action);
+          },
+
+          onDownload: () => {
+            // exportPDF();
+            // childRef.current.exportExcel();
+            childRefPdf.current.exportPDF();
+            return false;
+          },
+
           rowsPerPageOptions: options.rowsPerPageOptions
             ? options.rowsPerPageOptions
             : [20, 50, 100, 500],
@@ -136,6 +156,19 @@ const CustomDataTable = ({
         }}
       />
       {isLoading && <AppLoader />}
+
+      <ExcelExportComponent
+        ref={childRef}
+        data={data}
+        columns={columns}
+        title={messages[title.props.id]}
+      />
+      <ExportPdf
+        ref={childRefPdf}
+        data={data}
+        columns={columns}
+        titlePdf={messages[title?.props?.id] ?? 'no_name'}
+      />
     </>
   );
 };
