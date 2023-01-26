@@ -27,7 +27,6 @@ const getFooterContainer = (ListFooterComponent) => {
   }
   return null;
 };
-
 const GridView = ({
   sx,
   column,
@@ -45,7 +44,13 @@ const GridView = ({
   loading,
 }) => {
   const {theme} = useThemeContext();
+  useEffect(() => {
+    console.log('wwww', data, loading);
+  }, [loading]);
 
+  useEffect(() => {
+    console.log('eeee', data, loading);
+  }, [data]);
   const width = useWidth();
   const borderStyle = {
     border: `1px solid ${theme.palette.divider}`,
