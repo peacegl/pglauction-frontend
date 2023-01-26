@@ -262,6 +262,7 @@
   "common.likes": "Likes",
   "common.comments": "Comments",
   "common.download": "Download",
+  "common.getAReport" : "Get a report",
   "common.next": "Next",
   "common.edit": "Edit",
   "common.tag": "Tag",
@@ -853,6 +854,8 @@
   "common.reset": "Reset",
 
   "location.locationInfo": "Location Info",
+  "location.locationList": "Location List",
+  
   "confirm.location.delete": "Are you sure, you want to delete the selected Location(s)?",
   "message.location.deleted": "Location(s) deleted successfully!",
   "message.location.created": "Location created successfully!",
@@ -1114,6 +1117,7 @@
   "common.remove": "Remove",
   "watchlist.filterWatchList": "Watch List Filter",
   "vehicle.filter": "Vehicle Filter",
+  "vehicle.download": "Vehicle Download",
   "watchlist.message.deleted": "WatchList(s) deleted successfully",
   "watchlist.deleteMessage": "Are you sure, you want to delete the selected WatchList(s)?",
   "common.address_line_1": "Address Line 1",
@@ -1141,6 +1145,7 @@
   "common.individual": "Individual",
   "common.identificationProof": "Identification Proof",
   "customer.companyLicense": "Company License",
+  "customer.customerList": "Customer List",
   "customer.passport_id": "Passport / ID",
   "common.accountVerification": "Account Verification",
   "common.verifiedMessage": "Your account is verified!",
