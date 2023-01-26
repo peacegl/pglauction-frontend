@@ -6,7 +6,7 @@ import AppAnimateGroup from '../AppAnimateGroup';
 import PropTypes from 'prop-types';
 import {Box} from '@mui/material';
 
-const getEmptyContainer = (ListEmptyComponent, displayColumn, itemPadding) => {
+const getEmptyContainer = (ListEmptyComponent) => {
   if (ListEmptyComponent) {
     return React.isValidElement(ListEmptyComponent) ? (
       ListEmptyComponent
@@ -122,21 +122,6 @@ const GridView = ({
         }}
       >
         <>
-          {data.length > 0 &&
-            data.map((item, index) => (
-              <Box
-                style={{
-                  flexGrow: 0,
-                  maxWidth: `${100 / displayColumn}%`,
-                  flexBasis: `${100 / displayColumn}%`,
-                  padding: itemPadding,
-                  boxSizing: 'border-box',
-                }}
-                key={'grid-' + index}
-              >
-                {renderRow(item, index)}
-              </Box>
-            ))}
           {data.length === 0 && loading
             ? Array.from(new Array(perPage)).map((item, index) => (
                 <Box
@@ -152,8 +137,22 @@ const GridView = ({
                   {renderRow(item, index)}
                 </Box>
               ))
-            : !loading ??
-              getEmptyContainer(ListEmptyComponent, displayColumn, itemPadding)}
+            : data.length === 0 && !loading
+            ? getEmptyContainer(ListEmptyComponent)
+            : data.map((item, index) => (
+                <Box
+                  style={{
+                    flexGrow: 0,
+                    maxWidth: `${100 / displayColumn}%`,
+                    flexBasis: `${100 / displayColumn}%`,
+                    padding: itemPadding,
+                    boxSizing: 'border-box',
+                  }}
+                  key={'grid-' + index}
+                >
+                  {renderRow(item, index)}
+                </Box>
+              ))}
         </>
       </AppAnimateGroup>
       {getFooterContainer(ListFooterComponent)}
