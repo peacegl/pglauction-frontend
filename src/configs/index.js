@@ -1,6 +1,9 @@
 import {appIntl} from '@crema/utility/helper/Utils';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import IntlMessages from '@crema/utility/IntlMessages';
+import {useRef} from 'react';
+import {useEffect} from 'react';
+
 const merge = (a, b, p) =>
   a.filter((aa) => !b.find((bb) => aa[p] === bb[p])).concat(b);
 
@@ -164,3 +167,40 @@ export let pages = [
     target: '_self',
   },
 ];
+
+const usePrevious = (value, initialValue) => {
+  const ref = useRef(initialValue);
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+};
+
+export function useEffectDebugger(
+  effectHook,
+  dependencies,
+  dependencyNames = [],
+) {
+  const previousDeps = usePrevious(dependencies, []);
+
+  const changedDeps = dependencies.reduce((accum, dependency, index) => {
+    if (dependency !== previousDeps[index]) {
+      const keyName = dependencyNames[index] || index;
+      return {
+        ...accum,
+        [keyName]: {
+          before: previousDeps[index],
+          after: dependency,
+        },
+      };
+    }
+
+    return accum;
+  }, {});
+
+  if (Object.keys(changedDeps).length) {
+    console.log('[use-effect-debugger] ', changedDeps);
+  }
+
+  useEffect(effectHook, dependencies);
+}
