@@ -56,7 +56,7 @@ function TopMenu() {
     router.push(link);
   };
   const onSearch = (value) => {
-    router.push('/all-vehicles');
+    router.push('/');
     dispatch(setVehicleSearch(value));
   };
 

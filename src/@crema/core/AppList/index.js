@@ -33,6 +33,7 @@ AppList.propTypes = {
     footerText: PropTypes.string,
   }),
   perPage: PropTypes.number,
+  loading: PropTypes.bool,
 };
 AppList.defaultProps = {
   border: false,

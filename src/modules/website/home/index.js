@@ -1,20 +1,25 @@
-import MultipleContentSection from '../../../components/design/MultipleContentSection';
-import {onGetFeaturedVehicles, onGetRecentlyAddedVehicles} from 'redux/actions';
+import MultipleContentSection from 'components/design/MultipleContentSection';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
+import SecondCustomCarousel from 'components/SecondCustomCarousel';
 import HighQualityIcon from '@mui/icons-material/HighQuality';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import SecondCustomCarousel from '../../../components/SecondCustomCarousel';
 import {green, deepOrange, blue} from '@mui/material/colors';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
-import CustomCarousel from '../../../components/CustomCarousel';
+import CustomCarousel from 'components/CustomCarousel';
 import Container from '@mui/material/Container';
 import {Box, Paper, Typography} from '@mui/material';
 import CarouselBanur from './CarouselBanur';
 import {styled} from '@mui/material/styles';
 import {useEffect, useState} from 'react';
 import Button from '@mui/material/Button';
+import {
+  onCountPopularBrands,
+  onGetFeaturedVehicles,
+  onGetRecentlyAddedVehicles,
+} from 'redux/actions';
 
 const ColorButton = styled(Button)(({theme}) => ({
   color: (theme) => theme.palette.primary.contrastText('success'),
@@ -92,12 +97,17 @@ export default function Home() {
   const recentlyAddedVehicles = useSelector(
     ({webVehicles}) => webVehicles.recentlyAddedVehicles,
   );
+  const popularBrandsCount = useSelector(
+    ({webVehicles}) => webVehicles.popularBrandsCount,
+  );
+
   const dispatch = useDispatch();
   useEffect(() => {
     fetchData();
   }, [dispatch]);
 
   const fetchData = async () => {
+    await dispatch(onCountPopularBrands());
     await dispatch(onGetFeaturedVehicles());
     await dispatch(onGetRecentlyAddedVehicles());
   };
@@ -112,21 +122,17 @@ export default function Home() {
             items={featuredVehicles}
           />
         )}
-      </Container>
-      <Container maxWidth='xl' sx={{mt: 10}}>
         <MultipleContentSection
           title={<IntlMessages id='website.why_choose_us' />}
           contents={contents}
         />
-      </Container>
-
-      <Container maxWidth='xl' sx={{mt: 10}}>
         {recentlyAddedVehicles.length > 0 && (
           <SecondCustomCarousel
             title={<IntlMessages id='vehicle.recentlyAddedVehicles' />}
             items={recentlyAddedVehicles}
           />
         )}
+        <PopularBrandsList popularBrandsCount={popularBrandsCount} />
       </Container>
     </>
   );

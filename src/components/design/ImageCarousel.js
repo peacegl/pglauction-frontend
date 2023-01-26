@@ -53,7 +53,6 @@ const ImageCarousel = ({images, isSold = false, ...rest}) => {
     <Paper
       variant='outlined'
       sx={{
-        position: 'relative',
         '& .control-arrow': {
           backgroundColor: (theme) => theme.palette.info.main,
         },
