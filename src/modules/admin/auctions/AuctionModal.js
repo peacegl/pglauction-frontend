@@ -55,8 +55,9 @@ export default function AuctionModal({
           const res = await jwtAxios.get(`/auctions/${recordId}`);
           if (res.status === 200 && res.data.result) {
             let values = {};
+            console.log(res.data.data);
             Object.entries(res.data.data).forEach(([key, value]) => {
-              if (insertColumns.includes(key)) {
+              if (initialValues.includes(key)) {
                 values[key] = value ? value : initialValues[key];
               }
             });

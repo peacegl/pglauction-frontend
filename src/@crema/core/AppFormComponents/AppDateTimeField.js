@@ -33,6 +33,6 @@ export default AppDateTimeField;
 AppDateTimeField.propTypes = {
   className: PropTypes.string,
   name: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.any,
   setfieldvalue: PropTypes.func,
 };

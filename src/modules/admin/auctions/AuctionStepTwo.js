@@ -1,4 +1,4 @@
-import {Avatar, Box, Button, Chip, Stack, Typography} from '@mui/material';
+import {Box, Button, Chip, Paper, Stack, Typography} from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import IntlMessages from '@crema/utility/IntlMessages';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -6,12 +6,14 @@ import AuctionItemModal from './AuctionItemModal';
 import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
 import {useEffect, useState} from 'react';
+import {moneyFormater} from 'configs';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 
 const AuctionStepTwo = (props) => {
   const {messages} = useIntl();
   const [vehicle, setVehicle] = useState('');
+  const [auctionItem, setAuctionItem] = useState({});
   const [auctionItemModal, setAuctionItemModal] = useState(false);
 
   const onInputChange = (event, value, reason) => {
@@ -38,9 +40,7 @@ const AuctionStepTwo = (props) => {
         <Stack direction='row' spacing={5}>
           <Box sx={{flex: 1}}>
             <Autocomplete
-              // isOptionEqualToValue={(option, value) =>
-              //   value === undefined || value === '' || option.id === value.id
-              // }
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               sx={{width: '100%'}}
               size='small'
               value={vehicle}
@@ -111,6 +111,7 @@ const AuctionStepTwo = (props) => {
                   (item) => item.id == vehicle.id,
                 );
                 if (index == -1) {
+                  setAuctionItem({});
                   setAuctionItemModal(true);
                 }
               }
@@ -130,21 +131,56 @@ const AuctionStepTwo = (props) => {
           }}
         >
           {props.values.items?.map((item, index) => (
-            <Chip
-              sx={{m: 1.5}}
-              key={index}
-              label={`${item.lot_number} - ${item.vin}`}
-              variant='outlined'
-              onDelete={() => {
-                let items = props.values.items.filter(
-                  (veh) => veh.id != item.id,
-                );
-                props.setfieldvalue('items', items);
-                props.setVehiclesValidationError(
-                  items?.length == 0 ? true : false,
-                );
-              }}
-            />
+            <Paper sx={{m: 1.5, p: 2}} key={index}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Box>
+                  <Chip
+                    onClick={() => {
+                      setAuctionItem(item);
+                      setAuctionItemModal(true);
+                    }}
+                    sx={{m: 1.5}}
+                    key={index}
+                    label={`${item.lot_number} - ${item.vin}`}
+                    variant='outlined'
+                    onDelete={() => {
+                      let items = props.values.items.filter(
+                        (veh) => veh.id != item.id,
+                      );
+                      props.setfieldvalue('items', items);
+                      props.setVehiclesValidationError(
+                        items?.length == 0 ? true : false,
+                      );
+                    }}
+                  />
+                  <Typography sx={{textAlign: 'center'}}>
+                    <IntlMessages id='vehicle.minimumBid' />:
+                    <Typography
+                      component='span'
+                      sx={{fontWeight: 'bold', px: 1}}
+                    >
+                      {moneyFormater(parseInt(item.minimum_bid))}
+                    </Typography>
+                  </Typography>
+                  <Typography sx={{textAlign: 'center'}}>
+                    <IntlMessages id='vehicle.buyNowPrice' />:
+                    <Typography
+                      component='span'
+                      sx={{fontWeight: 'bold', px: 1}}
+                    >
+                      {moneyFormater(parseInt(item.buy_now_price))}
+                    </Typography>
+                  </Typography>
+                </Box>
+              </Box>
+            </Paper>
           ))}
         </Box>
       </Stack>
@@ -158,6 +194,7 @@ const AuctionStepTwo = (props) => {
           vehicle={vehicle}
           setfieldvalue={props.setfieldvalue}
           items={props.values?.items}
+          auctionItem={auctionItem}
         />
       )}
     </Box>
@@ -166,11 +203,11 @@ const AuctionStepTwo = (props) => {
 
 export default AuctionStepTwo;
 AuctionStepTwo.propTypes = {
-  values: PropTypes.object,
+  values: PropTypes.any,
   setfieldvalue: PropTypes.func,
   searchVehicles: PropTypes.func,
   vehiclesLoading: PropTypes.bool,
   vehicles: PropTypes.array,
-  vehiclesValidationError: PropTypes.string,
+  vehiclesValidationError: PropTypes.bool,
   setVehiclesValidationError: PropTypes.func,
 };
