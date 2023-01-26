@@ -14,9 +14,11 @@ import {
   EDIT_VEHICLE,
   ADD_SALE,
 } from 'shared/constants/Permissions';
+import DownloadModal from 'components/CustomModal/downloadModal';
 export default function VehicleList({user}) {
   const [openModal, setOpenModal] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
+  const [openDownload, setOpenDownload] = useState(false);
   const [showSaleModal, setShowSaleModal] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selected, setSelected] = useState([]);
@@ -134,8 +136,7 @@ export default function VehicleList({user}) {
         exportType='pdf'
         exportData={data}
         onDownloadClick={() => {
-          console.log('klhkjhjhjkh');
-          tableRef.current.download();
+          setOpenDownload(true);
         }}
       />
       {openFilter && (
@@ -148,6 +149,18 @@ export default function VehicleList({user}) {
           content={filterContent}
         />
       )}
+
+      {openDownload && (
+        <DownloadModal
+          open={openDownload}
+          toggleOpen={() => setOpenDownload((d) => !d)}
+          title={<IntlMessages id='vehicle.download' />}
+          onDownload={() => {
+            tableRef.current.download();
+          }}
+        />
+      )}
+
       {openModal && (
         <VehicleModal
           open={openModal}

@@ -1117,6 +1117,7 @@
   "common.remove": "Remove",
   "watchlist.filterWatchList": "Watch List Filter",
   "vehicle.filter": "Vehicle Filter",
+  "vehicle.download": "Vehicle Download",
   "watchlist.message.deleted": "WatchList(s) deleted successfully",
   "watchlist.deleteMessage": "Are you sure, you want to delete the selected WatchList(s)?",
   "common.address_line_1": "Address Line 1",
