@@ -33,7 +33,6 @@ const VehicleList = () => {
   );
   const viewType = useSelector(({webVehicles}) => webVehicles.viewType);
   const filterData = useSelector(({webVehicles}) => webVehicles.filterData);
-  const filterBrands = useSelector(({webVehicles}) => webVehicles.filterBrands);
   // const loading = useSelector(({common}) => common.loading);
   const loading = useSelector(({webVehicles}) => webVehicles.itemsLoading);
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
