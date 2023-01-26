@@ -10,7 +10,12 @@ import {
   CardContent,
   CardHeader,
   Divider,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
   IconButton,
+  Radio,
+  RadioGroup,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
@@ -53,6 +58,7 @@ export default function DownloadModal({
   toggleOpen,
   title,
   onDownload,
+  setExportType,
 
   ...rest
 }) {
@@ -89,7 +95,33 @@ export default function DownloadModal({
             }
           />
           <Divider />
-
+          <CardContent>
+            <FormControl component='fieldset'>
+              <FormLabel component='legend'>Type of report</FormLabel>
+              <RadioGroup
+                aria-label='gender'
+                defaultValue='pdf'
+                name='radio-buttons-group'
+              >
+                <FormControlLabel
+                  value='pdf'
+                  control={<Radio />}
+                  label='PDF'
+                  onClick={() => {
+                    setExportType('pdf');
+                  }}
+                />
+                <FormControlLabel
+                  value='excel'
+                  control={<Radio />}
+                  label='EXCEL'
+                  onClick={() => {
+                    setExportType('excel');
+                  }}
+                />
+              </RadioGroup>
+            </FormControl>
+          </CardContent>
           <Divider />
           <CardActions sx={{justifyContent: 'end', mx: 2}}>
             <Button
@@ -101,7 +133,15 @@ export default function DownloadModal({
               <IntlMessages id='common.cancel' />
             </Button>
 
-            <Button size='small' variant='contained' onClick={onDownload}>
+            <Button
+              size='small'
+              variant='contained'
+              onClick={() => {
+                onDownload();
+                setExportType('pdf');
+                toggleOpen();
+              }}
+            >
               <IntlMessages id='common.download' />
             </Button>
           </CardActions>

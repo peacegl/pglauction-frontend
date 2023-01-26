@@ -26,6 +26,8 @@ export default function VehicleList({user}) {
   const [per_page, setPerPage] = useState(20);
   const [recordId, setRecordId] = useState(null);
   const [search, setSearch] = useState('');
+  const [exportType, setExportType] = useState('pdf');
+
   const [exactMatch, setExactMatch] = useState(false);
   const [filterData, setFilterData] = useState([]);
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
@@ -133,7 +135,7 @@ export default function VehicleList({user}) {
           user?.permissions?.includes(DELETE_VEHICLE) ||
           user?.permissions?.includes(ADD_SALE)
         }
-        exportType='pdf'
+        exportType={exportType}
         exportData={data}
         onDownloadClick={() => {
           setOpenDownload(true);
@@ -158,6 +160,7 @@ export default function VehicleList({user}) {
           onDownload={() => {
             tableRef.current.download();
           }}
+          setExportType={setExportType}
         />
       )}
 
