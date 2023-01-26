@@ -32,6 +32,8 @@ export default function VehicleList({user}) {
   );
   const {loading} = useSelector(({common}) => common);
 
+  const tableRef = useRef();
+
   const dispatch = useDispatch();
   useEffect(() => {
     fetchData(search);
@@ -103,6 +105,7 @@ export default function VehicleList({user}) {
   return (
     <>
       <CustomDataTable
+        ref={tableRef}
         title={<IntlMessages id='vehicle.vehicleList' />}
         total={total}
         data={data}
@@ -128,8 +131,12 @@ export default function VehicleList({user}) {
           user?.permissions?.includes(DELETE_VEHICLE) ||
           user?.permissions?.includes(ADD_SALE)
         }
-        exportData={data}
         exportType='pdf'
+        exportData={data}
+        onDownloadClick={() => {
+          console.log('klhkjhjhjkh');
+          tableRef.current.download();
+        }}
       />
       {openFilter && (
         <FilterModal
