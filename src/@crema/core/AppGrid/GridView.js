@@ -6,7 +6,7 @@ import AppAnimateGroup from '../AppAnimateGroup';
 import PropTypes from 'prop-types';
 import {Box} from '@mui/material';
 
-const getEmptyContainer = (ListEmptyComponent, displayColumn, itemPadding) => {
+const getEmptyContainer = (ListEmptyComponent) => {
   if (ListEmptyComponent) {
     return React.isValidElement(ListEmptyComponent) ? (
       ListEmptyComponent
@@ -152,8 +152,9 @@ const GridView = ({
                   {renderRow(item, index)}
                 </Box>
               ))
-            : !loading ??
-              getEmptyContainer(ListEmptyComponent, displayColumn, itemPadding)}
+            : data.length === 0 &&
+              !loading &&
+              getEmptyContainer(ListEmptyComponent)}
         </>
       </AppAnimateGroup>
       {getFooterContainer(ListFooterComponent)}
@@ -186,11 +187,11 @@ GridView.defaultProps = {
   column: 5,
   animation: 'transition.expandIn',
   itemPadding: 12,
-  // responsive: {
-  //   xs: 1,
-  //   sm: 2,
-  //   md: 2,
-  //   lg: 4,
-  //   xl: 4,
-  // },
+  responsive: {
+    xs: 1,
+    sm: 2,
+    md: 2,
+    lg: 4,
+    xl: 5,
+  },
 };
