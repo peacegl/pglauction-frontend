@@ -31,8 +31,8 @@ export const onGetWebVehicleData = (data) => {
         params: {...data},
       });
       if (res.status === 200 && res.data.result) {
-        await dispatch({type: GET_WEB_VEHICLE_LIST, payload: res.data});
         dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_WEB_VEHICLE_LIST, payload: res.data});
       } else {
         dispatch({
           type: FETCH_ERROR,

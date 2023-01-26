@@ -137,9 +137,8 @@ const GridView = ({
                   {renderRow(item, index)}
                 </Box>
               ))
-            : data.length === 0 && !loading
-            ? getEmptyContainer(ListEmptyComponent)
-            : data.map((item, index) => (
+            : data?.length > 0
+            ? data.map((item, index) => (
                 <Box
                   style={{
                     flexGrow: 0,
@@ -152,7 +151,8 @@ const GridView = ({
                 >
                   {renderRow(item, index)}
                 </Box>
-              ))}
+              ))
+            : getEmptyContainer(ListEmptyComponent)}
         </>
       </AppAnimateGroup>
       {getFooterContainer(ListFooterComponent)}
