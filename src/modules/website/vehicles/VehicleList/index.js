@@ -25,7 +25,7 @@ const VehicleList = () => {
   const {theme} = useThemeContext();
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(50);
-  const [makeData, setMakeData] = useState(50);
+  const [makeData, setMakeData] = useState('');
   const {user} = useAuthUser();
   const router = useRouter();
   const {make} = router.query;
