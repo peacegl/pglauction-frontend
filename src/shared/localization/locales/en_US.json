@@ -853,6 +853,8 @@
   "common.reset": "Reset",
 
   "location.locationInfo": "Location Info",
+  "location.locationList": "Location List",
+  
   "confirm.location.delete": "Are you sure, you want to delete the selected Location(s)?",
   "message.location.deleted": "Location(s) deleted successfully!",
   "message.location.created": "Location created successfully!",
