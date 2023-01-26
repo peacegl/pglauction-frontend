@@ -1,4 +1,5 @@
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
+import {onGetWebVehicleData, setBrandFilter} from 'redux/actions';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
 import {useDispatch, useSelector} from 'react-redux';
@@ -9,11 +10,6 @@ import AppsContent from './AppsContent';
 import {useRouter} from 'next/router';
 import ListView from './ListView';
 import Header from '../Header';
-import {
-  onCountPopularBrands,
-  onGetWebVehicleData,
-  setBrandFilter,
-} from 'redux/actions';
 import {
   alpha,
   Box,
@@ -37,7 +33,6 @@ const VehicleList = () => {
   );
   const viewType = useSelector(({webVehicles}) => webVehicles.viewType);
   const filterData = useSelector(({webVehicles}) => webVehicles.filterData);
-  const filterBrands = useSelector(({webVehicles}) => webVehicles.filterBrands);
   const loading = useSelector(({common}) => common.loading);
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
   useEffect(() => {
@@ -45,8 +40,10 @@ const VehicleList = () => {
   }, [search, filterData]);
 
   useEffect(() => {
-    setPage(0);
-  }, [filterBrands]);
+    if (make) {
+      setPage(0);
+    }
+  }, [make]);
 
   useEffect(() => {
     let filterBrands = {};
