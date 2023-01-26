@@ -118,6 +118,7 @@ export default function LocationList({user}) {
           user?.permissions?.includes(EDIT_LOCATION) ||
           user?.permissions?.includes(DELETE_LOCATION)
         }
+        exportData={data}
       />
       {openFilter && (
         <FilterModal

@@ -119,6 +119,7 @@ export default function CustomerList({user}) {
           user?.permissions?.includes(EDIT_CUSTOMER) ||
           user?.permissions?.includes(DELETE_CUSTOMER)
         }
+        exportData={data}
       />
       {openFilter && (
         <FilterModal

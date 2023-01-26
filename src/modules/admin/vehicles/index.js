@@ -128,6 +128,8 @@ export default function VehicleList({user}) {
           user?.permissions?.includes(DELETE_VEHICLE) ||
           user?.permissions?.includes(ADD_SALE)
         }
+        exportData={data}
+        exportType='pdf'
       />
       {openFilter && (
         <FilterModal

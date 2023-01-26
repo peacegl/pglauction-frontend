@@ -12,6 +12,7 @@ import ExcelExportComponent from 'components/exports/exportExcel';
 import ExportPdf from 'components/exports/exportPdf';
 import {useRef} from 'react';
 import {useIntl} from 'react-intl';
+import {id} from 'date-fns/locale';
 
 const CustomDataTable = ({
   title,
@@ -35,10 +36,14 @@ const CustomDataTable = ({
   showSell,
   selectedItems = [],
   selectableRows,
+  exportData,
+  exportType = 'excel',
 }) => {
   const childRef = useRef();
   const childRefPdf = useRef();
   const {messages} = useIntl();
+
+  console.log(exportData);
 
   return (
     <>
@@ -64,11 +69,14 @@ const CustomDataTable = ({
             console.log(changedColumn);
             console.log(action);
           },
+          print: false,
 
           onDownload: () => {
-            // exportPDF();
-            // childRef.current.exportExcel();
-            childRefPdf.current.exportPDF();
+            if (exportType == 'excel') {
+              childRef.current.exportExcel();
+            } else {
+              childRefPdf.current.exportPDF();
+            }
             return false;
           },
 
@@ -82,6 +90,9 @@ const CustomDataTable = ({
               noMatch: isLoading
                 ? 'Data Loading...'
                 : 'Sorry, no matching records found',
+            },
+            toolbar: {
+              downloadCsv: 'Get a report',
             },
           },
           fixedHeader: true,
@@ -159,13 +170,13 @@ const CustomDataTable = ({
 
       <ExcelExportComponent
         ref={childRef}
-        data={data}
+        data={exportData}
         columns={columns}
         title={messages[title.props.id]}
       />
       <ExportPdf
         ref={childRefPdf}
-        data={data}
+        data={exportData}
         columns={columns}
         titlePdf={messages[title?.props?.id] ?? 'no_name'}
       />
@@ -201,4 +212,6 @@ CustomDataTable.propTypes = {
   showSell: PropTypes.bool,
   selectedItems: PropTypes.array,
   selectableRows: PropTypes.bool,
+  exportData: PropTypes.array,
+  exportType: PropTypes.string,
 };
