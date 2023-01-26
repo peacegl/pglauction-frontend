@@ -17,9 +17,9 @@ import {
   EMPTY_WEB_VEHICLE_LIST,
   GET_POPULAR_BRANDS_COUNT,
   SET_BRAND_FILTER_DATA,
-} from '../../shared/constants/ActionTypes';
+} from 'shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-import {appIntl} from '../../@crema/utility/helper/Utils';
+import {appIntl} from '@crema/utility/helper/Utils';
 
 export const onGetWebVehicleData = (data) => {
   return async (dispatch) => {
