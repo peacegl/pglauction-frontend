@@ -26,6 +26,7 @@ const VehicleList = () => {
   const {theme} = useThemeContext();
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(50);
+  const [makeData, setMakeData] = useState(50);
   const {user} = useAuthUser();
   const router = useRouter();
   const {make} = router.query;
@@ -45,13 +46,14 @@ const VehicleList = () => {
     if (make) {
       setPage(0);
     }
+    setMakeData(make);
   }, [make]);
 
   useEffect(() => {
     let filterBrands = {};
-    if (make && !search) {
+    if (makeData && !search) {
       filterBrands = {
-        brand: make,
+        brand: makeData,
         status: ['available', 'future'],
       };
       dispatch(
@@ -76,7 +78,7 @@ const VehicleList = () => {
     }
     dispatch(setBrandFilter(filterBrands));
     // filterData
-  }, [dispatch, make, page, search, perPage, user?.type]);
+  }, [dispatch, makeData, page, search, perPage, user?.type]);
 
   const onPageChange = (event, value) => {
     setPage(value);
