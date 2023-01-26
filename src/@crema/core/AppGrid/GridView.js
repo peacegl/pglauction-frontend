@@ -6,7 +6,7 @@ import AppAnimateGroup from '../AppAnimateGroup';
 import PropTypes from 'prop-types';
 import {Box} from '@mui/material';
 
-const getEmptyContainer = (ListEmptyComponent) => {
+const getEmptyContainer = (ListEmptyComponent, displayColumn, itemPadding) => {
   if (ListEmptyComponent) {
     return React.isValidElement(ListEmptyComponent) ? (
       ListEmptyComponent
@@ -27,6 +27,7 @@ const getFooterContainer = (ListFooterComponent) => {
   }
   return null;
 };
+
 const GridView = ({
   sx,
   column,
@@ -44,13 +45,7 @@ const GridView = ({
   loading,
 }) => {
   const {theme} = useThemeContext();
-  useEffect(() => {
-    console.log('wwww', data, loading);
-  }, [loading]);
 
-  useEffect(() => {
-    console.log('eeee', data, loading);
-  }, [data]);
   const width = useWidth();
   const borderStyle = {
     border: `1px solid ${theme.palette.divider}`,
@@ -127,6 +122,21 @@ const GridView = ({
         }}
       >
         <>
+          {data.length > 0 &&
+            data.map((item, index) => (
+              <Box
+                style={{
+                  flexGrow: 0,
+                  maxWidth: `${100 / displayColumn}%`,
+                  flexBasis: `${100 / displayColumn}%`,
+                  padding: itemPadding,
+                  boxSizing: 'border-box',
+                }}
+                key={'grid-' + index}
+              >
+                {renderRow(item, index)}
+              </Box>
+            ))}
           {data.length === 0 && loading
             ? Array.from(new Array(perPage)).map((item, index) => (
                 <Box
@@ -142,22 +152,8 @@ const GridView = ({
                   {renderRow(item, index)}
                 </Box>
               ))
-            : data?.length > 0
-            ? data.map((item, index) => (
-                <Box
-                  style={{
-                    flexGrow: 0,
-                    maxWidth: `${100 / displayColumn}%`,
-                    flexBasis: `${100 / displayColumn}%`,
-                    padding: itemPadding,
-                    boxSizing: 'border-box',
-                  }}
-                  key={'grid-' + index}
-                >
-                  {renderRow(item, index)}
-                </Box>
-              ))
-            : getEmptyContainer(ListEmptyComponent)}
+            : !loading ??
+              getEmptyContainer(ListEmptyComponent, displayColumn, itemPadding)}
         </>
       </AppAnimateGroup>
       {getFooterContainer(ListFooterComponent)}
