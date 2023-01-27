@@ -44,37 +44,38 @@ const VehicleList = () => {
   useEffect(() => {
     if (make) {
       setPage(0);
-      setMakeData(make);
     }
+    setMakeData(make ? make : '');
   }, [make]);
 
   useEffect(() => {
-    console.log(makeData, page, search, perPage, user?.type);
     let filterBrands = {};
-    if (makeData && !search) {
-      filterBrands = {
-        brand: makeData,
-        status: ['available', 'future'],
-      };
-      dispatch(
-        onGetWebVehicleData({
-          // filterData,
-          filterBrands,
-          per_page: perPage,
-          page: page + 1,
-          search,
-        }),
-      );
-    } else {
-      dispatch(
-        onGetWebVehicleData({
-          // filterData,
-          filterBrands,
-          per_page: perPage,
-          page: page + 1,
-          search,
-        }),
-      );
+    if (!make || make == makeData) {
+      if (makeData) {
+        filterBrands = {
+          brand: makeData,
+          status: ['available', 'future'],
+        };
+        dispatch(
+          onGetWebVehicleData({
+            // filterData,
+            filterBrands,
+            per_page: perPage,
+            page: page + 1,
+            search,
+          }),
+        );
+      } else {
+        dispatch(
+          onGetWebVehicleData({
+            // filterData,
+            filterBrands,
+            per_page: perPage,
+            page: page + 1,
+            search,
+          }),
+        );
+      }
     }
     dispatch(setBrandFilter(filterBrands));
     // filterData
