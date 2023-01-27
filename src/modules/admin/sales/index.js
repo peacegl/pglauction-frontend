@@ -112,6 +112,7 @@ export default function SaleList({user}) {
           user?.permissions?.includes(EDIT_SALE) ||
           user?.permissions?.includes(DELETE_SALE)
         }
+        exportData={data}
       />
       {openFilter && (
         <FilterModal

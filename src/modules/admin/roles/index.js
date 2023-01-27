@@ -105,6 +105,7 @@ export default function RoleList({user}) {
           user?.permissions?.includes(EDIT_ROLE) ||
           user?.permissions?.includes(DELETE_ROLE)
         }
+        exportData={data}
       />
       {openModal && (
         <RoleModal

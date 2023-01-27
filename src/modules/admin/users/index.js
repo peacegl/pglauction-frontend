@@ -112,6 +112,7 @@ export default function UserList({user}) {
           user?.permissions?.includes(EDIT_USER) ||
           user?.permissions?.includes(DELETE_USER)
         }
+        exportData={data}
       />
       {openFilter && (
         <FilterModal
