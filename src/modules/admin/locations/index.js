@@ -97,7 +97,7 @@ export default function LocationList({user}) {
   return (
     <>
       <CustomDataTable
-        title='Location List'
+        title={<IntlMessages id='location.locationList' />}
         total={total}
         data={data}
         columns={tableColumns()}
@@ -120,6 +120,7 @@ export default function LocationList({user}) {
             ? 'multiple'
             : 'none'
         }
+        exportData={data}
       />
       {openFilter && (
         <FilterModal

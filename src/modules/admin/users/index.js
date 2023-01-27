@@ -114,6 +114,7 @@ export default function UserList({user}) {
             ? 'multiple'
             : 'none'
         }
+        exportData={data}
       />
       {openFilter && (
         <FilterModal

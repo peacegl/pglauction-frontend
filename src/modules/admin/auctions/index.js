@@ -116,6 +116,7 @@ export default function AuctionList({user}) {
             ? 'multiple'
             : 'none'
         }
+        exportData={data}
       />
       {openModal && (
         <AuctionModal

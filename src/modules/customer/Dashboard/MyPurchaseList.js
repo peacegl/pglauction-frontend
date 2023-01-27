@@ -79,7 +79,8 @@ const PurchaseHistory = () => {
           showAddButton={false}
           showEditButton={false}
           showDeleteButton={false}
-          selectableRows='none'
+          selectableRows={false}
+          exportData={data}
         />
         {openFilter && (
           <FilterModal

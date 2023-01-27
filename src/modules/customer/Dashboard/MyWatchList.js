@@ -100,7 +100,8 @@ const WatchList = () => {
           showAddButton={false}
           showEditButton={false}
           showDeleteButton={true}
-          selectableRows='multiple'
+          selectableRows={true}
+          exportData={data}
         />
         {openFilter && (
           <FilterModal

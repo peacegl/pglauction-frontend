@@ -107,6 +107,7 @@ export default function RoleList({user}) {
             ? 'multiple'
             : 'none'
         }
+        exportData={data}
       />
       {openModal && (
         <RoleModal
