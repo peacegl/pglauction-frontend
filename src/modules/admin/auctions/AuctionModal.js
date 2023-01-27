@@ -46,6 +46,7 @@ export default function AuctionModal({
   useEffect(() => {
     searchVehicles({});
   }, []);
+
   useEffect(() => {
     if (recordId) {
       (async function () {
@@ -63,8 +64,9 @@ export default function AuctionModal({
                       id: item.id,
                       vin: item.vin,
                       lot_number: item.lot_number,
-                      minimum_bid: item.minimum_bid,
-                      buy_now_price: item.buy_now_price,
+                      minimum_bid: item.pivot.minimum_bid,
+                      buy_now_price: item.pivot.buy_now_price,
+                      images: item.images,
                     };
                     items.push(data);
                   });
@@ -72,13 +74,6 @@ export default function AuctionModal({
                 } else {
                   values[key] = value ? value : initialValues[key];
                 }
-              }
-              if (typeof value === 'object' && value != null) {
-                Object.entries(value).forEach(([ikey, ivalue]) => {
-                  if (Object.keys(initialValues).includes(ikey)) {
-                    values[ikey] = ivalue;
-                  }
-                });
               }
             });
             setInitialValues(values);
@@ -90,6 +85,7 @@ export default function AuctionModal({
       })();
     }
   }, [recordId]);
+
   const stepTwoValidation = async (values, actions) => {
     if (values.items.length == 0) {
       setVehiclesValidationError(true);
