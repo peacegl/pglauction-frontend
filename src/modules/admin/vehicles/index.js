@@ -1,5 +1,9 @@
 import {filterContent, tableColumns} from 'configs/pages/vehicles';
-import {onGetVehicleData, onDeleteVehicles} from 'redux/actions';
+import {
+  onGetVehicleData,
+  onDeleteVehicles,
+  onGetAllVehicle,
+} from 'redux/actions';
 import FilterModal from 'components/CustomModal/FilterModal';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
@@ -26,7 +30,16 @@ export default function VehicleList({user}) {
   const [per_page, setPerPage] = useState(20);
   const [recordId, setRecordId] = useState(null);
   const [search, setSearch] = useState('');
+
+  //  export data as pdf and Excel states
   const [exportType, setExportType] = useState('pdf');
+  const exportData = useSelector(({vehicles}) => {
+    console.log(vehicles);
+    return vehicles.vehiclesExportData.data;
+  });
+
+  const [exportDataAmount, setExportDataAmount] = useState('current_page');
+  //  end export data as pdf and Excel states
 
   const [exactMatch, setExactMatch] = useState(false);
   const [filterData, setFilterData] = useState([]);
@@ -42,6 +55,22 @@ export default function VehicleList({user}) {
   useEffect(() => {
     fetchData(search);
   }, [dispatch, page, per_page, orderBy, filterData]);
+
+  useEffect(() => {
+    if (openDownload && exportDataAmount == 'all') {
+      console.log(openDownload && exportDataAmount == 'all');
+      fetchExportAllData();
+    }
+  }, [dispatch, openDownload, exportDataAmount]);
+
+  const fetchExportAllData = async () => {
+    await dispatch(
+      onGetAllVehicle({
+        page: page + 1,
+        per_page: -1,
+      }),
+    );
+  };
 
   const fetchData = async (search = '') => {
     await dispatch(
@@ -136,7 +165,7 @@ export default function VehicleList({user}) {
           user?.permissions?.includes(ADD_SALE)
         }
         exportType={exportType}
-        exportData={data}
+        exportData={exportData.length == 0 ? data : exportData}
         onDownloadClick={() => {
           setOpenDownload(true);
         }}
@@ -161,6 +190,7 @@ export default function VehicleList({user}) {
             tableRef.current.download();
           }}
           setExportType={setExportType}
+          setExportDataAmount={setExportDataAmount}
         />
       )}
 

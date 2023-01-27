@@ -59,7 +59,7 @@ export default function DownloadModal({
   title,
   onDownload,
   setExportType,
-
+  setExportDataAmount,
   ...rest
 }) {
   return (
@@ -121,6 +121,34 @@ export default function DownloadModal({
                 />
               </RadioGroup>
             </FormControl>
+
+            <Box component='div'>
+              <FormControl component='fieldset'>
+                <FormLabel component='legend'>Amount of Data</FormLabel>
+                <RadioGroup
+                  aria-label='amount'
+                  defaultValue='current_page'
+                  name='radio-buttons-group'
+                >
+                  <FormControlLabel
+                    value='current_page'
+                    control={<Radio />}
+                    label='Current Page'
+                    onClick={() => {
+                      setExportDataAmount('current_page');
+                    }}
+                  />
+                  <FormControlLabel
+                    value='all'
+                    control={<Radio />}
+                    label='All'
+                    onClick={() => {
+                      setExportDataAmount('all');
+                    }}
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Box>
           </CardContent>
           <Divider />
           <CardActions sx={{justifyContent: 'end', mx: 2}}>
@@ -128,7 +156,11 @@ export default function DownloadModal({
               size='small'
               variant='outlined'
               color='primary'
-              onClick={toggleOpen}
+              onClick={() => {
+                setExportDataAmount('current_page');
+                setExportType('pdf');
+                toggleOpen();
+              }}
             >
               <IntlMessages id='common.cancel' />
             </Button>
@@ -139,6 +171,7 @@ export default function DownloadModal({
               onClick={() => {
                 onDownload();
                 setExportType('pdf');
+                setExportDataAmount('current_page');
                 toggleOpen();
               }}
             >
