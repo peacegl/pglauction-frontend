@@ -44,11 +44,12 @@ const VehicleList = () => {
   useEffect(() => {
     if (make) {
       setPage(0);
+      setMakeData(make);
     }
-    setMakeData(make);
   }, [make]);
 
   useEffect(() => {
+    console.log(makeData, page, search, perPage, user?.type);
     let filterBrands = {};
     if (makeData && !search) {
       filterBrands = {
