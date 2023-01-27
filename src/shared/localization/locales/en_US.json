@@ -1174,5 +1174,6 @@
   "validation.buyNowPriceMustBeBigger": "Buy now price must be bigger than minimum bid",
 
   "website.popularBrands": "Popular Brands",
-  "website.inStock": "In Stock"
+  "website.inStock": "In Stock",
+  "auction.deleteMessage": "Are you sure, you want to delete the selected Auction(s)?"
 }
