@@ -101,6 +101,7 @@ const WatchList = () => {
           showEditButton={false}
           showDeleteButton={true}
           selectableRows={true}
+          exportData={data}
         />
         {openFilter && (
           <FilterModal
