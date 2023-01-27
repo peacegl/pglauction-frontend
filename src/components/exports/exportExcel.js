@@ -61,7 +61,6 @@ export default ExcelExportComponent;
 
 ExcelExportComponent.propTypes = {
   data: PropTypes.array.isRequired,
-  titlePdf: PropTypes.any,
-  columns: PropTypes.any,
   title: PropTypes.any,
+  columns: PropTypes.any,
 };
