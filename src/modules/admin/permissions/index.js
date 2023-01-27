@@ -64,7 +64,6 @@ export default function UserList() {
         options={options}
         isLoading={loading}
         onEnterSearch={onEnterSearch}
-        exportData={data}
       />
     </>
   );

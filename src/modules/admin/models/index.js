@@ -135,7 +135,6 @@ export default function CustomerList() {
         onExactChange={(value) => setExactMatch(value)}
         selected={selected}
         onEnterSearch={onEnterSearch}
-        exportData={data}
       />
       {openModal && (
         <ModelModal

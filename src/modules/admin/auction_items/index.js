@@ -108,7 +108,6 @@ export default function AuctionItemList({user}) {
           user?.permissions?.includes(EDIT_AUCTION_ITEM) ||
           user?.permissions?.includes(DELETE_AUCTION_ITEM)
         }
-        exportData={data}
       />
       {openModal && (
         <AuctionItemModal

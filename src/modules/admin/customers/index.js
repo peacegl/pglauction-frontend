@@ -98,7 +98,7 @@ export default function CustomerList({user}) {
   return (
     <>
       <CustomDataTable
-        title={<IntlMessages id='customer.customerList' />}
+        title='Customer List'
         total={total}
         data={data}
         columns={tableColumns(setRecordId, setOpenVerifyModal)}
@@ -119,7 +119,6 @@ export default function CustomerList({user}) {
           user?.permissions?.includes(EDIT_CUSTOMER) ||
           user?.permissions?.includes(DELETE_CUSTOMER)
         }
-        exportData={data}
       />
       {openFilter && (
         <FilterModal

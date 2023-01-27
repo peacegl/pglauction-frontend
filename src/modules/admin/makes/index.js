@@ -134,7 +134,6 @@ export default function MakeList() {
         onExactChange={(value) => setExactMatch(value)}
         selected={selected}
         onEnterSearch={onEnterSearch}
-        exportData={data}
       />
       {openModal && (
         <MakeModal
