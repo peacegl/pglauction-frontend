@@ -231,7 +231,7 @@ CustomDataTable.propTypes = {
   onSell: PropTypes.func,
   showSell: PropTypes.bool,
   selectedItems: PropTypes.array,
-  selectableRows: PropTypes.bool,
+  selectableRows: PropTypes.any,
   exportData: PropTypes.array,
   exportType: PropTypes.string,
   onDownloadClick: PropTypes.func,

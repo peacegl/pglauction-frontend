@@ -46,7 +46,6 @@ export default function AuctionModal({
   useEffect(() => {
     searchVehicles({});
   }, []);
-
   useEffect(() => {
     if (recordId) {
       (async function () {
@@ -55,10 +54,31 @@ export default function AuctionModal({
           const res = await jwtAxios.get(`/auctions/${recordId}`);
           if (res.status === 200 && res.data.result) {
             let values = {};
-            console.log(res.data.data);
             Object.entries(res.data.data).forEach(([key, value]) => {
-              if (initialValues.includes(key)) {
-                values[key] = value ? value : initialValues[key];
+              if (Object.keys(initialValues).includes(key)) {
+                if (key == 'items') {
+                  let items = [];
+                  value.forEach((item) => {
+                    let data = {
+                      id: item.id,
+                      vin: item.vin,
+                      lot_number: item.lot_number,
+                      minimum_bid: item.minimum_bid,
+                      buy_now_price: item.buy_now_price,
+                    };
+                    items.push(data);
+                  });
+                  values.items = items;
+                } else {
+                  values[key] = value ? value : initialValues[key];
+                }
+              }
+              if (typeof value === 'object' && value != null) {
+                Object.entries(value).forEach(([ikey, ivalue]) => {
+                  if (Object.keys(initialValues).includes(ikey)) {
+                    values[ikey] = ivalue;
+                  }
+                });
               }
             });
             setInitialValues(values);
@@ -70,7 +90,6 @@ export default function AuctionModal({
       })();
     }
   }, [recordId]);
-
   const stepTwoValidation = async (values, actions) => {
     if (values.items.length == 0) {
       setVehiclesValidationError(true);
