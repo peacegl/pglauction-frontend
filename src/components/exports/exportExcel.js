@@ -1,8 +1,9 @@
+import {useRef, useImperativeHandle, forwardRef} from 'react';
 import {
   ExcelExport,
   ExcelExportColumn,
 } from '@progress/kendo-react-excel-export';
-import {useRef, useImperativeHandle, forwardRef} from 'react';
+import PropTypes from 'prop-types';
 
 const ExcelExportComponent = forwardRef(
   ({data, title = 'no_name', columns}, ref) => {
