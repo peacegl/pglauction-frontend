@@ -80,7 +80,6 @@ const PurchaseHistory = () => {
           showEditButton={false}
           showDeleteButton={false}
           selectableRows={false}
-          exportData={data}
         />
         {openFilter && (
           <FilterModal

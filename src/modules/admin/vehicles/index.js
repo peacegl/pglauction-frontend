@@ -5,7 +5,7 @@ import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import SaleModal from '../sales/SaleModal';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useState} from 'react';
 import VehicleModal from './VehicleModal';
 import PropTypes from 'prop-types';
 import {
@@ -14,11 +14,10 @@ import {
   EDIT_VEHICLE,
   ADD_SALE,
 } from 'shared/constants/Permissions';
-import DownloadModal from 'components/CustomModal/downloadModal';
+
 export default function VehicleList({user}) {
   const [openModal, setOpenModal] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
-  const [openDownload, setOpenDownload] = useState(false);
   const [showSaleModal, setShowSaleModal] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selected, setSelected] = useState([]);
@@ -26,8 +25,6 @@ export default function VehicleList({user}) {
   const [per_page, setPerPage] = useState(20);
   const [recordId, setRecordId] = useState(null);
   const [search, setSearch] = useState('');
-  const [exportType, setExportType] = useState('pdf');
-
   const [exactMatch, setExactMatch] = useState(false);
   const [filterData, setFilterData] = useState([]);
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
@@ -35,9 +32,6 @@ export default function VehicleList({user}) {
     ({vehicles}) => vehicles.vehiclesData,
   );
   const {loading} = useSelector(({common}) => common);
-
-  const tableRef = useRef();
-
   const dispatch = useDispatch();
   useEffect(() => {
     fetchData(search);
@@ -109,7 +103,6 @@ export default function VehicleList({user}) {
   return (
     <>
       <CustomDataTable
-        ref={tableRef}
         title={<IntlMessages id='vehicle.vehicleList' />}
         total={total}
         data={data}
@@ -135,11 +128,6 @@ export default function VehicleList({user}) {
           user?.permissions?.includes(DELETE_VEHICLE) ||
           user?.permissions?.includes(ADD_SALE)
         }
-        exportType={exportType}
-        exportData={data}
-        onDownloadClick={() => {
-          setOpenDownload(true);
-        }}
       />
       {openFilter && (
         <FilterModal
@@ -151,19 +139,6 @@ export default function VehicleList({user}) {
           content={filterContent}
         />
       )}
-
-      {openDownload && (
-        <DownloadModal
-          open={openDownload}
-          toggleOpen={() => setOpenDownload((d) => !d)}
-          title={<IntlMessages id='vehicle.download' />}
-          onDownload={() => {
-            tableRef.current.download();
-          }}
-          setExportType={setExportType}
-        />
-      )}
-
       {openModal && (
         <VehicleModal
           open={openModal}
