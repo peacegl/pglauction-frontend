@@ -1175,5 +1175,6 @@
 
   "website.popularBrands": "Popular Brands",
   "website.inStock": "In Stock",
-  "auction.deleteMessage": "Are you sure, you want to delete the selected Auction(s)?"
+  "auction.deleteMessage": "Are you sure, you want to delete the selected Auction(s)?",
+  "validation.endDateMustBeBigger": "End date must be greater than start date"
 }

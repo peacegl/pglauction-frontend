@@ -85,9 +85,14 @@ export default function configs(invalidYoutube) {
           .date()
           .typeError(<IntlMessages id='validation.dateValidation' />)
           .required(<IntlMessages id='validation.startDateRequired' />),
-
         end_date: yup
           .date()
+          .when('start_date', (start_date, schema) =>
+            schema.min(
+              start_date,
+              <IntlMessages id='validation.endDateMustBeBigger' />,
+            ),
+          )
           .typeError(<IntlMessages id='validation.dateValidation' />)
           .required(<IntlMessages id='validation.endDateRequired' />),
       }),
