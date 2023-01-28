@@ -24,6 +24,7 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import PropTypes from 'prop-types';
 import Avatar from '@mui/material/Avatar';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import {LoadingButton, SaveIcon} from '@mui/lab';
 
 const SectionItem = ({title, children, ...reset}) => {
   return (
@@ -55,7 +56,7 @@ SectionItem.propTypes = {
   children: PropTypes.node,
 };
 
-export default function DownloadModal({
+const DownloadModal = ({
   open = false,
   toggleOpen,
   title,
@@ -63,8 +64,9 @@ export default function DownloadModal({
   setExportType,
   setExportDataAmount,
   exportType,
+  isLoading,
   ...rest
-}) {
+}) => {
   const ExportSelect = styled('div')(({theme}) => ({
     position: 'absolute',
     right: 2,
@@ -222,32 +224,6 @@ export default function DownloadModal({
               </ExportInfo>
             </Box>
 
-            {/* <FormControl component='fieldset'>
-              <FormLabel component='legend'>Type of report</FormLabel>
-              <RadioGroup
-                aria-label='gender'
-                defaultValue='pdf'
-                name='radio-buttons-group'
-              >
-                <FormControlLabel
-                  value='pdf'
-                  control={<Radio />}
-                  label='PDF'
-                  onClick={() => {
-                    setExportType('pdf');
-                  }}
-                />
-                <FormControlLabel
-                  value='excel'
-                  control={<Radio />}
-                  label='EXCEL'
-                  onClick={() => {
-                    setExportType('excel');
-                  }}
-                />
-              </RadioGroup>
-            </FormControl> */}
-
             <Box component='div'>
               <FormControl component='fieldset'>
                 <FormLabel component='legend'>Amount of Data</FormLabel>
@@ -300,7 +276,7 @@ export default function DownloadModal({
               <IntlMessages id='common.cancel' />
             </Button>
 
-            <Button
+            {/* <Button
               size='small'
               variant='contained'
               onClick={() => {
@@ -311,13 +287,28 @@ export default function DownloadModal({
               }}
             >
               <IntlMessages id='common.download' />
-            </Button>
+            </Button> */}
+
+            <LoadingButton
+              size='small'
+              loading={isLoading}
+              loadingIndicator='Loading...'
+              variant='outlined'
+              onClick={() => {
+                onDownload();
+                setExportType('pdf');
+                setExportDataAmount('current_page');
+                toggleOpen();
+              }}
+            >
+              <IntlMessages id='common.download' />
+            </LoadingButton>
           </CardActions>
         </Card>
       </Fade>
     </Modal>
   );
-}
+};
 
 DownloadModal.propTypes = {
   open: PropTypes.bool.isRequired,
@@ -325,3 +316,5 @@ DownloadModal.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   onDownload: PropTypes.func,
 };
+
+export default DownloadModal;

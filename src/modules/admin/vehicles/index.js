@@ -209,6 +209,7 @@ export default function VehicleList({user}) {
           setExportType={setExportType}
           setExportDataAmount={setExportDataAmount}
           exportType={exportType}
+          isLoading={loading}
         />
       )}
 
