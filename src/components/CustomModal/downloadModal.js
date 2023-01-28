@@ -19,9 +19,11 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
-
+import {styled} from '@mui/material/styles';
 import IntlMessages from '@crema/utility/IntlMessages';
 import PropTypes from 'prop-types';
+import Avatar from '@mui/material/Avatar';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const SectionItem = ({title, children, ...reset}) => {
   return (
@@ -60,8 +62,48 @@ export default function DownloadModal({
   onDownload,
   setExportType,
   setExportDataAmount,
+  exportType,
   ...rest
 }) {
+  const ExportSelect = styled('div')(({theme}) => ({
+    position: 'absolute',
+    right: 2,
+    bottom: 10,
+    zIndex: 1,
+    width: 25,
+    height: 25,
+    backgroundColor: theme.palette.success.main,
+    color: theme.palette.primary.contrastText,
+    borderRadius: '50%',
+    border: `solid 3px ${theme.palette.primary.contrastText}`,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    '& .MuiSvgIcon-root': {
+      fontSize: 14,
+    },
+  }));
+
+  const ExportWrapper = styled('div')(({theme}) => ({
+    position: 'relative',
+    '& .MuiAvatar-root': {
+      width: 70,
+      height: 70,
+      margin: '0 10px 10px 10px',
+    },
+  }));
+
+  const ExportInfo = styled('div')(({theme}) => ({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    textAlign: 'center',
+    marginBottom: 20,
+    [theme.breakpoints.up('xl')]: {
+      marginBottom: 30,
+    },
+  }));
+
   return (
     <Modal {...rest} open={open} sx={{mx: 2}}>
       <Fade in={open} timeout={50}>
@@ -100,7 +142,87 @@ export default function DownloadModal({
           />
           <Divider />
           <CardContent>
-            <FormControl component='fieldset'>
+            <Box
+              component='p'
+              sx={{
+                marginBottom: 2,
+                color: (theme) => theme.palette.info.main,
+              }}
+            >
+              Types of report
+            </Box>
+            <Box
+              component='div'
+              sx={{
+                display: 'flex',
+              }}
+            >
+              <ExportInfo
+                onClick={() => {
+                  setExportType('pdf');
+                }}
+              >
+                <ExportWrapper>
+                  <Avatar
+                    sx={{
+                      p: 3,
+                      fontSize: {xs: 30, md: 48},
+                      height: {xs: 20, md: 30, xl: 40},
+                      width: {xs: 20, md: 30, xl: 40},
+                      backgroundColor: 'primary',
+                      border: `solid 2px`,
+                      borderColor:
+                        exportType == 'pdf'
+                          ? (theme) => theme.palette.success.main
+                          : 'transparent',
+                    }}
+                  >
+                    <img alt='Excel' src={'/assets/images/pdf.svg'} />
+                  </Avatar>
+                  {exportType == 'pdf' ? (
+                    <ExportSelect>
+                      <CheckCircleIcon />
+                    </ExportSelect>
+                  ) : (
+                    <></>
+                  )}
+                </ExportWrapper>
+              </ExportInfo>
+
+              <ExportInfo
+                onClick={() => {
+                  setExportType('excel');
+                }}
+              >
+                <ExportWrapper>
+                  <Avatar
+                    sx={{
+                      p: 3,
+                      fontSize: {xs: 30, md: 48},
+                      height: {xs: 20, md: 30, xl: 40},
+                      width: {xs: 20, md: 30, xl: 40},
+                      backgroundColor: 'primary',
+                      border: `solid 2px`,
+                      borderColor:
+                        exportType == 'excel'
+                          ? (theme) => theme.palette.success.main
+                          : 'transparent',
+                    }}
+                  >
+                    <img alt='Pdf' src={'/assets/images/excel.svg'} />
+                  </Avatar>
+                  {exportType == 'excel' ? (
+                    <ExportSelect>
+                      <CheckCircleIcon />
+                    </ExportSelect>
+                  ) : (
+                    <></>
+                  )}
+                </ExportWrapper>
+              </ExportInfo>
+            </Box>
+
+            {/* <FormControl component='fieldset'>
               <FormLabel component='legend'>Type of report</FormLabel>
               <RadioGroup
                 aria-label='gender'
@@ -124,7 +246,7 @@ export default function DownloadModal({
                   }}
                 />
               </RadioGroup>
-            </FormControl>
+            </FormControl> */}
 
             <Box component='div'>
               <FormControl component='fieldset'>
