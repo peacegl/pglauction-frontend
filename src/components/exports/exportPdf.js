@@ -73,11 +73,7 @@ const ExportPdf = forwardRef(({data, titlePdf = 'no_name', columns}, ref) => {
       40,
     );
     doc.autoTable(content);
-    doc.save(
-      `${data.length} ${titlePdf} ${new Date().toLocaleDateString(
-        'en-US',
-      )}.pdf`,
-    );
+    doc.save(`${titlePdf} ${new Date().toLocaleDateString('en-US')}.pdf`);
   };
 });
 
