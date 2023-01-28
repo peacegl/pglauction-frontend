@@ -157,6 +157,7 @@ const DownloadModal = ({
               component='div'
               sx={{
                 display: 'flex',
+                justifyContent: 'center',
               }}
             >
               <ExportInfo
