@@ -35,6 +35,7 @@ export const onGetVehicleData = (filterData) => {
   };
 };
 
+// for exporting data
 export const onGetAllVehicle = (filterData) => {
   return async (dispatch) => {
     dispatch({type: FETCH_START});
@@ -57,6 +58,8 @@ export const onGetAllVehicle = (filterData) => {
     }
   };
 };
+
+// for exporting data
 
 export const onInsertVehicle = (data, toggleOpen) => {
   return async (dispatch) => {

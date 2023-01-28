@@ -81,7 +81,11 @@ export default function DownloadModal({
         >
           <IconButton
             aria-label='close'
-            onClick={toggleOpen}
+            onClick={() => {
+              setExportDataAmount('current_page');
+              setExportType('pdf');
+              toggleOpen();
+            }}
             sx={{float: 'right', mt: 1}}
           >
             <CloseIcon sx={{fontSize: 18}} />
@@ -136,6 +140,15 @@ export default function DownloadModal({
                     label='Current Page'
                     onClick={() => {
                       setExportDataAmount('current_page');
+                    }}
+                  />
+
+                  <FormControlLabel
+                    value='filtered_data'
+                    control={<Radio />}
+                    label='Filtered Data'
+                    onClick={() => {
+                      setExportDataAmount('filtered_data');
                     }}
                   />
                   <FormControlLabel
