@@ -14,8 +14,12 @@ import {
   FormControlLabel,
   FormLabel,
   IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
   Radio,
   RadioGroup,
+  TextField,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
@@ -264,6 +268,19 @@ const DownloadModal = ({
                 </RadioGroup>
               </FormControl>
             </Box>
+            {/* <FormControl fullWidth sx={{m: 1}}>
+              <InputLabel htmlFor='outlined-adornment-amount'>
+                Amount
+              </InputLabel>
+              <OutlinedInput
+                size='small'
+                id='outlined-adornment-amount'
+                endAdornment={
+                  <InputAdornment position='start'>.pdf</InputAdornment>
+                }
+                label='File name'
+              />
+            </FormControl> */}
           </CardContent>
           <Divider />
           <CardActions sx={{justifyContent: 'end', mx: 2}}>
