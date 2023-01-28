@@ -226,7 +226,10 @@ const DownloadModal = ({
 
             <Box component='div'>
               <FormControl component='fieldset'>
-                <FormLabel component='legend'>Amount of Data</FormLabel>
+                <FormLabel component='legend'>
+                  {' '}
+                  <IntlMessages id='common.amountOfData' />
+                </FormLabel>
                 <RadioGroup
                   aria-label='amount'
                   defaultValue='current_page'
@@ -235,7 +238,7 @@ const DownloadModal = ({
                   <FormControlLabel
                     value='current_page'
                     control={<Radio />}
-                    label='Current Page'
+                    label={<IntlMessages id='common.currentPage' />}
                     onClick={() => {
                       setExportDataAmount('current_page');
                     }}
@@ -244,7 +247,7 @@ const DownloadModal = ({
                   <FormControlLabel
                     value='filtered_data'
                     control={<Radio />}
-                    label='Filtered Data'
+                    label={<IntlMessages id='common.filteredData' />}
                     onClick={() => {
                       setExportDataAmount('filtered_data');
                     }}
@@ -252,7 +255,7 @@ const DownloadModal = ({
                   <FormControlLabel
                     value='all'
                     control={<Radio />}
-                    label='All'
+                    label={<IntlMessages id='common.allData' />}
                     onClick={() => {
                       setExportDataAmount('all');
                     }}
