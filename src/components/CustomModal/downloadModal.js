@@ -276,24 +276,11 @@ const DownloadModal = ({
               <IntlMessages id='common.cancel' />
             </Button>
 
-            {/* <Button
-              size='small'
-              variant='contained'
-              onClick={() => {
-                onDownload();
-                setExportType('pdf');
-                setExportDataAmount('current_page');
-                toggleOpen();
-              }}
-            >
-              <IntlMessages id='common.download' />
-            </Button> */}
-
             <LoadingButton
               size='small'
               loading={isLoading}
               loadingIndicator='Loading...'
-              variant='outlined'
+              variant='contained'
               onClick={() => {
                 onDownload();
                 setExportType('pdf');
