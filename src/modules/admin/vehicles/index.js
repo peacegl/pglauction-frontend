@@ -48,7 +48,6 @@ export default function VehicleList({user}) {
   const isExportDataEmpty = (objectName) => {
     return JSON.stringify(objectName) === '{}';
   };
-
   const exportData = useSelector(({vehicles}) => {
     if (
       isExportDataEmpty(vehicles.vehiclesExportData) ||
@@ -59,7 +58,6 @@ export default function VehicleList({user}) {
       return vehicles.vehiclesExportData.data;
     }
   });
-
   const fetchExportAllData = async (filteredData = {}) => {
     await dispatch(
       onGetAllVehicle({
