@@ -43,7 +43,7 @@ export default function VehicleList({user}) {
   //  export data as pdf and Excel states
   const tableRef = useRef();
   const [openDownload, setOpenDownload] = useState(false);
-  const [exportType, setExportType] = useState('pdf');
+  const [exportType, setExportType] = useState('excel');
   const [exportDataAmount, setExportDataAmount] = useState('current_page');
   const isExportDataEmpty = (objectName) => {
     return JSON.stringify(objectName) === '{}';
@@ -181,7 +181,11 @@ export default function VehicleList({user}) {
         // for exporting data
         ref={tableRef}
         exportType={exportType}
-        exportData={exportData.length == 0 ? data : exportData}
+        exportData={
+          exportData.length == 0 || isExportDataEmpty(filterData)
+            ? data
+            : exportData
+        }
         onDownloadClick={() => {
           setOpenDownload(true);
         }}
