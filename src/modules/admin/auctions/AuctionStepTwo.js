@@ -35,8 +35,8 @@ const AuctionStepTwo = (props) => {
   }, [props.values?.items]);
 
   return (
-    <Box>
-      <Stack spacing={5}>
+    <Box sx={{position: 'relative'}}>
+      <Box sx={{position: 'sticky', left: '0%', top: '0%', right: '100%'}}>
         <Stack direction='row' spacing={5}>
           <Box sx={{flex: 1}}>
             <Autocomplete
@@ -120,11 +120,11 @@ const AuctionStepTwo = (props) => {
             <IntlMessages id='common.add' />
           </Button>
         </Stack>
-        <Typography component='p' sx={{fontWeight: 'bold', px: 1}}>
+        <Typography component='p' sx={{fontWeight: 'bold', px: 1, my: 3}}>
           <IntlMessages id='vehicle.totalVehicles' />:{' '}
           {props.values.items.length}
         </Typography>
-      </Stack>
+      </Box>
       <Box
         sx={{
           display: 'flex',
