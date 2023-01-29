@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
@@ -69,8 +69,23 @@ const DownloadModal = ({
   setExportDataAmount,
   exportType,
   isLoading,
+  tableRef,
+  filterData,
+  fetchExportAllData,
   ...rest
 }) => {
+  const isExportDataEmpty = (objectName) => {
+    return JSON.stringify(objectName) === '{}';
+  };
+
+  useEffect(() => {
+    if (isExportDataEmpty(filterData)) {
+      fetchExportAllData();
+    } else if (!isExportDataEmpty(filterData)) {
+      fetchExportAllData(filterData);
+    }
+  }, [filterData]);
+
   const ExportSelect = styled('div')(({theme}) => ({
     position: 'absolute',
     right: 2,
@@ -249,14 +264,19 @@ const DownloadModal = ({
                     }}
                   />
 
-                  <FormControlLabel
-                    value='filtered_data'
-                    control={<Radio />}
-                    label={<IntlMessages id='common.filteredData' />}
-                    onClick={() => {
-                      setExportDataAmount('filtered_data');
-                    }}
-                  />
+                  {isExportDataEmpty(filterData) ? (
+                    <></>
+                  ) : (
+                    <FormControlLabel
+                      value='filtered_data'
+                      control={<Radio />}
+                      label={<IntlMessages id='common.filteredData' />}
+                      onClick={() => {
+                        setExportDataAmount('filtered_data');
+                      }}
+                    />
+                  )}
+
                   <FormControlLabel
                     value='all'
                     control={<Radio />}
@@ -304,9 +324,9 @@ const DownloadModal = ({
               variant='contained'
               onClick={() => {
                 onDownload();
+                tableRef.current.download();
                 setExportType('pdf');
                 setExportDataAmount('current_page');
-                toggleOpen();
               }}
             >
               <IntlMessages id='common.download' />

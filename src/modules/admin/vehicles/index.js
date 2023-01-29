@@ -9,7 +9,7 @@ import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import SaleModal from '../sales/SaleModal';
-import {useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import VehicleModal from './VehicleModal';
 import PropTypes from 'prop-types';
 import {
@@ -59,18 +59,6 @@ export default function VehicleList({user}) {
       return vehicles.vehiclesExportData.data;
     }
   });
-
-  useEffect(() => {
-    if (openDownload && exportDataAmount == 'all') {
-      fetchExportAllData();
-    } else if (
-      openDownload &&
-      exportDataAmount == 'filtered_data' &&
-      !isExportDataEmpty(filterData)
-    ) {
-      fetchExportAllData(filterData);
-    }
-  }, [dispatch, openDownload, exportDataAmount]);
 
   const fetchExportAllData = async (filteredData = {}) => {
     await dispatch(
@@ -181,11 +169,7 @@ export default function VehicleList({user}) {
         // for exporting data
         ref={tableRef}
         exportType={exportType}
-        exportData={
-          exportData.length == 0 || isExportDataEmpty(filterData)
-            ? data
-            : exportData
-        }
+        exportData={exportData.length == 0 ? data : exportData}
         onDownloadClick={() => {
           setOpenDownload(true);
         }}
@@ -209,12 +193,27 @@ export default function VehicleList({user}) {
           toggleOpen={() => setOpenDownload((d) => !d)}
           title={<IntlMessages id='vehicle.download' />}
           onDownload={() => {
-            tableRef.current.download();
+            if (openDownload && exportDataAmount == 'all') {
+              fetchExportAllData();
+              console.log(exportData);
+            } else if (
+              openDownload &&
+              exportDataAmount == 'filtered_data' &&
+              !isExportDataEmpty(filterData)
+            ) {
+              fetchExportAllData(filterData);
+              console.log(exportData);
+            }
+            if (exportDataAmount == 'current_page') {
+            }
           }}
           setExportType={setExportType}
           setExportDataAmount={setExportDataAmount}
           exportType={exportType}
           isLoading={loading}
+          tableRef={tableRef}
+          filterData={filterData}
+          fetchExportAllData={fetchExportAllData}
         />
       )}
       {/*end of for exporting data */}
