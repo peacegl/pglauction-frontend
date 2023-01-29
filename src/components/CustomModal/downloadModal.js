@@ -323,6 +323,7 @@ DownloadModal.propTypes = {
   toggleOpen: PropTypes.func.isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   onDownload: PropTypes.func,
+  setExportType: PropTypes.func,
 };
 
 export default DownloadModal;

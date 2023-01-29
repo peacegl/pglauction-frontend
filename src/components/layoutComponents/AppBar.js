@@ -2,7 +2,6 @@ import {useAuthMethod, useAuthUser} from '@crema/utility/AuthHooks';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {useDispatch, useSelector} from 'react-redux';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import VehicleSearchBar from './VehicleSearchBar';
@@ -15,7 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import {useTheme} from '@mui/material';
+import {useDispatch} from 'react-redux';
 import Menu from '@mui/material/Menu';
 import {useRouter} from 'next/router';
 import CustomMenu from './CustomMenu';
@@ -38,10 +37,9 @@ function TopMenu() {
   const router = useRouter();
 
   const dispatch = useDispatch();
-  const theme = useTheme();
   const [active, setActive] = useState(null);
-  const {search = ''} = useSelector(({webVehicles}) => webVehicles);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const {make} = router.query;
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -56,7 +54,7 @@ function TopMenu() {
     router.push(link);
   };
   const onSearch = (value) => {
-    router.push('/');
+    router.push(make ? `/?make=${make}` : '/');
     dispatch(setVehicleSearch(value));
   };
 
@@ -148,13 +146,12 @@ function TopMenu() {
               placeholder='Search Inventory By Make, Model, Vin, and More...'
               onEnter={onSearch}
               onSearch={onSearch}
-              defaultValue={search}
               sx={{
                 width: {xs: '60vw'},
                 mx: 'auto',
                 backgroundColor: 'white',
                 borderColor: 'white',
-                color: theme.palette.primary.main,
+                color: (theme) => theme.palette.primary.main,
               }}
             />
           </Box>

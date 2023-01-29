@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
 import {alpha, styled} from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
-import {useTheme} from '@mui/material';
+import InputBase from '@mui/material/InputBase';
+import {setVehicleSearch} from 'redux/actions';
+import {useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
+import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 
 const Search = styled('div')(({theme}) => ({
@@ -51,36 +53,42 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 }));
 
 export default function VehicleSearchBar({
-  searchQuery,
   placeholder = 'Search...',
-  onChange,
   onEnter,
   onSearch,
   ...rest
 }) {
-  const theme = useTheme();
-  const [search, setSearch] = useState('');
+  const [inputValue, setInputValue] = useState('');
+  const {search = ''} = useSelector(({webVehicles}) => webVehicles);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (search == '') setInputValue('');
+  }, [search]);
+
+  useEffect(() => {
+    if (inputValue == '') dispatch(setVehicleSearch(''));
+  }, [inputValue]);
+
   return (
     <Box sx={{display: 'flex'}}>
       <Search
         sx={{
           width: {md: '40vw', lg: '35vw'},
-          backgroundColor: alpha(theme.palette.primary.main, 0.05),
-          borderColor: alpha(theme.palette.primary.main, 0.2),
+          backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.05),
+          borderColor: (theme) => alpha(theme.palette.primary.main, 0.2),
         }}
         {...rest}
       >
         <StyledInputBase
-          defaultValue={searchQuery}
+          value={inputValue}
           placeholder={placeholder}
           inputProps={{'aria-label': 'search'}}
           type='search'
-          name='s'
           id='site-search'
-          onChange={onChange}
+          onChange={(e) => setInputValue(e.target.value)}
           onKeyUp={(event) => {
-            setSearch(event.target.value);
-            if (event.keyCode === 13) {
+            if (event.key === 'Enter') {
               onEnter && onEnter(event.target.value);
             }
           }}
@@ -88,11 +96,11 @@ export default function VehicleSearchBar({
         <SearchIconWrapper>
           <IconButton
             onClick={() => {
-              onSearch && onSearch(search);
+              onSearch && onSearch(inputValue);
             }}
           >
             <SearchIcon
-              style={{color: alpha(theme.palette.primary.main, 0.6)}}
+              style={{color: (theme) => alpha(theme.palette.primary.main, 0.6)}}
             />
           </IconButton>
         </SearchIconWrapper>
@@ -102,9 +110,7 @@ export default function VehicleSearchBar({
 }
 
 VehicleSearchBar.propTypes = {
-  searchQuery: PropTypes.string,
   placeholder: PropTypes.string,
-  onChange: PropTypes.func,
   onEnter: PropTypes.func,
   onSearch: PropTypes.func,
 };

@@ -1,4 +1,5 @@
 import {forwardRef, useImperativeHandle} from 'react';
+import PropTypes from 'prop-types';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
@@ -78,3 +79,8 @@ const ExportPdf = forwardRef(({data, titlePdf = 'no_name', columns}, ref) => {
 });
 
 export default ExportPdf;
+ExportPdf.propTypes = {
+  data: PropTypes.array.isRequired,
+  titlePdf: PropTypes.any,
+  columns: PropTypes.any,
+};

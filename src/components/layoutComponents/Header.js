@@ -3,15 +3,14 @@ import WhatsAppIcon from '../../assets/icon/whatsapp.svg';
 import FacebookIcon from '../../assets/icon/facebook.svg';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import {useDispatch, useSelector} from 'react-redux';
 import VehicleSearchBar from './VehicleSearchBar';
 import TiktokIcon from 'assets/icon/tiktok.png';
 import MenuIcon from '@mui/icons-material/Menu';
 import {setVehicleSearch} from 'redux/actions';
 import logoImage from 'assets/united_logo.png';
 import {useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
 import {useRouter} from 'next/router';
-import {useTheme} from '@mui/styles';
 import {pages} from 'configs';
 import Link from 'next/link';
 import {
@@ -31,11 +30,11 @@ import {
 
 function Header() {
   const router = useRouter();
-  const theme = useTheme();
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [open, setOpen] = useState(true);
   const [active, setActive] = useState(true);
+  const {make} = router.query;
 
   useEffect(() => {
     pages.forEach((item, index) => {
@@ -60,10 +59,8 @@ function Header() {
     setIsMenuOpen(open);
   };
 
-  const {search = ''} = useSelector(({webVehicles}) => webVehicles);
-
   const onSearch = (value) => {
-    router.push('/');
+    router.push(make ? `/?make=${make}` : '/');
     dispatch(setVehicleSearch(value));
   };
 
@@ -214,7 +211,6 @@ function Header() {
               placeholder='Search Inventory By Make, Model, Vin, and More...'
               onEnter={onSearch}
               onSearch={onSearch}
-              defaultValue={search}
             />
           </Box>
           <Box
@@ -228,7 +224,7 @@ function Header() {
               variant='body2'
               fontSize='14px'
               underline='none'
-              href='https://www.tiktok.com/@united.used.car.llc'
+              href='https://www.tiktok.com/@united.used.cars?_t=8ZIpjlRz6DR&_r=1'
               mx='2px'
               target='_blank'
             >

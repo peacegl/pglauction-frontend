@@ -1,4 +1,5 @@
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
+import {onGetWebVehicleData, setBrandFilter} from 'redux/actions';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
 import {useDispatch, useSelector} from 'react-redux';
@@ -9,11 +10,6 @@ import AppsContent from './AppsContent';
 import {useRouter} from 'next/router';
 import ListView from './ListView';
 import Header from '../Header';
-import {
-  onCountPopularBrands,
-  onGetWebVehicleData,
-  setBrandFilter,
-} from 'redux/actions';
 import {
   alpha,
   Box,
@@ -29,6 +25,7 @@ const VehicleList = () => {
   const {theme} = useThemeContext();
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(50);
+  const [makeData, setMakeData] = useState('');
   const {user} = useAuthUser();
   const router = useRouter();
   const {make} = router.query;
@@ -37,42 +34,52 @@ const VehicleList = () => {
   );
   const viewType = useSelector(({webVehicles}) => webVehicles.viewType);
   const filterData = useSelector(({webVehicles}) => webVehicles.filterData);
-  const loading = useSelector(({common}) => common.loading);
+  // const loading = useSelector(({common}) => common.loading);
+  const loading = useSelector(({webVehicles}) => webVehicles.itemsLoading);
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
   useEffect(() => {
     setPage(0);
   }, [search, filterData]);
 
   useEffect(() => {
+    if (make) {
+      setPage(0);
+    }
+    setMakeData(make ? make : '');
+  }, [make]);
+
+  useEffect(() => {
     let filterBrands = {};
-    if (make && !search) {
-      filterBrands = {
-        brand: make,
-        status: ['available', 'future'],
-      };
-      dispatch(
-        onGetWebVehicleData({
-          // filterData,
-          filterBrands,
-          per_page: perPage,
-          page: page + 1,
-          search,
-        }),
-      );
-    } else {
-      dispatch(
-        onGetWebVehicleData({
-          // filterData,
-          filterBrands,
-          per_page: perPage,
-          page: page + 1,
-          search,
-        }),
-      );
+    if (!make || make == makeData) {
+      if (makeData) {
+        filterBrands = {
+          brand: makeData,
+          status: ['available', 'future'],
+        };
+        dispatch(
+          onGetWebVehicleData({
+            // filterData,
+            filterBrands,
+            per_page: perPage,
+            page: page + 1,
+            search,
+          }),
+        );
+      } else {
+        dispatch(
+          onGetWebVehicleData({
+            // filterData,
+            filterBrands,
+            per_page: perPage,
+            page: page + 1,
+            search,
+          }),
+        );
+      }
     }
     dispatch(setBrandFilter(filterBrands));
     // filterData
-  }, [dispatch, make, page, search, perPage, user?.type]);
+  }, [dispatch, makeData, page, search, perPage, user?.type]);
 
   const onPageChange = (event, value) => {
     setPage(value);

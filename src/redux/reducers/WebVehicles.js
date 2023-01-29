@@ -13,11 +13,13 @@ import {
   EMPTY_WEB_VEHICLE_LIST,
   GET_POPULAR_BRANDS_COUNT,
   SET_BRAND_FILTER_DATA,
+  FETCH_VEHICLES_ERROR,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
 const initialState = {
   vehiclesData: {},
+  itemsLoading: false,
   myWatchList: {},
   myPurchaseList: {},
   similarVehicles: [],
@@ -63,10 +65,17 @@ const WebVehicleReducer = (state = initialState, action) => {
       return {
         ...state,
         vehiclesData: action.payload,
+        itemsLoading: false,
+      };
+    case FETCH_VEHICLES_ERROR:
+      return {
+        ...state,
+        itemsLoading: false,
       };
     case EMPTY_WEB_VEHICLE_LIST:
       return {
         ...state,
+        itemsLoading: true,
         vehiclesData: {
           ...state.vehiclesData,
           data: [],

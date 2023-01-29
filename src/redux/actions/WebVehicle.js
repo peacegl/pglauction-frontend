@@ -17,32 +17,34 @@ import {
   EMPTY_WEB_VEHICLE_LIST,
   GET_POPULAR_BRANDS_COUNT,
   SET_BRAND_FILTER_DATA,
-} from '../../shared/constants/ActionTypes';
+  FETCH_VEHICLES_ERROR,
+} from 'shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-import {appIntl} from '../../@crema/utility/helper/Utils';
+import {appIntl} from '@crema/utility/helper/Utils';
 
 export const onGetWebVehicleData = (data) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch({type: EMPTY_WEB_VEHICLE_LIST, payload: {}});
     dispatch({type: FETCH_START});
-    jwtAxios
-      .get(`/website/vehicles`, {
+    const {messages} = appIntl();
+    try {
+      const res = await jwtAxios.get(`/website/vehicles`, {
         params: {...data},
-      })
-      .then((data) => {
-        if (data.status === 200) {
-          dispatch({type: GET_WEB_VEHICLE_LIST, payload: data.data});
-          dispatch({type: FETCH_SUCCESS});
-        } else {
-          dispatch({
-            type: FETCH_ERROR,
-            payload: 'Something went wrong, Please try again!',
-          });
-        }
-      })
-      .catch((error) => {
-        dispatch({type: FETCH_ERROR, payload: error.message});
       });
+      if (res.status === 200 && res.data.result) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_WEB_VEHICLE_LIST, payload: res.data});
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: messages['message.somethingWentWrong'],
+        });
+        dispatch({type: FETCH_VEHICLES_ERROR});
+      }
+    } catch (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      dispatch({type: FETCH_VEHICLES_ERROR});
+    }
   };
 };
 export const onGetWebSimilarVehicle = (id) => {
