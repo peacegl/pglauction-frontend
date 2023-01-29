@@ -36,7 +36,7 @@ const AuctionStepTwo = (props) => {
 
   return (
     <Box>
-      <Stack spacing={{xs: 5, md: 8}}>
+      <Stack spacing={5}>
         <Stack direction='row' spacing={5}>
           <Box sx={{flex: 1}}>
             <Autocomplete
@@ -124,70 +124,66 @@ const AuctionStepTwo = (props) => {
           <IntlMessages id='vehicle.totalVehicles' />:{' '}
           {props.values.items.length}
         </Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-          }}
-        >
-          {props.values.items?.map((item, index) => (
-            <Paper sx={{m: 1.5, p: 2}} key={index}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <Box>
-                  <Chip
-                    onClick={() => {
-                      setAuctionItem(item);
-                      setAuctionItemModal(true);
-                    }}
-                    sx={{m: 1.5}}
-                    key={index}
-                    label={`${item.lot_number} - ${item.vin}`}
-                    variant='outlined'
-                    onDelete={() => {
-                      let items = props.values.items.filter(
-                        (veh) => veh.id != item.id,
-                      );
-                      props.setfieldvalue('items', items);
-                      props.setVehiclesValidationError(
-                        items?.length == 0 ? true : false,
-                      );
-                    }}
-                  />
-                  <Typography sx={{textAlign: 'center'}}>
-                    <IntlMessages id='vehicle.minimumBid' />:
-                    <Typography
-                      component='span'
-                      sx={{fontWeight: 'bold', px: 1}}
-                    >
-                      {moneyFormater(
-                        parseInt(item.minimum_bid ? item.minimum_bid : 0),
-                      )}
-                    </Typography>
-                  </Typography>
-                  <Typography sx={{textAlign: 'center'}}>
-                    <IntlMessages id='vehicle.buyNowPrice' />:
-                    <Typography
-                      component='span'
-                      sx={{fontWeight: 'bold', px: 1}}
-                    >
-                      {moneyFormater(
-                        parseInt(item.buy_now_price ? item.buy_now_price : 0),
-                      )}
-                    </Typography>
-                  </Typography>
-                </Box>
-              </Box>
-            </Paper>
-          ))}
-        </Box>
       </Stack>
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        {props.values.items?.map((item, index) => (
+          <Paper sx={{m: 1, p: 1}} key={index}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Box>
+                <Chip
+                  onClick={() => {
+                    setAuctionItem(item);
+                    setAuctionItemModal(true);
+                  }}
+                  sx={{m: 1.5}}
+                  key={index}
+                  label={`${item.lot_number} - ${item.vin}`}
+                  variant='outlined'
+                  onDelete={() => {
+                    let items = props.values.items.filter(
+                      (veh) => veh.id != item.id,
+                    );
+                    props.setfieldvalue('items', items);
+                    props.setVehiclesValidationError(
+                      items?.length == 0 ? true : false,
+                    );
+                  }}
+                />
+                <Typography sx={{textAlign: 'center'}}>
+                  <IntlMessages id='vehicle.minimumBid' />:
+                  <Typography component='span' sx={{fontWeight: 'bold', px: 1}}>
+                    {moneyFormater(
+                      parseInt(item.minimum_bid ? item.minimum_bid : 0),
+                    )}
+                  </Typography>
+                </Typography>
+                <Typography sx={{textAlign: 'center'}}>
+                  <IntlMessages id='vehicle.buyNowPrice' />:
+                  <Typography component='span' sx={{fontWeight: 'bold', px: 1}}>
+                    {moneyFormater(
+                      parseInt(item.buy_now_price ? item.buy_now_price : 0),
+                    )}
+                  </Typography>
+                </Typography>
+              </Box>
+            </Box>
+          </Paper>
+        ))}
+      </Box>
       {auctionItemModal && (
         <AuctionItemModal
           open={auctionItemModal}
