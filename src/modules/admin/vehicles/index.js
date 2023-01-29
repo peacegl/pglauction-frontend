@@ -22,7 +22,7 @@ import DownloadModal from 'components/CustomModal/downloadModal';
 export default function VehicleList({user}) {
   const [openModal, setOpenModal] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
-  const [openDownload, setOpenDownload] = useState(false);
+
   const [showSaleModal, setShowSaleModal] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selected, setSelected] = useState([]);
@@ -42,6 +42,7 @@ export default function VehicleList({user}) {
 
   //  export data as pdf and Excel states
   const tableRef = useRef();
+  const [openDownload, setOpenDownload] = useState(false);
   const [exportType, setExportType] = useState('pdf');
   const [exportDataAmount, setExportDataAmount] = useState('current_page');
   const isExportDataEmpty = (objectName) => {
@@ -212,7 +213,6 @@ export default function VehicleList({user}) {
           isLoading={loading}
         />
       )}
-
       {/*end of for exporting data */}
 
       {openModal && (

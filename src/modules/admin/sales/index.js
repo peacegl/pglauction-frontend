@@ -1,13 +1,14 @@
 import {ADD_SALE, DELETE_SALE, EDIT_SALE} from 'shared/constants/Permissions';
 import {filterContent, tableColumns} from 'configs/pages/sales';
 import FilterModal from 'components/CustomModal/FilterModal';
-import {onGetSaleList, onDeleteSales} from 'redux/actions';
+import {onGetSaleList, onDeleteSales, onGetAllSales} from 'redux/actions';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import SaleModal from './SaleModal';
 import PropTypes from 'prop-types';
+import DownloadModal from 'components/CustomModal/downloadModal';
 
 export default function SaleList({user}) {
   const [showSaleModal, setShowSaleModal] = useState(false);
@@ -22,8 +23,51 @@ export default function SaleList({user}) {
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(({sales}) => sales.saleList);
   const {loading} = useSelector(({common}) => common);
-
   const dispatch = useDispatch();
+
+  //  export data as pdf and Excel states
+  const tableRef = useRef();
+  const [openDownload, setOpenDownload] = useState(false);
+  const [exportType, setExportType] = useState('pdf');
+  const [exportDataAmount, setExportDataAmount] = useState('current_page');
+  const isExportDataEmpty = (objectName) => {
+    return JSON.stringify(objectName) === '{}';
+  };
+
+  const exportData = useSelector(({vehicles}) => {
+    if (
+      isExportDataEmpty(vehicles.vehiclesExportData) ||
+      exportDataAmount == 'current_page'
+    ) {
+      return [];
+    } else {
+      return vehicles.vehiclesExportData.data;
+    }
+  });
+
+  useEffect(() => {
+    if (openDownload && exportDataAmount == 'all') {
+      fetchExportAllData();
+    } else if (
+      openDownload &&
+      exportDataAmount == 'filtered_data' &&
+      !isExportDataEmpty(filterData)
+    ) {
+      fetchExportAllData(filterData);
+    }
+  }, [dispatch, openDownload, exportDataAmount]);
+
+  const fetchExportAllData = async (filteredData = {}) => {
+    await dispatch(
+      onGetAllSales({
+        page: page + 1,
+        per_page: -1,
+        filterData: filteredData,
+      }),
+    );
+  };
+  // end of for exporting data
+
   useEffect(() => {
     fetchData(search);
   }, [dispatch, page, per_page, orderBy, filterData]);
@@ -112,7 +156,14 @@ export default function SaleList({user}) {
           user?.permissions?.includes(EDIT_SALE) ||
           user?.permissions?.includes(DELETE_SALE)
         }
-        exportData={data}
+        // for exporting data
+        ref={tableRef}
+        exportType={exportType}
+        exportData={exportData.length == 0 ? data : exportData}
+        onDownloadClick={() => {
+          setOpenDownload(true);
+        }}
+        //end for exporting data
       />
       {openFilter && (
         <FilterModal
@@ -124,6 +175,24 @@ export default function SaleList({user}) {
           content={filterContent}
         />
       )}
+
+      {/* for exporting data */}
+      {openDownload && (
+        <DownloadModal
+          open={openDownload}
+          toggleOpen={() => setOpenDownload((d) => !d)}
+          title={<IntlMessages id='vehicle.download' />}
+          onDownload={() => {
+            tableRef.current.download();
+          }}
+          setExportType={setExportType}
+          setExportDataAmount={setExportDataAmount}
+          exportType={exportType}
+          isLoading={loading}
+        />
+      )}
+      {/*end of for exporting data */}
+
       {showSaleModal && (
         <SaleModal
           open={showSaleModal}

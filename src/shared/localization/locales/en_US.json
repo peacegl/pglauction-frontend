@@ -1076,6 +1076,8 @@
   "common.buyer": "Buyer",
   "common.buyerPlaceholder": "Select Buyer",
   "sale.saleData": "Sale Data",
+  "sale.download": "Sales Download",
+
   "sale.salePrice": "Sale Price",
   "sale.salePricePlaceholder": "Type Price",
   "sale.saleDate": "Sale Date",
