@@ -21,7 +21,7 @@ const usersReducer = (state = initialUsers, action) => {
     case GET_ALL_SALES_LIST:
       return {
         ...state,
-        vehiclesExportData: action.payload,
+        salesExportData: action.payload,
       };
 
     case ADD_NEW_SALE:

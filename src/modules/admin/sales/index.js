@@ -26,7 +26,7 @@ export default function SaleList({user}) {
   const dispatch = useDispatch();
 
   //  export data as pdf and Excel states
-  const tableRef = useRef();
+  const salesTableRef = useRef();
   const [openDownload, setOpenDownload] = useState(false);
   const [exportType, setExportType] = useState('pdf');
   const [exportDataAmount, setExportDataAmount] = useState('current_page');
@@ -34,14 +34,14 @@ export default function SaleList({user}) {
     return JSON.stringify(objectName) === '{}';
   };
 
-  const exportData = useSelector(({vehicles}) => {
+  const exportData = useSelector(({sales}) => {
     if (
-      isExportDataEmpty(vehicles.vehiclesExportData) ||
+      isExportDataEmpty(sales.salesExportData) ||
       exportDataAmount == 'current_page'
     ) {
       return [];
     } else {
-      return vehicles.vehiclesExportData.data;
+      return sales.salesExportData.data;
     }
   });
 
@@ -157,7 +157,7 @@ export default function SaleList({user}) {
           user?.permissions?.includes(DELETE_SALE)
         }
         // for exporting data
-        ref={tableRef}
+        ref={salesTableRef}
         exportType={exportType}
         exportData={exportData.length == 0 ? data : exportData}
         onDownloadClick={() => {
@@ -181,9 +181,9 @@ export default function SaleList({user}) {
         <DownloadModal
           open={openDownload}
           toggleOpen={() => setOpenDownload((d) => !d)}
-          title={<IntlMessages id='vehicle.download' />}
+          title={<IntlMessages id='sale.download' />}
           onDownload={() => {
-            tableRef.current.download();
+            salesTableRef.current.download();
           }}
           setExportType={setExportType}
           setExportDataAmount={setExportDataAmount}

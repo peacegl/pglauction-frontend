@@ -143,6 +143,7 @@ export const GET_GALLERY_PHOTO = 'GET_GALLERY_PHOTO';
 
 //USER_LIST
 export const GET_USER_LIST = 'GET_USER_LIST';
+export const GET_ALL_USERS_LIST = 'GET_ALL_USERS_LIST';
 export const ADD_NEW_USER = 'ADD_NEW_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 export const AUTH_USER_UPDATE = 'AUTH_USER_UPDATE';

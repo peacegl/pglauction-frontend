@@ -779,6 +779,7 @@
   "user.deleteMessage": "Are you sure, you want to delete the selected User(s)?",
   "user.message.deleted": "User(s) deleted successfully!",
   "user.userList": "User List",
+  "user.userDownload": "User Download",
   "message.userCreated": "User created successfully!",
   "message.userUpdated": "User updated successfully!",
   "common.userInfo": "User Info",
