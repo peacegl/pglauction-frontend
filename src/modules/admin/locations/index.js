@@ -1,17 +1,22 @@
 import {filterContent, tableColumns} from '../../../configs/pages/locations';
-import {onGetLocationList, onDeleteLocations} from 'redux/actions';
+import {
+  onGetLocationList,
+  onDeleteLocations,
+  onGetAllLocations,
+} from 'redux/actions';
 import FilterModal from 'components/CustomModal/FilterModal';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import LocationModal from './LocationModal';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {
   ADD_LOCATION,
   EDIT_LOCATION,
   DELETE_LOCATION,
 } from 'shared/constants/Permissions';
 import PropTypes from 'prop-types';
+import DownloadModal from 'components/CustomModal/downloadModal';
 
 export default function LocationList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -94,6 +99,49 @@ export default function LocationList({user}) {
     fetchData(value);
   };
 
+  //  export data as pdf and Excel states
+  const tableRef = useRef();
+  const [openDownload, setOpenDownload] = useState(false);
+  const [exportType, setExportType] = useState('pdf');
+  const [exportDataAmount, setExportDataAmount] = useState('current_page');
+  const isExportDataEmpty = (objectName) => {
+    return JSON.stringify(objectName) === '{}';
+  };
+
+  const exportData = useSelector(({locations}) => {
+    if (
+      isExportDataEmpty(locations.locationsExportData) ||
+      exportDataAmount == 'current_page'
+    ) {
+      return [];
+    } else {
+      return locations.locationsExportData.data;
+    }
+  });
+
+  useEffect(() => {
+    if (openDownload && exportDataAmount == 'all') {
+      fetchExportAllData();
+    } else if (
+      openDownload &&
+      exportDataAmount == 'filtered_data' &&
+      !isExportDataEmpty(filterData)
+    ) {
+      fetchExportAllData(filterData);
+    }
+  }, [dispatch, openDownload, exportDataAmount]);
+
+  const fetchExportAllData = async (filteredData = {}) => {
+    await dispatch(
+      onGetAllLocations({
+        page: page + 1,
+        per_page: -1,
+        filterData: filteredData,
+      }),
+    );
+  };
+  // end of for exporting data
+
   return (
     <>
       <CustomDataTable
@@ -118,8 +166,33 @@ export default function LocationList({user}) {
           user?.permissions?.includes(EDIT_LOCATION) ||
           user?.permissions?.includes(DELETE_LOCATION)
         }
-        exportData={data}
+        // for exporting data
+        ref={tableRef}
+        exportType={exportType}
+        exportData={exportData.length == 0 ? data : exportData}
+        onDownloadClick={() => {
+          setOpenDownload(true);
+        }}
+        //end for exporting data
       />
+
+      {/* for exporting data */}
+      {openDownload && (
+        <DownloadModal
+          open={openDownload}
+          toggleOpen={() => setOpenDownload((d) => !d)}
+          title={<IntlMessages id='vehicle.download' />}
+          onDownload={() => {
+            tableRef.current.download();
+          }}
+          setExportType={setExportType}
+          setExportDataAmount={setExportDataAmount}
+          exportType={exportType}
+          isLoading={loading}
+        />
+      )}
+      {/*end of for exporting data */}
+
       {openFilter && (
         <FilterModal
           open={openFilter}
