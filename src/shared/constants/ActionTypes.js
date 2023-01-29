@@ -156,6 +156,7 @@ export const ADD_NEW_ROLE = 'ADD_NEW_ROLE';
 export const UPDATE_ROLE = 'UPDATE_ROLE';
 
 export const GET_PERMISSION_LIST = 'GET_PERMISSION_LIST';
+export const GET_ALL_PERMISSION_LIST = 'GET_ALL_PERMISSION_LIST';
 
 //Customer List
 export const GET_CUSTOMER_LIST = 'GET_CUSTOMER_LIST';

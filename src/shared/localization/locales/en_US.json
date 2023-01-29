@@ -971,6 +971,7 @@
 
   "validation.notUniquName": "This name is taken",
   "permission.permissionList": "Permission List",
+  "permission.permissionDownload": "Permission Download",
   "auctionItem.deleteMessage": "Are you sure, you want to delete the selected Auction item(s)?",
   "auction.auctionItemList": "Auction item List",
   "message.auctionItemUpdated": "Auction item updated successfully!",
