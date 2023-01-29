@@ -149,7 +149,9 @@ export const UPDATE_USER = 'UPDATE_USER';
 export const AUTH_USER_UPDATE = 'AUTH_USER_UPDATE';
 
 //ROLE_LIST
+
 export const GET_ROLE_LIST = 'GET_ROLE_LIST';
+export const GET_ALL_ROLES_LIST = 'GET_ALL_ROLES_LIST';
 export const ADD_NEW_ROLE = 'ADD_NEW_ROLE';
 export const UPDATE_ROLE = 'UPDATE_ROLE';
 

@@ -1,13 +1,14 @@
 import {ADD_ROLE, DELETE_ROLE, EDIT_ROLE} from 'shared/constants/Permissions';
 import CustomDataTable from '../../../components/CustomDataTable';
-import {onGetRoleList, onDeleteRoles} from 'redux/actions';
+import {onGetRoleList, onDeleteRoles, onGetAllRoles} from 'redux/actions';
 import RolesConfigs from '../../../configs/pages/roles';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 const columns = RolesConfigs().columns;
 import RoleModal from './RoleModal';
 import PropTypes from 'prop-types';
+import DownloadModal from 'components/CustomModal/downloadModal';
 
 export default function RoleList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -83,6 +84,51 @@ export default function RoleList({user}) {
     fetchData(value);
   };
 
+  //  export data as pdf and Excel states
+  const rolesTableRef = useRef();
+  const [openDownload, setOpenDownload] = useState(false);
+  const [exportType, setExportType] = useState('pdf');
+  const [exportDataAmount, setExportDataAmount] = useState('current_page');
+  const isExportDataEmpty = (objectName) => {
+    return JSON.stringify(objectName) === '{}';
+  };
+
+  const exportData = useSelector(({roles}) => {
+    console.log(roles);
+    if (
+      isExportDataEmpty(roles.rolesExportData) ||
+      exportDataAmount == 'current_page' ||
+      roles.rolesExportData.length == 0
+    ) {
+      return [];
+    } else {
+      return roles.rolesExportData.data;
+    }
+  });
+
+  useEffect(() => {
+    if (openDownload && exportDataAmount == 'all') {
+      fetchExportAllData();
+    } else if (
+      openDownload &&
+      exportDataAmount == 'filtered_data' &&
+      !isExportDataEmpty(filterData)
+    ) {
+      fetchExportAllData(filterData);
+    }
+  }, [dispatch, openDownload, exportDataAmount]);
+
+  const fetchExportAllData = async (filteredData = {}) => {
+    await dispatch(
+      onGetAllRoles({
+        page: page + 1,
+        per_page: -1,
+        filterData: filteredData,
+      }),
+    );
+  };
+  // end of for exporting data
+
   return (
     <>
       <CustomDataTable
@@ -105,8 +151,31 @@ export default function RoleList({user}) {
           user?.permissions?.includes(EDIT_ROLE) ||
           user?.permissions?.includes(DELETE_ROLE)
         }
-        exportData={data}
+        // for exporting data
+        ref={rolesTableRef}
+        exportType={exportType}
+        exportData={exportData.length == 0 ? data : exportData}
+        onDownloadClick={() => {
+          setOpenDownload(true);
+        }}
+        //end for exporting data
       />
+      {/* for exporting data */}
+      {openDownload && (
+        <DownloadModal
+          open={openDownload}
+          toggleOpen={() => setOpenDownload((d) => !d)}
+          title={<IntlMessages id='vehicle.download' />}
+          onDownload={() => {
+            rolesTableRef.current.download();
+          }}
+          setExportType={setExportType}
+          setExportDataAmount={setExportDataAmount}
+          exportType={exportType}
+          isLoading={loading}
+        />
+      )}
+      {/*end of for exporting data */}
       {openModal && (
         <RoleModal
           open={openModal}

@@ -961,6 +961,7 @@
   "customer.timezonePlaceholder": "Select Customer Timezone",
 
   "role.roleList": "Role List",
+  "role.roleDownload": "Role Download",
   "role.roleInfo": "Role Info",
   "role.permissions": "Permissions",
   "message.roleCreated": "Role created successfully!",
