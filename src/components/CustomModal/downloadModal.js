@@ -322,11 +322,12 @@ const DownloadModal = ({
               loading={isLoading}
               loadingIndicator='Loading...'
               variant='contained'
-              onClick={() => {
+              onClick={async () => {
                 onDownload();
-                tableRef.current.download();
+                await tableRef.current.download();
                 setExportType('pdf');
                 setExportDataAmount('current_page');
+                toggleOpen();
               }}
             >
               <IntlMessages id='common.download' />
