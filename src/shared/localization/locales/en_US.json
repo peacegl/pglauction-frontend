@@ -959,6 +959,7 @@
   "user.timezone": "User Timezone",
   "user.timezonePlaceholder": "Select User Timezone",
   "customer.timezone": "Customer Timezone",
+  "customer.download": "Customer Download",
   "customer.timezonePlaceholder": "Select Customer Timezone",
 
   "role.roleList": "Role List",

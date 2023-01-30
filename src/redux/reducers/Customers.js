@@ -3,10 +3,12 @@ import {
   SET_CUSTOMER_FILTER_DATA,
   ADD_NEW_CUSTOMER,
   UPDATE_CUSTOMER,
+  GET_ALL_CUSTOMER_LIST,
 } from '../../shared/constants/ActionTypes';
 
 const initialState = {
   customerData: {},
+  customersExportData: {},
   filterData: {},
 };
 
@@ -17,6 +19,13 @@ const CustomersReducer = (state = initialState, action) => {
         ...state,
         customerData: action.payload,
       };
+
+    case GET_ALL_CUSTOMER_LIST:
+      return {
+        ...state,
+        customersExportData: action.payload,
+      };
+
     case ADD_NEW_CUSTOMER:
       return {
         ...state,
