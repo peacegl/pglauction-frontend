@@ -42,7 +42,7 @@ export default function Footer() {
   return (
     <Box
       sx={{
-        mt: 17,
+        mt: 10,
         backgroundColor: (theme) => theme.palette.background.paper,
       }}
     >
