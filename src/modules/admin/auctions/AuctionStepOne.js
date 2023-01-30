@@ -1,5 +1,5 @@
+import AppAutocompleteField from '@crema/core/AppFormComponents/AppAutocompleteField';
 import AppDateTimeField from '@crema/core/AppFormComponents/AppDateTimeField';
-import AppDateField from '@crema/core/AppFormComponents/AppDateField';
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {Box, MenuItem, Stack} from '@mui/material';
@@ -13,6 +13,22 @@ const AuctionStepOne = (props) => {
   return (
     <Box>
       <Stack spacing={{xs: 5, md: 8}}>
+        <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+          <AppAutocompleteField
+            placeholder={messages['vehicle.locationPlaceholder']}
+            label={<IntlMessages id='vehicle.location' />}
+            name='location_id'
+            variant='outlined'
+            size='small'
+            sx={{flex: 1, width: '100%'}}
+            dataLoading={props.locationLoading}
+            options={props.locations}
+            keyName='name'
+            onSearch={props.searchLocations}
+            value={props.values?.location_id}
+            handleChange={({name, value}) => props.setfieldvalue(name, value)}
+          />
+        </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppTextField
             placeholder={messages['common.namePlaceholder']}
@@ -74,4 +90,7 @@ export default AuctionStepOne;
 AuctionStepOne.propTypes = {
   values: PropTypes.object,
   setfieldvalue: PropTypes.func,
+  searchLocations: PropTypes.func,
+  locationLoading: PropTypes.bool,
+  locations: PropTypes.array,
 };

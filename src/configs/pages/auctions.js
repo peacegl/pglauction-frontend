@@ -48,7 +48,7 @@ export const tableColumns = function () {
   ];
 };
 
-export default function configs(invalidYoutube) {
+export default function configs(initialValues) {
   return {
     exportColumns: [],
     itemSchema: yup.object({
@@ -80,7 +80,7 @@ export default function configs(invalidYoutube) {
           .required(<IntlMessages id='validation.statusRequired' />),
         start_date: yup
           .date()
-          .min(new Date(), <IntlMessages id='validation.pastDateNotAllowed' />)
+          // .min(new Date(), <IntlMessages id='validation.pastDateNotAllowed' />)
           .typeError(<IntlMessages id='validation.dateValidation' />)
           .required(<IntlMessages id='validation.startDateRequired' />),
         end_date: yup
@@ -92,10 +92,10 @@ export default function configs(invalidYoutube) {
             },
             then: yup
               .date()
-              .min(
-                yup.ref('start_date'),
-                <IntlMessages id='validation.endDateMustBeBigger' />,
-              )
+              // .min(
+              //   yup.ref('start_date'),
+              //   <IntlMessages id='validation.endDateMustBeBigger' />,
+              // )
               .typeError(<IntlMessages id='validation.dateValidation' />)
               .required(<IntlMessages id='validation.startDateRequired' />),
           })

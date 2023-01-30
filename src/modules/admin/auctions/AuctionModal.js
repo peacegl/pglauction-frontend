@@ -23,6 +23,8 @@ export default function AuctionModal({
 }) {
   const [vehiclesValidationError, setVehiclesValidationError] = useState(false);
   const [vehiclesLoading, setVehiclesLoading] = useState(false);
+  const [locationLoading, setLocationLoading] = useState(false);
+  const [locations, setLocations] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [vehicles, setVehicles] = useState([]);
   const dispatch = useDispatch();
@@ -36,9 +38,10 @@ export default function AuctionModal({
     start_date: '',
     end_date: '',
     status: '',
+    location_id: '',
     items: [],
   });
-  const validationSchema = AuctionConfigs().validationSchema;
+  const validationSchema = AuctionConfigs(initialValues).validationSchema;
   const searchVehicles = (content, vehicle_id = null) => {
     getData(
       `/vehicleColumn/auto_complete?column[]=vin&column[]=lot_number&mainImage=1&status=!sold${
@@ -51,6 +54,21 @@ export default function AuctionModal({
   };
   useEffect(() => {
     searchVehicles({});
+  }, []);
+
+  const searchLocations = (content, location_id = null) => {
+    getData(
+      `/location/auto_complete${location_id ? '?id=' + location_id : ''}`,
+      content,
+      setLocationLoading,
+      setLocations,
+    );
+  };
+
+  useEffect(() => {
+    if (!recordId) {
+      searchLocations({});
+    }
   }, []);
 
   useEffect(() => {
@@ -83,6 +101,7 @@ export default function AuctionModal({
               }
             });
             setInitialValues(values);
+            searchLocations({}, values.location_id);
           }
           setIsLoading(false);
         } catch (error) {
@@ -119,7 +138,13 @@ export default function AuctionModal({
       key: 1,
       icon: <StoreIcon />,
       label: <IntlMessages id='auction.auctionInfo' />,
-      children: <AuctionStepOne />,
+      children: (
+        <AuctionStepOne
+          locationLoading={locationLoading}
+          locations={locations}
+          searchLocations={searchLocations}
+        />
+      ),
     },
     {
       key: 2,
