@@ -19,10 +19,10 @@ import {
   ADD_SALE,
 } from 'shared/constants/Permissions';
 import DownloadModal from 'components/CustomModal/downloadModal';
+import {useRouter} from 'next/router';
 export default function VehicleList({user}) {
   const [openModal, setOpenModal] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
-
   const [showSaleModal, setShowSaleModal] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selected, setSelected] = useState([]);
@@ -43,7 +43,6 @@ export default function VehicleList({user}) {
   //  export data as pdf and Excel states
   const tableRef = useRef();
   const [openDownload, setOpenDownload] = useState(false);
-  const [lengthExport, setLengthExport] = useState(0);
   const [exportType, setExportType] = useState('pdf');
   const [exportDataAmount, setExportDataAmount] = useState('current_page');
   const isExportDataEmpty = (objectName) => {
@@ -74,18 +73,27 @@ export default function VehicleList({user}) {
   };
   // end of for exporting data
 
+  const router = useRouter();
   useEffect(() => {
-    fetchData(search);
-  }, [dispatch, page, per_page, orderBy, filterData]);
+    fetchData(search, router.query.filteredData);
+    console.log(filterData);
+  }, [
+    dispatch,
+    page,
+    per_page,
+    orderBy,
+    filterData,
+    router.query.filteredData,
+  ]);
 
-  const fetchData = async (search = '') => {
+  const fetchData = async (search = '', filteredData) => {
     await dispatch(
       onGetVehicleData({
         page: page + 1,
         per_page,
         search,
         exactMatch,
-        filterData,
+        filterData: filteredData ? filteredData : filterData,
         orderBy,
       }),
     );
