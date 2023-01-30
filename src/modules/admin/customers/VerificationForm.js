@@ -14,6 +14,19 @@ const VerificationForm = (props) => {
   const {size, elapsed, percentage, download, cancel, error, isInProgress} =
     useDownloader();
 
+  function handleDownload(dataUrl, filename) {
+    let link = document.createElement('a');
+    link.download = filename;
+    link.target = '_blank';
+
+    link.href = dataUrl;
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+    link = null;
+  }
+
   return (
     <Box sx={{mt: 10}}>
       <Stack spacing={{xs: 5, md: 8}}>
@@ -96,10 +109,14 @@ const VerificationForm = (props) => {
                     {props.customerData?.identification_proof && (
                       <IconButton
                         onClick={(e) => {
-                          e.stopPropagation();
-                          download(
+                          // e.stopPropagation();
+                          // download(
+                          //   props.customerData?.identification_proof,
+                          //   props.customerData?.identification_proof_name,
+                          // );
+                          handleDownload(
                             props.customerData?.identification_proof,
-                            props.customerData?.identification_proof_name,
+                            props.customerData?.identification_proof,
                           );
                         }}
                         size='small'

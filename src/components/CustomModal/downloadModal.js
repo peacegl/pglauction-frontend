@@ -78,9 +78,6 @@ const DownloadModal = ({
   const isExportDataEmpty = (objectName) => {
     return JSON.stringify(objectName) === '{}';
   };
-
-  console.log(length);
-
   useEffect(() => {
     if (isExportDataEmpty(filterData) && length == undefined) {
       fetchExportAllData();
@@ -348,6 +345,13 @@ DownloadModal.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   onDownload: PropTypes.func,
   setExportType: PropTypes.func,
+  setExportDataAmount: PropTypes.func,
+  exportType: PropTypes.string,
+  isLoading: PropTypes.bool,
+  tableRef: PropTypes.func,
+  filterData: PropTypes.any,
+  fetchExportAllData: PropTypes.any,
+  length: PropTypes.any,
 };
 
 export default DownloadModal;
