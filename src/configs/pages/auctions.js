@@ -83,18 +83,27 @@ export default function configs(invalidYoutube) {
           .required(<IntlMessages id='validation.statusRequired' />),
         start_date: yup
           .date()
+          .min(new Date(), <IntlMessages id='validation.pastDateNotAllowed' />)
           .typeError(<IntlMessages id='validation.dateValidation' />)
           .required(<IntlMessages id='validation.startDateRequired' />),
         end_date: yup
           .date()
-          .when('start_date', (start_date, schema) =>
-            schema.min(
-              start_date,
-              <IntlMessages id='validation.endDateMustBeBigger' />,
-            ),
-          )
+          .min(new Date(), <IntlMessages id='validation.pastDateNotAllowed' />)
+          .when('start_date', {
+            is: (start_date) => {
+              return !!start_date ? true : false;
+            },
+            then: yup
+              .date()
+              .min(
+                yup.ref('start_date'),
+                <IntlMessages id='validation.endDateMustBeBigger' />,
+              )
+              .typeError(<IntlMessages id='validation.dateValidation' />)
+              .required(<IntlMessages id='validation.startDateRequired' />),
+          })
           .typeError(<IntlMessages id='validation.dateValidation' />)
-          .required(<IntlMessages id='validation.endDateRequired' />),
+          .required(<IntlMessages id='validation.startDateRequired' />),
       }),
     ],
   };

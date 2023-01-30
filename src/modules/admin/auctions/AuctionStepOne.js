@@ -8,7 +8,8 @@ import PropTypes from 'prop-types';
 
 const AuctionStepOne = (props) => {
   const {messages} = useIntl();
-
+  const today = new Date();
+  const tommorrow = new Date();
   return (
     <Box>
       <Stack spacing={{xs: 5, md: 8}}>
@@ -47,6 +48,7 @@ const AuctionStepOne = (props) => {
             label={<IntlMessages id='common.startDate' />}
             value={props.values?.start_date}
             setfieldvalue={props.setfieldvalue}
+            minDate={today}
             name='start_date'
             size='small'
             sx={{flex: 1}}
@@ -56,6 +58,7 @@ const AuctionStepOne = (props) => {
             label={<IntlMessages id='common.endDate' />}
             value={props.values?.end_date}
             setfieldvalue={props.setfieldvalue}
+            minDate={tommorrow.setDate(today.getDate() + 1)}
             name='end_date'
             variant='outlined'
             size='small'
