@@ -43,12 +43,16 @@ export default function VehicleList({user}) {
   //  export data as pdf and Excel states
   const tableRef = useRef();
   const [openDownload, setOpenDownload] = useState(false);
+  const [lengthExport, setLengthExport] = useState(0);
   const [exportType, setExportType] = useState('pdf');
   const [exportDataAmount, setExportDataAmount] = useState('current_page');
   const isExportDataEmpty = (objectName) => {
     return JSON.stringify(objectName) === '{}';
   };
+
+  let data3;
   const exportData = useSelector(({vehicles}) => {
+    data3 = vehicles.vehiclesExportData.data;
     if (
       isExportDataEmpty(vehicles.vehiclesExportData) ||
       exportDataAmount == 'current_page'
@@ -58,6 +62,7 @@ export default function VehicleList({user}) {
       return vehicles.vehiclesExportData.data;
     }
   });
+
   const fetchExportAllData = async (filteredData = {}) => {
     await dispatch(
       onGetAllVehicle({
@@ -193,14 +198,12 @@ export default function VehicleList({user}) {
           onDownload={() => {
             if (openDownload && exportDataAmount == 'all') {
               fetchExportAllData();
-              console.log(exportData);
             } else if (
               openDownload &&
               exportDataAmount == 'filtered_data' &&
               !isExportDataEmpty(filterData)
             ) {
               fetchExportAllData(filterData);
-              console.log(exportData);
             }
             if (exportDataAmount == 'current_page') {
             }
@@ -212,6 +215,7 @@ export default function VehicleList({user}) {
           tableRef={tableRef}
           filterData={filterData}
           fetchExportAllData={fetchExportAllData}
+          length={data3}
         />
       )}
       {/*end of for exporting data */}

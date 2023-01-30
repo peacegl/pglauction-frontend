@@ -92,9 +92,9 @@ export default function RoleList({user}) {
   const isExportDataEmpty = (objectName) => {
     return JSON.stringify(objectName) === '{}';
   };
-
+  let data3;
   const exportData = useSelector(({roles}) => {
-    console.log(roles);
+    data3 = roles.rolesExportData.data;
     if (
       isExportDataEmpty(roles.rolesExportData) ||
       exportDataAmount == 'current_page' ||
@@ -106,17 +106,17 @@ export default function RoleList({user}) {
     }
   });
 
-  useEffect(() => {
-    if (openDownload && exportDataAmount == 'all') {
-      fetchExportAllData();
-    } else if (
-      openDownload &&
-      exportDataAmount == 'filtered_data' &&
-      !isExportDataEmpty(filterData)
-    ) {
-      fetchExportAllData(filterData);
-    }
-  }, [dispatch, openDownload, exportDataAmount]);
+  // useEffect(() => {
+  //   if (openDownload && exportDataAmount == 'all') {
+  //     fetchExportAllData();
+  //   } else if (
+  //     openDownload &&
+  //     exportDataAmount == 'filtered_data' &&
+  //     !isExportDataEmpty(filterData)
+  //   ) {
+  //     fetchExportAllData(filterData);
+  //   }
+  // }, [dispatch, openDownload, exportDataAmount]);
 
   const fetchExportAllData = async (filteredData = {}) => {
     await dispatch(
@@ -165,14 +165,28 @@ export default function RoleList({user}) {
         <DownloadModal
           open={openDownload}
           toggleOpen={() => setOpenDownload((d) => !d)}
-          title={<IntlMessages id='vehicle.download' />}
+          title={<IntlMessages id='role.roleDownload' />}
           onDownload={() => {
-            rolesTableRef.current.download();
+            if (openDownload && exportDataAmount == 'all') {
+              fetchExportAllData();
+            } else if (
+              openDownload &&
+              exportDataAmount == 'filtered_data' &&
+              !isExportDataEmpty(filterData)
+            ) {
+              fetchExportAllData(filterData);
+            }
+            if (exportDataAmount == 'current_page') {
+            }
           }}
           setExportType={setExportType}
           setExportDataAmount={setExportDataAmount}
           exportType={exportType}
           isLoading={loading}
+          tableRef={rolesTableRef}
+          filterData={filterData}
+          fetchExportAllData={fetchExportAllData}
+          length={data3}
         />
       )}
       {/*end of for exporting data */}

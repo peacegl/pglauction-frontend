@@ -100,7 +100,7 @@ export default function LocationList({user}) {
   };
 
   //  export data as pdf and Excel states
-  const tableRef = useRef();
+  const locationTableRef = useRef();
   const [openDownload, setOpenDownload] = useState(false);
   const [exportType, setExportType] = useState('pdf');
   const [exportDataAmount, setExportDataAmount] = useState('current_page');
@@ -108,7 +108,10 @@ export default function LocationList({user}) {
     return JSON.stringify(objectName) === '{}';
   };
 
+  let data3;
   const exportData = useSelector(({locations}) => {
+    data3 = locations.locationsExportData.data;
+
     if (
       isExportDataEmpty(locations.locationsExportData) ||
       exportDataAmount == 'current_page'
@@ -118,19 +121,6 @@ export default function LocationList({user}) {
       return locations.locationsExportData.data;
     }
   });
-
-  useEffect(() => {
-    if (openDownload && exportDataAmount == 'all') {
-      fetchExportAllData();
-    } else if (
-      openDownload &&
-      exportDataAmount == 'filtered_data' &&
-      !isExportDataEmpty(filterData)
-    ) {
-      fetchExportAllData(filterData);
-    }
-  }, [dispatch, openDownload, exportDataAmount]);
-
   const fetchExportAllData = async (filteredData = {}) => {
     await dispatch(
       onGetAllLocations({
@@ -167,7 +157,7 @@ export default function LocationList({user}) {
           user?.permissions?.includes(DELETE_LOCATION)
         }
         // for exporting data
-        ref={tableRef}
+        ref={locationTableRef}
         exportType={exportType}
         exportData={exportData.length == 0 ? data : exportData}
         onDownloadClick={() => {
@@ -181,14 +171,28 @@ export default function LocationList({user}) {
         <DownloadModal
           open={openDownload}
           toggleOpen={() => setOpenDownload((d) => !d)}
-          title={<IntlMessages id='vehicle.download' />}
+          title={<IntlMessages id='location.locationDownload' />}
           onDownload={() => {
-            tableRef.current.download();
+            if (openDownload && exportDataAmount == 'all') {
+              fetchExportAllData();
+            } else if (
+              openDownload &&
+              exportDataAmount == 'filtered_data' &&
+              !isExportDataEmpty(filterData)
+            ) {
+              fetchExportAllData(filterData);
+            }
+            if (exportDataAmount == 'current_page') {
+            }
           }}
           setExportType={setExportType}
           setExportDataAmount={setExportDataAmount}
           exportType={exportType}
           isLoading={loading}
+          tableRef={locationTableRef}
+          filterData={filterData}
+          fetchExportAllData={fetchExportAllData}
+          length={data3}
         />
       )}
       {/*end of for exporting data */}

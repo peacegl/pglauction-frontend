@@ -72,19 +72,22 @@ const DownloadModal = ({
   tableRef,
   filterData,
   fetchExportAllData,
+  length = undefined,
   ...rest
 }) => {
   const isExportDataEmpty = (objectName) => {
     return JSON.stringify(objectName) === '{}';
   };
 
+  console.log(length);
+
   useEffect(() => {
-    if (isExportDataEmpty(filterData)) {
+    if (isExportDataEmpty(filterData) && length == undefined) {
       fetchExportAllData();
-    } else if (!isExportDataEmpty(filterData)) {
+    } else if (!isExportDataEmpty(filterData) && length == undefined) {
       fetchExportAllData(filterData);
     }
-  }, [filterData]);
+  }, [filterData, length]);
 
   const ExportSelect = styled('div')(({theme}) => ({
     position: 'absolute',

@@ -859,6 +859,7 @@
   "common.reset": "Reset",
 
   "location.locationInfo": "Location Info",
+  "location.locationDownload": "Location Download",
   "location.locationList": "Location List",
   
   "confirm.location.delete": "Are you sure, you want to delete the selected Location(s)?",

@@ -64,7 +64,10 @@ export default function UserList() {
     return JSON.stringify(objectName) === '{}';
   };
 
+  let data3;
   const exportData = useSelector(({permissions}) => {
+    data3 = permissions.perExportData.data;
+
     if (
       isExportDataEmpty(permissions.perExportData) ||
       exportDataAmount == 'current_page' ||
@@ -76,17 +79,17 @@ export default function UserList() {
     }
   });
 
-  useEffect(() => {
-    if (openDownload && exportDataAmount == 'all') {
-      fetchExportAllData();
-    } else if (
-      openDownload &&
-      exportDataAmount == 'filtered_data' &&
-      !isExportDataEmpty(filterData)
-    ) {
-      fetchExportAllData(filterData);
-    }
-  }, [dispatch, openDownload, exportDataAmount]);
+  // useEffect(() => {
+  //   if (openDownload && exportDataAmount == 'all') {
+  //     fetchExportAllData();
+  //   } else if (
+  //     openDownload &&
+  //     exportDataAmount == 'filtered_data' &&
+  //     !isExportDataEmpty(filterData)
+  //   ) {
+  //     fetchExportAllData(filterData);
+  //   }
+  // }, [dispatch, openDownload, exportDataAmount]);
 
   const fetchExportAllData = async (filteredData = {}) => {
     await dispatch(
@@ -126,12 +129,26 @@ export default function UserList() {
           toggleOpen={() => setOpenDownload((d) => !d)}
           title={<IntlMessages id='permission.permissionDownload' />}
           onDownload={() => {
-            perTableRef.current.download();
+            if (openDownload && exportDataAmount == 'all') {
+              fetchExportAllData();
+            } else if (
+              openDownload &&
+              exportDataAmount == 'filtered_data' &&
+              !isExportDataEmpty(filterData)
+            ) {
+              fetchExportAllData(filterData);
+            }
+            if (exportDataAmount == 'current_page') {
+            }
           }}
           setExportType={setExportType}
           setExportDataAmount={setExportDataAmount}
           exportType={exportType}
           isLoading={loading}
+          tableRef={perTableRef}
+          filterData={filterData}
+          fetchExportAllData={fetchExportAllData}
+          length={data3}
         />
       )}
       {/*end of for exporting data */}

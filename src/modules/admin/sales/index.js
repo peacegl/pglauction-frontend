@@ -34,7 +34,9 @@ export default function SaleList({user}) {
     return JSON.stringify(objectName) === '{}';
   };
 
+  let data3;
   const exportData = useSelector(({sales}) => {
+    data3 = sales.salesExportData.data;
     if (
       isExportDataEmpty(sales.salesExportData) ||
       exportDataAmount == 'current_page'
@@ -44,19 +46,6 @@ export default function SaleList({user}) {
       return sales.salesExportData.data;
     }
   });
-
-  useEffect(() => {
-    if (openDownload && exportDataAmount == 'all') {
-      fetchExportAllData();
-    } else if (
-      openDownload &&
-      exportDataAmount == 'filtered_data' &&
-      !isExportDataEmpty(filterData)
-    ) {
-      fetchExportAllData(filterData);
-    }
-  }, [dispatch, openDownload, exportDataAmount]);
-
   const fetchExportAllData = async (filteredData = {}) => {
     await dispatch(
       onGetAllSales({
@@ -183,12 +172,26 @@ export default function SaleList({user}) {
           toggleOpen={() => setOpenDownload((d) => !d)}
           title={<IntlMessages id='sale.download' />}
           onDownload={() => {
-            salesTableRef.current.download();
+            if (openDownload && exportDataAmount == 'all') {
+              fetchExportAllData();
+            } else if (
+              openDownload &&
+              exportDataAmount == 'filtered_data' &&
+              !isExportDataEmpty(filterData)
+            ) {
+              fetchExportAllData(filterData);
+            }
+            if (exportDataAmount == 'current_page') {
+            }
           }}
           setExportType={setExportType}
           setExportDataAmount={setExportDataAmount}
           exportType={exportType}
           isLoading={loading}
+          tableRef={salesTableRef}
+          filterData={filterData}
+          fetchExportAllData={fetchExportAllData}
+          length={data3}
         />
       )}
       {/*end of for exporting data */}

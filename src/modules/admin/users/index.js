@@ -98,7 +98,9 @@ export default function UserList({user}) {
     return JSON.stringify(objectName) === '{}';
   };
 
+  let data3;
   const exportData = useSelector(({users}) => {
+    data3 = users.usersExportData.data;
     if (
       isExportDataEmpty(users.usersExportData) ||
       exportDataAmount == 'current_page'
@@ -108,18 +110,6 @@ export default function UserList({user}) {
       return users.usersExportData.data;
     }
   });
-
-  useEffect(() => {
-    if (openDownload && exportDataAmount == 'all') {
-      fetchExportAllData();
-    } else if (
-      openDownload &&
-      exportDataAmount == 'filtered_data' &&
-      !isExportDataEmpty(filterData)
-    ) {
-      fetchExportAllData(filterData);
-    }
-  }, [dispatch, openDownload, exportDataAmount]);
 
   const fetchExportAllData = async (filteredData = {}) => {
     await dispatch(
@@ -172,12 +162,26 @@ export default function UserList({user}) {
           toggleOpen={() => setOpenDownload((d) => !d)}
           title={<IntlMessages id='user.userDownload' />}
           onDownload={() => {
-            usersTableRef.current.download();
+            if (openDownload && exportDataAmount == 'all') {
+              fetchExportAllData();
+            } else if (
+              openDownload &&
+              exportDataAmount == 'filtered_data' &&
+              !isExportDataEmpty(filterData)
+            ) {
+              fetchExportAllData(filterData);
+            }
+            if (exportDataAmount == 'current_page') {
+            }
           }}
           setExportType={setExportType}
           setExportDataAmount={setExportDataAmount}
           exportType={exportType}
           isLoading={loading}
+          tableRef={usersTableRef}
+          filterData={filterData}
+          fetchExportAllData={fetchExportAllData}
+          length={data3}
         />
       )}
       {/*end of for exporting data */}
