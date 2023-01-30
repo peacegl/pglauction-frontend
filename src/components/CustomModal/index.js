@@ -29,6 +29,8 @@ const CustomModal = ({
   customValidation,
   isLoading,
   height,
+  extraDataOnStep,
+  extraData,
   ...rest
 }) => {
   const [activeStep, setActiveStep] = useState(0);
@@ -155,19 +157,30 @@ const CustomModal = ({
                         {steps[activeStep]?.label}
                       </Typography>
                     </Box>
-                    <Box
-                      sx={{
-                        height: height ? height : 380,
-                        overflowY: 'auto',
-                        px: 3,
-                        py: 5,
-                      }}
-                    >
-                      {React.cloneElement(steps[activeStep]?.children, {
-                        values: values,
-                        setfieldvalue: actions.setFieldValue,
-                        setFieldError: actions.setFieldError,
-                      })}
+                    <Box sx={{px: 3, py: 3}}>
+                      {extraDataOnStep == activeStep + 1 &&
+                        React.cloneElement(extraData, {
+                          values: values,
+                          setfieldvalue: actions.setFieldValue,
+                          setFieldError: actions.setFieldError,
+                        })}
+                      <Box
+                        sx={{
+                          py: 3,
+                          height: height
+                            ? height
+                            : extraDataOnStep == activeStep + 1
+                            ? 300
+                            : 380,
+                          overflowY: 'auto',
+                        }}
+                      >
+                        {React.cloneElement(steps[activeStep]?.children, {
+                          values: values,
+                          setfieldvalue: actions.setFieldValue,
+                          setFieldError: actions.setFieldError,
+                        })}
+                      </Box>
                     </Box>
                   </Box>
                 )}
@@ -281,4 +294,6 @@ CustomModal.propTypes = {
   customValidation: PropTypes.func,
   isLoading: PropTypes.bool,
   height: PropTypes.number || PropTypes.string,
+  extraDataOnStep: PropTypes.number,
+  extraData: PropTypes.node,
 };

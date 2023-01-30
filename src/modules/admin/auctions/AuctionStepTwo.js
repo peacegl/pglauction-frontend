@@ -1,33 +1,11 @@
-import {Box, Button, Chip, Paper, Stack, Typography} from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
+import {Box, Chip, Paper, Typography} from '@mui/material';
 import IntlMessages from '@crema/utility/IntlMessages';
-import Autocomplete from '@mui/material/Autocomplete';
 import AuctionItemModal from './AuctionItemModal';
-import TextField from '@mui/material/TextField';
-import AddIcon from '@mui/icons-material/Add';
-import {useEffect, useState} from 'react';
 import {moneyFormater} from 'configs';
-import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
+import {useEffect} from 'react';
 
 const AuctionStepTwo = (props) => {
-  const {messages} = useIntl();
-  const [vehicle, setVehicle] = useState('');
-  const [auctionItem, setAuctionItem] = useState({});
-  const [auctionItemModal, setAuctionItemModal] = useState(false);
-
-  const onInputChange = (event, value, reason) => {
-    if (reason == 'input') {
-      const object = searchObject(value);
-      props.searchVehicles(object);
-    }
-  };
-  const searchObject = (value) => {
-    const object = {};
-    object.content = value;
-    return object;
-  };
-
   useEffect(() => {
     if (props.values?.items?.length) {
       props.setVehiclesValidationError(false);
@@ -36,95 +14,6 @@ const AuctionStepTwo = (props) => {
 
   return (
     <Box sx={{position: 'relative'}}>
-      <Box sx={{position: 'sticky', left: '0%', top: '0%', right: '100%'}}>
-        <Stack direction='row' spacing={5}>
-          <Box sx={{flex: 1}}>
-            <Autocomplete
-              isOptionEqualToValue={(option, value) => option.id === value.id}
-              sx={{width: '100%'}}
-              size='small'
-              value={vehicle}
-              onChange={(event, newValue) => {
-                setVehicle(newValue);
-              }}
-              loading={props.vehiclesLoading}
-              options={props.vehicles}
-              getOptionLabel={(option) =>
-                option.lot_number ? option.lot_number + ' - ' + option.vin : ''
-              }
-              renderOption={(props, option) => (
-                <Box
-                  component='li'
-                  sx={{'& > img': {mr: 2, flexShrink: 0}}}
-                  {...props}
-                >
-                  {option?.images?.length > 0 && (
-                    <img
-                      loading='lazy'
-                      width='30'
-                      src={option?.images[0]?.path}
-                      alt=''
-                    />
-                  )}
-                  {option.lot_number} - {option.vin}
-                </Box>
-              )}
-              onInputChange={onInputChange}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label={<IntlMessages id='common.vehicle' />}
-                  placeholder={messages['common.vehiclePlaceholder']}
-                  InputProps={{
-                    ...params.InputProps,
-                    endAdornment: (
-                      <>
-                        {props.vehiclesLoading ? (
-                          <CircularProgress color='inherit' size={20} />
-                        ) : null}
-                        {params.InputProps.endAdornment}
-                      </>
-                    ),
-                  }}
-                />
-              )}
-            />
-            {props.vehiclesValidationError && (
-              <Typography sx={{mx: 2}} component='p' variant='p' color='error'>
-                <IntlMessages id='validation.vehiclesRequired' />
-              </Typography>
-            )}
-          </Box>
-          <Button
-            sx={{
-              minWidth: 100,
-              alignSelf: 'self-start',
-            }}
-            color='primary'
-            variant='outlined'
-            startIcon={<AddIcon />}
-            onClick={() => {
-              if (!vehicle?.id) {
-                props.setVehiclesValidationError(true);
-              } else {
-                let index = props.values.items.findIndex(
-                  (item) => item.id == vehicle.id,
-                );
-                if (index == -1) {
-                  setAuctionItem({});
-                  setAuctionItemModal(true);
-                }
-              }
-            }}
-          >
-            <IntlMessages id='common.add' />
-          </Button>
-        </Stack>
-        <Typography component='p' sx={{fontWeight: 'bold', px: 1, my: 3}}>
-          <IntlMessages id='vehicle.totalVehicles' />:{' '}
-          {props.values.items.length}
-        </Typography>
-      </Box>
       <Box
         sx={{
           display: 'flex',
@@ -146,8 +35,8 @@ const AuctionStepTwo = (props) => {
               <Box>
                 <Chip
                   onClick={() => {
-                    setAuctionItem(item);
-                    setAuctionItemModal(true);
+                    props.setAuctionItem(item);
+                    props.setAuctionItemModal(true);
                   }}
                   sx={{m: 1.5}}
                   key={index}
@@ -184,17 +73,17 @@ const AuctionStepTwo = (props) => {
           </Paper>
         ))}
       </Box>
-      {auctionItemModal && (
+      {props.auctionItemModal && (
         <AuctionItemModal
-          open={auctionItemModal}
+          open={props.auctionItemModal}
           toggleOpen={() => {
-            setAuctionItemModal((d) => !d);
-            setVehicle('');
+            props.setAuctionItemModal((d) => !d);
+            props.setVehicle('');
           }}
-          vehicle={vehicle}
+          vehicle={props.vehicle}
           setfieldvalue={props.setfieldvalue}
           items={props.values?.items}
-          auctionItem={auctionItem}
+          auctionItem={props.auctionItem}
         />
       )}
     </Box>
@@ -210,4 +99,10 @@ AuctionStepTwo.propTypes = {
   vehicles: PropTypes.array,
   vehiclesValidationError: PropTypes.bool,
   setVehiclesValidationError: PropTypes.func,
+  setVehicle: PropTypes.func,
+  vehicle: PropTypes.any,
+  setAuctionItem: PropTypes.func,
+  auctionItem: PropTypes.any,
+  setAuctionItemModal: PropTypes.func,
+  auctionItemModal: PropTypes.any,
 };

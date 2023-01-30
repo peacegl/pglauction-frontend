@@ -11,6 +11,7 @@ import {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import {getData} from 'configs';
+import ExtraDataOnStepTwo from './ExtraDataOnStepTwo';
 
 export default function AuctionModal({
   open,
@@ -25,6 +26,11 @@ export default function AuctionModal({
   const [isLoading, setIsLoading] = useState(false);
   const [vehicles, setVehicles] = useState([]);
   const dispatch = useDispatch();
+
+  const [vehicle, setVehicle] = useState('');
+  const [auctionItem, setAuctionItem] = useState({});
+  const [auctionItemModal, setAuctionItemModal] = useState(false);
+
   const [initialValues, setInitialValues] = useState({
     name: '',
     start_date: '',
@@ -116,7 +122,7 @@ export default function AuctionModal({
       children: <AuctionStepOne />,
     },
     {
-      key: 3,
+      key: 2,
       icon: <DirectionsCarIcon />,
       label: <IntlMessages id='auction.auctionItems' />,
       children: (
@@ -126,6 +132,12 @@ export default function AuctionModal({
           searchVehicles={searchVehicles}
           setVehiclesValidationError={setVehiclesValidationError}
           vehiclesValidationError={vehiclesValidationError}
+          setVehicle={setVehicle}
+          vehicle={vehicle}
+          setAuctionItem={setAuctionItem}
+          auctionItem={auctionItem}
+          setAuctionItemModal={setAuctionItemModal}
+          auctionItemModal={auctionItemModal}
         />
       ),
     },
@@ -137,6 +149,22 @@ export default function AuctionModal({
       width={width}
       steps={steps}
       onSave={onSave}
+      extraDataOnStep={2}
+      extraData={
+        <ExtraDataOnStepTwo
+          vehicles={vehicles}
+          vehiclesLoading={vehiclesLoading}
+          searchVehicles={searchVehicles}
+          setVehiclesValidationError={setVehiclesValidationError}
+          vehiclesValidationError={vehiclesValidationError}
+          setVehicle={setVehicle}
+          vehicle={vehicle}
+          setAuctionItem={setAuctionItem}
+          auctionItem={auctionItem}
+          setAuctionItemModal={setAuctionItemModal}
+          auctionItemModal={auctionItemModal}
+        />
+      }
       validationSchema={validationSchema}
       initialValues={initialValues}
       isLoading={isLoading}
