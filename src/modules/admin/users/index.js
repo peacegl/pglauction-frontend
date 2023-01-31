@@ -1,13 +1,14 @@
 import {ADD_USER, DELETE_USER, EDIT_USER} from 'shared/constants/Permissions';
 import {filterContent, tableColumns} from 'configs/pages/users';
 import FilterModal from 'components/CustomModal/FilterModal';
-import {onGetUserList, onDeleteUsers} from 'redux/actions';
+import {onGetUserList, onDeleteUsers, onGetAllUsers} from 'redux/actions';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import UserModal from './UserModal';
 import PropTypes from 'prop-types';
+import DownloadModal from 'components/CustomModal/downloadModal';
 
 export default function UserList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -88,6 +89,39 @@ export default function UserList({user}) {
     fetchData(value);
   };
 
+  //  export data as pdf and Excel states
+  const usersTableRef = useRef();
+  const [openDownload, setOpenDownload] = useState(false);
+  const [exportType, setExportType] = useState('pdf');
+  const [exportDataAmount, setExportDataAmount] = useState('current_page');
+  const isExportDataEmpty = (objectName) => {
+    return JSON.stringify(objectName) === '{}';
+  };
+
+  let data3;
+  const exportData = useSelector(({users}) => {
+    data3 = users.usersExportData.data;
+    if (
+      isExportDataEmpty(users.usersExportData) ||
+      exportDataAmount == 'current_page'
+    ) {
+      return [];
+    } else {
+      return users.usersExportData.data;
+    }
+  });
+
+  const fetchExportAllData = async (filteredData = {}) => {
+    await dispatch(
+      onGetAllUsers({
+        page: page + 1,
+        per_page: -1,
+        filterData: filteredData,
+      }),
+    );
+  };
+  // end of for exporting data
+
   return (
     <>
       <CustomDataTable
@@ -112,8 +146,46 @@ export default function UserList({user}) {
           user?.permissions?.includes(EDIT_USER) ||
           user?.permissions?.includes(DELETE_USER)
         }
-        exportData={data}
+        // for exporting data
+        ref={usersTableRef}
+        exportType={exportType}
+        exportData={exportData.length == 0 ? data : exportData}
+        onDownloadClick={() => {
+          setOpenDownload(true);
+        }}
+        //end for exporting data
       />
+      {/* for exporting data */}
+      {openDownload && (
+        <DownloadModal
+          open={openDownload}
+          toggleOpen={() => setOpenDownload((d) => !d)}
+          title={<IntlMessages id='user.userDownload' />}
+          onDownload={() => {
+            if (openDownload && exportDataAmount == 'all') {
+              fetchExportAllData();
+            } else if (
+              openDownload &&
+              exportDataAmount == 'filtered_data' &&
+              !isExportDataEmpty(filterData)
+            ) {
+              fetchExportAllData(filterData);
+            }
+            if (exportDataAmount == 'current_page') {
+            }
+          }}
+          setExportType={setExportType}
+          setExportDataAmount={setExportDataAmount}
+          exportType={exportType}
+          isLoading={loading}
+          tableRef={usersTableRef}
+          filterData={filterData}
+          fetchExportAllData={fetchExportAllData}
+          length={data3}
+        />
+      )}
+      {/*end of for exporting data */}
+
       {openFilter && (
         <FilterModal
           open={openFilter}

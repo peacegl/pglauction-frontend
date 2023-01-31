@@ -3,11 +3,13 @@ import {
   GET_LOCATION_LIST,
   SET_LOCATION_FILTER_DATA,
   UPDATE_LOCATION,
+  GET_ALL_LOCATIONS_LIST,
 } from '../../shared/constants/ActionTypes';
 
 const initialState = {
   locationData: {},
   filterData: {},
+  locationsExportData: {},
 };
 
 const LocationReducer = (state = initialState, action) => {
@@ -16,6 +18,11 @@ const LocationReducer = (state = initialState, action) => {
       return {
         ...state,
         locationData: action.payload,
+      };
+    case GET_ALL_LOCATIONS_LIST:
+      return {
+        ...state,
+        locationsExportData: action.payload,
       };
     case ADD_NEW_LOCATION:
       return {
