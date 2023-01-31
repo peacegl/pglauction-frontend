@@ -1,23 +1,20 @@
-import {filterContent, tableColumns} from '../../../configs/pages/customers';
-import {
-  onGetCustomerList,
-  onDeleteCustomers,
-  onGetAllCustomers,
-} from 'redux/actions';
+import {filterContent, tableColumns} from 'configs/pages/customers';
+import {onGetCustomerList, onDeleteCustomers} from 'redux/actions';
+import DownloadModal from 'components/CustomModal/downloadModal';
 import FilterModal from 'components/CustomModal/FilterModal';
+import AccountVerification from './AccountVerificationModal';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
+import {getData, onViewColumnsChange} from 'configs';
 import CustomerModal from './CustomerModal';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {
   ADD_CUSTOMER,
   EDIT_CUSTOMER,
   DELETE_CUSTOMER,
 } from 'shared/constants/Permissions';
-import AccountVerification from './AccountVerificationModal';
-import DownloadModal from 'components/CustomModal/downloadModal';
 
 export default function CustomerList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -56,6 +53,15 @@ export default function CustomerList({user}) {
   const options = {
     count: total,
     rowsPerPage: per_page,
+    onViewColumnsChange: (changedColumn, action) => {
+      onViewColumnsChange(
+        changedColumn,
+        action,
+        setDownloadColumns,
+        downloadColumns,
+        tableColumns(),
+      );
+    },
     onChangeRowsPerPage: (numberOfRows) => {
       setPerPage(numberOfRows);
       setPage(0);
@@ -101,36 +107,26 @@ export default function CustomerList({user}) {
   };
 
   //  export data as pdf and Excel states
-  const customerTableRef = useRef();
+  const [exportData, setExportData] = useState([]);
+  const [downloadColumns, setDownloadColumns] = useState([]);
   const [openDownload, setOpenDownload] = useState(false);
   const [exportType, setExportType] = useState('pdf');
   const [exportDataAmount, setExportDataAmount] = useState('current_page');
-  const isExportDataEmpty = (objectName) => {
-    return JSON.stringify(objectName) === '{}';
-  };
-
-  let data3;
-  const exportData = useSelector(({customers}) => {
-    data3 = customers.customersExportData.data;
-    if (
-      isExportDataEmpty(customers.customersExportData) ||
-      exportDataAmount == 'current_page'
-    ) {
-      return [];
-    } else {
-      return customers.customersExportData.data;
-    }
-  });
-
   const fetchExportAllData = async (filteredData = {}) => {
-    await dispatch(
-      onGetAllCustomers({
-        page: page + 1,
+    await getData(
+      `/customers`,
+      {
+        page: 1,
         per_page: -1,
         filterData: filteredData,
-      }),
+      },
+      () => {},
+      setExportData,
     );
   };
+  useEffect(() => {
+    setDownloadColumns(tableColumns());
+  }, []);
   // end of for exporting data
 
   return (
@@ -157,14 +153,9 @@ export default function CustomerList({user}) {
           user?.permissions?.includes(EDIT_CUSTOMER) ||
           user?.permissions?.includes(DELETE_CUSTOMER)
         }
-        // for exporting data
-        ref={customerTableRef}
-        exportType={exportType}
-        exportData={exportData.length == 0 ? data : exportData}
         onDownloadClick={() => {
           setOpenDownload(true);
         }}
-        //end for exporting data
       />
 
       {/* for exporting data */}
@@ -173,27 +164,19 @@ export default function CustomerList({user}) {
           open={openDownload}
           toggleOpen={() => setOpenDownload((d) => !d)}
           title={<IntlMessages id='customer.download' />}
-          onDownload={() => {
-            if (openDownload && exportDataAmount == 'all') {
-              fetchExportAllData();
-            } else if (
-              openDownload &&
-              exportDataAmount == 'filtered_data' &&
-              !isExportDataEmpty(filterData)
-            ) {
-              fetchExportAllData(filterData);
-            }
-            if (exportDataAmount == 'current_page') {
+          onDownloadData={async () => {
+            if (exportDataAmount == 'all') {
+              await fetchExportAllData();
+            } else if (exportDataAmount == 'filtered_data') {
+              await fetchExportAllData(filterData);
             }
           }}
           setExportType={setExportType}
           setExportDataAmount={setExportDataAmount}
           exportType={exportType}
-          isLoading={loading}
-          tableRef={customerTableRef}
           filterData={filterData}
-          fetchExportAllData={fetchExportAllData}
-          length={data3}
+          columns={downloadColumns}
+          exportData={exportDataAmount == 'current_page' ? data : exportData}
         />
       )}
       {/*end of for exporting data */}

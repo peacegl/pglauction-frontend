@@ -1,14 +1,15 @@
 import {ADD_ROLE, DELETE_ROLE, EDIT_ROLE} from 'shared/constants/Permissions';
-import CustomDataTable from '../../../components/CustomDataTable';
-import {onGetRoleList, onDeleteRoles, onGetAllRoles} from 'redux/actions';
-import RolesConfigs from '../../../configs/pages/roles';
+import DownloadModal from 'components/CustomModal/downloadModal';
+import {onGetRoleList, onDeleteRoles} from 'redux/actions';
+import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
-import {useEffect, useRef, useState} from 'react';
+import {getData, onViewColumnsChange} from 'configs';
+import RolesConfigs from 'configs/pages/roles';
+import {useEffect, useState} from 'react';
 const columns = RolesConfigs().columns;
 import RoleModal from './RoleModal';
 import PropTypes from 'prop-types';
-import DownloadModal from 'components/CustomModal/downloadModal';
 
 export default function RoleList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -41,6 +42,15 @@ export default function RoleList({user}) {
   const options = {
     count: total,
     rowsPerPage: per_page,
+    onViewColumnsChange: (changedColumn, action) => {
+      onViewColumnsChange(
+        changedColumn,
+        action,
+        setDownloadColumns,
+        downloadColumns,
+        columns,
+      );
+    },
     onChangeRowsPerPage: (numberOfRows) => {
       setPerPage(numberOfRows);
       setPage(0);
@@ -85,48 +95,26 @@ export default function RoleList({user}) {
   };
 
   //  export data as pdf and Excel states
-  const rolesTableRef = useRef();
+  const [exportData, setExportData] = useState([]);
+  const [downloadColumns, setDownloadColumns] = useState([]);
   const [openDownload, setOpenDownload] = useState(false);
   const [exportType, setExportType] = useState('pdf');
   const [exportDataAmount, setExportDataAmount] = useState('current_page');
-  const isExportDataEmpty = (objectName) => {
-    return JSON.stringify(objectName) === '{}';
-  };
-  let data3;
-  const exportData = useSelector(({roles}) => {
-    data3 = roles.rolesExportData.data;
-    if (
-      isExportDataEmpty(roles.rolesExportData) ||
-      exportDataAmount == 'current_page' ||
-      roles.rolesExportData.length == 0
-    ) {
-      return [];
-    } else {
-      return roles.rolesExportData.data;
-    }
-  });
-
-  // useEffect(() => {
-  //   if (openDownload && exportDataAmount == 'all') {
-  //     fetchExportAllData();
-  //   } else if (
-  //     openDownload &&
-  //     exportDataAmount == 'filtered_data' &&
-  //     !isExportDataEmpty(filterData)
-  //   ) {
-  //     fetchExportAllData(filterData);
-  //   }
-  // }, [dispatch, openDownload, exportDataAmount]);
-
   const fetchExportAllData = async (filteredData = {}) => {
-    await dispatch(
-      onGetAllRoles({
-        page: page + 1,
+    await getData(
+      `/roles`,
+      {
+        page: 1,
         per_page: -1,
         filterData: filteredData,
-      }),
+      },
+      () => {},
+      setExportData,
     );
   };
+  useEffect(() => {
+    setDownloadColumns(columns);
+  }, []);
   // end of for exporting data
 
   return (
@@ -151,14 +139,9 @@ export default function RoleList({user}) {
           user?.permissions?.includes(EDIT_ROLE) ||
           user?.permissions?.includes(DELETE_ROLE)
         }
-        // for exporting data
-        ref={rolesTableRef}
-        exportType={exportType}
-        exportData={exportData.length == 0 ? data : exportData}
         onDownloadClick={() => {
           setOpenDownload(true);
         }}
-        //end for exporting data
       />
       {/* for exporting data */}
       {openDownload && (
@@ -166,27 +149,19 @@ export default function RoleList({user}) {
           open={openDownload}
           toggleOpen={() => setOpenDownload((d) => !d)}
           title={<IntlMessages id='role.roleDownload' />}
-          onDownload={() => {
-            if (openDownload && exportDataAmount == 'all') {
-              fetchExportAllData();
-            } else if (
-              openDownload &&
-              exportDataAmount == 'filtered_data' &&
-              !isExportDataEmpty(filterData)
-            ) {
-              fetchExportAllData(filterData);
-            }
-            if (exportDataAmount == 'current_page') {
+          onDownloadData={async () => {
+            if (exportDataAmount == 'all') {
+              await fetchExportAllData();
+            } else if (exportDataAmount == 'filtered_data') {
+              await fetchExportAllData(filterData);
             }
           }}
           setExportType={setExportType}
           setExportDataAmount={setExportDataAmount}
           exportType={exportType}
-          isLoading={loading}
-          tableRef={rolesTableRef}
           filterData={filterData}
-          fetchExportAllData={fetchExportAllData}
-          length={data3}
+          columns={downloadColumns}
+          exportData={exportDataAmount == 'current_page' ? data : exportData}
         />
       )}
       {/*end of for exporting data */}
