@@ -1,11 +1,13 @@
 import {
   GET_USER_LIST,
+  GET_ALL_USERS_LIST,
   ADD_NEW_USER,
   UPDATE_USER,
 } from 'shared/constants/ActionTypes';
 
 const initialUsers = {
   userList: {},
+  usersExportData: {},
 };
 
 const usersReducer = (state = initialUsers, action) => {
@@ -15,6 +17,13 @@ const usersReducer = (state = initialUsers, action) => {
         ...state,
         userList: action.payload,
       };
+
+    case GET_ALL_USERS_LIST:
+      return {
+        ...state,
+        usersExportData: action.payload,
+      };
+
     case ADD_NEW_USER:
       return {
         ...state,

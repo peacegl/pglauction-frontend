@@ -204,3 +204,22 @@ export function useEffectDebugger(
 
   useEffect(effectHook, dependencies);
 }
+
+export async function onViewColumnsChange(
+  changedColumn,
+  action,
+  setDownloadColumns,
+  downloadColumns,
+  tableColumns,
+) {
+  if (action == 'remove') {
+    setDownloadColumns((d) => d.filter((item) => item.name !== changedColumn));
+  } else if (action == 'add') {
+    let index = tableColumns.findIndex((item) => item.name == changedColumn);
+    if (index != -1) {
+      let columns = downloadColumns;
+      columns.splice(index, 0, tableColumns[index]);
+      setDownloadColumns(columns);
+    }
+  }
+}

@@ -1,9 +1,12 @@
-import {filterContent, tableColumns} from '../../../configs/pages/customers';
+import {filterContent, tableColumns} from 'configs/pages/customers';
 import {onGetCustomerList, onDeleteCustomers} from 'redux/actions';
+import DownloadModal from 'components/CustomModal/downloadModal';
 import FilterModal from 'components/CustomModal/FilterModal';
+import AccountVerification from './AccountVerificationModal';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
+import {getData, onViewColumnsChange} from 'configs';
 import CustomerModal from './CustomerModal';
 import {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
@@ -12,7 +15,6 @@ import {
   EDIT_CUSTOMER,
   DELETE_CUSTOMER,
 } from 'shared/constants/Permissions';
-import AccountVerification from './AccountVerificationModal';
 
 export default function CustomerList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -51,6 +53,15 @@ export default function CustomerList({user}) {
   const options = {
     count: total,
     rowsPerPage: per_page,
+    onViewColumnsChange: (changedColumn, action) => {
+      onViewColumnsChange(
+        changedColumn,
+        action,
+        setDownloadColumns,
+        downloadColumns,
+        tableColumns(),
+      );
+    },
     onChangeRowsPerPage: (numberOfRows) => {
       setPerPage(numberOfRows);
       setPage(0);
@@ -95,6 +106,29 @@ export default function CustomerList({user}) {
     fetchData(value);
   };
 
+  //  export data as pdf and Excel states
+  const [exportData, setExportData] = useState([]);
+  const [downloadColumns, setDownloadColumns] = useState([]);
+  const [openDownload, setOpenDownload] = useState(false);
+  const [exportType, setExportType] = useState('pdf');
+  const [exportDataAmount, setExportDataAmount] = useState('current_page');
+  const fetchExportAllData = async (filteredData = {}) => {
+    await getData(
+      `/customers`,
+      {
+        page: 1,
+        per_page: -1,
+        filterData: filteredData,
+      },
+      () => {},
+      setExportData,
+    );
+  };
+  useEffect(() => {
+    setDownloadColumns(tableColumns());
+  }, []);
+  // end of for exporting data
+
   return (
     <>
       <CustomDataTable
@@ -121,8 +155,35 @@ export default function CustomerList({user}) {
             ? 'multiple'
             : 'none'
         }
-        exportData={data}
+        onDownloadClick={() => {
+          setOpenDownload(true);
+        }}
       />
+
+      {/* for exporting data */}
+      {openDownload && (
+        <DownloadModal
+          open={openDownload}
+          toggleOpen={() => setOpenDownload((d) => !d)}
+          title={<IntlMessages id='customer.download' />}
+          onDownloadData={async () => {
+            if (exportDataAmount == 'all') {
+              await fetchExportAllData();
+            } else if (exportDataAmount == 'filtered_data') {
+              await fetchExportAllData(filterData);
+            }
+          }}
+          setExportType={setExportType}
+          setExportDataAmount={setExportDataAmount}
+          exportType={exportType}
+          filterData={filterData}
+          columns={downloadColumns}
+          exportData={exportDataAmount == 'current_page' ? data : exportData}
+          exportTitle={<IntlMessages id='customer.customerList' />}
+        />
+      )}
+      {/*end of for exporting data */}
+
       {openFilter && (
         <FilterModal
           open={openFilter}

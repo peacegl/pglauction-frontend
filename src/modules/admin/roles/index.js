@@ -1,9 +1,11 @@
 import {ADD_ROLE, DELETE_ROLE, EDIT_ROLE} from 'shared/constants/Permissions';
-import CustomDataTable from '../../../components/CustomDataTable';
+import DownloadModal from 'components/CustomModal/downloadModal';
 import {onGetRoleList, onDeleteRoles} from 'redux/actions';
-import RolesConfigs from '../../../configs/pages/roles';
+import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
+import {getData, onViewColumnsChange} from 'configs';
+import RolesConfigs from 'configs/pages/roles';
 import {useEffect, useState} from 'react';
 const columns = RolesConfigs().columns;
 import RoleModal from './RoleModal';
@@ -40,6 +42,15 @@ export default function RoleList({user}) {
   const options = {
     count: total,
     rowsPerPage: per_page,
+    onViewColumnsChange: (changedColumn, action) => {
+      onViewColumnsChange(
+        changedColumn,
+        action,
+        setDownloadColumns,
+        downloadColumns,
+        columns,
+      );
+    },
     onChangeRowsPerPage: (numberOfRows) => {
       setPerPage(numberOfRows);
       setPage(0);
@@ -83,6 +94,29 @@ export default function RoleList({user}) {
     fetchData(value);
   };
 
+  //  export data as pdf and Excel states
+  const [exportData, setExportData] = useState([]);
+  const [downloadColumns, setDownloadColumns] = useState([]);
+  const [openDownload, setOpenDownload] = useState(false);
+  const [exportType, setExportType] = useState('pdf');
+  const [exportDataAmount, setExportDataAmount] = useState('current_page');
+  const fetchExportAllData = async (filteredData = {}) => {
+    await getData(
+      `/roles`,
+      {
+        page: 1,
+        per_page: -1,
+        filterData: filteredData,
+      },
+      () => {},
+      setExportData,
+    );
+  };
+  useEffect(() => {
+    setDownloadColumns(columns);
+  }, []);
+  // end of for exporting data
+
   return (
     <>
       <CustomDataTable
@@ -107,8 +141,33 @@ export default function RoleList({user}) {
             ? 'multiple'
             : 'none'
         }
-        exportData={data}
+        onDownloadClick={() => {
+          setOpenDownload(true);
+        }}
       />
+      {/* for exporting data */}
+      {openDownload && (
+        <DownloadModal
+          open={openDownload}
+          toggleOpen={() => setOpenDownload((d) => !d)}
+          title={<IntlMessages id='role.roleDownload' />}
+          onDownloadData={async () => {
+            if (exportDataAmount == 'all') {
+              await fetchExportAllData();
+            } else if (exportDataAmount == 'filtered_data') {
+              await fetchExportAllData(filterData);
+            }
+          }}
+          setExportType={setExportType}
+          setExportDataAmount={setExportDataAmount}
+          exportType={exportType}
+          filterData={filterData}
+          columns={downloadColumns}
+          exportData={exportDataAmount == 'current_page' ? data : exportData}
+          exportTitle={<IntlMessages id='role.roleList' />}
+        />
+      )}
+      {/*end of for exporting data */}
       {openModal && (
         <RoleModal
           open={openModal}

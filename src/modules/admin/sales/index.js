@@ -1,10 +1,12 @@
 import {ADD_SALE, DELETE_SALE, EDIT_SALE} from 'shared/constants/Permissions';
+import {onGetSaleList, onDeleteSales} from 'redux/actions';
+import DownloadModal from 'components/CustomModal/downloadModal';
 import {filterContent, tableColumns} from 'configs/pages/sales';
 import FilterModal from 'components/CustomModal/FilterModal';
-import {onGetSaleList, onDeleteSales} from 'redux/actions';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
+import {getData, onViewColumnsChange} from 'configs';
 import {useEffect, useState} from 'react';
 import SaleModal from './SaleModal';
 import PropTypes from 'prop-types';
@@ -22,8 +24,31 @@ export default function SaleList({user}) {
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(({sales}) => sales.saleList);
   const {loading} = useSelector(({common}) => common);
-
   const dispatch = useDispatch();
+
+  //  export data as pdf and Excel states
+  const [exportData, setExportData] = useState([]);
+  const [downloadColumns, setDownloadColumns] = useState([]);
+  const [openDownload, setOpenDownload] = useState(false);
+  const [exportType, setExportType] = useState('pdf');
+  const [exportDataAmount, setExportDataAmount] = useState('current_page');
+  const fetchExportAllData = async (filteredData = {}) => {
+    await getData(
+      `/sales`,
+      {
+        page: 1,
+        per_page: -1,
+        filterData: filteredData,
+      },
+      () => {},
+      setExportData,
+    );
+  };
+  useEffect(() => {
+    setDownloadColumns(tableColumns());
+  }, []);
+  // end of for exporting data
+
   useEffect(() => {
     fetchData(search);
   }, [dispatch, page, per_page, orderBy, filterData]);
@@ -44,6 +69,15 @@ export default function SaleList({user}) {
   const options = {
     count: total,
     rowsPerPage: per_page,
+    onViewColumnsChange: (changedColumn, action) => {
+      onViewColumnsChange(
+        changedColumn,
+        action,
+        setDownloadColumns,
+        downloadColumns,
+        tableColumns(),
+      );
+    },
     onChangeRowsPerPage: (numberOfRows) => {
       setPerPage(numberOfRows);
       setPage(0);
@@ -114,7 +148,9 @@ export default function SaleList({user}) {
             ? 'multiple'
             : 'none'
         }
-        exportData={data}
+        onDownloadClick={() => {
+          setOpenDownload(true);
+        }}
       />
       {openFilter && (
         <FilterModal
@@ -126,6 +162,31 @@ export default function SaleList({user}) {
           content={filterContent}
         />
       )}
+
+      {/* for exporting data */}
+      {openDownload && (
+        <DownloadModal
+          open={openDownload}
+          toggleOpen={() => setOpenDownload((d) => !d)}
+          title={<IntlMessages id='sale.download' />}
+          onDownloadData={async () => {
+            if (exportDataAmount == 'all') {
+              await fetchExportAllData();
+            } else if (exportDataAmount == 'filtered_data') {
+              await fetchExportAllData(filterData);
+            }
+          }}
+          setExportType={setExportType}
+          setExportDataAmount={setExportDataAmount}
+          exportType={exportType}
+          filterData={filterData}
+          columns={downloadColumns}
+          exportData={exportDataAmount == 'current_page' ? data : exportData}
+          exportTitle={<IntlMessages id='sale.saleList' />}
+        />
+      )}
+      {/*end of for exporting data */}
+
       {showSaleModal && (
         <SaleModal
           open={showSaleModal}

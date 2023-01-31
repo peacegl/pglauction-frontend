@@ -1,24 +1,27 @@
 import {filterContent, tableColumns} from 'configs/pages/vehicles';
+import DownloadModal from 'components/CustomModal/downloadModal';
 import {onGetVehicleData, onDeleteVehicles} from 'redux/actions';
 import FilterModal from 'components/CustomModal/FilterModal';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
+import {getData, onViewColumnsChange} from 'configs';
 import SaleModal from '../sales/SaleModal';
-import {useEffect, useRef, useState} from 'react';
 import VehicleModal from './VehicleModal';
-import PropTypes from 'prop-types';
+import {useEffect, useState} from 'react';
 import {
   ADD_VEHICLE,
   DELETE_VEHICLE,
   EDIT_VEHICLE,
   ADD_SALE,
 } from 'shared/constants/Permissions';
-import DownloadModal from 'components/CustomModal/downloadModal';
+import {useRouter} from 'next/router';
+import PropTypes from 'prop-types';
+
 export default function VehicleList({user}) {
+  const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
-  const [openDownload, setOpenDownload] = useState(false);
   const [showSaleModal, setShowSaleModal] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selected, setSelected] = useState([]);
@@ -26,31 +29,57 @@ export default function VehicleList({user}) {
   const [per_page, setPerPage] = useState(20);
   const [recordId, setRecordId] = useState(null);
   const [search, setSearch] = useState('');
-  const [exportType, setExportType] = useState('pdf');
-
   const [exactMatch, setExactMatch] = useState(false);
-  const [filterData, setFilterData] = useState([]);
+  const [filterData, setFilterData] = useState({});
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
+  const {loading} = useSelector(({common}) => common);
   const {data = [], total = 0} = useSelector(
     ({vehicles}) => vehicles.vehiclesData,
   );
-  const {loading} = useSelector(({common}) => common);
 
-  const tableRef = useRef();
-
-  const dispatch = useDispatch();
+  //  export data as pdf and Excel states
+  const [downloadColumns, setDownloadColumns] = useState([]);
+  const [exportData, setExportData] = useState([]);
+  const [openDownload, setOpenDownload] = useState(false);
+  const [exportType, setExportType] = useState('pdf');
+  const [exportDataAmount, setExportDataAmount] = useState('current_page');
+  const fetchExportAllData = async (filteredData = {}) => {
+    await getData(
+      `/vehicles`,
+      {
+        page: 1,
+        per_page: -1,
+        filterData: filteredData,
+      },
+      () => {},
+      setExportData,
+    );
+  };
   useEffect(() => {
-    fetchData(search);
-  }, [dispatch, page, per_page, orderBy, filterData]);
+    setDownloadColumns(tableColumns());
+  }, []);
+  // end of for exporting data
 
-  const fetchData = async (search = '') => {
+  const router = useRouter();
+  useEffect(() => {
+    fetchData(search, router.query.filteredData);
+  }, [
+    dispatch,
+    page,
+    per_page,
+    orderBy,
+    filterData,
+    router.query.filteredData,
+  ]);
+
+  const fetchData = async (search = '', filteredData) => {
     await dispatch(
       onGetVehicleData({
         page: page + 1,
         per_page,
         search,
         exactMatch,
-        filterData,
+        filterData: filteredData ? filteredData : filterData,
         orderBy,
       }),
     );
@@ -59,6 +88,15 @@ export default function VehicleList({user}) {
     count: total,
     rowsPerPage: per_page,
     page: page,
+    onViewColumnsChange: (changedColumn, action) => {
+      onViewColumnsChange(
+        changedColumn,
+        action,
+        setDownloadColumns,
+        downloadColumns,
+        tableColumns(),
+      );
+    },
     onChangeRowsPerPage: (numberOfRows) => {
       setPerPage(numberOfRows);
       setPage(0);
@@ -109,7 +147,6 @@ export default function VehicleList({user}) {
   return (
     <>
       <CustomDataTable
-        ref={tableRef}
         title={<IntlMessages id='vehicle.vehicleList' />}
         total={total}
         data={data}
@@ -137,8 +174,6 @@ export default function VehicleList({user}) {
             ? 'multiple'
             : 'none'
         }
-        exportType={exportType}
-        exportData={data}
         onDownloadClick={() => {
           setOpenDownload(true);
         }}
@@ -154,17 +189,29 @@ export default function VehicleList({user}) {
         />
       )}
 
+      {/* for exporting data */}
       {openDownload && (
         <DownloadModal
           open={openDownload}
           toggleOpen={() => setOpenDownload((d) => !d)}
           title={<IntlMessages id='vehicle.download' />}
-          onDownload={() => {
-            tableRef.current.download();
+          onDownloadData={async () => {
+            if (exportDataAmount == 'all') {
+              await fetchExportAllData();
+            } else if (exportDataAmount == 'filtered_data') {
+              await fetchExportAllData(filterData);
+            }
           }}
           setExportType={setExportType}
+          setExportDataAmount={setExportDataAmount}
+          exportType={exportType}
+          filterData={filterData}
+          columns={downloadColumns}
+          exportData={exportDataAmount == 'current_page' ? data : exportData}
+          exportTitle={<IntlMessages id='vehicle.vehicleList' />}
         />
       )}
+      {/*end of for exporting data */}
 
       {openModal && (
         <VehicleModal

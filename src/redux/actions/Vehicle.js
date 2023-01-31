@@ -7,6 +7,7 @@ import {
   ADD_NEW_VEHICLE,
   UPDATE_VEHICLE,
   SHOW_MESSAGE,
+  GET_ALL_VEHICLE_LIST,
 } from '../../shared/constants/ActionTypes';
 import {appIntl} from '../../@crema/utility/helper/Utils';
 import jwtAxios from '@crema/services/auth/jwt-auth';
@@ -33,6 +34,31 @@ export const onGetVehicleData = (filterData) => {
     }
   };
 };
+
+// for exporting data
+export const onGetAllVehicle = (filterData) => {
+  return async (dispatch) => {
+    const {messages} = appIntl();
+    try {
+      const res = await jwtAxios.get(`/vehicles`, {
+        params: {...filterData},
+      });
+      if (res.status === 200 && res.data.result) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_ALL_VEHICLE_LIST, payload: res.data});
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: messages['message.somethingWentWrong'],
+        });
+      }
+    } catch (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+    }
+  };
+};
+
+// for exporting data
 
 export const onInsertVehicle = (data, toggleOpen) => {
   return async (dispatch) => {

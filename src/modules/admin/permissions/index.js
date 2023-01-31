@@ -1,6 +1,8 @@
+import DownloadModal from 'components/CustomModal/downloadModal';
 import PermissionsConfigs from 'configs/pages/permissions';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
+import {getData, onViewColumnsChange} from 'configs';
 import {useDispatch, useSelector} from 'react-redux';
 import {onGetPermissionList} from 'redux/actions';
 import {useEffect, useState} from 'react';
@@ -36,7 +38,16 @@ export default function UserList() {
   const options = {
     count: total,
     rowsPerPage: per_page,
-    selectableRows: 'none',
+    selectableRows: false,
+    onViewColumnsChange: (changedColumn, action) => {
+      onViewColumnsChange(
+        changedColumn,
+        action,
+        setDownloadColumns,
+        downloadColumns,
+        columns,
+      );
+    },
     onChangeRowsPerPage: (numberOfRows) => {
       setPerPage(numberOfRows);
       setPage(0);
@@ -54,6 +65,30 @@ export default function UserList() {
     fetchData(value);
   };
 
+  //  export data as pdf and Excel states
+  const [exportData, setExportData] = useState([]);
+  const [downloadColumns, setDownloadColumns] = useState([]);
+  const [openDownload, setOpenDownload] = useState(false);
+  const [exportType, setExportType] = useState('pdf');
+  const [exportDataAmount, setExportDataAmount] = useState('current_page');
+
+  const fetchExportAllData = async (filteredData = {}) => {
+    await getData(
+      `/permissions`,
+      {
+        page: 1,
+        per_page: -1,
+        filterData: filteredData,
+      },
+      () => {},
+      setExportData,
+    );
+  };
+  useEffect(() => {
+    setDownloadColumns(columns);
+  }, []);
+  // end of for exporting data
+
   return (
     <>
       <CustomDataTable
@@ -64,8 +99,34 @@ export default function UserList() {
         options={options}
         isLoading={loading}
         onEnterSearch={onEnterSearch}
-        exportData={data}
+        onDownloadClick={() => {
+          setOpenDownload(true);
+        }}
       />
+
+      {/* for exporting data */}
+      {openDownload && (
+        <DownloadModal
+          open={openDownload}
+          toggleOpen={() => setOpenDownload((d) => !d)}
+          title={<IntlMessages id='permission.permissionDownload' />}
+          onDownloadData={async () => {
+            if (exportDataAmount == 'all') {
+              await fetchExportAllData();
+            } else if (exportDataAmount == 'filtered_data') {
+              await fetchExportAllData(filterData);
+            }
+          }}
+          setExportType={setExportType}
+          setExportDataAmount={setExportDataAmount}
+          exportType={exportType}
+          filterData={filterData}
+          columns={downloadColumns}
+          exportData={exportDataAmount == 'current_page' ? data : exportData}
+          exportTitle={<IntlMessages id='permission.permissionList' />}
+        />
+      )}
+      {/*end of for exporting data */}
     </>
   );
 }
