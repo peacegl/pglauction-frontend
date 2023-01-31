@@ -162,6 +162,7 @@ export default function RoleList({user}) {
           filterData={filterData}
           columns={downloadColumns}
           exportData={exportDataAmount == 'current_page' ? data : exportData}
+          exportTitle={<IntlMessages id='role.roleList' />}
         />
       )}
       {/*end of for exporting data */}

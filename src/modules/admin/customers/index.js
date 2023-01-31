@@ -177,6 +177,7 @@ export default function CustomerList({user}) {
           filterData={filterData}
           columns={downloadColumns}
           exportData={exportDataAmount == 'current_page' ? data : exportData}
+          exportTitle={<IntlMessages id='customer.customerList' />}
         />
       )}
       {/*end of for exporting data */}

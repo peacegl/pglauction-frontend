@@ -114,6 +114,7 @@ const DownloadModal = ({
   filterData,
   exportData,
   columns,
+  exportTitle,
   ...rest
 }) => {
   const [loading, setLoading] = useState(false);
@@ -361,13 +362,13 @@ const DownloadModal = ({
         ref={childRef}
         data={exportData}
         columns={columns}
-        title={messages[title.props.id]}
+        title={messages[exportTitle?.props?.id]}
       />
       <ExportPdf
         ref={childRefPdf}
         data={exportData}
         columns={columns}
-        titlePdf={messages[title?.props?.id] ?? 'no_name'}
+        titlePdf={messages[exportTitle?.props?.id] ?? 'no_name'}
       />
     </>
   );
@@ -385,6 +386,7 @@ DownloadModal.propTypes = {
   exportData: PropTypes.array,
   exportType: PropTypes.string,
   columns: PropTypes.array.isRequired,
+  exportTitle: PropTypes.any,
 };
 
 export default DownloadModal;
