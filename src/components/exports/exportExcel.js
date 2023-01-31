@@ -36,7 +36,9 @@ const ExcelExportComponent = forwardRef(
       <>
         <ExcelExport
           data={data}
-          fileName={`${title} ${new Date().toLocaleDateString('en-US')}.xlsx`}
+          fileName={`${data.length} ${title} ${new Date().toLocaleDateString(
+            'en-US',
+          )}.xlsx`}
           ref={_exporter}
         >
           {columns.map((item, i) => {

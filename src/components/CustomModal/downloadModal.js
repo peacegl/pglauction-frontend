@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
@@ -14,21 +14,14 @@ import {
   FormControlLabel,
   FormLabel,
   IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
   Radio,
   RadioGroup,
-  TextField,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
-import {styled} from '@mui/material/styles';
+
 import IntlMessages from '@crema/utility/IntlMessages';
 import PropTypes from 'prop-types';
-import Avatar from '@mui/material/Avatar';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import {LoadingButton, SaveIcon} from '@mui/lab';
 
 const SectionItem = ({title, children, ...reset}) => {
   return (
@@ -60,71 +53,15 @@ SectionItem.propTypes = {
   children: PropTypes.node,
 };
 
-const DownloadModal = ({
+export default function DownloadModal({
   open = false,
   toggleOpen,
   title,
   onDownload,
   setExportType,
-  setExportDataAmount,
-  exportType,
-  isLoading,
-  tableRef,
-  filterData,
-  fetchExportAllData,
-  length = undefined,
+
   ...rest
-}) => {
-  const isExportDataEmpty = (objectName) => {
-    return JSON.stringify(objectName) === '{}';
-  };
-  useEffect(() => {
-    if (isExportDataEmpty(filterData) && length == undefined) {
-      fetchExportAllData();
-    } else if (!isExportDataEmpty(filterData) && length == undefined) {
-      fetchExportAllData(filterData);
-    }
-  }, [filterData, length]);
-
-  const ExportSelect = styled('div')(({theme}) => ({
-    position: 'absolute',
-    right: 2,
-    bottom: 10,
-    zIndex: 1,
-    width: 25,
-    height: 25,
-    backgroundColor: theme.palette.success.main,
-    color: theme.palette.primary.contrastText,
-    borderRadius: '50%',
-    border: `solid 3px ${theme.palette.primary.contrastText}`,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    '& .MuiSvgIcon-root': {
-      fontSize: 14,
-    },
-  }));
-
-  const ExportWrapper = styled('div')(({theme}) => ({
-    position: 'relative',
-    '& .MuiAvatar-root': {
-      width: 70,
-      height: 70,
-      margin: '0 10px 10px 10px',
-    },
-  }));
-
-  const ExportInfo = styled('div')(({theme}) => ({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-    marginBottom: 20,
-    [theme.breakpoints.up('xl')]: {
-      marginBottom: 30,
-    },
-  }));
-
+}) {
   return (
     <Modal {...rest} open={open} sx={{mx: 2}}>
       <Fade in={open} timeout={50}>
@@ -144,11 +81,7 @@ const DownloadModal = ({
         >
           <IconButton
             aria-label='close'
-            onClick={() => {
-              setExportDataAmount('current_page');
-              setExportType('pdf');
-              toggleOpen();
-            }}
+            onClick={toggleOpen}
             sx={{float: 'right', mt: 1}}
           >
             <CloseIcon sx={{fontSize: 18}} />
@@ -163,144 +96,31 @@ const DownloadModal = ({
           />
           <Divider />
           <CardContent>
-            <Box
-              component='p'
-              sx={{
-                marginBottom: 2,
-                color: (theme) => theme.palette.info.main,
-              }}
-            >
-              Types of report
-            </Box>
-            <Box
-              component='div'
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <ExportInfo
-                onClick={() => {
-                  setExportType('pdf');
-                }}
+            <FormControl component='fieldset'>
+              <FormLabel component='legend'>Type of report</FormLabel>
+              <RadioGroup
+                aria-label='gender'
+                defaultValue='pdf'
+                name='radio-buttons-group'
               >
-                <ExportWrapper>
-                  <Avatar
-                    sx={{
-                      p: 3,
-                      fontSize: {xs: 30, md: 48},
-                      height: {xs: 20, md: 30, xl: 40},
-                      width: {xs: 20, md: 30, xl: 40},
-                      backgroundColor: 'primary',
-                      border: `solid 2px`,
-                      borderColor:
-                        exportType == 'pdf'
-                          ? (theme) => theme.palette.success.main
-                          : 'transparent',
-                    }}
-                  >
-                    <img alt='Excel' src={'/assets/images/pdf.svg'} />
-                  </Avatar>
-                  {exportType == 'pdf' ? (
-                    <ExportSelect>
-                      <CheckCircleIcon />
-                    </ExportSelect>
-                  ) : (
-                    <></>
-                  )}
-                </ExportWrapper>
-              </ExportInfo>
-
-              <ExportInfo
-                onClick={() => {
-                  setExportType('excel');
-                }}
-              >
-                <ExportWrapper>
-                  <Avatar
-                    sx={{
-                      p: 3,
-                      fontSize: {xs: 30, md: 48},
-                      height: {xs: 20, md: 30, xl: 40},
-                      width: {xs: 20, md: 30, xl: 40},
-                      backgroundColor: 'primary',
-                      border: `solid 2px`,
-                      borderColor:
-                        exportType == 'excel'
-                          ? (theme) => theme.palette.success.main
-                          : 'transparent',
-                    }}
-                  >
-                    <img alt='Pdf' src={'/assets/images/excel.svg'} />
-                  </Avatar>
-                  {exportType == 'excel' ? (
-                    <ExportSelect>
-                      <CheckCircleIcon />
-                    </ExportSelect>
-                  ) : (
-                    <></>
-                  )}
-                </ExportWrapper>
-              </ExportInfo>
-            </Box>
-
-            <Box component='div'>
-              <FormControl component='fieldset'>
-                <FormLabel component='legend'>
-                  {' '}
-                  <IntlMessages id='common.amountOfData' />
-                </FormLabel>
-                <RadioGroup
-                  aria-label='amount'
-                  defaultValue='current_page'
-                  name='radio-buttons-group'
-                >
-                  <FormControlLabel
-                    value='current_page'
-                    control={<Radio />}
-                    label={<IntlMessages id='common.currentPage' />}
-                    onClick={() => {
-                      setExportDataAmount('current_page');
-                    }}
-                  />
-
-                  {isExportDataEmpty(filterData) ? (
-                    <></>
-                  ) : (
-                    <FormControlLabel
-                      value='filtered_data'
-                      control={<Radio />}
-                      label={<IntlMessages id='common.filteredData' />}
-                      onClick={() => {
-                        setExportDataAmount('filtered_data');
-                      }}
-                    />
-                  )}
-
-                  <FormControlLabel
-                    value='all'
-                    control={<Radio />}
-                    label={<IntlMessages id='common.allData' />}
-                    onClick={() => {
-                      setExportDataAmount('all');
-                    }}
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Box>
-            {/* <FormControl fullWidth sx={{m: 1}}>
-              <InputLabel htmlFor='outlined-adornment-amount'>
-                Amount
-              </InputLabel>
-              <OutlinedInput
-                size='small'
-                id='outlined-adornment-amount'
-                endAdornment={
-                  <InputAdornment position='start'>.pdf</InputAdornment>
-                }
-                label='File name'
-              />
-            </FormControl> */}
+                <FormControlLabel
+                  value='pdf'
+                  control={<Radio />}
+                  label='PDF'
+                  onClick={() => {
+                    setExportType('pdf');
+                  }}
+                />
+                <FormControlLabel
+                  value='excel'
+                  control={<Radio />}
+                  label='EXCEL'
+                  onClick={() => {
+                    setExportType('excel');
+                  }}
+                />
+              </RadioGroup>
+            </FormControl>
           </CardContent>
           <Divider />
           <CardActions sx={{justifyContent: 'end', mx: 2}}>
@@ -308,36 +128,28 @@ const DownloadModal = ({
               size='small'
               variant='outlined'
               color='primary'
-              onClick={() => {
-                setExportDataAmount('current_page');
-                setExportType('pdf');
-                toggleOpen();
-              }}
+              onClick={toggleOpen}
             >
               <IntlMessages id='common.cancel' />
             </Button>
 
-            <LoadingButton
+            <Button
               size='small'
-              loading={isLoading}
-              loadingIndicator='Loading...'
               variant='contained'
-              onClick={async () => {
+              onClick={() => {
                 onDownload();
-                await tableRef.current.download();
                 setExportType('pdf');
-                setExportDataAmount('current_page');
                 toggleOpen();
               }}
             >
               <IntlMessages id='common.download' />
-            </LoadingButton>
+            </Button>
           </CardActions>
         </Card>
       </Fade>
     </Modal>
   );
-};
+}
 
 DownloadModal.propTypes = {
   open: PropTypes.bool.isRequired,
@@ -345,13 +157,4 @@ DownloadModal.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   onDownload: PropTypes.func,
   setExportType: PropTypes.func,
-  setExportDataAmount: PropTypes.func,
-  exportType: PropTypes.string,
-  isLoading: PropTypes.bool,
-  tableRef: PropTypes.func,
-  filterData: PropTypes.any,
-  fetchExportAllData: PropTypes.any,
-  length: PropTypes.any,
 };
-
-export default DownloadModal;

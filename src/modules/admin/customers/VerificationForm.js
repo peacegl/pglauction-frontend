@@ -5,33 +5,23 @@ import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 import {BsFillFilePdfFill} from 'react-icons/bs';
 import AppTooltip from '@crema/core/AppTooltip';
-import {Visibility} from '@mui/icons-material';
+import useDownloader from 'react-use-downloader';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 const VerificationForm = (props) => {
   const {messages} = useIntl();
-
-  function handleDownload(dataUrl, filename) {
-    let link = document.createElement('a');
-    link.download = filename;
-    link.target = '_blank';
-
-    link.href = dataUrl;
-    document.body.appendChild(link);
-    link.click();
-
-    document.body.removeChild(link);
-    link = null;
-  }
+  const token = localStorage.getItem('token');
+  const {size, elapsed, percentage, download, cancel, error, isInProgress} =
+    useDownloader();
 
   return (
     <Box sx={{mt: 10}}>
       <Stack spacing={{xs: 5, md: 8}}>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-around',
-            alignItems: 'center',
-          }}
+        <Stack
+          direction={{xs: 'column', md: 'row'}}
+          spacing={5}
+          justifyContent={{md: 'space-around'}}
+          alignItems={{md: 'center'}}
         >
           <Box sx={{display: 'flex', px: 2}}>
             <Typography>
@@ -60,69 +50,69 @@ const VerificationForm = (props) => {
             </Box>
           )}
           {props.customerData?.identification_proof && (
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}
-            >
-              <BsFillFilePdfFill style={{fontSize: '30px'}} />
+            <Box sx={{position: 'relative'}}>
               <Box
                 sx={{
-                  mx: 1,
-                  py: 2,
                   display: 'flex',
-
                   alignItems: 'center',
                 }}
               >
-                <Box
-                  sx={{
-                    display: 'flex',
-                  }}
-                >
-                  <AppTooltip
-                    title={
-                      props.customerData?.identification_proof_name
-                        ? props.customerData?.identification_proof_name
-                        : 'Identification Proof'
-                    }
+                <BsFillFilePdfFill style={{fontSize: '30px'}} />
+                <Box sx={{mx: 1, py: 2}}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                    }}
                   >
-                    <Typography noWrap>
-                      {props.customerData?.identification_proof_name
-                        ? props.customerData?.identification_proof_name
-                        : 'Identification Proof'}
-                    </Typography>
-                  </AppTooltip>
-                </Box>
-                {props.customerData?.identification_proof_size && (
-                  <Box>
-                    {Math.ceil(
-                      props.customerData?.identification_proof_size / 1024,
-                    )}
-                    KB
-                  </Box>
-                )}
-                <Box sx={{marginLeft: 'auto'}}>
-                  {props.customerData?.identification_proof && (
-                    <IconButton
-                      onClick={(e) => {
-                        handleDownload(
-                          props.customerData?.identification_proof,
-                          props.customerData?.identification_proof,
-                        );
-                      }}
-                      size='small'
+                    <AppTooltip
+                      title={
+                        props.customerData?.identification_proof_name
+                          ? props.customerData?.identification_proof_name
+                          : 'Identification Proof'
+                      }
                     >
-                      <Visibility fontSize='inherit' />
-                    </IconButton>
+                      <Typography noWrap>
+                        {props.customerData?.identification_proof_name
+                          ? props.customerData?.identification_proof_name
+                          : 'Identification Proof'}
+                      </Typography>
+                    </AppTooltip>
+                  </Box>
+                  {props.customerData?.identification_proof_size && (
+                    <Box>
+                      {Math.ceil(
+                        props.customerData?.identification_proof_size / 1024,
+                      )}
+                      KB
+                    </Box>
                   )}
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      right: 0,
+                      bottom: 0,
+                    }}
+                  >
+                    {props.customerData?.identification_proof && (
+                      <IconButton
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          download(
+                            props.customerData?.identification_proof,
+                            props.customerData?.identification_proof_name,
+                          );
+                        }}
+                        size='small'
+                      >
+                        <FileDownloadIcon fontSize='inherit' />
+                      </IconButton>
+                    )}
+                  </Box>
                 </Box>
               </Box>
             </Box>
           )}
-        </Box>
+        </Stack>
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppTextField
             select

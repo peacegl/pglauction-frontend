@@ -1,15 +1,11 @@
 import {filterContent, tableColumns} from '../../../configs/pages/customers';
-import {
-  onGetCustomerList,
-  onDeleteCustomers,
-  onGetAllCustomers,
-} from 'redux/actions';
+import {onGetCustomerList, onDeleteCustomers} from 'redux/actions';
 import FilterModal from 'components/CustomModal/FilterModal';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import CustomerModal from './CustomerModal';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {
   ADD_CUSTOMER,
@@ -17,7 +13,6 @@ import {
   DELETE_CUSTOMER,
 } from 'shared/constants/Permissions';
 import AccountVerification from './AccountVerificationModal';
-import DownloadModal from 'components/CustomModal/downloadModal';
 
 export default function CustomerList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -100,39 +95,6 @@ export default function CustomerList({user}) {
     fetchData(value);
   };
 
-  //  export data as pdf and Excel states
-  const customerTableRef = useRef();
-  const [openDownload, setOpenDownload] = useState(false);
-  const [exportType, setExportType] = useState('pdf');
-  const [exportDataAmount, setExportDataAmount] = useState('current_page');
-  const isExportDataEmpty = (objectName) => {
-    return JSON.stringify(objectName) === '{}';
-  };
-
-  let data3;
-  const exportData = useSelector(({customers}) => {
-    data3 = customers.customersExportData.data;
-    if (
-      isExportDataEmpty(customers.customersExportData) ||
-      exportDataAmount == 'current_page'
-    ) {
-      return [];
-    } else {
-      return customers.customersExportData.data;
-    }
-  });
-
-  const fetchExportAllData = async (filteredData = {}) => {
-    await dispatch(
-      onGetAllCustomers({
-        page: page + 1,
-        per_page: -1,
-        filterData: filteredData,
-      }),
-    );
-  };
-  // end of for exporting data
-
   return (
     <>
       <CustomDataTable
@@ -157,47 +119,8 @@ export default function CustomerList({user}) {
           user?.permissions?.includes(EDIT_CUSTOMER) ||
           user?.permissions?.includes(DELETE_CUSTOMER)
         }
-        // for exporting data
-        ref={customerTableRef}
-        exportType={exportType}
-        exportData={exportData.length == 0 ? data : exportData}
-        onDownloadClick={() => {
-          setOpenDownload(true);
-        }}
-        //end for exporting data
+        exportData={data}
       />
-
-      {/* for exporting data */}
-      {openDownload && (
-        <DownloadModal
-          open={openDownload}
-          toggleOpen={() => setOpenDownload((d) => !d)}
-          title={<IntlMessages id='customer.download' />}
-          onDownload={() => {
-            if (openDownload && exportDataAmount == 'all') {
-              fetchExportAllData();
-            } else if (
-              openDownload &&
-              exportDataAmount == 'filtered_data' &&
-              !isExportDataEmpty(filterData)
-            ) {
-              fetchExportAllData(filterData);
-            }
-            if (exportDataAmount == 'current_page') {
-            }
-          }}
-          setExportType={setExportType}
-          setExportDataAmount={setExportDataAmount}
-          exportType={exportType}
-          isLoading={loading}
-          tableRef={customerTableRef}
-          filterData={filterData}
-          fetchExportAllData={fetchExportAllData}
-          length={data3}
-        />
-      )}
-      {/*end of for exporting data */}
-
       {openFilter && (
         <FilterModal
           open={openFilter}

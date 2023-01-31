@@ -6,7 +6,6 @@ import {
   SHOW_MESSAGE,
   ADD_NEW_USER,
   UPDATE_USER,
-  GET_ALL_USERS_LIST,
 } from 'shared/constants/ActionTypes';
 
 import {appIntl} from '../../@crema/utility/helper/Utils';
@@ -36,32 +35,6 @@ export const onGetUserList = (filterData) => {
     }
   };
 };
-
-// for exporting data
-export const onGetAllUsers = (filterData) => {
-  return async (dispatch) => {
-    dispatch({type: FETCH_START});
-    const {messages} = appIntl();
-    try {
-      const res = await jwtAxios.get(`/users`, {
-        params: {...filterData},
-      });
-      if (res.status === 200 && res.data.result) {
-        dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_ALL_USERS_LIST, payload: res.data});
-      } else {
-        dispatch({
-          type: FETCH_ERROR,
-          payload: messages['message.somethingWentWrong'],
-        });
-      }
-    } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-    }
-  };
-};
-
-// for exporting data
 
 export const onInsertUser = (data, toggleOpen) => {
   return async (dispatch) => {

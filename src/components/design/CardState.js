@@ -24,19 +24,9 @@ const getIcon = (iconType) => {
   }
 };
 
-const CardState = ({item, onClick = () => {}}) => {
+const CardState = ({item}) => {
   return (
-    <AppCard
-      onClick={onClick}
-      sxStyle={{
-        height: 1,
-        '&:hover': {
-          cursor: 'pointer',
-          backgroundColor: (theme) => theme.palette.background.default,
-        },
-      }}
-      // className='card-hover'
-    >
+    <AppCard sxStyle={{height: 1}} className='card-hover'>
       <Box
         sx={{
           display: 'flex',
@@ -106,5 +96,4 @@ export default CardState;
 
 CardState.propTypes = {
   item: PropTypes.object,
-  onClick: PropTypes.func,
 };

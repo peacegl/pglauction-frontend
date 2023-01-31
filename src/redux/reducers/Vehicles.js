@@ -1,6 +1,5 @@
 import {
   GET_VEHICLE_LIST,
-  GET_ALL_VEHICLE_LIST,
   SET_VEHICLE_FILTER_DATA,
   ADD_NEW_VEHICLE,
   UPDATE_VEHICLE,
@@ -8,7 +7,6 @@ import {
 
 const initialState = {
   vehiclesData: {},
-  vehiclesExportData: {},
   filterData: {},
 };
 
@@ -18,12 +16,6 @@ const VeihcleReducers = (state = initialState, action) => {
       return {
         ...state,
         vehiclesData: action.payload,
-      };
-
-    case GET_ALL_VEHICLE_LIST:
-      return {
-        ...state,
-        vehiclesExportData: action.payload,
       };
 
     case ADD_NEW_VEHICLE:
