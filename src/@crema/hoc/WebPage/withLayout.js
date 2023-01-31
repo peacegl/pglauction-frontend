@@ -2,10 +2,10 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import AppBar from 'components/layoutComponents/AppBar';
 import Header from 'components/layoutComponents/Header';
 import Footer from 'components/layoutComponents/Footer';
-import AppInfoView from '@crema/core/AppInfoView';
-import {useEffect, useState} from 'react';
-import {Fab, Tooltip} from '@mui/material';
 import IntlMessages from '@crema/utility/IntlMessages';
+import AppInfoView from '@crema/core/AppInfoView';
+import {Box, Fab, Tooltip} from '@mui/material';
+import {useEffect, useState} from 'react';
 
 const withLayout = (ComposedComponent) => (props) => {
   const [visible, setVisible] = useState(false);
@@ -28,29 +28,34 @@ const withLayout = (ComposedComponent) => (props) => {
     window.addEventListener('scroll', toggleVisible);
   }, []);
   return (
-    <div>
-      <Header />
-      <AppBar />
-      <ComposedComponent {...props} />
-      <AppInfoView />
-      <Footer />
-      <Tooltip title={<IntlMessages id='common.scrollToTop' />} placement='top'>
-        <Fab
-          onClick={scrollToTop}
-          size='small'
-          color='primary'
-          sx={{
-            display: visible ? 'flex' : 'none',
-            position: 'fixed',
-            bottom: '20px',
-            right: '50px',
-            zIndex: 99,
-          }}
+    <Box sx={{display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
+      <Box sx={{flex: 1}}>
+        <Tooltip
+          title={<IntlMessages id='common.scrollToTop' />}
+          placement='top'
         >
-          <KeyboardArrowUpIcon />
-        </Fab>
-      </Tooltip>
-    </div>
+          <Fab
+            onClick={scrollToTop}
+            size='small'
+            color='primary'
+            sx={{
+              display: visible ? 'flex' : 'none',
+              position: 'fixed',
+              bottom: '20px',
+              right: '50px',
+              zIndex: 99,
+            }}
+          >
+            <KeyboardArrowUpIcon />
+          </Fab>
+        </Tooltip>
+        <Header />
+        <AppBar />
+        <ComposedComponent {...props} />
+        <AppInfoView />
+      </Box>
+      <Footer />
+    </Box>
   );
 };
 
