@@ -1189,5 +1189,6 @@
   "auction.deleteMessage": "Are you sure, you want to delete the selected Auction(s)?",
   "validation.endDateMustBeBigger": "End date must be greater than start date",
   "validation.pastDateNotAllowed": "Past dates are not allowed",
-  "website.auctions": "Auctions"
+  "website.auctions": "Auctions",
+  "website.todayAuctions": "Today's Auctions"
 }
