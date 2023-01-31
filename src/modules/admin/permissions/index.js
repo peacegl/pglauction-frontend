@@ -123,6 +123,7 @@ export default function UserList() {
           filterData={filterData}
           columns={downloadColumns}
           exportData={exportDataAmount == 'current_page' ? data : exportData}
+          exportTitle={<IntlMessages id='permission.permissionList' />}
         />
       )}
       {/*end of for exporting data */}

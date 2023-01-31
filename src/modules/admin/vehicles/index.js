@@ -206,6 +206,7 @@ export default function VehicleList({user}) {
           filterData={filterData}
           columns={downloadColumns}
           exportData={exportDataAmount == 'current_page' ? data : exportData}
+          exportTitle={<IntlMessages id='vehicle.vehicleList' />}
         />
       )}
       {/*end of for exporting data */}

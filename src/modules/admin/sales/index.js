@@ -180,6 +180,7 @@ export default function SaleList({user}) {
           filterData={filterData}
           columns={downloadColumns}
           exportData={exportDataAmount == 'current_page' ? data : exportData}
+          exportTitle={<IntlMessages id='sale.saleList' />}
         />
       )}
       {/*end of for exporting data */}
