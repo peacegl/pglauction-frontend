@@ -1,14 +1,15 @@
 import {ADD_USER, DELETE_USER, EDIT_USER} from 'shared/constants/Permissions';
+import DownloadModal from 'components/CustomModal/downloadModal';
 import {filterContent, tableColumns} from 'configs/pages/users';
 import FilterModal from 'components/CustomModal/FilterModal';
-import {onGetUserList, onDeleteUsers, onGetAllUsers} from 'redux/actions';
+import {onGetUserList, onDeleteUsers} from 'redux/actions';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
-import {useEffect, useRef, useState} from 'react';
+import {getData, onViewColumnsChange} from 'configs';
+import {useEffect, useState} from 'react';
 import UserModal from './UserModal';
 import PropTypes from 'prop-types';
-import DownloadModal from 'components/CustomModal/downloadModal';
 
 export default function UserList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -45,6 +46,15 @@ export default function UserList({user}) {
   const options = {
     count: total,
     rowsPerPage: per_page,
+    onViewColumnsChange: (changedColumn, action) => {
+      onViewColumnsChange(
+        changedColumn,
+        action,
+        setDownloadColumns,
+        downloadColumns,
+        tableColumns(),
+      );
+    },
     onChangeRowsPerPage: (numberOfRows) => {
       setPerPage(numberOfRows);
       setPage(0);
@@ -90,36 +100,26 @@ export default function UserList({user}) {
   };
 
   //  export data as pdf and Excel states
-  const usersTableRef = useRef();
+  const [exportData, setExportData] = useState([]);
+  const [downloadColumns, setDownloadColumns] = useState([]);
   const [openDownload, setOpenDownload] = useState(false);
   const [exportType, setExportType] = useState('pdf');
   const [exportDataAmount, setExportDataAmount] = useState('current_page');
-  const isExportDataEmpty = (objectName) => {
-    return JSON.stringify(objectName) === '{}';
-  };
-
-  let data3;
-  const exportData = useSelector(({users}) => {
-    data3 = users.usersExportData.data;
-    if (
-      isExportDataEmpty(users.usersExportData) ||
-      exportDataAmount == 'current_page'
-    ) {
-      return [];
-    } else {
-      return users.usersExportData.data;
-    }
-  });
-
   const fetchExportAllData = async (filteredData = {}) => {
-    await dispatch(
-      onGetAllUsers({
-        page: page + 1,
+    await getData(
+      `/users`,
+      {
+        page: 1,
         per_page: -1,
         filterData: filteredData,
-      }),
+      },
+      () => {},
+      setExportData,
     );
   };
+  useEffect(() => {
+    setDownloadColumns(tableColumns());
+  }, []);
   // end of for exporting data
 
   return (
@@ -146,14 +146,9 @@ export default function UserList({user}) {
           user?.permissions?.includes(EDIT_USER) ||
           user?.permissions?.includes(DELETE_USER)
         }
-        // for exporting data
-        ref={usersTableRef}
-        exportType={exportType}
-        exportData={exportData.length == 0 ? data : exportData}
         onDownloadClick={() => {
           setOpenDownload(true);
         }}
-        //end for exporting data
       />
       {/* for exporting data */}
       {openDownload && (
@@ -161,27 +156,19 @@ export default function UserList({user}) {
           open={openDownload}
           toggleOpen={() => setOpenDownload((d) => !d)}
           title={<IntlMessages id='user.userDownload' />}
-          onDownload={() => {
-            if (openDownload && exportDataAmount == 'all') {
-              fetchExportAllData();
-            } else if (
-              openDownload &&
-              exportDataAmount == 'filtered_data' &&
-              !isExportDataEmpty(filterData)
-            ) {
-              fetchExportAllData(filterData);
-            }
-            if (exportDataAmount == 'current_page') {
+          onDownloadData={async () => {
+            if (exportDataAmount == 'all') {
+              await fetchExportAllData();
+            } else if (exportDataAmount == 'filtered_data') {
+              await fetchExportAllData(filterData);
             }
           }}
           setExportType={setExportType}
           setExportDataAmount={setExportDataAmount}
           exportType={exportType}
-          isLoading={loading}
-          tableRef={usersTableRef}
           filterData={filterData}
-          fetchExportAllData={fetchExportAllData}
-          length={data3}
+          columns={downloadColumns}
+          exportData={exportDataAmount == 'current_page' ? data : exportData}
         />
       )}
       {/*end of for exporting data */}

@@ -38,7 +38,6 @@ export const onGetVehicleData = (filterData) => {
 // for exporting data
 export const onGetAllVehicle = (filterData) => {
   return async (dispatch) => {
-    dispatch({type: FETCH_START});
     const {messages} = appIntl();
     try {
       const res = await jwtAxios.get(`/vehicles`, {

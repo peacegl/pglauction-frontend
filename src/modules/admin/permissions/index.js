@@ -1,10 +1,11 @@
+import DownloadModal from 'components/CustomModal/downloadModal';
 import PermissionsConfigs from 'configs/pages/permissions';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
+import {getData, onViewColumnsChange} from 'configs';
 import {useDispatch, useSelector} from 'react-redux';
-import {onGetPermissionList, onGetAllPermission} from 'redux/actions';
-import {useEffect, useRef, useState} from 'react';
-import DownloadModal from 'components/CustomModal/downloadModal';
+import {onGetPermissionList} from 'redux/actions';
+import {useEffect, useState} from 'react';
 
 export default function UserList() {
   const [page, setPage] = useState(0);
@@ -38,6 +39,15 @@ export default function UserList() {
     count: total,
     rowsPerPage: per_page,
     selectableRows: false,
+    onViewColumnsChange: (changedColumn, action) => {
+      onViewColumnsChange(
+        changedColumn,
+        action,
+        setDownloadColumns,
+        downloadColumns,
+        columns,
+      );
+    },
     onChangeRowsPerPage: (numberOfRows) => {
       setPerPage(numberOfRows);
       setPage(0);
@@ -56,50 +66,27 @@ export default function UserList() {
   };
 
   //  export data as pdf and Excel states
-  const perTableRef = useRef();
+  const [exportData, setExportData] = useState([]);
+  const [downloadColumns, setDownloadColumns] = useState([]);
   const [openDownload, setOpenDownload] = useState(false);
   const [exportType, setExportType] = useState('pdf');
   const [exportDataAmount, setExportDataAmount] = useState('current_page');
-  const isExportDataEmpty = (objectName) => {
-    return JSON.stringify(objectName) === '{}';
-  };
-
-  let data3;
-  const exportData = useSelector(({permissions}) => {
-    data3 = permissions.perExportData.data;
-
-    if (
-      isExportDataEmpty(permissions.perExportData) ||
-      exportDataAmount == 'current_page' ||
-      permissions.perExportData.length == 0
-    ) {
-      return [];
-    } else {
-      return permissions.perExportData.data;
-    }
-  });
-
-  // useEffect(() => {
-  //   if (openDownload && exportDataAmount == 'all') {
-  //     fetchExportAllData();
-  //   } else if (
-  //     openDownload &&
-  //     exportDataAmount == 'filtered_data' &&
-  //     !isExportDataEmpty(filterData)
-  //   ) {
-  //     fetchExportAllData(filterData);
-  //   }
-  // }, [dispatch, openDownload, exportDataAmount]);
 
   const fetchExportAllData = async (filteredData = {}) => {
-    await dispatch(
-      onGetAllPermission({
-        page: page + 1,
+    await getData(
+      `/permissions`,
+      {
+        page: 1,
         per_page: -1,
         filterData: filteredData,
-      }),
+      },
+      () => {},
+      setExportData,
     );
   };
+  useEffect(() => {
+    setDownloadColumns(columns);
+  }, []);
   // end of for exporting data
 
   return (
@@ -112,14 +99,9 @@ export default function UserList() {
         options={options}
         isLoading={loading}
         onEnterSearch={onEnterSearch}
-        // for exporting data
-        ref={perTableRef}
-        exportType={exportType}
-        exportData={exportData.length == 0 ? data : exportData}
         onDownloadClick={() => {
           setOpenDownload(true);
         }}
-        //end for exporting data
       />
 
       {/* for exporting data */}
@@ -128,27 +110,19 @@ export default function UserList() {
           open={openDownload}
           toggleOpen={() => setOpenDownload((d) => !d)}
           title={<IntlMessages id='permission.permissionDownload' />}
-          onDownload={() => {
-            if (openDownload && exportDataAmount == 'all') {
-              fetchExportAllData();
-            } else if (
-              openDownload &&
-              exportDataAmount == 'filtered_data' &&
-              !isExportDataEmpty(filterData)
-            ) {
-              fetchExportAllData(filterData);
-            }
-            if (exportDataAmount == 'current_page') {
+          onDownloadData={async () => {
+            if (exportDataAmount == 'all') {
+              await fetchExportAllData();
+            } else if (exportDataAmount == 'filtered_data') {
+              await fetchExportAllData(filterData);
             }
           }}
           setExportType={setExportType}
           setExportDataAmount={setExportDataAmount}
           exportType={exportType}
-          isLoading={loading}
-          tableRef={perTableRef}
           filterData={filterData}
-          fetchExportAllData={fetchExportAllData}
-          length={data3}
+          columns={downloadColumns}
+          exportData={exportDataAmount == 'current_page' ? data : exportData}
         />
       )}
       {/*end of for exporting data */}
