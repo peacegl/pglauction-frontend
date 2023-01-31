@@ -1,7 +1,6 @@
 import {AppAnimate} from '@crema';
 import {Box, Skeleton} from '@mui/material';
 import CardState from 'components/design/CardState';
-import {useRouter} from 'next/router';
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAdminCounts} from 'redux/actions';
@@ -13,15 +12,6 @@ export default function Dashboard() {
   useEffect(() => {
     dispatch(getAdminCounts());
   }, []);
-
-  const router = useRouter();
-
-  const handleClick = (href, filterData) => {
-    router.push({
-      pathname: href,
-      query: {filteredData: filterData},
-    });
-  };
 
   return (
     <>
@@ -71,9 +61,6 @@ export default function Dashboard() {
                   color: '#9E49E6',
                   icon: 'AL',
                 }}
-                onClick={() => {
-                  handleClick(`/admin/vehicles`);
-                }}
               />
             </Box>
             <Box component='span' sx={{flex: '1 1 15%'}}>
@@ -83,12 +70,6 @@ export default function Dashboard() {
                   count: vehicles.future,
                   color: '#ff9800',
                   icon: 'F',
-                }}
-                onClick={() => {
-                  handleClick(
-                    '/admin/vehicles',
-                    JSON.stringify({'vehicles.status': ['future']}),
-                  );
                 }}
               />
             </Box>
@@ -100,12 +81,6 @@ export default function Dashboard() {
                   color: '#4caf50',
                   icon: 'AV',
                 }}
-                onClick={() => {
-                  handleClick(
-                    '/admin/vehicles',
-                    JSON.stringify({'vehicles.status': ['available']}),
-                  );
-                }}
               />
             </Box>
             <Box component='span' sx={{flex: '1 1 15%'}}>
@@ -116,12 +91,6 @@ export default function Dashboard() {
                   color: '#b23c17',
                   icon: 'S',
                 }}
-                onClick={() => {
-                  handleClick(
-                    '/admin/vehicles',
-                    JSON.stringify({'vehicles.status': ['sold']}),
-                  );
-                }}
               />
             </Box>
             <Box component='span' sx={{flex: '1 1 15%'}}>
@@ -131,12 +100,6 @@ export default function Dashboard() {
                   count: vehicles.inactive,
                   color: '#009688',
                   icon: 'IN',
-                }}
-                onClick={() => {
-                  handleClick(
-                    '/admin/vehicles',
-                    JSON.stringify({'vehicles.status': ['inactive']}),
-                  );
                 }}
               />
             </Box>

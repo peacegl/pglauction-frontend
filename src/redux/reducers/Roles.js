@@ -2,13 +2,11 @@ import {
   GET_ROLE_LIST,
   ADD_NEW_ROLE,
   UPDATE_ROLE,
-  GET_ALL_ROLES_LIST,
 } from 'shared/constants/ActionTypes';
 
 const initialState = {
   roleList: {},
   filterData: {},
-  rolesExportData: [],
 };
 
 const permissionsReducer = (state = initialState, action) => {
@@ -17,11 +15,6 @@ const permissionsReducer = (state = initialState, action) => {
       return {
         ...state,
         roleList: action.payload,
-      };
-    case GET_ALL_ROLES_LIST:
-      return {
-        ...state,
-        rolesExportData: action.payload,
       };
     case ADD_NEW_ROLE:
       return {

@@ -1,12 +1,8 @@
-import {
-  GET_PERMISSION_LIST,
-  GET_ALL_PERMISSION_LIST,
-} from 'shared/constants/ActionTypes';
+import {GET_PERMISSION_LIST} from 'shared/constants/ActionTypes';
 
 const initialState = {
   permissionList: {},
   filterData: {},
-  perExportData: {},
 };
 
 const permissionsReducer = (state = initialState, action) => {
@@ -15,12 +11,6 @@ const permissionsReducer = (state = initialState, action) => {
       return {
         ...state,
         permissionList: action.payload,
-      };
-
-    case GET_ALL_PERMISSION_LIST:
-      return {
-        ...state,
-        perExportData: action.payload,
       };
 
     default:
