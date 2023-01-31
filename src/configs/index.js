@@ -137,11 +137,11 @@ export let pages = [
     link: '/',
     target: '_self',
   },
-  // {
-  //   key: 3,
-  //   title: <IntlMessages id='website.live_auctions' />,
-  //   link: '/live-auctions',
-  // },
+  {
+    key: 3,
+    title: <IntlMessages id='website.auctions' />,
+    link: '/auctions',
+  },
   {
     key: 4,
     title: <IntlMessages id='website.shipping' />,

@@ -262,7 +262,7 @@
   "common.likes": "Likes",
   "common.comments": "Comments",
   "common.download": "Download",
-  "common.getAReport" : "Get a report",
+  "common.getAReport": "Get a report",
   "common.next": "Next",
   "common.edit": "Edit",
   "common.tag": "Tag",
@@ -861,7 +861,7 @@
   "location.locationInfo": "Location Info",
   "location.locationDownload": "Location Download",
   "location.locationList": "Location List",
-  
+
   "confirm.location.delete": "Are you sure, you want to delete the selected Location(s)?",
   "message.location.deleted": "Location(s) deleted successfully!",
   "message.location.created": "Location created successfully!",
@@ -1178,7 +1178,16 @@
   "auction.auctionInfo": "Auction Info",
   "auction.auctionItems": "Auction Items",
   "vehicle.totalVehicles": "Total Vehicles",
+  "validation.startDateRequired": "Start date is required",
+  "validation.endDateRequired": "End date is required",
+  "validation.vehiclesRequired": "At least one vehicle is required",
+  "validation.minimumBidRequired": "Minimum bid is required",
+  "validation.buyNowPriceMustBeBigger": "Buy now price must be bigger than minimum bid",
 
   "website.popularBrands": "Popular Brands",
-  "website.inStock": "In Stock"
+  "website.inStock": "In Stock",
+  "auction.deleteMessage": "Are you sure, you want to delete the selected Auction(s)?",
+  "validation.endDateMustBeBigger": "End date must be greater than start date",
+  "validation.pastDateNotAllowed": "Past dates are not allowed",
+  "website.auctions": "Auctions"
 }

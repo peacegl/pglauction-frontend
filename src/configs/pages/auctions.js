@@ -48,21 +48,60 @@ export const tableColumns = function () {
   ];
 };
 
-export default function configs(invalidYoutube) {
+export default function configs(initialValues) {
   return {
     exportColumns: [],
+    itemSchema: yup.object({
+      minimum_bid: yup
+        .number()
+        .typeError(<IntlMessages id='validation.priceError' />)
+        .required(<IntlMessages id='validation.minimumBidRequired' />),
+      buy_now_price: yup
+        .number()
+        .when('minimum_bid', (minimum_bid, schema) => {
+          return schema.test({
+            test: (buy_now_price) =>
+              !!minimum_bid && buy_now_price > minimum_bid,
+            message: <IntlMessages id='validation.buyNowPriceMustBeBigger' />,
+          });
+        })
+        .typeError(<IntlMessages id='validation.priceError' />)
+        .required(<IntlMessages id='validation.minimumBidRequired' />),
+    }),
     validationSchema: [
       yup.object({
+        name: yup
+          .string()
+          .min(3, <IntlMessages id='validation.min3Letter' />)
+          .max(64, <IntlMessages id='validation.max64Letter' />)
+          .required(<IntlMessages id='validation.nameRequired' />),
+        status: yup
+          .string()
+          .required(<IntlMessages id='validation.statusRequired' />),
         start_date: yup
           .date()
+          // .min(new Date(), <IntlMessages id='validation.pastDateNotAllowed' />)
           .typeError(<IntlMessages id='validation.dateValidation' />)
-          .nullable(),
+          .required(<IntlMessages id='validation.startDateRequired' />),
         end_date: yup
           .date()
+          .min(new Date(), <IntlMessages id='validation.pastDateNotAllowed' />)
+          .when('start_date', {
+            is: (start_date) => {
+              return !!start_date ? true : false;
+            },
+            then: yup
+              .date()
+              // .min(
+              //   yup.ref('start_date'),
+              //   <IntlMessages id='validation.endDateMustBeBigger' />,
+              // )
+              .typeError(<IntlMessages id='validation.dateValidation' />)
+              .required(<IntlMessages id='validation.startDateRequired' />),
+          })
           .typeError(<IntlMessages id='validation.dateValidation' />)
-          .nullable(),
+          .required(<IntlMessages id='validation.startDateRequired' />),
       }),
-      yup.object({}),
     ],
   };
 }

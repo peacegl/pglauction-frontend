@@ -27,12 +27,12 @@ export default function AuctionItemModal({
   const [images, setImages] = useState([]);
   const [deletedImages, setDeletedImages] = useState([]);
   const [mainImage, setMainImage] = useState({});
-  const [locationLoading, setLocationLoading] = useState(false);
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [sellersLoading, setSellersLoading] = useState(false);
   const [isMainImageValid, setIsMainImageValid] = useState(true);
   const [isMinImagesValid, setMinImagesValid] = useState(true);
   const [isMaxImagesValid, setMaxImagesValid] = useState(true);
+  const [locationLoading, setLocationLoading] = useState(false);
   const [locations, setLocations] = useState([]);
   const [categories, setCategories] = useState([]);
   const [sellers, setSellers] = useState([]);

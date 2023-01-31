@@ -145,6 +145,8 @@ export default function SaleList({user}) {
         selectableRows={
           user?.permissions?.includes(EDIT_SALE) ||
           user?.permissions?.includes(DELETE_SALE)
+            ? 'multiple'
+            : 'none'
         }
         onDownloadClick={() => {
           setOpenDownload(true);

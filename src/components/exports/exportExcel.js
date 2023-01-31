@@ -1,8 +1,8 @@
+import {useRef, useImperativeHandle, forwardRef} from 'react';
 import {
   ExcelExport,
   ExcelExportColumn,
 } from '@progress/kendo-react-excel-export';
-import {useRef, useImperativeHandle, forwardRef} from 'react';
 import PropTypes from 'prop-types';
 
 const ExcelExportComponent = forwardRef(
@@ -56,6 +56,7 @@ const ExcelExportComponent = forwardRef(
 );
 
 export default ExcelExportComponent;
+
 ExcelExportComponent.propTypes = {
   data: PropTypes.array.isRequired,
   title: PropTypes.any,
