@@ -14,6 +14,7 @@ import ExportPdf from 'components/exports/exportPdf';
 import {forwardRef, useImperativeHandle, useRef} from 'react';
 import {useIntl} from 'react-intl';
 import {id} from 'date-fns/locale';
+import {ArrowCircleDown} from '@mui/icons-material';
 
 const CustomDataTable = forwardRef(
   (
@@ -132,7 +133,7 @@ const CustomDataTable = forwardRef(
                   <BasicTooltip
                     onClick={onDownloadClick}
                     title={<IntlMessages id='common.getAReport' />}
-                    icon={<SimCardDownloadIcon />}
+                    icon={<ArrowCircleDown />}
                   />
                 )}
 
