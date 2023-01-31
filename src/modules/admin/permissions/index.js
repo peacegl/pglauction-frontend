@@ -2,8 +2,9 @@ import PermissionsConfigs from 'configs/pages/permissions';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
-import {onGetPermissionList} from 'redux/actions';
-import {useEffect, useState} from 'react';
+import {onGetPermissionList, onGetAllPermission} from 'redux/actions';
+import {useEffect, useRef, useState} from 'react';
+import DownloadModal from 'components/CustomModal/downloadModal';
 
 export default function UserList() {
   const [page, setPage] = useState(0);
@@ -54,6 +55,53 @@ export default function UserList() {
     fetchData(value);
   };
 
+  //  export data as pdf and Excel states
+  const perTableRef = useRef();
+  const [openDownload, setOpenDownload] = useState(false);
+  const [exportType, setExportType] = useState('pdf');
+  const [exportDataAmount, setExportDataAmount] = useState('current_page');
+  const isExportDataEmpty = (objectName) => {
+    return JSON.stringify(objectName) === '{}';
+  };
+
+  let data3;
+  const exportData = useSelector(({permissions}) => {
+    data3 = permissions.perExportData.data;
+
+    if (
+      isExportDataEmpty(permissions.perExportData) ||
+      exportDataAmount == 'current_page' ||
+      permissions.perExportData.length == 0
+    ) {
+      return [];
+    } else {
+      return permissions.perExportData.data;
+    }
+  });
+
+  // useEffect(() => {
+  //   if (openDownload && exportDataAmount == 'all') {
+  //     fetchExportAllData();
+  //   } else if (
+  //     openDownload &&
+  //     exportDataAmount == 'filtered_data' &&
+  //     !isExportDataEmpty(filterData)
+  //   ) {
+  //     fetchExportAllData(filterData);
+  //   }
+  // }, [dispatch, openDownload, exportDataAmount]);
+
+  const fetchExportAllData = async (filteredData = {}) => {
+    await dispatch(
+      onGetAllPermission({
+        page: page + 1,
+        per_page: -1,
+        filterData: filteredData,
+      }),
+    );
+  };
+  // end of for exporting data
+
   return (
     <>
       <CustomDataTable
@@ -64,8 +112,46 @@ export default function UserList() {
         options={options}
         isLoading={loading}
         onEnterSearch={onEnterSearch}
-        exportData={data}
+        // for exporting data
+        ref={perTableRef}
+        exportType={exportType}
+        exportData={exportData.length == 0 ? data : exportData}
+        onDownloadClick={() => {
+          setOpenDownload(true);
+        }}
+        //end for exporting data
       />
+
+      {/* for exporting data */}
+      {openDownload && (
+        <DownloadModal
+          open={openDownload}
+          toggleOpen={() => setOpenDownload((d) => !d)}
+          title={<IntlMessages id='permission.permissionDownload' />}
+          onDownload={() => {
+            if (openDownload && exportDataAmount == 'all') {
+              fetchExportAllData();
+            } else if (
+              openDownload &&
+              exportDataAmount == 'filtered_data' &&
+              !isExportDataEmpty(filterData)
+            ) {
+              fetchExportAllData(filterData);
+            }
+            if (exportDataAmount == 'current_page') {
+            }
+          }}
+          setExportType={setExportType}
+          setExportDataAmount={setExportDataAmount}
+          exportType={exportType}
+          isLoading={loading}
+          tableRef={perTableRef}
+          filterData={filterData}
+          fetchExportAllData={fetchExportAllData}
+          length={data3}
+        />
+      )}
+      {/*end of for exporting data */}
     </>
   );
 }

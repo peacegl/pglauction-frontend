@@ -19,10 +19,15 @@ const AppCard = ({
   footerPosition,
   footerStyle,
   children,
+  onClick = () => {},
   ...rest
 }) => {
   return (
-    <Card sx={{display: 'flex', flexDirection: 'column', ...sxStyle}} {...rest}>
+    <Card
+      onClick={onClick}
+      sx={{display: 'flex', flexDirection: 'column', ...sxStyle}}
+      {...rest}
+    >
       {title || action ? (
         <CardHeader
           sx={{
@@ -139,6 +144,7 @@ AppCard.propTypes = {
   contentStyle: PropTypes.object,
   actionStyle: PropTypes.object,
   children: PropTypes.node,
+  onClick: PropTypes.func,
 };
 
 AppCard.defaultProps = {

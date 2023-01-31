@@ -6,6 +6,7 @@ import {
   SHOW_MESSAGE,
   ADD_NEW_ROLE,
   UPDATE_ROLE,
+  GET_ALL_ROLES_LIST,
 } from 'shared/constants/ActionTypes';
 
 import {appIntl} from '../../@crema/utility/helper/Utils';
@@ -35,6 +36,33 @@ export const onGetRoleList = (filterData) => {
     }
   };
 };
+
+// for exporting data
+export const onGetAllRoles = (filterData) => {
+  return async (dispatch) => {
+    dispatch({type: FETCH_START});
+    const {messages} = appIntl();
+    try {
+      const res = await jwtAxios.get(`/roles`, {
+        params: {...filterData},
+      });
+      if (res.status === 200 && res.data.result) {
+        console.log(res.data);
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_ALL_ROLES_LIST, payload: res.data});
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: messages['message.somethingWentWrong'],
+        });
+      }
+    } catch (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+    }
+  };
+};
+
+// for exporting data
 
 export const onInsertRole = (data, toggleOpen) => {
   return async (dispatch) => {

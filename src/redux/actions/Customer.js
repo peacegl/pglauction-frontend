@@ -6,6 +6,7 @@ import {
   SHOW_MESSAGE,
   ADD_NEW_CUSTOMER,
   UPDATE_CUSTOMER,
+  GET_ALL_CUSTOMER_LIST,
 } from 'shared/constants/ActionTypes';
 
 import {appIntl} from '../../@crema/utility/helper/Utils';
@@ -35,6 +36,32 @@ export const onGetCustomerList = (filterData) => {
     }
   };
 };
+
+// for exporting data
+export const onGetAllCustomers = (filterData) => {
+  return async (dispatch) => {
+    dispatch({type: FETCH_START});
+    const {messages} = appIntl();
+    try {
+      const res = await jwtAxios.get(`/customers`, {
+        params: {...filterData},
+      });
+      if (res.status === 200 && res.data.result) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_ALL_CUSTOMER_LIST, payload: res.data});
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: messages['message.somethingWentWrong'],
+        });
+      }
+    } catch (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+    }
+  };
+};
+
+// for exporting data
 
 export const onInsertCustomer = (data, toggleOpen) => {
   return async (dispatch) => {

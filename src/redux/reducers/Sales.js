@@ -2,10 +2,12 @@ import {
   GET_SALE_LIST,
   ADD_NEW_SALE,
   UPDATE_SALE,
+  GET_ALL_SALES_LIST,
 } from 'shared/constants/ActionTypes';
 
 const initialUsers = {
   saleList: {},
+  salesExportData: {},
 };
 
 const usersReducer = (state = initialUsers, action) => {
@@ -15,6 +17,13 @@ const usersReducer = (state = initialUsers, action) => {
         ...state,
         saleList: action.payload,
       };
+
+    case GET_ALL_SALES_LIST:
+      return {
+        ...state,
+        salesExportData: action.payload,
+      };
+
     case ADD_NEW_SALE:
       return {
         ...state,

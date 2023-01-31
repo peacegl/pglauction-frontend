@@ -325,6 +325,10 @@
   "common.priority": "Priority",
   "common.status": "Status",
   "common.all": "All",
+  "common.allData": "All Data",
+  "common.filteredData": "Filtered Data",
+  "common.currentPage": "Current Page",
+  "common.amountOfData": "Amount of Data",
   "common.none": "None",
   "common.emailAddress": "Email Address",
   "common.login": "Login",
@@ -775,6 +779,7 @@
   "user.deleteMessage": "Are you sure, you want to delete the selected User(s)?",
   "user.message.deleted": "User(s) deleted successfully!",
   "user.userList": "User List",
+  "user.userDownload": "User Download",
   "message.userCreated": "User created successfully!",
   "message.userUpdated": "User updated successfully!",
   "common.userInfo": "User Info",
@@ -854,6 +859,7 @@
   "common.reset": "Reset",
 
   "location.locationInfo": "Location Info",
+  "location.locationDownload": "Location Download",
   "location.locationList": "Location List",
   
   "confirm.location.delete": "Are you sure, you want to delete the selected Location(s)?",
@@ -953,9 +959,11 @@
   "user.timezone": "User Timezone",
   "user.timezonePlaceholder": "Select User Timezone",
   "customer.timezone": "Customer Timezone",
+  "customer.download": "Customer Download",
   "customer.timezonePlaceholder": "Select Customer Timezone",
 
   "role.roleList": "Role List",
+  "role.roleDownload": "Role Download",
   "role.roleInfo": "Role Info",
   "role.permissions": "Permissions",
   "message.roleCreated": "Role created successfully!",
@@ -965,6 +973,7 @@
 
   "validation.notUniquName": "This name is taken",
   "permission.permissionList": "Permission List",
+  "permission.permissionDownload": "Permission Download",
   "auctionItem.deleteMessage": "Are you sure, you want to delete the selected Auction item(s)?",
   "auction.auctionItemList": "Auction item List",
   "message.auctionItemUpdated": "Auction item updated successfully!",
@@ -1072,6 +1081,8 @@
   "common.buyer": "Buyer",
   "common.buyerPlaceholder": "Select Buyer",
   "sale.saleData": "Sale Data",
+  "sale.download": "Sales Download",
+
   "sale.salePrice": "Sale Price",
   "sale.salePricePlaceholder": "Type Price",
   "sale.saleDate": "Sale Date",
