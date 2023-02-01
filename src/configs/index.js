@@ -124,7 +124,7 @@ export async function jwtMethod(
   }
 }
 
-export let pages = [
+export let webPages = [
   {
     key: 1,
     title: <IntlMessages id='website.home' />,
@@ -139,8 +139,8 @@ export let pages = [
   },
   // {
   //   key: 3,
-  //   title: <IntlMessages id='website.live_auctions' />,
-  //   link: '/live-auctions',
+  //   title: <IntlMessages id='website.auctions' />,
+  //   link: '/auctions',
   // },
   {
     key: 4,
