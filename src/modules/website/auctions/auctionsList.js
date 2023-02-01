@@ -1,5 +1,5 @@
-import TodayAuctions from './todayAcutions';
-import UpComingAuctions from './upComingAcutions';
+import TodayAuctions from './todayAuction/todayAcutions';
+import UpComingAuctions from './upcomingAuction/upComingAcutions';
 
 const AuctionsList = () => {
   return (

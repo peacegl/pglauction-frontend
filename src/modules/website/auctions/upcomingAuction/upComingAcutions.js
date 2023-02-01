@@ -1,24 +1,24 @@
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
-import AppsContent from '../vehicles/VehicleList/AppsContent';
+import AppsContent from '../../vehicles/VehicleList/AppsContent';
 import {useDispatch, useSelector} from 'react-redux';
 import {useAuthUser} from '@crema/utility/AuthHooks';
-import {onGetWebAuctionData, setAuctionsViewType} from 'redux/actions';
+import {onGetWebAuctionData, setUpComingAuctionViewType} from 'redux/actions';
 import React, {useEffect, useState} from 'react';
-import Header from '../vehicles/Header/index';
-import AuctionItem from './auctionItem';
-import {alpha, Box, Button, Card} from '@mui/material';
+import Header from '../../vehicles/Header/index';
+import AuctionItem from '../grid/auctionItem';
+import {alpha, Box, Card} from '@mui/material';
 import {VIEW_TYPE} from 'redux/reducers/WebAuctions';
 
-const TodayAuctions = () => {
+const UpComingAuctions = () => {
   const dispatch = useDispatch();
   const {theme} = useThemeContext();
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(10);
   const {user} = useAuthUser();
   const {data = [], total = 0} = useSelector(
-    ({webAuctions}) => webAuctions.auctionsList,
+    ({webAuctions}) => webAuctions.auctionsUpComingList,
   );
-  const viewType = useSelector(({webAuctions}) => webAuctions.viewType);
+  const viewType = useSelector(({webAuctions}) => webAuctions.viewUpType);
   // const loading = useSelector(({common}) => common.loading);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const TodayAuctions = () => {
       onGetWebAuctionData({
         per_page: perPage,
         page: page + 1,
-        dayData: 'today',
+        dayData: 'up_coming',
       }),
     );
   }, [page, perPage, user?.type]);
@@ -62,8 +62,12 @@ const TodayAuctions = () => {
             perPage={perPage}
             totalProducts={total}
             onPageChange={onPageChange}
-            onGClick={() => dispatch(setAuctionsViewType(VIEW_TYPE.GRID))}
-            onLClick={() => dispatch(setAuctionsViewType(VIEW_TYPE.LIST))}
+            onGClick={() =>
+              dispatch(setUpComingAuctionViewType(VIEW_TYPE.GRID))
+            }
+            onLClick={() =>
+              dispatch(setUpComingAuctionViewType(VIEW_TYPE.LIST))
+            }
           />
         </Box>
       </Card>
@@ -96,4 +100,4 @@ const TodayAuctions = () => {
   );
 };
 
-export default TodayAuctions;
+export default UpComingAuctions;

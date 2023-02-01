@@ -3,7 +3,7 @@ import {alpha, Box} from '@mui/system';
 import CoinsInfo from './CoinsInfo';
 import PropTypes from 'prop-types';
 import {AppCard} from '@crema';
-import MyTimer from './timer';
+import MyTimer from '../timer';
 import moment from 'moment';
 import 'moment-timezone';
 
