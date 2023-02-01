@@ -4,7 +4,7 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import logoImage from '../../assets/united_logo.png';
 import {useRouter} from 'next/router';
 import {useTheme} from '@mui/styles';
-import {pages} from 'configs';
+import {webPages} from 'configs';
 import Link from 'next/link';
 import {
   Box,
@@ -105,7 +105,7 @@ export default function Footer() {
                 }}
               >
                 {title('Quick Links')}
-                {pages.map((page, index) => {
+                {webPages.map((page, index) => {
                   if (page.link) {
                     return link(page.title, page.link, page?.target, index);
                   }

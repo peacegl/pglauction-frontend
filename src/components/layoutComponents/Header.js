@@ -11,7 +11,7 @@ import logoImage from 'assets/united_logo.png';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useRouter} from 'next/router';
-import {pages} from 'configs';
+import PropTypes from 'prop-types';
 import Link from 'next/link';
 import {
   alpha,
@@ -28,7 +28,7 @@ import {
   Typography,
 } from '@mui/material';
 
-function Header() {
+function Header(props) {
   const router = useRouter();
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -37,7 +37,7 @@ function Header() {
   const {make} = router.query;
 
   useEffect(() => {
-    pages.forEach((item, index) => {
+    props.pages.forEach((item, index) => {
       if (item.key == 8) {
         setActive(index);
       } else if (router.asPath == item.link) {
@@ -71,7 +71,7 @@ function Header() {
       // onKeyDown={toggleDrawer(false)}
     >
       <List>
-        {pages.map((item, index) => (
+        {props.pages.map((item, index) => (
           <ListItem key={index} disablePadding>
             {item.children ? (
               <Box sx={{width: '100%'}}>
@@ -297,3 +297,6 @@ function Header() {
 }
 
 export default Header;
+Header.propTypes = {
+  pages: PropTypes.array,
+};
