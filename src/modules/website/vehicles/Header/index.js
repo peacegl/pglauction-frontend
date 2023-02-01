@@ -43,11 +43,11 @@ const Header = ({
   totalProducts,
   onPageChange,
   title,
+  onLClick,
+  onGClick,
 }) => {
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
-  const {total = 0} = useSelector(({webVehicles}) => webVehicles.vehiclesData);
   const dispatch = useDispatch();
-  const theme = useTheme();
 
   const onDeleteSearch = () => {
     dispatch(setVehicleSearch(''));
@@ -72,7 +72,7 @@ const Header = ({
           <IntlMessages id={title} />
         </Typography>
         <Badge
-          badgeContent={total}
+          badgeContent={totalProducts}
           max={99999999}
           color='primary'
           sx={{ml: 6}}
@@ -100,7 +100,7 @@ const Header = ({
         }}
       >
         <IconBtn
-          onClick={() => dispatch(setVehicleViewType(VIEW_TYPE.LIST))}
+          onClick={onLClick}
           className={clsx({
             active: viewType === VIEW_TYPE.LIST,
           })}
@@ -108,7 +108,7 @@ const Header = ({
           <ListIcon />
         </IconBtn>
         <IconBtn
-          onClick={() => dispatch(setVehicleViewType(VIEW_TYPE.GRID))}
+          onClick={onGClick}
           className={clsx({
             active: viewType === VIEW_TYPE.GRID,
           })}
@@ -149,4 +149,6 @@ Header.propTypes = {
   onPageChange: PropTypes.func,
   make: PropTypes.any,
   title: PropTypes.any,
+  onLClick: PropTypes.func,
+  onGClick: PropTypes.func,
 };

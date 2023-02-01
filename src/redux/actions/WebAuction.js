@@ -3,7 +3,9 @@ import {
   FETCH_START,
   FETCH_SUCCESS,
   GET_WEB_AUCTIONS,
-  SET_AUCTION_VIEW_TYPE,
+  SET_WEB_AUCTION_VIEW_TYPE,
+  GET_UP_COMING_WEB_AUCTIONS,
+  SET_UP_COMING_AUCTION_VIEW_TYPE,
 } from 'shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
@@ -21,7 +23,11 @@ export const onGetWebAuctionData = (filterData) => {
       .then((data) => {
         if (data.status === 200) {
           dispatch({type: FETCH_SUCCESS});
-          dispatch({type: GET_WEB_AUCTIONS, payload: data.data});
+          if (filterData?.dayData == 'today') {
+            dispatch({type: GET_WEB_AUCTIONS, payload: data.data});
+          } else {
+            dispatch({type: GET_UP_COMING_WEB_AUCTIONS, payload: data.data});
+          }
         } else {
           dispatch({
             type: FETCH_ERROR,
@@ -37,6 +43,12 @@ export const onGetWebAuctionData = (filterData) => {
 
 export const setAuctionViewType = (viewType) => {
   return (dispatch) => {
-    dispatch({type: SET_AUCTION_VIEW_TYPE, payload: viewType});
+    dispatch({type: SET_WEB_AUCTION_VIEW_TYPE, payload: viewType});
+  };
+};
+
+export const setUpComingAuctionViewType = (viewType) => {
+  return (dispatch) => {
+    dispatch({type: SET_UP_COMING_AUCTION_VIEW_TYPE, payload: viewType});
   };
 };

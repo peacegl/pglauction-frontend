@@ -1190,5 +1190,6 @@
   "validation.endDateMustBeBigger": "End date must be greater than start date",
   "validation.pastDateNotAllowed": "Past dates are not allowed",
   "website.auctions": "Auctions",
-  "website.todayAuctions": "Today's Auctions"
+  "website.todayAuctions": "Today's Auctions",
+  "website.upcomingAuctions": "Up Coming Auctions"
 }

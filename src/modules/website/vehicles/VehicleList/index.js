@@ -1,5 +1,9 @@
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
-import {onGetWebVehicleData, setBrandFilter} from 'redux/actions';
+import {
+  onGetWebVehicleData,
+  setBrandFilter,
+  setVehicleViewType,
+} from 'redux/actions';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
 import {useDispatch, useSelector} from 'react-redux';
@@ -79,7 +83,7 @@ const VehicleList = () => {
     }
     dispatch(setBrandFilter(filterBrands));
     // filterData
-  }, [dispatch, makeData, page, search, perPage, user?.type]);
+  }, [makeData, page, search, perPage, user?.type]);
 
   const onPageChange = (event, value) => {
     setPage(value);
@@ -116,6 +120,8 @@ const VehicleList = () => {
             totalProducts={total}
             onPageChange={onPageChange}
             make={make}
+            onLClick={() => dispatch(setVehicleViewType(VIEW_TYPE.LIST))}
+            onGClick={() => dispatch(setVehicleViewType(VIEW_TYPE.GRID))}
           />
         </Box>
       </Card>

@@ -11,7 +11,7 @@ const AuctionItem = ({items, user}) => {
   return (
     <Box sx={{flexGrow: 1}}>
       <Grid container spacing={2}>
-        {items.map((data, i) => {
+        {items?.map((data, i) => {
           let time = moment
             .tz(
               data?.end_date,
@@ -70,28 +70,6 @@ const AuctionItem = ({items, user}) => {
                         display: 'flex',
                       }}
                     >
-                      {/* <Box>
-                        <Button
-                          size='small'
-                          sx={{
-                            backgroundColor: (theme) =>
-                              alpha(theme.palette.primary.main, 0.1),
-                            color: 'primary.main',
-                            fontWeight: 'light',
-                            textTransform: 'capitalize',
-                            paddingX: 5,
-                            fontSize: 16,
-                            '&:hover, &:focus': {
-                              backgroundColor: (theme) =>
-                                alpha(theme.palette.primary.main, 0.15),
-                              color: 'primary.main',
-                            },
-                            lineHeight: {xs: '16px', sm: '20px', xl: '26px'},
-                          }}
-                        >
-                          View Sale List
-                        </Button>
-                      </Box> */}
                       <Box
                         sx={{
                           ml: 3,
@@ -131,19 +109,6 @@ const AuctionItem = ({items, user}) => {
                     >
                       {data?.name}
                     </Box>
-                    {/* <Box
-                      component='p'
-                      sx={{
-                        color: 'text.secondary',
-                        fontSize: 14,
-                        whiteSpace: 'nowrap',
-                        mb: 1,
-                        textAlign: 'center',
-                      }}
-                    >
-                      {time}
-                    </Box> */}
-
                     <Box>
                       <Box
                         sx={{
