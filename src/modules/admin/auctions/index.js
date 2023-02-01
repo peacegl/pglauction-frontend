@@ -1,8 +1,8 @@
 import {onGetAuctionData, onDeleteAuctions} from 'redux/actions';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {tableColumns} from 'configs/pages/auctions';
 import {useDispatch, useSelector} from 'react-redux';
+import {tableColumns} from 'configs/pages/auctions';
 import AuctionModal from './AuctionModal';
 import {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import {
   DELETE_AUCTION,
   EDIT_AUCTION,
 } from 'shared/constants/Permissions';
-import CustomerConfigs from 'configs/pages/customers';
 
 export default function AuctionList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -97,7 +96,7 @@ export default function AuctionList({user}) {
         title={<IntlMessages id='auction.auctionList' />}
         total={total}
         data={data}
-        columns={tableColumns()}
+        columns={tableColumns(user)}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}

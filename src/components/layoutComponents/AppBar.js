@@ -1,11 +1,9 @@
 import {useAuthMethod, useAuthUser} from '@crema/utility/AuthHooks';
-import {useCallback, useEffect, useMemo, useState} from 'react';
-import BookmarksIcon from '@mui/icons-material/Bookmarks';
+import {useEffect, useMemo, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import VehicleSearchBar from './VehicleSearchBar';
-import ShopIcon from '@mui/icons-material/Shop';
 import Container from '@mui/material/Container';
 import {setVehicleSearch} from 'redux/actions';
 import MenuItem from '@mui/material/MenuItem';
@@ -19,7 +17,7 @@ import Menu from '@mui/material/Menu';
 import {useRouter} from 'next/router';
 import CustomMenu from './CustomMenu';
 import Box from '@mui/material/Box';
-import {pages} from 'configs';
+import PropTypes from 'prop-types';
 import Link from 'next/link';
 
 const signOptions = [
@@ -31,7 +29,7 @@ const signOptions = [
   {title: <IntlMessages id='common.signup' />, link: '/signup'},
 ];
 
-function TopMenu() {
+function TopMenu(props) {
   const {logout} = useAuthMethod();
   const {user, isLoading} = useAuthUser();
   const router = useRouter();
@@ -59,7 +57,7 @@ function TopMenu() {
   };
 
   const settings = useMemo(() => {
-    const sets = [
+    let sets = [
       {
         key: 1,
         title: <IntlMessages id='common.logout' />,
@@ -81,35 +79,6 @@ function TopMenu() {
     }
     return sets;
   }, [user?.type]);
-
-  const addTodo = useCallback(() => {
-    if (user?.type == 'Customer') {
-      if (pages.filter((item) => item.key == 8).length == 0) {
-        pages.unshift({
-          key: 8,
-          title: <IntlMessages id='sidebar.dashboard' />,
-          children: [
-            {
-              title: <IntlMessages id='common.myWatchlist' />,
-              link: '/dashboard/my-watchlist',
-              target: '_self',
-              icon: <BookmarksIcon />,
-            },
-            {
-              title: <IntlMessages id='common.myPurchaseList' />,
-              link: '/dashboard/my-purchaselist',
-              target: '_self',
-              icon: <ShopIcon />,
-            },
-          ],
-        });
-      }
-    }
-  }, [user?.type]);
-
-  useEffect(() => {
-    addTodo();
-  }, []);
 
   // useEffect(() => {
   //   pages.forEach((item, index) => {
@@ -161,7 +130,7 @@ function TopMenu() {
               display: {xs: 'none', md: 'flex'},
             }}
           >
-            {pages.map((page, index) =>
+            {props.pages.map((page, index) =>
               page.children ? (
                 <CustomMenu
                   page={page}
@@ -245,3 +214,6 @@ function TopMenu() {
   );
 }
 export default TopMenu;
+TopMenu.propTypes = {
+  pages: PropTypes.array,
+};

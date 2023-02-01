@@ -40,6 +40,7 @@
     "jspdf-autotable": "^3.5.28",
     "laravel-echo": "^1.14.2",
     "moment": "^2.29.1",
+    "moment-timezone": "^0.5.40",
     "mui-datatables": "^4.2.2",
     "mui-rte": "^2.0.1",
     "next": "^13.0.2",

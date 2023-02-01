@@ -42,13 +42,16 @@ const checkRemaining = (diff) => {
   return total_time_spent;
 };
 
-const TimeRemainingBox = ({end_date}) => {
+const TimeRemainingBox = ({end_date, onExpire}) => {
   const [timeRemaining, setTimeRemaining] = useState('');
   const timeDiff = (end) => {
     const date1 = new Date();
     const date2 = new Date(end);
     const diff = Math.floor(Math.abs((date2 - date1) / 1000));
     setTimeRemaining(checkRemaining(diff));
+    if (0 <= 0) {
+      onExpire();
+    }
   };
   useEffect(() => {
     const interval = setInterval(() => {
@@ -73,4 +76,5 @@ const TimeRemainingBox = ({end_date}) => {
 export default TimeRemainingBox;
 TimeRemainingBox.propTypes = {
   end_date: PropTypes.string.isRequired,
+  onExpire: PropTypes.func,
 };

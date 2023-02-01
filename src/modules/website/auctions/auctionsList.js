@@ -95,7 +95,7 @@ const AuctionsList = () => {
             },
           }}
         >
-          <AuctionItem items={data} />
+          <AuctionItem items={data} user={user} />
         </Box>
         {data.length > 0 && (
           <Box
