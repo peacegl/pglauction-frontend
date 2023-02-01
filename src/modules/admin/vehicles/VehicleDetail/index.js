@@ -1,11 +1,5 @@
-import {
-  onCountPopularBrands,
-  onGetWebSimilarVehicle,
-  onGetWebVehicleView,
-} from 'redux/actions';
+import {onGetVehicleView} from 'redux/actions';
 import ImageCarousel from 'components/design/ImageCarousel';
-import CustomCarousel from 'components/CustomCarousel';
-import IntlMessages from '@crema/utility/IntlMessages';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import {useDispatch, useSelector} from 'react-redux';
 import Error404 from 'modules/errorPages/Error404';
@@ -15,7 +9,6 @@ import SaleInfo from '../../../../components/vehicles/VehicleDetails/SaleInfo';
 import {useEffect} from 'react';
 import LotInfo from '../../../../components/vehicles/VehicleDetails/LotInfo';
 import Header from '../../../../components/vehicles/VehicleDetails/Header';
-import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
 
 const VehicleDetail = () => {
   const router = useRouter();
@@ -23,34 +16,27 @@ const VehicleDetail = () => {
   const {id} = router.query;
 
   const loading = useSelector(({common}) => common.loading);
-  const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
-  const {similarVehicles = []} = useSelector(({webVehicles}) => webVehicles);
+  const {vehicle = {}} = useSelector(({vehicles}) => vehicles);
+
   const {user} = useAuthUser();
-  const popularBrandsCount = useSelector(
-    ({webVehicles}) => webVehicles.popularBrandsCount,
-  );
-  useEffect(() => {
-    (async function () {
-      await dispatch(onCountPopularBrands());
-    })();
-  }, []);
+
   useEffect(() => {
     if (id) {
-      dispatch(onGetWebVehicleView(id));
-      dispatch(onGetWebSimilarVehicle(id));
+      dispatch(onGetVehicleView(id));
     }
   }, [id]);
 
   useEffect(() => {
     if (id) {
-      dispatch(onGetWebVehicleView(id));
+      dispatch(onGetVehicleView(id));
     }
   }, [user?.type]);
+
   return (
     <>
       {vehicle.id ? (
         <>
-          <Header vehicle={vehicle} admin={false} />
+          <Header vehicle={vehicle} admin={true} />
           <Container maxWidth='xl' sx={{mt: 6}}>
             <Box
               sx={{
@@ -80,22 +66,13 @@ const VehicleDetail = () => {
                 }}
               >
                 <Box sx={{flex: 1.5}}>
-                  <LotInfo vehicle={vehicle} admin={false} />
+                  <LotInfo vehicle={vehicle} admin={true} />
                 </Box>
                 <Box sx={{flex: 1}}>
-                  <SaleInfo vehicle={vehicle} admin={false} />
+                  <SaleInfo vehicle={vehicle} admin={true} />
                 </Box>
               </Box>
             </Box>
-            <Box sx={{mt: 12}}>
-              {similarVehicles.length > 0 && (
-                <CustomCarousel
-                  title={<IntlMessages id='website.vehicle.similarVehicles' />}
-                  items={similarVehicles}
-                />
-              )}
-            </Box>
-            <PopularBrandsList popularBrandsCount={popularBrandsCount} />
           </Container>
         </>
       ) : (

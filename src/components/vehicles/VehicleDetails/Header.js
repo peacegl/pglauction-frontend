@@ -10,12 +10,12 @@ import {useTheme} from '@mui/styles';
 import PropTypes from 'prop-types';
 import {useState} from 'react';
 
-function Header({item}) {
+function Header({vehicle, admin}) {
   const theme = useTheme();
-  const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
+  // const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
   const [showSignInModal, setShowSignInModl] = useState(false);
   const {addToWatchList, watchlistLoading, addedToWatchList} =
-    useAddToWatchList(item, setShowSignInModl);
+    useAddToWatchList(vehicle, setShowSignInModl);
   return (
     <Box
       display='flex'
@@ -66,25 +66,31 @@ function Header({item}) {
               </Typography>
             </Box>
           </Box>
-          <Box>
-            <LoadingButton
-              loading={watchlistLoading}
-              loadingPosition='start'
-              startIcon={
-                !addedToWatchList ? <BookmarkAddIcon /> : <BookmarkAddedIcon />
-              }
-              variant='outlined'
-              size='small'
-              sx={{mt: 2}}
-              onClick={() => addToWatchList(item.id)}
-            >
-              {!addedToWatchList ? (
-                <IntlMessages id='common.watch' />
-              ) : (
-                <IntlMessages id='common.remove' />
-              )}
-            </LoadingButton>
-          </Box>
+          {!admin && (
+            <Box>
+              <LoadingButton
+                loading={watchlistLoading}
+                loadingPosition='start'
+                startIcon={
+                  !addedToWatchList ? (
+                    <BookmarkAddIcon />
+                  ) : (
+                    <BookmarkAddedIcon />
+                  )
+                }
+                variant='outlined'
+                size='small'
+                sx={{mt: 2}}
+                onClick={() => addToWatchList(vehicle.id)}
+              >
+                {!addedToWatchList ? (
+                  <IntlMessages id='common.watch' />
+                ) : (
+                  <IntlMessages id='common.remove' />
+                )}
+              </LoadingButton>
+            </Box>
+          )}
         </Box>
       </Container>
       {showSignInModal && (
@@ -99,6 +105,8 @@ function Header({item}) {
 }
 
 export default Header;
+
 Header.propTypes = {
-  item: PropTypes.any,
+  vehicle: PropTypes.any,
+  admin: PropTypes.bool,
 };

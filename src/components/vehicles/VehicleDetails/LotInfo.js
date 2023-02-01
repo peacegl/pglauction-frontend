@@ -1,18 +1,18 @@
 import React, {useState} from 'react';
 import List from '@mui/material/List';
 import {Card, Chip, Typography, useTheme} from '@mui/material';
-import {useSelector} from 'react-redux';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import TabPanel from '@mui/lab/TabPanel';
 import {TabContext, TabList} from '@mui/lab';
 import Item from './Item';
 import IntlMessages from '@crema/utility/IntlMessages';
+import PropTypes from 'prop-types';
+import {appIntl} from '../../../@crema/utility/helper/Utils';
 
-export default function SaleInfo() {
+export default function LotInfo({vehicle, admin}) {
   const [value, setValue] = useState('lot_info');
   const theme = useTheme();
-  const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -176,14 +176,63 @@ export default function SaleInfo() {
               py: 2,
             }}
           >
-            About this {vehicle.make} {vehicle.model}
+            About {vehicle.make} {vehicle.model}
           </Typography>
           <Typography
             px={3}
             dangerouslySetInnerHTML={{__html: vehicle.description}}
           />
+          {admin && (
+            <>
+              <Item
+                label={<IntlMessages id='common.code' />}
+                value={vehicle.code}
+              />
+              <Item
+                label={<IntlMessages id='common.created_by' />}
+                value={vehicle.created_by.username}
+              />
+              <Item
+                label={<IntlMessages id='common.created_at' />}
+                value={vehicle.created_at}
+              />
+              <Item
+                label={<IntlMessages id='common.updated_by' />}
+                value={vehicle.updated_by.username}
+              />
+              <Item
+                label={<IntlMessages id='common.last_updated' />}
+                value={vehicle.updated_at}
+              />
+              <Item
+                label={<IntlMessages id='vehicle.is_featured' />}
+                value={
+                  vehicle.is_featured ? (
+                    <IntlMessages id='common.yes' />
+                  ) : (
+                    <IntlMessages id='common.no' />
+                  )
+                }
+              />
+              <Item
+                label={<IntlMessages id='vehicle.is_best_selling' />}
+                value={
+                  vehicle.is_best_selling ? (
+                    <IntlMessages id='common.yes' />
+                  ) : (
+                    <IntlMessages id='common.no' />
+                  )
+                }
+              />
+            </>
+          )}
         </TabPanel>
       </TabContext>
     </Card>
   );
 }
+
+LotInfo.propTypes = {
+  vehicle: PropTypes.any,
+  admin: PropTypes.bool,
+};

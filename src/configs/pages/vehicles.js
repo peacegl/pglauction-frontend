@@ -7,11 +7,39 @@ import {appIntl} from '@crema/utility/helper/Utils';
 const youtubeRegExp = CommonConfigs().youtubeRegExp;
 const {messages = []} = appIntl() ? appIntl() : {};
 
-export const tableColumns = function () {
+export const tableColumns = function (router) {
   return [
+    {
+      name: 'id',
+      label: messages['common.id'],
+      options: {
+        display: false,
+        viewColumns: false,
+      },
+    },
     {
       name: 'str_code',
       label: messages['common.code'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              fontWeight: 'bold',
+              cursor: 'pointer',
+            }}
+            onClick={() => {
+              router.push(
+                `/admin/vehicles/${tableMeta.tableData[tableMeta.rowIndex][0]}`,
+              );
+            }}
+            noWrap={true}
+          >
+            {value}
+          </Typography>
+        ),
+      },
     },
     {
       name: 'vin',
@@ -51,7 +79,7 @@ export const tableColumns = function () {
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
             {moneyFormater(
-              parseInt(value) + parseInt((value * tableMeta?.rowData[4]) / 100),
+              parseInt(value) + parseInt((value * tableMeta?.rowData[5]) / 100),
             )}
           </Typography>
         ),
