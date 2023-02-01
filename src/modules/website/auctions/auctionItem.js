@@ -20,6 +20,15 @@ const AuctionItem = ({items, user}) => {
             )
             .tz(user?.timezone ? user.timezone : moment.tz.guess())
             .format('YYYY-MM-DD hh:mm:ss A');
+
+          let startTime = moment
+            .tz(
+              data?.start_date,
+              'YYYY-MM-DD HH:mm:ss',
+              user?.timezone ? user.timezone : 'UTC',
+            )
+            .tz(user?.timezone ? user.timezone : moment.tz.guess())
+            .format('YYYY-MM-DD hh:mm:ss A');
           return (
             <Grid key={i} item lg={6} md={12} xs={12}>
               <Box>
@@ -55,25 +64,13 @@ const AuctionItem = ({items, user}) => {
                       >
                         {data?.location?.name}
                       </Box>
-                      <Box
-                        component='p'
-                        sx={{
-                          color: 'text.secondary',
-                          fontSize: 14,
-                          whiteSpace: 'nowrap',
-                          mb: 1,
-                          textTransform: 'capitalize',
-                        }}
-                      >
-                        {data?.location?.slug}
-                      </Box>
                     </Box>
                     <Box
                       sx={{
                         display: 'flex',
                       }}
                     >
-                      <Box>
+                      {/* <Box>
                         <Button
                           size='small'
                           sx={{
@@ -94,7 +91,7 @@ const AuctionItem = ({items, user}) => {
                         >
                           View Sale List
                         </Button>
-                      </Box>
+                      </Box> */}
                       <Box
                         sx={{
                           ml: 3,
@@ -128,13 +125,24 @@ const AuctionItem = ({items, user}) => {
                       component='p'
                       sx={{
                         fontSize: 18,
-                        color: (theme) => theme.palette.primary.main,
                         mb: 2,
                         textTransform: 'capitalize',
                       }}
                     >
                       {data?.name}
                     </Box>
+                    {/* <Box
+                      component='p'
+                      sx={{
+                        color: 'text.secondary',
+                        fontSize: 14,
+                        whiteSpace: 'nowrap',
+                        mb: 1,
+                        textAlign: 'center',
+                      }}
+                    >
+                      {time}
+                    </Box> */}
 
                     <Box>
                       <Box
@@ -151,18 +159,6 @@ const AuctionItem = ({items, user}) => {
                           )}
                         />
                       </Box>
-                      <Box
-                        component='p'
-                        sx={{
-                          color: 'text.secondary',
-                          fontSize: 14,
-                          whiteSpace: 'nowrap',
-                          mb: 1,
-                          textAlign: 'center',
-                        }}
-                      >
-                        {time}
-                      </Box>
                     </Box>
                   </Box>
 
@@ -173,7 +169,9 @@ const AuctionItem = ({items, user}) => {
                         name: 'Total Vehicles',
                         value: `${data?.items_count} total`,
                       },
-                      {id: 2, name: 'Status', value: 'Up coming || Bidding'},
+                      {id: 2, name: 'Status', value: 'Up coming'},
+                      {id: 3, name: 'Start Date', value: `${startTime}`},
+                      {id: 4, name: 'End Date', value: `${time}`},
                     ]}
                   />
                 </AppCard>

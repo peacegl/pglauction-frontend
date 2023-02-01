@@ -7,15 +7,7 @@ import {onGetWebAuctionData} from 'redux/actions';
 import React, {useEffect, useState} from 'react';
 import Header from '../vehicles/Header/index';
 import AuctionItem from './auctionItem';
-import {
-  alpha,
-  Box,
-  Card,
-  Pagination,
-  Typography,
-  Select,
-  MenuItem,
-} from '@mui/material';
+import {alpha, Box, Card} from '@mui/material';
 
 const AuctionsList = () => {
   const dispatch = useDispatch();
@@ -40,9 +32,6 @@ const AuctionsList = () => {
 
   const onPageChange = (event, value) => {
     setPage(value);
-  };
-  const onPageChange2 = (event, value) => {
-    setPage(value - 1);
   };
   return (
     <>
@@ -94,64 +83,6 @@ const AuctionsList = () => {
         >
           <AuctionItem items={data} user={user} />
         </Box>
-        {data.length > 0 && (
-          <Box
-            sx={{
-              m: 4,
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            <Card
-              sx={{
-                px: 3,
-                borderRadius: 1,
-                py: 1,
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <Typography variant='body1' sx={{mr: 2}}>
-                  <IntlMessages id='common.rowsPerPage' />:
-                </Typography>
-                <Select
-                  value={perPage}
-                  onChange={(e) => {
-                    setPerPage(parseInt(e.target.value));
-                    setPage(0);
-                  }}
-                  autoWidth
-                  size='small'
-                  sx={{
-                    boxShadow: 'none',
-                    '.MuiOutlinedInput-notchedOutline': {border: 0},
-                  }}
-                >
-                  <MenuItem value={10}>10</MenuItem>
-                  <MenuItem value={25}>25</MenuItem>
-                  <MenuItem value={50}>50</MenuItem>
-                  <MenuItem value={100}>100</MenuItem>
-                  <MenuItem value={200}>200</MenuItem>
-                </Select>
-              </Box>
-              <Pagination
-                count={Math.ceil(total / perPage)}
-                page={page + 1}
-                onChange={onPageChange2}
-                color='primary'
-              />
-            </Card>
-          </Box>
-        )}
       </AppsContent>
     </>
   );

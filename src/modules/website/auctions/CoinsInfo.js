@@ -31,11 +31,10 @@ const CoinsInfo = ({coins}) => {
               {coin.name}
             </Box>
             <Box
-              component='h3'
+              component='h5'
               sx={{
                 fontWeight: 'bold',
-                fontSize: 20,
-                color: 'primary.main',
+                fontSize: 12,
               }}
             >
               {coin.value}
