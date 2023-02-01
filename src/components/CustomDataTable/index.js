@@ -3,7 +3,6 @@ import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {Badge, Box, Typography} from '@mui/material';
-import ExportPdf from 'components/exports/exportPdf';
 import AppLoader from '@crema/core/AppLoader';
 import BasicTooltip from './BasicTooltip';
 import MUIDataTable from 'mui-datatables';

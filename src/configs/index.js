@@ -124,7 +124,7 @@ export async function jwtMethod(
   }
 }
 
-export let pages = [
+export let webPages = [
   {
     key: 1,
     title: <IntlMessages id='website.home' />,

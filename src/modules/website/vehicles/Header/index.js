@@ -14,7 +14,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
 import IconButton from '@mui/material/IconButton';
 import PropTypes from 'prop-types';
-import {setVehicleViewType, setVehicleSearch} from '../../../../redux/actions';
+import {setVehicleViewType, setVehicleSearch} from 'redux/actions';
 import {styled} from '@mui/material/styles';
 import clsx from 'clsx';
 import AppsPagination from '@crema/core/AppsPagination';

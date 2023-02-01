@@ -2,8 +2,10 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 const {messages = []} = appIntl() ? appIntl() : {};
 import * as yup from 'yup';
+import moment from 'moment';
+import 'moment-timezone';
 
-export const tableColumns = function () {
+export const tableColumns = function (user) {
   return [
     {
       name: 'str_code',
@@ -16,10 +18,28 @@ export const tableColumns = function () {
     {
       name: 'start_date',
       label: messages['common.startDate'],
+      options: {
+        download: false,
+        sort: false,
+        customBodyRender: (value, tableMeta, updateValue) =>
+          moment
+            .tz(value, 'YYYY-MM-DD HH:mm:ss', 'UTC')
+            .tz(user?.timezone ? user.timezone : moment.tz.guess())
+            .format('YYYY-MM-DD hh:mm:ss A'),
+      },
     },
     {
       name: 'end_date',
       label: messages['common.endDate'],
+      options: {
+        download: false,
+        sort: false,
+        customBodyRender: (value, tableMeta, updateValue) =>
+          moment
+            .tz(value, 'YYYY-MM-DD HH:mm:ss', 'UTC')
+            .tz(user?.timezone ? user.timezone : moment.tz.guess())
+            .format('YYYY-MM-DD hh:mm:ss A'),
+      },
     },
     {
       name: 'items_count',

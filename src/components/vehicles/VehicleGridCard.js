@@ -87,7 +87,10 @@ export default function VehicleGridCard(props) {
             >
               <IntlMessages id='bid.timeRemaining' />
             </Typography>
-            <TimeRemainingBox end_date={props.item.end_date} />
+            <TimeRemainingBox
+              end_date={props.item.end_date}
+              onExpire={() => console.log('dsfd')}
+            />
           </Box>
         </Box>
         <Button
