@@ -2,11 +2,12 @@ import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextPro
 import AppsContent from '../vehicles/VehicleList/AppsContent';
 import {useDispatch, useSelector} from 'react-redux';
 import {useAuthUser} from '@crema/utility/AuthHooks';
-import {onGetWebAuctionData} from 'redux/actions';
+import {onGetWebAuctionData, setAuctionsViewType} from 'redux/actions';
 import React, {useEffect, useState} from 'react';
 import Header from '../vehicles/Header/index';
 import AuctionItem from './auctionItem';
-import {alpha, Box, Card} from '@mui/material';
+import {alpha, Box, Button, Card} from '@mui/material';
+import {VIEW_TYPE} from 'redux/reducers/WebAuctions';
 
 const TodayAuctions = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const TodayAuctions = () => {
         dayData: 'today',
       }),
     );
-  }, [dispatch, page, perPage, user?.type]);
+  }, [page, perPage, user?.type]);
 
   const onPageChange = (event, value) => {
     setPage(value);
@@ -54,15 +55,15 @@ const TodayAuctions = () => {
           className='apps-header'
         >
           <Header
-            title='website.todayAuctions'
+            title='website.upcomingAuctions'
             list={data}
             viewType={viewType}
             page={page}
             perPage={perPage}
             totalProducts={total}
             onPageChange={onPageChange}
-            onGClick={() => {}}
-            onLClick={() => {}}
+            onGClick={() => dispatch(setAuctionsViewType(VIEW_TYPE.GRID))}
+            onLClick={() => dispatch(setAuctionsViewType(VIEW_TYPE.LIST))}
           />
         </Box>
       </Card>
@@ -84,7 +85,11 @@ const TodayAuctions = () => {
             },
           }}
         >
-          <AuctionItem items={data} user={user} />
+          {viewType === VIEW_TYPE.GRID ? (
+            <AuctionItem items={data} user={user} />
+          ) : (
+            <>not yet</>
+          )}
         </Box>
       </AppsContent>
     </>

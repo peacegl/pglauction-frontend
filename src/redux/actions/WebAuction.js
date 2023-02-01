@@ -8,7 +8,6 @@ import {
   SET_UP_COMING_AUCTION_VIEW_TYPE,
 } from 'shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-import {appIntl} from '@crema/utility/helper/Utils';
 
 export const onGetWebAuctionData = (filterData) => {
   return (dispatch) => {
@@ -41,7 +40,7 @@ export const onGetWebAuctionData = (filterData) => {
   };
 };
 
-export const setAuctionViewType = (viewType) => {
+export const setAuctionsViewType = (viewType) => {
   return (dispatch) => {
     dispatch({type: SET_WEB_AUCTION_VIEW_TYPE, payload: viewType});
   };
