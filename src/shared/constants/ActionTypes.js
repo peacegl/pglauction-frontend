@@ -195,6 +195,9 @@ export const SET_AUCTION_FILTER_DATA = 'SET_AUCTION_FILTER_DATA';
 export const ADD_NEW_AUCTION = 'ADD_NEW_AUCTION';
 export const UPDATE_AUCTION = 'UPDATE_AUCTION';
 
+// Web Auction List
+export const GET_WEB_AUCTIONS = 'GET_WEB_AUCTIONS';
+
 // Vehicles List
 export const GET_VEHICLE_LIST = 'GET_VEHICLE_LIST';
 export const GET_ALL_VEHICLE_LIST = 'GET_ALL_VEHICLE_LIST';

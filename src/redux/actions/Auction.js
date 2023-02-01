@@ -7,7 +7,6 @@ import {
   UPDATE_AUCTION,
   SHOW_MESSAGE,
   ADD_NEW_AUCTION,
-  SET_AUCTION_VIEW_TYPE,
 } from 'shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
@@ -36,12 +35,6 @@ export const onGetAuctionData = (filterData) => {
       .catch((error) => {
         dispatch({type: FETCH_ERROR, payload: error.message});
       });
-  };
-};
-
-export const setVehicleViewType = (viewType) => {
-  return (dispatch) => {
-    dispatch({type: SET_AUCTION_VIEW_TYPE, payload: viewType});
   };
 };
 

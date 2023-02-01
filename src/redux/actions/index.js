@@ -8,6 +8,7 @@ export * from './Vehicle';
 export * from './Role';
 export * from './Permission';
 export * from './Auction';
+export * from './WebAuction';
 export * from './WebVehicle';
 export * from './Make';
 export * from './Model';

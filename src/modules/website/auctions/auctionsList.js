@@ -1,11 +1,12 @@
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
-import {onGetAuctionData} from 'redux/actions';
+import AppsContent from '../vehicles/VehicleList/AppsContent';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {VIEW_TYPE} from 'redux/reducers/Auctions';
 import {useDispatch, useSelector} from 'react-redux';
 import {useAuthUser} from '@crema/utility/AuthHooks';
+import {onGetWebAuctionData} from 'redux/actions';
 import React, {useEffect, useState} from 'react';
 import Header from '../vehicles/Header/index';
+import AuctionItem from './auctionItem';
 import {
   alpha,
   Box,
@@ -15,8 +16,6 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
-import AppsContent from '../vehicles/VehicleList/AppsContent';
-import AuctionItem from './auctionItem';
 
 const AuctionsList = () => {
   const dispatch = useDispatch();
@@ -25,20 +24,18 @@ const AuctionsList = () => {
   const [perPage, setPerPage] = useState(10);
   const {user} = useAuthUser();
   const {data = [], total = 0} = useSelector(
-    ({auctions}) => auctions.auctionsList,
+    ({webAuctions}) => webAuctions.auctionsList,
   );
-  const viewType = useSelector(({auctions}) => auctions.viewType);
+  const viewType = useSelector(({webAuctions}) => webAuctions.viewType);
   // const loading = useSelector(({common}) => common.loading);
 
   useEffect(() => {
     dispatch(
-      onGetAuctionData({
+      onGetWebAuctionData({
         per_page: perPage,
         page: page + 1,
       }),
     );
-
-    // filterData
   }, [dispatch, page, perPage, user?.type]);
 
   const onPageChange = (event, value) => {

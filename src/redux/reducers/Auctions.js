@@ -4,7 +4,6 @@ import {
   SET_AUCTION_DATA,
   UPDATE_AUCTION,
   ADD_NEW_AUCTION,
-  SET_AUCTION_VIEW_TYPE,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -12,7 +11,6 @@ const initialState = {
   auctionsList: [],
   currectAuction: null,
   filterData: {},
-  viewType: VIEW_TYPE.GRID,
 };
 
 const AuctionReducer = (state = initialState, action) => {
@@ -31,13 +29,6 @@ const AuctionReducer = (state = initialState, action) => {
           data: [action.payload, ...state.auctionsList.data],
         },
       };
-
-    case SET_AUCTION_VIEW_TYPE:
-      return {
-        ...state,
-        viewType: action.payload,
-      };
-
     case UPDATE_AUCTION:
       return {
         ...state,
