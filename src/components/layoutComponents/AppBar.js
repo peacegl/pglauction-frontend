@@ -1,6 +1,6 @@
 import {useAuthMethod, useAuthUser} from '@crema/utility/AuthHooks';
-import {useEffect, useMemo, useState} from 'react';
 import IntlMessages from '@crema/utility/IntlMessages';
+import {useEffect, useMemo, useState} from 'react';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import VehicleSearchBar from './VehicleSearchBar';
