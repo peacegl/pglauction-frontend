@@ -5,6 +5,11 @@ import CoinsInfo from './CoinsInfo';
 import MyTimer from './timer';
 
 const AuctionItem = ({items}) => {
+  const endDate = (date) => {
+    const d = new Date(date);
+    return d.toString();
+  };
+
   return (
     <Box sx={{flexGrow: 1}}>
       <Grid container spacing={2}>
@@ -143,7 +148,7 @@ const AuctionItem = ({items}) => {
                         textAlign: 'center',
                       }}
                     >
-                      {data?.start_date}
+                      {endDate(data?.end_date)}
                     </Box>
                   </Box>
                 </Box>
