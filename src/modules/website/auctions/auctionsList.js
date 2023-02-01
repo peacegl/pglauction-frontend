@@ -1,15 +1,11 @@
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
-import {onGetWebVehicleData, setBrandFilter} from 'redux/actions';
+import {onGetAuctionData} from 'redux/actions';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
+import {VIEW_TYPE} from 'redux/reducers/Auctions';
 import {useDispatch, useSelector} from 'react-redux';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import React, {useEffect, useState} from 'react';
-import GridView from './GridView/index';
-import AppsContent from './AppsContent';
-import {useRouter} from 'next/router';
-import ListView from './ListView';
-import Header from '../Header';
+import Header from '../vehicles/Header/index';
 import {
   alpha,
   Box,
@@ -19,67 +15,31 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
+import AppsContent from '../vehicles/VehicleList/AppsContent';
+import AuctionItem from './auctionItem';
 
-const VehicleList = () => {
+const AuctionsList = () => {
   const dispatch = useDispatch();
   const {theme} = useThemeContext();
   const [page, setPage] = useState(0);
-  const [perPage, setPerPage] = useState(50);
-  const [makeData, setMakeData] = useState('');
+  const [perPage, setPerPage] = useState(10);
   const {user} = useAuthUser();
-  const router = useRouter();
-  const {make} = router.query;
   const {data = [], total = 0} = useSelector(
-    ({webVehicles}) => webVehicles.vehiclesData,
+    ({auctions}) => auctions.auctionsList,
   );
-  const viewType = useSelector(({webVehicles}) => webVehicles.viewType);
-  const filterData = useSelector(({webVehicles}) => webVehicles.filterData);
+  const viewType = useSelector(({auctions}) => auctions.viewType);
   // const loading = useSelector(({common}) => common.loading);
-  const loading = useSelector(({webVehicles}) => webVehicles.itemsLoading);
-  const {search = ''} = useSelector(({webVehicles}) => webVehicles);
-  useEffect(() => {
-    setPage(0);
-  }, [search, filterData]);
 
   useEffect(() => {
-    if (make) {
-      setPage(0);
-    }
-    setMakeData(make ? make : '');
-  }, [make]);
+    dispatch(
+      onGetAuctionData({
+        per_page: perPage,
+        page: page + 1,
+      }),
+    );
 
-  useEffect(() => {
-    let filterBrands = {};
-    if (!make || make == makeData) {
-      if (makeData) {
-        filterBrands = {
-          brand: makeData,
-          status: ['available', 'future'],
-        };
-        dispatch(
-          onGetWebVehicleData({
-            // filterData,
-            filterBrands,
-            per_page: perPage,
-            page: page + 1,
-            search,
-          }),
-        );
-      } else {
-        dispatch(
-          onGetWebVehicleData({
-            // filterData,
-            filterBrands,
-            per_page: perPage,
-            page: page + 1,
-            search,
-          }),
-        );
-      }
-    }
-    dispatch(setBrandFilter(filterBrands));
     // filterData
-  }, [dispatch, makeData, page, search, perPage, user?.type]);
+  }, [dispatch, page, perPage, user?.type]);
 
   const onPageChange = (event, value) => {
     setPage(value);
@@ -108,14 +68,13 @@ const VehicleList = () => {
           className='apps-header'
         >
           <Header
-            title='website.allVehicles'
+            title='website.todayAuctions'
             list={data}
             viewType={viewType}
             page={page}
             perPage={perPage}
             totalProducts={total}
             onPageChange={onPageChange}
-            make={make}
           />
         </Box>
       </Card>
@@ -136,11 +95,7 @@ const VehicleList = () => {
             },
           }}
         >
-          {viewType === VIEW_TYPE.GRID ? (
-            <GridView list={data} loading={loading} perPage={perPage} />
-          ) : (
-            <ListView list={data} loading={loading} perPage={perPage} />
-          )}
+          <AuctionItem items={data} />
         </Box>
         {data.length > 0 && (
           <Box
@@ -205,4 +160,4 @@ const VehicleList = () => {
   );
 };
 
-export default VehicleList;
+export default AuctionsList;

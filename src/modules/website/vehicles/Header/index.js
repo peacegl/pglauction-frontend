@@ -42,7 +42,7 @@ const Header = ({
   perPage,
   totalProducts,
   onPageChange,
-  make,
+  title,
 }) => {
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
   const {total = 0} = useSelector(({webVehicles}) => webVehicles.vehiclesData);
@@ -69,11 +69,7 @@ const Header = ({
         }}
       >
         <Typography variant='h2' color='primary'>
-          {make ? (
-            make.charAt(0).toUpperCase() + make.slice(1)
-          ) : (
-            <IntlMessages id='website.allVehicles' />
-          )}
+          <IntlMessages id={title} />
         </Typography>
         <Badge
           badgeContent={total}
@@ -152,4 +148,5 @@ Header.propTypes = {
   totalProducts: PropTypes.number,
   onPageChange: PropTypes.func,
   make: PropTypes.any,
+  title: PropTypes.any,
 };
