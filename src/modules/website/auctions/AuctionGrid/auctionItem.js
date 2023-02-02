@@ -1,12 +1,12 @@
 import IntlMessages from '@crema/utility/IntlMessages';
-import {Button, Grid} from '@mui/material';
+import AuctionsInfo from './AuctionsInfo';
 import {alpha, Box} from '@mui/system';
-import CoinsInfo from './CoinsInfo';
 import PropTypes from 'prop-types';
 import {AppCard} from '@crema';
 import MyTimer from '../timer';
 import moment from 'moment';
 import 'moment-timezone';
+import {Button, Grid} from '@mui/material';
 
 const AuctionItem = ({items, user}) => {
   return (
@@ -128,7 +128,7 @@ const AuctionItem = ({items, user}) => {
                     </Box>
                   </Box>
 
-                  <CoinsInfo
+                  <AuctionsInfo
                     coins={[
                       {
                         id: 1,

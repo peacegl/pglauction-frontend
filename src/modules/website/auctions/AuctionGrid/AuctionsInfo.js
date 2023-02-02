@@ -2,21 +2,21 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 
-const CoinsInfo = ({coins}) => {
+const AuctionsInfo = ({items}) => {
   return (
     <Box
       sx={{
-        mb: {xl: 1},
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
       }}
     >
-      {coins.map((coin) => {
+      {items.map((coin) => {
         return (
           <Box
             sx={{
-              mt: {xl: 3},
+              flex: {xs: '1 0 50%', md: '1 0 25%'},
+              mt: 3,
               px: 2,
             }}
             key={coin.id}
@@ -46,12 +46,12 @@ const CoinsInfo = ({coins}) => {
   );
 };
 
-export default CoinsInfo;
+export default AuctionsInfo;
 
-CoinsInfo.defaultProps = {
-  coins: [],
+AuctionsInfo.defaultProps = {
+  items: [],
 };
 
-CoinsInfo.propTypes = {
-  coins: PropTypes.array,
+AuctionsInfo.propTypes = {
+  items: PropTypes.array,
 };

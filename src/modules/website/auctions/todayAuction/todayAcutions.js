@@ -5,9 +5,10 @@ import {useAuthUser} from '@crema/utility/AuthHooks';
 import {onGetWebAuctionData, setAuctionsViewType} from 'redux/actions';
 import React, {useEffect, useState} from 'react';
 import Header from '../../vehicles/Header/index';
-import AuctionItem from '../grid/auctionItem';
+import AuctionItem from '../AuctionGrid/auctionItem';
 import {alpha, Box, Button, Card} from '@mui/material';
 import {VIEW_TYPE} from 'redux/reducers/WebAuctions';
+import AuctionGrid from '../AuctionGrid';
 
 const TodayAuctions = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const TodayAuctions = () => {
     ({webAuctions}) => webAuctions.auctionsList,
   );
   const viewType = useSelector(({webAuctions}) => webAuctions.viewType);
-  // const loading = useSelector(({common}) => common.loading);
+  const loading = useSelector(({common}) => common.loading);
 
   useEffect(() => {
     dispatch(
@@ -55,7 +56,7 @@ const TodayAuctions = () => {
           className='apps-header'
         >
           <Header
-            title='website.upcomingAuctions'
+            title='website.todaysAuctions'
             list={data}
             viewType={viewType}
             page={page}
@@ -86,8 +87,14 @@ const TodayAuctions = () => {
           }}
         >
           {viewType === VIEW_TYPE.GRID ? (
-            <AuctionItem items={data} user={user} />
+            <AuctionGrid
+              list={data}
+              loading={loading}
+              perPage={perPage}
+              user={user}
+            />
           ) : (
+            // <AuctionItem items={data} user={user} />
             <>not yet</>
           )}
         </Box>

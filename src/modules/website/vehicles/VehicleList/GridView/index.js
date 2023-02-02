@@ -4,7 +4,7 @@ import GridItem from './GridItem';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const AuctionGrid = ({list, loading, perPage}) => (
+const GridView = ({list, loading, perPage}) => (
   <AppGrid
     responsive={{
       xs: 1,
@@ -31,9 +31,9 @@ const AuctionGrid = ({list, loading, perPage}) => (
 //     <GridItem item={item} key={item.id} />
 //   </Grid>
 // ));
-export default AuctionGrid;
+export default GridView;
 
-AuctionGrid.propTypes = {
+GridView.propTypes = {
   list: PropTypes.array,
   loading: PropTypes.bool,
   perPage: PropTypes.number,
