@@ -1,3 +1,4 @@
+import IntlMessages from '@crema/utility/IntlMessages';
 import {Button, Grid} from '@mui/material';
 import {alpha, Box} from '@mui/system';
 import CoinsInfo from './CoinsInfo';
@@ -86,7 +87,7 @@ const AuctionItem = ({items, user}) => {
                             lineHeight: {xs: '16px', sm: '20px', xl: '26px'},
                           }}
                         >
-                          View live auction
+                          <IntlMessages id='auction.viewSaleList' />
                         </Button>
                       </Box>
                     </Box>
