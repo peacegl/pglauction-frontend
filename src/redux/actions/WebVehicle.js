@@ -49,23 +49,15 @@ export const onGetWebVehicleData = (data) => {
 };
 export const onGetWebSimilarVehicle = (id) => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
     jwtAxios
       .get(`/website/vehicles/${id}/similar`)
       .then((data) => {
         if (data.status === 200) {
           dispatch({type: FETCH_SUCCESS});
           dispatch({type: GET_WEB_SIMILAR_VEHICLE, payload: data.data.data});
-        } else {
-          dispatch({
-            type: FETCH_ERROR,
-            payload: 'Something went wrong, Please try again!',
-          });
         }
       })
-      .catch((error) => {
-        dispatch({type: FETCH_ERROR, payload: error.message});
-      });
+      .catch((error) => {});
   };
 };
 
@@ -82,7 +74,6 @@ export const onGetWebVehicleView = (id) => {
       .get(`/website/vehicles/${id}`)
       .then((data) => {
         if (data.status === 200) {
-          dispatch({type: FETCH_SUCCESS});
           data.data.data.images.forEach((image, index, arr) => {
             if (image.type == 'main_image') {
               arr.unshift(image);
@@ -90,7 +81,11 @@ export const onGetWebVehicleView = (id) => {
               return;
             }
           });
-          dispatch({type: GET_WEB_VEHICLE_VIEW, payload: data.data.data});
+          dispatch({
+            type: GET_WEB_VEHICLE_VIEW,
+            payload: data.data.data,
+          });
+          dispatch({type: FETCH_SUCCESS});
         } else {
           dispatch({
             type: FETCH_ERROR,
