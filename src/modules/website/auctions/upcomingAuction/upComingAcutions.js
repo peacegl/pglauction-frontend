@@ -86,7 +86,8 @@ const UpComingAuctions = () => {
             loading={loading}
             perPage={perPage}
             user={user}
-            emptyTitle={<IntlMessages id='auction.noUpcommingAuction' />}
+            emptyTitle={<IntlMessages id='auction.auctionList' />}
+            emptyContent={<IntlMessages id='auction.noUpcommingAuction' />}
           />
         </Box>
       </AppsContent>

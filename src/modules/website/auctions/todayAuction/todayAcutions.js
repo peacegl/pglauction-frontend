@@ -86,7 +86,8 @@ const TodayAuctions = () => {
             loading={loading}
             perPage={perPage}
             user={user}
-            emptyTitle={<IntlMessages id='auction.noAuctionForToday' />}
+            emptyTitle={<IntlMessages id='auction.auctionList' />}
+            emptyContent={<IntlMessages id='auction.noAuctionForToday' />}
           />
         </Box>
       </AppsContent>
