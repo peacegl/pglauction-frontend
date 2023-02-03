@@ -14,8 +14,18 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import {ArrowBack} from '@mui/icons-material';
 
-const Header = ({list, page, perPage, totalProducts, onPageChange, title}) => {
+const Header = ({
+  list,
+  page,
+  perPage,
+  totalProducts,
+  onPageChange,
+  title,
+  onBack,
+  preTitle,
+}) => {
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
   const dispatch = useDispatch();
 
@@ -35,10 +45,27 @@ const Header = ({list, page, perPage, totalProducts, onPageChange, title}) => {
         sx={{
           display: 'flex',
           alignItems: 'center',
-          pl: 3,
+          pl: onBack ? 1 : 3,
         }}
       >
+        {onBack ? (
+          <IconButton aria-label='delete' color='primary' onClick={onBack}>
+            <ArrowBack />
+          </IconButton>
+        ) : (
+          <></>
+        )}
         <Typography variant='h2' color='primary'>
+          {preTitle ? (
+            <Box
+              component='p'
+              sx={{display: 'inline', textTransform: 'capitalize'}}
+            >
+              {preTitle}
+            </Box>
+          ) : (
+            <></>
+          )}
           <IntlMessages id={title} />
         </Typography>
         <Badge
@@ -105,4 +132,6 @@ Header.propTypes = {
   title: PropTypes.any,
   onLClick: PropTypes.func,
   onGClick: PropTypes.func,
+  onBack: PropTypes.func,
+  preTitle: PropTypes.string,
 };

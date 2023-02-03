@@ -1204,5 +1204,7 @@
   "auction.startsIn": "Starts In",
   "common.totalVehicles": "Total Vehicles",
   "auction.noAuctionForToday": "No Auction for Today",
-  "auction.noUpcommingAuction": "No Up Comming Auction"
+  "auction.noUpcommingAuction": "No Up Comming Auction",
+
+  "website.auctionVehicles": "'s auction vehicles List"
 }

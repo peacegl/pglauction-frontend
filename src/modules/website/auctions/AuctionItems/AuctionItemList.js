@@ -1,13 +1,13 @@
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
+
 import {useDispatch, useSelector} from 'react-redux';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import React, {useEffect, useState} from 'react';
 import GridView from './GridView/index';
 import AppsContent from './AppsContent';
 import {useRouter} from 'next/router';
-import ListView from './ListView';
+
 import Header from '../Header';
 import {
   onGetWebAuctionItemsData,
@@ -29,59 +29,39 @@ const AuctionItemList = () => {
   const {theme} = useThemeContext();
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(50);
-  const [makeData, setMakeData] = useState('');
   const {user} = useAuthUser();
   const router = useRouter();
-  const {id, make} = router.query;
-  const {items = []} = useSelector(({webAuctions}) => webAuctions.auction);
-  const auction = useSelector(({webAuctions}) => webAuctions.auction);
+  const {id} = router.query;
+  const {
+    data = [],
+    total,
+    auction_name,
+  } = useSelector(({webAuctions}) => {
+    return webAuctions.auction;
+  });
+
   const viewType = useSelector(({webAuctions}) => webAuctions.viewType);
-  const filterData = useSelector(({webAuctions}) => webAuctions.filterData);
-  const loading = useSelector(({webAuctions}) => webAuctions.itemsLoading);
+  // const filterData = useSelector(({webAuctions}) => webAuctions.filterData);
+  // const loading = useSelector(({webAuctions}) => webAuctions.itemsLoading);
   const {search = ''} = useSelector(({webAuctions}) => webAuctions);
   useEffect(() => {
     setPage(0);
-  }, [search, filterData]);
-  console.log(auction);
-  useEffect(() => {
-    if (make) {
-      setPage(0);
-    }
-    setMakeData(make ? make : '');
-  }, [make]);
+  }, [
+    search,
+    //  filterData
+  ]);
 
   useEffect(() => {
-    let filterBrands = {};
-    if (!make || make == makeData) {
-      if (makeData) {
-        filterBrands = {
-          brand: makeData,
-          status: ['available', 'future'],
-        };
-        dispatch(
-          onGetWebAuctionItemsData(id, {
-            // filterData,
-            filterBrands,
-            per_page: perPage,
-            page: page + 1,
-            search,
-          }),
-        );
-      } else {
-        dispatch(
-          onGetWebAuctionItemsData(id, {
-            // filterData,
-            filterBrands,
-            per_page: perPage,
-            page: page + 1,
-            search,
-          }),
-        );
-      }
-    }
-    dispatch(setBrandFilter(filterBrands));
+    dispatch(
+      onGetWebAuctionItemsData(id, {
+        // filterData,
+        per_page: perPage,
+        page: page + 1,
+        search,
+      }),
+    );
     // filterData
-  }, [id, makeData, page, search, perPage, user?.type]);
+  }, [id, page, search, perPage, user?.type]);
 
   const onPageChange = (event, value) => {
     setPage(value);
@@ -110,16 +90,19 @@ const AuctionItemList = () => {
           className='apps-header'
         >
           <Header
-            title='website.allVehicles'
-            list={items}
+            onBack={() => {
+              history.back();
+            }}
+            preTitle={auction_name}
+            title='website.auctionVehicles'
+            list={data}
             viewType={viewType}
             page={page}
             perPage={perPage}
-            totalProducts={items.length + 1}
+            totalProducts={data.length + 1}
             onPageChange={onPageChange}
-            make={make}
-            onLClick={() => dispatch(setVehicleViewType(VIEW_TYPE.LIST))}
-            onGClick={() => dispatch(setVehicleViewType(VIEW_TYPE.GRID))}
+            onLClick={() => {}}
+            onGClick={() => {}}
           />
         </Box>
       </Card>
@@ -140,13 +123,9 @@ const AuctionItemList = () => {
             },
           }}
         >
-          {viewType === VIEW_TYPE.GRID ? (
-            <GridView list={items} loading={loading} perPage={perPage} />
-          ) : (
-            <ListView list={items} loading={loading} perPage={perPage} />
-          )}
+          <GridView list={data} perPage={perPage} />
         </Box>
-        {items.length > 0 && (
+        {data.length > 0 && (
           <Box
             sx={{
               m: 4,

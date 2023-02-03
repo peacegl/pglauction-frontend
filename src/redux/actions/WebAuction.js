@@ -46,12 +46,14 @@ export const onGetWebAuctionItemsData = (id, filterData) => {
     dispatch({type: FETCH_START});
     const {messages} = appIntl();
     try {
-      const res = await jwtAxios.get(`/website/auctions/${id}`, {
-        params: {...filterData},
+      const res = await jwtAxios.get(`/website/auctions_items/${id}`, {
+        params: {
+          ...filterData,
+        },
       });
       if (res.status === 200 && res.data.result) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_WEB_AUCTION_ITEMS, payload: res.data});
+        dispatch({type: GET_WEB_AUCTION_ITEMS, payload: res?.data});
       } else {
         dispatch({
           type: FETCH_ERROR,
