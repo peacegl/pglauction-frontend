@@ -15,7 +15,6 @@ import {useEffect, useState} from 'react';
 import {LoadingButton} from '@mui/lab';
 import Card from '@mui/material/Card';
 import {useRouter} from 'next/router';
-import {moneyFormater} from 'configs';
 import PropTypes from 'prop-types';
 
 export default function GridItem({item, ...props}) {
@@ -157,7 +156,7 @@ export default function GridItem({item, ...props}) {
                       ? theme.palette.success.main
                       : '#ffa834',
                 }}
-                label={item.status == 'future' ? 'On The Way' : item.status}
+                label={`Start from ${item?.auction_item?.minimum_bid}`}
                 size='small'
               />
             )}
@@ -251,11 +250,8 @@ export default function GridItem({item, ...props}) {
                 variant='contained'
                 size='small'
                 sx={{mt: 2}}
-                href={`https://wa.me/${item?.seller?.loginable?.whatsapp}?text=${window.location.origin}/all-vehicles/${item?.id}`}
-                target='_blank'
-                startIcon={<WhatsAppIcon />}
               >
-                {item?.seller?.loginable?.whatsapp}
+                Buy Now {item?.auction_item?.buy_now_price}
               </Button>
             )}
           </Box>
