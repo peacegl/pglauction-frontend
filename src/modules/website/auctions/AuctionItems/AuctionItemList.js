@@ -10,7 +10,7 @@ import {useRouter} from 'next/router';
 import ListView from './ListView';
 import Header from '../Header';
 import {
-  onGetWebVehicleData,
+  onGetWebAuctionItemsData,
   setBrandFilter,
   setVehicleViewType,
 } from 'redux/actions';
@@ -32,19 +32,17 @@ const AuctionItemList = () => {
   const [makeData, setMakeData] = useState('');
   const {user} = useAuthUser();
   const router = useRouter();
-  const {make} = router.query;
-  const {data = [], total = 0} = useSelector(
-    ({webVehicles}) => webVehicles.vehiclesData,
-  );
-  const viewType = useSelector(({webVehicles}) => webVehicles.viewType);
-  const filterData = useSelector(({webVehicles}) => webVehicles.filterData);
-  // const loading = useSelector(({common}) => common.loading);
-  const loading = useSelector(({webVehicles}) => webVehicles.itemsLoading);
-  const {search = ''} = useSelector(({webVehicles}) => webVehicles);
+  const {id, make} = router.query;
+  const {items = []} = useSelector(({webAuctions}) => webAuctions.auction);
+  const auction = useSelector(({webAuctions}) => webAuctions.auction);
+  const viewType = useSelector(({webAuctions}) => webAuctions.viewType);
+  const filterData = useSelector(({webAuctions}) => webAuctions.filterData);
+  const loading = useSelector(({webAuctions}) => webAuctions.itemsLoading);
+  const {search = ''} = useSelector(({webAuctions}) => webAuctions);
   useEffect(() => {
     setPage(0);
   }, [search, filterData]);
-
+  console.log(auction);
   useEffect(() => {
     if (make) {
       setPage(0);
@@ -61,7 +59,7 @@ const AuctionItemList = () => {
           status: ['available', 'future'],
         };
         dispatch(
-          onGetWebVehicleData({
+          onGetWebAuctionItemsData(id, {
             // filterData,
             filterBrands,
             per_page: perPage,
@@ -71,7 +69,7 @@ const AuctionItemList = () => {
         );
       } else {
         dispatch(
-          onGetWebVehicleData({
+          onGetWebAuctionItemsData(id, {
             // filterData,
             filterBrands,
             per_page: perPage,
@@ -83,7 +81,7 @@ const AuctionItemList = () => {
     }
     dispatch(setBrandFilter(filterBrands));
     // filterData
-  }, [makeData, page, search, perPage, user?.type]);
+  }, [id, makeData, page, search, perPage, user?.type]);
 
   const onPageChange = (event, value) => {
     setPage(value);
@@ -113,11 +111,11 @@ const AuctionItemList = () => {
         >
           <Header
             title='website.allVehicles'
-            list={data}
+            list={items}
             viewType={viewType}
             page={page}
             perPage={perPage}
-            totalProducts={total}
+            totalProducts={items.length + 1}
             onPageChange={onPageChange}
             make={make}
             onLClick={() => dispatch(setVehicleViewType(VIEW_TYPE.LIST))}
@@ -143,12 +141,12 @@ const AuctionItemList = () => {
           }}
         >
           {viewType === VIEW_TYPE.GRID ? (
-            <GridView list={data} loading={loading} perPage={perPage} />
+            <GridView list={items} loading={loading} perPage={perPage} />
           ) : (
-            <ListView list={data} loading={loading} perPage={perPage} />
+            <ListView list={items} loading={loading} perPage={perPage} />
           )}
         </Box>
-        {data.length > 0 && (
+        {items.length > 0 && (
           <Box
             sx={{
               m: 4,

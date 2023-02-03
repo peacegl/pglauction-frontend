@@ -12,20 +12,11 @@ import {useDispatch} from 'react-redux';
 
 const AuctionItems = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
-  const dispatch = useDispatch();
-  const popularBrandsCount = useSelector(
-    ({webVehicles}) => webVehicles.popularBrandsCount,
-  );
-  useEffect(() => {
-    (async function () {
-      await dispatch(onCountPopularBrands());
-    })();
-  }, []);
+
   return (
     <>
-      <PopularBrandsList popularBrandsCount={popularBrandsCount} small />
       <Container maxWidth='xl' sx={{mt: 6}}>
-        <Hidden mdUp>
+        {/* <Hidden mdUp>
           <Button
             sx={{mx: 3}}
             variant='outlined'
@@ -35,14 +26,14 @@ const AuctionItems = () => {
           >
             <IntlMessages id='common.filter' />
           </Button>
-        </Hidden>
+        </Hidden> */}
 
         <Box
           sx={{
             display: 'flex',
           }}
         >
-          <Box
+          {/* <Box
             sx={{
               flex: 1,
               display: {xs: 'none', md: 'block'},
@@ -56,7 +47,7 @@ const AuctionItems = () => {
             >
               <AuctionsSidebar />
             </Card>
-          </Box>
+          </Box> */}
           <Box
             sx={{
               flex: {xs: 1, md: 2, lg: 3, xl: 3.7},

@@ -1,6 +1,5 @@
 import {
   GET_AUCTION_ITEMS,
-  GET_WEB_AUCTION_ITEMS,
   GET_CATEGORIES,
   SET_AUCTION_ITEM_FILTER_DATA,
   SET_AUCTION_ITEM_DATA,
@@ -11,7 +10,6 @@ import {
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
 const initialState = {
   auctionItemsList: [],
-  webAuctionItemsList: [],
   categories: [],
   viewType: VIEW_TYPE.GRID,
   currectAuction: null,
@@ -31,11 +29,6 @@ const AuctionReducer = (state = initialState, action) => {
       return {
         ...state,
         auctionItemsList: action.payload,
-      };
-    case GET_WEB_AUCTION_ITEMS:
-      return {
-        ...state,
-        webAuctionItemsList: action.payload,
       };
     case UPDATE_AUCTION_ITEM:
       return {

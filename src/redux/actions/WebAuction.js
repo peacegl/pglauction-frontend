@@ -5,9 +5,10 @@ import {
   GET_WEB_AUCTIONS,
   SET_WEB_AUCTION_VIEW_TYPE,
   GET_UP_COMING_WEB_AUCTIONS,
-  SET_UP_COMING_AUCTION_VIEW_TYPE,
+  GET_WEB_AUCTION_ITEMS,
 } from 'shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
+import {appIntl} from '@crema/utility/helper/Utils';
 
 export const onGetWebAuctionData = (filterData) => {
   return (dispatch) => {
@@ -40,14 +41,31 @@ export const onGetWebAuctionData = (filterData) => {
   };
 };
 
-export const setAuctionsViewType = (viewType) => {
-  return (dispatch) => {
-    dispatch({type: SET_WEB_AUCTION_VIEW_TYPE, payload: viewType});
+export const onGetWebAuctionItemsData = (id, filterData) => {
+  return async (dispatch) => {
+    dispatch({type: FETCH_START});
+    const {messages} = appIntl();
+    try {
+      const res = await jwtAxios.get(`/website/auctions/${id}`, {
+        params: {...filterData},
+      });
+      if (res.status === 200 && res.data.result) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_WEB_AUCTION_ITEMS, payload: res.data});
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: messages['message.somethingWentWrong'],
+        });
+      }
+    } catch (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+    }
   };
 };
 
-export const setUpComingAuctionViewType = (viewType) => {
+export const setAuctionsViewType = (viewType) => {
   return (dispatch) => {
-    dispatch({type: SET_UP_COMING_AUCTION_VIEW_TYPE, payload: viewType});
+    dispatch({type: SET_WEB_AUCTION_VIEW_TYPE, payload: viewType});
   };
 };
