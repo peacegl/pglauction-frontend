@@ -2,6 +2,7 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import {Button, Box, Typography} from '@mui/material';
 import AuctionsInfo from './AuctionsInfo';
 import {useEffect, useState} from 'react';
+import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
 import {AppCard} from '@crema';
 import MyTimer from '../timer';
@@ -9,6 +10,7 @@ import moment from 'moment';
 import 'moment-timezone';
 
 const AuctioGridItem = ({item, user}) => {
+  const router = useRouter();
   const [isStarted, setIsStarted] = useState(false);
   let endTime = moment(
     item?.end_date,
@@ -74,6 +76,7 @@ const AuctioGridItem = ({item, user}) => {
           </Box>
           <Box>
             <Button
+              onClick={() => router.push(`/auctions/${item?.id}`)}
               variant='contained'
               sx={{
                 mt: 2,
