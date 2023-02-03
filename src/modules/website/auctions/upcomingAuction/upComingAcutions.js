@@ -1,14 +1,13 @@
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
 import AppsContent from '../../vehicles/VehicleList/AppsContent';
+import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import {useAuthUser} from '@crema/utility/AuthHooks';
-import {onGetWebAuctionData, setUpComingAuctionViewType} from 'redux/actions';
+import {onGetWebAuctionData} from 'redux/actions';
 import React, {useEffect, useState} from 'react';
-import Header from '../../vehicles/Header/index';
-import AuctionItem from '../grid/auctionItem';
 import {alpha, Box, Card} from '@mui/material';
-import {VIEW_TYPE} from 'redux/reducers/WebAuctions';
-import AuctionListItem from '../list/auctionListItem';
+import AuctionGrid from '../AuctionGrid';
+import Header from '../Header';
 
 const UpComingAuctions = () => {
   const dispatch = useDispatch();
@@ -19,8 +18,7 @@ const UpComingAuctions = () => {
   const {data = [], total = 0} = useSelector(
     ({webAuctions}) => webAuctions.auctionsUpComingList,
   );
-  const viewType = useSelector(({webAuctions}) => webAuctions.viewUpType);
-  // const loading = useSelector(({common}) => common.loading);
+  const loading = useSelector(({common}) => common.loading);
 
   useEffect(() => {
     dispatch(
@@ -58,17 +56,10 @@ const UpComingAuctions = () => {
           <Header
             title='website.upcomingAuctions'
             list={data}
-            viewType={viewType}
             page={page}
             perPage={perPage}
             totalProducts={total}
             onPageChange={onPageChange}
-            onGClick={() =>
-              dispatch(setUpComingAuctionViewType(VIEW_TYPE.GRID))
-            }
-            onLClick={() =>
-              dispatch(setUpComingAuctionViewType(VIEW_TYPE.LIST))
-            }
           />
         </Box>
       </Card>
@@ -90,11 +81,14 @@ const UpComingAuctions = () => {
             },
           }}
         >
-          {viewType === VIEW_TYPE.GRID ? (
-            <AuctionItem items={data} user={user} />
-          ) : (
-            <AuctionListItem items={data} user={user} />
-          )}
+          <AuctionGrid
+            list={data}
+            loading={loading}
+            perPage={perPage}
+            user={user}
+            emptyTitle={<IntlMessages id='auction.auctionList' />}
+            emptyContent={<IntlMessages id='auction.noUpcommingAuction' />}
+          />
         </Box>
       </AppsContent>
     </>

@@ -1192,11 +1192,17 @@
   "website.auctions": "Auctions",
   "website.todayAuctions": "Today's Auctions",
   "website.upcomingAuctions": "Up Coming Auctions",
-
   "website.auctionsLocation": "Location",
   "website.auctionsTotal": "Total Vehicles",
   "website.auctionsStart": "Start Date",
   "website.auctionsEnd": "End Date",
   "website.auctionsList": "List",
-  "website.auctionsName": "Name"
+  "website.auctionsName": "Name",
+  "website.todaysAuctions": "Today's Auctions",
+  "auction.viewList": "View List",
+  "auction.endsIn": "Ends In",
+  "auction.startsIn": "Starts In",
+  "common.totalVehicles": "Total Vehicles",
+  "auction.noAuctionForToday": "No Auction for Today",
+  "auction.noUpcommingAuction": "No Up Comming Auction"
 }

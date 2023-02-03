@@ -1,54 +1,54 @@
-import {
-  onCountPopularBrands,
-  onGetWebSimilarVehicle,
-  onGetWebVehicleView,
-} from 'redux/actions';
+import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
 import ImageCarousel from 'components/design/ImageCarousel';
 import CustomCarousel from 'components/CustomCarousel';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import {useDispatch, useSelector} from 'react-redux';
-import Error404 from 'modules/errorPages/Error404';
 import {Box, Container} from '@mui/material';
 import {useRouter} from 'next/router';
 import SaleInfo from './SaleInfo';
 import {useEffect} from 'react';
 import LotInfo from './LotInfo';
 import Header from './Header';
-import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
+import {
+  onCountPopularBrands,
+  onGetWebSimilarVehicle,
+  onGetWebVehicleView,
+} from 'redux/actions';
 
 const VehicleDetail = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const {user} = useAuthUser();
   const {id} = router.query;
-
-  const loading = useSelector(({common}) => common.loading);
   const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
   const {similarVehicles = []} = useSelector(({webVehicles}) => webVehicles);
-  const {user} = useAuthUser();
   const popularBrandsCount = useSelector(
     ({webVehicles}) => webVehicles.popularBrandsCount,
   );
   useEffect(() => {
-    (async function () {
-      await dispatch(onCountPopularBrands());
-    })();
-  }, []);
+    if (vehicle?.id) {
+      (async function () {
+        await dispatch(onCountPopularBrands());
+      })();
+    }
+  }, [vehicle?.id]);
+
+  useEffect(() => {
+    if (user?.type) {
+      dispatch(onGetWebVehicleView(id));
+    }
+  }, [id, user?.type]);
+
   useEffect(() => {
     if (id) {
-      dispatch(onGetWebVehicleView(id));
       dispatch(onGetWebSimilarVehicle(id));
     }
   }, [id]);
 
-  useEffect(() => {
-    if (id) {
-      dispatch(onGetWebVehicleView(id));
-    }
-  }, [user?.type]);
   return (
     <>
-      {vehicle.id ? (
+      {vehicle.id && (
         <>
           <Header item={vehicle} />
           <Container maxWidth='xl' sx={{mt: 6}}>
@@ -98,8 +98,6 @@ const VehicleDetail = () => {
             <PopularBrandsList popularBrandsCount={popularBrandsCount} />
           </Container>
         </>
-      ) : (
-        !loading && <Error404 url='/' />
       )}
     </>
   );

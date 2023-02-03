@@ -1,44 +1,47 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
+import {Typography} from '@mui/material';
 
-const CoinsInfo = ({coins}) => {
+const AuctionsInfo = ({items}) => {
   return (
     <Box
       sx={{
-        mb: {xl: 1},
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
       }}
     >
-      {coins.map((coin) => {
+      {items.map((coin) => {
         return (
           <Box
             sx={{
-              mt: {xl: 3},
+              flex: 1,
+              mt: 3,
               px: 2,
             }}
             key={coin.id}
           >
-            <Box
+            <Typography
               component='p'
               sx={{
                 fontSize: 14,
                 color: 'text.secondary',
               }}
+              noWrap={true}
             >
               {coin.name}
-            </Box>
-            <Box
+            </Typography>
+            <Typography
               component='h5'
               sx={{
                 fontWeight: 'bold',
                 fontSize: 12,
               }}
+              noWrap={true}
             >
               {coin.value}
-            </Box>
+            </Typography>
           </Box>
         );
       })}
@@ -46,12 +49,12 @@ const CoinsInfo = ({coins}) => {
   );
 };
 
-export default CoinsInfo;
+export default AuctionsInfo;
 
-CoinsInfo.defaultProps = {
-  coins: [],
+AuctionsInfo.defaultProps = {
+  items: [],
 };
 
-CoinsInfo.propTypes = {
-  coins: PropTypes.array,
+AuctionsInfo.propTypes = {
+  items: PropTypes.array,
 };

@@ -1,4 +1,14 @@
-import React, {useEffect} from 'react';
+import AppsPagination from '@crema/core/AppsPagination';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
+import {useDispatch, useSelector} from 'react-redux';
+import IconButton from '@mui/material/IconButton';
+import ListIcon from '@mui/icons-material/List';
+import AppsIcon from '@mui/icons-material/Apps';
+import {setVehicleSearch} from 'redux/actions';
+import {styled} from '@mui/material/styles';
+import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import {
   alpha,
   Badge,
@@ -8,18 +18,6 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import ListIcon from '@mui/icons-material/List';
-import AppsIcon from '@mui/icons-material/Apps';
-import {useDispatch, useSelector} from 'react-redux';
-import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
-import IconButton from '@mui/material/IconButton';
-import PropTypes from 'prop-types';
-import {setVehicleViewType, setVehicleSearch} from 'redux/actions';
-import {styled} from '@mui/material/styles';
-import clsx from 'clsx';
-import AppsPagination from '@crema/core/AppsPagination';
-import {useTheme} from '@mui/material';
-import IntlMessages from '@crema/utility/IntlMessages';
 
 const IconBtn = styled(IconButton)(({theme}) => {
   return {
