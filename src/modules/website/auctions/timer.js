@@ -1,8 +1,9 @@
+import {useTimer} from 'react-timer-hook';
+import PropTypes from 'prop-types';
 import {Box} from '@mui/material';
 import React from 'react';
-import {useTimer} from 'react-timer-hook';
 
-const MyTimer = ({expiryTimestamp}) => {
+const MyTimer = ({expiryTimestamp, onExpire}) => {
   const {
     seconds,
     minutes,
@@ -15,7 +16,7 @@ const MyTimer = ({expiryTimestamp}) => {
     restart,
   } = useTimer({
     expiryTimestamp,
-    onExpire: () => console.warn('onExpire called'),
+    onExpire: () => onExpire(),
   });
 
   return (
@@ -44,3 +45,7 @@ const MyTimer = ({expiryTimestamp}) => {
 };
 
 export default MyTimer;
+MyTimer.propTypes = {
+  expiryTimestamp: PropTypes.any,
+  onExpire: PropTypes.func,
+};

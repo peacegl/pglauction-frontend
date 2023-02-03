@@ -111,5 +111,5 @@ ListEmptyResult.propTypes = {
   loading: PropTypes.bool,
   loader: PropTypes.bool,
   placeholder: PropTypes.node,
-  content: PropTypes.string,
+  content: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };

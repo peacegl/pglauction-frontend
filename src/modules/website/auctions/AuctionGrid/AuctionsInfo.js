@@ -1,6 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
+import {Typography} from '@mui/material';
 
 const AuctionsInfo = ({items}) => {
   return (
@@ -15,30 +16,32 @@ const AuctionsInfo = ({items}) => {
         return (
           <Box
             sx={{
-              flex: {xs: '1 0 50%', md: '1 0 25%'},
+              flex: 1,
               mt: 3,
               px: 2,
             }}
             key={coin.id}
           >
-            <Box
+            <Typography
               component='p'
               sx={{
                 fontSize: 14,
                 color: 'text.secondary',
               }}
+              noWrap={true}
             >
               {coin.name}
-            </Box>
-            <Box
+            </Typography>
+            <Typography
               component='h5'
               sx={{
                 fontWeight: 'bold',
                 fontSize: 12,
               }}
+              noWrap={true}
             >
               {coin.value}
-            </Box>
+            </Typography>
           </Box>
         );
       })}
