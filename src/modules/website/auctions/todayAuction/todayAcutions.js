@@ -8,6 +8,7 @@ import Header from '../../vehicles/Header/index';
 import AuctionItem from '../grid/auctionItem';
 import {alpha, Box, Button, Card} from '@mui/material';
 import {VIEW_TYPE} from 'redux/reducers/WebAuctions';
+import AuctionListItem from '../list/auctionListItem';
 
 const TodayAuctions = () => {
   const dispatch = useDispatch();
@@ -88,7 +89,7 @@ const TodayAuctions = () => {
           {viewType === VIEW_TYPE.GRID ? (
             <AuctionItem items={data} user={user} />
           ) : (
-            <>not yet</>
+            <AuctionListItem items={data} user={user} />
           )}
         </Box>
       </AppsContent>

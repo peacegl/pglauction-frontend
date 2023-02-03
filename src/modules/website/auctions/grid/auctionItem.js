@@ -12,23 +12,23 @@ const AuctionItem = ({items, user}) => {
     <Box sx={{flexGrow: 1}}>
       <Grid container spacing={2}>
         {items?.map((data, i) => {
-          let time = moment
-            .tz(
-              data?.end_date,
-              'YYYY-MM-DD HH:mm:ss',
-              user?.timezone ? user.timezone : 'UTC',
-            )
-            .tz(user?.timezone ? user.timezone : moment.tz.guess())
-            .format('YYYY-MM-DD hh:mm:ss A');
+          const d1 = new Date(data?.start_date);
+          const d2 = new Date();
 
-          let startTime = moment
-            .tz(
+          const same = d1.getTime() > d2.getTime();
+          let timeTimer;
+          if (same) {
+            console.log(d1.getTime());
+            console.log(d2.getTime());
+            timeTimer = moment.tz(
               data?.start_date,
               'YYYY-MM-DD HH:mm:ss',
-              user?.timezone ? user.timezone : 'UTC',
-            )
-            .tz(user?.timezone ? user.timezone : moment.tz.guess())
-            .format('YYYY-MM-DD hh:mm:ss A');
+              'UTC',
+            );
+          } else {
+            timeTimer = moment.tz(data?.end_date, 'YYYY-MM-DD HH:mm:ss', 'UTC');
+          }
+
           return (
             <Grid key={i} item lg={6} md={12} xs={12}>
               <Box>
@@ -109,21 +109,16 @@ const AuctionItem = ({items, user}) => {
                     >
                       {data?.name}
                     </Box>
-                    <Box>
-                      <Box
-                        sx={{
-                          fontSize: 18,
-                          color: (theme) => theme.palette.primary.main,
-                        }}
-                      >
-                        <MyTimer
-                          expiryTimestamp={moment.tz(
-                            data?.end_date,
-                            'YYYY-MM-DD HH:mm:ss',
-                            'UTC',
-                          )}
-                        />
-                      </Box>
+
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        fontSize: 18,
+                        color: (theme) => theme.palette.primary.main,
+                      }}
+                    >
+                      {same ? 'Start at' : 'End at'}
+                      <MyTimer expiryTimestamp={timeTimer} />
                     </Box>
                   </Box>
 
@@ -135,8 +130,34 @@ const AuctionItem = ({items, user}) => {
                         value: `${data?.items_count} total`,
                       },
                       {id: 2, name: 'Status', value: 'Up coming'},
-                      {id: 3, name: 'Start Date', value: `${startTime}`},
-                      {id: 4, name: 'End Date', value: `${time}`},
+                      {
+                        id: 3,
+                        name: 'Start Date',
+                        value: `${moment
+                          .tz(
+                            data?.start_date,
+                            'YYYY-MM-DD HH:mm:ss',
+                            user?.timezone ? user.timezone : 'UTC',
+                          )
+                          .tz(
+                            user?.timezone ? user.timezone : moment.tz.guess(),
+                          )
+                          .format('YYYY-MM-DD hh:mm:ss A')}`,
+                      },
+                      {
+                        id: 4,
+                        name: 'End Date',
+                        value: `${moment
+                          .tz(
+                            data?.end_date,
+                            'YYYY-MM-DD HH:mm:ss',
+                            user?.timezone ? user.timezone : 'UTC',
+                          )
+                          .tz(
+                            user?.timezone ? user.timezone : moment.tz.guess(),
+                          )
+                          .format('YYYY-MM-DD hh:mm:ss A')}`,
+                      },
                     ]}
                   />
                 </AppCard>

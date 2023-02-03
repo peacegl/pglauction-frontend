@@ -1191,5 +1191,12 @@
   "validation.pastDateNotAllowed": "Past dates are not allowed",
   "website.auctions": "Auctions",
   "website.todayAuctions": "Today's Auctions",
-  "website.upcomingAuctions": "Up Coming Auctions"
+  "website.upcomingAuctions": "Up Coming Auctions",
+
+  "website.auctionsLocation": "Location",
+  "website.auctionsTotal": "Total Vehicles",
+  "website.auctionsStart": "Start Date",
+  "website.auctionsEnd": "End Date",
+  "website.auctionsList": "List",
+  "website.auctionsName": "Name"
 }
