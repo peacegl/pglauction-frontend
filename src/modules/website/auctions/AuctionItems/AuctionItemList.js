@@ -99,7 +99,7 @@ const AuctionItemList = () => {
             viewType={viewType}
             page={page}
             perPage={perPage}
-            totalProducts={data.length + 1}
+            totalProducts={data.length}
             onPageChange={onPageChange}
             onLClick={() => {}}
             onGClick={() => {}}
