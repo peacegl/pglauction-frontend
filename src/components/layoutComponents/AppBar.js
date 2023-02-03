@@ -142,11 +142,10 @@ function TopMenu(props) {
                   variant='contained'
                   key={index}
                   sx={{
-                    color: 'white',
                     display: 'block',
                     boxShadow: 0,
                   }}
-                  color={page.link == router.pathname ? 'success' : 'primary'}
+                  color={page.link == router.pathname ? 'inherit' : 'primary'}
                 >
                   <Link
                     href={page.link}
@@ -155,7 +154,8 @@ function TopMenu(props) {
                       display: 'block',
                       width: '100%',
                       height: '100%',
-                      color: 'white',
+                      color:
+                        page.link == router.pathname ? '#0a8fdc' : 'inherit',
                       textDecoration: 'none',
                     }}
                   >
