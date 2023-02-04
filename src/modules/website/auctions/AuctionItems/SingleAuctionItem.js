@@ -8,7 +8,6 @@ import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {onGetWebVehicleView} from 'redux/actions';
 import Header from '../Header';
-import HeaderVehicle from 'modules/website/vehicles/VehicleDetail/Header';
 
 const SingleAuctionItem = () => {
   const router = useRouter();
@@ -21,8 +20,6 @@ const SingleAuctionItem = () => {
   useEffect(() => {
     dispatch(onGetWebVehicleView(id));
   }, [id]);
-
-  console.log(id);
 
   return (
     <>

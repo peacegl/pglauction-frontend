@@ -32,8 +32,6 @@ const Header = ({
   const onDeleteSearch = () => {
     dispatch(setVehicleSearch(''));
   };
-  console.log(list);
-
   return (
     <Box
       sx={{
