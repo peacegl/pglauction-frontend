@@ -1,11 +1,7 @@
 import {Box, Divider, Button, useTheme, Chip, Skeleton} from '@mui/material';
-import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
-import useAddToWatchList from 'customHooks/useAddToWatchList';
-import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import DefaultCarImage from 'assets/default_car_image.png';
 import SoldIcon from '../../../../../assets/icon/sold.png';
 import SignInModal from 'modules/auth/Signin/SignInModal';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import IntlMessages from '@crema/utility/IntlMessages';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -23,8 +19,6 @@ export default function GridItem({item, ...props}) {
   const [hoverImage, setHoverImage] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showSignInModal, setShowSignInModl] = useState(false);
-  const {addToWatchList, watchlistLoading, addedToWatchList} =
-    useAddToWatchList(item, setShowSignInModl);
   // useLayoutEffect(() => {
   //   setHeight((cardRef.current?.clientWidth / 4) * 3 + 'px');
   // });
@@ -108,7 +102,9 @@ export default function GridItem({item, ...props}) {
             <Box sx={{display: 'flex'}}>
               <AppTooltip title={`${item.year} ${item.make} ${item.model}`}>
                 <Typography
-                  onClick={() => router.push(`/all-vehicles/${item.id}`)}
+                  onClick={() =>
+                    router.push(`/auctions/auction_item/${item.id}`)
+                  }
                   noWrap
                   gutterBottom
                   variant='h4'
@@ -136,30 +132,6 @@ export default function GridItem({item, ...props}) {
           </Box>
 
           <Box sx={{mt: 1}}>
-            {!item ? (
-              <Chip
-                sx={{width: 80, float: 'right', ml: 4}}
-                label={<Skeleton animation='wave' variant='rounded' />}
-                size='small'
-              />
-            ) : (
-              <Chip
-                sx={{
-                  float: 'right',
-                  textTransform: 'capitalize',
-                  fontWeight: 'bold',
-                  color: (theme) => theme.palette.primary.contrastText,
-                  bgcolor: (theme) =>
-                    item.status == 'sold'
-                      ? theme.palette.error.main
-                      : item.status == 'available'
-                      ? theme.palette.success.main
-                      : '#ffa834',
-                }}
-                label={`Start from ${item?.auction_item?.minimum_bid}`}
-                size='small'
-              />
-            )}
             <>
               <Box display='flex' columnGap='5px'>
                 <IntlMessages id='common.lot' />#
@@ -207,54 +179,74 @@ export default function GridItem({item, ...props}) {
               </Box>
             </>
           </Box>
-          <Box
-            display='flex'
-            justifyContent='space-between'
-            alignItems='center'
-            sx={{flexWrap: 'wrap'}}
-          >
+          <Box>
             {!item ? (
-              <Button size='small' sx={{mt: 2}}>
-                <Skeleton animation='wave' sx={{width: 90, py: 3}} />
-              </Button>
+              <Chip
+                sx={{width: 80, float: 'right', ml: 4}}
+                label={<Skeleton animation='wave' variant='rounded' />}
+                size='small'
+              />
             ) : (
-              <LoadingButton
-                loading={watchlistLoading}
-                loadingPosition='start'
-                startIcon={
-                  !addedToWatchList ? (
-                    <BookmarkAddIcon />
-                  ) : (
-                    <BookmarkAddedIcon />
-                  )
+              <Chip
+                sx={{
+                  textTransform: 'capitalize',
+                  fontWeight: 'bold',
+                  color: (theme) => theme.palette.primary.contrastText,
+                  bgcolor: (theme) =>
+                    item?.auction_item?.status == 'sold'
+                      ? theme.palette.error.main
+                      : '#ffa834',
+                }}
+                label={
+                  item.status == 'sold'
+                    ? 'sold'
+                    : `Start from ${item?.auction_item?.minimum_bid}`
                 }
-                variant='outlined'
                 size='small'
-                sx={{mt: 2}}
-                onClick={() => addToWatchList(item.id)}
-              >
-                {!addedToWatchList ? (
-                  <IntlMessages id='common.watch' />
-                ) : (
-                  <IntlMessages id='common.remove' />
-                )}
-              </LoadingButton>
-            )}
-            {!item ? (
-              <Button size='small' sx={{mt: 2}}>
-                <Skeleton animation='wave' sx={{width: 100, py: 3}} />
-              </Button>
-            ) : (
-              <Button
-                onClick={(e) => e.stopPropagation()}
-                variant='contained'
-                size='small'
-                sx={{mt: 2}}
-              >
-                Buy Now {item?.auction_item?.buy_now_price}
-              </Button>
+              />
             )}
           </Box>
+          {item?.auction_item?.status != 'sold' ? (
+            <Box
+              display='flex'
+              justifyContent='space-between'
+              alignItems='center'
+              sx={{flexWrap: 'wrap'}}
+            >
+              {!item ? (
+                <Button size='small' sx={{mt: 2}}>
+                  <Skeleton animation='wave' sx={{width: 100, py: 3}} />
+                </Button>
+              ) : (
+                <Button
+                  onClick={(e) => e.stopPropagation()}
+                  variant='contained'
+                  size='small'
+                  sx={{mt: 2}}
+                >
+                  Buy Now {item?.auction_item?.buy_now_price}
+                </Button>
+              )}
+
+              {!item ? (
+                <Button size='small' sx={{mt: 2}}>
+                  <Skeleton animation='wave' sx={{width: 100, py: 3}} />
+                </Button>
+              ) : (
+                <Button
+                  onClick={(e) => e.stopPropagation()}
+                  variant='contained'
+                  size='small'
+                  sx={{mt: 2, color: 'white'}}
+                  color='success'
+                >
+                  Start live bid
+                </Button>
+              )}
+            </Box>
+          ) : (
+            <Box sx={{height: '38.75px'}}></Box>
+          )}
         </CardContent>
       </Card>
       {showSignInModal && (
