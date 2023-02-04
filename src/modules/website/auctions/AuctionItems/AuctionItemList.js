@@ -30,6 +30,7 @@ const AuctionItemList = () => {
   const [perPage, setPerPage] = useState(50);
   const {user} = useAuthUser();
   const router = useRouter();
+  const [back, setBack] = useState(true);
   const {id} = router.query;
   const {
     data = [],
@@ -90,7 +91,10 @@ const AuctionItemList = () => {
         >
           <Header
             onBack={() => {
-              history.back();
+              if (back) {
+                history.back();
+                setBack(false);
+              }
             }}
             preTitle={auction_name}
             title='website.auctionVehicles'
