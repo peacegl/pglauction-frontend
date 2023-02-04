@@ -1206,5 +1206,7 @@
   "auction.noAuctionForToday": "No Auction for Today",
   "auction.noUpcommingAuction": "No Up Comming Auction",
 
+  "auction.bidInfo": "Bid Info",
+
   "website.auctionVehicles": "'s auction vehicles List"
 }

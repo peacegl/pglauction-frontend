@@ -1,13 +1,14 @@
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import {Box, Card, Container} from '@mui/material';
 import ImageCarousel from 'components/design/ImageCarousel';
-import SaleInfo from 'modules/website/vehicles/VehicleDetail/LotInfo';
-import LotInfo from 'modules/website/vehicles/VehicleDetail/SaleInfo';
+import SaleInfo from 'modules/website/vehicles/VehicleDetail/SaleInfo';
+import LotInfo from 'modules/website/vehicles/VehicleDetail/LotInfo';
 import {useRouter} from 'next/router';
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {onGetWebVehicleView} from 'redux/actions';
 import Header from '../Header';
+import BidInfo from './BidInfo';
 
 const SingleAuctionItem = () => {
   const router = useRouter();
@@ -106,11 +107,14 @@ const SingleAuctionItem = () => {
                           flexDirection: {xs: 'column', sm: 'row'},
                         }}
                       >
-                        <Box sx={{flex: 1}}>
-                          <SaleInfo />
-                        </Box>
                         <Box sx={{flex: 1.5}}>
                           <LotInfo />
+                        </Box>
+                        <Box sx={{flex: 1}}>
+                          <Box sx={{mb: 2}}>
+                            <SaleInfo />
+                          </Box>
+                          <BidInfo />
                         </Box>
                       </Box>
                     </Box>
