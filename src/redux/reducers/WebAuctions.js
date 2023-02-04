@@ -3,6 +3,7 @@ import {
   SET_WEB_AUCTION_VIEW_TYPE,
   GET_UP_COMING_WEB_AUCTIONS,
   GET_WEB_AUCTION_ITEMS,
+  LOADING_VEHICLE,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -11,6 +12,7 @@ const initialState = {
   auctionsUpComingList: {},
   auction: {},
   viewType: VIEW_TYPE.GRID,
+  loading: false,
 };
 
 const AuctionReducer = (state = initialState, action) => {
@@ -34,6 +36,11 @@ const AuctionReducer = (state = initialState, action) => {
       return {
         ...state,
         viewType: action.payload,
+      };
+    case LOADING_VEHICLE:
+      return {
+        ...state,
+        loading: action.payload,
       };
     default:
       return state;

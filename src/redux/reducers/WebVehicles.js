@@ -14,6 +14,7 @@ import {
   GET_POPULAR_BRANDS_COUNT,
   SET_BRAND_FILTER_DATA,
   FETCH_VEHICLES_ERROR,
+  LOADING_ITEM,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -31,6 +32,7 @@ const initialState = {
   bestSellingVehicles: [],
   recentlyAddedVehicles: [],
   filterBrands: {},
+  loadingItem: false,
   filterData: {
     newly_added: {
       newly_added_duration: 24,
@@ -141,6 +143,11 @@ const WebVehicleReducer = (state = initialState, action) => {
       return {
         ...state,
         myPurchaseList: action.payload,
+      };
+    case LOADING_ITEM:
+      return {
+        ...state,
+        loadingItem: action.payload,
       };
     default:
       return state;

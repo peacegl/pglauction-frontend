@@ -18,6 +18,7 @@ import {
   GET_POPULAR_BRANDS_COUNT,
   SET_BRAND_FILTER_DATA,
   FETCH_VEHICLES_ERROR,
+  LOADING_ITEM,
 } from 'shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
@@ -69,6 +70,7 @@ export const setVehicleSearch = (data) => {
 
 export const onGetWebVehicleView = (id) => {
   return (dispatch) => {
+    dispatch({type: LOADING_ITEM, payload: true});
     dispatch({type: FETCH_START});
     jwtAxios
       .get(`/website/vehicles/${id}`)
@@ -92,9 +94,11 @@ export const onGetWebVehicleView = (id) => {
             payload: 'Something went wrong, Please try again!',
           });
         }
+        dispatch({type: LOADING_ITEM, payload: false});
       })
       .catch((error) => {
         dispatch({type: FETCH_ERROR, payload: error.message});
+        dispatch({type: LOADING_ITEM, payload: false});
       });
   };
 };

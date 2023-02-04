@@ -41,8 +41,9 @@ const AuctionItemList = () => {
   });
 
   const viewType = useSelector(({webAuctions}) => webAuctions.viewType);
+  const loading = useSelector(({webAuctions}) => webAuctions.loading);
   // const filterData = useSelector(({webAuctions}) => webAuctions.filterData);
-  // const loading = useSelector(({webAuctions}) => webAuctions.itemsLoading);
+
   const {search = ''} = useSelector(({webAuctions}) => webAuctions);
   useEffect(() => {
     setPage(0);
@@ -126,7 +127,8 @@ const AuctionItemList = () => {
             },
           }}
         >
-          <GridView list={data} perPage={perPage} />
+          {loading ? <></> : <GridView list={data} perPage={perPage} />}
+          {/* <GridView list={data} perPage={perPage} /> */}
         </Box>
         {data.length > 0 && (
           <Box

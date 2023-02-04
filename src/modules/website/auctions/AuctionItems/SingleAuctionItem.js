@@ -16,6 +16,7 @@ const SingleAuctionItem = () => {
   const [back, setBack] = useState(true);
   const {id} = router.query;
   const {vehicle = []} = useSelector(({webVehicles}) => webVehicles);
+  const loadingItem = useSelector(({webVehicles}) => webVehicles.loadingItem);
 
   useEffect(() => {
     dispatch(onGetWebVehicleView(id));
@@ -72,46 +73,50 @@ const SingleAuctionItem = () => {
 
             {/* details */}
 
-            {vehicle.id && (
-              <>
-                <Container maxWidth='xl' sx={{mt: 6}}>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignContent: 'space-between',
-                      borderRadius: 2,
-                      columnGap: '10px',
-                      rowGap: '20px',
-                      backgroundColor: 'transparent',
-                      flexDirection: {xs: 'column', md: 'row'},
-                    }}
-                  >
-                    <Box sx={{mr: 2, flex: 1.5}}>
-                      <ImageCarousel
-                        images={vehicle.images}
-                        isSold={vehicle.status == 'sold'}
-                      />
-                    </Box>
+            {loadingItem ? (
+              <>loading</>
+            ) : (
+              vehicle.id && (
+                <>
+                  <Container maxWidth='xl' sx={{mt: 6}}>
                     <Box
                       sx={{
                         display: 'flex',
-                        flex: 2,
                         alignContent: 'space-between',
+                        borderRadius: 2,
                         columnGap: '10px',
                         rowGap: '20px',
-                        flexDirection: {xs: 'column', sm: 'row'},
+                        backgroundColor: 'transparent',
+                        flexDirection: {xs: 'column', md: 'row'},
                       }}
                     >
-                      <Box sx={{flex: 1}}>
-                        <SaleInfo />
+                      <Box sx={{mr: 2, flex: 1.5}}>
+                        <ImageCarousel
+                          images={vehicle.images}
+                          isSold={vehicle.status == 'sold'}
+                        />
                       </Box>
-                      <Box sx={{flex: 1.5}}>
-                        <LotInfo />
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flex: 2,
+                          alignContent: 'space-between',
+                          columnGap: '10px',
+                          rowGap: '20px',
+                          flexDirection: {xs: 'column', sm: 'row'},
+                        }}
+                      >
+                        <Box sx={{flex: 1}}>
+                          <SaleInfo />
+                        </Box>
+                        <Box sx={{flex: 1.5}}>
+                          <LotInfo />
+                        </Box>
                       </Box>
                     </Box>
-                  </Box>
-                </Container>
-              </>
+                  </Container>
+                </>
+              )
             )}
           </Box>
         </Box>

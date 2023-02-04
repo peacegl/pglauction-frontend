@@ -6,6 +6,7 @@ import {
   SET_WEB_AUCTION_VIEW_TYPE,
   GET_UP_COMING_WEB_AUCTIONS,
   GET_WEB_AUCTION_ITEMS,
+  LOADING_VEHICLE,
 } from 'shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
@@ -43,6 +44,7 @@ export const onGetWebAuctionData = (filterData) => {
 
 export const onGetWebAuctionItemsData = (id, filterData) => {
   return async (dispatch) => {
+    dispatch({type: LOADING_VEHICLE, payload: true});
     dispatch({type: FETCH_START});
     const {messages} = appIntl();
     try {
@@ -60,8 +62,10 @@ export const onGetWebAuctionItemsData = (id, filterData) => {
           payload: messages['message.somethingWentWrong'],
         });
       }
+      dispatch({type: LOADING_VEHICLE, payload: false});
     } catch (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
+      dispatch({type: LOADING_VEHICLE, payload: false});
     }
   };
 };
