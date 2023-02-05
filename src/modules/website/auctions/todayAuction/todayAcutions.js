@@ -28,7 +28,7 @@ const TodayAuctions = () => {
         dayData: 'today',
       }),
     );
-  }, [page, perPage, user?.type]);
+  }, [dispatch, page, perPage, user?.type]);
 
   const onPageChange = (event, value) => {
     setPage(value);

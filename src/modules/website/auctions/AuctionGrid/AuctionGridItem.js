@@ -8,6 +8,7 @@ import {AppCard} from '@crema';
 import MyTimer from '../timer';
 import moment from 'moment';
 import 'moment-timezone';
+import jwtAxios from '@crema/services/auth/jwt-auth';
 
 const AuctioGridItem = ({item, user}) => {
   const router = useRouter();
@@ -31,6 +32,37 @@ const AuctioGridItem = ({item, user}) => {
   useEffect(() => {
     setIsStarted(moment().isAfter(startTime));
   }, []);
+
+  const onExpire = (endDate) => {
+    const time = moment(
+      endDate,
+      'YYYY-MM-DD HH:mm:ss',
+      user?.timezone ? user.timezone : 'UTC',
+    )
+      .tz(user?.timezone ? user.timezone : moment.tz.guess())
+      .format('YYYY-MM-DD hh:mm:ss A');
+
+    const current = moment(
+      new Date(),
+      'YYYY-MM-DD HH:mm:ss',
+      user?.timezone ? user.timezone : 'UTC',
+    )
+      .tz(user?.timezone ? user.timezone : moment.tz.guess())
+      .format('YYYY-MM-DD hh:mm:ss A');
+    if (time == current || time < current) {
+      jwtAxios
+        .post(`/website/expire_auctions`, null, {
+          params: {
+            id: item?.id,
+          },
+        })
+        .then((data) => {
+          if (data.status === 200) {
+          } else {
+          }
+        });
+    }
+  };
 
   return (
     <Box>
@@ -147,7 +179,7 @@ const AuctioGridItem = ({item, user}) => {
                     'YYYY-MM-DD HH:mm:ss',
                     'UTC',
                   )}
-                  onExpire={() => {}}
+                  onExpire={() => onExpire(item?.end_date)}
                 />
               )}
               {!isStarted && (

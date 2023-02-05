@@ -124,7 +124,6 @@ const AuctionItemList = () => {
           }}
         >
           {loading ? <></> : <GridView list={data} perPage={perPage} />}
-          {/* <GridView list={data} perPage={perPage} /> */}
         </Box>
         {data.length > 0 && (
           <Box
