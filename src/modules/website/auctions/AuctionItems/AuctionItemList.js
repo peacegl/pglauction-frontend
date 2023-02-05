@@ -32,11 +32,7 @@ const AuctionItemList = () => {
   const router = useRouter();
   const [back, setBack] = useState(true);
   const {id} = router.query;
-  const {
-    data = [],
-    total,
-    auction_name,
-  } = useSelector(({webAuctions}) => {
+  const {data = [], total} = useSelector(({webAuctions}) => {
     return webAuctions.auction;
   });
 
@@ -97,7 +93,7 @@ const AuctionItemList = () => {
                 setBack(false);
               }
             }}
-            preTitle={auction_name}
+            preTitle={data[0]?.name}
             title='website.auctionVehicles'
             list={data}
             viewType={viewType}
