@@ -8,7 +8,6 @@ import React, {useEffect, useState} from 'react';
 import {alpha, Box, Card} from '@mui/material';
 import AuctionGrid from '../AuctionGrid';
 import Header from '../Header';
-
 const TodayAuctions = () => {
   const dispatch = useDispatch();
   const {theme} = useThemeContext();
@@ -19,7 +18,6 @@ const TodayAuctions = () => {
     ({webAuctions}) => webAuctions.auctionsList,
   );
   const loading = useSelector(({common}) => common.loading);
-
   useEffect(() => {
     dispatch(
       onGetWebAuctionData({
@@ -29,7 +27,6 @@ const TodayAuctions = () => {
       }),
     );
   }, [dispatch, page, perPage, user?.type]);
-
   const onPageChange = (event, value) => {
     setPage(value);
   };
@@ -63,7 +60,6 @@ const TodayAuctions = () => {
           />
         </Box>
       </Card>
-
       <AppsContent
         style={{backgroundColor: alpha(theme.palette.background.default, 0.6)}}
       >
