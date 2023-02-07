@@ -1,5 +1,6 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {Button, Box, Typography} from '@mui/material';
+import jwtAxios from '@crema/services/auth/jwt-auth';
 import AuctionsInfo from './AuctionsInfo';
 import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
@@ -8,7 +9,6 @@ import {AppCard} from '@crema';
 import MyTimer from '../timer';
 import moment from 'moment';
 import 'moment-timezone';
-import jwtAxios from '@crema/services/auth/jwt-auth';
 
 const AuctioGridItem = ({item, user}) => {
   const router = useRouter();

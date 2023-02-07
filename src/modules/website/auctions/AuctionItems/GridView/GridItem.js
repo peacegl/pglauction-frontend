@@ -30,6 +30,7 @@ export default function GridItem({item, ...props}) {
   //       : '';
   //   setAddressUrl(origin + router.asPath + `/${item.id}`);
   // }, []);
+  console.log(item);
   return (
     <>
       <Card sx={{borderRadius: 1}}>
@@ -193,41 +194,26 @@ export default function GridItem({item, ...props}) {
                   fontWeight: 'bold',
                   color: (theme) => theme.palette.primary.contrastText,
                   bgcolor: (theme) =>
-                    item?.auction_item?.status == 'sold'
+                    item?.status == 'sold'
                       ? theme.palette.error.main
                       : '#ffa834',
                 }}
                 label={
                   item.status == 'sold'
                     ? 'sold'
-                    : `Start from ${item?.auction_item?.minimum_bid}`
+                    : `Start from ${item?.minimum_bid}`
                 }
                 size='small'
               />
             )}
           </Box>
-          {item?.auction_item?.status != 'sold' ? (
+          {item?.status != 'sold' ? (
             <Box
               display='flex'
               justifyContent='space-between'
               alignItems='center'
               sx={{flexWrap: 'wrap'}}
             >
-              {!item ? (
-                <Button size='small' sx={{mt: 2}}>
-                  <Skeleton animation='wave' sx={{width: 100, py: 3}} />
-                </Button>
-              ) : (
-                <Button
-                  onClick={(e) => e.stopPropagation()}
-                  variant='contained'
-                  size='small'
-                  sx={{mt: 2}}
-                >
-                  Buy Now {item?.auction_item?.buy_now_price}
-                </Button>
-              )}
-
               {!item ? (
                 <Button size='small' sx={{mt: 2}}>
                   <Skeleton animation='wave' sx={{width: 100, py: 3}} />

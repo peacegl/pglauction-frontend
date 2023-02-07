@@ -37,7 +37,7 @@ const AuctionItemList = () => {
   });
 
   const viewType = useSelector(({webAuctions}) => webAuctions.viewType);
-  const loading = useSelector(({webAuctions}) => webAuctions.loading);
+  const loading = useSelector(({common}) => common.loading);
   // const filterData = useSelector(({webAuctions}) => webAuctions.filterData);
 
   const {search = ''} = useSelector(({webAuctions}) => webAuctions);
@@ -123,7 +123,7 @@ const AuctionItemList = () => {
             },
           }}
         >
-          {loading ? <></> : <GridView list={data} perPage={perPage} />}
+          <GridView list={data} perPage={perPage} loading={loading} />
         </Box>
         {data.length > 0 && (
           <Box

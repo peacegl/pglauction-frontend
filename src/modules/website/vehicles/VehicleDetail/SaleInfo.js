@@ -1,6 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import List from '@mui/material/List';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {useAuthUser} from '@crema/utility/AuthHooks';
+import React, {useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
+import List from '@mui/material/List';
+import {moneyFormater} from 'configs';
+import {useRouter} from 'next/router';
+import moment from 'moment';
+import Item from './Item';
+import 'moment-timezone';
 import {
   alpha,
   Box,
@@ -9,17 +17,19 @@ import {
   CardContent,
   CardHeader,
   Typography,
-  useTheme,
 } from '@mui/material';
-import {useSelector} from 'react-redux';
-import Item from './Item';
-import {moneyFormater} from 'configs';
-import IntlMessages from '@crema/utility/IntlMessages';
-import {useRouter} from 'next/router';
 
 export default function LotInfo() {
-  const theme = useTheme();
+  const {user} = useAuthUser();
   const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
+  let updatedAt = moment(
+    vehicle?.updated_at,
+    'YYYY-MM-DD HH:mm:ss',
+    user?.timezone ? user.timezone : 'UTC',
+  )
+    .tz(user?.timezone ? user.timezone : moment.tz.guess())
+    .format('YYYY-MM-DD hh:mm:ss A');
+
   const router = useRouter();
   // const [addressUrl, setAddressUrl] = useState('');
   // useEffect(() => {
@@ -33,7 +43,7 @@ export default function LotInfo() {
     <Card sx={{borderRadius: 1, boxShadow: 1, m: 0}}>
       <CardHeader
         sx={{
-          backgroundColor: alpha(theme.palette.primary.main, 0.9),
+          backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.9),
           color: 'white',
           p: 3,
         }}
@@ -65,7 +75,7 @@ export default function LotInfo() {
           /> */}
           <Item
             label={<IntlMessages id='common.last_updated' />}
-            value={vehicle.updated_at}
+            value={updatedAt}
           />
         </List>
         <Button
