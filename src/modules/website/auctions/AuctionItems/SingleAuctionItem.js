@@ -13,6 +13,7 @@ import BidInfo from './BidInfo';
 const SingleAuctionItem = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [back, setBack] = useState(true);
   const {id} = router.query;
   const {vehicle = []} = useSelector(({webVehicles}) => webVehicles);
   const loadingItem = useSelector(({webVehicles}) => webVehicles.loadingItem);
@@ -24,7 +25,15 @@ const SingleAuctionItem = () => {
   return (
     <Container maxWidth='xl'>
       <Box sx={{mx: 3}}>
-        <ItemHeader item={vehicle} onBack={() => router.back()} />
+        <ItemHeader
+          item={vehicle}
+          onBack={() => {
+            if (back) {
+              router.back();
+              setBack(false);
+            }
+          }}
+        />
       </Box>
       {/* details */}
       {!loadingItem && vehicle.id && (

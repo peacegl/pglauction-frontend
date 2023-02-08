@@ -10,7 +10,7 @@ import MyTimer from '../timer';
 import moment from 'moment';
 import 'moment-timezone';
 
-const AuctioGridItem = ({item, user}) => {
+const AuctionGridItem = ({item, user}) => {
   const router = useRouter();
   const [isStarted, setIsStarted] = useState(false);
   let endTime = moment(
@@ -221,9 +221,9 @@ const AuctioGridItem = ({item, user}) => {
   );
 };
 
-export default AuctioGridItem;
+export default AuctionGridItem;
 
-AuctioGridItem.propTypes = {
+AuctionGridItem.propTypes = {
   item: PropTypes.any,
   user: PropTypes.object,
 };
