@@ -141,7 +141,7 @@ export default function GridItem({item, ...props}) {
           <Divider sx={{mb: 2}} />
           <Box sx={{mt: 1}}>
             <>
-              <Box display='flex' columnGap='5px'>
+              {/* <Box display='flex' columnGap='5px'>
                 <IntlMessages id='common.lot' />#
                 {!item ? (
                   <Typography sx={{flex: 1}}>
@@ -168,7 +168,7 @@ export default function GridItem({item, ...props}) {
                     {item.vin}
                   </Typography>
                 )}
-              </Box>
+              </Box> */}
               <Box display='flex' columnGap='5px'>
                 <IntlMessages id='common.location' />
                 {!item ? (
