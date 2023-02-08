@@ -1,11 +1,11 @@
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
 import AppsContent from '../../vehicles/VehicleList/AppsContent';
 import IntlMessages from '@crema/utility/IntlMessages';
+import ListHeader from 'components/design/ListHeader';
 import {useDispatch, useSelector} from 'react-redux';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import {onGetWebAuctionData} from 'redux/actions';
 import React, {useEffect, useState} from 'react';
-import Header from 'components/design/Header';
 import {alpha, Box} from '@mui/material';
 import AuctionGrid from '../AuctionGrid';
 
@@ -35,7 +35,7 @@ const UpComingAuctions = () => {
   };
   return (
     <>
-      <Header
+      <ListHeader
         title='website.upcomingAuctions'
         list={data}
         page={page}

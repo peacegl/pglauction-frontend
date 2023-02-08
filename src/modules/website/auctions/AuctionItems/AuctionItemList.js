@@ -4,7 +4,7 @@ import {onGetWebAuctionItemsData} from 'redux/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import React, {useEffect, useState} from 'react';
-import Header from 'components/design/Header';
+import ListHeader from 'components/design/ListHeader';
 import GridView from './GridView/index';
 import AppsContent from './AppsContent';
 import {useRouter} from 'next/router';
@@ -61,13 +61,8 @@ const AuctionItemList = () => {
   };
   return (
     <>
-      <Header
-        onBack={() => {
-          if (back) {
-            history.back();
-            setBack(false);
-          }
-        }}
+      <ListHeader
+        onBack={() => router.back()}
         name={data[0]?.name}
         title='website.saleList'
         list={data}

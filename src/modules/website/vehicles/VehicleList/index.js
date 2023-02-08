@@ -4,7 +4,7 @@ import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
 import {useDispatch, useSelector} from 'react-redux';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import React, {useEffect, useState} from 'react';
-import Header from 'components/design/Header';
+import ListHeader from 'components/design/ListHeader';
 import GridView from './GridView/index';
 import AppsContent from './AppsContent';
 import {useRouter} from 'next/router';
@@ -93,7 +93,7 @@ const VehicleList = () => {
   };
   return (
     <>
-      <Header
+      <ListHeader
         title='website.allVehicles'
         list={data}
         viewType={viewType}

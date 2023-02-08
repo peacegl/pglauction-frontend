@@ -1,11 +1,11 @@
 import SaleInfo from 'modules/website/vehicles/VehicleDetail/SaleInfo';
 import LotInfo from 'modules/website/vehicles/VehicleDetail/LotInfo';
 import ImageCarousel from 'components/design/ImageCarousel';
+import ItemHeader from 'components/design/ItemHeader';
 import {useDispatch, useSelector} from 'react-redux';
 import {useAuthUser} from '@crema/utility/AuthHooks';
-import {Box, Card, Container} from '@mui/material';
 import {onGetWebVehicleView} from 'redux/actions';
-import Header from 'components/design/Header';
+import {Box, Container} from '@mui/material';
 import {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
 import BidInfo from './BidInfo';
@@ -13,8 +13,6 @@ import BidInfo from './BidInfo';
 const SingleAuctionItem = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const {user} = useAuthUser();
-  const [back, setBack] = useState(true);
   const {id} = router.query;
   const {vehicle = []} = useSelector(({webVehicles}) => webVehicles);
   const loadingItem = useSelector(({webVehicles}) => webVehicles.loadingItem);
@@ -24,71 +22,54 @@ const SingleAuctionItem = () => {
   }, [id]);
 
   return (
-    <>
-      <Container maxWidth='xl' sx={{mt: 6}}>
-        <Header
-          onBack={() => {
-            if (back) {
-              history.back();
-              setBack(false);
-            }
-          }}
-          preTitle={`${vehicle?.year} ${vehicle?.make} ${vehicle?.model}`}
-          title=' '
-          list={vehicle}
-          page={0}
-          perPage={0}
-          totalProducts={0}
-          onPageChange={() => {}}
-        />
-        {/* details */}
-
-        {!loadingItem && vehicle.id && (
-          <>
-            <Container maxWidth='xl' sx={{mt: 6}}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignContent: 'space-between',
-                  borderRadius: 2,
-                  columnGap: '10px',
-                  rowGap: '20px',
-                  backgroundColor: 'transparent',
-                  flexDirection: {xs: 'column', md: 'row'},
-                }}
-              >
-                <Box sx={{mr: 2, flex: 1.5}}>
-                  <ImageCarousel
-                    images={vehicle.images}
-                    isSold={vehicle.status == 'sold'}
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flex: 2,
-                    alignContent: 'space-between',
-                    columnGap: '10px',
-                    rowGap: '20px',
-                    flexDirection: {xs: 'column', sm: 'row'},
-                  }}
-                >
-                  <Box sx={{flex: 1.5}}>
-                    <LotInfo />
-                  </Box>
-                  <Box sx={{flex: 1}}>
-                    <Box sx={{mb: 2}}>
-                      <SaleInfo />
-                    </Box>
-                    <BidInfo />
-                  </Box>
-                </Box>
+    <Container maxWidth='xl'>
+      <Box sx={{mx: 3}}>
+        <ItemHeader item={vehicle} onBack={() => router.back()} />
+      </Box>
+      {/* details */}
+      {!loadingItem && vehicle.id && (
+        <Container maxWidth='xl'>
+          <Box
+            sx={{
+              display: 'flex',
+              alignContent: 'space-between',
+              borderRadius: 2,
+              columnGap: '10px',
+              rowGap: '20px',
+              backgroundColor: 'transparent',
+              flexDirection: {xs: 'column', md: 'row'},
+            }}
+          >
+            <Box sx={{mr: 2, flex: 1.5}}>
+              <ImageCarousel
+                images={vehicle.images}
+                isSold={vehicle.status == 'sold'}
+              />
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                flex: 2,
+                alignContent: 'space-between',
+                columnGap: '10px',
+                rowGap: '20px',
+                flexDirection: {xs: 'column', sm: 'row'},
+              }}
+            >
+              <Box sx={{flex: 1.5}}>
+                <LotInfo />
               </Box>
-            </Container>
-          </>
-        )}
-      </Container>
-    </>
+              <Box sx={{flex: 1}}>
+                <Box sx={{mb: 2}}>
+                  <SaleInfo />
+                </Box>
+                <BidInfo />
+              </Box>
+            </Box>
+          </Box>
+        </Container>
+      )}
+    </Container>
   );
 };
 

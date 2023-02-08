@@ -34,7 +34,7 @@ const IconBtn = styled(IconButton)(({theme}) => {
     },
   };
 });
-const Header = ({
+const ListHeader = ({
   viewType,
   list,
   page,
@@ -176,9 +176,9 @@ const Header = ({
   );
 };
 
-export default Header;
+export default ListHeader;
 
-Header.propTypes = {
+ListHeader.propTypes = {
   viewType: PropTypes.number,
   list: PropTypes.array,
   page: PropTypes.number,

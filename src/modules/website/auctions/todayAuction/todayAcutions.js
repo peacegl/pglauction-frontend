@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import {onGetWebAuctionData} from 'redux/actions';
 import React, {useEffect, useState} from 'react';
-import Header from 'components/design/Header';
+import ListHeader from 'components/design/ListHeader';
 import {alpha, Box} from '@mui/material';
 import AuctionGrid from '../AuctionGrid';
 
@@ -33,7 +33,7 @@ const TodayAuctions = () => {
   };
   return (
     <>
-      <Header
+      <ListHeader
         title='website.todaysAuctions'
         list={data}
         page={page}
