@@ -2,19 +2,25 @@ import {Box, Divider, Button, useTheme, Chip, Skeleton} from '@mui/material';
 import DefaultCarImage from 'assets/default_car_image.png';
 import SoldIcon from '../../../../../assets/icon/sold.png';
 import SignInModal from 'modules/auth/Signin/SignInModal';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import IntlMessages from '@crema/utility/IntlMessages';
+import {useAuthUser} from '@crema/utility/AuthHooks';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import AppTooltip from '@crema/core/AppTooltip';
 import {useEffect, useState} from 'react';
 import {LoadingButton} from '@mui/lab';
+import {moneyFormater} from 'configs';
 import Card from '@mui/material/Card';
 import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+import 'moment-timezone';
 
 export default function GridItem({item, ...props}) {
   const router = useRouter();
+  const {user} = useAuthUser();
   // const [height, setHeight] = useState('260px');
   const [hoverImage, setHoverImage] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -30,6 +36,19 @@ export default function GridItem({item, ...props}) {
   //       : '';
   //   setAddressUrl(origin + router.asPath + `/${item.id}`);
   // }, []);
+
+  const [isStarted, setIsStarted] = useState(false);
+  let startTime = moment(
+    item?.start_date,
+    'YYYY-MM-DD HH:mm:ss',
+    user?.timezone ? user.timezone : 'UTC',
+  )
+    .tz(user?.timezone ? user.timezone : moment.tz.guess())
+    .format('YYYY-MM-DD hh:mm:ss A');
+
+  useEffect(() => {
+    setIsStarted(moment().isAfter(startTime));
+  }, []);
   return (
     <>
       <Card sx={{borderRadius: 1}}>
@@ -119,18 +138,7 @@ export default function GridItem({item, ...props}) {
               </AppTooltip>
             </Box>
           )}
-
           <Divider sx={{mb: 2}} />
-          <Box display='flex' justifyContent='space-between'>
-            {/* <Typography color={theme.palette.primary.main} fontWeight='bold'>
-            {moneyFormater(
-              parseInt(item.price) +
-                parseInt((item.price * item.sale_rate ?? 15) / 100),
-            )}
-            </Typography> */}
-            {/* {item && <Typography>{item.odometer_type}</Typography>} */}
-          </Box>
-
           <Box sx={{mt: 1}}>
             <>
               <Box display='flex' columnGap='5px'>
@@ -177,34 +185,45 @@ export default function GridItem({item, ...props}) {
                   </Typography>
                 )}
               </Box>
+              <Box display='flex' columnGap='5px'>
+                <IntlMessages id='auction.startingBid' />
+                {!item ? (
+                  <Typography sx={{flex: 1, fontWeight: 'bold'}}>
+                    <Skeleton animation='wave' />
+                  </Typography>
+                ) : (
+                  <Typography
+                    noWrap
+                    gutterBottom
+                    sx={{
+                      color: (theme) => theme.palette.primary.main,
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    {moneyFormater(parseInt(item?.minimum_bid))}
+                  </Typography>
+                )}
+              </Box>
+              <Box display='flex' columnGap='5px'>
+                <IntlMessages id='vehicle.buyNowPrice' />
+                {!item ? (
+                  <Typography sx={{flex: 1, fontWeight: 'bold'}}>
+                    <Skeleton animation='wave' />
+                  </Typography>
+                ) : (
+                  <Typography
+                    noWrap
+                    gutterBottom
+                    sx={{
+                      color: (theme) => theme.palette.primary.main,
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    {moneyFormater(parseInt(item?.buy_now_price))}
+                  </Typography>
+                )}
+              </Box>
             </>
-          </Box>
-          <Box>
-            {!item ? (
-              <Chip
-                sx={{width: 80, float: 'right', ml: 4}}
-                label={<Skeleton animation='wave' variant='rounded' />}
-                size='small'
-              />
-            ) : (
-              <Chip
-                sx={{
-                  textTransform: 'capitalize',
-                  fontWeight: 'bold',
-                  color: (theme) => theme.palette.primary.contrastText,
-                  bgcolor: (theme) =>
-                    item?.status == 'sold'
-                      ? theme.palette.error.main
-                      : '#ffa834',
-                }}
-                label={
-                  item.status == 'sold'
-                    ? 'sold'
-                    : `Start from ${item?.minimum_bid}`
-                }
-                size='small'
-              />
-            )}
           </Box>
           {item?.status != 'sold' ? (
             <Box
@@ -215,17 +234,39 @@ export default function GridItem({item, ...props}) {
             >
               {!item ? (
                 <Button size='small' sx={{mt: 2}}>
+                  <Skeleton animation='wave' sx={{height: '38.75px'}} />
+                </Button>
+              ) : (
+                <Button
+                  onClick={() =>
+                    router.push(`/auctions/auction_item/${item.id}`)
+                  }
+                  variant='contained'
+                  size='small'
+                  sx={{mt: 2, color: 'white'}}
+                >
+                  {isStarted ? (
+                    <IntlMessages id='auction.bidNow' />
+                  ) : (
+                    <IntlMessages id='auction.preBid' />
+                  )}
+                </Button>
+              )}
+              {!item ? (
+                <Button size='small' sx={{mt: 2}}>
                   <Skeleton animation='wave' sx={{width: 100, py: 3}} />
                 </Button>
               ) : (
                 <Button
                   onClick={(e) => e.stopPropagation()}
                   variant='contained'
-                  size='small'
-                  sx={{mt: 2, color: 'white'}}
                   color='success'
+                  size='small'
+                  sx={{mt: 2}}
+                  href={`https://wa.me/${item?.seller?.loginable?.whatsapp}?text=${window.location.origin}/auctions/auction_item/${item?.id}`}
+                  target='_blank'
                 >
-                  Start live bid
+                  <WhatsAppIcon sx={{color: 'white'}} />
                 </Button>
               )}
             </Box>

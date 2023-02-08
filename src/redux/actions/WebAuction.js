@@ -45,6 +45,7 @@ export const onGetWebAuctionData = (filterData) => {
 export const onGetWebAuctionItemsData = (id, filterData) => {
   return async (dispatch) => {
     dispatch({type: LOADING_VEHICLE, payload: true});
+    dispatch({type: GET_WEB_AUCTION_ITEMS, payload: {}});
     dispatch({type: FETCH_START});
     const {messages} = appIntl();
     try {

@@ -1208,5 +1208,8 @@
 
   "auction.bidInfo": "Bid Info",
 
-  "website.saleList": "Sale list for"
+  "website.saleList": "Sale list for",
+  "auction.startingBid": "Starting Bid",
+  "auction.bidNow": "Bid Now",
+  "auction.preBid": "Pre Bid"
 }
