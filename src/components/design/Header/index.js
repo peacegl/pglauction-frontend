@@ -14,6 +14,7 @@ import {
   alpha,
   Badge,
   Box,
+  Card,
   Chip,
   Hidden,
   Stack,
@@ -54,104 +55,124 @@ const Header = ({
   };
 
   return (
-    <Box
+    <Card
       sx={{
-        display: 'flex',
-        flex: 1,
-        alignItems: 'center',
+        m: 3,
+        borderRadius: 1,
       }}
     >
       <Box
         sx={{
+          height: 60,
           display: 'flex',
           alignItems: 'center',
-          pl: onBack ? 1 : 3,
+          padding: {
+            xs: '4px 10px',
+            xl: '12px 10px',
+          },
         }}
+        className='apps-header'
       >
-        {onBack && (
-          <IconButton aria-label='delete' color='primary' onClick={onBack}>
-            <ArrowBack />
-          </IconButton>
-        )}
-        <Typography variant='h2' color='primary'>
-          <IntlMessages id={title} />
-        </Typography>
-        {name && (
-          <Typography
-            variant='h2'
-            color='primary'
-            sx={{textTransform: 'capitalize', px: 1}}
+        <Box
+          sx={{
+            display: 'flex',
+            flex: 1,
+            alignItems: 'center',
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              pl: onBack ? 1 : 3,
+            }}
           >
-            {name}
-          </Typography>
-        )}
-        <Badge
-          badgeContent={totalProducts}
-          max={99999999}
-          color='primary'
-          sx={{ml: 6}}
-        />
-        {search && (
-          <Box sx={{ml: 7}}>
-            <Chip
-              variant='outlined'
+            {onBack && (
+              <IconButton aria-label='delete' color='primary' onClick={onBack}>
+                <ArrowBack />
+              </IconButton>
+            )}
+            <Typography variant='h2' color='primary'>
+              <IntlMessages id={title} />
+            </Typography>
+            {name && (
+              <Typography
+                variant='h2'
+                color='primary'
+                sx={{textTransform: 'capitalize', px: 1}}
+              >
+                {name}
+              </Typography>
+            )}
+            <Badge
+              badgeContent={totalProducts}
+              max={99999999}
               color='primary'
-              ml='20px'
-              label={`Search: ${search}`}
-              onDelete={onDeleteSearch}
+              sx={{ml: 6}}
             />
+            {search && (
+              <Box sx={{ml: 7}}>
+                <Chip
+                  variant='outlined'
+                  color='primary'
+                  ml='20px'
+                  label={`Search: ${search}`}
+                  onDelete={onDeleteSearch}
+                />
+              </Box>
+            )}
           </Box>
-        )}
-      </Box>
 
-      <Stack
-        spacing={2}
-        direction='row'
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          ml: 'auto',
-        }}
-      >
-        {onLClick && onGClick && (
-          <>
-            <IconBtn
-              onClick={onLClick}
-              className={clsx({
-                active: viewType === VIEW_TYPE.LIST,
-              })}
-            >
-              <ListIcon />
-            </IconBtn>
-            <IconBtn
-              onClick={onGClick}
-              className={clsx({
-                active: viewType === VIEW_TYPE.GRID,
-              })}
-            >
-              <AppsIcon />
-            </IconBtn>
-          </>
-        )}
-        <Hidden smDown>
-          {list.length > 0 ? (
-            <Box
-              component='span'
-              sx={{
-                ml: {sm: 'auto'},
-              }}
-            >
-              <AppsPagination
-                rowsPerPage={perPage}
-                count={totalProducts}
-                page={page}
-                onPageChange={onPageChange}
-              />
-            </Box>
-          ) : null}
-        </Hidden>
-      </Stack>
-    </Box>
+          <Stack
+            spacing={2}
+            direction='row'
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              ml: 'auto',
+            }}
+          >
+            {onLClick && onGClick && (
+              <>
+                <IconBtn
+                  onClick={onLClick}
+                  className={clsx({
+                    active: viewType === VIEW_TYPE.LIST,
+                  })}
+                >
+                  <ListIcon />
+                </IconBtn>
+                <IconBtn
+                  onClick={onGClick}
+                  className={clsx({
+                    active: viewType === VIEW_TYPE.GRID,
+                  })}
+                >
+                  <AppsIcon />
+                </IconBtn>
+              </>
+            )}
+            <Hidden smDown>
+              {list.length > 0 ? (
+                <Box
+                  component='span'
+                  sx={{
+                    ml: {sm: 'auto'},
+                  }}
+                >
+                  <AppsPagination
+                    rowsPerPage={perPage}
+                    count={totalProducts}
+                    page={page}
+                    onPageChange={onPageChange}
+                  />
+                </Box>
+              ) : null}
+            </Hidden>
+          </Stack>
+        </Box>
+      </Box>
+    </Card>
   );
 };
 

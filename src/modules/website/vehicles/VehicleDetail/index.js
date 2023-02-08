@@ -4,12 +4,12 @@ import CustomCarousel from 'components/CustomCarousel';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import {useDispatch, useSelector} from 'react-redux';
-import Header from 'components/design/Header';
 import {Box, Container} from '@mui/material';
 import {useRouter} from 'next/router';
 import SaleInfo from './SaleInfo';
 import {useEffect} from 'react';
 import LotInfo from './LotInfo';
+import Header from './Header';
 import {
   onCountPopularBrands,
   onGetWebSimilarVehicle,

@@ -5,8 +5,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import {onGetWebAuctionData} from 'redux/actions';
 import React, {useEffect, useState} from 'react';
-import {alpha, Box, Card} from '@mui/material';
 import Header from 'components/design/Header';
+import {alpha, Box} from '@mui/material';
 import AuctionGrid from '../AuctionGrid';
 
 const TodayAuctions = () => {
@@ -33,34 +33,14 @@ const TodayAuctions = () => {
   };
   return (
     <>
-      <Card
-        sx={{
-          m: 3,
-          borderRadius: 1,
-        }}
-      >
-        <Box
-          sx={{
-            height: 60,
-            display: 'flex',
-            alignItems: 'center',
-            padding: {
-              xs: '4px 10px',
-              xl: '12px 10px',
-            },
-          }}
-          className='apps-header'
-        >
-          <Header
-            title='website.todaysAuctions'
-            list={data}
-            page={page}
-            perPage={perPage}
-            totalProducts={total}
-            onPageChange={onPageChange}
-          />
-        </Box>
-      </Card>
+      <Header
+        title='website.todaysAuctions'
+        list={data}
+        page={page}
+        perPage={perPage}
+        totalProducts={total}
+        onPageChange={onPageChange}
+      />
       <AppsContent
         style={{backgroundColor: alpha(theme.palette.background.default, 0.6)}}
       >

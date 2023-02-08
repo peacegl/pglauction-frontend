@@ -93,39 +93,18 @@ const VehicleList = () => {
   };
   return (
     <>
-      <Card
-        sx={{
-          m: 3,
-          borderRadius: 1,
-        }}
-      >
-        <Box
-          sx={{
-            height: 60,
-            display: 'flex',
-            alignItems: 'center',
-            padding: {
-              xs: '4px 10px',
-              xl: '12px 10px',
-            },
-          }}
-          className='apps-header'
-        >
-          <Header
-            title='website.allVehicles'
-            list={data}
-            viewType={viewType}
-            page={page}
-            perPage={perPage}
-            totalProducts={total}
-            onPageChange={onPageChange}
-            make={make}
-            onLClick={() => dispatch(setVehicleViewType(VIEW_TYPE.LIST))}
-            onGClick={() => dispatch(setVehicleViewType(VIEW_TYPE.GRID))}
-          />
-        </Box>
-      </Card>
-
+      <Header
+        title='website.allVehicles'
+        list={data}
+        viewType={viewType}
+        page={page}
+        perPage={perPage}
+        totalProducts={total}
+        onPageChange={onPageChange}
+        make={make}
+        onLClick={() => dispatch(setVehicleViewType(VIEW_TYPE.LIST))}
+        onGClick={() => dispatch(setVehicleViewType(VIEW_TYPE.GRID))}
+      />
       <AppsContent
         style={{backgroundColor: alpha(theme.palette.background.default, 0.6)}}
       >

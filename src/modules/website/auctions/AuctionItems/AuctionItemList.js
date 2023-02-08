@@ -61,42 +61,21 @@ const AuctionItemList = () => {
   };
   return (
     <>
-      <Card
-        sx={{
-          m: 3,
-          borderRadius: 1,
+      <Header
+        onBack={() => {
+          if (back) {
+            history.back();
+            setBack(false);
+          }
         }}
-      >
-        <Box
-          sx={{
-            height: 60,
-            display: 'flex',
-            alignItems: 'center',
-            padding: {
-              xs: '4px 10px',
-              xl: '12px 10px',
-            },
-          }}
-          className='apps-header'
-        >
-          <Header
-            onBack={() => {
-              if (back) {
-                history.back();
-                setBack(false);
-              }
-            }}
-            name={data[0]?.name}
-            title='website.saleList'
-            list={data}
-            page={page}
-            perPage={perPage}
-            totalProducts={data.length}
-            onPageChange={onPageChange}
-          />
-        </Box>
-      </Card>
-
+        name={data[0]?.name}
+        title='website.saleList'
+        list={data}
+        page={page}
+        perPage={perPage}
+        totalProducts={data.length}
+        onPageChange={onPageChange}
+      />
       <AppsContent
         style={{backgroundColor: alpha(theme.palette.background.default, 0.6)}}
       >
