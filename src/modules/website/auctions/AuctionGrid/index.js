@@ -4,7 +4,14 @@ import AppGrid from '@crema/core/AppGrid';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const AuctionGrid = ({list, loading, perPage, emptyContent, emptyTitle}) => (
+const AuctionGrid = ({
+  list,
+  loading,
+  perPage,
+  emptyContent,
+  emptyTitle,
+  user,
+}) => (
   <AppGrid
     responsive={{
       xs: 1,
@@ -12,7 +19,9 @@ const AuctionGrid = ({list, loading, perPage, emptyContent, emptyTitle}) => (
       lg: 2,
     }}
     data={list}
-    renderRow={(item, index) => <AuctionGridItem item={item} key={index} />}
+    renderRow={(item, index) => (
+      <AuctionGridItem item={item} key={index} user={user} />
+    )}
     perPage={perPage}
     ListEmptyComponent={
       <ListEmptyResult
@@ -26,6 +35,7 @@ export default AuctionGrid;
 
 AuctionGrid.propTypes = {
   list: PropTypes.array,
+  user: PropTypes.any,
   loading: PropTypes.bool,
   perPage: PropTypes.number,
   emptyContent: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
