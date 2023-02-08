@@ -1,13 +1,13 @@
-import {useAuthUser} from '@crema/utility/AuthHooks';
-import {Box, Card, Container} from '@mui/material';
-import ImageCarousel from 'components/design/ImageCarousel';
 import SaleInfo from 'modules/website/vehicles/VehicleDetail/SaleInfo';
 import LotInfo from 'modules/website/vehicles/VehicleDetail/LotInfo';
-import {useRouter} from 'next/router';
-import {useState, useEffect} from 'react';
+import ImageCarousel from 'components/design/ImageCarousel';
 import {useDispatch, useSelector} from 'react-redux';
+import {useAuthUser} from '@crema/utility/AuthHooks';
+import {Box, Card, Container} from '@mui/material';
 import {onGetWebVehicleView} from 'redux/actions';
-import Header from '../Header';
+import Header from 'components/design/Header';
+import {useState, useEffect} from 'react';
+import {useRouter} from 'next/router';
 import BidInfo from './BidInfo';
 
 const SingleAuctionItem = () => {

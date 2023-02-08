@@ -1,18 +1,13 @@
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
 import IntlMessages from '@crema/utility/IntlMessages';
+import {onGetWebAuctionItemsData} from 'redux/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import React, {useEffect, useState} from 'react';
+import Header from 'components/design/Header';
 import GridView from './GridView/index';
 import AppsContent from './AppsContent';
 import {useRouter} from 'next/router';
-
-import Header from '../Header';
-import {
-  onGetWebAuctionItemsData,
-  setBrandFilter,
-  setVehicleViewType,
-} from 'redux/actions';
 import {
   alpha,
   Box,
@@ -35,8 +30,6 @@ const AuctionItemList = () => {
   const {data = [], total} = useSelector(({webAuctions}) => {
     return webAuctions.auction;
   });
-
-  const viewType = useSelector(({webAuctions}) => webAuctions.viewType);
   const loading = useSelector(({common}) => common.loading);
   // const filterData = useSelector(({webAuctions}) => webAuctions.filterData);
 
@@ -93,16 +86,13 @@ const AuctionItemList = () => {
                 setBack(false);
               }
             }}
-            preTitle={data[0]?.name}
-            title='website.auctionVehicles'
+            name={data[0]?.name}
+            title='website.saleList'
             list={data}
-            viewType={viewType}
             page={page}
             perPage={perPage}
             totalProducts={data.length}
             onPageChange={onPageChange}
-            onLClick={() => {}}
-            onGClick={() => {}}
           />
         </Box>
       </Card>

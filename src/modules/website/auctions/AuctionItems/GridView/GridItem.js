@@ -30,7 +30,6 @@ export default function GridItem({item, ...props}) {
   //       : '';
   //   setAddressUrl(origin + router.asPath + `/${item.id}`);
   // }, []);
-  console.log(item);
   return (
     <>
       <Card sx={{borderRadius: 1}}>
@@ -46,7 +45,7 @@ export default function GridItem({item, ...props}) {
           <Box
             sx={{cursor: 'pointer'}}
             overflow='hidden'
-            onClick={() => router.push(`/all-vehicles/${item?.id}`)}
+            onClick={() => router.push(`/auctions/auction_item/${item.id}`)}
             onMouseEnter={() => setHoverImage(true)}
             onMouseLeave={() => setHoverImage(false)}
           >

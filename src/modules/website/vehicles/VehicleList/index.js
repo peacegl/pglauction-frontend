@@ -1,19 +1,19 @@
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
-import {
-  onGetWebVehicleData,
-  setBrandFilter,
-  setVehicleViewType,
-} from 'redux/actions';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
 import {useDispatch, useSelector} from 'react-redux';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import React, {useEffect, useState} from 'react';
+import Header from 'components/design/Header';
 import GridView from './GridView/index';
 import AppsContent from './AppsContent';
 import {useRouter} from 'next/router';
 import ListView from './ListView';
-import Header from '../Header';
+import {
+  onGetWebVehicleData,
+  setBrandFilter,
+  setVehicleViewType,
+} from 'redux/actions';
 import {
   alpha,
   Box,

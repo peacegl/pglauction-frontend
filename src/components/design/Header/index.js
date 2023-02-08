@@ -6,6 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import ListIcon from '@mui/icons-material/List';
 import AppsIcon from '@mui/icons-material/Apps';
 import {setVehicleSearch} from 'redux/actions';
+import {ArrowBack} from '@mui/icons-material';
 import {styled} from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -33,7 +34,6 @@ const IconBtn = styled(IconButton)(({theme}) => {
   };
 });
 const Header = ({
-  onSearch,
   viewType,
   list,
   page,
@@ -43,6 +43,8 @@ const Header = ({
   title,
   onLClick,
   onGClick,
+  onBack,
+  name,
 }) => {
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
   const dispatch = useDispatch();
@@ -63,12 +65,26 @@ const Header = ({
         sx={{
           display: 'flex',
           alignItems: 'center',
-          pl: 3,
+          pl: onBack ? 1 : 3,
         }}
       >
+        {onBack && (
+          <IconButton aria-label='delete' color='primary' onClick={onBack}>
+            <ArrowBack />
+          </IconButton>
+        )}
         <Typography variant='h2' color='primary'>
           <IntlMessages id={title} />
         </Typography>
+        {name && (
+          <Typography
+            variant='h2'
+            color='primary'
+            sx={{textTransform: 'capitalize', px: 1}}
+          >
+            {name}
+          </Typography>
+        )}
         <Badge
           badgeContent={totalProducts}
           max={99999999}
@@ -97,22 +113,26 @@ const Header = ({
           ml: 'auto',
         }}
       >
-        <IconBtn
-          onClick={onLClick}
-          className={clsx({
-            active: viewType === VIEW_TYPE.LIST,
-          })}
-        >
-          <ListIcon />
-        </IconBtn>
-        <IconBtn
-          onClick={onGClick}
-          className={clsx({
-            active: viewType === VIEW_TYPE.GRID,
-          })}
-        >
-          <AppsIcon />
-        </IconBtn>
+        {onLClick && onGClick && (
+          <>
+            <IconBtn
+              onClick={onLClick}
+              className={clsx({
+                active: viewType === VIEW_TYPE.LIST,
+              })}
+            >
+              <ListIcon />
+            </IconBtn>
+            <IconBtn
+              onClick={onGClick}
+              className={clsx({
+                active: viewType === VIEW_TYPE.GRID,
+              })}
+            >
+              <AppsIcon />
+            </IconBtn>
+          </>
+        )}
         <Hidden smDown>
           {list.length > 0 ? (
             <Box
@@ -139,7 +159,6 @@ export default Header;
 
 Header.propTypes = {
   viewType: PropTypes.number,
-  onSearch: PropTypes.func,
   list: PropTypes.array,
   page: PropTypes.number,
   perPage: PropTypes.number,
@@ -149,4 +168,10 @@ Header.propTypes = {
   title: PropTypes.any,
   onLClick: PropTypes.func,
   onGClick: PropTypes.func,
+  onBack: PropTypes.func,
+  name: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.node,
+  ]),
 };

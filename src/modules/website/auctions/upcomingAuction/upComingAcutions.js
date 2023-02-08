@@ -6,8 +6,8 @@ import {useAuthUser} from '@crema/utility/AuthHooks';
 import {onGetWebAuctionData} from 'redux/actions';
 import React, {useEffect, useState} from 'react';
 import {alpha, Box, Card} from '@mui/material';
+import Header from 'components/design/Header';
 import AuctionGrid from '../AuctionGrid';
-import Header from '../Header';
 
 const UpComingAuctions = () => {
   const dispatch = useDispatch();
