@@ -30,7 +30,7 @@ const AuctionItemList = () => {
   const {data = [], total} = useSelector(({webAuctions}) => {
     return webAuctions.auction;
   });
-  const loading = useSelector(({common}) => common.loading);
+  const loading = useSelector(({webAuctions}) => webAuctions.loading);
   // const filterData = useSelector(({webAuctions}) => webAuctions.filterData);
 
   const {search = ''} = useSelector(({webAuctions}) => webAuctions);
