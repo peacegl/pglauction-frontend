@@ -21,8 +21,6 @@ const AuctioGridItem = ({item, user}) => {
     .tz(user?.timezone ? user.timezone : moment.tz.guess())
     .format('YYYY-MM-DD hh:mm:ss A');
 
-  console.log(user, moment.tz.guess());
-
   let startTime = moment(
     item?.start_date,
     'YYYY-MM-DD hh:mm:ss A',
