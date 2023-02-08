@@ -10,7 +10,7 @@ import MyTimer from '../timer';
 import moment from 'moment';
 import 'moment-timezone';
 
-const AuctionGridItem = ({item, user}) => {
+const AuctioGridItem = ({item, user}) => {
   const router = useRouter();
   const [isStarted, setIsStarted] = useState(false);
   let endTime = moment(
@@ -176,22 +176,24 @@ const AuctionGridItem = ({item, user}) => {
             >
               {isStarted && (
                 <MyTimer
-                  expiryTimestamp={moment.tz(
+                  expiryTimestamp={moment(
                     item?.end_date,
-                    'YYYY-MM-DD HH:mm:ss',
-                    'UTC',
-                  )}
+                    'YYYY-MM-DD hh:mm:ss A',
+                    user?.timezone ? user.timezone : 'UTC',
+                  ).tz('UTC')}
                   onExpire={() => onExpire(item?.end_date)}
                 />
               )}
               {!isStarted && (
                 <MyTimer
-                  expiryTimestamp={moment.tz(
+                  expiryTimestamp={moment(
                     item?.start_date,
-                    'YYYY-MM-DD HH:mm:ss',
-                    'UTC',
-                  )}
-                  onExpire={() => {}}
+                    'YYYY-MM-DD hh:mm:ss A',
+                    user?.timezone ? user.timezone : 'UTC',
+                  ).tz('UTC')}
+                  onExpire={() => {
+                    setIsStarted(true);
+                  }}
                 />
               )}
             </Typography>
@@ -221,9 +223,9 @@ const AuctionGridItem = ({item, user}) => {
   );
 };
 
-export default AuctionGridItem;
+export default AuctioGridItem;
 
-AuctionGridItem.propTypes = {
+AuctioGridItem.propTypes = {
   item: PropTypes.any,
   user: PropTypes.object,
 };
