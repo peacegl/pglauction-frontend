@@ -40,4 +40,5 @@ AuctionGrid.propTypes = {
   perPage: PropTypes.number,
   emptyContent: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   emptyTitle: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  user: PropTypes.any,
 };
