@@ -59,10 +59,16 @@ const AuctionItemList = () => {
   const onPageChange2 = (event, value) => {
     setPage(value - 1);
   };
+
   return (
     <>
       <ListHeader
-        onBack={() => router.back()}
+        onBack={() => {
+          if (back) {
+            router.back();
+            setBack(false);
+          }
+        }}
         name={data[0]?.name}
         title='website.saleList'
         list={data}

@@ -10,7 +10,6 @@ import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import AppTooltip from '@crema/core/AppTooltip';
 import {useEffect, useState} from 'react';
-import {LoadingButton} from '@mui/lab';
 import {moneyFormater} from 'configs';
 import Card from '@mui/material/Card';
 import {useRouter} from 'next/router';
@@ -21,21 +20,12 @@ import 'moment-timezone';
 export default function GridItem({item, ...props}) {
   const router = useRouter();
   const {user} = useAuthUser();
-  // const [height, setHeight] = useState('260px');
+
   const [hoverImage, setHoverImage] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showSignInModal, setShowSignInModl] = useState(false);
-  // useLayoutEffect(() => {
-  //   setHeight((cardRef.current?.clientWidth / 4) * 3 + 'px');
-  // });
+
   const [addressUrl, setAddressUrl] = useState('');
-  // useEffect(() => {
-  //   const origin =
-  //     typeof window !== 'undefined' && window.location.origin
-  //       ? window.location.origin
-  //       : '';
-  //   setAddressUrl(origin + router.asPath + `/${item.id}`);
-  // }, []);
 
   const [isStarted, setIsStarted] = useState(false);
   let startTime = moment(
@@ -141,34 +131,6 @@ export default function GridItem({item, ...props}) {
           <Divider sx={{mb: 2}} />
           <Box sx={{mt: 1}}>
             <>
-              {/* <Box display='flex' columnGap='5px'>
-                <IntlMessages id='common.lot' />#
-                {!item ? (
-                  <Typography sx={{flex: 1}}>
-                    <Skeleton animation='wave' />
-                  </Typography>
-                ) : (
-                  <Typography
-                    sx={{color: (theme) => theme.palette.primary.main}}
-                  >
-                    {item.lot_number}
-                  </Typography>
-                )}
-              </Box>
-              <Box display='flex' columnGap='5px'>
-                <IntlMessages id='common.vin' />
-                {!item ? (
-                  <Typography sx={{flex: 1}}>
-                    <Skeleton animation='wave' />
-                  </Typography>
-                ) : (
-                  <Typography
-                    sx={{color: (theme) => theme.palette.primary.main}}
-                  >
-                    {item.vin}
-                  </Typography>
-                )}
-              </Box> */}
               <Box display='flex' columnGap='5px'>
                 <IntlMessages id='common.location' />
                 {!item ? (
