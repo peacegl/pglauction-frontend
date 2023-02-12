@@ -6,10 +6,10 @@ import ItemHeader from 'components/design/ItemHeader';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import {useDispatch, useSelector} from 'react-redux';
 import {Box, Container} from '@mui/material';
+import SaleInfo from 'components/SaleInfo';
+import LotInfo from 'components/LotInfo';
 import {useRouter} from 'next/router';
-import SaleInfo from './SaleInfo';
 import {useEffect} from 'react';
-import LotInfo from './LotInfo';
 import {
   onCountPopularBrands,
   onGetWebSimilarVehicle,
@@ -79,10 +79,10 @@ const VehicleDetail = () => {
               }}
             >
               <Box sx={{flex: 1.5}}>
-                <LotInfo />
+                <LotInfo vehicle={vehicle} />
               </Box>
               <Box sx={{flex: 1}}>
-                <SaleInfo />
+                <SaleInfo vehicle={vehicle} />
               </Box>
             </Box>
           </Box>

@@ -1,18 +1,17 @@
-import React, {useState} from 'react';
-import List from '@mui/material/List';
 import {Card, Chip, Typography, useTheme} from '@mui/material';
-import {useSelector} from 'react-redux';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {TabContext, TabList} from '@mui/lab';
+import TabPanel from '@mui/lab/TabPanel';
+import List from '@mui/material/List';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import TabPanel from '@mui/lab/TabPanel';
-import {TabContext, TabList} from '@mui/lab';
+import PropTypes from 'prop-types';
+import {useState} from 'react';
 import Item from './Item';
-import IntlMessages from '@crema/utility/IntlMessages';
 
-export default function SaleInfo() {
+export default function LotInfo({vehicle}) {
   const [value, setValue] = useState('lot_info');
   const theme = useTheme();
-  const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -187,3 +186,6 @@ export default function SaleInfo() {
     </Card>
   );
 }
+LotInfo.propTypes = {
+  vehicle: PropTypes.any,
+};

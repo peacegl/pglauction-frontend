@@ -1,11 +1,10 @@
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useAuthUser} from '@crema/utility/AuthHooks';
-import React, {useEffect, useState} from 'react';
-import {useSelector} from 'react-redux';
 import List from '@mui/material/List';
 import {moneyFormater} from 'configs';
 import {useRouter} from 'next/router';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import Item from './Item';
 import 'moment-timezone';
@@ -19,9 +18,8 @@ import {
   Typography,
 } from '@mui/material';
 
-export default function LotInfo() {
+export default function SaleInfo({vehicle, showPrice}) {
   const {user} = useAuthUser();
-  const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
   let updatedAt = moment(
     vehicle?.updated_at,
     'YYYY-MM-DD HH:mm:ss',
@@ -66,13 +64,15 @@ export default function LotInfo() {
               value={vehicle.location?.name}
             />
           )}
-          {/* <Item
-            label={<IntlMessages id='vehicle.price' />}
-            value={moneyFormater(
-              parseInt(vehicle.price) +
-                parseInt((vehicle.price * vehicle.sale_rate ?? 15) / 100),
-            )}
-          /> */}
+          {showPrice && (
+            <Item
+              label={<IntlMessages id='vehicle.price' />}
+              value={moneyFormater(
+                parseInt(vehicle.price) +
+                  parseInt((vehicle.price * vehicle.sale_rate ?? 15) / 100),
+              )}
+            />
+          )}
           <Item
             label={<IntlMessages id='common.last_updated' />}
             value={updatedAt}
@@ -92,3 +92,7 @@ export default function LotInfo() {
     </Card>
   );
 }
+SaleInfo.propTypes = {
+  vehicle: PropTypes.any,
+  showPrice: PropTypes.bool,
+};

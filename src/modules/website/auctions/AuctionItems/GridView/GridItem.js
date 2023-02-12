@@ -54,7 +54,9 @@ export default function GridItem({item, ...props}) {
           <Box
             sx={{cursor: 'pointer'}}
             overflow='hidden'
-            onClick={() => router.push(`/auctions/auction_item/${item.id}`)}
+            onClick={() =>
+              router.push(`/auctions/auction_items/${item.item_id}`)
+            }
             onMouseEnter={() => setHoverImage(true)}
             onMouseLeave={() => setHoverImage(false)}
           >
@@ -112,7 +114,7 @@ export default function GridItem({item, ...props}) {
               <AppTooltip title={`${item.year} ${item.make} ${item.model}`}>
                 <Typography
                   onClick={() =>
-                    router.push(`/auctions/auction_item/${item.id}`)
+                    router.push(`/auctions/auction_items/${item.item_id}`)
                   }
                   noWrap
                   gutterBottom
@@ -201,7 +203,7 @@ export default function GridItem({item, ...props}) {
               ) : (
                 <Button
                   onClick={() =>
-                    router.push(`/auctions/auction_item/${item.id}`)
+                    router.push(`/auctions/auction_items/${item.item_id}`)
                   }
                   variant='contained'
                   size='small'
@@ -225,7 +227,7 @@ export default function GridItem({item, ...props}) {
                   color='success'
                   size='small'
                   sx={{mt: 2}}
-                  href={`https://wa.me/${item?.seller?.loginable?.whatsapp}?text=${window.location.origin}/auctions/auction_item/${item?.id}`}
+                  href={`https://wa.me/${item?.seller?.loginable?.whatsapp}?text=${window.location.origin}/auctions/auction_items/${item?.item_id}`}
                   target='_blank'
                 >
                   <WhatsAppIcon sx={{color: 'white'}} />

@@ -1,21 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {useEffect, useState} from 'react';
+import Item from 'components/Item';
+import PropTypes from 'prop-types';
 import {
   alpha,
+  Box,
   Card,
   CardContent,
   CardHeader,
   Typography,
-  useTheme,
 } from '@mui/material';
-import IntlMessages from '@crema/utility/IntlMessages';
 
-export default function BidInfo() {
-  const theme = useTheme();
+export default function BidInfo({vehicle}) {
   return (
     <Card sx={{borderRadius: 1, boxShadow: 1, m: 0, minHeight: 400}}>
       <CardHeader
         sx={{
-          backgroundColor: alpha(theme.palette.primary.main, 0.9),
+          backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.9),
           color: 'white',
           p: 3,
         }}
@@ -31,9 +32,24 @@ export default function BidInfo() {
         }
       />
       <CardContent sx={{px: 3, py: 0}}>
-        {/* code here bid info */}
-        Bidding Here 🍟
+        <Item
+          label={<IntlMessages id='bid.bidStatus' />}
+          value={
+            vehicle.bid_status == 1
+              ? 'You have set the highest bid'
+              : vehicle.bid_status == 2
+              ? 'Your bid is lower than the current bid'
+              : "You Haven't Bid"
+          }
+        />
+        <Item
+          label={<IntlMessages id='bid.currentBid' />}
+          value={vehicle.minimum_bid}
+        />
       </CardContent>
     </Card>
   );
 }
+BidInfo.propTypes = {
+  vehicle: PropTypes.any,
+};

@@ -56,7 +56,7 @@ function ItemHeader({item, onBack}) {
                 overflow='hidden'
                 pb={1}
               >
-                {item.year} {item?.make} {item.model}
+                {item?.year} {item?.make} {item?.model}
               </Typography>
               <Box display='flex' columnGap='8px'>
                 <Typography component='div' overflow='hidden'>

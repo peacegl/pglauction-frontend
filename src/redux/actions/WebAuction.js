@@ -49,7 +49,7 @@ export const onGetWebAuctionItemsData = (id, filterData) => {
     dispatch({type: FETCH_START});
     const {messages} = appIntl();
     try {
-      const res = await jwtAxios.get(`/website/auctions_items/${id}`, {
+      const res = await jwtAxios.get(`/website/auctions/${id}`, {
         params: {
           ...filterData,
         },
