@@ -35,8 +35,12 @@ export default function BidInfo({vehicle}) {
   };
 
   const bid = () => {
-    // code here for bid function
-    console.log('bid');
+    if (parseFloat(bidValue) < vehicle?.minimum_bid || bidValue == '') {
+      setBidError(true);
+    } else {
+      // code here for bid
+      console.log('bid');
+    }
   };
 
   return (
