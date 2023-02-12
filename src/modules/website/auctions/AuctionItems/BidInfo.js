@@ -1,5 +1,6 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useEffect, useState} from 'react';
+import {moneyFormater} from 'configs';
 import Item from 'components/Item';
 import PropTypes from 'prop-types';
 import {
@@ -44,7 +45,9 @@ export default function BidInfo({vehicle}) {
         />
         <Item
           label={<IntlMessages id='bid.currentBid' />}
-          value={vehicle.minimum_bid}
+          value={moneyFormater(
+            vehicle.bids[0]?.amount ? vehicle.bids[0]?.amount : 0,
+          )}
         />
       </CardContent>
     </Card>
