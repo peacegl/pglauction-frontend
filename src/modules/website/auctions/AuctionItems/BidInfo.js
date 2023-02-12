@@ -16,7 +16,7 @@ import {
   Typography,
 } from '@mui/material';
 
-export default function BidInfo({vehicle}) {
+const BidInfo = ({vehicle}) => {
   const [bidValue, setBidValue] = useState('');
   const [bidError, setBidError] = useState(false);
 
@@ -147,7 +147,9 @@ export default function BidInfo({vehicle}) {
       </CardContent>
     </Card>
   );
-}
+};
+
+export default BidInfo;
 BidInfo.propTypes = {
   vehicle: PropTypes.any,
 };
