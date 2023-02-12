@@ -34,6 +34,11 @@ export default function BidInfo({vehicle}) {
     }
   };
 
+  const bid = () => {
+    // code here for bid function
+    console.log('bid');
+  };
+
   return (
     <Card sx={{borderRadius: 1, boxShadow: 1, m: 0, minHeight: 400}}>
       <CardHeader
@@ -114,7 +119,7 @@ export default function BidInfo({vehicle}) {
             label={'Enter your bid value'}
             value={bidValue}
             error={bidError}
-            helperText={bidError ? 'Incorrect entry.' : ''}
+            helperText={bidError ? 'Low then minimum' : ''}
             onChange={(e) => bidChange(e)}
             size='small'
             type='number'
@@ -130,8 +135,8 @@ export default function BidInfo({vehicle}) {
 
         <Button
           variant='contained'
-          sx={{mt: 2, px: 6, borderRadius: 1, width: '50%'}}
-          onClick={() => console.log('bid')}
+          sx={{mt: 2, borderRadius: 1, width: '40%'}}
+          onClick={() => bid()}
         >
           <IntlMessages id='bid.bid' />
         </Button>
