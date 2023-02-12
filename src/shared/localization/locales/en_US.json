@@ -857,6 +857,7 @@
   "common.data": "Data",
   "common.date_range": "Date Renge",
   "common.reset": "Reset",
+  "common.AED": "AED",
 
   "location.locationInfo": "Location Info",
   "location.locationDownload": "Location Download",
@@ -985,6 +986,7 @@
   "auction.mainImage": "Main Image",
   "auction.mainImageRequired": "Main image is required",
   "bid.bids": "Bid(s)",
+  "bid.bid": "Bid",
   "bid.currentBid": "Current Bid",
   "bid.timeRemaining": "Time Remaining",
   "bid.minimum_bid": "Minimum Bid",
