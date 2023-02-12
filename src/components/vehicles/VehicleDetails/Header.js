@@ -6,16 +6,15 @@ import SignInModal from 'modules/auth/Signin/SignInModal';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useSelector} from 'react-redux';
 import {LoadingButton} from '@mui/lab';
-import {useTheme} from '@mui/styles';
 import PropTypes from 'prop-types';
 import {useState} from 'react';
 
 function Header({vehicle, admin}) {
-  const theme = useTheme();
   // const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
   const [showSignInModal, setShowSignInModl] = useState(false);
   const {addToWatchList, watchlistLoading, addedToWatchList} =
     useAddToWatchList(vehicle, setShowSignInModl);
+
   return (
     <Box
       display='flex'
@@ -30,7 +29,7 @@ function Header({vehicle, admin}) {
         py: 1,
         borderBottom: '1px',
         borderStyle: 'solid',
-        borderColor: alpha(theme.palette.primary.main, 0.2),
+        borderColor: (theme) => alpha(theme.palette.primary.main, 0.2),
         color: colors.grey[800],
       }}
     >

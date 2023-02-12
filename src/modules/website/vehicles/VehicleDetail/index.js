@@ -8,7 +8,6 @@ import CustomCarousel from 'components/CustomCarousel';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import {useDispatch, useSelector} from 'react-redux';
-import Error404 from 'modules/errorPages/Error404';
 import {Box, Container} from '@mui/material';
 import {useRouter} from 'next/router';
 import SaleInfo from '../../../../components/vehicles/VehicleDetails/SaleInfo';
@@ -21,8 +20,6 @@ const VehicleDetail = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const {id} = router.query;
-
-  const loading = useSelector(({common}) => common.loading);
   const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
   const {similarVehicles = []} = useSelector(({webVehicles}) => webVehicles);
   const {user} = useAuthUser();
@@ -30,25 +27,28 @@ const VehicleDetail = () => {
     ({webVehicles}) => webVehicles.popularBrandsCount,
   );
   useEffect(() => {
-    (async function () {
-      await dispatch(onCountPopularBrands());
-    })();
-  }, []);
+    if (vehicle?.id) {
+      (async function () {
+        await dispatch(onCountPopularBrands());
+      })();
+    }
+  }, [vehicle?.id]);
+
+  useEffect(() => {
+    if (user?.type) {
+      dispatch(onGetWebVehicleView(id));
+    }
+  }, [id, user?.type]);
+
   useEffect(() => {
     if (id) {
-      dispatch(onGetWebVehicleView(id));
       dispatch(onGetWebSimilarVehicle(id));
     }
   }, [id]);
 
-  useEffect(() => {
-    if (id) {
-      dispatch(onGetWebVehicleView(id));
-    }
-  }, [user?.type]);
   return (
     <>
-      {vehicle.id ? (
+      {vehicle.id && (
         <>
           <Header vehicle={vehicle} admin={false} />
           <Container maxWidth='xl' sx={{mt: 6}}>
@@ -98,8 +98,6 @@ const VehicleDetail = () => {
             <PopularBrandsList popularBrandsCount={popularBrandsCount} />
           </Container>
         </>
-      ) : (
-        !loading && <Error404 url='/' />
       )}
     </>
   );
