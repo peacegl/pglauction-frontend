@@ -138,6 +138,7 @@ const BidInfo = ({vehicle}) => {
         </Box>
 
         <Button
+          disabled={bidError}
           variant='contained'
           sx={{mt: 2, borderRadius: 1, width: '40%'}}
           onClick={() => bid()}
