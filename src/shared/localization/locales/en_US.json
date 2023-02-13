@@ -911,6 +911,8 @@
   "validation.buyNowPriceRequired": "Buy now price is required",
   "validation.mbidRequired": "Minimum bid is required",
   "validation.priceError": "Invalid price",
+  "validation.amountError": "Invalid amount",
+  "validation.amountRequired": "Amount is required",
   "validation.saleRateError": "Invalid Sale Rate",
   "validation.numberError": "Only number acceptable",
   "validation.dateValidation": "Invalid date",
@@ -1214,5 +1216,8 @@
   "auction.startingBid": "Starting Bid",
   "auction.bidNow": "Bid Now",
   "auction.preBid": "Pre Bid",
-  "bid.bidStatus": "Bid Status"
+  "bid.bidStatus": "Bid Status",
+  "bidStatus.topBidder": "You are top bidder",
+  "bidStatus.notTopBidder": "You are not top bidder",
+  "bidStatus.notBid": "You Haven't Bid"
 }
