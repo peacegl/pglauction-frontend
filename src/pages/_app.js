@@ -15,7 +15,7 @@ import '@crema/services/index';
 import 'shared/vendors/index.css';
 import AppPageMeta from '@crema/core/AppPageMeta';
 import JWTAuthProvider from '@crema/services/auth/jwt-auth/JWTAuthProvider';
-// import EchoProvider from 'configs/EchoProvider';
+import EchoProvider from 'configs/EchoProvider';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -25,27 +25,27 @@ export default function MyApp(props) {
   const store = useStore(pageProps.initialReduxState);
 
   return (
-    // <EchoProvider>
-    <CacheProvider value={emotionCache}>
-      <AppContextProvider>
-        <Provider store={store}>
-          <AppThemeProvider>
-            <AppStyleProvider>
-              <AppLocaleProvider>
-                <JWTAuthProvider>
-                  <AuthRoutes>
-                    <CssBaseline />
-                    <AppPageMeta />
-                    <Component {...pageProps} />
-                  </AuthRoutes>
-                </JWTAuthProvider>
-              </AppLocaleProvider>
-            </AppStyleProvider>
-          </AppThemeProvider>
-        </Provider>
-      </AppContextProvider>
-    </CacheProvider>
-    // </EchoProvider>
+    <EchoProvider>
+      <CacheProvider value={emotionCache}>
+        <AppContextProvider>
+          <Provider store={store}>
+            <AppThemeProvider>
+              <AppStyleProvider>
+                <AppLocaleProvider>
+                  <JWTAuthProvider>
+                    <AuthRoutes>
+                      <CssBaseline />
+                      <AppPageMeta />
+                      <Component {...pageProps} />
+                    </AuthRoutes>
+                  </JWTAuthProvider>
+                </AppLocaleProvider>
+              </AppStyleProvider>
+            </AppThemeProvider>
+          </Provider>
+        </AppContextProvider>
+      </CacheProvider>
+    </EchoProvider>
   );
 }
 

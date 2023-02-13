@@ -1,4 +1,5 @@
 import IntlMessages from '@crema/utility/IntlMessages';
+import {useEcho} from 'configs/EchoProvider';
 import {useEffect, useState} from 'react';
 import {moneyFormater} from 'configs';
 import Item from 'components/Item';
@@ -19,7 +20,8 @@ import {
 const BidInfo = ({vehicle}) => {
   const [bidValue, setBidValue] = useState('');
   const [bidError, setBidError] = useState(false);
-
+  const {echo} = useEcho();
+  console.log('sddssd', echo);
   const buyNow = () => {
     //code here buy now price
     console.log(vehicle);
