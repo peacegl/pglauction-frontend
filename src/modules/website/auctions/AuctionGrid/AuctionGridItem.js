@@ -69,9 +69,6 @@ const AuctionGridItem = ({item, user}) => {
       <AppCard
         sxStyle={{
           borderRadius: 1,
-          '&:hover': {
-            backgroundColor: (theme) => theme.palette.background.default,
-          },
         }}
       >
         <Box

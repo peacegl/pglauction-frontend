@@ -1,27 +1,47 @@
+import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {useEcho} from 'configs/EchoProvider';
+import {moneyFormater, getData} from 'configs';
 import {useEffect, useState} from 'react';
-import {moneyFormater} from 'configs';
+import {LoadingButton} from '@mui/lab';
+import {Form, Formik} from 'formik';
 import Item from 'components/Item';
 import PropTypes from 'prop-types';
+import {useIntl} from 'react-intl';
+import * as yup from 'yup';
 import {
   alpha,
   Box,
-  Button,
   Card,
   CardContent,
   CardHeader,
   Chip,
+  CircularProgress,
   InputAdornment,
-  TextField,
   Typography,
 } from '@mui/material';
 
 const BidInfo = ({vehicle}) => {
+  const {messages} = useIntl();
   const [bidValue, setBidValue] = useState('');
   const [bidError, setBidError] = useState(false);
-  const {echo} = useEcho();
-  console.log('sddssd', echo);
+  const [bidStatus, setBidStatus] = useState(3);
+  const [bidStatusLoading, setBidStatusLoading] = useState(true);
+  const validationSchema = yup.object({
+    amount: yup
+      .number()
+      .typeError(<IntlMessages id='validation.amountError' />)
+      .required(<IntlMessages id='validation.amountRequired' />),
+  });
+
+  useEffect(() => {
+    getData(
+      `/website/user_bid_status/${vehicle.id}`,
+      {},
+      setBidStatusLoading,
+      setBidStatus,
+    );
+  }, []);
+
   const buyNow = () => {
     //code here buy now price
     console.log(vehicle);
@@ -66,22 +86,26 @@ const BidInfo = ({vehicle}) => {
       />
       <CardContent
         sx={{
-          px: 3,
           py: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
         }}
       >
         <Box>
           <Item
             label={<IntlMessages id='bid.bidStatus' />}
             value={
-              vehicle.bid_status == 1
-                ? 'You have set the highest bid'
-                : vehicle.bid_status == 2
-                ? 'Your bid is lower than the current bid'
-                : "You Haven't Bid"
+              !bidStatusLoading ? (
+                bidStatus?.bid_status == 1 ? (
+                  <IntlMessages id='bidStatus.topBidder' />
+                ) : bidStatus?.bid_status == 2 ? (
+                  <IntlMessages id='bidStatus.notTopBidder' />
+                ) : (
+                  bidStatus?.bid_status == 3 && (
+                    <IntlMessages id='bidStatus.notBid' />
+                  )
+                )
+              ) : (
+                <CircularProgress size={15} sx={{mx: 5}} />
+              )
             }
           />
           <Item
@@ -116,37 +140,53 @@ const BidInfo = ({vehicle}) => {
               />
             }
           />
-
-          <TextField
-            sx={{
-              mt: 12,
+          <Formik
+            validateOnChange={true}
+            initialValues={{
+              amount: '',
             }}
-            fullWidth
-            label={'Enter your bid value'}
-            value={bidValue}
-            error={bidError}
-            helperText={bidError ? 'Low then minimum' : ''}
-            onChange={(e) => bidChange(e)}
-            size='small'
-            type='number'
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position='start'>
-                  <IntlMessages id='common.AED' />
-                </InputAdornment>
-              ),
+            enableReinitialize
+            validationSchema={validationSchema}
+            onSubmit={async (values, actions) => {
+              actions.setSubmitting(true);
+              await delay(0);
+              await handleSubmit(values, actions);
+              actions.setSubmitting(false);
             }}
-          />
+          >
+            {({values, ...actions}) => {
+              return (
+                <Form>
+                  <AppTextField
+                    placeholder={messages['common.amountPlaceholder']}
+                    label={<IntlMessages id='common.amount' />}
+                    name='amount'
+                    variant='outlined'
+                    size='small'
+                    sx={{width: '100%', mt: 8}}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position='start'>
+                          <IntlMessages id='common.AED' />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                  <Box sx={{display: 'flex', justifyContent: 'center'}}>
+                    <LoadingButton
+                      loading={actions.isSubmitting}
+                      variant='contained'
+                      type='submit'
+                      sx={{mt: 3, borderRadius: 1, minWidth: '100px'}}
+                    >
+                      <IntlMessages id='bid.bid' />
+                    </LoadingButton>
+                  </Box>
+                </Form>
+              );
+            }}
+          </Formik>
         </Box>
-
-        <Button
-          // disabled={bidError}
-          variant='contained'
-          sx={{mt: 2, borderRadius: 1, width: '40%'}}
-          onClick={() => bid()}
-        >
-          <IntlMessages id='bid.bid' />
-        </Button>
       </CardContent>
     </Card>
   );
