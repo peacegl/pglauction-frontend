@@ -9,13 +9,17 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getData, onViewColumnsChange} from 'configs';
 import {useEffect, useState} from 'react';
 import SaleModal from './SaleModal';
+import SingleSaleModal from './SingleSaleModal';
 import PropTypes from 'prop-types';
+import CustomModal from 'components/CustomModal';
 
 export default function SaleList({user}) {
   const [showSaleModal, setShowSaleModal] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
   const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
+  const [singleSale, setSingleSale] = useState([]);
+  const [showSingleSaleModal, setShowSingleSaleModal] = useState(false);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
   const [search, setSearch] = useState('');
@@ -122,13 +126,18 @@ export default function SaleList({user}) {
     fetchData(value);
   };
 
+  const getSingleSale = (id) => {
+    setSingleSale(data.filter((sale) => sale.id === id)[0]);
+    setShowSingleSaleModal(true);
+  };
+
   return (
     <>
       <CustomDataTable
         title={<IntlMessages id='sale.saleList' />}
         total={total}
         data={data}
-        columns={tableColumns()}
+        columns={tableColumns(getSingleSale)}
         options={options}
         onFilterClick={() => setOpenFilter(true)}
         onEdit={onEdit}
@@ -191,6 +200,15 @@ export default function SaleList({user}) {
           toggleOpen={() => setShowSaleModal((d) => !d)}
           recordId={recordId}
           showVehicle
+        />
+      )}
+
+      {showSingleSaleModal && (
+        <SingleSaleModal
+          open={showSingleSaleModal}
+          toggleOpen={() => setShowSingleSaleModal((d) => !d)}
+          singleSale={singleSale}
+          width={1000}
         />
       )}
     </>

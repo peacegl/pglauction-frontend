@@ -6,11 +6,35 @@ import {moneyFormater} from 'configs';
 
 const {messages = []} = appIntl() ? appIntl() : {};
 
-export const tableColumns = function () {
+export const tableColumns = function (getSingleSale) {
   return [
+    {
+      name: 'id',
+      label: messages['common.id'],
+      options: {
+        display: false,
+        viewColumns: false,
+      },
+    },
     {
       name: 'str_code',
       label: messages['common.code'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              fontWeight: 'bold',
+              cursor: 'pointer',
+            }}
+            onClick={() => getSingleSale(tableMeta.rowData[0])}
+            noWrap={true}
+          >
+            {value}
+          </Typography>
+        ),
+      },
     },
     {
       name: 'vin',
