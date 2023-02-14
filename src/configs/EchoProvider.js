@@ -12,10 +12,11 @@ const EchoProvider = ({children}) => {
     window.Pusher = require('pusher-js');
     setEcho(
       new Echo({
+        app_id: '1548163',
         broadcaster: 'pusher',
-        key: '7c34c103432b342343d3434',
-        cluster: 'ap1',
-        wsHost: 'localhost',
+        key: 'd50b12da7c3c5c8ef0da',
+        cluster: 'mt1',
+        wsHost: '127.0.0.1',
         wsPort: 6001,
         forceTLS: false,
         disableStats: true,
@@ -23,7 +24,7 @@ const EchoProvider = ({children}) => {
           return {
             authorize: (socketId, callback) => {
               app.$axios
-                .post('http://localhost:8000/broadcasting/auth', {
+                .post('http://127.0.0.1:8000/broadcasting/auth', {
                   socket_id: socketId,
                   channel_name: channel.name,
                 })
@@ -62,6 +63,7 @@ const EchoProvider = ({children}) => {
         // },
       }),
     );
+    console.log(echo);
   }, []);
 
   return (
