@@ -107,6 +107,8 @@ export default function AuctionItemList({user}) {
         selectableRows={
           user?.permissions?.includes(EDIT_AUCTION_ITEM) ||
           user?.permissions?.includes(DELETE_AUCTION_ITEM)
+            ? 'multiple'
+            : 'none'
         }
         exportData={data}
       />
