@@ -12,6 +12,7 @@ const SingleAuctionItem = (props) => {
   const router = useRouter();
   const [back, setBack] = useState(true);
   const [vehicle, setVehicle] = useState({});
+  const {id} = router.query;
 
   useEffect(() => {
     setVehicle(props.vehicle);
@@ -65,7 +66,7 @@ const SingleAuctionItem = (props) => {
               <Box sx={{mb: 2}}>
                 <SaleInfo vehicle={vehicle.vehicle} showPrice />
               </Box>
-              <BidInfo vehicle={vehicle} />
+              <BidInfo vehicle={vehicle} id={id} />
             </Box>
           </Box>
         </Box>
