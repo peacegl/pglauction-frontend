@@ -125,7 +125,6 @@ export default function UserList({user}) {
 
   useEffect(() => {
     EchoConfig(); // import the echo config to authenticate driver
-
     window.Echo.private(`update.user`).listen('Updated', (e) => {
       console.log(e, 'test'); // console the message
     });
