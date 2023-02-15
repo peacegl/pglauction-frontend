@@ -10,6 +10,7 @@ import {getData, onViewColumnsChange} from 'configs';
 import {useEffect, useState} from 'react';
 import UserModal from './UserModal';
 import PropTypes from 'prop-types';
+import EchoConfig from 'plugins/echo';
 
 export default function UserList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -121,6 +122,17 @@ export default function UserList({user}) {
     setDownloadColumns(tableColumns());
   }, []);
   // end of for exporting data
+
+  useEffect(() => {
+    EchoConfig(); // import the echo config to authenticate driver
+
+    window.Echo.private(`update.user`).listen('Updated', (e) => {
+      console.log(e, 'test'); // console the message
+    });
+    return () => {
+      console.log('clean up...');
+    };
+  }, []);
 
   return (
     <>
