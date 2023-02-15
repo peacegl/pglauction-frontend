@@ -130,7 +130,9 @@ export default function UserList({user}) {
       console.log(e, 'test'); // console the message
     });
     return () => {
-      console.log('clean up...');
+      const echoChannel = window.Echo.private(`update.user`);
+      echoChannel.stopListening('Updated');
+      Echo.leave(`update.user`);
     };
   }, []);
 
