@@ -1219,5 +1219,7 @@
   "bid.bidStatus": "Bid Status",
   "bidStatus.topBidder": "You are top bidder",
   "bidStatus.notTopBidder": "You are not top bidder",
-  "bidStatus.notBid": "You Haven't Bid"
+  "bidStatus.notBid": "You Haven't Bid",
+  "validation.bidStartsAt": "Bid starts at:",
+  "validation.biggerThanCurrentBid": "Bid should be greater than:"
 }
