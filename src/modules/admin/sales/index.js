@@ -11,7 +11,6 @@ import {useEffect, useState} from 'react';
 import SaleModal from './SaleModal';
 import SingleSaleModal from './SingleSaleModal';
 import PropTypes from 'prop-types';
-import CustomModal from 'components/CustomModal';
 
 export default function SaleList({user}) {
   const [showSaleModal, setShowSaleModal] = useState(false);
@@ -154,6 +153,8 @@ export default function SaleList({user}) {
         selectableRows={
           user?.permissions?.includes(EDIT_SALE) ||
           user?.permissions?.includes(DELETE_SALE)
+            ? 'multiple'
+            : 'none'
         }
         onDownloadClick={() => {
           setOpenDownload(true);
