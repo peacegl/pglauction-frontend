@@ -8,6 +8,7 @@ import {moneyFormater, getData} from 'configs';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {LoadingButton} from '@mui/lab';
+import EchoConfig from 'plugins/echo';
 import {Form, Formik} from 'formik';
 import Item from 'components/Item';
 import PropTypes from 'prop-types';
@@ -87,6 +88,18 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
       dispatch({type: FETCH_ERROR, payload: error.message});
     }
   };
+
+  useEffect(() => {
+    EchoConfig(); // import the echo config to authenticate driver
+    window.Echo.private(`update.bid`).listen('Updated', (e) => {
+      console.log(e, 'test'); // console the message
+    });
+    return () => {
+      const echoChannel = window.Echo.private(`update.bid`);
+      echoChannel.stopListening('Updated');
+      Echo.leave(`update.bid`);
+    };
+  }, []);
 
   return (
     <>
