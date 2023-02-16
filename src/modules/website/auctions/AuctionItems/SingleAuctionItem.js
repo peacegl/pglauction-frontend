@@ -21,17 +21,15 @@ const SingleAuctionItem = (props) => {
   return (
     vehicle.id && (
       <Container maxWidth='xl'>
-        <Box sx={{mx: 3}}>
-          <ItemHeader
-            item={vehicle.vehicle}
-            onBack={() => {
-              if (back) {
-                router.back();
-                setBack(false);
-              }
-            }}
-          />
-        </Box>
+        <ItemHeader
+          item={vehicle.vehicle}
+          onBack={() => {
+            if (back) {
+              router.back();
+              setBack(false);
+            }
+          }}
+        />
         <Box
           sx={{
             display: 'flex',
@@ -66,7 +64,7 @@ const SingleAuctionItem = (props) => {
               <Box sx={{mb: 2}}>
                 <SaleInfo vehicle={vehicle.vehicle} showPrice />
               </Box>
-              <BidInfo vehicle={vehicle} id={id} />
+              <BidInfo vehicle={vehicle} id={id} setVehicle={setVehicle} />
             </Box>
           </Box>
         </Box>

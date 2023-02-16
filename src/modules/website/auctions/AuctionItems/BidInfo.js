@@ -3,6 +3,7 @@ import SignInModal from 'modules/auth/Signin/SignInModal';
 import {FETCH_ERROR} from 'shared/constants/ActionTypes';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useAuthUser} from '@crema/utility/AuthHooks';
+import jwtAxios from '@crema/services/auth/jwt-auth';
 import {moneyFormater, getData} from 'configs';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
@@ -15,16 +16,16 @@ import * as yup from 'yup';
 import {
   alpha,
   Box,
+  Button,
   Card,
   CardContent,
   CardHeader,
-  Chip,
   CircularProgress,
   InputAdornment,
   Typography,
 } from '@mui/material';
 
-const BidInfo = ({vehicle, id}) => {
+const BidInfo = ({id, vehicle, setVehicle}) => {
   const {messages} = useIntl();
   const {user} = useAuthUser();
   const [bidStatus, setBidStatus] = useState(3);
@@ -32,15 +33,19 @@ const BidInfo = ({vehicle, id}) => {
   const [showSignInModal, setShowSignInModl] = useState(false);
   const [bidStatusLoading, setBidStatusLoading] = useState(true);
   const dispatch = useDispatch();
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
   const validationSchema = yup.object({
     amount: yup
       .number()
       .typeError(<IntlMessages id='validation.amountError' />)
       .min(
-        currentBid > 0 ? currentBid + 500 : vehicle.minimum_bid,
+        currentBid > 0
+          ? parseFloat(currentBid) + parseFloat(500)
+          : vehicle.minimum_bid,
         currentBid > 0
           ? `${messages['validation.biggerThanCurrentBid']} ${moneyFormater(
-              currentBid,
+              parseFloat(currentBid) + parseFloat(500),
             )}`
           : `${messages['validation.bidStartsAt']} ${moneyFormater(
               vehicle.minimum_bid,
@@ -64,17 +69,20 @@ const BidInfo = ({vehicle, id}) => {
 
   const handleSubmit = async (values, actions) => {
     if (user?.email) {
-      sendRequest(values);
+      sendRequest(values, actions);
     } else {
       setShowSignInModl(true);
     }
   };
-
-  const sendRequest = async (data) => {
+  const sendRequest = async (data, actions) => {
     try {
-      const res = await jwtAxios.post(`/add_bid/${id}`, data);
+      const res = await jwtAxios.post(`/website/add_bid/${id}`, data);
       if (res.status === 201 && res.data.result) {
-        setCurrentBid(res.data.currentBid);
+        setCurrentBid(res?.data?.data?.amount);
+        setVehicle((d) => {
+          return {...d, bids: [res?.data?.data]};
+        });
+        actions.resetForm();
       }
     } catch (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -138,21 +146,15 @@ const BidInfo = ({vehicle, id}) => {
             <Item
               label={<IntlMessages id='common.buy_now_price' />}
               value={
-                <Chip
-                  sx={{
-                    px: 2,
-                    textTransform: 'capitalize',
-                    fontWeight: 'bold',
-                    color: (theme) => theme.palette.primary.contrastText,
-                    bgcolor: '#ffa834',
-                    '&:hover': {
-                      backgroundColor: '#c98709',
-                    },
-                  }}
-                  label={moneyFormater(vehicle?.buy_now_price)}
+                <Button
+                  variant='contained'
+                  color='success'
                   size='small'
-                  onClick={() => buyNow()}
-                />
+                  href={`https://wa.me/${vehicle.vehicle?.seller?.loginable?.whatsapp}?text=${window.location.origin}/auctions/auction_items/${vehicle.id}`}
+                  target='_blank'
+                >
+                  {moneyFormater(vehicle?.buy_now_price)}
+                </Button>
               }
             />
             <Formik
@@ -164,6 +166,7 @@ const BidInfo = ({vehicle, id}) => {
               validationSchema={validationSchema}
               onSubmit={async (values, actions) => {
                 actions.setSubmitting(true);
+                await delay(0);
                 await handleSubmit(values, actions);
                 actions.setSubmitting(false);
               }}
@@ -217,5 +220,6 @@ const BidInfo = ({vehicle, id}) => {
 export default BidInfo;
 BidInfo.propTypes = {
   vehicle: PropTypes.any,
+  setVehicle: PropTypes.func,
   id: PropTypes.any,
 };
