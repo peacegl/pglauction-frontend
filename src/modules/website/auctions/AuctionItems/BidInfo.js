@@ -65,7 +65,7 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
 
   useEffect(() => {
     setCurrentBid(vehicle.bids[0]?.amount ? vehicle.bids[0]?.amount : 0);
-  }, []);
+  }, [vehicle.bids]);
 
   const handleSubmit = async (values, actions) => {
     if (user?.email) {
@@ -78,9 +78,8 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
     try {
       const res = await jwtAxios.post(`/website/add_bid/${id}`, data);
       if (res.status === 201 && res.data.result) {
-        setCurrentBid(res?.data?.data?.amount);
         setVehicle((d) => {
-          return {...d, bids: [res?.data?.data]};
+          return {...d, bids: [res?.data?.data, ...d.bids]};
         });
         actions.resetForm();
       }
