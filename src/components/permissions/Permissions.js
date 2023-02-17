@@ -147,5 +147,5 @@ export default Permissions;
 Permissions.propTypes = {
   values: PropTypes.object,
   setfieldvalue: PropTypes.func,
-  permissions: PropTypes.object.isRequired,
+  permissions: PropTypes.any.isRequired,
 };
