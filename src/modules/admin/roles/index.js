@@ -50,7 +50,7 @@ export default function RoleList({user}) {
         action,
         setDownloadColumns,
         downloadColumns,
-        columns,
+        tableColumns(),
       );
     },
     onChangeRowsPerPage: (numberOfRows) => {
