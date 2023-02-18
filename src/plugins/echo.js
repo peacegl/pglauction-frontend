@@ -29,7 +29,6 @@ const EchoConfig = () => {
               channel_name: channel.name,
             })
             .then((response) => {
-              console.log(response);
               callback(false, response.data);
             })
             .catch((error) => {

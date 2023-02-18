@@ -2,7 +2,7 @@ import {ADD_USER, DELETE_USER, EDIT_USER} from 'shared/constants/Permissions';
 import DownloadModal from 'components/CustomModal/downloadModal';
 import {filterContent, tableColumns} from 'configs/pages/users';
 import FilterModal from 'components/CustomModal/FilterModal';
-import {onGetUserList, onDeleteUsers} from 'redux/actions';
+import {onGetUserList, onDeleteUsers, addRealTimeUser} from 'redux/actions';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
@@ -124,17 +124,25 @@ export default function UserList({user}) {
   // end of for exporting data
 
   useEffect(() => {
-    EchoConfig(); // import the echo config to authenticate driver
+    EchoConfig();
     window.Echo.private(`update.user`).listen('Updated', (e) => {
-      console.log(e, 'test'); // console the message
+      if (user.uid != e.authUser) {
+        if (e.action === 'created') {
+          NewUserAddRealTime(e.data);
+        }
+      }
     });
     return () => {
       const echoChannel = window.Echo.private(`update.user`);
       echoChannel.stopListening('Updated');
       Echo.leave(`update.user`);
-      console.log('clean up ...');
+      console.log('clean up...');
     };
   }, []);
+
+  const NewUserAddRealTime = async (data) => {
+    await dispatch(addRealTimeUser(data));
+  };
 
   return (
     <>

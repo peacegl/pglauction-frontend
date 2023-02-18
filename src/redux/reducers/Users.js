@@ -43,6 +43,7 @@ const usersReducer = (state = initialUsers, action) => {
           ),
         },
       };
+
     default:
       return state;
   }

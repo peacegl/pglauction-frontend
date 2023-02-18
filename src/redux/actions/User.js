@@ -60,7 +60,6 @@ export const onGetAllUsers = (filterData) => {
     }
   };
 };
-
 // for exporting data
 
 export const onInsertUser = (data, toggleOpen) => {
@@ -200,6 +199,16 @@ export const onUpdateAuthUser = (
       } else {
         dispatch({type: FETCH_ERROR, payload: error.message});
       }
+    }
+  };
+};
+
+export const addRealTimeUser = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: ADD_NEW_USER, payload: data});
+    } catch (error) {
+      console.log(error);
     }
   };
 };
