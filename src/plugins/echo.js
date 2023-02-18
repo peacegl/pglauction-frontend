@@ -15,7 +15,7 @@ const EchoConfig = () => {
   window.Echo = new Echo({
     broadcaster: 'pusher',
     key: 'd50b12da7c3c5c8ef0da', // same key used in the pusher key
-    wsHost: 'localhost', // host when you deploy would be your domain
+    wsHost: '127.0.0.1', // host when you deploy would be your domain
     cluster: 'mt1',
     wsPort: 6001, // same port
     forceTLS: false, // force https to false
