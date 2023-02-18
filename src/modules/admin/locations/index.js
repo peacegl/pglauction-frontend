@@ -1,5 +1,10 @@
 import {filterContent, tableColumns} from 'configs/pages/locations';
-import {onGetLocationList, onDeleteLocations} from 'redux/actions';
+import {
+  onGetLocationList,
+  onDeleteLocations,
+  addRealTimeLocation,
+  updateRealTimeLocation,
+} from 'redux/actions';
 import DownloadModal from 'components/CustomModal/downloadModal';
 import FilterModal from 'components/CustomModal/FilterModal';
 import CustomDataTable from 'components/CustomDataTable';
@@ -14,6 +19,7 @@ import {
   DELETE_LOCATION,
 } from 'shared/constants/Permissions';
 import PropTypes from 'prop-types';
+import EchoConfig from 'plugins/echo';
 
 export default function LocationList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -127,6 +133,37 @@ export default function LocationList({user}) {
     setDownloadColumns(tableColumns());
   }, []);
   // end of for exporting data
+
+  useEffect(() => {
+    EchoConfig();
+    window.Echo.private(`update.location`).listen('Updated', (e) => {
+      if (user.uid != e.authUser) {
+        if (e.action === 'created') {
+          newLocationRealTime(e.data);
+        }
+        if (e.action == 'updated') {
+          updateLocationRealTime(e.data);
+        }
+        if (e.action == 'deleted') {
+          fetchData();
+        }
+      }
+    });
+    return () => {
+      const echoChannel = window.Echo.private(`update.location`);
+      echoChannel.stopListening('Updated');
+      Echo.leave(`update.location`);
+      console.log('clean up...');
+    };
+  }, []);
+
+  const newLocationRealTime = async (data) => {
+    await dispatch(addRealTimeLocation(data));
+  };
+
+  const updateLocationRealTime = async (data) => {
+    await dispatch(updateRealTimeLocation(data));
+  };
 
   return (
     <>

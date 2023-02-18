@@ -152,3 +152,23 @@ export const onDeleteLocations = (data) => {
     }
   };
 };
+
+export const addRealTimeLocation = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: ADD_NEW_LOCATION, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const updateRealTimeLocation = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: UPDATE_LOCATION, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
