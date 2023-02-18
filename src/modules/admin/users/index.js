@@ -133,6 +133,7 @@ export default function UserList({user}) {
     window.Echo.private(`update.user`).listen('Updated', (e) => {
       if (user.uid != e.authUser) {
         if (e.action === 'created') {
+          console.log(e);
           newUserAddRealTime(e.data);
         }
         if (e.action == 'updated') {
