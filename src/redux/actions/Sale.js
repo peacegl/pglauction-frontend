@@ -149,3 +149,23 @@ export const onDeleteSales = (data) => {
     }
   };
 };
+
+export const addRealTimeSale = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: ADD_NEW_SALE, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const updateRealTimeSale = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: UPDATE_SALE, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
