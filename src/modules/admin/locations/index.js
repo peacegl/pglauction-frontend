@@ -13,6 +13,7 @@ import {
   EDIT_LOCATION,
   DELETE_LOCATION,
 } from 'shared/constants/Permissions';
+import SingleLocationModal from './SingleLocationModal';
 import PropTypes from 'prop-types';
 
 export default function LocationList({user}) {
@@ -20,6 +21,8 @@ export default function LocationList({user}) {
   const [openFilter, setOpenFilter] = useState(false);
   const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
+  const [singleLocation, setSingleLocation] = useState([]);
+  const [showSingleLocationModal, setShowSingleLocationModal] = useState(false);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
   const [search, setSearch] = useState('');
@@ -128,13 +131,18 @@ export default function LocationList({user}) {
   }, []);
   // end of for exporting data
 
+  const getSingleLocation = (id) => {
+    setSingleLocation(data.filter((sale) => sale.id === id)[0]);
+    setShowSingleLocationModal(true);
+  };
+
   return (
     <>
       <CustomDataTable
         title={<IntlMessages id='location.locationList' />}
         total={total}
         data={data}
-        columns={tableColumns()}
+        columns={tableColumns(getSingleLocation)}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}
@@ -193,12 +201,22 @@ export default function LocationList({user}) {
           content={filterContent}
         />
       )}
+
       {openModal && (
         <LocationModal
           open={openModal}
           toggleOpen={() => setOpenModal((d) => !d)}
           recordId={recordId}
           edit={recordId ? true : false}
+        />
+      )}
+
+      {showSingleLocationModal && (
+        <SingleLocationModal
+          open={showSingleLocationModal}
+          toggleOpen={() => setShowSingleLocationModal((d) => !d)}
+          singleLocation={singleLocation}
+          width={500}
         />
       )}
     </>
