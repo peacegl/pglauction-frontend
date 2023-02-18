@@ -212,3 +212,13 @@ export const addRealTimeUser = (data) => {
     }
   };
 };
+
+export const updateRealTimeUser = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: UPDATE_USER, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};

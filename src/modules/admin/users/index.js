@@ -2,7 +2,12 @@ import {ADD_USER, DELETE_USER, EDIT_USER} from 'shared/constants/Permissions';
 import DownloadModal from 'components/CustomModal/downloadModal';
 import {filterContent, tableColumns} from 'configs/pages/users';
 import FilterModal from 'components/CustomModal/FilterModal';
-import {onGetUserList, onDeleteUsers, addRealTimeUser} from 'redux/actions';
+import {
+  onGetUserList,
+  onDeleteUsers,
+  addRealTimeUser,
+  updateRealTimeUser,
+} from 'redux/actions';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
@@ -128,7 +133,13 @@ export default function UserList({user}) {
     window.Echo.private(`update.user`).listen('Updated', (e) => {
       if (user.uid != e.authUser) {
         if (e.action === 'created') {
-          NewUserAddRealTime(e.data);
+          newUserAddRealTime(e.data);
+        }
+        if (e.action == 'updated') {
+          updateAddRealTime(e.data);
+        }
+        if (e.action == 'deleted') {
+          fetchData();
         }
       }
     });
@@ -140,8 +151,12 @@ export default function UserList({user}) {
     };
   }, []);
 
-  const NewUserAddRealTime = async (data) => {
+  const newUserAddRealTime = async (data) => {
     await dispatch(addRealTimeUser(data));
+  };
+
+  const updateAddRealTime = async (data) => {
+    await dispatch(updateRealTimeUser(data));
   };
 
   return (
