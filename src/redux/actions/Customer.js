@@ -210,3 +210,23 @@ export const onVerifyCustomer = (id, data, toggleOpen) => {
     }
   };
 };
+
+export const addRealTimeCustomer = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: ADD_NEW_CUSTOMER, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const updateRealTimeCustomer = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: UPDATE_CUSTOMER, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};

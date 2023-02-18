@@ -1,5 +1,10 @@
 import {filterContent, tableColumns} from 'configs/pages/customers';
-import {onGetCustomerList, onDeleteCustomers} from 'redux/actions';
+import {
+  onGetCustomerList,
+  onDeleteCustomers,
+  addRealTimeCustomer,
+  updateRealTimeCustomer,
+} from 'redux/actions';
 import DownloadModal from 'components/CustomModal/downloadModal';
 import FilterModal from 'components/CustomModal/FilterModal';
 import AccountVerification from './AccountVerificationModal';
@@ -15,6 +20,7 @@ import {
   EDIT_CUSTOMER,
   DELETE_CUSTOMER,
 } from 'shared/constants/Permissions';
+import EchoConfig from 'plugins/echo';
 
 export default function CustomerList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -128,6 +134,37 @@ export default function CustomerList({user}) {
     setDownloadColumns(tableColumns());
   }, []);
   // end of for exporting data
+
+  useEffect(() => {
+    EchoConfig();
+    window.Echo.private(`update.customer`).listen('Updated', (e) => {
+      if (user.uid != e.authUser) {
+        if (e.action === 'created') {
+          newCustomerAddRealTime(e.data);
+        }
+        if (e.action == 'updated') {
+          updateCustomerRealTime(e.data);
+        }
+        if (e.action == 'deleted') {
+          fetchData();
+        }
+      }
+    });
+    return () => {
+      const echoChannel = window.Echo.private(`update.customer`);
+      echoChannel.stopListening('Updated');
+      Echo.leave(`update.customer`);
+      console.log('clean up...');
+    };
+  }, []);
+
+  const newCustomerAddRealTime = async (data) => {
+    await dispatch(addRealTimeCustomer(data));
+  };
+
+  const updateCustomerRealTime = async (data) => {
+    await dispatch(updateRealTimeCustomer(data));
+  };
 
   return (
     <>
