@@ -147,7 +147,6 @@ export default function UserList({user}) {
       const echoChannel = window.Echo.private(`update.user`);
       echoChannel.stopListening('Updated');
       Echo.leave(`update.user`);
-      console.log('clean up...');
     };
   }, []);
 

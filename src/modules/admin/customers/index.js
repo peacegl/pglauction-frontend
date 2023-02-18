@@ -154,7 +154,6 @@ export default function CustomerList({user}) {
       const echoChannel = window.Echo.private(`update.customer`);
       echoChannel.stopListening('Updated');
       Echo.leave(`update.customer`);
-      console.log('clean up...');
     };
   }, []);
 

@@ -153,7 +153,6 @@ export default function LocationList({user}) {
       const echoChannel = window.Echo.private(`update.location`);
       echoChannel.stopListening('Updated');
       Echo.leave(`update.location`);
-      console.log('clean up...');
     };
   }, []);
 

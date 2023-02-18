@@ -147,7 +147,6 @@ export default function SaleList({user}) {
       const echoChannel = window.Echo.private(`update.sale`);
       echoChannel.stopListening('Updated');
       Echo.leave(`update.sale`);
-      console.log('clean up...');
     };
   }, []);
 

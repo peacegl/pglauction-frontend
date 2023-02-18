@@ -169,7 +169,6 @@ export default function VehicleList({user}) {
       const echoChannel = window.Echo.private(`update.vehicle`);
       echoChannel.stopListening('Updated');
       Echo.leave(`update.vehicle`);
-      console.log('clean up...');
     };
   }, []);
 
