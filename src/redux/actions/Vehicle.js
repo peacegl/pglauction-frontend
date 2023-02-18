@@ -187,3 +187,23 @@ export const onSaleVehicle = (data, toggleOpen) => {
     }
   };
 };
+
+export const addRealTimeVehicle = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: ADD_NEW_VEHICLE, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const updateRealTimeVehicle = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: UPDATE_VEHICLE, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
