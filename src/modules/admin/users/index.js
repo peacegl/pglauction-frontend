@@ -7,6 +7,7 @@ import {
   onDeleteUsers,
   addRealTimeUser,
   updateRealTimeUser,
+  addRealTimeUserCount,
 } from 'redux/actions';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
@@ -133,7 +134,6 @@ export default function UserList({user}) {
     window.Echo.private(`update.user`).listen('Updated', (e) => {
       if (user.uid != e.authUser) {
         if (e.action === 'created') {
-          console.log(e);
           newUserAddRealTime(e.data);
         }
         if (e.action == 'updated') {
@@ -152,7 +152,11 @@ export default function UserList({user}) {
   }, []);
 
   const newUserAddRealTime = async (data) => {
-    await dispatch(addRealTimeUser(data));
+    if (page == 0) {
+      await dispatch(addRealTimeUser(data));
+    } else {
+      await dispatch(addRealTimeUserCount(data));
+    }
   };
 
   const updateAddRealTime = async (data) => {

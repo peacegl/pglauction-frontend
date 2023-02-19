@@ -1,3 +1,4 @@
+import {INCREMENT_TOTAL_VEHICLE} from 'shared/constants/ActionTypes';
 import {filterContent, tableColumns} from 'configs/pages/vehicles';
 import DownloadModal from 'components/CustomModal/downloadModal';
 import {
@@ -5,6 +6,7 @@ import {
   onDeleteVehicles,
   addRealTimeVehicle,
   updateRealTimeVehicle,
+  addRealTimeVehicleCount,
 } from 'redux/actions';
 import FilterModal from 'components/CustomModal/FilterModal';
 import CustomDataTable from 'components/CustomDataTable';
@@ -173,7 +175,11 @@ export default function VehicleList({user}) {
   }, []);
 
   const newVehicleAddRealTime = async (data) => {
-    await dispatch(addRealTimeVehicle(data));
+    if (page == 0) {
+      await dispatch(addRealTimeVehicle(data));
+    } else {
+      await dispatch(addRealTimeVehicleCount(data));
+    }
   };
 
   const updateVehicleRealTime = async (data) => {

@@ -7,6 +7,7 @@ import {
   UPDATE_SALE,
   SHOW_MESSAGE,
   GET_ALL_SALES_LIST,
+  INCREMENT_TOTAL_SALE,
 } from 'shared/constants/ActionTypes';
 
 import {appIntl} from '../../@crema/utility/helper/Utils';
@@ -154,6 +155,16 @@ export const addRealTimeSale = (data) => {
   return async (dispatch) => {
     try {
       dispatch({type: ADD_NEW_SALE, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const addRealTimeSaleCount = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: INCREMENT_TOTAL_SALE, payload: data});
     } catch (error) {
       console.log(error);
     }

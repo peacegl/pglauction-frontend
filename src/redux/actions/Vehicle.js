@@ -8,8 +8,9 @@ import {
   UPDATE_VEHICLE,
   SHOW_MESSAGE,
   GET_ALL_VEHICLE_LIST,
-} from '../../shared/constants/ActionTypes';
-import {appIntl} from '../../@crema/utility/helper/Utils';
+  INCREMENT_TOTAL_VEHICLE,
+} from 'shared/constants/ActionTypes';
+import {appIntl} from '@crema/utility/helper/Utils';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 
 export const onGetVehicleData = (filterData) => {
@@ -192,6 +193,16 @@ export const addRealTimeVehicle = (data) => {
   return async (dispatch) => {
     try {
       dispatch({type: ADD_NEW_VEHICLE, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const addRealTimeVehicleCount = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: INCREMENT_TOTAL_VEHICLE, payload: data});
     } catch (error) {
       console.log(error);
     }

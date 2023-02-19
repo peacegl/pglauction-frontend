@@ -4,6 +4,7 @@ import {
   onDeleteCustomers,
   addRealTimeCustomer,
   updateRealTimeCustomer,
+  addRealTimeCustomerCount,
 } from 'redux/actions';
 import DownloadModal from 'components/CustomModal/downloadModal';
 import FilterModal from 'components/CustomModal/FilterModal';
@@ -158,7 +159,11 @@ export default function CustomerList({user}) {
   }, []);
 
   const newCustomerAddRealTime = async (data) => {
-    await dispatch(addRealTimeCustomer(data));
+    if (page == 0) {
+      await dispatch(addRealTimeCustomer(data));
+    } else {
+      await dispatch(addRealTimeCustomerCount(data));
+    }
   };
 
   const updateCustomerRealTime = async (data) => {

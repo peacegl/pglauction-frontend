@@ -4,6 +4,7 @@ import {
   onDeleteSales,
   addRealTimeSale,
   updateRealTimeSale,
+  addRealTimeSaleCount,
 } from 'redux/actions';
 import DownloadModal from 'components/CustomModal/downloadModal';
 import {filterContent, tableColumns} from 'configs/pages/sales';
@@ -151,7 +152,11 @@ export default function SaleList({user}) {
   }, []);
 
   const newSaleRealTime = async (data) => {
-    await dispatch(addRealTimeSale(data));
+    if (page == 0) {
+      await dispatch(addRealTimeSale(data));
+    } else {
+      await dispatch(addRealTimeSaleCount(data));
+    }
   };
 
   const updateSaleRealTime = async (data) => {

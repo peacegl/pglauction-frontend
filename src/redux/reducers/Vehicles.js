@@ -4,7 +4,8 @@ import {
   SET_VEHICLE_FILTER_DATA,
   ADD_NEW_VEHICLE,
   UPDATE_VEHICLE,
-} from '../../shared/constants/ActionTypes';
+  INCREMENT_TOTAL_VEHICLE,
+} from 'shared/constants/ActionTypes';
 
 const initialState = {
   vehiclesData: {},
@@ -33,6 +34,14 @@ const VeihcleReducers = (state = initialState, action) => {
           ...state.vehiclesData,
           total: state.vehiclesData.total + 1,
           data: [action.payload, ...state.vehiclesData.data],
+        },
+      };
+    case INCREMENT_TOTAL_VEHICLE:
+      return {
+        ...state,
+        vehiclesData: {
+          ...state.vehiclesData,
+          total: state.vehiclesData.total + 1,
         },
       };
     case UPDATE_VEHICLE:

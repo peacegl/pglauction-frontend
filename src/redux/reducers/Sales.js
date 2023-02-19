@@ -3,6 +3,7 @@ import {
   ADD_NEW_SALE,
   UPDATE_SALE,
   GET_ALL_SALES_LIST,
+  INCREMENT_TOTAL_SALE,
 } from 'shared/constants/ActionTypes';
 
 const initialUsers = {
@@ -31,6 +32,14 @@ const usersReducer = (state = initialUsers, action) => {
           ...state.saleList,
           total: state.saleList.total + 1,
           data: [action.payload, ...state.saleList.data],
+        },
+      };
+    case INCREMENT_TOTAL_SALE:
+      return {
+        ...state,
+        saleList: {
+          ...state.saleList,
+          total: state.saleList.total + 1,
         },
       };
     case UPDATE_SALE:

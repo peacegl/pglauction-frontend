@@ -4,6 +4,7 @@ import {
   onDeleteLocations,
   addRealTimeLocation,
   updateRealTimeLocation,
+  addRealTimeLocationCount,
 } from 'redux/actions';
 import DownloadModal from 'components/CustomModal/downloadModal';
 import FilterModal from 'components/CustomModal/FilterModal';
@@ -157,7 +158,11 @@ export default function LocationList({user}) {
   }, []);
 
   const newLocationRealTime = async (data) => {
-    await dispatch(addRealTimeLocation(data));
+    if (page == 0) {
+      await dispatch(addRealTimeLocation(data));
+    } else {
+      await dispatch(addRealTimeLocationCount(data));
+    }
   };
 
   const updateLocationRealTime = async (data) => {

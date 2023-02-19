@@ -7,6 +7,7 @@ import {
   ADD_NEW_USER,
   UPDATE_USER,
   GET_ALL_USERS_LIST,
+  INCREMENT_TOTAL_USER,
 } from 'shared/constants/ActionTypes';
 
 import {appIntl} from '../../@crema/utility/helper/Utils';
@@ -207,6 +208,15 @@ export const addRealTimeUser = (data) => {
   return async (dispatch) => {
     try {
       dispatch({type: ADD_NEW_USER, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const addRealTimeUserCount = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: INCREMENT_TOTAL_USER, payload: data});
     } catch (error) {
       console.log(error);
     }

@@ -38,7 +38,7 @@ export default function UserList() {
   const options = {
     count: total,
     rowsPerPage: per_page,
-    selectableRows: false,
+    selectableRows: 'none',
     onViewColumnsChange: (changedColumn, action) => {
       onViewColumnsChange(
         changedColumn,
