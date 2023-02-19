@@ -4,6 +4,7 @@ import {
   SET_AUCTION_DATA,
   UPDATE_AUCTION,
   ADD_NEW_AUCTION,
+  INCREMENT_TOTAL_AUCTION,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -49,6 +50,15 @@ const AuctionReducer = (state = initialState, action) => {
       return {
         ...state,
         currectAuction: action.payload,
+      };
+
+    case INCREMENT_TOTAL_AUCTION:
+      return {
+        ...state,
+        auctionsList: {
+          ...state.auctionsList,
+          total: state.auctionsList.total + 1,
+        },
       };
 
     default:

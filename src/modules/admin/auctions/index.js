@@ -1,4 +1,10 @@
-import {onGetAuctionData, onDeleteAuctions} from 'redux/actions';
+import {
+  onGetAuctionData,
+  onDeleteAuctions,
+  addRealTimeAuction,
+  addRealTimeAuctionCount,
+  updateRealTimeAuction,
+} from 'redux/actions';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
@@ -11,6 +17,7 @@ import {
   DELETE_AUCTION,
   EDIT_AUCTION,
 } from 'shared/constants/Permissions';
+import EchoConfig from 'plugins/echo';
 
 export default function AuctionList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -88,6 +95,40 @@ export default function AuctionList({user}) {
   const onEnterSearch = (value) => {
     setPage(0);
     fetchData(value);
+  };
+
+  useEffect(() => {
+    EchoConfig();
+    window.Echo.private(`update.auction`).listen('Updated', (e) => {
+      if (user.uid != e.authUser) {
+        if (e.action === 'created') {
+          newAuctionRealTime(e.data);
+        }
+        if (e.action == 'updated') {
+          updateAuctionRealTime(e.data);
+        }
+        if (e.action == 'deleted') {
+          fetchData();
+        }
+      }
+    });
+    return () => {
+      const echoChannel = window.Echo.private(`update.auction`);
+      echoChannel.stopListening('Updated');
+      Echo.leave(`update.auction`);
+    };
+  }, []);
+
+  const newAuctionRealTime = async (data) => {
+    if (page == 0) {
+      await dispatch(addRealTimeAuction(data));
+    } else {
+      await dispatch(addRealTimeAuctionCount(data));
+    }
+  };
+
+  const updateAuctionRealTime = async (data) => {
+    await dispatch(updateRealTimeAuction(data));
   };
 
   return (

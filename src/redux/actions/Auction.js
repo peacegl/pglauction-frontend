@@ -7,6 +7,7 @@ import {
   UPDATE_AUCTION,
   SHOW_MESSAGE,
   ADD_NEW_AUCTION,
+  INCREMENT_TOTAL_AUCTION,
 } from 'shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
@@ -131,5 +132,34 @@ export const onDeleteAuctions = (data) => {
 export const setAuctionFilters = (filters) => {
   return (dispatch) => {
     dispatch({type: SET_AUCTION_FILTER_DATA, payload: filters});
+  };
+};
+
+export const addRealTimeAuction = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: ADD_NEW_AUCTION, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const addRealTimeAuctionCount = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: INCREMENT_TOTAL_AUCTION, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const updateRealTimeAuction = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: UPDATE_AUCTION, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
