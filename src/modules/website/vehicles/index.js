@@ -6,7 +6,6 @@ import {useState, useEffect} from 'react';
 import VehicleList from './VehicleList';
 import {useSelector} from 'react-redux';
 import {useDispatch} from 'react-redux';
-import WebEcho from 'plugins/echoWeb';
 
 const Vehicles = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -18,18 +17,6 @@ const Vehicles = () => {
     (async function () {
       await dispatch(onCountPopularBrands());
     })();
-  }, []);
-
-  useEffect(() => {
-    WebEcho();
-    window.Echo.channel(`web.vehicle`).listen('Web', (e) => {
-      console.log(e, 'test');
-    });
-    return () => {
-      const echoChannel = window.Echo.channel(`web.vehicle`);
-      echoChannel.stopListening('Web');
-      Echo.leave(`web.vehicle`);
-    };
   }, []);
 
   return (

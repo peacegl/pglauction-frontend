@@ -13,6 +13,8 @@ import {
   onGetWebVehicleData,
   setBrandFilter,
   setVehicleViewType,
+  vehicleCreated,
+  vehicleCreatedCount,
 } from 'redux/actions';
 import {
   alpha,
@@ -23,6 +25,7 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
+import WebEcho from 'plugins/echoWeb';
 
 const VehicleList = () => {
   const dispatch = useDispatch();
@@ -91,6 +94,30 @@ const VehicleList = () => {
   const onPageChange2 = (event, value) => {
     setPage(value - 1);
   };
+
+  useEffect(() => {
+    WebEcho();
+    window.Echo.channel(`web.vehicle`).listen('Web', (e) => {
+      if (e.action == 'created') {
+        vehicleReaTimeCreated(e);
+      }
+    });
+    return () => {
+      const echoChannel = window.Echo.channel(`web.vehicle`);
+      echoChannel.stopListening('Web');
+      Echo.leave(`web.vehicle`);
+    };
+  }, []);
+
+  const vehicleReaTimeCreated = async (e) => {
+    if (page == 0 && e.data.status == 'available') {
+      console.log(e.data);
+      await dispatch(vehicleCreated(e.data));
+    } else {
+      await dispatch(vehicleCreatedCount(e.data));
+    }
+  };
+
   return (
     <>
       <ListHeader

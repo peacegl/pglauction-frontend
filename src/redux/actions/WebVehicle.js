@@ -19,6 +19,8 @@ import {
   SET_BRAND_FILTER_DATA,
   FETCH_VEHICLES_ERROR,
   LOADING_ITEM,
+  ADD_NEW_WEB_VEHICLE,
+  INCREMENT_TOTAL_WEB_VEHICLE,
 } from 'shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
@@ -278,3 +280,32 @@ export const onGetMyPurchaseList = (data) => {
       });
   };
 };
+
+export const vehicleCreated = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: ADD_NEW_WEB_VEHICLE, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const vehicleCreatedCount = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: INCREMENT_TOTAL_WEB_VEHICLE, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+// export const updateRealTimeUser = (data) => {
+//   return async (dispatch) => {
+//     try {
+//       dispatch({type: UPDATE_USER, payload: data});
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+// };

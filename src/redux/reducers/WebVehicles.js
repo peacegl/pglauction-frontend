@@ -15,6 +15,8 @@ import {
   SET_BRAND_FILTER_DATA,
   FETCH_VEHICLES_ERROR,
   LOADING_ITEM,
+  ADD_NEW_WEB_VEHICLE,
+  INCREMENT_TOTAL_WEB_VEHICLE,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -148,6 +150,23 @@ const WebVehicleReducer = (state = initialState, action) => {
       return {
         ...state,
         loadingItem: action.payload,
+      };
+    case ADD_NEW_WEB_VEHICLE:
+      return {
+        ...state,
+        vehiclesData: {
+          ...state.vehiclesData,
+          total: state.vehiclesData.total + 1,
+          data: [action.payload, ...state.vehiclesData.data],
+        },
+      };
+    case INCREMENT_TOTAL_WEB_VEHICLE:
+      return {
+        ...state,
+        vehiclesData: {
+          ...state.vehiclesData,
+          total: state.vehiclesData.total + 1,
+        },
       };
     default:
       return state;
