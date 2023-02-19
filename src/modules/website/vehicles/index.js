@@ -1,14 +1,12 @@
 import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
-import {Box, Card, Container, Button, Drawer} from '@mui/material';
-import FilterListIcon from '@mui/icons-material/FilterList';
-import IntlMessages from '@crema/utility/IntlMessages';
+import {Box, Container, Drawer} from '@mui/material';
 import AuctionsSidebar from 'components/filterSlider';
 import {onCountPopularBrands} from 'redux/actions';
-import Hidden from '@mui/material/Hidden';
 import {useState, useEffect} from 'react';
 import VehicleList from './VehicleList';
 import {useSelector} from 'react-redux';
 import {useDispatch} from 'react-redux';
+import WebEcho from 'plugins/echoWeb';
 
 const Vehicles = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -21,6 +19,19 @@ const Vehicles = () => {
       await dispatch(onCountPopularBrands());
     })();
   }, []);
+
+  useEffect(() => {
+    WebEcho();
+    window.Echo.channel(`web.vehicle`).listen('Web', (e) => {
+      console.log(e, 'test');
+    });
+    return () => {
+      const echoChannel = window.Echo.channel(`web.vehicle`);
+      echoChannel.stopListening('Web');
+      Echo.leave(`web.vehicle`);
+    };
+  }, []);
+
   return (
     <>
       <PopularBrandsList popularBrandsCount={popularBrandsCount} small />
