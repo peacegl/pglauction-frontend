@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getData, onViewColumnsChange} from 'configs';
 import CustomerModal from './CustomerModal';
 import {useEffect, useState} from 'react';
+import SingleCustomerModal from './SingleCustomerModal';
 import PropTypes from 'prop-types';
 import {
   ADD_CUSTOMER,
@@ -26,6 +27,9 @@ export default function CustomerList({user}) {
   const [search, setSearch] = useState('');
   const [exactMatch, setExactMatch] = useState(false);
   const [filterData, setFilterData] = useState({});
+  const [singleCustomer, setSingleCustomer] = useState([]);
+  const [singleCustomerID, setSingleCustomerID] = useState([]);
+  const [showSingleCustomerModal, setShowSingleCustomerModal] = useState(false);
   const [openVerifyModal, setOpenVerifyModal] = useState(false);
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(
@@ -129,13 +133,27 @@ export default function CustomerList({user}) {
   }, []);
   // end of for exporting data
 
+  const getSingleCustomer = (id) => {
+    setSingleCustomerID(id);
+    setSingleCustomer(data.filter((sale) => sale.id === id)[0]);
+    setShowSingleCustomerModal(true);
+  };
+
+  useEffect(() => {
+    setSingleCustomer(data.filter((sale) => sale.id === singleCustomerID)[0]);
+  }, [data]);
+
   return (
     <>
       <CustomDataTable
         title={<IntlMessages id='customer.customerList' />}
         total={total}
         data={data}
-        columns={tableColumns(setRecordId, setOpenVerifyModal)}
+        columns={tableColumns(
+          setRecordId,
+          setOpenVerifyModal,
+          getSingleCustomer,
+        )}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}
@@ -194,6 +212,7 @@ export default function CustomerList({user}) {
           content={filterContent}
         />
       )}
+
       {openModal && (
         <CustomerModal
           open={openModal}
@@ -202,6 +221,7 @@ export default function CustomerList({user}) {
           edit={recordId ? true : false}
         />
       )}
+
       {openVerifyModal && (
         <AccountVerification
           open={openVerifyModal}
@@ -209,9 +229,19 @@ export default function CustomerList({user}) {
           recordId={recordId}
         />
       )}
+
+      {showSingleCustomerModal && (
+        <SingleCustomerModal
+          open={showSingleCustomerModal}
+          toggleOpen={() => setShowSingleCustomerModal((d) => !d)}
+          singleCustomer={singleCustomer}
+          width={500}
+        />
+      )}
     </>
   );
 }
+
 CustomerList.propTypes = {
   user: PropTypes.any,
 };
