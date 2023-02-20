@@ -111,7 +111,6 @@ const VehicleList = () => {
 
   const vehicleReaTimeCreated = async (e) => {
     if (page == 0 && e.data.status == 'available') {
-      console.log(e.data);
       await dispatch(vehicleCreated(e.data));
     } else {
       await dispatch(vehicleCreatedCount(e.data));
