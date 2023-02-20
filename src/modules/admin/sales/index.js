@@ -209,7 +209,7 @@ export default function SaleList({user}) {
           open={showSingleSaleModal}
           toggleOpen={() => setShowSingleSaleModal((d) => !d)}
           singleSale={singleSale}
-          width={1000}
+          width={450}
         />
       )}
     </>

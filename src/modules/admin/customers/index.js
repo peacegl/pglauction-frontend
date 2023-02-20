@@ -235,7 +235,7 @@ export default function CustomerList({user}) {
           open={showSingleCustomerModal}
           toggleOpen={() => setShowSingleCustomerModal((d) => !d)}
           singleCustomer={singleCustomer}
-          width={500}
+          width={450}
         />
       )}
     </>

@@ -207,7 +207,7 @@ export default function UserList({user}) {
           open={showSingleUserModal}
           toggleOpen={() => setShowSingleUserModal((d) => !d)}
           singleUser={singleUser}
-          width={1000}
+          width={450}
         />
       )}
     </>

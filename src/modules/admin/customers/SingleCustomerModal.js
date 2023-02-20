@@ -43,10 +43,10 @@ export default function SingleCustomerModal({
       <Modal open={open}>
         <Card
           sx={{
-            mt: {xs: 10, sm: 20, md: 20, lg: 30},
+            mt: {xs: 5, md: 5, lg: 5, xl: 10},
             mx: 'auto',
-            overflow: {xs: 'auto', md: 'unset'},
-            height: {xs: '90vh', md: 'unset'},
+            overflow: {xs: 'auto', s: 'auto', md: 'auto', lg: 'unset'},
+            height: {xs: '700px', s: '700px', md: '700px', lg: 'unset'},
             width: width
               ? size >= width
                 ? width
@@ -113,9 +113,9 @@ export default function SingleCustomerModal({
             />
           </Box>
 
-          <Box sx={{px: 3, pt: 3, pb: 6}}>
+          <Box sx={{px: 3, py: 4}}>
             <TabContext value={value}>
-              <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+              <Box sx={{borderBottom: 1, borderColor: 'divider', mx: 6}}>
                 <TabList
                   centered
                   onChange={handleChange}

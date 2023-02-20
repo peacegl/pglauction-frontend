@@ -8,9 +8,14 @@ import CloseIcon from '@mui/icons-material/Close';
 import {Stack} from '@mui/material';
 import {Box, List, Typography} from '@mui/material';
 import Item from '../../../components/vehicles/VehicleDetails/Item';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 
 export default function SingleSaleModal({open, toggleOpen, singleSale, width}) {
   const [size, setSize] = useState([0]);
+  const [value, setValue] = React.useState('1');
 
   useLayoutEffect(() => {
     function updateSize() {
@@ -21,6 +26,10 @@ export default function SingleSaleModal({open, toggleOpen, singleSale, width}) {
     return () => window.removeEventListener('resize', updateSize);
   }, []);
 
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <Modal open={open}>
       <Card
@@ -28,7 +37,7 @@ export default function SingleSaleModal({open, toggleOpen, singleSale, width}) {
           mt: {xs: 10, sm: 20, md: 20, lg: 40},
           mx: 'auto',
           overflow: {xs: 'auto', md: 'unset'},
-          height: {xs: '550px', md: 'unset'},
+          height: {xs: '400px', md: 'unset'},
           width: width
             ? size >= width
               ? width
@@ -39,6 +48,9 @@ export default function SingleSaleModal({open, toggleOpen, singleSale, width}) {
           bgcolor: 'background.paper',
           boxShadow: 24,
           position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
         }}
       >
         <Box>
@@ -73,9 +85,19 @@ export default function SingleSaleModal({open, toggleOpen, singleSale, width}) {
           </Box>
         </Box>
 
-        <Box sx={{px: 3, pt: 3, pb: 6}}>
-          <Stack spacing={{xs: 5, md: 8}}>
-            <Stack direction={{xs: 'column', md: 'row'}}>
+        <Box sx={{px: 3, py: 4}}>
+          <TabContext value={value}>
+            <Box sx={{borderBottom: 1, borderColor: 'divider', mx: 6}}>
+              <TabList
+                centered
+                onChange={handleChange}
+                aria-label='lab API tabs example'
+              >
+                <Tab label='Basic Info' value='1' />
+                <Tab label='Show More' value='2' />
+              </TabList>
+            </Box>
+            <TabPanel value='1'>
               <List
                 sx={{px: 3, py: 0, width: '100%', bgcolor: 'background.paper'}}
               >
@@ -104,6 +126,8 @@ export default function SingleSaleModal({open, toggleOpen, singleSale, width}) {
                   value={singleSale.sale_date}
                 />
               </List>
+            </TabPanel>
+            <TabPanel value='2'>
               <List
                 sx={{px: 3, py: 0, width: '100%', bgcolor: 'background.paper'}}
               >
@@ -128,24 +152,21 @@ export default function SingleSaleModal({open, toggleOpen, singleSale, width}) {
                   value={singleSale.updated_at}
                 />
                 {singleSale.description &&
-                  singleSale.description.length < 55 && (
-                    <Item
-                      label={<IntlMessages id='common.description' />}
-                      value={singleSale.description}
-                    />
-                  )}
+                singleSale.description.length < 55 ? (
+                  <Item
+                    label={<IntlMessages id='common.description' />}
+                    value={singleSale.description}
+                  />
+                ) : (
+                  <Item
+                    label={<IntlMessages id='common.description' />}
+                    value={singleSale.description}
+                    valueWidth={'80%'}
+                  />
+                )}
               </List>
-            </Stack>
-          </Stack>
-          {singleSale.description && singleSale.description.length >= 55 && (
-            <Stack sx={{mx: 3, bgcolor: 'background.paper'}}>
-              <Item
-                label={<IntlMessages id='common.description' />}
-                value={singleSale.description}
-                valueWidth={'80%'}
-              />
-            </Stack>
-          )}
+            </TabPanel>
+          </TabContext>
         </Box>
       </Card>
     </Modal>
