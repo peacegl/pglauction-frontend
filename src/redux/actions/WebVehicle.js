@@ -21,6 +21,7 @@ import {
   LOADING_ITEM,
   ADD_NEW_WEB_VEHICLE,
   INCREMENT_TOTAL_WEB_VEHICLE,
+  UPDATE_WEB_VEHICLE,
 } from 'shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
@@ -294,6 +295,16 @@ export const vehicleCreatedCount = (data) => {
   return async (dispatch) => {
     try {
       dispatch({type: INCREMENT_TOTAL_WEB_VEHICLE, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const updateRealTimeWebVehicle = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: UPDATE_WEB_VEHICLE, payload: data});
     } catch (error) {
       console.log(error);
     }

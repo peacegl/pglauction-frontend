@@ -8,11 +8,13 @@ import ListHeader from 'components/design/ListHeader';
 import GridView from './GridView/index';
 import AppsContent from './AppsContent';
 import {useRouter} from 'next/router';
+import WebEcho from 'plugins/echoWeb';
 import ListView from './ListView';
 import {
   onGetWebVehicleData,
   setBrandFilter,
   setVehicleViewType,
+  updateRealTimeWebVehicle,
   vehicleCreated,
   vehicleCreatedCount,
 } from 'redux/actions';
@@ -25,7 +27,6 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
-import WebEcho from 'plugins/echoWeb';
 
 const VehicleList = () => {
   const dispatch = useDispatch();
@@ -100,6 +101,8 @@ const VehicleList = () => {
     window.Echo.channel(`web.vehicle`).listen('Web', (e) => {
       if (e.action == 'created') {
         vehicleReaTimeCreated(e);
+      } else if (e.action == 'updated') {
+        vehicleReaTimeUpdated(e?.data);
       }
     });
     return () => {
@@ -115,6 +118,10 @@ const VehicleList = () => {
     } else {
       await dispatch(vehicleCreatedCount(e.data));
     }
+  };
+
+  const vehicleReaTimeUpdated = async (data) => {
+    await dispatch(updateRealTimeWebVehicle(data));
   };
 
   return (

@@ -17,6 +17,7 @@ import {
   LOADING_ITEM,
   ADD_NEW_WEB_VEHICLE,
   INCREMENT_TOTAL_WEB_VEHICLE,
+  UPDATE_WEB_VEHICLE,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -166,6 +167,16 @@ const WebVehicleReducer = (state = initialState, action) => {
         vehiclesData: {
           ...state.vehiclesData,
           total: state.vehiclesData.total + 1,
+        },
+      };
+    case UPDATE_WEB_VEHICLE:
+      return {
+        ...state,
+        vehiclesData: {
+          ...state.vehiclesData,
+          data: state.vehiclesData.data.map((item) =>
+            item.id == action.payload.id ? action.payload : item,
+          ),
         },
       };
     default:
