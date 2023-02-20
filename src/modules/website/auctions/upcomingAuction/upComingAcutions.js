@@ -4,10 +4,16 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import ListHeader from 'components/design/ListHeader';
 import {useDispatch, useSelector} from 'react-redux';
 import {useAuthUser} from '@crema/utility/AuthHooks';
-import {onGetWebAuctionData} from 'redux/actions';
+import {
+  onGetWebAuctionData,
+  upComingAuctionRealTime,
+  upComingAuctionRealTimeCount,
+} from 'redux/actions';
 import React, {useEffect, useState} from 'react';
 import {alpha, Box} from '@mui/material';
 import AuctionGrid from '../AuctionGrid';
+import WebEcho from 'plugins/echoWeb';
+import moment from 'moment';
 
 const UpComingAuctions = () => {
   const dispatch = useDispatch();
@@ -33,6 +39,45 @@ const UpComingAuctions = () => {
   const onPageChange = (event, value) => {
     setPage(value);
   };
+
+  useEffect(() => {
+    WebEcho();
+    window.Echo.channel(`web.auction_item`).listen('Web', (e) => {
+      let startTime = moment(
+        e.data?.start_date,
+        'YYYY-MM-DD hh:mm:ss A',
+        user?.timezone ? user.timezone : 'UTC',
+      )
+        .tz(user?.timezone ? user.timezone : moment.tz.guess())
+        .format('YYYY-MM-DD hh:mm:ss A');
+
+      const today = moment(new Date()).format('YYYY-MM-DD hh:mm:ss A');
+      console.log(!moment(today).isSame(startTime, 'day'));
+      if (e.action == 'created') {
+        if (
+          !moment(today).isSame(startTime, 'day') &&
+          e.data?.status == 'active'
+        ) {
+          newUpComingAuctionItem(e.data);
+        }
+      }
+    });
+    return () => {
+      const echoChannel = window.Echo.channel(`web.auction_item`);
+      echoChannel.stopListening('Web');
+      Echo.leave(`web.auction_item`);
+      console.log('clean up ...');
+    };
+  }, []);
+
+  const newUpComingAuctionItem = async (data) => {
+    // if (page == 0) {
+    await dispatch(upComingAuctionRealTime(data));
+    // } else {
+    //   await dispatch(upComingAuctionRealTimeCount(data));
+    // }
+  };
+
   return (
     <>
       <ListHeader

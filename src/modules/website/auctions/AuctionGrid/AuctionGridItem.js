@@ -166,6 +166,7 @@ const AuctionGridItem = ({item, user}) => {
               sx={{
                 fontSize: 16,
                 color: (theme) => theme.palette.primary.main,
+                width: '200px',
               }}
               noWrap={true}
             >
