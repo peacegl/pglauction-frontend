@@ -1,19 +1,25 @@
-import {alpha, Box, colors, Container, Typography} from '@mui/material';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import useAddToWatchList from 'customHooks/useAddToWatchList';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import SignInModal from 'modules/auth/Signin/SignInModal';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {useSelector} from 'react-redux';
+import {ArrowBack} from '@mui/icons-material';
 import {LoadingButton} from '@mui/lab';
 import PropTypes from 'prop-types';
 import {useState} from 'react';
+import {
+  alpha,
+  Box,
+  colors,
+  Container,
+  IconButton,
+  Typography,
+} from '@mui/material';
 
-function Header({vehicle, admin}) {
-  // const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
+function ItemHeader({item, onBack, admin}) {
   const [showSignInModal, setShowSignInModl] = useState(false);
   const {addToWatchList, watchlistLoading, addedToWatchList} =
-    useAddToWatchList(vehicle, setShowSignInModl);
+    useAddToWatchList(item, setShowSignInModl);
 
   return (
     <Box
@@ -23,10 +29,11 @@ function Header({vehicle, admin}) {
       position='static'
       zIndex='1'
       sx={{
+        my: 5,
+        py: 2,
         minHeight: '70px',
         backgroundColor: 'white',
         border: '0',
-        py: 1,
         borderBottom: '1px',
         borderStyle: 'solid',
         borderColor: (theme) => alpha(theme.palette.primary.main, 0.2),
@@ -34,35 +41,37 @@ function Header({vehicle, admin}) {
       }}
     >
       <Container maxWidth='xl'>
-        <Box
-          margin='auto'
-          display='flex'
-          justifyContent='space-between'
-          alignItems='cemter'
-        >
-          <Box>
-            <Typography
-              component='h1'
-              fontSize='22px'
-              fontWeight='bold'
-              overflow='hidden'
-              pb={1}
-            >
-              {vehicle.year} {vehicle?.make} {vehicle.model}
-            </Typography>
-            <Box display='flex' columnGap='8px'>
-              <Typography component='div' overflow='hidden'>
-                <Box component='span' display='inline' fontWeight='bold'>
-                  <IntlMessages id='common.lot' />#
-                </Box>
-                {vehicle.lot_number} |
+        <Box display='flex' justifyContent='space-between' alignItems='center'>
+          <Box sx={{display: 'flex', alignItems: 'center'}}>
+            {onBack && (
+              <IconButton color='primary' onClick={onBack} sx={{mr: 1}}>
+                <ArrowBack />
+              </IconButton>
+            )}
+            <Box>
+              <Typography
+                component='h1'
+                fontSize='22px'
+                fontWeight='bold'
+                overflow='hidden'
+                pb={1}
+              >
+                {item?.year} {item?.make} {item?.model}
               </Typography>
-              <Typography component='div' overflow='hidden'>
-                <Box component='span' display='inline' fontWeight='bold'>
-                  <IntlMessages id='common.sale_location' />
-                </Box>{' '}
-                {vehicle.location?.name}
-              </Typography>
+              <Box display='flex' columnGap='8px'>
+                <Typography component='div' overflow='hidden'>
+                  <IntlMessages id='common.lot' />#{' '}
+                  <Box component='span' display='inline' fontWeight='bold'>
+                    {item.lot_number} |
+                  </Box>
+                </Typography>
+                <Typography component='div' overflow='hidden'>
+                  <IntlMessages id='common.sale_location' />{' '}
+                  <Box component='span' display='inline' fontWeight='bold'>
+                    {item.location?.name}
+                  </Box>
+                </Typography>
+              </Box>
             </Box>
           </Box>
           {!admin && (
@@ -79,8 +88,7 @@ function Header({vehicle, admin}) {
                 }
                 variant='outlined'
                 size='small'
-                sx={{mt: 2}}
-                onClick={() => addToWatchList(vehicle.id)}
+                onClick={() => addToWatchList(item.id)}
               >
                 {!addedToWatchList ? (
                   <IntlMessages id='common.watch' />
@@ -103,9 +111,9 @@ function Header({vehicle, admin}) {
   );
 }
 
-export default Header;
-
-Header.propTypes = {
-  vehicle: PropTypes.any,
+export default ItemHeader;
+ItemHeader.propTypes = {
+  item: PropTypes.any,
+  onBack: PropTypes.func,
   admin: PropTypes.bool,
 };

@@ -1,14 +1,14 @@
-import {onGetVehicleView} from 'redux/actions';
+import SaleInfo from 'components/vehicles/VehicleDetails/SaleInfo';
+import LotInfo from 'components/vehicles/VehicleDetails/LotInfo';
 import ImageCarousel from 'components/design/ImageCarousel';
+import ItemHeader from 'components/design/ItemHeader';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import {useDispatch, useSelector} from 'react-redux';
 import Error404 from 'modules/errorPages/Error404';
+import {onGetVehicleView} from 'redux/actions';
 import {Box, Container} from '@mui/material';
 import {useRouter} from 'next/router';
-import SaleInfo from '../../../../components/vehicles/VehicleDetails/SaleInfo';
 import {useEffect} from 'react';
-import LotInfo from '../../../../components/vehicles/VehicleDetails/LotInfo';
-import Header from '../../../../components/vehicles/VehicleDetails/Header';
 
 const VehicleDetail = () => {
   const router = useRouter();
@@ -36,7 +36,11 @@ const VehicleDetail = () => {
     <>
       {vehicle.id ? (
         <>
-          <Header vehicle={vehicle} admin={true} />
+          <ItemHeader
+            item={vehicle}
+            admin={true}
+            onBack={() => router.back()}
+          />
           <Container maxWidth='xl' sx={{mt: 6}}>
             <Box
               sx={{

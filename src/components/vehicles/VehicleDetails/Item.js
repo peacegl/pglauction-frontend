@@ -18,6 +18,7 @@ export default function Item({label, value, valueWidth, ...rest}) {
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
+          alignItems: 'center',
           width: '100%',
         }}
       >

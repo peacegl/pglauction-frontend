@@ -1,14 +1,13 @@
-import React, {useState} from 'react';
-import List from '@mui/material/List';
 import {Card, Chip, Typography, useTheme} from '@mui/material';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {TabContext, TabList} from '@mui/lab';
+import TabPanel from '@mui/lab/TabPanel';
+import List from '@mui/material/List';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import TabPanel from '@mui/lab/TabPanel';
-import {TabContext, TabList} from '@mui/lab';
-import Item from './Item';
-import IntlMessages from '@crema/utility/IntlMessages';
 import PropTypes from 'prop-types';
-import {appIntl} from '../../../@crema/utility/helper/Utils';
+import {useState} from 'react';
+import Item from './Item';
 
 export default function LotInfo({vehicle, admin}) {
   const [value, setValue] = useState('lot_info');

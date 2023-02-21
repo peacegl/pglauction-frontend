@@ -1,20 +1,20 @@
+import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
+import SaleInfo from 'components/vehicles/VehicleDetails/SaleInfo';
+import LotInfo from 'components/vehicles/VehicleDetails/LotInfo';
+import ImageCarousel from 'components/design/ImageCarousel';
+import CustomCarousel from 'components/CustomCarousel';
+import IntlMessages from '@crema/utility/IntlMessages';
+import ItemHeader from 'components/design/ItemHeader';
+import {useAuthUser} from '@crema/utility/AuthHooks';
+import {useDispatch, useSelector} from 'react-redux';
+import {Box, Container} from '@mui/material';
+import {useRouter} from 'next/router';
+import {useEffect} from 'react';
 import {
   onCountPopularBrands,
   onGetWebSimilarVehicle,
   onGetWebVehicleView,
 } from 'redux/actions';
-import ImageCarousel from 'components/design/ImageCarousel';
-import CustomCarousel from 'components/CustomCarousel';
-import IntlMessages from '@crema/utility/IntlMessages';
-import {useAuthUser} from '@crema/utility/AuthHooks';
-import {useDispatch, useSelector} from 'react-redux';
-import {Box, Container} from '@mui/material';
-import {useRouter} from 'next/router';
-import SaleInfo from '../../../../components/vehicles/VehicleDetails/SaleInfo';
-import {useEffect} from 'react';
-import LotInfo from '../../../../components/vehicles/VehicleDetails/LotInfo';
-import Header from '../../../../components/vehicles/VehicleDetails/Header';
-import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
 
 const VehicleDetail = () => {
   const router = useRouter();
@@ -50,8 +50,12 @@ const VehicleDetail = () => {
     <>
       {vehicle.id && (
         <>
-          <Header vehicle={vehicle} admin={false} />
           <Container maxWidth='xl' sx={{mt: 6}}>
+            <ItemHeader
+              item={vehicle}
+              admin={false}
+              onBack={() => router.push('/')}
+            />
             <Box
               sx={{
                 display: 'flex',
