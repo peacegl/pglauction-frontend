@@ -14,10 +14,8 @@ const VehicleDetail = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const {id} = router.query;
-
   const loading = useSelector(({common}) => common.loading);
   const {vehicle = {}} = useSelector(({vehicles}) => vehicles);
-
   const {user} = useAuthUser();
 
   useEffect(() => {
@@ -35,7 +33,7 @@ const VehicleDetail = () => {
   return (
     <>
       {vehicle.id ? (
-        <Container maxWidth='xl' sx={{mt: 6}}>
+        <>
           <ItemHeader
             item={vehicle}
             admin={true}
@@ -56,6 +54,7 @@ const VehicleDetail = () => {
               <ImageCarousel
                 images={vehicle.images}
                 isSold={vehicle.status == 'sold'}
+                hideMagnifier
               />
             </Box>
             <Box
@@ -76,7 +75,7 @@ const VehicleDetail = () => {
               </Box>
             </Box>
           </Box>
-        </Container>
+        </>
       ) : (
         !loading && <Error404 url='/' />
       )}
