@@ -8,6 +8,7 @@ import {
   onGetWebAuctionData,
   upComingAuctionRealTime,
   upComingAuctionRealTimeCount,
+  updateUpComingAuctionItemReaTime,
 } from 'redux/actions';
 import React, {useEffect, useState} from 'react';
 import {alpha, Box} from '@mui/material';
@@ -52,13 +53,21 @@ const UpComingAuctions = () => {
         .format('YYYY-MM-DD hh:mm:ss A');
 
       const today = moment(new Date()).format('YYYY-MM-DD hh:mm:ss A');
-      console.log(!moment(today).isSame(startTime, 'day'));
+
       if (e.action == 'created') {
         if (
           !moment(today).isSame(startTime, 'day') &&
           e.data?.status == 'active'
         ) {
           newUpComingAuctionItem(e.data);
+        }
+      }
+      if (e.action == 'updated') {
+        if (
+          moment(startTime).isAfter(today, 'day') &&
+          e.data?.status == 'active'
+        ) {
+          updateUpComingAuctionItem(e.data);
         }
       }
     });
@@ -76,6 +85,10 @@ const UpComingAuctions = () => {
     // } else {
     //   await dispatch(upComingAuctionRealTimeCount(data));
     // }
+  };
+
+  const updateUpComingAuctionItem = async (data) => {
+    await dispatch(updateUpComingAuctionItemReaTime(data));
   };
 
   return (

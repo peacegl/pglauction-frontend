@@ -8,6 +8,8 @@ import {
   INCREMENT_TOTAL_NEW_AUCTION_ITEM,
   ADD_UPCOMING_AUCTION,
   INCREMENT_TOTAL_UPCOMING_AUCTION_ITEM,
+  UPDATE_UPCOMING_AUCTION,
+  UPDATE_TODAY_AUCTION,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -79,6 +81,27 @@ const AuctionReducer = (state = initialState, action) => {
         auctionsUpComingList: {
           ...state.auctionsUpComingList,
           total: state.auctionsUpComingList.total + 1,
+        },
+      };
+
+    case UPDATE_TODAY_AUCTION:
+      return {
+        ...state,
+        auctionsList: {
+          ...state.auctionsList,
+          data: state.auctionsList.data.map((item) =>
+            item.id == action.payload.id ? action.payload : item,
+          ),
+        },
+      };
+    case UPDATE_UPCOMING_AUCTION:
+      return {
+        ...state,
+        auctionsUpComingList: {
+          ...state.auctionsUpComingList,
+          data: state.auctionsUpComingList.data.map((item) =>
+            item.id == action.payload.id ? action.payload : item,
+          ),
         },
       };
     default:
