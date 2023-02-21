@@ -262,7 +262,7 @@
   "common.likes": "Likes",
   "common.comments": "Comments",
   "common.download": "Download",
-  "common.getAReport" : "Get a report",
+  "common.getAReport": "Get a report",
   "common.next": "Next",
   "common.edit": "Edit",
   "common.tag": "Tag",
@@ -861,7 +861,7 @@
   "location.locationInfo": "Location Info",
   "location.locationDownload": "Location Download",
   "location.locationList": "Location List",
-  
+
   "confirm.location.delete": "Are you sure, you want to delete the selected Location(s)?",
   "message.location.deleted": "Location(s) deleted successfully!",
   "message.location.created": "Location created successfully!",
@@ -874,8 +874,10 @@
   "validation.genderRequired": "Gender is required",
   "validation.usernameRequired": "Username is required",
   "validation.min3Letter": "Minimum 3 characters is required",
+  "validation.min5Letter": "Minimum 5 characters is required",
   "validation.min8Letter": "Minimum 8 characters is required",
   "validation.max64Letter": "Maximum 64 characters is allowed",
+  "validation.max32Letter": "Maximum 32 characters is allowed",
   "validation.notUniqueEmail": "This email is taken",
   "validation.notUniqueUsername": "This username is taken",
   "validation.notUniquePhone": "This phone number is taken",
