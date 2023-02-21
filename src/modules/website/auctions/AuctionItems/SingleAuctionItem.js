@@ -7,6 +7,7 @@ import {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
 import BidInfo from './BidInfo';
+import WebEcho from 'plugins/echoWeb';
 
 const SingleAuctionItem = (props) => {
   const router = useRouter();
@@ -18,11 +19,32 @@ const SingleAuctionItem = (props) => {
     setVehicle(props.vehicle);
   }, []);
 
+  useEffect(() => {
+    WebEcho();
+
+    window.Echo.channel(`web.vehicles.${props.vehicle.vehicle.id}`).listen(
+      'Web',
+      (e) => {
+        console.log(e);
+        if (e.action == 'updated') {
+          setVehicle(e.data);
+        }
+      },
+    );
+    return () => {
+      const echoChannel = window.Echo.channel(
+        `web.vehicles.${props.vehicle.vehicle.id}`,
+      );
+      echoChannel.stopListening('Web');
+      Echo.leave(`web.vehicles.${props.vehicle.vehicle.id}`);
+    };
+  }, []);
+
   return (
     vehicle.id && (
       <Container maxWidth='xl'>
         <ItemHeader
-          item={vehicle.vehicle}
+          item={vehicle.vehicle ?? vehicle}
           onBack={() => {
             if (back) {
               router.back();
@@ -43,8 +65,12 @@ const SingleAuctionItem = (props) => {
         >
           <Box sx={{mr: 2, flex: 1.5}}>
             <ImageCarousel
-              images={vehicle.vehicle.images}
-              isSold={vehicle.vehicle.status == 'sold'}
+              images={vehicle?.vehicle?.images ?? vehicle.images}
+              isSold={
+                vehicle?.vehicle?.status
+                  ? vehicle?.vehicle?.status == 'sold'
+                  : vehicle?.status == 'sold'
+              }
             />
           </Box>
           <Box
@@ -58,11 +84,11 @@ const SingleAuctionItem = (props) => {
             }}
           >
             <Box sx={{flex: 1.5}}>
-              <LotInfo vehicle={vehicle.vehicle} />
+              <LotInfo vehicle={vehicle?.vehicle ?? vehicle} />
             </Box>
             <Box sx={{flex: 1}}>
               <Box sx={{mb: 2}}>
-                <SaleInfo vehicle={vehicle.vehicle} showPrice />
+                <SaleInfo vehicle={vehicle?.vehicle ?? vehicle} showPrice />
               </Box>
               <BidInfo vehicle={vehicle} id={id} setVehicle={setVehicle} />
             </Box>
