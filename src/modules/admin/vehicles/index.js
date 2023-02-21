@@ -150,7 +150,7 @@ export default function VehicleList({user}) {
         title={<IntlMessages id='vehicle.vehicleList' />}
         total={total}
         data={data}
-        columns={tableColumns()}
+        columns={tableColumns(router)}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}
@@ -171,6 +171,8 @@ export default function VehicleList({user}) {
           user?.permissions?.includes(EDIT_VEHICLE) ||
           user?.permissions?.includes(DELETE_VEHICLE) ||
           user?.permissions?.includes(ADD_SALE)
+            ? 'multiple'
+            : 'none'
         }
         onDownloadClick={() => {
           setOpenDownload(true);

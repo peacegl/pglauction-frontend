@@ -89,6 +89,6 @@ RoleStepOne.propTypes = {
   values: PropTypes.object,
   setfieldvalue: PropTypes.func,
   permissionsLoading: PropTypes.bool,
-  permissions: PropTypes.object.isRequired,
+  permissions: PropTypes.any.isRequired,
   totalPermissions: PropTypes.number,
 };

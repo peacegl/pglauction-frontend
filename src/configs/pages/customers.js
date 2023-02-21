@@ -1,15 +1,17 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
-import {Avatar, Chip, Typography} from '@mui/material';
+import {Avatar, Typography} from '@mui/material';
 import * as yup from 'yup';
 import {CommonConfigs} from 'configs';
 const phoneRegExp = CommonConfigs().phoneRegExp;
 const {messages = []} = appIntl() ? appIntl() : {};
-import {GoUnverified} from 'react-icons/go';
-import {MdVerified} from 'react-icons/md';
-import {BsPatchExclamationFill} from 'react-icons/bs';
+import CustomerStatus from '../../modules/admin/customers/CustomerStatus';
 
-export const tableColumns = function (setRecordId, setOpenVerifyModal) {
+export const tableColumns = function (
+  setRecordId,
+  setOpenVerifyModal,
+  getSingleCustomer,
+) {
   return [
     {
       name: 'id',
@@ -26,13 +28,38 @@ export const tableColumns = function (setRecordId, setOpenVerifyModal) {
         download: false,
         sort: false,
         customBodyRender: (value, tableMeta, updateValue) => (
-          <Avatar alt={'Profile picture'} src={value} />
+          <Avatar
+            alt={'Profile picture'}
+            src={value}
+            onClick={() => getSingleCustomer(tableMeta.rowData[0])}
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              cursor: 'pointer',
+            }}
+          />
         ),
       },
     },
     {
       name: 'str_code',
       label: 'Code',
+      options: {
+        download: false,
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              fontWeight: 'bold',
+              cursor: 'pointer',
+            }}
+            onClick={() => getSingleCustomer(tableMeta.rowData[0])}
+            noWrap={true}
+          >
+            {value}
+          </Typography>
+        ),
+      },
     },
     {
       name: 'username',
@@ -82,33 +109,11 @@ export const tableColumns = function (setRecordId, setOpenVerifyModal) {
       options: {
         filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
-          <Chip
-            label={value}
-            onClick={(e) => {
-              e.preventDefault();
-              if (value == 'pending verification') {
-                setRecordId(tableMeta.tableData[tableMeta.rowIndex][0]);
-                setOpenVerifyModal(true);
-              }
-            }}
-            color={
-              value == 'verified'
-                ? 'success'
-                : value == 'pending verification'
-                ? 'primary'
-                : 'default'
-            }
-            variant='outlined'
-            size='small'
-            icon={
-              value == 'verified' ? (
-                <MdVerified style={{fontSize: '14px'}} />
-              ) : value == 'pending verification' ? (
-                <BsPatchExclamationFill style={{fontSize: '14px'}} />
-              ) : (
-                <GoUnverified style={{fontSize: '14px'}} />
-              )
-            }
+          <CustomerStatus
+            value={value}
+            id={tableMeta.tableData[tableMeta.rowIndex][0]}
+            setRecordId={setRecordId}
+            setOpenVerifyModal={setOpenVerifyModal}
           />
         ),
       },
@@ -244,7 +249,7 @@ export const filterContent = [
   },
 ];
 
-export default function conifgs(
+export default function configs(
   invalidPhone,
   invalidWhatsapp,
   misMatch,

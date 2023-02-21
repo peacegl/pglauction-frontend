@@ -1,61 +1,47 @@
-import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
 import SaleInfo from 'components/vehicles/VehicleDetails/SaleInfo';
 import LotInfo from 'components/vehicles/VehicleDetails/LotInfo';
 import ImageCarousel from 'components/design/ImageCarousel';
-import CustomCarousel from 'components/CustomCarousel';
-import IntlMessages from '@crema/utility/IntlMessages';
 import ItemHeader from 'components/design/ItemHeader';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import {useDispatch, useSelector} from 'react-redux';
+import Error404 from 'modules/errorPages/Error404';
+import {onGetVehicleView} from 'redux/actions';
 import {Box, Container} from '@mui/material';
 import {useRouter} from 'next/router';
 import {useEffect} from 'react';
-import {
-  onCountPopularBrands,
-  onGetWebSimilarVehicle,
-  onGetWebVehicleView,
-} from 'redux/actions';
 
 const VehicleDetail = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const {id} = router.query;
-  const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
-  const {similarVehicles = []} = useSelector(({webVehicles}) => webVehicles);
-  const {user} = useAuthUser();
-  const popularBrandsCount = useSelector(
-    ({webVehicles}) => webVehicles.popularBrandsCount,
-  );
-  useEffect(() => {
-    if (vehicle?.id) {
-      (async function () {
-        await dispatch(onCountPopularBrands());
-      })();
-    }
-  }, [vehicle?.id]);
 
-  useEffect(() => {
-    if (user?.type) {
-      dispatch(onGetWebVehicleView(id));
-    }
-  }, [id, user?.type]);
+  const loading = useSelector(({common}) => common.loading);
+  const {vehicle = {}} = useSelector(({vehicles}) => vehicles);
+
+  const {user} = useAuthUser();
 
   useEffect(() => {
     if (id) {
-      dispatch(onGetWebSimilarVehicle(id));
+      dispatch(onGetVehicleView(id));
     }
   }, [id]);
 
+  useEffect(() => {
+    if (id) {
+      dispatch(onGetVehicleView(id));
+    }
+  }, [user?.type]);
+
   return (
     <>
-      {vehicle.id && (
+      {vehicle.id ? (
         <>
+          <ItemHeader
+            item={vehicle}
+            admin={true}
+            onBack={() => router.back()}
+          />
           <Container maxWidth='xl' sx={{mt: 6}}>
-            <ItemHeader
-              item={vehicle}
-              admin={false}
-              onBack={() => router.push('/')}
-            />
             <Box
               sx={{
                 display: 'flex',
@@ -84,24 +70,17 @@ const VehicleDetail = () => {
                 }}
               >
                 <Box sx={{flex: 1.5}}>
-                  <LotInfo vehicle={vehicle} admin={false} />
+                  <LotInfo vehicle={vehicle} admin={true} />
                 </Box>
                 <Box sx={{flex: 1}}>
-                  <SaleInfo vehicle={vehicle} admin={false} />
+                  <SaleInfo vehicle={vehicle} admin={true} />
                 </Box>
               </Box>
             </Box>
-            <Box sx={{mt: 12}}>
-              {similarVehicles.length > 0 && (
-                <CustomCarousel
-                  title={<IntlMessages id='website.vehicle.similarVehicles' />}
-                  items={similarVehicles}
-                />
-              )}
-            </Box>
-            <PopularBrandsList popularBrandsCount={popularBrandsCount} />
           </Container>
         </>
+      ) : (
+        !loading && <Error404 url='/' />
       )}
     </>
   );

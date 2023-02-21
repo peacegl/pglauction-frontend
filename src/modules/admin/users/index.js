@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getData, onViewColumnsChange} from 'configs';
 import {useEffect, useState} from 'react';
 import UserModal from './UserModal';
+import SingleUserModal from './SingleUserModal';
 import PropTypes from 'prop-types';
 
 export default function UserList({user}) {
@@ -21,6 +22,8 @@ export default function UserList({user}) {
   const [search, setSearch] = useState('');
   const [exactMatch, setExactMatch] = useState(false);
   const [filterData, setFilterData] = useState({});
+  const [singleUser, setSingleUser] = useState([]);
+  const [showSingleUserModal, setShowSingleUserModal] = useState(false);
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(({users}) => users.userList);
   const {loading} = useSelector(({common}) => common);
@@ -122,13 +125,18 @@ export default function UserList({user}) {
   }, []);
   // end of for exporting data
 
+  const getSingleUser = (id) => {
+    setSingleUser(data.filter((sale) => sale.id === id)[0]);
+    setShowSingleUserModal(true);
+  };
+
   return (
     <>
       <CustomDataTable
         title={<IntlMessages id='user.userList' />}
         total={total}
         data={data}
-        columns={tableColumns()}
+        columns={tableColumns(getSingleUser)}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}
@@ -145,6 +153,8 @@ export default function UserList({user}) {
         selectableRows={
           user?.permissions?.includes(EDIT_USER) ||
           user?.permissions?.includes(DELETE_USER)
+            ? 'multiple'
+            : 'none'
         }
         onDownloadClick={() => {
           setOpenDownload(true);
@@ -190,6 +200,14 @@ export default function UserList({user}) {
           toggleOpen={() => setOpenModal((d) => !d)}
           recordId={recordId}
           edit={recordId ? true : false}
+        />
+      )}
+      {showSingleUserModal && (
+        <SingleUserModal
+          open={showSingleUserModal}
+          toggleOpen={() => setShowSingleUserModal((d) => !d)}
+          singleUser={singleUser}
+          width={450}
         />
       )}
     </>

@@ -5,16 +5,18 @@ import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import {getData, onViewColumnsChange} from 'configs';
-import RolesConfigs from 'configs/pages/roles';
+import {tableColumns} from 'configs/pages/roles';
 import {useEffect, useState} from 'react';
-const columns = RolesConfigs().columns;
 import RoleModal from './RoleModal';
+import SingleRoleModal from './SingleRoleModal';
 import PropTypes from 'prop-types';
 
 export default function RoleList({user}) {
   const [openModal, setOpenModal] = useState(false);
   const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
+  const [singleRole, setSingleRole] = useState([]);
+  const [showSingleRoleModal, setShowSingleRoleModal] = useState(false);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
   const [search, setSearch] = useState('');
@@ -48,7 +50,7 @@ export default function RoleList({user}) {
         action,
         setDownloadColumns,
         downloadColumns,
-        columns,
+        tableColumns(),
       );
     },
     onChangeRowsPerPage: (numberOfRows) => {
@@ -113,9 +115,14 @@ export default function RoleList({user}) {
     );
   };
   useEffect(() => {
-    setDownloadColumns(columns);
+    setDownloadColumns(tableColumns());
   }, []);
   // end of for exporting data
+
+  const getSingleRole = (id) => {
+    setSingleRole(data.filter((sale) => sale.id === id)[0]);
+    setShowSingleRoleModal(true);
+  };
 
   return (
     <>
@@ -123,7 +130,7 @@ export default function RoleList({user}) {
         title={<IntlMessages id='role.roleList' />}
         total={total}
         data={data}
-        columns={columns}
+        columns={tableColumns(getSingleRole)}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}
@@ -138,6 +145,8 @@ export default function RoleList({user}) {
         selectableRows={
           user?.permissions?.includes(EDIT_ROLE) ||
           user?.permissions?.includes(DELETE_ROLE)
+            ? 'multiple'
+            : 'none'
         }
         onDownloadClick={() => {
           setOpenDownload(true);
@@ -172,6 +181,15 @@ export default function RoleList({user}) {
           toggleOpen={() => setOpenModal((d) => !d)}
           recordId={recordId}
           edit={recordId ? true : false}
+        />
+      )}
+
+      {showSingleRoleModal && (
+        <SingleRoleModal
+          open={showSingleRoleModal}
+          toggleOpen={() => setShowSingleRoleModal((d) => !d)}
+          singleRole={singleRole}
+          width={500}
         />
       )}
     </>

@@ -1,7 +1,7 @@
 import {Box, colors, ListItem, Typography} from '@mui/material';
 import {PropTypes} from 'prop-types';
 
-export default function Item({label, value, ...rest}) {
+export default function Item({label, value, valueWidth, ...rest}) {
   return (
     <ListItem
       key={value}
@@ -18,6 +18,7 @@ export default function Item({label, value, ...rest}) {
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
+          alignItems: 'center',
           width: '100%',
         }}
       >
@@ -30,6 +31,7 @@ export default function Item({label, value, ...rest}) {
           overflow='hidden'
           fontWeight='bold'
           align='right'
+          sx={{width: valueWidth ? valueWidth : 'unset'}}
         >
           {value}
         </Typography>
@@ -45,4 +47,5 @@ Item.propTypes = {
     PropTypes.string,
     PropTypes.object,
   ]),
+  valueWidth: PropTypes.string,
 };
