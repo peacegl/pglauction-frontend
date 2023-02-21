@@ -28,14 +28,18 @@ const UpComingAuctions = () => {
   const loading = useSelector(({common}) => common.loading);
 
   useEffect(() => {
-    dispatch(
+    fetchData();
+  }, [page, perPage, user?.type]);
+
+  const fetchData = async () => {
+    await dispatch(
       onGetWebAuctionData({
         per_page: perPage,
         page: page + 1,
         dayData: 'up_coming',
       }),
     );
-  }, [page, perPage, user?.type]);
+  };
 
   const onPageChange = (event, value) => {
     setPage(value);
@@ -69,6 +73,9 @@ const UpComingAuctions = () => {
         ) {
           updateUpComingAuctionItem(e.data);
         }
+      }
+      if (e.action == 'deleted') {
+        fetchData();
       }
     });
     return () => {

@@ -27,16 +27,20 @@ const TodayAuctions = () => {
   );
   const loading = useSelector(({common}) => common.loading);
   useEffect(() => {
-    dispatch(
+    fetchData();
+  }, [dispatch, page, perPage, user?.type]);
+  const onPageChange = (event, value) => {
+    setPage(value);
+  };
+
+  const fetchData = async () => {
+    await dispatch(
       onGetWebAuctionData({
         per_page: perPage,
         page: page + 1,
         dayData: 'today',
       }),
     );
-  }, [dispatch, page, perPage, user?.type]);
-  const onPageChange = (event, value) => {
-    setPage(value);
   };
 
   useEffect(() => {
@@ -63,9 +67,11 @@ const TodayAuctions = () => {
           moment(today).isSameOrBefore(startTime, 'day') &&
           e.data?.status == 'active'
         ) {
-          console.log("';l;;l;'l';l");
           updateAuctionItem(e.data);
         }
+      }
+      if (e.action == 'deleted') {
+        fetchData();
       }
     });
     return () => {
