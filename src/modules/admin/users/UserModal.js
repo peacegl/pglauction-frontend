@@ -90,7 +90,7 @@ export default function UserModal({
       phone: values.phone,
       id: recordId ? recordId : null,
     };
-    if (values.whatsapp && values.phone) {
+    if (values.whatsapp || values.phone) {
       return availableChecking(
         'user/valid_credential',
         params,

@@ -49,59 +49,57 @@ const VehicleDetail = () => {
   return (
     <>
       {vehicle.id && (
-        <>
-          <Container maxWidth='xl' sx={{mt: 6}}>
-            <ItemHeader
-              item={vehicle}
-              admin={false}
-              onBack={() => router.push('/')}
-            />
+        <Container maxWidth='xl' sx={{mt: 6}}>
+          <ItemHeader
+            item={vehicle}
+            admin={false}
+            onBack={() => router.push('/')}
+          />
+          <Box
+            sx={{
+              display: 'flex',
+              alignContent: 'space-between',
+              borderRadius: 2,
+              columnGap: '10px',
+              rowGap: '20px',
+              backgroundColor: 'transparent',
+              flexDirection: {xs: 'column', md: 'row'},
+            }}
+          >
+            <Box sx={{mr: 2, flex: 1.5}}>
+              <ImageCarousel
+                images={vehicle.images}
+                isSold={vehicle.status == 'sold'}
+              />
+            </Box>
             <Box
               sx={{
                 display: 'flex',
+                flex: 2,
                 alignContent: 'space-between',
-                borderRadius: 2,
                 columnGap: '10px',
                 rowGap: '20px',
-                backgroundColor: 'transparent',
-                flexDirection: {xs: 'column', md: 'row'},
+                flexDirection: {xs: 'column', sm: 'row'},
               }}
             >
-              <Box sx={{mr: 2, flex: 1.5}}>
-                <ImageCarousel
-                  images={vehicle.images}
-                  isSold={vehicle.status == 'sold'}
-                />
+              <Box sx={{flex: 1.5}}>
+                <LotInfo vehicle={vehicle} admin={false} />
               </Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flex: 2,
-                  alignContent: 'space-between',
-                  columnGap: '10px',
-                  rowGap: '20px',
-                  flexDirection: {xs: 'column', sm: 'row'},
-                }}
-              >
-                <Box sx={{flex: 1.5}}>
-                  <LotInfo vehicle={vehicle} admin={false} />
-                </Box>
-                <Box sx={{flex: 1}}>
-                  <SaleInfo vehicle={vehicle} admin={false} />
-                </Box>
+              <Box sx={{flex: 1}}>
+                <SaleInfo vehicle={vehicle} admin={false} />
               </Box>
             </Box>
-            <Box sx={{mt: 12}}>
-              {similarVehicles.length > 0 && (
-                <CustomCarousel
-                  title={<IntlMessages id='website.vehicle.similarVehicles' />}
-                  items={similarVehicles}
-                />
-              )}
-            </Box>
-            <PopularBrandsList popularBrandsCount={popularBrandsCount} />
-          </Container>
-        </>
+          </Box>
+          <Box sx={{mt: 12}}>
+            {similarVehicles.length > 0 && (
+              <CustomCarousel
+                title={<IntlMessages id='website.vehicle.similarVehicles' />}
+                items={similarVehicles}
+              />
+            )}
+          </Box>
+          <PopularBrandsList popularBrandsCount={popularBrandsCount} />
+        </Container>
       )}
     </>
   );
