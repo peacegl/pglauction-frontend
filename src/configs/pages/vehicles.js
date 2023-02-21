@@ -341,6 +341,16 @@ export default function configs(invalidYoutube) {
           .required(<IntlMessages id='validation.modelRequired' />),
         vin: yup
           .string()
+          .test(
+            'len',
+            <IntlMessages id='validation.min5Letter' />,
+            (val) => val?.length > 5,
+          )
+          .test(
+            'len',
+            <IntlMessages id='validation.max32Letter' />,
+            (val) => val?.length < 32,
+          )
           .required(<IntlMessages id='validation.vinRequired' />),
         lot_number: yup
           .number()
