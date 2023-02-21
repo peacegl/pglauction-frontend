@@ -50,7 +50,11 @@ const VehicleDetail = () => {
     <>
       {vehicle.id && (
         <Container maxWidth='xl'>
-          <ItemHeader item={vehicle} onBack={() => router.push('/')} />
+          <ItemHeader
+            item={vehicle}
+            admin={false}
+            onBack={() => router.push('/')}
+          />
           <Box
             sx={{
               display: 'flex',
