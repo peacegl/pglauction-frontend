@@ -1,9 +1,9 @@
+import SaleInfo from 'components/vehicles/VehicleDetails/SaleInfo';
+import LotInfo from 'components/vehicles/VehicleDetails/LotInfo';
 import ImageCarousel from 'components/design/ImageCarousel';
 import ItemHeader from 'components/design/ItemHeader';
 import {Box, Container} from '@mui/material';
-import SaleInfo from 'components/SaleInfo';
 import {useState, useEffect} from 'react';
-import LotInfo from 'components/LotInfo';
 import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
 import BidInfo from './BidInfo';

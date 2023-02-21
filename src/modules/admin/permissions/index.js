@@ -1,13 +1,17 @@
 import DownloadModal from 'components/CustomModal/downloadModal';
-import PermissionsConfigs from 'configs/pages/permissions';
+import {tableColumns} from 'configs/pages/permissions';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {getData, onViewColumnsChange} from 'configs';
 import {useDispatch, useSelector} from 'react-redux';
 import {onGetPermissionList} from 'redux/actions';
 import {useEffect, useState} from 'react';
+import SinglePermissionModal from './SinglePermissionModal';
 
 export default function UserList() {
+  const [singlePermission, setSinglePermission] = useState([]);
+  const [showSinglePermissionModal, setShowSinglePermissionModal] =
+    useState(false);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
   const [search, setSearch] = useState('');
@@ -17,7 +21,6 @@ export default function UserList() {
   );
   const filterData = useSelector(({permissions}) => permissions.filterData);
   const {loading} = useSelector(({common}) => common);
-  const columns = PermissionsConfigs().columns;
   const dispatch = useDispatch();
   useEffect(() => {
     fetchData(search);
@@ -45,7 +48,7 @@ export default function UserList() {
         action,
         setDownloadColumns,
         downloadColumns,
-        columns,
+        tableColumns(),
       );
     },
     onChangeRowsPerPage: (numberOfRows) => {
@@ -85,9 +88,14 @@ export default function UserList() {
     );
   };
   useEffect(() => {
-    setDownloadColumns(columns);
+    setDownloadColumns(tableColumns());
   }, []);
   // end of for exporting data
+
+  const getSinglePermission = (id) => {
+    setSinglePermission(data.filter((sale) => sale.id === id)[0]);
+    setShowSinglePermissionModal(true);
+  };
 
   return (
     <>
@@ -95,7 +103,7 @@ export default function UserList() {
         title={<IntlMessages id='permission.permissionList' />}
         total={total}
         data={data}
-        columns={columns}
+        columns={tableColumns(getSinglePermission)}
         options={options}
         isLoading={loading}
         onEnterSearch={onEnterSearch}
@@ -127,6 +135,15 @@ export default function UserList() {
         />
       )}
       {/*end of for exporting data */}
+
+      {showSinglePermissionModal && (
+        <SinglePermissionModal
+          open={showSinglePermissionModal}
+          toggleOpen={() => setShowSinglePermissionModal((d) => !d)}
+          singlePermission={singlePermission}
+          width={500}
+        />
+      )}
     </>
   );
 }

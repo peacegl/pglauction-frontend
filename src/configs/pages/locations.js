@@ -3,11 +3,34 @@ import {Typography} from '@mui/material';
 import * as yup from 'yup';
 const {messages = []} = appIntl() ? appIntl() : {};
 
-export const tableColumns = function () {
+export const tableColumns = function (getSingleLocation) {
   return [
+    {
+      name: 'id',
+      label: messages['common.id'],
+      options: {
+        display: false,
+        viewColumns: false,
+      },
+    },
     {
       name: 'str_code',
       label: 'Code',
+      options: {
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography
+            noWrap={true}
+            onClick={() => getSingleLocation(tableMeta.rowData[0])}
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              fontWeight: 'bold',
+              cursor: 'pointer',
+            }}
+          >
+            {value}
+          </Typography>
+        ),
+      },
     },
     {
       name: 'name',

@@ -9,6 +9,7 @@ import {
   SHOW_MESSAGE,
   GET_ALL_VEHICLE_LIST,
   INCREMENT_TOTAL_VEHICLE,
+  GET_VEHICLE_VIEW,
 } from 'shared/constants/ActionTypes';
 import {appIntl} from '@crema/utility/helper/Utils';
 import jwtAxios from '@crema/services/auth/jwt-auth';
@@ -33,6 +34,35 @@ export const onGetVehicleData = (filterData) => {
     } catch (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
     }
+  };
+};
+
+export const onGetVehicleView = (id) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    jwtAxios
+      .get(`/vehicles/${id}`)
+      .then((data) => {
+        if (data.status === 200) {
+          dispatch({type: FETCH_SUCCESS});
+          data.data.data.images.forEach((image, index, arr) => {
+            if (image.type == 'main_image') {
+              arr.unshift(image);
+              arr.splice(index + 1, 1);
+              return;
+            }
+          });
+          dispatch({type: GET_VEHICLE_VIEW, payload: data.data.data});
+        } else {
+          dispatch({
+            type: FETCH_ERROR,
+            payload: 'Something went wrong, Please try again!',
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      });
   };
 };
 

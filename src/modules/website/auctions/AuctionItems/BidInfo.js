@@ -1,4 +1,5 @@
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
+import Item from 'components/vehicles/VehicleDetails/Item';
 import SignInModal from 'modules/auth/Signin/SignInModal';
 import {FETCH_ERROR} from 'shared/constants/ActionTypes';
 import IntlMessages from '@crema/utility/IntlMessages';
@@ -10,7 +11,6 @@ import {useDispatch} from 'react-redux';
 import {LoadingButton} from '@mui/lab';
 import WebEcho from 'plugins/echoWeb';
 import {Form, Formik} from 'formik';
-import Item from 'components/Item';
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
 import * as yup from 'yup';

@@ -1,4 +1,6 @@
 import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
+import SaleInfo from 'components/vehicles/VehicleDetails/SaleInfo';
+import LotInfo from 'components/vehicles/VehicleDetails/LotInfo';
 import ImageCarousel from 'components/design/ImageCarousel';
 import CustomCarousel from 'components/CustomCarousel';
 import IntlMessages from '@crema/utility/IntlMessages';
@@ -6,8 +8,6 @@ import ItemHeader from 'components/design/ItemHeader';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import {useDispatch, useSelector} from 'react-redux';
 import {Box, Container} from '@mui/material';
-import SaleInfo from 'components/SaleInfo';
-import LotInfo from 'components/LotInfo';
 import {useRouter} from 'next/router';
 import {useEffect} from 'react';
 import {
@@ -19,10 +19,10 @@ import {
 const VehicleDetail = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const {user} = useAuthUser();
   const {id} = router.query;
   const {vehicle = {}} = useSelector(({webVehicles}) => webVehicles);
   const {similarVehicles = []} = useSelector(({webVehicles}) => webVehicles);
+  const {user} = useAuthUser();
   const popularBrandsCount = useSelector(
     ({webVehicles}) => webVehicles.popularBrandsCount,
   );

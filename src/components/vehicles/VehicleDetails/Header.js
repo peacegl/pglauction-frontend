@@ -88,6 +88,7 @@ function ItemHeader({item, onBack, admin}) {
                 }
                 variant='outlined'
                 size='small'
+                sx={{mt: 2}}
                 onClick={() => addToWatchList(item.id)}
               >
                 {!addedToWatchList ? (

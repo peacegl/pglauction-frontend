@@ -5,12 +5,14 @@ import {
   ADD_NEW_VEHICLE,
   UPDATE_VEHICLE,
   INCREMENT_TOTAL_VEHICLE,
+  GET_VEHICLE_VIEW,
 } from 'shared/constants/ActionTypes';
 
 const initialState = {
   vehiclesData: {},
   vehiclesExportData: {},
   filterData: {},
+  vehicle: {},
 };
 
 const VeihcleReducers = (state = initialState, action) => {
@@ -25,6 +27,12 @@ const VeihcleReducers = (state = initialState, action) => {
       return {
         ...state,
         vehiclesExportData: action.payload,
+      };
+
+    case GET_VEHICLE_VIEW:
+      return {
+        ...state,
+        vehicle: action.payload,
       };
 
     case ADD_NEW_VEHICLE:

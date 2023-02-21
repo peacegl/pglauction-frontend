@@ -6,15 +6,53 @@ import {CommonConfigs} from 'configs';
 const phoneRegExp = CommonConfigs().phoneRegExp;
 const {messages = []} = appIntl() ? appIntl() : {};
 
-export const tableColumns = function () {
+export const tableColumns = function (getSingleUser) {
   return [
+    {
+      name: 'id',
+      label: messages['common.id'],
+      options: {
+        display: false,
+        viewColumns: false,
+      },
+    },
     {
       name: 'profile',
       label: messages['common.profile'],
       options: {
         download: false,
+        filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
-          <Avatar alt={'Profile picture'} src={value} />
+          <Avatar
+            alt={'Profile picture'}
+            src={value}
+            onClick={() => getSingleUser(tableMeta.rowData[0])}
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              cursor: 'pointer',
+            }}
+          />
+        ),
+      },
+    },
+    {
+      name: 'str_code',
+      label: messages['common.code'],
+      options: {
+        download: false,
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              fontWeight: 'bold',
+              cursor: 'pointer',
+            }}
+            onClick={() => getSingleUser(tableMeta.rowData[0])}
+            noWrap={true}
+          >
+            {value}
+          </Typography>
         ),
       },
     },

@@ -1,15 +1,9 @@
 import {filterContent, tableColumns} from 'configs/pages/customers';
-import {
-  onGetCustomerList,
-  onDeleteCustomers,
-  addRealTimeCustomer,
-  updateRealTimeCustomer,
-  addRealTimeCustomerCount,
-} from 'redux/actions';
 import DownloadModal from 'components/CustomModal/downloadModal';
 import FilterModal from 'components/CustomModal/FilterModal';
 import AccountVerification from './AccountVerificationModal';
 import CustomDataTable from 'components/CustomDataTable';
+import SingleCustomerModal from './SingleCustomerModal';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import {getData, onViewColumnsChange} from 'configs';
@@ -22,6 +16,13 @@ import {
   DELETE_CUSTOMER,
 } from 'shared/constants/Permissions';
 import EchoConfig from 'plugins/echo';
+import {
+  onGetCustomerList,
+  onDeleteCustomers,
+  addRealTimeCustomer,
+  updateRealTimeCustomer,
+  addRealTimeCustomerCount,
+} from 'redux/actions';
 
 export default function CustomerList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -33,6 +34,9 @@ export default function CustomerList({user}) {
   const [search, setSearch] = useState('');
   const [exactMatch, setExactMatch] = useState(false);
   const [filterData, setFilterData] = useState({});
+  const [singleCustomer, setSingleCustomer] = useState([]);
+  const [singleCustomerID, setSingleCustomerID] = useState([]);
+  const [showSingleCustomerModal, setShowSingleCustomerModal] = useState(false);
   const [openVerifyModal, setOpenVerifyModal] = useState(false);
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(
@@ -170,13 +174,27 @@ export default function CustomerList({user}) {
     await dispatch(updateRealTimeCustomer(data));
   };
 
+  const getSingleCustomer = (id) => {
+    setSingleCustomerID(id);
+    setSingleCustomer(data.filter((sale) => sale.id === id)[0]);
+    setShowSingleCustomerModal(true);
+  };
+
+  useEffect(() => {
+    setSingleCustomer(data.filter((sale) => sale.id === singleCustomerID)[0]);
+  }, [data]);
+
   return (
     <>
       <CustomDataTable
         title={<IntlMessages id='customer.customerList' />}
         total={total}
         data={data}
-        columns={tableColumns(setRecordId, setOpenVerifyModal)}
+        columns={tableColumns(
+          setRecordId,
+          setOpenVerifyModal,
+          getSingleCustomer,
+        )}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}
@@ -235,6 +253,7 @@ export default function CustomerList({user}) {
           content={filterContent}
         />
       )}
+
       {openModal && (
         <CustomerModal
           open={openModal}
@@ -243,6 +262,7 @@ export default function CustomerList({user}) {
           edit={recordId ? true : false}
         />
       )}
+
       {openVerifyModal && (
         <AccountVerification
           open={openVerifyModal}
@@ -250,9 +270,19 @@ export default function CustomerList({user}) {
           recordId={recordId}
         />
       )}
+
+      {showSingleCustomerModal && (
+        <SingleCustomerModal
+          open={showSingleCustomerModal}
+          toggleOpen={() => setShowSingleCustomerModal((d) => !d)}
+          singleCustomer={singleCustomer}
+          width={450}
+        />
+      )}
     </>
   );
 }
+
 CustomerList.propTypes = {
   user: PropTypes.any,
 };

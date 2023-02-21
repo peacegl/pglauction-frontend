@@ -3,7 +3,6 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import List from '@mui/material/List';
 import {moneyFormater} from 'configs';
-import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Item from './Item';
@@ -18,7 +17,7 @@ import {
   Typography,
 } from '@mui/material';
 
-export default function SaleInfo({vehicle, showPrice}) {
+export default function SaleInfo({vehicle, showPrice, admin}) {
   const {user} = useAuthUser();
   let updatedAt = moment(
     vehicle?.updated_at,
@@ -28,15 +27,6 @@ export default function SaleInfo({vehicle, showPrice}) {
     .tz(user?.timezone ? user.timezone : moment.tz.guess())
     .format('YYYY-MM-DD hh:mm:ss A');
 
-  const router = useRouter();
-  // const [addressUrl, setAddressUrl] = useState('');
-  // useEffect(() => {
-  //   const origin =
-  //     typeof window !== 'undefined' && window.location.origin
-  //       ? window.location.origin
-  //       : '';
-  //   setAddressUrl(origin + router.asPath);
-  // }, []);
   return (
     <Card sx={{borderRadius: 1, boxShadow: 1, m: 0}}>
       <CardHeader
@@ -58,7 +48,7 @@ export default function SaleInfo({vehicle, showPrice}) {
       />
       <CardContent sx={{px: 3, py: 0}}>
         <List sx={{width: '100%', bgcolor: 'background.paper', pb: 0}}>
-          {vehicle.location?.name && vehicle.status != 'future' && (
+          {vehicle.location?.name && vehicle.status !== 'future' && (
             <Item
               label={<IntlMessages id='vehicle.location' />}
               value={vehicle.location?.name}
@@ -77,22 +67,45 @@ export default function SaleInfo({vehicle, showPrice}) {
             label={<IntlMessages id='common.last_updated' />}
             value={updatedAt}
           />
+          {admin && (
+            <>
+              <Item
+                label={<IntlMessages id='vehicle.price' />}
+                value={moneyFormater(
+                  parseInt(vehicle.price) +
+                    parseInt((vehicle.price * vehicle.sale_rate ?? 15) / 100),
+                )}
+              />
+              <Item
+                label={<IntlMessages id='common.saleRate' />}
+                value={vehicle.sale_rate + '%'}
+              />
+              <Item
+                label={<IntlMessages id='common.totalCost' />}
+                value={'AED ' + vehicle.price}
+              />
+            </>
+          )}
         </List>
-        <Button
-          variant='outlined'
-          size='large'
-          sx={{mt: 4, width: '100%', borderRadius: 20}}
-          href={`https://wa.me/${vehicle.seller?.loginable?.whatsapp}?text=${window.location.origin}/all-vehicles/${vehicle.id}`}
-          target='_blank'
-        >
-          <WhatsAppIcon />
-          <Box pt='2px'>{vehicle.seller?.loginable?.whatsapp}</Box>
-        </Button>
+        {!admin && (
+          <Button
+            variant='outlined'
+            size='large'
+            sx={{mt: 4, width: '100%', borderRadius: 20}}
+            href={`https://wa.me/${vehicle.seller?.loginable?.whatsapp}?text=${window.location.origin}/all-vehicles/${vehicle.id}`}
+            target='_blank'
+          >
+            <WhatsAppIcon />
+            <Box pt='2px'>{vehicle.seller?.loginable?.whatsapp}</Box>
+          </Button>
+        )}
       </CardContent>
     </Card>
   );
 }
+
 SaleInfo.propTypes = {
   vehicle: PropTypes.any,
+  admin: PropTypes.bool,
   showPrice: PropTypes.bool,
 };
