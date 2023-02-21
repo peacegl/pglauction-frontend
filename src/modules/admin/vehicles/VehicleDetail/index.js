@@ -14,10 +14,8 @@ const VehicleDetail = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const {id} = router.query;
-
   const loading = useSelector(({common}) => common.loading);
   const {vehicle = {}} = useSelector(({vehicles}) => vehicles);
-
   const {user} = useAuthUser();
 
   useEffect(() => {
@@ -41,43 +39,42 @@ const VehicleDetail = () => {
             admin={true}
             onBack={() => router.back()}
           />
-          <Container maxWidth='xl' sx={{mt: 6}}>
+          <Box
+            sx={{
+              display: 'flex',
+              alignContent: 'space-between',
+              borderRadius: 2,
+              columnGap: '10px',
+              rowGap: '20px',
+              backgroundColor: 'transparent',
+              flexDirection: {xs: 'column', md: 'row'},
+            }}
+          >
+            <Box sx={{mr: 2, flex: 1.5}}>
+              <ImageCarousel
+                images={vehicle.images}
+                isSold={vehicle.status == 'sold'}
+                hideMagnifier
+              />
+            </Box>
             <Box
               sx={{
                 display: 'flex',
+                flex: 2,
                 alignContent: 'space-between',
-                borderRadius: 2,
                 columnGap: '10px',
                 rowGap: '20px',
-                backgroundColor: 'transparent',
-                flexDirection: {xs: 'column', md: 'row'},
+                flexDirection: {xs: 'column', sm: 'row'},
               }}
             >
-              <Box sx={{mr: 2, flex: 1.5}}>
-                <ImageCarousel
-                  images={vehicle.images}
-                  isSold={vehicle.status == 'sold'}
-                />
+              <Box sx={{flex: 1.5}}>
+                <LotInfo vehicle={vehicle} admin={true} />
               </Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flex: 2,
-                  alignContent: 'space-between',
-                  columnGap: '10px',
-                  rowGap: '20px',
-                  flexDirection: {xs: 'column', sm: 'row'},
-                }}
-              >
-                <Box sx={{flex: 1.5}}>
-                  <LotInfo vehicle={vehicle} admin={true} />
-                </Box>
-                <Box sx={{flex: 1}}>
-                  <SaleInfo vehicle={vehicle} admin={true} />
-                </Box>
+              <Box sx={{flex: 1}}>
+                <SaleInfo vehicle={vehicle} admin={true} />
               </Box>
             </Box>
-          </Container>
+          </Box>
         </>
       ) : (
         !loading && <Error404 url='/' />
