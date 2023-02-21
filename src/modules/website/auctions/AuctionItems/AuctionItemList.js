@@ -17,6 +17,8 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
+import WebEcho from 'plugins/echoWeb';
+import {async} from '@firebase/util';
 
 const AuctionItemList = () => {
   const dispatch = useDispatch();
@@ -36,22 +38,21 @@ const AuctionItemList = () => {
   const {search = ''} = useSelector(({webAuctions}) => webAuctions);
   useEffect(() => {
     setPage(0);
-  }, [
-    search,
-    //  filterData
-  ]);
+  }, [search]);
 
   useEffect(() => {
-    dispatch(
+    fetchData();
+  }, [dispatch, id, page, search, perPage, user?.type]);
+
+  const fetchData = async () => {
+    await dispatch(
       onGetWebAuctionItemsData(id, {
-        // filterData,
         per_page: perPage,
         page: page + 1,
         search,
       }),
     );
-    // filterData
-  }, [id, page, search, perPage, user?.type]);
+  };
 
   const onPageChange = (event, value) => {
     setPage(value);
@@ -59,6 +60,27 @@ const AuctionItemList = () => {
   const onPageChange2 = (event, value) => {
     setPage(value - 1);
   };
+
+  useEffect(() => {
+    console.log('haji');
+    WebEcho();
+    window.Echo.channel(`web.auction_items.${id}`).listen('Web', (e) => {
+      if (e.action === 'created') {
+        console.log('created');
+        fetchData();
+      }
+      if (e.action == 'deleted') {
+        console.log('deleted');
+
+        fetchData();
+      }
+    });
+    return () => {
+      const echoChannel = window.Echo.channel(`web.auction_items.${id}`);
+      echoChannel.stopListening('Web');
+      Echo.leave(`web.auction_items.${id}`);
+    };
+  }, []);
 
   return (
     <>
