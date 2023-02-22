@@ -62,16 +62,12 @@ const AuctionItemList = () => {
   };
 
   useEffect(() => {
-    console.log('haji');
     WebEcho();
     window.Echo.channel(`web.auction_items.${id}`).listen('Web', (e) => {
       if (e.action === 'created') {
-        console.log('created');
         fetchData();
       }
       if (e.action == 'deleted') {
-        console.log('deleted');
-
         fetchData();
       }
     });
