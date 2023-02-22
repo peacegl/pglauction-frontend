@@ -22,6 +22,7 @@ import {
   ADD_NEW_WEB_VEHICLE,
   INCREMENT_TOTAL_WEB_VEHICLE,
   UPDATE_WEB_VEHICLE,
+  DELETE_REAL_TIME_VEHICLE,
 } from 'shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
@@ -305,6 +306,16 @@ export const updateRealTimeWebVehicle = (data) => {
   return async (dispatch) => {
     try {
       dispatch({type: UPDATE_WEB_VEHICLE, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const deleteRealTimeVehicle = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: DELETE_REAL_TIME_VEHICLE, payload: data});
     } catch (error) {
       console.log(error);
     }

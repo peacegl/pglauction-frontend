@@ -18,6 +18,7 @@ import {
   ADD_NEW_WEB_VEHICLE,
   INCREMENT_TOTAL_WEB_VEHICLE,
   UPDATE_WEB_VEHICLE,
+  DELETE_REAL_TIME_VEHICLE,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -177,6 +178,18 @@ const WebVehicleReducer = (state = initialState, action) => {
           data: state.vehiclesData.data.map((item) =>
             item.id == action.payload.id ? action.payload : item,
           ),
+        },
+      };
+
+    case DELETE_REAL_TIME_VEHICLE:
+      return {
+        ...state,
+        vehiclesData: {
+          ...state.vehiclesData,
+          data: state.vehiclesData.data.filter(
+            (obj) => !action.payload?.includes(obj.id),
+          ),
+          total: state.vehiclesData.total - action.payload.length,
         },
       };
     default:
