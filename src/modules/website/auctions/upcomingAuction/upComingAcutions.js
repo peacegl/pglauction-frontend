@@ -8,6 +8,7 @@ import {
   onGetWebAuctionData,
   upComingAuctionRealTime,
   upComingAuctionRealTimeCount,
+  updateUpComingAuctionItemReaTime,
 } from 'redux/actions';
 import React, {useEffect, useState} from 'react';
 import {alpha, Box} from '@mui/material';
@@ -27,14 +28,18 @@ const UpComingAuctions = () => {
   const loading = useSelector(({common}) => common.loading);
 
   useEffect(() => {
-    dispatch(
+    fetchData();
+  }, [page, perPage, user?.type]);
+
+  const fetchData = async () => {
+    await dispatch(
       onGetWebAuctionData({
         per_page: perPage,
         page: page + 1,
         dayData: 'up_coming',
       }),
     );
-  }, [page, perPage, user?.type]);
+  };
 
   const onPageChange = (event, value) => {
     setPage(value);
@@ -52,7 +57,7 @@ const UpComingAuctions = () => {
         .format('YYYY-MM-DD hh:mm:ss A');
 
       const today = moment(new Date()).format('YYYY-MM-DD hh:mm:ss A');
-      console.log(!moment(today).isSame(startTime, 'day'));
+
       if (e.action == 'created') {
         if (
           !moment(today).isSame(startTime, 'day') &&
@@ -60,6 +65,17 @@ const UpComingAuctions = () => {
         ) {
           newUpComingAuctionItem(e.data);
         }
+      }
+      if (e.action == 'updated') {
+        if (
+          moment(startTime).isAfter(today, 'day') &&
+          e.data?.status == 'active'
+        ) {
+          updateUpComingAuctionItem(e.data);
+        }
+      }
+      if (e.action == 'deleted') {
+        fetchData();
       }
     });
     return () => {
@@ -76,6 +92,10 @@ const UpComingAuctions = () => {
     // } else {
     //   await dispatch(upComingAuctionRealTimeCount(data));
     // }
+  };
+
+  const updateUpComingAuctionItem = async (data) => {
+    await dispatch(updateUpComingAuctionItemReaTime(data));
   };
 
   return (

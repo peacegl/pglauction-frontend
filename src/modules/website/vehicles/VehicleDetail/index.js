@@ -1,5 +1,6 @@
 import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
 import SaleInfo from 'components/vehicles/VehicleDetails/SaleInfo';
+import {GET_WEB_VEHICLE_VIEW} from 'shared/constants/ActionTypes';
 import LotInfo from 'components/vehicles/VehicleDetails/LotInfo';
 import ImageCarousel from 'components/design/ImageCarousel';
 import CustomCarousel from 'components/CustomCarousel';
@@ -15,6 +16,7 @@ import {
   onGetWebSimilarVehicle,
   onGetWebVehicleView,
 } from 'redux/actions';
+import WebEcho from 'plugins/echoWeb';
 
 const VehicleDetail = () => {
   const router = useRouter();
@@ -45,6 +47,37 @@ const VehicleDetail = () => {
       dispatch(onGetWebSimilarVehicle(id));
     }
   }, [id]);
+
+  useEffect(() => {
+    WebEcho();
+    window.Echo.channel(`web.vehicles.${id}`).listen('Web', (e) => {
+      if (e.action == 'updated') {
+        dispatch({
+          type: GET_WEB_VEHICLE_VIEW,
+          payload: e.data,
+        });
+      }
+    });
+    return () => {
+      const echoChannel = window.Echo.channel(`web.vehicles.${id}`);
+      echoChannel.stopListening('Web');
+      Echo.leave(`web.vehicles.${id}`);
+    };
+  }, []);
+
+  useEffect(() => {
+    WebEcho();
+    window.Echo.channel(`web.vehicles`).listen('Web', (e) => {
+      if (e.action == 'deleted' && e?.data?.includes(id)) {
+        router.push('/');
+      }
+    });
+    return () => {
+      const echoChannel = window.Echo.channel(`web.vehicles`);
+      echoChannel.stopListening('Web');
+      Echo.leave(`web.vehicles`);
+    };
+  }, []);
 
   return (
     <>

@@ -7,6 +7,7 @@ import {
   onGetWebAuctionData,
   todayAuctionRealTime,
   todayAuctionRealTimeCount,
+  updateTodayAuctionItem,
 } from 'redux/actions';
 import React, {useEffect, useState} from 'react';
 import ListHeader from 'components/design/ListHeader';
@@ -26,16 +27,20 @@ const TodayAuctions = () => {
   );
   const loading = useSelector(({common}) => common.loading);
   useEffect(() => {
-    dispatch(
+    fetchData();
+  }, [dispatch, page, perPage, user?.type]);
+  const onPageChange = (event, value) => {
+    setPage(value);
+  };
+
+  const fetchData = async () => {
+    await dispatch(
       onGetWebAuctionData({
         per_page: perPage,
         page: page + 1,
         dayData: 'today',
       }),
     );
-  }, [dispatch, page, perPage, user?.type]);
-  const onPageChange = (event, value) => {
-    setPage(value);
   };
 
   useEffect(() => {
@@ -48,16 +53,25 @@ const TodayAuctions = () => {
       )
         .tz(user?.timezone ? user.timezone : moment.tz.guess())
         .format('YYYY-MM-DD hh:mm:ss A');
-
       const today = moment(new Date()).format('YYYY-MM-DD hh:mm:ss A');
-      console.log(e, 'today');
-      if (e.action == 'created') {
-        if (
-          moment(today).isSame(startTime, 'day') &&
-          e.data?.status == 'active'
-        ) {
+      if (
+        moment(today).isSame(startTime, 'day') &&
+        e.data?.status == 'active'
+      ) {
+        if (e.action == 'created') {
           newAuctionItem(e.data);
         }
+      }
+      if (e.action == 'updated') {
+        if (
+          moment(today).isSameOrBefore(startTime, 'day') &&
+          e.data?.status == 'active'
+        ) {
+          updateAuctionItem(e.data);
+        }
+      }
+      if (e.action == 'deleted') {
+        fetchData();
       }
     });
     return () => {
@@ -74,6 +88,9 @@ const TodayAuctions = () => {
     // } else {
     //   await dispatch(todayAuctionRealTimeCount(data));
     // }
+  };
+  const updateAuctionItem = async (data) => {
+    await dispatch(updateTodayAuctionItem(data));
   };
 
   return (

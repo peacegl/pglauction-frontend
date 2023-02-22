@@ -11,6 +11,8 @@ import {
   INCREMENT_TOTAL_NEW_AUCTION_ITEM,
   ADD_UPCOMING_AUCTION,
   INCREMENT_TOTAL_UPCOMING_AUCTION_ITEM,
+  UPDATE_UPCOMING_AUCTION,
+  UPDATE_TODAY_AUCTION,
 } from 'shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
@@ -113,6 +115,25 @@ export const upComingAuctionRealTimeCount = (data) => {
   return async (dispatch) => {
     try {
       dispatch({type: INCREMENT_TOTAL_UPCOMING_AUCTION_ITEM, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const updateTodayAuctionItem = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: UPDATE_TODAY_AUCTION, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const updateUpComingAuctionItemReaTime = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: UPDATE_UPCOMING_AUCTION, payload: data});
     } catch (error) {
       console.log(error);
     }
