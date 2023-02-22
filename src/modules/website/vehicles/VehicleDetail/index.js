@@ -10,13 +10,13 @@ import {useAuthUser} from '@crema/utility/AuthHooks';
 import {useDispatch, useSelector} from 'react-redux';
 import {Box, Container} from '@mui/material';
 import {useRouter} from 'next/router';
+import WebEcho from 'plugins/echoWeb';
 import {useEffect} from 'react';
 import {
   onCountPopularBrands,
   onGetWebSimilarVehicle,
   onGetWebVehicleView,
 } from 'redux/actions';
-import WebEcho from 'plugins/echoWeb';
 
 const VehicleDetail = () => {
   const router = useRouter();
