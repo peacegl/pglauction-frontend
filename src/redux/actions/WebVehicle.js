@@ -148,12 +148,10 @@ export const onGetFeaturedVehicles = () => {
 
 export const onCountPopularBrands = () => {
   return async (dispatch) => {
-    dispatch({type: FETCH_START});
     const {messages} = appIntl();
     try {
       const res = await jwtAxios.get(`/count_populars`);
       if (res.status === 200 && res.data.result) {
-        dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_POPULAR_BRANDS_COUNT, payload: res.data.data});
       } else {
         dispatch({

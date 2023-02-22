@@ -18,6 +18,7 @@ import {
   vehicleCreated,
   vehicleCreatedCount,
   deleteRealTimeVehicle,
+  onCountPopularBrands,
 } from 'redux/actions';
 import {
   alpha,
@@ -122,10 +123,12 @@ const VehicleList = () => {
     } else {
       await dispatch(vehicleCreatedCount(e.data));
     }
+    await dispatch(onCountPopularBrands());
   };
 
   const deletedVehicle = async (data) => {
     await dispatch(deleteRealTimeVehicle(data));
+    await dispatch(onCountPopularBrands());
   };
 
   const vehicleReaTimeUpdated = async (data) => {
