@@ -177,7 +177,7 @@ export default function VehicleModal({
       lot_number: values.lot_number,
       id: recordId ? recordId : null,
     };
-    if (values.vin && values.lot_number) {
+    if (values.vin || values.lot_number) {
       return availableChecking(
         '/vehicle/valid_credential',
         params,

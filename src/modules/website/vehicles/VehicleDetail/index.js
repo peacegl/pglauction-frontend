@@ -82,7 +82,7 @@ const VehicleDetail = () => {
   return (
     <>
       {vehicle.id && (
-        <Container maxWidth='xl'>
+        <Container maxWidth='xl' sx={{mt: 6}}>
           <ItemHeader
             item={vehicle}
             admin={false}
@@ -116,10 +116,10 @@ const VehicleDetail = () => {
               }}
             >
               <Box sx={{flex: 1.5}}>
-                <LotInfo vehicle={vehicle} />
+                <LotInfo vehicle={vehicle} admin={false} />
               </Box>
               <Box sx={{flex: 1}}>
-                <SaleInfo vehicle={vehicle} />
+                <SaleInfo vehicle={vehicle} admin={false} />
               </Box>
             </Box>
           </Box>

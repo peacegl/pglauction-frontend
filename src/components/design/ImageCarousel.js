@@ -1,5 +1,5 @@
 import DefaultCarImage from 'assets/default_car_image.png';
-import {Box, Card, Grid, Paper, Skeleton} from '@mui/material';
+import {Box, Grid, Paper, Skeleton} from '@mui/material';
 import ImageMagnifier from './ImageMagnifier';
 import SoldIcon from 'assets/icon/sold.png';
 import CustomSlider from './CustomSlider';
@@ -125,7 +125,7 @@ const ImageCarousel = ({images, isSold = false, ...rest}) => {
             : images?.map((item, index) => (
                 <Grid item xs={3} sm={2} md={3} lg={2} key={index}>
                   <Box
-                    sx={{maxWidth: '100%'}}
+                    sx={{maxWidth: '100%', cursor: 'pointer'}}
                     onClick={() => setActiveImage(index)}
                     key={item.id}
                     component='img'

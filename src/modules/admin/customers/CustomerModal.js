@@ -97,7 +97,7 @@ export default function CustomerModal({
       phone: values.phone,
       id: recordId ? recordId : null,
     };
-    if (values.whatsapp && values.phone) {
+    if (values.whatsapp || values.phone) {
       return availableChecking(
         'customer/valid_credential',
         params,
