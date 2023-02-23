@@ -17,6 +17,8 @@ import {
   updateRealTimeWebVehicle,
   vehicleCreated,
   vehicleCreatedCount,
+  deleteRealTimeVehicle,
+  onCountPopularBrands,
 } from 'redux/actions';
 import {
   alpha,
@@ -104,6 +106,9 @@ const VehicleList = () => {
       } else if (e.action == 'updated') {
         vehicleReaTimeUpdated(e?.data);
       }
+      if (e.action == 'deleted') {
+        deletedVehicle(e.data);
+      }
     });
     return () => {
       const echoChannel = window.Echo.channel(`web.vehicle`);
@@ -118,6 +123,12 @@ const VehicleList = () => {
     } else {
       await dispatch(vehicleCreatedCount(e.data));
     }
+    await dispatch(onCountPopularBrands());
+  };
+
+  const deletedVehicle = async (data) => {
+    await dispatch(deleteRealTimeVehicle(data));
+    await dispatch(onCountPopularBrands());
   };
 
   const vehicleReaTimeUpdated = async (data) => {

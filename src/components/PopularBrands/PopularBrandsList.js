@@ -176,6 +176,7 @@ const PopularBrandsList = (props) => {
               variant='outlined'
               sx={{
                 pb: props.small ? 1 : 2,
+                width: 100,
               }}
             >
               <Box
@@ -184,7 +185,7 @@ const PopularBrandsList = (props) => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  height: props.small ? 70 : 90,
+                  height: props.small ? 50 : 70,
                   px: props.small ? 1 : 3,
                   m: 1,
                 }}
@@ -197,7 +198,7 @@ const PopularBrandsList = (props) => {
               </Box>
               <Typography sx={{textAlign: 'center', px: 1}}>
                 <IntlMessages id='website.inStock' />{' '}
-                <Typography component='span' sx={{fontWeight: 'bold'}}>
+                <Typography component='p' sx={{fontWeight: 'bold'}}>
                   {props.popularBrandsCount[brand.name]}
                 </Typography>
               </Typography>
