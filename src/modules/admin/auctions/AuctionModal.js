@@ -44,7 +44,7 @@ export default function AuctionModal({
   const validationSchema = AuctionConfigs(initialValues).validationSchema;
   const searchVehicles = (content, vehicle_id = null) => {
     getData(
-      `/vehicleColumn/auto_complete?column[]=vin&column[]=lot_number&mainImage=1&status=!sold&auctionItem=0${
+      `/vehicleColumn/auto_complete?column[]=vin&column[]=lot_number&mainImage=1&status=available&auctionItem=0${
         vehicle_id ? '&id=' + vehicle_id : ''
       }`,
       content,
