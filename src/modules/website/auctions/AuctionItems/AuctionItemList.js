@@ -64,7 +64,7 @@ const AuctionItemList = () => {
   useEffect(() => {
     WebEcho();
     window.Echo.channel(`web.auction_items.${id}`).listen('Web', (e) => {
-      if (e.action === 'created' || e.action == 'deleted') {
+      if (e.action === 'sync') {
         fetchData();
       }
     });
