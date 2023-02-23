@@ -1,15 +1,42 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 const {messages = []} = appIntl() ? appIntl() : {};
+import {Typography} from '@mui/material';
 import * as yup from 'yup';
 import moment from 'moment';
 import 'moment-timezone';
 
-export const tableColumns = function (user) {
+export const tableColumns = function (router) {
   return [
+    {
+      name: 'id',
+      label: messages['common.id'],
+      options: {
+        display: false,
+        viewColumns: false,
+      },
+    },
     {
       name: 'str_code',
       label: messages['common.code'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              fontWeight: 'bold',
+              cursor: 'pointer',
+            }}
+            onClick={() => {
+              router.push(`/admin/auctions/${tableMeta.rowData[0]}`);
+            }}
+            noWrap={true}
+          >
+            {value}
+          </Typography>
+        ),
+      },
     },
     {
       name: 'name',

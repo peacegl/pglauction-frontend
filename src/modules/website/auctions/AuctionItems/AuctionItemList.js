@@ -89,7 +89,7 @@ const AuctionItemList = () => {
         list={data}
         page={page}
         perPage={perPage}
-        totalProducts={data.length}
+        total={data.length}
         onPageChange={onPageChange}
       />
       <AppsContent

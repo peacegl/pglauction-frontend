@@ -1,3 +1,11 @@
+import CustomDataTable from 'components/CustomDataTable';
+import IntlMessages from '@crema/utility/IntlMessages';
+import {useDispatch, useSelector} from 'react-redux';
+import {tableColumns} from 'configs/pages/auctions';
+import AuctionModal from './AuctionModal';
+import {useEffect, useState} from 'react';
+import EchoConfig from 'plugins/echo';
+import PropTypes from 'prop-types';
 import {
   onGetAuctionData,
   onDeleteAuctions,
@@ -5,19 +13,12 @@ import {
   addRealTimeAuctionCount,
   updateRealTimeAuction,
 } from 'redux/actions';
-import CustomDataTable from 'components/CustomDataTable';
-import IntlMessages from '@crema/utility/IntlMessages';
-import {useDispatch, useSelector} from 'react-redux';
-import {tableColumns} from 'configs/pages/auctions';
-import AuctionModal from './AuctionModal';
-import {useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
 import {
   ADD_AUCTION,
   DELETE_AUCTION,
   EDIT_AUCTION,
 } from 'shared/constants/Permissions';
-import EchoConfig from 'plugins/echo';
+import {useRouter} from 'next/router';
 
 export default function AuctionList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -34,6 +35,8 @@ export default function AuctionList({user}) {
   );
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
+  const router = useRouter();
+
   useEffect(() => {
     fetchData(search);
   }, [dispatch, page, per_page, orderBy, filterData]);
@@ -137,7 +140,7 @@ export default function AuctionList({user}) {
         title={<IntlMessages id='auction.auctionList' />}
         total={total}
         data={data}
-        columns={tableColumns(user)}
+        columns={tableColumns(router)}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}
