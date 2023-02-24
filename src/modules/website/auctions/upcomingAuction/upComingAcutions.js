@@ -105,7 +105,7 @@ const UpComingAuctions = () => {
         list={data}
         page={page}
         perPage={perPage}
-        totalProducts={total}
+        total={total}
         onPageChange={onPageChange}
       />
       <AppsContent

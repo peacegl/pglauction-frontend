@@ -64,10 +64,7 @@ const AuctionItemList = () => {
   useEffect(() => {
     WebEcho();
     window.Echo.channel(`web.auction_items.${id}`).listen('Web', (e) => {
-      if (e.action === 'created') {
-        fetchData();
-      }
-      if (e.action == 'deleted') {
+      if (e.action === 'sync') {
         fetchData();
       }
     });
@@ -92,7 +89,7 @@ const AuctionItemList = () => {
         list={data}
         page={page}
         perPage={perPage}
-        totalProducts={data.length}
+        total={data.length}
         onPageChange={onPageChange}
       />
       <AppsContent

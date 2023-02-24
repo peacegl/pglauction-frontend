@@ -44,7 +44,7 @@ export default function AuctionModal({
   const validationSchema = AuctionConfigs(initialValues).validationSchema;
   const searchVehicles = (content, vehicle_id = null) => {
     getData(
-      `/vehicleColumn/auto_complete?column[]=vin&column[]=lot_number&mainImage=1&status=!sold${
+      `/vehicleColumn/auto_complete?column[]=vin&column[]=lot_number&mainImage=1&status=available&auctionItem=0${
         vehicle_id ? '&id=' + vehicle_id : ''
       }`,
       content,
@@ -85,12 +85,12 @@ export default function AuctionModal({
                   let items = [];
                   value.forEach((item) => {
                     let data = {
-                      id: item.id,
-                      vin: item.vin,
-                      lot_number: item.lot_number,
-                      minimum_bid: item.pivot.minimum_bid,
-                      buy_now_price: item.pivot.buy_now_price,
-                      images: item.images,
+                      id: item.vehicle.id,
+                      vin: item.vehicle.vin,
+                      lot_number: item.vehicle.lot_number,
+                      minimum_bid: item.minimum_bid,
+                      buy_now_price: item.buy_now_price,
+                      images: item.vehicle.images,
                     };
                     items.push(data);
                   });

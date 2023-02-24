@@ -1,5 +1,6 @@
 import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
 import SaleInfo from 'components/vehicles/VehicleDetails/SaleInfo';
+import {GET_WEB_VEHICLE_VIEW} from 'shared/constants/ActionTypes';
 import LotInfo from 'components/vehicles/VehicleDetails/LotInfo';
 import ImageCarousel from 'components/design/ImageCarousel';
 import CustomCarousel from 'components/CustomCarousel';
@@ -9,14 +10,13 @@ import {useAuthUser} from '@crema/utility/AuthHooks';
 import {useDispatch, useSelector} from 'react-redux';
 import {Box, Container} from '@mui/material';
 import {useRouter} from 'next/router';
+import WebEcho from 'plugins/echoWeb';
 import {useEffect} from 'react';
 import {
   onCountPopularBrands,
   onGetWebSimilarVehicle,
   onGetWebVehicleView,
 } from 'redux/actions';
-import WebEcho from 'plugins/echoWeb';
-import {GET_WEB_VEHICLE_VIEW} from 'shared/constants/ActionTypes';
 
 const VehicleDetail = () => {
   const router = useRouter();
@@ -82,7 +82,7 @@ const VehicleDetail = () => {
   return (
     <>
       {vehicle.id && (
-        <Container maxWidth='xl' sx={{mt: 6}}>
+        <Container maxWidth='xl'>
           <ItemHeader
             item={vehicle}
             admin={false}
@@ -116,10 +116,10 @@ const VehicleDetail = () => {
               }}
             >
               <Box sx={{flex: 1.5}}>
-                <LotInfo vehicle={vehicle} admin={false} />
+                <LotInfo vehicle={vehicle} />
               </Box>
               <Box sx={{flex: 1}}>
-                <SaleInfo vehicle={vehicle} admin={false} />
+                <SaleInfo vehicle={vehicle} />
               </Box>
             </Box>
           </Box>

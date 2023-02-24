@@ -39,7 +39,7 @@ const ListHeader = ({
   list,
   page,
   perPage,
-  totalProducts,
+  total,
   onPageChange,
   title,
   onLClick,
@@ -105,7 +105,7 @@ const ListHeader = ({
               </Typography>
             )}
             <Badge
-              badgeContent={totalProducts}
+              badgeContent={total}
               max={99999999}
               color='primary'
               sx={{ml: 6}}
@@ -162,7 +162,7 @@ const ListHeader = ({
                 >
                   <AppsPagination
                     rowsPerPage={perPage}
-                    count={totalProducts}
+                    count={total}
                     page={page}
                     onPageChange={onPageChange}
                   />
@@ -183,7 +183,7 @@ ListHeader.propTypes = {
   list: PropTypes.array,
   page: PropTypes.number,
   perPage: PropTypes.number,
-  totalProducts: PropTypes.number,
+  total: PropTypes.number,
   onPageChange: PropTypes.func,
   make: PropTypes.any,
   title: PropTypes.any,

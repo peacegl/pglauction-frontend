@@ -166,7 +166,7 @@ const VehicleList = () => {
         viewType={viewType}
         page={page}
         perPage={perPage}
-        totalProducts={total}
+        total={total}
         onPageChange={onPageChange}
         make={make}
         onLClick={() => dispatch(setVehicleViewType(VIEW_TYPE.LIST))}

@@ -62,7 +62,7 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
       setBidStatusLoading,
       setBidStatus,
     );
-  }, []);
+  }, [vehicle?.bids[0]?.amount]);
 
   useEffect(() => {
     setCurrentBid(vehicle?.bids[0]?.amount ? vehicle?.bids[0]?.amount : 0);

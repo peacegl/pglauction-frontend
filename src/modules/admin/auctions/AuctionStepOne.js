@@ -46,15 +46,19 @@ const AuctionStepOne = (props) => {
             size='small'
             value={props.values?.status}
             sx={{flex: 1}}
+            disabled={props.values?.status == 'completed'}
           >
             <MenuItem value='active'>
               <IntlMessages id='common.active' />
             </MenuItem>
-            <MenuItem value='inactive'>
+            {/* <MenuItem value='inactive'>
               <IntlMessages id='common.inactive' />
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem value='pending'>
               <IntlMessages id='common.pending' />
+            </MenuItem>
+            <MenuItem value='completed' disabled>
+              <IntlMessages id='common.completed' />
             </MenuItem>
           </AppTextField>
         </Stack>
