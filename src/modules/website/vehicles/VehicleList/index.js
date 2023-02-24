@@ -29,6 +29,7 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
+import {es} from 'date-fns/locale';
 
 const VehicleList = () => {
   const dispatch = useDispatch();
@@ -99,6 +100,7 @@ const VehicleList = () => {
   };
 
   useEffect(() => {
+    console.log(router.query.make);
     WebEcho();
     window.Echo.channel(`web.vehicle`).listen('Web', (e) => {
       if (e.action == 'created') {
@@ -115,11 +117,23 @@ const VehicleList = () => {
       echoChannel.stopListening('Web');
       Echo.leave(`web.vehicle`);
     };
-  }, []);
+  }, [router]);
 
   const vehicleReaTimeCreated = async (e) => {
     if (page == 0 && e.data.status == 'available') {
-      await dispatch(vehicleCreated(e.data));
+      if (router.query.make == undefined) {
+        await dispatch(vehicleCreated(e.data));
+        return;
+      } else if (
+        compareStrings(
+          router.query.make.toUpperCase(),
+          e.data.make.toUpperCase(),
+        )
+      ) {
+        await dispatch(vehicleCreated(e.data));
+      } else {
+        await dispatch(onCountPopularBrands());
+      }
     } else {
       await dispatch(vehicleCreatedCount(e.data));
     }
@@ -134,6 +148,15 @@ const VehicleList = () => {
   const vehicleReaTimeUpdated = async (data) => {
     await dispatch(updateRealTimeWebVehicle(data));
   };
+
+  function compareStrings(s1, s2) {
+    // This condition will return true only if s1 and s2 hold true from equality
+    if (s1 == s2) {
+      return true;
+    }
+
+    return false;
+  }
 
   return (
     <>
