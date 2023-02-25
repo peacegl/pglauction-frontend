@@ -110,6 +110,7 @@ export default function AuctionList({user}) {
     window.Echo.private(`update.auction`).listen('Updated', (e) => {
       if (user.uid != e.authUser) {
         if (e.action === 'created') {
+          console.log('', e.data);
           newAuctionRealTime(e.data);
         }
         if (e.action == 'updated') {

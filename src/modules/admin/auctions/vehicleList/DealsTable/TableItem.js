@@ -4,7 +4,7 @@ import {Box} from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import TableRow from '@mui/material/TableRow';
 import PropTypes from 'prop-types';
-import {blue, green, red} from '@mui/material/colors';
+import {blue, green, grey, red} from '@mui/material/colors';
 import {Fonts} from '../../../../../shared/constants/AppEnums';
 import {moneyFormater} from 'configs';
 import {appIntl} from '@crema/utility/helper/Utils';
@@ -29,6 +29,12 @@ const TableItem = (props) => {
   const {row} = props;
   const {messages = []} = appIntl() ? appIntl() : {};
 
+  const handleClick = (id) => {
+    console.log(id);
+  };
+
+  const color = grey[100];
+
   return (
     <TableRow
       key={row.id}
@@ -45,8 +51,13 @@ const TableItem = (props) => {
             pr: 5,
           },
         },
+        '&:hover': {
+          cursor: 'pointer',
+          backgroundColor: color,
+        },
       }}
       className='item-hover'
+      onClick={() => handleClick(row.id)}
     >
       <TableCell scope='row' className='tableCell'>
         {row.code}.

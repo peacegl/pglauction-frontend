@@ -16,11 +16,13 @@ const AuctionVehicleList = ({auctionId}) => {
   const {data = [], total = 0} = useSelector(
     ({auctions}) => auctions.auctionVehicleList,
   );
+  const {loading} = useSelector(({common}) => common);
   const [tableData, setTableData] = useState(data);
 
   useEffect(() => {
     console.log(auctionId);
     fetchData(auctionId);
+    setTableData(data);
   }, []);
 
   const fetchData = async (actionId) => {
@@ -32,51 +34,20 @@ const AuctionVehicleList = ({auctionId}) => {
   };
 
   const handleChange = (value) => {
-    if (value === messages['website.allVehicles']) {
-      setTableData(data);
-    } else if (value === messages['common.available']) {
-      setTableData(data.filter((data) => data.status === 'available'));
-    } else {
-      setTableData(data.filter((data) => data.status === 'sold'));
-    }
+    // if (value === messages['website.allVehicles']) {
+    //   setTableData(data);
+    // } else if (value === messages['common.available']) {
+    //   setTableData(data.filter((data) => data.status === 'available'));
+    // } else {
+    //   setTableData(data.filter((data) => data.status === 'sold'));
+    // }
   };
 
   const {messages} = useIntl();
 
   return (
-    <AppCard
-      title={
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <Box
-            sx={{
-              mr: {xs: 3, lg: 8},
-              fontWeight: Fonts.BOLD,
-              fontSize: 16,
-            }}
-            component='h3'
-          >
-            <IntlMessages id='sidebar.vehicles' />
-          </Box>
-          <AppSelect
-            menus={[
-              messages['website.allVehicles'],
-              messages['common.available'],
-              messages['common.sold'],
-            ]}
-            defaultValue={messages['website.allVehicles']}
-            onChange={handleChange}
-          />
-        </Box>
-      }
-      contentStyle={{px: 0}}
-      sxStyle={{height: 1}}
-    >
-      <DealsTable dealsTableData={tableData} />
+    <AppCard contentStyle={{px: 0}} sxStyle={{height: 1}}>
+      {!loading ? <DealsTable dealsTableData={data} /> : <Box></Box>}
     </AppCard>
   );
 };
