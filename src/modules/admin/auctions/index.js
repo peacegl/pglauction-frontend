@@ -19,6 +19,7 @@ import {
   EDIT_AUCTION,
 } from 'shared/constants/Permissions';
 import {useRouter} from 'next/router';
+import AuctionVehicleModal from './AuctionVehiclesModal';
 
 export default function AuctionList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -36,6 +37,10 @@ export default function AuctionList({user}) {
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   const router = useRouter();
+  const [showAuctionVehiclesModal, setShowAuctionVehiclesModal] =
+    useState(false);
+
+  const [auctionId, setAuctionId] = useState('');
 
   useEffect(() => {
     fetchData(search);
@@ -134,13 +139,19 @@ export default function AuctionList({user}) {
     await dispatch(updateRealTimeAuction(data));
   };
 
+  const showAuctionVehicles = (id) => {
+    console.log(id);
+    setAuctionId(id);
+    setShowAuctionVehiclesModal(true);
+  };
+
   return (
     <>
       <CustomDataTable
         title={<IntlMessages id='auction.auctionList' />}
         total={total}
         data={data}
-        columns={tableColumns(router)}
+        columns={tableColumns(router, showAuctionVehicles)}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}
@@ -167,6 +178,13 @@ export default function AuctionList({user}) {
           toggleOpen={() => setOpenModal((d) => !d)}
           recordId={recordId}
           edit={recordId ? true : false}
+        />
+      )}
+      {showAuctionVehiclesModal && (
+        <AuctionVehicleModal
+          open={showAuctionVehiclesModal}
+          toggleOpen={() => setShowAuctionVehiclesModal((d) => !d)}
+          auctionId={auctionId}
         />
       )}
     </>

@@ -8,6 +8,7 @@ import {
   SHOW_MESSAGE,
   ADD_NEW_AUCTION,
   INCREMENT_TOTAL_AUCTION,
+  GET_VEHICLE_AUCTIONS,
 } from 'shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
@@ -161,5 +162,31 @@ export const updateRealTimeAuction = (data) => {
     } catch (error) {
       console.log(error);
     }
+  };
+};
+
+export const onGetVehicleAuctionData = (filterData) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    jwtAxios
+      .get(`/auction_vehicles`, {
+        params: {
+          ...filterData,
+        },
+      })
+      .then((data) => {
+        if (data.status === 200) {
+          dispatch({type: FETCH_SUCCESS});
+          dispatch({type: GET_VEHICLE_AUCTIONS, payload: data.data});
+        } else {
+          dispatch({
+            type: FETCH_ERROR,
+            payload: 'Something went wrong, Please try again!',
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      });
   };
 };

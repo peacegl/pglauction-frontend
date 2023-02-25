@@ -827,6 +827,7 @@
   "common.endDate": "End Date",
   "common.minimum_bid": "Minimum Bid",
   "common.buy_now_price": "Buy Now Price",
+  "common.bid_status": "Bid Status",
   "common.slug": "Slug",
   "common.parent_name": "Parent Name",
   "common.users_count": "Users Count",

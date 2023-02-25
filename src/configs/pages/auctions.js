@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import moment from 'moment';
 import 'moment-timezone';
 
-export const tableColumns = function (router) {
+export const tableColumns = function (router, showAuctionVehicles) {
   return [
     {
       name: 'id',
@@ -53,6 +53,23 @@ export const tableColumns = function (router) {
     {
       name: 'items_count',
       label: messages['auction.VehiclesCount'],
+      options: {
+        download: false,
+        sort: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              fontWeight: 'bold',
+              cursor: 'pointer',
+            }}
+            onClick={() => showAuctionVehicles(tableMeta.rowData[0])}
+            noWrap={true}
+          >
+            {value}
+          </Typography>
+        ),
+      },
     },
     {
       name: 'status',
