@@ -10,6 +10,7 @@ import {useEffect, useState} from 'react';
 import RoleModal from './RoleModal';
 import SingleRoleModal from './SingleRoleModal';
 import PropTypes from 'prop-types';
+import UserRolesModal from './UserRoles';
 
 export default function RoleList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -17,6 +18,9 @@ export default function RoleList({user}) {
   const [selected, setSelected] = useState([]);
   const [singleRole, setSingleRole] = useState([]);
   const [showSingleRoleModal, setShowSingleRoleModal] = useState(false);
+  const [showUserRoleModal, setShowUserRoleModal] = useState(false);
+  const [roleId, setRoleId] = useState('');
+
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
   const [search, setSearch] = useState('');
@@ -124,13 +128,19 @@ export default function RoleList({user}) {
     setShowSingleRoleModal(true);
   };
 
+  const roleUsers = (id) => {
+    console.log(id, 'id');
+    setRoleId(id);
+    setShowUserRoleModal(true);
+  };
+
   return (
     <>
       <CustomDataTable
         title={<IntlMessages id='role.roleList' />}
         total={total}
         data={data}
-        columns={tableColumns(getSingleRole)}
+        columns={tableColumns(getSingleRole, roleUsers)}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}
@@ -189,6 +199,15 @@ export default function RoleList({user}) {
           open={showSingleRoleModal}
           toggleOpen={() => setShowSingleRoleModal((d) => !d)}
           singleRole={singleRole}
+          width={500}
+        />
+      )}
+
+      {showUserRoleModal && (
+        <UserRolesModal
+          open={showUserRoleModal}
+          toggleOpen={() => setShowUserRoleModal((d) => !d)}
+          roleId={roleId}
           width={500}
         />
       )}

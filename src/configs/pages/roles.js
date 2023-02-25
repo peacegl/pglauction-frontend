@@ -5,7 +5,7 @@ import * as yup from 'yup';
 
 const {messages = []} = appIntl() ? appIntl() : {};
 
-export const tableColumns = function (getSingleRole) {
+export const tableColumns = function (getSingleRole, roleUsers) {
   return [
     {
       name: 'id',
@@ -60,7 +60,7 @@ export const tableColumns = function (getSingleRole) {
               fontWeight: 'bold',
               cursor: 'pointer',
             }}
-            onClick={() => console.log('hello')}
+            onClick={() => roleUsers(tableMeta.rowData[0])}
             noWrap={true}
           >
             {value +

@@ -141,7 +141,6 @@ export default function AuctionList({user}) {
   };
 
   const showAuctionVehicles = (id) => {
-    console.log(id);
     setAuctionId(id);
     setShowAuctionVehiclesModal(true);
   };
