@@ -805,6 +805,7 @@
   "common.password": "Password",
   "common.passwordConfirmation": "Password Confirmation",
   "common.parentName": "Parent Name",
+  "common.user": "User",
 
   "common.fullnamePlaceholder": "Type fullname",
   "common.lastnamePlaceholder": "Type lastname",
@@ -972,6 +973,7 @@
   "role.roleDownload": "Role Download",
   "role.roleInfo": "Role Info",
   "role.permissions": "Permissions",
+  "role.permission": "Permission",
   "message.roleCreated": "Role created successfully!",
   "message.roleUpdated": "Role updated successfully!",
   "role.deleteMessage": "Are you sure, you want to delete the selected Role(s)?",

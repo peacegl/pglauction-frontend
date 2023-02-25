@@ -51,10 +51,52 @@ export const tableColumns = function (getSingleRole) {
     {
       name: 'users_count',
       label: messages['common.users_count'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              fontWeight: 'bold',
+              cursor: 'pointer',
+            }}
+            onClick={() => console.log('hello')}
+            noWrap={true}
+          >
+            {value +
+              ' ' +
+              `${
+                value > 1 ? messages['sidebar.users'] : messages['common.user']
+              }`}
+          </Typography>
+        ),
+      },
     },
     {
       name: 'permissions_count',
       label: messages['common.permissions_count'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              fontWeight: 'bold',
+              cursor: 'pointer',
+            }}
+            onClick={() => console.log('hello')}
+            noWrap={true}
+          >
+            {value +
+              ' ' +
+              `${
+                value > 1
+                  ? messages['role.permissions']
+                  : messages['role.permission']
+              }`}
+          </Typography>
+        ),
+      },
     },
     {
       name: 'created_by',
