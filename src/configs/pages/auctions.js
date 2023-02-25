@@ -66,7 +66,13 @@ export const tableColumns = function (router, showAuctionVehicles) {
             onClick={() => showAuctionVehicles(tableMeta.rowData[0])}
             noWrap={true}
           >
-            {value}
+            {value +
+              ' ' +
+              `${
+                value > 1
+                  ? messages['sidebar.vehicles']
+                  : messages['common.vehicle']
+              }`}
           </Typography>
         ),
       },
