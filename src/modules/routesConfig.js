@@ -16,7 +16,6 @@ import {
   VIEW_PERMISSIONS,
   VIEW_ROLES,
   VIEW_AUCTIONS,
-  VIEW_AUCTION_ITEMS,
 } from 'shared/constants/Permissions';
 
 const routesConfig = [
@@ -75,15 +74,6 @@ const routesConfig = [
     url: '/admin/auctions',
     permittedPermission: VIEW_AUCTIONS,
   },
-  // {
-  //   id: 'auction_items',
-  //   title: 'Auction Item List',
-  //   messageId: 'sidebar.auctionItems',
-  //   type: 'item',
-  //   icon: <SellIcon sx={{fontSize: 22}} />,
-  //   url: '/admin/auction_items',
-  //   permittedPermission: VIEW_AUCTION_ITEMS,
-  // },
   {
     id: 'users',
     title: 'User List',

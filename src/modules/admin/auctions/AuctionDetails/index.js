@@ -12,6 +12,7 @@ const AuctionDetails = () => {
   const [auctionItems, setAuctionItems] = useState([]);
   const [auctionItemsLoading, setAuctionItemsLoading] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(0);
   const router = useRouter();
   const {id} = router.query;
   const {user} = useAuthUser();
@@ -19,16 +20,19 @@ const AuctionDetails = () => {
   useEffect(() => {
     if (id) {
       getData(`/auctions/${id}`, {}, setLoading, setAuctionData);
+    }
+  }, [id]);
+  useEffect(() => {
+    if (id) {
       getData(
-        `/website/auctions/${id}?per_page=50&page=1/`,
+        `/website/auctions/${id}?per_page=10&page=${page + 1}/`,
         {},
         setAuctionItemsLoading,
         setAuctionItems,
       );
     }
-  }, [id]);
+  }, [id, page]);
 
-  console.log(auctionItems, aucitonData);
   return (
     <>
       {loading ? (

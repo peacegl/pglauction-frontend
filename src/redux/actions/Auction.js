@@ -9,7 +9,7 @@ import {
   ADD_NEW_AUCTION,
   INCREMENT_TOTAL_AUCTION,
   GET_VEHICLE_AUCTIONS,
-  SET_AUCTION_DATA,
+  GET_AUCTION_ITEMS,
 } from 'shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
@@ -192,7 +192,7 @@ export const onGetVehicleAuctionData = (filterData) => {
   };
 };
 
-export const onGetAuctionDetail = (id) => {
+export const onGetAuctionItems = (id) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     jwtAxios
@@ -200,7 +200,7 @@ export const onGetAuctionDetail = (id) => {
       .then((data) => {
         if (data.status === 200) {
           dispatch({type: FETCH_SUCCESS});
-          dispatch({type: SET_AUCTION_DATA, payload: data.data});
+          dispatch({type: GET_AUCTION_ITEMS, payload: data.data});
         } else {
           dispatch({
             type: FETCH_ERROR,

@@ -3,7 +3,6 @@ export * from './Setting';
 export * from './User';
 export * from './Customer';
 export * from './Location';
-export * from './AuctionItem';
 export * from './Vehicle';
 export * from './Role';
 export * from './Permission';
