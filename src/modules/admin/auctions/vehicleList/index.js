@@ -14,7 +14,7 @@ import {onGetVehicleAuctionData} from 'redux/actions';
 const AuctionVehicleList = ({auctionId}) => {
   const dispatch = useDispatch();
   const {data = [], total = 0} = useSelector(
-    ({auctions}) => auctions.auctionVehicleList,
+    ({auctions}) => auctions.auctionItemList,
   );
   const {loading} = useSelector(({common}) => common);
   const [tableData, setTableData] = useState(data);

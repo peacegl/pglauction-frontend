@@ -5,7 +5,7 @@ import LotInfo from 'components/vehicles/VehicleDetails/LotInfo';
 import ImageCarousel from 'components/design/ImageCarousel';
 import CustomCarousel from 'components/CustomCarousel';
 import IntlMessages from '@crema/utility/IntlMessages';
-import ItemHeader from 'components/design/ItemHeader';
+import VehicleHeader from 'components/design/VehicleHeader';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import {useDispatch, useSelector} from 'react-redux';
 import {Box, Container} from '@mui/material';
@@ -83,8 +83,8 @@ const VehicleDetail = () => {
     <>
       {vehicle.id && (
         <Container maxWidth='xl'>
-          <ItemHeader
-            item={vehicle}
+          <VehicleHeader
+            vehicle={vehicle}
             admin={false}
             onBack={() => router.push('/')}
           />

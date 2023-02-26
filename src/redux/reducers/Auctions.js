@@ -11,9 +11,9 @@ import {
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
 const initialState = {
   auctionsList: [],
-  currectAuction: null,
+  auction: {},
   filterData: {},
-  auctionVehicleList: [],
+  auctionItemList: [],
 };
 
 const AuctionReducer = (state = initialState, action) => {
@@ -51,7 +51,7 @@ const AuctionReducer = (state = initialState, action) => {
     case SET_AUCTION_DATA:
       return {
         ...state,
-        currectAuction: action.payload,
+        auction: action.payload,
       };
 
     case INCREMENT_TOTAL_AUCTION:
@@ -66,7 +66,7 @@ const AuctionReducer = (state = initialState, action) => {
     case GET_VEHICLE_AUCTIONS:
       return {
         ...state,
-        auctionVehicleList: action.payload,
+        auctionItemList: action.payload,
       };
 
     default:

@@ -1,7 +1,7 @@
 import SaleInfo from 'components/vehicles/VehicleDetails/SaleInfo';
 import LotInfo from 'components/vehicles/VehicleDetails/LotInfo';
 import ImageCarousel from 'components/design/ImageCarousel';
-import ItemHeader from 'components/design/ItemHeader';
+import VehicleHeader from 'components/design/VehicleHeader';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import {useDispatch, useSelector} from 'react-redux';
 import Error404 from 'modules/errorPages/Error404';
@@ -34,8 +34,8 @@ const VehicleDetail = () => {
     <>
       {vehicle.id ? (
         <>
-          <ItemHeader
-            item={vehicle}
+          <VehicleHeader
+            vehicle={vehicle}
             admin={true}
             onBack={() => router.back()}
           />

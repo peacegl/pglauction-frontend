@@ -1,7 +1,7 @@
 import SaleInfo from 'components/vehicles/VehicleDetails/SaleInfo';
 import LotInfo from 'components/vehicles/VehicleDetails/LotInfo';
 import ImageCarousel from 'components/design/ImageCarousel';
-import ItemHeader from 'components/design/ItemHeader';
+import VehicleHeader from 'components/design/VehicleHeader';
 import {Box, Container} from '@mui/material';
 import {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
@@ -43,8 +43,8 @@ const SingleAuctionItem = (props) => {
   return (
     vehicle.id && (
       <Container maxWidth='xl'>
-        <ItemHeader
-          item={vehicle.vehicle ?? vehicle}
+        <VehicleHeader
+          vehicle={vehicle.vehicle ?? vehicle}
           onBack={() => {
             if (back) {
               router.back();
