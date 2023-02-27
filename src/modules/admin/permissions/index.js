@@ -8,6 +8,7 @@ import {onGetPermissionList} from 'redux/actions';
 import {useEffect, useState} from 'react';
 import SinglePermissionModal from './SinglePermissionModal';
 import PermissionUsersModal from './permission_users_modal';
+import PermissionRolesModal from './permission_roles_modal';
 
 export default function UserList() {
   const [singlePermission, setSinglePermission] = useState([]);
@@ -167,6 +168,14 @@ export default function UserList() {
         <PermissionUsersModal
           open={showPermissionUserModal}
           toggleOpen={() => setShowPermissionUserModal((d) => !d)}
+          id={PermissionId}
+        />
+      )}
+
+      {showPermissionRoleModal && (
+        <PermissionRolesModal
+          open={showPermissionRoleModal}
+          toggleOpen={() => setShowPermissionRoleModal((d) => !d)}
           id={PermissionId}
         />
       )}
