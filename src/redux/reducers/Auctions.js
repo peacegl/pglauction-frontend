@@ -15,7 +15,7 @@ const initialState = {
   auction: {},
   filterData: {},
   auctionItemList: [],
-  auctionItemItemsData: {},
+  auctionItemsData: {},
 };
 
 const AuctionReducer = (state = initialState, action) => {
@@ -73,7 +73,7 @@ const AuctionReducer = (state = initialState, action) => {
     case GET_AUCTION_ITEMS:
       return {
         ...state,
-        auctionItemItemsData: action.payload,
+        auctionItemsData: action.payload,
       };
     default:
       return state;

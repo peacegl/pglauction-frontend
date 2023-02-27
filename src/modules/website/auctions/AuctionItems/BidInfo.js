@@ -1,5 +1,5 @@
 import AppTextField from '@crema/core/AppFormComponents/AppTextField';
-import Item from 'components/vehicles/VehicleDetails/Item';
+import Item from 'components/design/Item';
 import SignInModal from 'modules/auth/Signin/SignInModal';
 import {FETCH_ERROR} from 'shared/constants/ActionTypes';
 import IntlMessages from '@crema/utility/IntlMessages';

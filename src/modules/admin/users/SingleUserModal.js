@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import {Stack} from '@mui/material';
 import {Avatar, Box, List, Typography} from '@mui/material';
-import Item from '../../../components/vehicles/VehicleDetails/Item';
+import Item from '../../../components/design/Item';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';

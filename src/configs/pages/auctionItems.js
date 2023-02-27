@@ -1,22 +1,20 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
-import {Typography} from '@mui/material';
 import * as yup from 'yup';
-import {CommonConfigs} from 'configs';
-const youtubeRegExp = CommonConfigs().youtubeRegExp;
+
 const {messages = []} = appIntl() ? appIntl() : {};
 export const tableColumns = function () {
   return [
     {
-      name: 'str_code',
+      name: 'vehicle.str_code',
       label: messages['common.code'],
     },
     {
-      name: 'vin',
+      name: 'vehicle.vin',
       label: messages['common.vin'],
     },
     {
-      name: 'lot_number',
+      name: 'vehicle.lot_number',
       label: messages['common.lot_number'],
     },
     {
@@ -36,23 +34,23 @@ export const tableColumns = function () {
       label: messages['common.status'],
     },
     {
-      name: 'seller',
+      name: 'vehicle.seller',
       label: messages['common.seller'],
     },
     {
-      name: 'created_by',
+      name: 'vehicle.created_by',
       label: messages['common.created_by'],
     },
     {
-      name: 'updated_by',
+      name: 'vehicle.updated_by',
       label: messages['common.updated_by'],
     },
     {
-      name: 'created_at',
+      name: 'vehicle.created_at',
       label: messages['common.created_at'],
     },
     {
-      name: 'updated_at',
+      name: 'vehicle.updated_at',
       label: messages['common.updated_at'],
     },
   ];

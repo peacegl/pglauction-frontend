@@ -5,7 +5,7 @@ import List from '@mui/material/List';
 import {moneyFormater} from 'configs';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import Item from './Item';
+import Item from '../../design/Item';
 import 'moment-timezone';
 import {
   alpha,

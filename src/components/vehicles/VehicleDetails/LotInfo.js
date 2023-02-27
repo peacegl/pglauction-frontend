@@ -7,7 +7,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 import {useState} from 'react';
-import Item from './Item';
+import Item from '../../design/Item';
 
 export default function LotInfo({vehicle, admin}) {
   const [value, setValue] = useState('lot_info');

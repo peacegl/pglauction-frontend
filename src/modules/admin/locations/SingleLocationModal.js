@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import {Stack} from '@mui/material';
 import {Box, List, Typography} from '@mui/material';
-import Item from '../../../components/vehicles/VehicleDetails/Item';
+import Item from '../../../components/design/Item';
 
 export default function SingleLocationModal({
   open,
