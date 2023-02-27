@@ -10,6 +10,7 @@ import AppSelect from '../../../../@crema/core/AppSelect';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {onGetVehicleAuctionData} from 'redux/actions';
+import {CardActions, Pagination} from '@mui/material';
 
 const AuctionVehicleList = ({auctionId}) => {
   const dispatch = useDispatch();
@@ -17,20 +18,24 @@ const AuctionVehicleList = ({auctionId}) => {
     ({auctions}) => auctions.auctionItemList,
   );
   const {loading} = useSelector(({common}) => common);
-  const [tableData, setTableData] = useState(data);
+  const [page, setPage] = useState(0);
+  const [perPage, setPerPage] = useState(10);
 
   useEffect(() => {
-    console.log(auctionId);
     fetchData(auctionId);
-    setTableData(data);
-  }, []);
+  }, [page]);
 
   const fetchData = async (actionId) => {
     await dispatch(
-      onGetVehicleAuctionData({
-        auction_id: actionId,
+      onGetVehicleAuctionData(actionId, {
+        per_page: perPage,
+        page: page + 1,
       }),
     );
+  };
+
+  const onPageChange2 = (event, value) => {
+    setPage(value - 1);
   };
 
   const handleChange = (value) => {
@@ -46,8 +51,28 @@ const AuctionVehicleList = ({auctionId}) => {
   const {messages} = useIntl();
 
   return (
-    <AppCard contentStyle={{px: 0}} sxStyle={{height: 1}}>
-      {!loading ? <DealsTable dealsTableData={data} /> : <Box></Box>}
+    <AppCard
+      contentStyle={{
+        px: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      {!loading ? (
+        <DealsTable dealsTableData={data} />
+      ) : (
+        <Box sx={{height: '500px'}}></Box>
+      )}
+      <CardActions>
+        <Pagination
+          count={Math.ceil(total / perPage)}
+          page={page + 1}
+          onChange={onPageChange2}
+          color='primary'
+        />
+      </CardActions>
     </AppCard>
   );
 };

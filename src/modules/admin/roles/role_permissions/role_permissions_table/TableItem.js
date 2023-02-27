@@ -1,13 +1,13 @@
 import React from 'react';
 import TableCell from '@mui/material/TableCell';
-import {Box} from '@mui/material';
-import Avatar from '@mui/material/Avatar';
+
 import TableRow from '@mui/material/TableRow';
 import PropTypes from 'prop-types';
 import {grey, red} from '@mui/material/colors';
-import {Fonts} from '../../../../../shared/constants/AppEnums';
+import {appIntl} from '@crema/utility/helper/Utils';
 
 const TableItem = (props) => {
+  const {messages = []} = appIntl() ? appIntl() : {};
   const {row} = props;
 
   const color = grey[100];
@@ -40,31 +40,6 @@ const TableItem = (props) => {
       className='item-hover'
       onClick={() => handleClick(row.id)}
     >
-      <TableCell align='left' className='tableCell'>
-        <Box display='flex' alignItems='center'>
-          {row.image ? (
-            <Avatar
-              sx={{
-                width: {xs: 40, xl: 50},
-                height: {xs: 40, xl: 50},
-                backgroundColor: red[500],
-              }}
-              src={row.image}
-            />
-          ) : (
-            <Avatar
-              sx={{
-                width: {xs: 40, xl: 50},
-                height: {xs: 40, xl: 50},
-                backgroundColor: red[500],
-              }}
-            >
-              {row.fullname[0].toUpperCase()}
-            </Avatar>
-          )}
-        </Box>
-      </TableCell>
-
       <TableCell
         scope='row'
         className='tableCell'
@@ -74,49 +49,38 @@ const TableItem = (props) => {
           cursor: 'pointer',
         }}
       >
-        {row.str_code}
+        {row.name
+          .replaceAll('_', ' ')
+          .replace(/^(.)|\s+(.)/g, (c) => c.toUpperCase())}
       </TableCell>
 
       <TableCell align='left' className='tableCell'>
-        {row.username}
+        {row.name}
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        {row.fullname}
+        {row.group_name}
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        {row.phone}
-      </TableCell>
-
-      <TableCell align='left' className='tableCell'>
-        {row.whatsapp}
-      </TableCell>
-      <TableCell align='left' className='tableCell'>
-        {row.gender}
-      </TableCell>
-      <TableCell align='left' className='tableCell'>
-        {row.email}
+        {row.users_count +
+          ' ' +
+          `${
+            row.users_count > 1
+              ? messages['sidebar.users']
+              : messages['common.user']
+          }`}
       </TableCell>
 
       <TableCell align='left' className='tableCell'>
-        {row.status}
-      </TableCell>
-
-      <TableCell align='left' className='tableCell'>
-        {row.type}
-      </TableCell>
-      <TableCell align='left' className='tableCell'>
-        {row.birth_date}
-      </TableCell>
-
-      <TableCell align='left' className='tableCell'>
-        {row.created_by}
+        {row.roles_count +
+          ' ' +
+          `${
+            row.roles_count > 1
+              ? messages['sidebar.roles']
+              : messages['common.role']
+          }`}
       </TableCell>
       <TableCell align='left' className='tableCell'>
         {row.created_at}
-      </TableCell>
-
-      <TableCell align='left' className='tableCell'>
-        {row.updated_by}
       </TableCell>
       <TableCell align='left' className='tableCell'>
         {row.updated_at}

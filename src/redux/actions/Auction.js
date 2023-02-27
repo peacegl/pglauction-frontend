@@ -167,29 +167,30 @@ export const updateRealTimeAuction = (data) => {
   };
 };
 
-export const onGetVehicleAuctionData = (filterData) => {
-  return (dispatch) => {
+export const onGetVehicleAuctionData = (id, filterData) => {
+  console.log(id);
+  return async (dispatch) => {
+    dispatch({type: GET_VEHICLE_AUCTIONS, payload: {}});
     dispatch({type: FETCH_START});
-    jwtAxios
-      .get(`/auction_vehicles`, {
+    const {messages} = appIntl();
+    try {
+      const res = await jwtAxios.get(`auctions/auction_items/${id}`, {
         params: {
           ...filterData,
         },
-      })
-      .then((data) => {
-        if (data.status === 200) {
-          dispatch({type: FETCH_SUCCESS});
-          dispatch({type: GET_VEHICLE_AUCTIONS, payload: data.data});
-        } else {
-          dispatch({
-            type: FETCH_ERROR,
-            payload: 'Something went wrong, Please try again!',
-          });
-        }
-      })
-      .catch((error) => {
-        dispatch({type: FETCH_ERROR, payload: error.message});
       });
+      if (res.status === 200 && res.data.result) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_VEHICLE_AUCTIONS, payload: res?.data});
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: messages['message.somethingWentWrong'],
+        });
+      }
+    } catch (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+    }
   };
 };
 

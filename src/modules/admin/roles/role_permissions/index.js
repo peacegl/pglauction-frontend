@@ -1,26 +1,28 @@
 import React, {useEffect, useState} from 'react';
-import TicketSupportTable from './user_roles_tables';
+import PermissionTable from './role_permissions_table';
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
-import {onGetUserRoles} from 'redux/actions';
+import {onGetRolePermissions} from 'redux/actions';
 import {AppCard} from '@crema';
 import {Box} from '@mui/system';
 import {CardActions, Pagination} from '@mui/material';
 
-const UserRoles = ({roleId}) => {
+const PermissionRoles = ({roleId}) => {
   const dispatch = useDispatch();
-  const {data = [], total = 0} = useSelector(({roles}) => roles.userRoles);
+  const {data = [], total = 0} = useSelector(
+    ({roles}) => roles.PermissionRoles,
+  );
   const {loading} = useSelector(({common}) => common);
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(10);
 
   useEffect(() => {
     fetchData(roleId);
-  }, []);
+  }, [page]);
 
   const fetchData = async (roleId) => {
     await dispatch(
-      onGetUserRoles(roleId, {
+      onGetRolePermissions(roleId, {
         per_page: perPage,
         page: page + 1,
       }),
@@ -42,9 +44,9 @@ const UserRoles = ({roleId}) => {
       }}
     >
       {!loading ? (
-        <TicketSupportTable ticketSupportData={data} />
+        <PermissionTable ticketSupportData={data} />
       ) : (
-        <Box sx={{height: '500px'}}></Box>
+        <Box sx={{height: '350px'}}></Box>
       )}
       <CardActions>
         <Pagination
@@ -58,8 +60,8 @@ const UserRoles = ({roleId}) => {
   );
 };
 
-export default UserRoles;
+export default PermissionRoles;
 
-UserRoles.propTypes = {
+PermissionRoles.propTypes = {
   roleId: PropTypes.any,
 };

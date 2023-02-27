@@ -2,7 +2,7 @@ import React from 'react';
 import TableCell from '@mui/material/TableCell';
 import IntlMessages from '../../../../../@crema/utility/IntlMessages';
 import TableRow from '@mui/material/TableRow';
-import {grey} from '@mui/material/colors';
+
 import {Fonts} from '../../../../../shared/constants/AppEnums';
 
 const TableHeading = () => {
@@ -28,47 +28,22 @@ const TableHeading = () => {
       }}
     >
       <TableCell className='tableCell'>
-        <IntlMessages id='common.profile' />
+        <IntlMessages id='common.name' />
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        <IntlMessages id='common.code' />
+        <IntlMessages id='common.slug' />
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        <IntlMessages id='common.username' />
+        <IntlMessages id='common.group' />
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        <IntlMessages id='common.fullname' />
+        <IntlMessages id='common.users_count' />
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        <IntlMessages id='common.phone' />
-      </TableCell>
-      <TableCell align='left' className='tableCell'>
-        <IntlMessages id='common.whatsapp' />
-      </TableCell>
-      <TableCell align='left' className='tableCell'>
-        <IntlMessages id='common.gender' />
-      </TableCell>
-      <TableCell align='left' className='tableCell'>
-        <IntlMessages id='common.email' />
-      </TableCell>
-      <TableCell align='left' className='tableCell'>
-        <IntlMessages id='common.status' />
-      </TableCell>
-      <TableCell align='left' className='tableCell'>
-        <IntlMessages id='common.type' />
-      </TableCell>
-      <TableCell align='left' className='tableCell'>
-        <IntlMessages id='common.birthDate' />
-      </TableCell>
-
-      <TableCell align='left' className='tableCell'>
-        <IntlMessages id='common.created_by' />
+        <IntlMessages id='common.roles_count' />
       </TableCell>
       <TableCell align='left' className='tableCell'>
         <IntlMessages id='common.created_at' />
-      </TableCell>
-      <TableCell align='left' className='tableCell'>
-        <IntlMessages id='common.updated_by' />
       </TableCell>
       <TableCell align='left' className='tableCell'>
         <IntlMessages id='common.updated_at' />

@@ -11,7 +11,7 @@ const DealsTable = (props) => {
   const {dealsTableData} = props;
 
   return (
-    <AppTableContainer sxStyle={{height: '600px'}}>
+    <AppTableContainer sxStyle={{height: '500px'}}>
       <Table className='table'>
         <TableHead
           sx={{

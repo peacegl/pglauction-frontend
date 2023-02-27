@@ -6,14 +6,9 @@ import Card from '@mui/material/Card';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import {Box, CardContent, Typography} from '@mui/material';
-import AuctionVehicleList from './vehicleList';
+import PermissionRoles from './role_permissions';
 
-export default function AuctionVehicleModal({
-  open,
-  toggleOpen,
-  auctionId,
-  width,
-}) {
+export default function RolePermissionModal({open, toggleOpen, roleId, width}) {
   const [size, setSize] = useState([0]);
 
   useLayoutEffect(() => {
@@ -32,7 +27,7 @@ export default function AuctionVehicleModal({
           sx={{
             mx: 'auto',
             overflow: {xs: 'auto', s: 'auto', md: 'auto', lg: 'unset'},
-            height: {xs: '700px', s: '700px', md: '700px', lg: 'auto '},
+            height: {xs: '700px', s: '700px', md: '700px', lg: 'auto'},
             width: width
               ? size >= width
                 ? width
@@ -67,7 +62,7 @@ export default function AuctionVehicleModal({
                   color: (theme) => theme.palette.primary.main,
                 }}
               >
-                <IntlMessages id='vehicle.vehicleList' />
+                <IntlMessages id='sidebar.pages.userList' />
               </Typography>
             </Box>
           </Box>
@@ -76,7 +71,7 @@ export default function AuctionVehicleModal({
               padding: '0 !important',
             }}
           >
-            <AuctionVehicleList auctionId={auctionId}></AuctionVehicleList>
+            <PermissionRoles roleId={roleId}></PermissionRoles>
           </CardContent>
         </Card>
       </Modal>
@@ -84,9 +79,9 @@ export default function AuctionVehicleModal({
   );
 }
 
-AuctionVehicleModal.propTypes = {
+RolePermissionModal.propTypes = {
   open: PropTypes.bool.isRequired,
   toggleOpen: PropTypes.func.isRequired,
-  auctionId: PropTypes.any.isRequired,
+  roleId: PropTypes.any.isRequired,
   width: PropTypes.number,
 };

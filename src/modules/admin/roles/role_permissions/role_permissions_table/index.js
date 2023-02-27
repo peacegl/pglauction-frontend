@@ -7,9 +7,9 @@ import TableHeading from './TableHeading';
 import TableItem from './TableItem';
 import AppTableContainer from '../../../../../@crema/core/AppTableContainer';
 
-const TicketSupportTable = ({ticketSupportData}) => {
+const PermissionTable = ({ticketSupportData}) => {
   return (
-    <AppTableContainer sxStyle={{height: '500px'}}>
+    <AppTableContainer sxStyle={{height: '350px'}}>
       <Table>
         <TableHead
           sx={{
@@ -32,12 +32,12 @@ const TicketSupportTable = ({ticketSupportData}) => {
   );
 };
 
-export default TicketSupportTable;
+export default PermissionTable;
 
-TicketSupportTable.defaultProps = {
+PermissionTable.defaultProps = {
   ticketSupportData: [],
 };
 
-TicketSupportTable.propTypes = {
+PermissionTable.propTypes = {
   ticketSupportData: PropTypes.array,
 };

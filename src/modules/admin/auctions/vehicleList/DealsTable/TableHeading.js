@@ -10,11 +10,14 @@ const TableHeading = () => {
     <TableRow
       sx={{
         borderBottom: '0 none',
+        bgcolor: (theme) => theme.palette.primary.main,
+
         color: grey[500],
         '& .tableCell': {
           borderBottom: '0 none',
           fontSize: 13,
           padding: 2,
+          color: 'white',
           fontWeight: Fonts.BOLD,
           '&:first-of-type': {
             pl: 5,
@@ -37,7 +40,6 @@ const TableHeading = () => {
       <TableCell align='left' className='tableCell'>
         <IntlMessages id='common.lot_number' />
       </TableCell>
-
       <TableCell align='left' className='tableCell'>
         <IntlMessages id='common.minimum_bid' />
       </TableCell>
@@ -47,7 +49,6 @@ const TableHeading = () => {
       <TableCell align='left' className='tableCell'>
         <IntlMessages id='common.bid_status' />
       </TableCell>
-
       <TableCell align='left' className='tableCell'>
         <IntlMessages id='common.totalCost' />
       </TableCell>
