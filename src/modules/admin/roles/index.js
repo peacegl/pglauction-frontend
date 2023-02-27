@@ -129,7 +129,6 @@ export default function RoleList({user}) {
   };
 
   const roleUsers = (id) => {
-    console.log(id, 'id');
     setRoleId(id);
     setShowUserRoleModal(true);
   };
@@ -208,7 +207,6 @@ export default function RoleList({user}) {
           open={showUserRoleModal}
           toggleOpen={() => setShowUserRoleModal((d) => !d)}
           roleId={roleId}
-          width={500}
         />
       )}
     </>

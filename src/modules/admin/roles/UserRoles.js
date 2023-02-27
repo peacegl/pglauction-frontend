@@ -27,7 +27,7 @@ export default function UserRolesModal({open, toggleOpen, roleId, width}) {
           sx={{
             mx: 'auto',
             overflow: {xs: 'auto', s: 'auto', md: 'auto', lg: 'unset'},
-            height: {xs: '700px', s: '700px', md: '700px', lg: '700px'},
+            height: {xs: '700px', s: '700px', md: '700px', lg: 'auto'},
             width: width
               ? size >= width
                 ? width
@@ -62,11 +62,15 @@ export default function UserRolesModal({open, toggleOpen, roleId, width}) {
                   color: (theme) => theme.palette.primary.main,
                 }}
               >
-                <IntlMessages id='vehicle.vehicleList' />
+                <IntlMessages id='sidebar.pages.userList' />
               </Typography>
             </Box>
           </Box>
-          <CardContent>
+          <CardContent
+            sx={{
+              padding: '0 !important',
+            }}
+          >
             <UserRoles roleId={roleId}></UserRoles>
           </CardContent>
         </Card>

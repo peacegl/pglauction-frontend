@@ -9,11 +9,13 @@ const TableHeading = () => {
   return (
     <TableRow
       sx={{
+        bgcolor: (theme) => theme.palette.primary.main,
         borderBottom: '0 none',
-        color: grey[500],
+
         '& .tableCell': {
           borderBottom: '0 none',
           fontSize: 13,
+          color: 'white',
           padding: {xs: 2, xl: 4},
           fontWeight: Fonts.BOLD,
           '&:first-of-type': {
@@ -26,19 +28,50 @@ const TableHeading = () => {
       }}
     >
       <TableCell className='tableCell'>
-        <IntlMessages id='common.num' />
+        <IntlMessages id='common.profile' />
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        <IntlMessages id='dashboard.basicInfo' />
+        <IntlMessages id='common.code' />
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        <IntlMessages id='dashboard.ticketId' />
+        <IntlMessages id='common.username' />
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        <IntlMessages id='dashboard.createDate' />
+        <IntlMessages id='common.fullname' />
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        <IntlMessages id='common.contact' />
+        <IntlMessages id='common.phone' />
+      </TableCell>
+      <TableCell align='left' className='tableCell'>
+        <IntlMessages id='common.whatsapp' />
+      </TableCell>
+      <TableCell align='left' className='tableCell'>
+        <IntlMessages id='common.gender' />
+      </TableCell>
+      <TableCell align='left' className='tableCell'>
+        <IntlMessages id='common.email' />
+      </TableCell>
+      <TableCell align='left' className='tableCell'>
+        <IntlMessages id='common.status' />
+      </TableCell>
+      <TableCell align='left' className='tableCell'>
+        <IntlMessages id='common.type' />
+      </TableCell>
+      <TableCell align='left' className='tableCell'>
+        <IntlMessages id='common.birthDate' />
+      </TableCell>
+
+      <TableCell align='left' className='tableCell'>
+        <IntlMessages id='common.created_by' />
+      </TableCell>
+      <TableCell align='left' className='tableCell'>
+        <IntlMessages id='common.created_at' />
+      </TableCell>
+      <TableCell align='left' className='tableCell'>
+        <IntlMessages id='common.updated_by' />
+      </TableCell>
+      <TableCell align='left' className='tableCell'>
+        <IntlMessages id='common.updated_at' />
       </TableCell>
     </TableRow>
   );

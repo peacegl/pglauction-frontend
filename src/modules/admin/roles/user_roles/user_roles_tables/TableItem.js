@@ -4,11 +4,17 @@ import {Box} from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import TableRow from '@mui/material/TableRow';
 import PropTypes from 'prop-types';
-import {red} from '@mui/material/colors';
+import {grey, red} from '@mui/material/colors';
 import {Fonts} from '../../../../../shared/constants/AppEnums';
 
 const TableItem = (props) => {
   const {row} = props;
+
+  const color = grey[100];
+
+  const handleClick = (id) => {
+    console.log(id);
+  };
 
   return (
     <TableRow
@@ -17,6 +23,7 @@ const TableItem = (props) => {
         '& .tableCell': {
           borderBottom: '0 none',
           fontSize: 13,
+
           padding: '6px 8px',
           '&:first-of-type': {
             pl: 5,
@@ -25,12 +32,14 @@ const TableItem = (props) => {
             pr: 5,
           },
         },
+        '&:hover': {
+          cursor: 'pointer',
+          backgroundColor: color,
+        },
       }}
       className='item-hover'
+      onClick={() => handleClick(row.id)}
     >
-      <TableCell scope='row' className='tableCell'>
-        {row.id}.
-      </TableCell>
       <TableCell align='left' className='tableCell'>
         <Box display='flex' alignItems='center'>
           {row.image ? (
@@ -50,22 +59,67 @@ const TableItem = (props) => {
                 backgroundColor: red[500],
               }}
             >
-              {'H'}
+              {row.fullname[0].toUpperCase()}
             </Avatar>
           )}
-          <Box component='span' ml={3.5} fontWeight={Fonts.MEDIUM}>
-            {row.name}
-          </Box>
         </Box>
       </TableCell>
+
+      <TableCell
+        scope='row'
+        className='tableCell'
+        sx={{
+          color: (theme) => theme.palette.primary.main,
+          fontWeight: 'bold',
+          cursor: 'pointer',
+        }}
+      >
+        {row.str_code}
+      </TableCell>
+
       <TableCell align='left' className='tableCell'>
-        {row.ticketId}
+        {row.username}
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        {row.created}
+        {row.fullname}
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        {row.contact}
+        {row.phone}
+      </TableCell>
+
+      <TableCell align='left' className='tableCell'>
+        {row.whatsapp}
+      </TableCell>
+      <TableCell align='left' className='tableCell'>
+        {row.gender}
+      </TableCell>
+      <TableCell align='left' className='tableCell'>
+        {row.email}
+      </TableCell>
+
+      <TableCell align='left' className='tableCell'>
+        {row.status}
+      </TableCell>
+
+      <TableCell align='left' className='tableCell'>
+        {row.type}
+      </TableCell>
+      <TableCell align='left' className='tableCell'>
+        {row.birth_date}
+      </TableCell>
+
+      <TableCell align='left' className='tableCell'>
+        {row.created_by}
+      </TableCell>
+      <TableCell align='left' className='tableCell'>
+        {row.created_at}
+      </TableCell>
+
+      <TableCell align='left' className='tableCell'>
+        {row.updated_by}
+      </TableCell>
+      <TableCell align='left' className='tableCell'>
+        {row.updated_at}
       </TableCell>
     </TableRow>
   );

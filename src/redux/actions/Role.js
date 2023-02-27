@@ -153,16 +153,15 @@ export const onDeleteRoles = (data) => {
   };
 };
 
-export const onGetUserRoles = (filterData) => {
+export const onGetUserRoles = (role_id, filterData) => {
   return async (dispatch) => {
     dispatch({type: FETCH_START});
     const {messages} = appIntl();
     try {
-      const res = await jwtAxios.get(`/role/user_roles`, {
+      const res = await jwtAxios.get(`/role/${role_id}/users`, {
         params: {...filterData},
       });
       if (res.status === 200 && res.data.result) {
-        console.log(res.data);
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_USER_ROLES_LIST, payload: res.data});
       } else {
