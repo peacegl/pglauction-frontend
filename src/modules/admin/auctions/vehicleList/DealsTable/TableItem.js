@@ -37,7 +37,7 @@ const TableItem = (props) => {
 
   return (
     <TableRow
-      key={row.id}
+      key={row.vehicle.id}
       sx={{
         borderBottom: '0 none',
         '& .tableCell': {
@@ -57,10 +57,10 @@ const TableItem = (props) => {
         },
       }}
       className='item-hover'
-      onClick={() => handleClick(row.id)}
+      onClick={() => handleClick(row.vehicle.id)}
     >
       <TableCell scope='row' className='tableCell'>
-        {row.code}.
+        {row.vehicle.str_code}
       </TableCell>
       <TableCell
         align='left'
@@ -75,11 +75,14 @@ const TableItem = (props) => {
             alignItems: 'center',
           }}
         >
-          {row.images[0] ? (
-            <Avatar src={row.images[0].path} sx={{height: 60, width: 60}} />
+          {row.vehicle.images[0] ? (
+            <Avatar
+              src={row.vehicle.images[0].path}
+              sx={{height: 60, width: 60}}
+            />
           ) : (
             <Avatar sx={{height: 60, width: 60}}>
-              {row?.model[0].toUpperCase()}
+              {row.vehicle.model[0].toUpperCase()}
             </Avatar>
           )}
           <Box
@@ -89,57 +92,55 @@ const TableItem = (props) => {
               fontWeight: Fonts.MEDIUM,
             }}
           >
-            {row.name}
+            {row.vehicle.name}
           </Box>
         </Box>
       </TableCell>
 
       <TableCell align='left' className='tableCell'>
-        {row.vin}
+        {row.vehicle.vin}
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        {row.lot_number}
+        {row.vehicle.lot_number}
       </TableCell>
 
       <TableCell align='left' className='tableCell'>
-        {moneyFormater(row.auction_items[0]?.minimum_bid)}
+        {moneyFormater(row.minimum_bid)}
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        {moneyFormater(row.auction_items[0]?.buy_now_price)}
+        {moneyFormater(row.buy_now_price)}
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        {row.auction_items[0]?.status}
+        {row?.status}
       </TableCell>
 
       <TableCell align='left' className='tableCell' fontWeight={Fonts.MEDIUM}>
-        {moneyFormater(row.price)}
+        {moneyFormater(row.vehicle.price)}
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        {row.sale_rate + ' %'}
+        {row.vehicle.sale_rate + ' %'}
       </TableCell>
 
       <TableCell align='left' className='tableCell'>
         {moneyFormater(
-          parseInt(row.price) + parseInt((row.price * row.sale_rate) / 100),
+          parseInt(row.vehicle.price) +
+            parseInt((row.vehicle.price * row.vehicle.sale_rate) / 100),
         )}
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        {row.year}
+        {row.vehicle.year}
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        {row.make}
+        {row.vehicle.make}
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        {row.model}
+        {row.vehicle.model}
       </TableCell>
-      {/* <TableCell align='left' className='tableCell'>
-        {row.status}
-      </TableCell> */}
 
       <TableCell
         align='left'
         sx={{
-          color: getProgressColor(row.status),
+          color: getProgressColor(row.vehicle.status),
         }}
         className='tableCell'
       >
@@ -149,43 +150,47 @@ const TableItem = (props) => {
             fontWeight: Fonts.REGULAR,
           }}
         >
-          {row.status.toUpperCase()}
+          {row.vehicle.status.toUpperCase()}
         </Box>
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        {row.exterior_color}
+        {row.vehicle.exterior_color}
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        {row.interior_color}
+        {row.vehicle.interior_color}
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        {row.primary_damage}
-      </TableCell>
-
-      <TableCell align='left' className='tableCell'>
-        {row.is_featured ? messages['common.yes'] : messages['common.no']}
-      </TableCell>
-      <TableCell align='left' className='tableCell'>
-        {row.is_best_selling ? messages['common.yes'] : messages['common.no']}
+        {row.vehicle.primary_damage}
       </TableCell>
 
       <TableCell align='left' className='tableCell'>
-        {row.engine_type}
+        {row.vehicle.is_featured
+          ? messages['common.yes']
+          : messages['common.no']}
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        {row.odometer_type}
-      </TableCell>
-
-      <TableCell align='left' className='tableCell'>
-        {row.transmission}
-      </TableCell>
-
-      <TableCell align='left' className='tableCell'>
-        {row.created_by?.username}
+        {row.vehicle.is_best_selling
+          ? messages['common.yes']
+          : messages['common.no']}
       </TableCell>
 
       <TableCell align='left' className='tableCell'>
-        {row.updated_by?.username}
+        {row.vehicle.engine_type}
+      </TableCell>
+      <TableCell align='left' className='tableCell'>
+        {row.vehicle.odometer_type}
+      </TableCell>
+
+      <TableCell align='left' className='tableCell'>
+        {row.vehicle.transmission}
+      </TableCell>
+
+      <TableCell align='left' className='tableCell'>
+        {row.vehicle.created_by?.username}
+      </TableCell>
+
+      <TableCell align='left' className='tableCell'>
+        {row.vehicle.updated_by?.username}
       </TableCell>
     </TableRow>
   );

@@ -32,7 +32,7 @@ export default function AuctionVehicleModal({
           sx={{
             mx: 'auto',
             overflow: {xs: 'auto', s: 'auto', md: 'auto', lg: 'unset'},
-            height: {xs: '700px', s: '700px', md: '700px', lg: '700px'},
+            height: {xs: '700px', s: '700px', md: '700px', lg: 'auto '},
             width: width
               ? size >= width
                 ? width
@@ -71,7 +71,11 @@ export default function AuctionVehicleModal({
               </Typography>
             </Box>
           </Box>
-          <CardContent>
+          <CardContent
+            sx={{
+              padding: '0 !important',
+            }}
+          >
             <AuctionVehicleList auctionId={auctionId}></AuctionVehicleList>
           </CardContent>
         </Card>
