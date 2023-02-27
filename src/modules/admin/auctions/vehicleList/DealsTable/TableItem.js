@@ -59,7 +59,15 @@ const TableItem = (props) => {
       className='item-hover'
       onClick={() => handleClick(row.vehicle.id)}
     >
-      <TableCell scope='row' className='tableCell'>
+      <TableCell
+        scope='row'
+        className='tableCell'
+        sx={{
+          color: (theme) => theme.palette.primary.main,
+          fontWeight: 'bold',
+          cursor: 'pointer',
+        }}
+      >
         {row.vehicle.str_code}
       </TableCell>
       <TableCell
