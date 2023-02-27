@@ -1,8 +1,6 @@
-import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
-import * as yup from 'yup';
-
 const {messages = []} = appIntl() ? appIntl() : {};
+
 export const tableColumns = function () {
   return [
     {
@@ -34,15 +32,15 @@ export const tableColumns = function () {
       label: messages['common.status'],
     },
     {
-      name: 'vehicle.seller',
+      name: 'vehicle.seller.loginable.fullname',
       label: messages['common.seller'],
     },
     {
-      name: 'vehicle.created_by',
+      name: 'vehicle.created_by.username',
       label: messages['common.created_by'],
     },
     {
-      name: 'vehicle.updated_by',
+      name: 'vehicle.updated_by.username',
       label: messages['common.updated_by'],
     },
     {
@@ -55,22 +53,3 @@ export const tableColumns = function () {
     },
   ];
 };
-
-export default function configs(invalidYoutube) {
-  return {
-    exportColumns: [],
-    validationSchema: [
-      yup.object({
-        minimum_bid: yup
-          .number()
-          .typeError(<IntlMessages id='validation.priceError' />),
-        // .required(<IntlMessages id='validation.mbidRequired' />),
-        buy_now_price: yup
-          .number()
-          .typeError(<IntlMessages id='validation.priceError' />)
-          .required(<IntlMessages id='validation.buyNowPriceRequired' />),
-      }),
-      yup.object({}),
-    ],
-  };
-}

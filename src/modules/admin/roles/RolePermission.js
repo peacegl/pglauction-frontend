@@ -71,7 +71,7 @@ export default function RolePermissionModal({open, toggleOpen, roleId, width}) {
               padding: '0 !important',
             }}
           >
-            <PermissionRoles roleId={roleId}></PermissionRoles>
+            <PermissionRoles roleId={roleId} />
           </CardContent>
         </Card>
       </Modal>

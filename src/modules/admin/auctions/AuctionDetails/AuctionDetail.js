@@ -20,16 +20,13 @@ export default function AuctionDetail({auction}) {
             fontWeight='bold'
             overflow='hidden'
           >
-            <IntlMessages id='auction.auctionDetail' />
+            sdfsd
           </Typography>
         }
       />
       <CardContent sx={{px: 3, py: 0}}>
         <List sx={{width: '100%', bgcolor: 'background.paper', pb: 0}}>
-          <Item
-            label={<IntlMessages id='auction.location' />}
-            value={'sfdfsd'}
-          />
+          <Item label={'sss'} value={'sfdfsd'} />
         </List>
       </CardContent>
     </Card>

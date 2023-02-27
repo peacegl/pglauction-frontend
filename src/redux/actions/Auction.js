@@ -174,7 +174,7 @@ export const onGetVehicleAuctionData = (id, filterData) => {
     dispatch({type: FETCH_START});
     const {messages} = appIntl();
     try {
-      const res = await jwtAxios.get(`auctions/auction_items/${id}`, {
+      const res = await jwtAxios.get(`auctions/${id}/items`, {
         params: {
           ...filterData,
         },

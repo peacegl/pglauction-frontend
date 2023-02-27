@@ -76,7 +76,7 @@ export default function AuctionVehicleModal({
               padding: '0 !important',
             }}
           >
-            <AuctionVehicleList auctionId={auctionId}></AuctionVehicleList>
+            <AuctionVehicleList auctionId={auctionId} />
           </CardContent>
         </Card>
       </Modal>
