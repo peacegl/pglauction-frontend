@@ -1,6 +1,6 @@
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
+
 import {useDispatch, useSelector} from 'react-redux';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import React, {useEffect, useState} from 'react';
@@ -30,6 +30,7 @@ import {
   MenuItem,
 } from '@mui/material';
 import {es} from 'date-fns/locale';
+import {VIEW_TYPE} from 'redux/reducers/Auctions';
 
 const VehicleList = () => {
   const dispatch = useDispatch();

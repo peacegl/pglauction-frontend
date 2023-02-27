@@ -1,6 +1,6 @@
 import AppsPagination from '@crema/core/AppsPagination';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
+
 import {useDispatch, useSelector} from 'react-redux';
 import IconButton from '@mui/material/IconButton';
 import ListIcon from '@mui/icons-material/List';
@@ -20,6 +20,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import {VIEW_TYPE} from 'redux/reducers/Auctions';
 
 const IconBtn = styled(IconButton)(({theme}) => {
   return {
