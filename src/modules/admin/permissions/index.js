@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {onGetPermissionList} from 'redux/actions';
 import {useEffect, useState} from 'react';
 import SinglePermissionModal from './SinglePermissionModal';
+import PermissionUsersModal from './permission_users_modal';
 
 export default function UserList() {
   const [singlePermission, setSinglePermission] = useState([]);
@@ -25,6 +26,10 @@ export default function UserList() {
   useEffect(() => {
     fetchData(search);
   }, [dispatch, page, per_page, orderBy]);
+
+  const [showPermissionUserModal, setShowPermissionUserModal] = useState(false);
+  const [showPermissionRoleModal, setShowPermissionRoleModal] = useState(false);
+  const [PermissionId, setPermissionId] = useState('');
 
   const fetchData = async (search = '') => {
     await dispatch(
@@ -97,13 +102,26 @@ export default function UserList() {
     setShowSinglePermissionModal(true);
   };
 
+  const PermissionUsers = (id) => {
+    setPermissionId(id);
+    setShowPermissionUserModal(true);
+  };
+  const permissionRoles = (id) => {
+    setPermissionId(id);
+    setShowPermissionRoleModal(true);
+  };
+
   return (
     <>
       <CustomDataTable
         title={<IntlMessages id='permission.permissionList' />}
         total={total}
         data={data}
-        columns={tableColumns(getSinglePermission)}
+        columns={tableColumns(
+          getSinglePermission,
+          PermissionUsers,
+          permissionRoles,
+        )}
         options={options}
         isLoading={loading}
         onEnterSearch={onEnterSearch}
@@ -142,6 +160,14 @@ export default function UserList() {
           toggleOpen={() => setShowSinglePermissionModal((d) => !d)}
           singlePermission={singlePermission}
           width={500}
+        />
+      )}
+
+      {showPermissionUserModal && (
+        <PermissionUsersModal
+          open={showPermissionUserModal}
+          toggleOpen={() => setShowPermissionUserModal((d) => !d)}
+          id={PermissionId}
         />
       )}
     </>
