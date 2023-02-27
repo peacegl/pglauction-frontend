@@ -8,6 +8,7 @@ import {
   UPDATE_ROLE,
   GET_ALL_ROLES_LIST,
   GET_USER_ROLES_LIST,
+  GET_PERMISSION_ROLES_LIST,
 } from 'shared/constants/ActionTypes';
 
 import {appIntl} from '../../@crema/utility/helper/Utils';
@@ -164,6 +165,29 @@ export const onGetUserRoles = (role_id, filterData) => {
       if (res.status === 200 && res.data.result) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_USER_ROLES_LIST, payload: res.data});
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: messages['message.somethingWentWrong'],
+        });
+      }
+    } catch (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+    }
+  };
+};
+
+export const onGetRolePermissions = (role_id, filterData) => {
+  return async (dispatch) => {
+    dispatch({type: FETCH_START});
+    const {messages} = appIntl();
+    try {
+      const res = await jwtAxios.get(`/roles/${role_id}/permissions`, {
+        params: {...filterData},
+      });
+      if (res.status === 200 && res.data.result) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_PERMISSION_ROLES_LIST, payload: res.data});
       } else {
         dispatch({
           type: FETCH_ERROR,
