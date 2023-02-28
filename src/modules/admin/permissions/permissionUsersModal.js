@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import {Box, CardContent, Typography} from '@mui/material';
 
-import PermissionUsers from './permission_users';
+import PermissionUsers from './PermissionUsers';
 
 export default function PermissionUsersModal({open, toggleOpen, id, width}) {
   const [size, setSize] = useState([0]);
