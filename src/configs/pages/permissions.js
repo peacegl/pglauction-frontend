@@ -3,7 +3,11 @@ import {Typography} from '@mui/material';
 
 const {messages = []} = appIntl() ? appIntl() : {};
 
-export const tableColumns = function (getSinglePermission, openUsersModal) {
+export const tableColumns = function (
+  getSinglePermission,
+  PermissionUsers,
+  permissionRoles,
+) {
   return [
     {
       name: 'id',
@@ -60,14 +64,22 @@ export const tableColumns = function (getSinglePermission, openUsersModal) {
       name: 'users_count',
       label: messages['common.users_count'],
       options: {
+        filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              fontWeight: 'bold',
+              cursor: 'pointer',
+            }}
+            onClick={() => PermissionUsers(tableMeta.rowData[0])}
             noWrap={true}
-            // onClick={() =>
-            //   openUsersModal(tableMeta.tableData[tableMeta.rowIndex]['id'])
-            // }
           >
-            {value}
+            {value +
+              ' ' +
+              `${
+                value > 1 ? messages['sidebar.users'] : messages['common.user']
+              }`}
           </Typography>
         ),
       },
@@ -76,14 +88,22 @@ export const tableColumns = function (getSinglePermission, openUsersModal) {
       name: 'roles_count',
       label: messages['common.roles_count'],
       options: {
+        filter: false,
         customBodyRender: (value, tableMeta, updateValue) => (
           <Typography
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              fontWeight: 'bold',
+              cursor: 'pointer',
+            }}
+            onClick={() => permissionRoles(tableMeta.rowData[0])}
             noWrap={true}
-            // onClick={() =>
-            //   openUsersModal(tableMeta.tableData[tableMeta.rowIndex]['id'])
-            // }
           >
-            {value}
+            {value +
+              ' ' +
+              `${
+                value > 1 ? messages['sidebar.roles'] : messages['common.role']
+              }`}
           </Typography>
         ),
       },
