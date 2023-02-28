@@ -89,7 +89,7 @@ const TicketSupportTable = ({ticketSupportData}) => {
     {
       id: 'common.updated_at',
       algin: 'left',
-      label: 'updated_by',
+      label: 'updated_at',
     },
   ];
 
