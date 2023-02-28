@@ -40,7 +40,7 @@ const DealsTable = (props) => {
 
   return (
     <AppTableContainer sxStyle={{height: '500px'}}>
-      <Table className='table'>
+      <Table stickyHeader className='table'>
         <TableHead
           sx={{
             borderBottom: '0 none',
