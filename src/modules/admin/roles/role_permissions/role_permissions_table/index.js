@@ -4,8 +4,8 @@ import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 import PropTypes from 'prop-types';
 
-import TableItem from './TableItem';
-import AppTableContainer from '../../../../../@crema/core/AppTableContainer';
+import TableItem from 'components/CustomTableHeading/TableItem';
+import AppTableContainer from '@crema/core/AppTableContainer';
 import TableHeading from 'components/CustomTableHeading/TableHeading';
 
 const PermissionTable = ({ticketSupportData}) => {

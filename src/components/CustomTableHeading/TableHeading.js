@@ -9,12 +9,13 @@ const TableHeading = ({header}) => {
   return (
     <TableRow
       sx={{
-        backgroundColor: (theme) => theme.palette.primary.main,
         borderBottom: '0 none',
 
         '& .tableCell': {
           borderBottom: '0 none',
           fontSize: 13,
+
+          backgroundColor: (theme) => theme.palette.primary.main,
           color: 'white',
           padding: {xs: 2, xl: 4},
           fontWeight: Fonts.BOLD,

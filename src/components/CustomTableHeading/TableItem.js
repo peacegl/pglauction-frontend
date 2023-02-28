@@ -79,7 +79,7 @@ const TableItem = ({data, header}) => {
                       backgroundColor: red[500],
                     }}
                   >
-                    {head.avatar.toUpperCase()}
+                    {row[head.hint][0].toUpperCase()}
                   </Avatar>
                 )
               ) : (
