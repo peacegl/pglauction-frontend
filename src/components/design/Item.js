@@ -1,7 +1,13 @@
 import {Box, colors, ListItem, Typography} from '@mui/material';
 import {PropTypes} from 'prop-types';
 
-export default function Item({label, value, valueWidth, ...rest}) {
+export default function Item({
+  label,
+  value,
+  valueWidth,
+  capitalizeValue,
+  ...rest
+}) {
   return (
     <ListItem
       key={value}
@@ -31,7 +37,10 @@ export default function Item({label, value, valueWidth, ...rest}) {
           overflow='hidden'
           fontWeight='bold'
           align='right'
-          sx={{width: valueWidth ? valueWidth : 'unset'}}
+          sx={{
+            width: valueWidth ? valueWidth : 'unset',
+            textTransform: capitalizeValue ? 'capitalize' : '',
+          }}
         >
           {value}
         </Typography>
@@ -48,4 +57,5 @@ Item.propTypes = {
     PropTypes.object,
   ]),
   valueWidth: PropTypes.string,
+  capitalizeValue: PropTypes.bool,
 };

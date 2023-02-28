@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import ItemTable from './items_table';
+import ItemTable from './ItemsTable';
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
 import {onGetAuctionItems} from 'redux/actions';
 import {AppCard} from '@crema';
 import {Box} from '@mui/system';
-import {CardActions, Pagination} from '@mui/material';
+import {Card, CardActions, Pagination} from '@mui/material';
 
 const ItemsData = ({id}) => {
   const dispatch = useDispatch();
@@ -34,9 +34,11 @@ const ItemsData = ({id}) => {
   };
 
   return (
-    <AppCard
-      contentStyle={{
-        px: 0,
+    <Card
+      sx={{
+        borderRadius: 1,
+        boxShadow: 1,
+        m: 0,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -46,7 +48,7 @@ const ItemsData = ({id}) => {
       {!loading ? (
         <ItemTable ticketSupportData={data} />
       ) : (
-        <Box sx={{height: '350px'}}></Box>
+        <Box sx={{height: '450px'}}></Box>
       )}
       <CardActions>
         <Pagination
@@ -56,7 +58,7 @@ const ItemsData = ({id}) => {
           color='primary'
         />
       </CardActions>
-    </AppCard>
+    </Card>
   );
 };
 

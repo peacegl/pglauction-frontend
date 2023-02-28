@@ -1,23 +1,16 @@
-import React from 'react';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import PropTypes from 'prop-types';
-import TableHeading from './TableHeading';
-import TableItem from './TableItem';
 import AppTableContainer from '@crema/core/AppTableContainer';
+import TableHeading from 'components/design/TableHeading';
+import TableBody from '@mui/material/TableBody';
+import Table from '@mui/material/Table';
+import TableItem from './TableItem';
+import PropTypes from 'prop-types';
+import {Box} from '@mui/material';
 
 const ItemsTable = ({data}) => {
   return (
-    <AppTableContainer sxStyle={{height: '350px'}}>
+    <AppTableContainer sxStyle={{height: '450px'}}>
       <Table>
-        <TableHead
-          sx={{
-            borderBottom: '0 none',
-          }}
-        >
-          <TableHeading />
-        </TableHead>
+        <TableHeading />
         <TableBody
           sx={{
             borderBottom: '0 none',

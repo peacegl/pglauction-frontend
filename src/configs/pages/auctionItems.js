@@ -8,6 +8,10 @@ export const tableColumns = function () {
       label: messages['common.code'],
     },
     {
+      name: 'vehicle.image',
+      label: messages['common.image'],
+    },
+    {
       name: 'vehicle.vin',
       label: messages['common.vin'],
     },
@@ -30,6 +34,23 @@ export const tableColumns = function () {
     {
       name: 'status',
       label: messages['common.status'],
+    },
+    {
+      name: 'vehicle.totalCost',
+      label: messages['common.totalCost'],
+    },
+    {
+      name: 'vehicle.saleRate',
+      label: messages['common.saleRate'],
+    },
+    {
+      name: 'vehicle.year',
+      label: messages['common.year'],
+    },
+
+    {
+      name: 'vehicle.price',
+      label: messages['common.price'],
     },
     {
       name: 'vehicle.seller.loginable.fullname',

@@ -47,8 +47,8 @@ const AuctionDetails = () => {
               </Typography>
             }
           />
-          <Box sx={{display: 'flex'}}>
-            <Box sx={{flex: 1}}>
+          <Box sx={{display: {md: 'flex'}}}>
+            <Box sx={{flex: 1, mr: {md: 3}, mb: {xs: 3, md: 0}}}>
               <AuctionDetail auction={auction} />
             </Box>
             <Box sx={{flex: 2}}>

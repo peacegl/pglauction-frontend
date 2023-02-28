@@ -1226,5 +1226,6 @@
   "bidStatus.notTopBidder": "You are not top bidder",
   "bidStatus.notBid": "You Haven't Bid",
   "validation.bidStartsAt": "Bid starts at:",
-  "validation.biggerThanCurrentBid": "Bid should be greater than:"
+  "validation.biggerThanCurrentBid": "Bid should be greater than:",
+  "auction.totalItems": "Total items"
 }
