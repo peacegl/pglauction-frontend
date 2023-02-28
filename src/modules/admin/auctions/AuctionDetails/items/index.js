@@ -1,34 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import ItemTable from './ItemsTable';
-import PropTypes from 'prop-types';
-import {useDispatch, useSelector} from 'react-redux';
-import {onGetAuctionItems} from 'redux/actions';
-import {AppCard} from '@crema';
-import {Box} from '@mui/system';
 import {Card, CardActions, Pagination} from '@mui/material';
 
-const ItemsData = ({id}) => {
-  const dispatch = useDispatch();
-  const {data = [], total = 0} = useSelector(
-    ({auctions}) => auctions.auctionItemsData,
-  );
-  const {loading} = useSelector(({common}) => common);
-  const [page, setPage] = useState(0);
-  const perPage = 10;
+import PropTypes from 'prop-types';
+import ItemsTable from './ItemsTable';
 
-  useEffect(() => {
-    // fetchData(id);
-  }, [page]);
-
-  const fetchData = async (id) => {
-    await dispatch(
-      onGetAuctionItems(id, {
-        per_page: perPage,
-        page: page + 1,
-      }),
-    );
-  };
-
+const ItemsData = ({data, total, perPage, setPage, page}) => {
   const onPageChange2 = (event, value) => {
     setPage(value - 1);
   };
@@ -36,20 +11,16 @@ const ItemsData = ({id}) => {
   return (
     <Card
       sx={{
+        px: 0,
         borderRadius: 1,
         boxShadow: 1,
-        m: 0,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
       }}
     >
-      {!loading ? (
-        <ItemTable ticketSupportData={data} />
-      ) : (
-        <Box sx={{height: '450px'}}></Box>
-      )}
+      <ItemsTable data={data} />
       <CardActions>
         <Pagination
           count={Math.ceil(total / perPage)}
@@ -65,5 +36,9 @@ const ItemsData = ({id}) => {
 export default ItemsData;
 
 ItemsData.propTypes = {
-  id: PropTypes.any,
+  data: PropTypes.any,
+  total: PropTypes.number,
+  setPage: PropTypes.func.isRequired,
+  perPage: PropTypes.number,
+  page: PropTypes.number,
 };

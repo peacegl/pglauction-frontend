@@ -11,7 +11,7 @@ export default function AuctionDetail({auction}) {
         borderRadius: 1,
         boxShadow: 1,
         m: 0,
-        height: '500px',
+        height: '650px',
         overflowY: 'auto',
         position: 'relative',
       }}

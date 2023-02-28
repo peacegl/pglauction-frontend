@@ -3,13 +3,12 @@ import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 import PropTypes from 'prop-types';
-
-import TableItem from './TableItem';
-import AppTableContainer from '../../../../../@crema/core/AppTableContainer';
+import AppTableContainer from '@crema/core/AppTableContainer';
 import TableHeading from 'components/CustomTableHeading/TableHeading';
+import TableItem from '../TableItem';
 
-const DealsTable = (props) => {
-  const {dealsTableData} = props;
+const ItemsTable = (props) => {
+  const {data} = props;
 
   const header = [
     {id: 'common.code'},
@@ -39,7 +38,7 @@ const DealsTable = (props) => {
   ];
 
   return (
-    <AppTableContainer sxStyle={{height: '500px'}}>
+    <AppTableContainer sxStyle={{height: '450px'}}>
       <Table stickyHeader className='table'>
         <TableHead
           sx={{
@@ -53,7 +52,7 @@ const DealsTable = (props) => {
             borderBottom: '0 none',
           }}
         >
-          {dealsTableData.map((row) => (
+          {data.map((row) => (
             <TableItem row={row} key={row.id} />
           ))}
         </TableBody>
@@ -62,12 +61,12 @@ const DealsTable = (props) => {
   );
 };
 
-export default DealsTable;
+export default ItemsTable;
 
-DealsTable.defaultProps = {
-  dealsTableData: [],
+ItemsTable.defaultProps = {
+  data: [],
 };
 
-DealsTable.propTypes = {
-  dealsTableData: PropTypes.array,
+ItemsTable.propTypes = {
+  data: PropTypes.array,
 };

@@ -20,7 +20,7 @@ const UpComingAuctions = () => {
   const dispatch = useDispatch();
   const {theme} = useThemeContext();
   const [page, setPage] = useState(0);
-  const [perPage, setPerPage] = useState(10);
+  const perPage = 10;
   const {user} = useAuthUser();
   const {data = [], total = 0} = useSelector(
     ({webAuctions}) => webAuctions.auctionsUpComingList,

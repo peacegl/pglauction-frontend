@@ -17,7 +17,7 @@ const TableHeading = ({header}) => {
 
           backgroundColor: (theme) => theme.palette.primary.main,
           color: 'white',
-          padding: {xs: 2, xl: 4},
+          padding: 3,
           fontWeight: Fonts.BOLD,
           '&:first-of-type': {
             pl: 5,

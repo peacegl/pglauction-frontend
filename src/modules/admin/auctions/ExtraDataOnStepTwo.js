@@ -106,7 +106,8 @@ const ExtraDataOnStepTwo = (props) => {
         </Button>
       </Stack>
       <Typography component='p' sx={{fontWeight: 'bold', px: 1, my: 3}}>
-        <IntlMessages id='vehicle.totalVehicles' />: {props.values.items.length}
+        <IntlMessages id='vehicle.totalVehicles' />:{' '}
+        {props?.values?.items?.length}
       </Typography>
     </Box>
   );

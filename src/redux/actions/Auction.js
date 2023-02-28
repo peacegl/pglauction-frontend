@@ -198,7 +198,7 @@ export const onGetSingleAuctionData = (id) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     jwtAxios
-      .get(`/auctions/${id}`)
+      .get(`/auction/${id}`)
       .then((data) => {
         if (data.status === 200) {
           dispatch({type: FETCH_SUCCESS});

@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import DealsTable from './DealsTable';
-import IntlMessages from '../../../../@crema/utility/IntlMessages';
+import ItemsTable from '../ItemsTable';
 import {useIntl} from 'react-intl';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
-import {Fonts} from '../../../../shared/constants/AppEnums';
-import AppCard from '../../../../@crema/core/AppCard';
-import AppSelect from '../../../../@crema/core/AppSelect';
+import AppCard from '@crema/core/AppCard';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {onGetVehicleAuctionData} from 'redux/actions';
@@ -19,7 +16,7 @@ const AuctionVehicleList = ({auctionId}) => {
   );
   const {loading} = useSelector(({common}) => common);
   const [page, setPage] = useState(0);
-  const [perPage, setPerPage] = useState(10);
+  const perPage = 10;
 
   useEffect(() => {
     fetchData(auctionId);
@@ -61,7 +58,7 @@ const AuctionVehicleList = ({auctionId}) => {
       }}
     >
       {!loading ? (
-        <DealsTable dealsTableData={data} />
+        <ItemsTable data={data} />
       ) : (
         <Box sx={{height: '500px'}}></Box>
       )}

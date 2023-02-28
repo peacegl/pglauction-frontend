@@ -5,7 +5,7 @@ import Avatar from '@mui/material/Avatar';
 import TableRow from '@mui/material/TableRow';
 import PropTypes from 'prop-types';
 import {blue, green, grey, red} from '@mui/material/colors';
-import {Fonts} from '../../../../../shared/constants/AppEnums';
+import {Fonts} from '../../../shared/constants/AppEnums';
 import {moneyFormater} from 'configs';
 import {appIntl} from '@crema/utility/helper/Utils';
 

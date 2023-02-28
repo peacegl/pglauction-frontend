@@ -14,7 +14,7 @@ const RolePermissions = ({id}) => {
   );
   const {loading} = useSelector(({common}) => common);
   const [page, setPage] = useState(0);
-  const [perPage, setPerPage] = useState(10);
+  const perPage = 10;
 
   useEffect(() => {
     fetchData(id);
