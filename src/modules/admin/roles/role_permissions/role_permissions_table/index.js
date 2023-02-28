@@ -3,11 +3,42 @@ import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 import PropTypes from 'prop-types';
-import TableHeading from './TableHeading';
+
 import TableItem from './TableItem';
 import AppTableContainer from '../../../../../@crema/core/AppTableContainer';
+import TableHeading from 'components/CustomTableHeading/TableHeading';
 
 const PermissionTable = ({ticketSupportData}) => {
+  const header = [
+    {
+      id: 'common.name',
+    },
+    {
+      id: 'common.slug',
+      algin: 'left',
+    },
+
+    {
+      id: 'common.group',
+      algin: 'left',
+    },
+    {
+      id: 'common.users_count',
+      algin: 'left',
+    },
+    {
+      id: 'common.roles_count',
+      algin: 'left',
+    },
+    {
+      id: 'common.created_at',
+      algin: 'left',
+    },
+    {
+      id: 'common.updated_at',
+      algin: 'left',
+    },
+  ];
   return (
     <AppTableContainer sxStyle={{height: '350px'}}>
       <Table>
@@ -16,7 +47,7 @@ const PermissionTable = ({ticketSupportData}) => {
             borderBottom: '0 none',
           }}
         >
-          <TableHeading />
+          <TableHeading header={header} />
         </TableHead>
         <TableBody
           sx={{

@@ -3,11 +3,12 @@ import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 import PropTypes from 'prop-types';
+
 import TableItem from './TableItem';
 import AppTableContainer from '../../../../../@crema/core/AppTableContainer';
 import TableHeading from 'components/CustomTableHeading/TableHeading';
 
-const TicketSupportTable = ({ticketSupportData}) => {
+const PermissionUsersTable = ({ticketSupportData}) => {
   const header = [
     {
       id: 'common.profile',
@@ -95,12 +96,12 @@ const TicketSupportTable = ({ticketSupportData}) => {
   );
 };
 
-export default TicketSupportTable;
+export default PermissionUsersTable;
 
-TicketSupportTable.defaultProps = {
+PermissionUsersTable.defaultProps = {
   ticketSupportData: [],
 };
 
-TicketSupportTable.propTypes = {
+PermissionUsersTable.propTypes = {
   ticketSupportData: PropTypes.array,
 };

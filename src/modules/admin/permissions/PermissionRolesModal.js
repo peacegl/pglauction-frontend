@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import {Box, CardContent, Typography} from '@mui/material';
 
-import RolePermissions from './permission_roles';
+import RolePermissions from './PermissionRoles';
 
 export default function PermissionRolesModal({open, toggleOpen, id, width}) {
   const [size, setSize] = useState([0]);

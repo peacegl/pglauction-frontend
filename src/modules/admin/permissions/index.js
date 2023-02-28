@@ -7,8 +7,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {onGetPermissionList} from 'redux/actions';
 import {useEffect, useState} from 'react';
 import SinglePermissionModal from './SinglePermissionModal';
-import PermissionUsersModal from './permission_users_modal';
-import PermissionRolesModal from './permission_roles_modal';
+import PermissionUsersModal from './permissionUsersModal';
+import PermissionRolesModal from './PermissionRolesModal';
 
 export default function UserList() {
   const [singlePermission, setSinglePermission] = useState([]);

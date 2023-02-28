@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import PermissionUsersTable from './permission_uesrs_table';
+import PermissionUsersTable from './PermissionUesrsTable';
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
 import {onGetPermissionUsers} from 'redux/actions';
