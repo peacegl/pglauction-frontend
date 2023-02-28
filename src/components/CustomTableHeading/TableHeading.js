@@ -9,7 +9,7 @@ const TableHeading = ({header}) => {
   return (
     <TableRow
       sx={{
-        bgcolor: (theme) => theme.palette.primary.main,
+        backgroundColor: (theme) => theme.palette.primary.main,
         borderBottom: '0 none',
 
         '& .tableCell': {
@@ -34,7 +34,7 @@ const TableHeading = ({header}) => {
             align={
               data?.align != null || data?.align != undefined
                 ? data.align
-                : 'center'
+                : 'left'
             }
             className='tableCell'
           >
