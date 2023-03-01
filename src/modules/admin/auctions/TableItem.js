@@ -82,10 +82,10 @@ const TableItem = (props) => {
           {row.vehicle.images[0] ? (
             <Avatar
               src={row.vehicle.images[0].path}
-              sx={{height: 60, width: 60}}
+              sx={{height: 60, width: 60, borderRadius: 0}}
             />
           ) : (
-            <Avatar sx={{height: 60, width: 60}}>
+            <Avatar sx={{height: 60, width: 60, borderRadius: 0}}>
               {row.vehicle.model[0].toUpperCase()}
             </Avatar>
           )}
