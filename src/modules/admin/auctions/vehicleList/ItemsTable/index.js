@@ -5,7 +5,7 @@ import TableBody from '@mui/material/TableBody';
 import PropTypes from 'prop-types';
 import AppTableContainer from '@crema/core/AppTableContainer';
 import TableHeading from 'components/CustomTableHeading/TableHeading';
-import TableItem from '../TableItem';
+import TableItem from '../../TableItem';
 import {useRouter} from 'next/router';
 
 const ItemsTable = (props) => {
@@ -57,7 +57,7 @@ const ItemsTable = (props) => {
           {data.map((row) => (
             <TableItem
               onClickRow={() =>
-                router.push(`/admin/auctions/auction_item/${row.vehicle.id}`)
+                router.push(`/admin/auctions/auction_items/${row.id}`)
               }
               row={row}
               key={row.id}

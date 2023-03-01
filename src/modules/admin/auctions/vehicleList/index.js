@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import ItemsTable from '../ItemsTable';
+import ItemsTable from './ItemsTable';
 import {useIntl} from 'react-intl';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';

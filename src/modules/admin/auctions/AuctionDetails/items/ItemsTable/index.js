@@ -57,7 +57,7 @@ const ItemsTable = (props) => {
           {data.map((row) => (
             <TableItem
               onClickRow={() =>
-                router.push(`/admin/auctions/auction_item/${row.vehicle.id}`)
+                router.push(`/admin/auctions/auction_items/${row.id}`)
               }
               row={row}
               key={row.id}
