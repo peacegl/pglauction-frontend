@@ -53,7 +53,11 @@ const ItemsTable = (props) => {
           }}
         >
           {data.map((row) => (
-            <TableItem row={row} key={row.id} />
+            <TableItem
+              onClickRow={() => console.log(row.vehicle.id)}
+              row={row}
+              key={row.id}
+            />
           ))}
         </TableBody>
       </Table>

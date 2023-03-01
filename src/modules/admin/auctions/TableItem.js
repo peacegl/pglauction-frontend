@@ -26,12 +26,8 @@ const getProgressColor = (progress) => {
 };
 
 const TableItem = (props) => {
-  const {row} = props;
+  const {row, onClickRow} = props;
   const {messages = []} = appIntl() ? appIntl() : {};
-
-  const handleClick = (id) => {
-    console.log(id);
-  };
 
   const color = grey[100];
 
@@ -57,7 +53,7 @@ const TableItem = (props) => {
         },
       }}
       className='item-hover'
-      onClick={() => handleClick(row.vehicle.id)}
+      onClick={() => onClickRow()}
     >
       <TableCell
         scope='row'
@@ -208,4 +204,5 @@ export default TableItem;
 
 TableItem.propTypes = {
   row: PropTypes.object.isRequired,
+  onClickRow: PropTypes.func.isRequired,
 };

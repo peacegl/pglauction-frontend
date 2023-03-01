@@ -68,6 +68,7 @@ const TableItem = ({data, header}) => {
                       width: {xs: 40, xl: 50},
                       height: {xs: 40, xl: 50},
                       backgroundColor: red[500],
+                      borderRadius: '0 !important',
                     }}
                     src={row[head.label]}
                   />
