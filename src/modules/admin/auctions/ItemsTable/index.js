@@ -6,9 +6,11 @@ import PropTypes from 'prop-types';
 import AppTableContainer from '@crema/core/AppTableContainer';
 import TableHeading from 'components/CustomTableHeading/TableHeading';
 import TableItem from '../TableItem';
+import {useRouter} from 'next/router';
 
 const ItemsTable = (props) => {
   const {data} = props;
+  const router = useRouter();
 
   const header = [
     {id: 'common.code'},
@@ -54,7 +56,9 @@ const ItemsTable = (props) => {
         >
           {data.map((row) => (
             <TableItem
-              onClickRow={() => console.log(row.vehicle.id)}
+              onClickRow={() =>
+                router.push(`/admin/auctions/auction_item/${row.vehicle.id}`)
+              }
               row={row}
               key={row.id}
             />
