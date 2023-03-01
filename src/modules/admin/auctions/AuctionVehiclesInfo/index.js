@@ -1,54 +1,76 @@
-import ItemHeader from 'components/design/ItemHeader';
-import {Box, Typography} from '@mui/material';
+import LotInfo from 'components/vehicles/VehicleDetails/LotInfo';
+import ImageCarousel from 'components/design/ImageCarousel';
+import VehicleHeader from 'components/design/VehicleHeader';
+import {Box, Container} from '@mui/material';
+import {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
-import {useState} from 'react';
+import PropTypes from 'prop-types';
 
-const AuctionVehicleInfo = () => {
+const SingleAuctionItem = (props) => {
   const router = useRouter();
-  const {id} = router.query;
   const [back, setBack] = useState(true);
+  const [vehicle, setVehicle] = useState({});
+  const {id} = router.query;
 
-  // useEffect(() => {
-  //   fetchItems(id);
-  // }, [page]);
-
-  const fetchItems = async (id) => {
-    // await dispatch(
-    //   onGetAuctionItems(id, {
-    //     per_page: perPage,
-    //     page: page + 1,
-    //   }),
-    // );
-  };
-
+  useEffect(() => {
+    setVehicle(props.vehicle);
+  }, []);
   return (
-    <>
-      <>
-        <ItemHeader
+    vehicle.id && (
+      <Container maxWidth='xl'>
+        <VehicleHeader
+          vehicle={vehicle.vehicle ?? vehicle}
           onBack={() => {
             if (back) {
               router.back();
               setBack(false);
             }
           }}
-          title={
-            <Typography
-              component='h1'
-              fontSize='25px'
-              fontWeight='bold'
-              overflow='hidden'
-            >
-              nasim
-            </Typography>
-          }
         />
-        <Box sx={{display: {md: 'flex'}}}>
-          <Box sx={{flex: 1, mr: {md: 3}, mb: {xs: 3, md: 0}}}>haji</Box>
-          <Box sx={{flex: 2, overflow: 'auto'}}></Box>
+        <Box
+          sx={{
+            display: 'flex',
+            alignContent: 'space-between',
+            borderRadius: 2,
+            columnGap: '10px',
+            rowGap: '20px',
+            backgroundColor: 'transparent',
+            flexDirection: {xs: 'column', md: 'row'},
+          }}
+        >
+          <Box sx={{mr: 2, flex: 1.5}}>
+            <ImageCarousel
+              images={vehicle?.vehicle?.images ?? vehicle.images}
+              isSold={
+                vehicle?.vehicle?.status
+                  ? vehicle?.vehicle?.status == 'sold'
+                  : vehicle?.status == 'sold'
+              }
+              topCustom={'16%'}
+              leftCustom={'43%'}
+            />
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flex: 2,
+              alignContent: 'space-between',
+              columnGap: '10px',
+              rowGap: '20px',
+              flexDirection: {xs: 'column', sm: 'row'},
+            }}
+          >
+            <Box sx={{flex: 1.5}}>
+              <LotInfo vehicle={vehicle?.vehicle ?? vehicle} />
+            </Box>
+          </Box>
         </Box>
-      </>
-    </>
+      </Container>
+    )
   );
 };
 
-export default AuctionVehicleInfo;
+export default SingleAuctionItem;
+SingleAuctionItem.propTypes = {
+  vehicle: PropTypes.any,
+};

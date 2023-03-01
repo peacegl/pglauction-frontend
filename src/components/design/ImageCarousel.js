@@ -95,6 +95,8 @@ const ImageCarousel = ({images, isSold = false, ...rest}) => {
             onNext={() =>
               images.length - 1 != activeImage && setActiveImage((d) => d + 1)
             }
+            topCustom={rest.topCustom}
+            leftCustom={rest.leftCustom}
           />
         ) : (
           <Box
