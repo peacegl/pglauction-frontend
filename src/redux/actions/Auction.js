@@ -168,7 +168,6 @@ export const updateRealTimeAuction = (data) => {
 };
 
 export const onGetVehicleAuctionData = (id, filterData) => {
-  console.log(id);
   return async (dispatch) => {
     dispatch({type: GET_VEHICLE_AUCTIONS, payload: {}});
     dispatch({type: FETCH_START});
