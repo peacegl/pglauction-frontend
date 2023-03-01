@@ -67,7 +67,7 @@ const TableItem = ({data, header}) => {
                     sx={{
                       width: {xs: 40, xl: 50},
                       height: {xs: 40, xl: 50},
-                      backgroundColor: red[500],
+                      backgroundColor: (theme) => theme.palette.primary.main,
                       borderRadius: '0 !important',
                     }}
                     src={row[head.label]}
@@ -75,9 +75,9 @@ const TableItem = ({data, header}) => {
                 ) : (
                   <Avatar
                     sx={{
+                      backgroundColor: (theme) => theme.palette.primary.main,
                       width: {xs: 40, xl: 50},
                       height: {xs: 40, xl: 50},
-                      backgroundColor: red[500],
                     }}
                   >
                     {row[head.hint][0].toUpperCase()}
