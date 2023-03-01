@@ -38,7 +38,7 @@ const SingleAuctionItem = (props) => {
             flexDirection: {xs: 'column', md: 'row'},
           }}
         >
-          <Box sx={{mr: 2, flex: 1.5}}>
+          <Box sx={{mr: 2, flex: 1}}>
             <ImageCarousel
               images={vehicle?.vehicle?.images ?? vehicle.images}
               isSold={
@@ -46,8 +46,8 @@ const SingleAuctionItem = (props) => {
                   ? vehicle?.vehicle?.status == 'sold'
                   : vehicle?.status == 'sold'
               }
-              topCustom={'16%'}
-              leftCustom={'43%'}
+              topCustom={'17%'}
+              leftCustom={'50%'}
             />
           </Box>
           <Box
@@ -60,9 +60,10 @@ const SingleAuctionItem = (props) => {
               flexDirection: {xs: 'column', sm: 'row'},
             }}
           >
-            <Box sx={{flex: 1.5}}>
+            <Box sx={{flex: 0.7}}>
               <LotInfo vehicle={vehicle?.vehicle ?? vehicle} />
             </Box>
+            <Box sx={{flex: 1}}>bid</Box>
           </Box>
         </Box>
       </Container>
