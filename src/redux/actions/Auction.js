@@ -11,6 +11,7 @@ import {
   GET_VEHICLE_AUCTIONS,
   GET_AUCTION_ITEMS,
   SET_AUCTION_DATA,
+  GET_AUCTION_ITEM_BID,
 } from 'shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
@@ -229,6 +230,31 @@ export const onGetAuctionItems = (id, filterData) => {
         if (data.status === 200) {
           dispatch({type: FETCH_SUCCESS});
           dispatch({type: GET_AUCTION_ITEMS, payload: data.data});
+        } else {
+          dispatch({
+            type: FETCH_ERROR,
+            payload: 'Something went wrong, Please try again!',
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      });
+  };
+};
+
+export const onGetAuctionItemBid = (id, filterData) => {
+  return (dispatch) => {
+    jwtAxios
+      .get(`/auctions/auction_items/item_bid/${id}`, {
+        params: {
+          page: filterData?.page,
+          ...filterData,
+        },
+      })
+      .then((data) => {
+        if (data.status === 200) {
+          dispatch({type: GET_AUCTION_ITEM_BID, payload: data.data});
         } else {
           dispatch({
             type: FETCH_ERROR,

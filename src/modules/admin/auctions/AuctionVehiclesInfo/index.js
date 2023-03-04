@@ -5,12 +5,14 @@ import {Box, Container} from '@mui/material';
 import {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
+import BidInfoAdmin from './BidInfo';
 
 const SingleAuctionItem = (props) => {
   const router = useRouter();
   const [back, setBack] = useState(true);
   const [vehicle, setVehicle] = useState({});
   const {id} = router.query;
+  console.log(vehicle);
 
   useEffect(() => {
     setVehicle(props.vehicle);
@@ -60,10 +62,12 @@ const SingleAuctionItem = (props) => {
               flexDirection: {xs: 'column', sm: 'row'},
             }}
           >
-            <Box sx={{flex: 0.7}}>
+            <Box sx={{flex: 1}}>
               <LotInfo vehicle={vehicle?.vehicle ?? vehicle} />
             </Box>
-            <Box sx={{flex: 1}}>bid</Box>
+            <Box sx={{flex: 1}}>
+              <BidInfoAdmin bid={vehicle}></BidInfoAdmin>
+            </Box>
           </Box>
         </Box>
       </Container>

@@ -3,7 +3,8 @@ import TableCell from '@mui/material/TableCell';
 import IntlMessages from '../../@crema/utility/IntlMessages';
 import TableRow from '@mui/material/TableRow';
 import {Fonts} from '../../shared/constants/AppEnums';
-import {propTypes} from 'velocity-react/velocity-component';
+
+import PropTypes from 'prop-types';
 
 const TableHeading = ({header}) => {
   return (
@@ -50,5 +51,5 @@ const TableHeading = ({header}) => {
 export default TableHeading;
 
 TableHeading.propTypes = {
-  header: propTypes.array,
+  header: PropTypes.any,
 };

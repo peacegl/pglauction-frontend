@@ -13,7 +13,9 @@ export default AppPage((props) => (
 export async function getServerSideProps(context) {
   let vehicle = {};
   try {
-    const res = await jwtAxios.get(`website/auction_items/${context.query.id}`);
+    const res = await jwtAxios.get(
+      `auctions/auction_items/${context.query.id}`,
+    );
     if (res.status === 200 && res.data.result) {
       vehicle = res.data.data;
     }

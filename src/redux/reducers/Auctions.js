@@ -7,6 +7,7 @@ import {
   INCREMENT_TOTAL_AUCTION,
   GET_VEHICLE_AUCTIONS,
   GET_AUCTION_ITEMS,
+  GET_AUCTION_ITEM_BID,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -16,6 +17,7 @@ const initialState = {
   filterData: {},
   auctionItemList: [],
   auctionItemsData: {},
+  auctionItemBid: {},
 };
 
 const AuctionReducer = (state = initialState, action) => {
@@ -75,6 +77,12 @@ const AuctionReducer = (state = initialState, action) => {
         ...state,
         auctionItemsData: action.payload,
       };
+    case GET_AUCTION_ITEM_BID:
+      return {
+        ...state,
+        auctionItemBid: action.payload,
+      };
+
     default:
       return state;
   }
