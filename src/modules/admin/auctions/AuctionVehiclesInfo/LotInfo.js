@@ -10,7 +10,7 @@ import {useState} from 'react';
 import Item from 'components/design/Item';
 import BidItemHistory from './BidItemHistory';
 
-export default function LotInfoAdmin({vehicle, admin}) {
+export default function LotInfoAdmin({vehicle, admin, auction_id}) {
   const [value, setValue] = useState('lot_info');
   const theme = useTheme();
 
@@ -258,7 +258,7 @@ export default function LotInfoAdmin({vehicle, admin}) {
             overflow: 'auto',
           }}
         >
-          <BidItemHistory />
+          <BidItemHistory id={auction_id} />
         </TabPanel>
       </TabContext>
     </Card>
@@ -268,4 +268,5 @@ export default function LotInfoAdmin({vehicle, admin}) {
 LotInfoAdmin.propTypes = {
   vehicle: PropTypes.any,
   admin: PropTypes.bool,
+  auction_id: PropTypes.any,
 };

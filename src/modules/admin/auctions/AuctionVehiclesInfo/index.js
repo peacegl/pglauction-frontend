@@ -12,7 +12,6 @@ const SingleAuctionItem = (props) => {
   const [back, setBack] = useState(true);
   const [vehicle, setVehicle] = useState({});
   const {id} = router.query;
-  console.log(vehicle);
 
   useEffect(() => {
     setVehicle(props.vehicle);
@@ -69,6 +68,7 @@ const SingleAuctionItem = (props) => {
               <LotInfoAdmin
                 vehicle={vehicle?.vehicle ?? vehicle}
                 admin={true}
+                auction_id={vehicle?.id}
               />
             </Box>
           </Box>
