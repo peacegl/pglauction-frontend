@@ -1,4 +1,3 @@
-import LotInfo from 'components/vehicles/VehicleDetails/LotInfo';
 import ImageCarousel from 'components/design/ImageCarousel';
 import VehicleHeader from 'components/design/VehicleHeader';
 import {Box, Container} from '@mui/material';
@@ -6,6 +5,7 @@ import {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
 import BidInfoAdmin from './BidInfo';
+import LotInfoAdmin from './LotInfo';
 
 const SingleAuctionItem = (props) => {
   const router = useRouter();
@@ -40,7 +40,7 @@ const SingleAuctionItem = (props) => {
             flexDirection: {xs: 'column', md: 'row'},
           }}
         >
-          <Box sx={{mr: 2, flex: 1}}>
+          <Box sx={{mr: 2, flex: 0.7}}>
             <ImageCarousel
               images={vehicle?.vehicle?.images ?? vehicle.images}
               isSold={
@@ -48,14 +48,17 @@ const SingleAuctionItem = (props) => {
                   ? vehicle?.vehicle?.status == 'sold'
                   : vehicle?.status == 'sold'
               }
-              topCustom={'17%'}
-              leftCustom={'50%'}
+              topCustom={'13.7%'}
+              leftCustom={'42%'}
             />
+            <Box sx={{flex: 1, mt: 5}}>
+              <BidInfoAdmin bid={vehicle}></BidInfoAdmin>
+            </Box>
           </Box>
           <Box
             sx={{
               display: 'flex',
-              flex: 2,
+              flex: 1,
               alignContent: 'space-between',
               columnGap: '10px',
               rowGap: '20px',
@@ -63,10 +66,10 @@ const SingleAuctionItem = (props) => {
             }}
           >
             <Box sx={{flex: 1}}>
-              <LotInfo vehicle={vehicle?.vehicle ?? vehicle} />
-            </Box>
-            <Box sx={{flex: 1}}>
-              <BidInfoAdmin bid={vehicle}></BidInfoAdmin>
+              <LotInfoAdmin
+                vehicle={vehicle?.vehicle ?? vehicle}
+                admin={true}
+              />
             </Box>
           </Box>
         </Box>
