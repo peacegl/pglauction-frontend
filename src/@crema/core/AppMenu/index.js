@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-const options = ['View More', 'Update Data', 'Clear Data'];
+const options = ['Accept', 'reject'];
 const AppMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);

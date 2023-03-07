@@ -1217,16 +1217,17 @@
 
   "auction.bidInfo": "Bid Information",
   "auction.bidHis": "Bid History",
-
   "website.saleList": "Sale list for",
   "auction.startingBid": "Starting Bid",
   "auction.bidNow": "Bid Now",
   "auction.preBid": "Pre Bid",
   "bid.bidStatus": "Bid Status",
+  "bid.bid_amount": "Bid Amount",
   "bidStatus.topBidder": "You are top bidder",
   "bidStatus.notTopBidder": "You are not top bidder",
   "bidStatus.notBid": "You Haven't Bid",
   "validation.bidStartsAt": "Bid starts at:",
   "validation.biggerThanCurrentBid": "Bid should be greater than:",
-  "auction.totalItems": "Total items"
+  "auction.totalItems": "Total items",
+  "common.actions": "Actions"
 }

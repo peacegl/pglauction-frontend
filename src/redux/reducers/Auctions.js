@@ -8,6 +8,7 @@ import {
   GET_VEHICLE_AUCTIONS,
   GET_AUCTION_ITEMS,
   GET_AUCTION_ITEM_BID,
+  GET_AUCTION_ITEM_BID_EMPTY,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -78,9 +79,26 @@ const AuctionReducer = (state = initialState, action) => {
         auctionItemsData: action.payload,
       };
     case GET_AUCTION_ITEM_BID:
+      let prevData = state.auctionItemBid?.data
+        ? state.auctionItemBid.data
+        : [];
       return {
         ...state,
-        auctionItemBid: action.payload,
+        auctionItemBid: {
+          ...action.payload,
+          data: [...prevData, ...action.payload.data],
+          // data: action.payload.data,
+          hasMore:
+            action.payload.data.length == 10 &&
+            action.payload.data.length != undefined
+              ? true
+              : false,
+        },
+      };
+
+    case GET_AUCTION_ITEM_BID_EMPTY:
+      return {
+        auctionItemBid: {},
       };
 
     default:

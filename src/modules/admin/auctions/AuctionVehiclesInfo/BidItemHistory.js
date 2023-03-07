@@ -5,72 +5,96 @@ import {onGetAuctionItemBid} from 'redux/actions';
 
 import {AppList, AppMenu} from '@crema';
 import {Box} from '@mui/system';
-import {Avatar, TableCell, TableRow} from '@mui/material';
+import {
+  Avatar,
+  Table,
+  TableCell,
+  TableRow,
+  TableBody,
+  TableHead,
+  Pagination,
+} from '@mui/material';
 import {Fonts} from 'shared/constants/AppEnums';
 
-// const ScrollbarWrapper = styled(SimpleBarReact)(() => {
-//   return {
-//     display: 'flex',
-//     flexDirection: 'column',
-//     height: `calc(100% - 400px)`,
-//   };
-// });
+import TableHeading from 'components/CustomTableHeading/TableHeading';
+import {moneyFormater} from 'configs';
+import {GET_AUCTION_ITEM_BID_EMPTY} from 'shared/constants/ActionTypes';
 
 const BidItemHistory = ({id}) => {
   const dispatch = useDispatch();
   const loading = useSelector(({common}) => common.loading);
-  const {data = [], total = 0} = useSelector(
-    ({auctions}) => auctions.auctionItemBid,
-  );
+  const {
+    data = [],
+    total = 0,
+    hasMore,
+  } = useSelector(({auctions}) => auctions.auctionItemBid);
   const [page, setPage] = useState(0);
+  const [fetch, setFetch] = useState(false);
   const _scrollBarRef = useRef();
 
   useEffect(() => {
     fetchData(id);
-  }, []);
+    console.log('kljklj');
+  }, [page]);
 
   useEffect(() => {
-    if (data && data.length > 0) {
-      if (_scrollBarRef.current) {
-        console.log(_scrollBarRef);
-        _scrollBarRef.current.scrollIntoView({
-          behaviour: 'smooth',
-        });
-      }
-    }
-  }, [data]);
+    dispatch({type: GET_AUCTION_ITEM_BID_EMPTY});
+  }, []);
 
   const fetchData = async (id) => {
+    setFetch(true);
     await dispatch(
       onGetAuctionItemBid(id, {
         per_page: 10,
         page: page + 1,
-        orderBy: {column: 'created_at', order: 'asc'},
+        orderBy: {column: 'created_at', order: 'desc'},
       }),
     );
+    setFetch(false);
   };
 
+  const onScroll = () => {
+    if (_scrollBarRef.current) {
+      const {scrollTop, scrollHeight, clientHeight} = _scrollBarRef.current;
+      if (scrollTop + clientHeight === scrollHeight) {
+        if (!fetch && hasMore) {
+          setPage(page + 1);
+        }
+      }
+    }
+  };
+
+  const header = [
+    {id: 'common.customerInfo'},
+    {id: 'bid.bid_amount'},
+    {id: 'common.status'},
+    {id: 'common.created_at'},
+    {id: 'common.actions', align: 'center'},
+  ];
+
   return (
-    <Box
-      sx={{
-        height: '300px',
-        position: 'relative',
-      }}
+    <div
+      onScroll={onScroll}
+      ref={_scrollBarRef}
+      style={{height: '600px', overflowY: 'scroll'}}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          height: `calc(100% - 400px)`,
-        }}
-      >
-        <AppList
-          animation='transition.slideUpIn'
-          data={data}
-          renderRow={(data, index) => {
+      <Table stickyHeader className='table' sx={{pb: 7, height: `100%`}}>
+        <TableHead
+          sx={{
+            borderBottom: '0 none',
+          }}
+        >
+          <TableHeading header={header} />
+        </TableHead>
+        <TableBody
+          sx={{
+            borderBottom: '0 none',
+          }}
+        >
+          {data.map((item, index) => {
             return (
               <TableRow
-                key={data?.id}
+                key={index}
                 sx={{
                   '& .tableCell': {
                     fontSize: 13,
@@ -83,6 +107,7 @@ const BidItemHistory = ({id}) => {
                       pr: 5,
                     },
                   },
+                  width: '100%',
                 }}
                 className='item-hover'
               >
@@ -105,43 +130,29 @@ const BidItemHistory = ({id}) => {
                         fontWeight: Fonts.MEDIUM,
                       }}
                     >
-                      {data?.buyer.username}
+                      {item?.buyer.username}
                     </Box>
                   </Box>
                 </TableCell>
                 <TableCell align='left' className='tableCell'>
-                  {data.id}
+                  {moneyFormater(item.amount)}
                 </TableCell>
-                {/* <TableCell align='left' className='tableCell'>
-                  {data.weight}
+
+                <TableCell align='left' className='tableCell'>
+                  {item.is_accepted == 0 ? 'No' : 'yes'}
                 </TableCell>
                 <TableCell align='left' className='tableCell'>
-                  {data.assignedDr}
+                  {item.created_at}
                 </TableCell>
-                <TableCell align='left'>{data.date}</TableCell> */}
-                <TableCell align='left'>
-                  <Box
-                    sx={{
-                      // color: data.color,
-                      // backgroundColor: data.color + '44',
-                      padding: '3px 10px',
-                      borderRadius: 1,
-                      display: 'inline-block',
-                      fontSize: 13,
-                    }}
-                  >
-                    {data.status}
-                  </Box>
-                </TableCell>
-                <TableCell align='right'>
+                <TableCell align='center'>
                   <AppMenu />
                 </TableCell>
               </TableRow>
             );
-          }}
-        />
-      </Box>
-    </Box>
+          })}
+        </TableBody>
+      </Table>
+    </div>
   );
 };
 

@@ -252,10 +252,9 @@ export default function LotInfoAdmin({vehicle, admin, auction_id}) {
         <TabPanel
           value='bid_info'
           sx={{
-            pt: 3,
-            pb: 7,
-            height: '600px',
-            overflow: 'auto',
+            p: 0,
+
+            position: 'relative',
           }}
         >
           <BidItemHistory id={auction_id} />
