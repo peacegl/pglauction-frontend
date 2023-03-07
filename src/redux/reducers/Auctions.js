@@ -98,7 +98,11 @@ const AuctionReducer = (state = initialState, action) => {
 
     case GET_AUCTION_ITEM_BID_EMPTY:
       return {
-        auctionItemBid: {},
+        ...state,
+        auctionItemBid: {
+          ...action.payload,
+          data: [],
+        },
       };
 
     default:

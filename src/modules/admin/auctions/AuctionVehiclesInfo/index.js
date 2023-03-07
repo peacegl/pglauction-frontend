@@ -6,16 +6,37 @@ import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
 import BidInfoAdmin from './BidInfo';
 import LotInfoAdmin from './LotInfo';
+import {onGetAuctionItemBid} from 'redux/actions';
+import {useDispatch, useSelector} from 'react-redux';
+import {GET_AUCTION_ITEM_BID_EMPTY} from 'shared/constants/ActionTypes';
 
 const SingleAuctionItem = (props) => {
   const router = useRouter();
   const [back, setBack] = useState(true);
   const [vehicle, setVehicle] = useState({});
   const {id} = router.query;
+  const {auctionItemBid} = useSelector(({auctions}) => auctions.auctionItemBid);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setVehicle(props.vehicle);
+    fetchData(props.vehicle?.id);
   }, []);
+
+  useEffect(() => {
+    dispatch({type: GET_AUCTION_ITEM_BID_EMPTY});
+  }, []);
+
+  const fetchData = async (id) => {
+    await dispatch(
+      onGetAuctionItemBid(id, {
+        per_page: 10,
+        page: 1,
+        orderBy: {column: 'created_at', order: 'desc'},
+      }),
+    );
+  };
+
   return (
     vehicle.id && (
       <Container maxWidth='xl'>
@@ -69,6 +90,7 @@ const SingleAuctionItem = (props) => {
                 vehicle={vehicle?.vehicle ?? vehicle}
                 admin={true}
                 auction_id={vehicle?.id}
+                bidData={auctionItemBid}
               />
             </Box>
           </Box>

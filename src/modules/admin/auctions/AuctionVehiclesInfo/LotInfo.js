@@ -1,4 +1,4 @@
-import {Card, Chip, Typography, useTheme} from '@mui/material';
+import {Avatar, Badge, Card, Chip, Typography, useTheme} from '@mui/material';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {TabContext, TabList} from '@mui/lab';
 import TabPanel from '@mui/lab/TabPanel';
@@ -9,10 +9,12 @@ import PropTypes from 'prop-types';
 import {useState} from 'react';
 import Item from 'components/design/Item';
 import BidItemHistory from './BidItemHistory';
+import {useSelector} from 'react-redux';
 
 export default function LotInfoAdmin({vehicle, admin, auction_id}) {
   const [value, setValue] = useState('lot_info');
   const theme = useTheme();
+  const {total = 0} = useSelector(({auctions}) => auctions.auctionItemBid);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -74,7 +76,26 @@ export default function LotInfoAdmin({vehicle, admin, auction_id}) {
               'more_info',
               <IntlMessages id='common.more_information' />,
             )}
-            {SingleTab('bid_info', <IntlMessages id='auction.bidHis' />)}
+            {SingleTab(
+              'bid_info',
+              <Box sx={{display: 'flex'}}>
+                <IntlMessages id='auction.bidHis' />{' '}
+                <Box
+                  sx={{
+                    bgcolor:
+                      value == 'bid_info'
+                        ? 'white'
+                        : theme.palette.primary.main,
+                    px: 2,
+                    mx: 2,
+                    borderRadius: 10,
+                    color: value == 'bid_info' ? 'black' : 'white',
+                  }}
+                >
+                  {total}
+                </Box>{' '}
+              </Box>,
+            )}
           </TabList>
         </Box>
         <TabPanel
@@ -253,7 +274,6 @@ export default function LotInfoAdmin({vehicle, admin, auction_id}) {
           value='bid_info'
           sx={{
             p: 0,
-
             position: 'relative',
           }}
         >

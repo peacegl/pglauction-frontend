@@ -784,6 +784,7 @@
   "message.userUpdated": "User updated successfully!",
   "common.userInfo": "User Info",
   "common.customerInfo": "Customer Info",
+  "common.customer": "Customer",
   "common.accountInfo": "Account Info",
   "common.rolePermission": "Role and Permission",
   "common.role": "Role",
@@ -1229,5 +1230,6 @@
   "validation.bidStartsAt": "Bid starts at:",
   "validation.biggerThanCurrentBid": "Bid should be greater than:",
   "auction.totalItems": "Total items",
-  "common.actions": "Actions"
+  "common.actions": "Actions",
+  "common.accept": "Accept"
 }

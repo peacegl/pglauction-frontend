@@ -2,8 +2,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
 import {onGetAuctionItemBid} from 'redux/actions';
-
-import {AppList, AppMenu} from '@crema';
 import {Box} from '@mui/system';
 import {
   Avatar,
@@ -12,34 +10,24 @@ import {
   TableRow,
   TableBody,
   TableHead,
-  Pagination,
+  Button,
 } from '@mui/material';
 import {Fonts} from 'shared/constants/AppEnums';
 
 import TableHeading from 'components/CustomTableHeading/TableHeading';
 import {moneyFormater} from 'configs';
-import {GET_AUCTION_ITEM_BID_EMPTY} from 'shared/constants/ActionTypes';
+import IntlMessages from '@crema/utility/IntlMessages';
 
 const BidItemHistory = ({id}) => {
   const dispatch = useDispatch();
-  const loading = useSelector(({common}) => common.loading);
+  const _scrollBarRef = useRef();
   const {
     data = [],
     total = 0,
     hasMore,
   } = useSelector(({auctions}) => auctions.auctionItemBid);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [fetch, setFetch] = useState(false);
-  const _scrollBarRef = useRef();
-
-  useEffect(() => {
-    fetchData(id);
-    console.log('kljklj');
-  }, [page]);
-
-  useEffect(() => {
-    dispatch({type: GET_AUCTION_ITEM_BID_EMPTY});
-  }, []);
 
   const fetchData = async (id) => {
     setFetch(true);
@@ -58,14 +46,14 @@ const BidItemHistory = ({id}) => {
       const {scrollTop, scrollHeight, clientHeight} = _scrollBarRef.current;
       if (scrollTop + clientHeight === scrollHeight) {
         if (!fetch && hasMore) {
-          setPage(page + 1);
+          fetchData(id);
         }
       }
     }
   };
 
   const header = [
-    {id: 'common.customerInfo'},
+    {id: 'common.customer'},
     {id: 'bid.bid_amount'},
     {id: 'common.status'},
     {id: 'common.created_at'},
@@ -76,7 +64,7 @@ const BidItemHistory = ({id}) => {
     <div
       onScroll={onScroll}
       ref={_scrollBarRef}
-      style={{height: '600px', overflowY: 'scroll'}}
+      style={{height: '600px', overflowY: 'scroll', width: '100%'}}
     >
       <Table stickyHeader className='table' sx={{pb: 7, height: `100%`}}>
         <TableHead
@@ -101,10 +89,10 @@ const BidItemHistory = ({id}) => {
                     padding: 2,
                     whiteSpace: 'nowrap',
                     '&:first-of-type': {
-                      pl: 5,
+                      pl: 2,
                     },
                     '&:last-of-type': {
-                      pr: 5,
+                      pr: 2,
                     },
                   },
                   width: '100%',
@@ -138,14 +126,27 @@ const BidItemHistory = ({id}) => {
                   {moneyFormater(item.amount)}
                 </TableCell>
 
-                <TableCell align='left' className='tableCell'>
+                <TableCell align='left' className='tableCell' sx={{p: 1}}>
                   {item.is_accepted == 0 ? 'No' : 'yes'}
                 </TableCell>
                 <TableCell align='left' className='tableCell'>
                   {item.created_at}
                 </TableCell>
-                <TableCell align='center'>
-                  <AppMenu />
+                <TableCell align='center' sx={{p: 1}}>
+                  <Button
+                    sx={{
+                      borderRadius: 0.7,
+                      width: '100%',
+                      textTransform: 'capitalize',
+                      marginTop: 'auto',
+                      height: 25,
+                      px: 2,
+                    }}
+                    variant='contained'
+                    color='primary'
+                  >
+                    <IntlMessages id='common.accept' />
+                  </Button>
                 </TableCell>
               </TableRow>
             );
