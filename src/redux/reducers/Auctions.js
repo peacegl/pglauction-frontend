@@ -9,6 +9,7 @@ import {
   GET_AUCTION_ITEMS,
   GET_AUCTION_ITEM_BID,
   GET_AUCTION_ITEM_BID_EMPTY,
+  GET_AUCTION_ITEM_BID_IS_ACCEPTED,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -103,6 +104,12 @@ const AuctionReducer = (state = initialState, action) => {
           ...action.payload,
           data: [],
         },
+      };
+
+    case GET_AUCTION_ITEM_BID_IS_ACCEPTED:
+      return {
+        ...state,
+        auctionsAcceptedID: action.payload,
       };
 
     default:

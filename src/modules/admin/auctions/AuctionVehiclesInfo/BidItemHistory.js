@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
 import {onGetAuctionItemBid} from 'redux/actions';
@@ -13,21 +13,32 @@ import {
   Button,
 } from '@mui/material';
 import {Fonts} from 'shared/constants/AppEnums';
-
 import TableHeading from 'components/CustomTableHeading/TableHeading';
 import {moneyFormater} from 'configs';
 import IntlMessages from '@crema/utility/IntlMessages';
+import {grey} from '@mui/material/colors';
+import jwtAxios from '@crema/services/auth/jwt-auth';
+import {
+  FETCH_ERROR,
+  GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+  SHOW_MESSAGE,
+} from 'shared/constants/ActionTypes';
+import {appIntl} from '@crema/utility/helper/Utils';
 
 const BidItemHistory = ({id}) => {
+  const {messages} = appIntl();
+  const color = grey[100];
   const dispatch = useDispatch();
   const _scrollBarRef = useRef();
-  const {
-    data = [],
-    total = 0,
-    hasMore,
-  } = useSelector(({auctions}) => auctions.auctionItemBid);
+  const {data = [], hasMore} = useSelector(
+    ({auctions}) => auctions.auctionItemBid,
+  );
+  const acceptedIdState = useSelector(
+    ({auctions}) => auctions.auctionsAcceptedID,
+  );
   const [page, setPage] = useState(1);
   const [fetch, setFetch] = useState(false);
+  const [acceptedId, setAcceptedId] = useState(acceptedIdState);
 
   const fetchData = async (id) => {
     setFetch(true);
@@ -49,6 +60,68 @@ const BidItemHistory = ({id}) => {
           fetchData(id);
         }
       }
+    }
+  };
+
+  const is_accepted = () => {
+    const find = data.find((item) => item.is_accepted == true);
+    if (find == undefined) {
+      return {
+        item_id: null,
+        is_accepted: false,
+      };
+    } else {
+      return {
+        item_id: find.id,
+        is_accepted: true,
+      };
+    }
+  };
+
+  const disabled = (id) => {
+    if (is_accepted().is_accepted || acceptedId) {
+      if (is_accepted().item_id == id || acceptedId == id) {
+        return false;
+      } else return true;
+    } else {
+      return false;
+    }
+  };
+
+  const AcceptClick = async (e, item_id) => {
+    e.stopPropagation();
+    if (is_accepted().is_accepted) {
+      setAcceptedId('');
+      dispatch({
+        type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+        payload: '',
+      });
+    }
+    try {
+      const res = await jwtAxios.post(`/bid/${item_id}`, null, {
+        params: {
+          auction_id: id,
+        },
+      });
+
+      if (res.status === 200 && res.data.data) {
+        setAcceptedId(item_id);
+        dispatch({
+          type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+          payload: item_id,
+        });
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: messages['message.auctionCreated'],
+        });
+      } else {
+        dispatch({
+          type: FETCH_ERROR,
+          payload: messages['message.somethingWentWrong'],
+        });
+      }
+    } catch (e) {
+      dispatch({type: FETCH_ERROR, payload: e.message});
     }
   };
 
@@ -95,9 +168,15 @@ const BidItemHistory = ({id}) => {
                       pr: 2,
                     },
                   },
-                  width: '100%',
+                  '&:hover': {
+                    cursor: 'pointer',
+                    backgroundColor: color,
+                  },
                 }}
                 className='item-hover'
+                onClick={() => {
+                  console.log(item.id);
+                }}
               >
                 <TableCell component='th' scope='row' className='tableCell'>
                   <Box
@@ -125,7 +204,6 @@ const BidItemHistory = ({id}) => {
                 <TableCell align='left' className='tableCell'>
                   {moneyFormater(item.amount)}
                 </TableCell>
-
                 <TableCell align='left' className='tableCell' sx={{p: 1}}>
                   {item.is_accepted == 0 ? 'No' : 'yes'}
                 </TableCell>
@@ -142,10 +220,21 @@ const BidItemHistory = ({id}) => {
                       height: 25,
                       px: 2,
                     }}
+                    disabled={disabled(item.id)}
                     variant='contained'
                     color='primary'
+                    onClick={async (e) => {
+                      AcceptClick(e, item.id);
+                    }}
                   >
-                    <IntlMessages id='common.accept' />
+                    <IntlMessages
+                      id={
+                        is_accepted().item_id == item.id ||
+                        acceptedId == item.id
+                          ? 'common.cancel'
+                          : 'common.accept'
+                      }
+                    />
                   </Button>
                 </TableCell>
               </TableRow>
