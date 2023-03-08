@@ -63,6 +63,8 @@ const BidItemHistory = ({id}) => {
     }
   };
 
+  useEffect(() => {}, [acceptedId]);
+
   const is_accepted = () => {
     const find = data.find((item) => item.is_accepted == true);
     if (find == undefined) {
@@ -79,6 +81,7 @@ const BidItemHistory = ({id}) => {
   };
 
   const disabled = (id) => {
+    // console.log(is_accepted().is_accepted || acceptedId);
     if (is_accepted().is_accepted || acceptedId) {
       if (is_accepted().item_id == id || acceptedId == id) {
         return false;
@@ -90,13 +93,6 @@ const BidItemHistory = ({id}) => {
 
   const AcceptClick = async (e, item_id) => {
     e.stopPropagation();
-    if (is_accepted().is_accepted) {
-      setAcceptedId('');
-      dispatch({
-        type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
-        payload: '',
-      });
-    }
     try {
       const res = await jwtAxios.post(`/bid/${item_id}`, null, {
         params: {
@@ -105,11 +101,19 @@ const BidItemHistory = ({id}) => {
       });
 
       if (res.status === 200 && res.data.data) {
-        setAcceptedId(item_id);
-        dispatch({
-          type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
-          payload: item_id,
-        });
+        if (acceptedId) {
+          setAcceptedId('');
+          dispatch({
+            type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+            payload: '',
+          });
+        } else {
+          setAcceptedId(item_id);
+          dispatch({
+            type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+            payload: item_id,
+          });
+        }
         dispatch({
           type: SHOW_MESSAGE,
           payload: messages['message.auctionCreated'],
@@ -175,7 +179,7 @@ const BidItemHistory = ({id}) => {
                 }}
                 className='item-hover'
                 onClick={() => {
-                  console.log(item.id);
+                  console.log(item.buyer);
                 }}
               >
                 <TableCell component='th' scope='row' className='tableCell'>
