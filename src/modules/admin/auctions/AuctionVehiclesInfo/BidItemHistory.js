@@ -84,7 +84,6 @@ const BidItemHistory = ({id}) => {
   };
 
   const disabled = (id) => {
-    // console.log(is_accepted().is_accepted || acceptedId);
     if (is_accepted().is_accepted || acceptedId) {
       if (is_accepted().item_id == id || acceptedId == id) {
         return false;
