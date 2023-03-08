@@ -1231,5 +1231,6 @@
   "validation.biggerThanCurrentBid": "Bid should be greater than:",
   "auction.totalItems": "Total items",
   "common.actions": "Actions",
-  "common.accept": "Accept"
+  "common.accept": "Accept",
+  "common.biderInfo": "Bider Info"
 }

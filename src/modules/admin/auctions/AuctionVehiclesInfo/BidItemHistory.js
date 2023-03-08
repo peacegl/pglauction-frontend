@@ -24,6 +24,7 @@ import {
   SHOW_MESSAGE,
 } from 'shared/constants/ActionTypes';
 import {appIntl} from '@crema/utility/helper/Utils';
+import SingleCustomerModal from './SingleCustomerModal';
 
 const BidItemHistory = ({id}) => {
   const {messages} = appIntl();
@@ -39,6 +40,8 @@ const BidItemHistory = ({id}) => {
   const [page, setPage] = useState(1);
   const [fetch, setFetch] = useState(false);
   const [acceptedId, setAcceptedId] = useState(acceptedIdState);
+  const [showSingleCustomerModal, setShowSingleCustomerModal] = useState(false);
+  const [singleCustomer, setSingleCustomer] = useState([]);
 
   const fetchData = async (id) => {
     setFetch(true);
@@ -141,7 +144,7 @@ const BidItemHistory = ({id}) => {
     <div
       onScroll={onScroll}
       ref={_scrollBarRef}
-      style={{height: '600px', overflowY: 'scroll', width: '100%'}}
+      style={{height: '600px', overflow: 'auto', width: '100%'}}
     >
       <Table stickyHeader className='table' sx={{pb: 7, height: `100%`}}>
         <TableHead
@@ -180,6 +183,8 @@ const BidItemHistory = ({id}) => {
                 className='item-hover'
                 onClick={() => {
                   console.log(item.buyer);
+                  setSingleCustomer(item.buyer);
+                  setShowSingleCustomerModal(true);
                 }}
               >
                 <TableCell component='th' scope='row' className='tableCell'>
@@ -246,6 +251,15 @@ const BidItemHistory = ({id}) => {
           })}
         </TableBody>
       </Table>
+
+      {showSingleCustomerModal && (
+        <SingleCustomerModal
+          open={showSingleCustomerModal}
+          toggleOpen={() => setShowSingleCustomerModal((d) => !d)}
+          singleCustomer={singleCustomer}
+          width={450}
+        />
+      )}
     </div>
   );
 };
