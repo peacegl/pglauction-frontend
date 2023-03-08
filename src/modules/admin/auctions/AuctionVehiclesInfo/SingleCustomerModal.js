@@ -6,7 +6,6 @@ import Card from '@mui/material/Card';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import {Avatar, Box, List, Typography, Chip} from '@mui/material';
-
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
