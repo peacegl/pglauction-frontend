@@ -8,8 +8,8 @@ import {Box, Divider, Paper, Typography} from '@mui/material';
 import Toyota from 'assets/vehicle_logos/toyota.png';
 import Nissan from 'assets/vehicle_logos/nissan.png';
 import Honda from 'assets/vehicle_logos/honda.png';
-import Tesla from 'assets/vehicle_logos/Tesla.png';
 import Lexus from 'assets/vehicle_logos/lexus.png';
+import Tesla from 'assets/vehicle_logos/Tesla.png';
 import Dodge from 'assets/vehicle_logos/dodge.png';
 import Mazda from 'assets/vehicle_logos/mazda.png';
 import Jeep from 'assets/vehicle_logos/jeep.png';
@@ -89,9 +89,14 @@ const PopularBrandsList = (props) => {
       name: 'honda',
     },
     {
-      key: 10,
+      key: 11,
       logo: Tesla.src,
       name: 'tesla',
+    },
+    {
+      key: 12,
+      logo: LandRover.src,
+      name: 'rover',
     },
     // {
     //   key: 10,
@@ -182,6 +187,7 @@ const PopularBrandsList = (props) => {
               variant='outlined'
               sx={{
                 pb: props.small ? 1 : 2,
+                width: 100,
               }}
             >
               <Box
@@ -190,7 +196,7 @@ const PopularBrandsList = (props) => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  height: props.small ? 70 : 90,
+                  height: props.small ? 50 : 70,
                   px: props.small ? 1 : 3,
                   m: 1,
                 }}
@@ -203,7 +209,7 @@ const PopularBrandsList = (props) => {
               </Box>
               <Typography sx={{textAlign: 'center', px: 1}}>
                 <IntlMessages id='website.inStock' />{' '}
-                <Typography component='span' sx={{fontWeight: 'bold'}}>
+                <Typography component='p' sx={{fontWeight: 'bold'}}>
                   {props.popularBrandsCount[brand.name]}
                 </Typography>
               </Typography>
