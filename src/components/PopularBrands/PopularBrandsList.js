@@ -8,6 +8,7 @@ import {Box, Divider, Paper, Typography} from '@mui/material';
 import Toyota from 'assets/vehicle_logos/toyota.png';
 import Nissan from 'assets/vehicle_logos/nissan.png';
 import Honda from 'assets/vehicle_logos/honda.png';
+import Tesla from 'assets/vehicle_logos/Tesla.png';
 import Lexus from 'assets/vehicle_logos/lexus.png';
 import Dodge from 'assets/vehicle_logos/dodge.png';
 import Mazda from 'assets/vehicle_logos/mazda.png';
@@ -86,6 +87,11 @@ const PopularBrandsList = (props) => {
       key: 10,
       logo: Honda.src,
       name: 'honda',
+    },
+    {
+      key: 10,
+      logo: Tesla.src,
+      name: 'tesla',
     },
     // {
     //   key: 10,
