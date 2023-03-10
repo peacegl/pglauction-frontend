@@ -25,6 +25,8 @@ import {
 } from 'shared/constants/ActionTypes';
 import {appIntl} from '@crema/utility/helper/Utils';
 import SingleCustomerModal from './SingleCustomerModal';
+import EchoConfig from 'plugins/echo';
+import {useAuthUser} from '@crema/utility/AuthHooks';
 
 const BidItemHistory = ({id}) => {
   const {messages} = appIntl();
@@ -138,6 +140,25 @@ const BidItemHistory = ({id}) => {
     {id: 'common.created_at'},
     {id: 'common.actions', align: 'center'},
   ];
+
+  const {user} = useAuthUser();
+  console.log(user);
+
+  useEffect(() => {
+    EchoConfig();
+    window.Echo.private(`update.bidData`).listen('Updated', (e) => {
+      if (user.uid != e.authUser) {
+        if (e.action === 'created') {
+          console.log('', e.data);
+        }
+      }
+    });
+    return () => {
+      const echoChannel = window.Echo.private(`update.bidData`);
+      echoChannel.stopListening('Updated');
+      Echo.leave(`update.bidData`);
+    };
+  }, []);
 
   return (
     <div
