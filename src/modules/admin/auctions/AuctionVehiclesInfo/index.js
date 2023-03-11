@@ -6,7 +6,7 @@ import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
 import BidInfoAdmin from './BidInfo';
 import LotInfoAdmin from './LotInfo';
-import {newTotalBidCount, onGetAuctionItemBid} from 'redux/actions';
+import {newBidRealTime, onGetAuctionItemBid} from 'redux/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {GET_AUCTION_ITEM_BID_EMPTY} from 'shared/constants/ActionTypes';
 import useSound from 'use-sound';
@@ -50,8 +50,10 @@ const SingleAuctionItem = (props) => {
     window.Echo.private(`update.bidData`).listen('Updated', (e) => {
       if (user.uid != e.authUser) {
         if (e.action === 'created') {
-          buttonClick.current.click();
-          addNew(e.data);
+          if (e.data.auction_item_id == props.vehicle?.id) {
+            buttonClick.current.click();
+            addNew(e.data);
+          }
         }
       }
     });
@@ -63,7 +65,7 @@ const SingleAuctionItem = (props) => {
   }, []);
 
   const addNew = async (data) => {
-    await dispatch(newTotalBidCount(data));
+    await dispatch(newBidRealTime(data));
   };
 
   return (

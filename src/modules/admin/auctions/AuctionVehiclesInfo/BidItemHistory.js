@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
-import {newBidRealTime, onGetAuctionItemBid} from 'redux/actions';
+import {onGetAuctionItemBid} from 'redux/actions';
 import {Box} from '@mui/system';
 import {
   Avatar,
@@ -25,8 +25,8 @@ import {
 } from 'shared/constants/ActionTypes';
 import {appIntl} from '@crema/utility/helper/Utils';
 import SingleCustomerModal from './SingleCustomerModal';
-import EchoConfig from 'plugins/echo';
-import {useAuthUser} from '@crema/utility/AuthHooks';
+// import EchoConfig from 'plugins/echo';
+// import {useAuthUser} from '@crema/utility/AuthHooks';
 
 const BidItemHistory = ({id}) => {
   const {messages} = appIntl();
@@ -141,29 +141,6 @@ const BidItemHistory = ({id}) => {
     {id: 'common.created_at'},
     {id: 'common.actions', align: 'center'},
   ];
-
-  const {user} = useAuthUser();
-  useEffect(() => {
-    EchoConfig();
-    window.Echo.private(`update.bidData`).listen('Updated', (e) => {
-      if (user.uid != e.authUser) {
-        if (e.action === 'created') {
-          console.log('', e.data);
-          newBidAdd(e.data);
-        }
-      }
-    });
-    return () => {
-      const echoChannel = window.Echo.private(`update.bidData`);
-      echoChannel.stopListening('Updated');
-      Echo.leave(`update.bidData`);
-    };
-  }, []);
-
-  const newBidAdd = async (data) => {
-    await dispatch(newBidRealTime(data));
-  };
-
   return (
     <div
       onScroll={onScroll}
