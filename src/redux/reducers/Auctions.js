@@ -10,6 +10,8 @@ import {
   GET_AUCTION_ITEM_BID,
   GET_AUCTION_ITEM_BID_EMPTY,
   GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+  ADD_NEW_BID,
+  INCREMENT_TOTAL_BID,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -110,6 +112,25 @@ const AuctionReducer = (state = initialState, action) => {
       return {
         ...state,
         auctionsAcceptedID: action.payload,
+      };
+
+    case ADD_NEW_BID:
+      return {
+        ...state,
+        auctionItemBid: {
+          ...state.auctionItemBid,
+          total: state.auctionItemBid.total + 1,
+          data: [action.payload, ...state.auctionItemBid.data],
+        },
+      };
+
+    case INCREMENT_TOTAL_BID:
+      return {
+        ...state,
+        auctionItemBid: {
+          ...state.auctionItemBid,
+          total: state.auctionItemBid.total + 1,
+        },
       };
 
     default:

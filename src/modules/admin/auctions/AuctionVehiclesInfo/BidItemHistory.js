@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
-import {onGetAuctionItemBid} from 'redux/actions';
+import {newBidRealTime, onGetAuctionItemBid} from 'redux/actions';
 import {Box} from '@mui/system';
 import {
   Avatar,
@@ -149,6 +149,7 @@ const BidItemHistory = ({id}) => {
       if (user.uid != e.authUser) {
         if (e.action === 'created') {
           console.log('', e.data);
+          newBidAdd(e.data);
         }
       }
     });
@@ -158,6 +159,10 @@ const BidItemHistory = ({id}) => {
       Echo.leave(`update.bidData`);
     };
   }, []);
+
+  const newBidAdd = async (data) => {
+    await dispatch(newBidRealTime(data));
+  };
 
   return (
     <div

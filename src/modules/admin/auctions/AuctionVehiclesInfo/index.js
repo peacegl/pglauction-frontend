@@ -6,11 +6,10 @@ import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
 import BidInfoAdmin from './BidInfo';
 import LotInfoAdmin from './LotInfo';
-import {onGetAuctionItemBid} from 'redux/actions';
+import {newTotalBidCount, onGetAuctionItemBid} from 'redux/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {GET_AUCTION_ITEM_BID_EMPTY} from 'shared/constants/ActionTypes';
 import useSound from 'use-sound';
-import {CheckBox} from '@mui/icons-material';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import EchoConfig from 'plugins/echo';
 
@@ -52,6 +51,7 @@ const SingleAuctionItem = (props) => {
       if (user.uid != e.authUser) {
         if (e.action === 'created') {
           buttonClick.current.click();
+          addNew(e.data);
         }
       }
     });
@@ -61,6 +61,10 @@ const SingleAuctionItem = (props) => {
       Echo.leave(`update.bidData`);
     };
   }, []);
+
+  const addNew = async (data) => {
+    await dispatch(newTotalBidCount(data));
+  };
 
   return (
     vehicle.id && (
