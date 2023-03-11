@@ -39,7 +39,7 @@ const BidItemHistory = ({id}) => {
   const acceptedIdState = useSelector(
     ({auctions}) => auctions.auctionsAcceptedID,
   );
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
   const [fetch, setFetch] = useState(false);
   const [acceptedId, setAcceptedId] = useState(acceptedIdState);
   const [showSingleCustomerModal, setShowSingleCustomerModal] = useState(false);
@@ -50,7 +50,7 @@ const BidItemHistory = ({id}) => {
     await dispatch(
       onGetAuctionItemBid(id, {
         per_page: 10,
-        page: page + 1,
+        page: page,
         orderBy: {column: 'created_at', order: 'desc'},
       }),
     );
@@ -62,6 +62,7 @@ const BidItemHistory = ({id}) => {
       const {scrollTop, scrollHeight, clientHeight} = _scrollBarRef.current;
       if (scrollTop + clientHeight === scrollHeight) {
         if (!fetch && hasMore) {
+          setPage(page + 1);
           fetchData(id);
         }
       }
@@ -142,8 +143,6 @@ const BidItemHistory = ({id}) => {
   ];
 
   const {user} = useAuthUser();
-  console.log(user);
-
   useEffect(() => {
     EchoConfig();
     window.Echo.private(`update.bidData`).listen('Updated', (e) => {
@@ -202,7 +201,6 @@ const BidItemHistory = ({id}) => {
                 }}
                 className='item-hover'
                 onClick={() => {
-                  console.log(item.buyer);
                   setSingleCustomer(item.buyer);
                   setShowSingleCustomerModal(true);
                 }}
