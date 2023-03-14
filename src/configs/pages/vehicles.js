@@ -116,6 +116,10 @@ export const tableColumns = function (router) {
       },
     },
     {
+      name: 'seller.loginable.fullname',
+      label: messages['common.seller'],
+    },
+    {
       name: 'exterior_color',
       label: messages['vehicle.exterior_color'],
     },
@@ -170,6 +174,7 @@ export const tableColumns = function (router) {
         ),
       },
     },
+
     {
       name: 'created_by',
       label: messages['common.created_by'],
@@ -213,6 +218,13 @@ export const filterContent = [
         type: 'autocomplete',
         url: '/vehicle_vins/auto_complete?id=',
         keyName: 'vin',
+      },
+      {
+        name: 'vehicles.seller_id',
+        label: 'Seller',
+        type: 'autocomplete',
+        url: '/sellers/auto_complete?id=',
+        keyName: 'fullname',
       },
       {
         name: 'vehicles.created_by',

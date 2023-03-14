@@ -9,6 +9,7 @@ import Toyota from 'assets/vehicle_logos/toyota.png';
 import Nissan from 'assets/vehicle_logos/nissan.png';
 import Honda from 'assets/vehicle_logos/honda.png';
 import Lexus from 'assets/vehicle_logos/lexus.png';
+import Tesla from 'assets/vehicle_logos/Tesla.png';
 import Dodge from 'assets/vehicle_logos/dodge.png';
 import Mazda from 'assets/vehicle_logos/mazda.png';
 import Jeep from 'assets/vehicle_logos/jeep.png';
@@ -86,6 +87,16 @@ const PopularBrandsList = (props) => {
       key: 10,
       logo: Honda.src,
       name: 'honda',
+    },
+    {
+      key: 11,
+      logo: Tesla.src,
+      name: 'tesla',
+    },
+    {
+      key: 12,
+      logo: LandRover.src,
+      name: 'rover',
     },
     // {
     //   key: 10,
