@@ -21,11 +21,9 @@ const SingleAuctionItem = (props) => {
 
   useEffect(() => {
     WebEcho();
-
     window.Echo.channel(`web.vehicles.${props.vehicle.vehicle.id}`).listen(
       'Web',
       (e) => {
-        console.log(e);
         if (e.action == 'updated') {
           setVehicle(e.data);
         }

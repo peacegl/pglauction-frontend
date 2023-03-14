@@ -31,8 +31,11 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
   const {user} = useAuthUser();
   const [bidStatus, setBidStatus] = useState(3);
   const [currentBid, setCurrentBid] = useState(0);
+  const [showBid, setShowBid] = useState(true);
+
   const [showSignInModal, setShowSignInModl] = useState(false);
   const [bidStatusLoading, setBidStatusLoading] = useState(true);
+
   const dispatch = useDispatch();
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -90,13 +93,46 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
   };
 
   useEffect(() => {
+    if (vehicle.status != 'active') {
+      setShowBid(false);
+    }
+  }, []);
+
+  useEffect(() => {
     WebEcho();
     window.Echo.channel(`web.bid`).listen('Web', (e) => {
-      console.log(e);
       if (e.action == 'created') {
         setVehicle((d) => {
           return {...d, bids: [e.data, ...d.bids]};
         });
+      }
+      if (e.action == 'bidAccepted') {
+        if (e.data[0] == vehicle.id) {
+          setShowBid(false);
+          setVehicle((d) => {
+            return {
+              ...d,
+              vehicle: {
+                ...d.vehicle,
+                status: 'sold',
+              },
+            };
+          });
+        }
+      }
+      if (e.action == 'bidCanceled') {
+        if (e.data[0] == vehicle.id) {
+          setShowBid(true);
+          setVehicle((d) => {
+            return {
+              ...d,
+              vehicle: {
+                ...d.vehicle,
+                status: 'available',
+              },
+            };
+          });
+        }
       }
     });
     return () => {
@@ -131,96 +167,100 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
             py: 0,
           }}
         >
-          <Box>
-            <Item
-              label={<IntlMessages id='bid.bidStatus' />}
-              value={
-                !bidStatusLoading ? (
-                  bidStatus?.bid_status == 1 ? (
-                    <IntlMessages id='bidStatus.topBidder' />
-                  ) : bidStatus?.bid_status == 2 ? (
-                    <IntlMessages id='bidStatus.notTopBidder' />
-                  ) : (
-                    bidStatus?.bid_status == 3 && (
-                      <IntlMessages id='bidStatus.notBid' />
+          {showBid ? (
+            <Box>
+              <Item
+                label={<IntlMessages id='bid.bidStatus' />}
+                value={
+                  !bidStatusLoading ? (
+                    bidStatus?.bid_status == 1 ? (
+                      <IntlMessages id='bidStatus.topBidder' />
+                    ) : bidStatus?.bid_status == 2 ? (
+                      <IntlMessages id='bidStatus.notTopBidder' />
+                    ) : (
+                      bidStatus?.bid_status == 3 && (
+                        <IntlMessages id='bidStatus.notBid' />
+                      )
                     )
+                  ) : (
+                    <CircularProgress size={15} sx={{mx: 5}} />
                   )
-                ) : (
-                  <CircularProgress size={15} sx={{mx: 5}} />
-                )
-              }
-            />
-            <Item
-              label={<IntlMessages id='bid.minimum_bid' />}
-              value={moneyFormater(vehicle?.minimum_bid)}
-            />
+                }
+              />
+              <Item
+                label={<IntlMessages id='bid.minimum_bid' />}
+                value={moneyFormater(vehicle?.minimum_bid)}
+              />
 
-            <Item
-              label={<IntlMessages id='bid.currentBid' />}
-              value={moneyFormater(currentBid)}
-            />
+              <Item
+                label={<IntlMessages id='bid.currentBid' />}
+                value={moneyFormater(currentBid)}
+              />
 
-            <Item
-              label={<IntlMessages id='common.buy_now_price' />}
-              value={
-                <Button
-                  variant='contained'
-                  color='success'
-                  size='small'
-                  href={`https://wa.me/${vehicle.vehicle?.seller?.loginable?.whatsapp}?text=${window.location.origin}/auctions/auction_items/${vehicle.id}`}
-                  target='_blank'
-                >
-                  {moneyFormater(vehicle?.buy_now_price)}
-                </Button>
-              }
-            />
-            <Formik
-              validateOnChange={true}
-              initialValues={{
-                amount: '',
-              }}
-              enableReinitialize
-              validationSchema={validationSchema}
-              onSubmit={async (values, actions) => {
-                actions.setSubmitting(true);
-                await delay(0);
-                await handleSubmit(values, actions);
-                actions.setSubmitting(false);
-              }}
-            >
-              {({values, ...actions}) => {
-                return (
-                  <Form>
-                    <AppTextField
-                      placeholder={messages['common.amountPlaceholder']}
-                      label={<IntlMessages id='common.amount' />}
-                      name='amount'
-                      variant='outlined'
-                      size='small'
-                      sx={{width: '100%', mt: 8}}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position='start'>
-                            <IntlMessages id='common.AED' />
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                    <Box sx={{display: 'flex', justifyContent: 'center'}}>
-                      <LoadingButton
-                        loading={actions.isSubmitting}
-                        variant='contained'
-                        type='submit'
-                        sx={{mt: 3, borderRadius: 1, minWidth: '100px'}}
-                      >
-                        <IntlMessages id='bid.bid' />
-                      </LoadingButton>
-                    </Box>
-                  </Form>
-                );
-              }}
-            </Formik>
-          </Box>
+              <Item
+                label={<IntlMessages id='common.buy_now_price' />}
+                value={
+                  <Button
+                    variant='contained'
+                    color='success'
+                    size='small'
+                    href={`https://wa.me/${vehicle.vehicle?.seller?.loginable?.whatsapp}?text=${window.location.origin}/auctions/auction_items/${vehicle.id}`}
+                    target='_blank'
+                  >
+                    {moneyFormater(vehicle?.buy_now_price)}
+                  </Button>
+                }
+              />
+              <Formik
+                validateOnChange={true}
+                initialValues={{
+                  amount: '',
+                }}
+                enableReinitialize
+                validationSchema={validationSchema}
+                onSubmit={async (values, actions) => {
+                  actions.setSubmitting(true);
+                  await delay(0);
+                  await handleSubmit(values, actions);
+                  actions.setSubmitting(false);
+                }}
+              >
+                {({values, ...actions}) => {
+                  return (
+                    <Form>
+                      <AppTextField
+                        placeholder={messages['common.amountPlaceholder']}
+                        label={<IntlMessages id='common.amount' />}
+                        name='amount'
+                        variant='outlined'
+                        size='small'
+                        sx={{width: '100%', mt: 8}}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position='start'>
+                              <IntlMessages id='common.AED' />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                      <Box sx={{display: 'flex', justifyContent: 'center'}}>
+                        <LoadingButton
+                          loading={actions.isSubmitting}
+                          variant='contained'
+                          type='submit'
+                          sx={{mt: 3, borderRadius: 1, minWidth: '100px'}}
+                        >
+                          <IntlMessages id='bid.bid' />
+                        </LoadingButton>
+                      </Box>
+                    </Form>
+                  );
+                }}
+              </Formik>
+            </Box>
+          ) : (
+            <></>
+          )}
         </CardContent>
       </Card>
       {showSignInModal && (
