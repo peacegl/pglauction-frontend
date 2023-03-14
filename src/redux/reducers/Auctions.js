@@ -90,7 +90,6 @@ const AuctionReducer = (state = initialState, action) => {
         auctionItemBid: {
           ...action.payload,
           data: [...prevData, ...action.payload.data],
-          // data: action.payload.data,
           hasMore:
             action.payload.data.length == 10 &&
             action.payload.data.length != undefined
@@ -111,6 +110,17 @@ const AuctionReducer = (state = initialState, action) => {
     case GET_AUCTION_ITEM_BID_IS_ACCEPTED:
       return {
         ...state,
+        auctionItemBid: {
+          ...state.auctionItemBid,
+          data: state.auctionItemBid.data.map((item) => {
+            if (item.id == action.payload) {
+              item.is_accepted == 0
+                ? (item.is_accepted = 1)
+                : (item.is_accepted = 0);
+            }
+            return item;
+          }),
+        },
         auctionsAcceptedID: action.payload,
       };
 

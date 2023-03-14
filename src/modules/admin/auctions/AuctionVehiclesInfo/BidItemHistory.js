@@ -89,6 +89,10 @@ const BidItemHistory = ({id}) => {
         is_accepted: false,
       };
     } else {
+      dispatch({
+        type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+        payload: find.id,
+      });
       return {
         item_id: find.id,
         is_accepted: true,
@@ -115,18 +119,18 @@ const BidItemHistory = ({id}) => {
       });
 
       if (res.status === 200 && res.data.data) {
-        if (acceptedId) {
+        if (acceptedId != '' && acceptedId) {
           setAcceptedId('');
-          // dispatch({
-          //   type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
-          //   payload: '',
-          // });
+          dispatch({
+            type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+            payload: '',
+          });
         } else {
           setAcceptedId(item_id);
-          // dispatch({
-          //   type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
-          //   payload: item_id,
-          // });
+          dispatch({
+            type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+            payload: item_id,
+          });
         }
       }
     } catch (e) {
@@ -304,7 +308,6 @@ const BidItemHistory = ({id}) => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-slide-description'>
-            {acceptedId}
             {acceptedId == '' || acceptedId == null ? (
               <IntlMessages id='common.acceptDialogText' />
             ) : (
