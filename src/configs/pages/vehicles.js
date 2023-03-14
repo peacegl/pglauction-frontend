@@ -116,6 +116,10 @@ export const tableColumns = function (router) {
       },
     },
     {
+      name: 'seller.loginable.fullname',
+      label: messages['common.seller'],
+    },
+    {
       name: 'exterior_color',
       label: messages['vehicle.exterior_color'],
     },
@@ -170,10 +174,7 @@ export const tableColumns = function (router) {
         ),
       },
     },
-    {
-      name: 'seller.loginable.fullname',
-      label: messages['common.seller'],
-    },
+
     {
       name: 'created_by',
       label: messages['common.created_by'],
