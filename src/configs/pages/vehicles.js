@@ -171,6 +171,10 @@ export const tableColumns = function (router) {
       },
     },
     {
+      name: 'seller',
+      label: messages['common.seller'],
+    },
+    {
       name: 'created_by',
       label: messages['common.created_by'],
     },
@@ -213,6 +217,13 @@ export const filterContent = [
         type: 'autocomplete',
         url: '/vehicle_vins/auto_complete?id=',
         keyName: 'vin',
+      },
+      {
+        name: 'vehicles.seller_id',
+        label: 'Seller',
+        type: 'autocomplete',
+        url: '/user/auto_complete?id=',
+        keyName: 'username',
       },
       {
         name: 'vehicles.created_by',
