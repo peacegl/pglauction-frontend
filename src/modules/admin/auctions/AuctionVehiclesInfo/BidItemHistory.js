@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
 import {onGetAuctionItemBid} from 'redux/actions';
@@ -11,6 +11,12 @@ import {
   TableBody,
   TableHead,
   Button,
+  Dialog,
+  Slide,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from '@mui/material';
 import {Fonts} from 'shared/constants/AppEnums';
 import TableHeading from 'components/CustomTableHeading/TableHeading';
@@ -21,12 +27,16 @@ import jwtAxios from '@crema/services/auth/jwt-auth';
 import {
   FETCH_ERROR,
   GET_AUCTION_ITEM_BID_IS_ACCEPTED,
-  SHOW_MESSAGE,
 } from 'shared/constants/ActionTypes';
 import {appIntl} from '@crema/utility/helper/Utils';
 import SingleCustomerModal from './SingleCustomerModal';
+import WebEcho from 'plugins/echoWeb';
 // import EchoConfig from 'plugins/echo';
 // import {useAuthUser} from '@crema/utility/AuthHooks';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction='up' ref={ref} {...props} />;
+});
 
 const BidItemHistory = ({id}) => {
   const {messages} = appIntl();
@@ -41,7 +51,7 @@ const BidItemHistory = ({id}) => {
   );
   const [page, setPage] = useState(2);
   const [fetch, setFetch] = useState(false);
-  const [acceptedId, setAcceptedId] = useState(acceptedIdState);
+  const [acceptedId, setAcceptedId] = useState(acceptedIdState ?? '');
   const [showSingleCustomerModal, setShowSingleCustomerModal] = useState(false);
   const [singleCustomer, setSingleCustomer] = useState([]);
 
@@ -69,7 +79,7 @@ const BidItemHistory = ({id}) => {
     }
   };
 
-  useEffect(() => {}, [acceptedId]);
+  // useEffect(() => {}, [acceptedId]);
 
   const is_accepted = () => {
     const find = data.find((item) => item.is_accepted == true);
@@ -96,8 +106,7 @@ const BidItemHistory = ({id}) => {
     }
   };
 
-  const AcceptClick = async (e, item_id) => {
-    e.stopPropagation();
+  const AcceptClick = async (item_id) => {
     try {
       const res = await jwtAxios.post(`/bid/${item_id}`, null, {
         params: {
@@ -108,26 +117,17 @@ const BidItemHistory = ({id}) => {
       if (res.status === 200 && res.data.data) {
         if (acceptedId) {
           setAcceptedId('');
-          dispatch({
-            type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
-            payload: '',
-          });
+          // dispatch({
+          //   type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+          //   payload: '',
+          // });
         } else {
           setAcceptedId(item_id);
-          dispatch({
-            type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
-            payload: item_id,
-          });
+          // dispatch({
+          //   type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+          //   payload: item_id,
+          // });
         }
-        dispatch({
-          type: SHOW_MESSAGE,
-          payload: messages['message.auctionCreated'],
-        });
-      } else {
-        dispatch({
-          type: FETCH_ERROR,
-          payload: messages['message.somethingWentWrong'],
-        });
       }
     } catch (e) {
       dispatch({type: FETCH_ERROR, payload: e.message});
@@ -141,6 +141,33 @@ const BidItemHistory = ({id}) => {
     {id: 'common.created_at'},
     {id: 'common.actions', align: 'center'},
   ];
+
+  const [open, setOpen] = useState(false);
+  const [itemId, setItemId] = useState('');
+
+  const handleAccept = async () => {
+    await AcceptClick(itemId);
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    WebEcho();
+    window.Echo.channel(`web.bid`).listen('Web', (e) => {
+      if (e.action == 'bidAccepted') {
+        disabled(e.data[0]);
+        setAcceptedId(e.data[0]);
+      }
+      if (e.action == 'bidCanceled') {
+        setAcceptedId('');
+      }
+    });
+    return () => {
+      const echoChannel = window.Echo.channel(`web.bid`);
+      echoChannel.stopListening('Web');
+      Echo.leave(`web.bid`);
+    };
+  }, []);
+
   return (
     <div
       onScroll={onScroll}
@@ -233,7 +260,10 @@ const BidItemHistory = ({id}) => {
                     variant='contained'
                     color='primary'
                     onClick={async (e) => {
-                      AcceptClick(e, item.id);
+                      e.stopPropagation();
+                      // disabled(item.id);
+                      setItemId(item.id);
+                      setOpen(true);
                     }}
                   >
                     <IntlMessages
@@ -260,6 +290,37 @@ const BidItemHistory = ({id}) => {
           width={450}
         />
       )}
+
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={() => setOpen(false)}
+        sx={{textAlign: 'center'}}
+        aria-describedby='alert-dialog-slide-description'
+      >
+        <DialogTitle sx={{fontSize: '24px'}}>
+          {<IntlMessages id='common.areYouSure' />}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id='alert-dialog-slide-description'>
+            {acceptedId}
+            {acceptedId == '' || acceptedId == null ? (
+              <IntlMessages id='common.acceptDialogText' />
+            ) : (
+              <IntlMessages id='common.cancelDialogText' />
+            )}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)}>
+            <IntlMessages id='common.close' />
+          </Button>
+          <Button onClick={handleAccept}>
+            {acceptedId == '' || acceptedId == null ? 'accept' : 'cancel'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

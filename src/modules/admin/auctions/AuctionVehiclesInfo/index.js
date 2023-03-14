@@ -12,6 +12,7 @@ import {GET_AUCTION_ITEM_BID_EMPTY} from 'shared/constants/ActionTypes';
 import useSound from 'use-sound';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import EchoConfig from 'plugins/echo';
+import WebEcho from 'plugins/echoWeb';
 
 const SingleAuctionItem = (props) => {
   const router = useRouter();
