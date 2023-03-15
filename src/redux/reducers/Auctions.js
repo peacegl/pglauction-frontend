@@ -1,4 +1,3 @@
-import vehicles from 'pages/admin/vehicles';
 import {
   GET_AUCTIONS,
   SET_AUCTION_FILTER_DATA,
