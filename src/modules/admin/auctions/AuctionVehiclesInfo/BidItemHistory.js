@@ -31,6 +31,7 @@ import {
 import {appIntl} from '@crema/utility/helper/Utils';
 import SingleCustomerModal from './SingleCustomerModal';
 import WebEcho from 'plugins/echoWeb';
+import {useRouter} from 'next/router';
 // import EchoConfig from 'plugins/echo';
 // import {useAuthUser} from '@crema/utility/AuthHooks';
 
@@ -40,6 +41,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const BidItemHistory = ({id}) => {
   const {messages} = appIntl();
+  const router = useRouter();
+
   const color = grey[100];
   const dispatch = useDispatch();
   const _scrollBarRef = useRef();
@@ -158,19 +161,23 @@ const BidItemHistory = ({id}) => {
     WebEcho();
     window.Echo.channel(`web.bid`).listen('Web', (e) => {
       if (e.action == 'bidAccepted') {
-        disabled(e.data[0]);
-        setAcceptedId(e.data[0]);
-        dispatch({
-          type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
-          payload: e.data[0],
-        });
+        if (e.data[0] == router.query.id) {
+          disabled(e.data[0]);
+          setAcceptedId(e.data[0]);
+          dispatch({
+            type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+            payload: e.data[0],
+          });
+        }
       }
       if (e.action == 'bidCanceled') {
-        setAcceptedId('');
-        dispatch({
-          type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
-          payload: '',
-        });
+        if (e.data[0] == router.query.id) {
+          setAcceptedId('');
+          dispatch({
+            type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+            payload: '',
+          });
+        }
       }
     });
     return () => {

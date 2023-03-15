@@ -78,10 +78,10 @@ const SingleAuctionItem = (props) => {
       if (e.action == 'bidAccepted') {
         console.log(e.data[0] == router.query.id);
         if (e.data[0] == router.query.id) {
-          dispatch({
-            type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
-            payload: e.data[0],
-          });
+          // dispatch({
+          //   type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+          //   payload: e.data[0],
+          // });
           setVehicle((d) => {
             return {
               ...d,
@@ -95,10 +95,10 @@ const SingleAuctionItem = (props) => {
       }
       if (e.action == 'bidCanceled') {
         if (e.data[0] == router.query.id) {
-          dispatch({
-            type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
-            payload: '',
-          });
+          // dispatch({
+          //   type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+          //   payload: '',
+          // });
           setVehicle((d) => {
             return {
               ...d,
