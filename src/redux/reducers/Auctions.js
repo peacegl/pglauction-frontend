@@ -1,3 +1,4 @@
+import vehicles from 'pages/admin/vehicles';
 import {
   GET_AUCTIONS,
   SET_AUCTION_FILTER_DATA,
@@ -12,6 +13,8 @@ import {
   GET_AUCTION_ITEM_BID_IS_ACCEPTED,
   ADD_NEW_BID,
   INCREMENT_TOTAL_BID,
+  GET_VEHICLE_AUCTIONS_CHANGES,
+  GET_AUCTION_ITEMS_CHANGE,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -76,11 +79,51 @@ const AuctionReducer = (state = initialState, action) => {
         ...state,
         auctionItemList: action.payload,
       };
+
+    case GET_VEHICLE_AUCTIONS_CHANGES:
+      return {
+        ...state,
+        auctionItemList: {
+          ...state.auctionItemList,
+          data: state.auctionItemList.data.map((item) => {
+            if (item.id == action.payload) {
+              item.status == 'active'
+                ? (item.status = 'sold')
+                : (item.status = 'active');
+              item.vehicle.status == 'available'
+                ? (item.vehicle.status = 'sold')
+                : (item.vehicle.status = 'available');
+            }
+            return item;
+          }),
+        },
+      };
+
     case GET_AUCTION_ITEMS:
       return {
         ...state,
         auctionItemsData: action.payload,
       };
+
+    case GET_AUCTION_ITEMS_CHANGE:
+      return {
+        ...state,
+        auctionItemsData: {
+          ...state.auctionItemsData,
+          data: state.auctionItemsData.data.map((item) => {
+            if (item.id == action.payload) {
+              item.status == 'active'
+                ? (item.status = 'sold')
+                : (item.status = 'active');
+              item.vehicle.status == 'available'
+                ? (item.vehicle.status = 'sold')
+                : (item.vehicle.status = 'available');
+            }
+            return item;
+          }),
+        },
+      };
+
     case GET_AUCTION_ITEM_BID:
       let prevData = state.auctionItemBid?.data
         ? state.auctionItemBid.data

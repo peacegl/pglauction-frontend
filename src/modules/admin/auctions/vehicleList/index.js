@@ -8,6 +8,8 @@ import AppCard from '@crema/core/AppCard';
 import {useDispatch, useSelector} from 'react-redux';
 import {onGetVehicleAuctionData} from 'redux/actions';
 import {CardActions, Pagination} from '@mui/material';
+import WebEcho from 'plugins/echoWeb';
+import {GET_VEHICLE_AUCTIONS_CHANGES} from 'shared/constants/ActionTypes';
 
 const AuctionVehicleList = ({auctionId}) => {
   const dispatch = useDispatch();
@@ -31,22 +33,32 @@ const AuctionVehicleList = ({auctionId}) => {
     );
   };
 
+  useEffect(() => {
+    WebEcho();
+    window.Echo.channel(`web.bid`).listen('Web', (e) => {
+      if (e.action == 'bidAccepted') {
+        dispatch({
+          type: GET_VEHICLE_AUCTIONS_CHANGES,
+          payload: e.data[0],
+        });
+      }
+      if (e.action == 'bidCanceled') {
+        dispatch({
+          type: GET_VEHICLE_AUCTIONS_CHANGES,
+          payload: e.data[0],
+        });
+      }
+    });
+    return () => {
+      const echoChannel = window.Echo.channel(`web.bid`);
+      echoChannel.stopListening('Web');
+      Echo.leave(`web.bid`);
+    };
+  }, []);
+
   const onPageChange2 = (event, value) => {
     setPage(value - 1);
   };
-
-  const handleChange = (value) => {
-    // if (value === messages['website.allVehicles']) {
-    //   setTableData(data);
-    // } else if (value === messages['common.available']) {
-    //   setTableData(data.filter((data) => data.status === 'available'));
-    // } else {
-    //   setTableData(data.filter((data) => data.status === 'sold'));
-    // }
-  };
-
-  const {messages} = useIntl();
-
   return (
     <AppCard
       contentStyle={{

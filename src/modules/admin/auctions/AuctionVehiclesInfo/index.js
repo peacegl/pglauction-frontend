@@ -76,7 +76,6 @@ const SingleAuctionItem = (props) => {
     WebEcho();
     window.Echo.channel(`web.bid`).listen('Web', (e) => {
       if (e.action == 'bidAccepted') {
-        console.log(e.data[0] == router.query.id);
         if (e.data[0] == router.query.id) {
           dispatch({
             type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,

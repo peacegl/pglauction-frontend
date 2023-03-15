@@ -9,6 +9,8 @@ import {useRouter} from 'next/router';
 import {AppLoader} from '@crema';
 import ItemsData from './items';
 import {useState} from 'react';
+import {GET_AUCTION_ITEMS_CHANGE} from 'shared/constants/ActionTypes';
+import WebEcho from 'plugins/echoWeb';
 
 const AuctionDetails = () => {
   const {auction = {}} = useSelector(({auctions}) => auctions);
@@ -42,6 +44,29 @@ const AuctionDetails = () => {
   const fetchData = async () => {
     await dispatch(onGetSingleAuctionData(id));
   };
+
+  useEffect(() => {
+    WebEcho();
+    window.Echo.channel(`web.bid`).listen('Web', (e) => {
+      if (e.action == 'bidAccepted') {
+        dispatch({
+          type: GET_AUCTION_ITEMS_CHANGE,
+          payload: e.data[0],
+        });
+      }
+      if (e.action == 'bidCanceled') {
+        dispatch({
+          type: GET_AUCTION_ITEMS_CHANGE,
+          payload: e.data[0],
+        });
+      }
+    });
+    return () => {
+      const echoChannel = window.Echo.channel(`web.bid`);
+      echoChannel.stopListening('Web');
+      Echo.leave(`web.bid`);
+    };
+  }, []);
 
   return (
     <>
