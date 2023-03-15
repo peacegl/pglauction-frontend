@@ -69,6 +69,33 @@ const SingleAuctionItem = (props) => {
     await dispatch(newBidRealTime(data));
   };
 
+  useEffect(() => {
+    WebEcho();
+    window.Echo.channel(`web.bid`).listen('Web', (e) => {
+      console.log(e.action);
+      if (e.action == 'bidAccepted') {
+        if (e.data[0] == vehicle.id) {
+          setVehicle((d) => {
+            return {
+              ...d,
+              vehicle: {
+                ...d.vehicle,
+                status: 'sold',
+              },
+            };
+          });
+        }
+      }
+      if (e.action == 'bidCanceled') {
+      }
+    });
+    return () => {
+      const echoChannel = window.Echo.channel(`web.bid`);
+      echoChannel.stopListening('Web');
+      Echo.leave(`web.bid`);
+    };
+  }, []);
+
   return (
     vehicle.id && (
       <Container maxWidth='xl'>
@@ -130,6 +157,7 @@ const SingleAuctionItem = (props) => {
                 admin={true}
                 auction_id={vehicle?.id}
                 bidData={auctionItemBid}
+                setVehicle={setVehicle}
               />
             </Box>
           </Box>
