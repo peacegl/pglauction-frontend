@@ -161,9 +161,9 @@ const BidItemHistory = ({id}) => {
     WebEcho();
     window.Echo.channel(`web.bid`).listen('Web', (e) => {
       if (e.action == 'bidAccepted') {
+        disabled(e.data[0]);
+        setAcceptedId(e.data[0]);
         if (e.data[0] == router.query.id) {
-          disabled(e.data[0]);
-          setAcceptedId(e.data[0]);
           dispatch({
             type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
             payload: e.data[0],
@@ -171,8 +171,8 @@ const BidItemHistory = ({id}) => {
         }
       }
       if (e.action == 'bidCanceled') {
+        setAcceptedId('');
         if (e.data[0] == router.query.id) {
-          setAcceptedId('');
           dispatch({
             type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
             payload: '',
