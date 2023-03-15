@@ -160,9 +160,17 @@ const BidItemHistory = ({id}) => {
       if (e.action == 'bidAccepted') {
         disabled(e.data[0]);
         setAcceptedId(e.data[0]);
+        dispatch({
+          type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+          payload: e.data[0],
+        });
       }
       if (e.action == 'bidCanceled') {
         setAcceptedId('');
+        dispatch({
+          type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+          payload: '',
+        });
       }
     });
     return () => {

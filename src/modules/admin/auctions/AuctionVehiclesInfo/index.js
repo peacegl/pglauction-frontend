@@ -8,7 +8,10 @@ import BidInfoAdmin from './BidInfo';
 import LotInfoAdmin from './LotInfo';
 import {newBidRealTime, onGetAuctionItemBid} from 'redux/actions';
 import {useDispatch, useSelector} from 'react-redux';
-import {GET_AUCTION_ITEM_BID_EMPTY} from 'shared/constants/ActionTypes';
+import {
+  GET_AUCTION_ITEM_BID_EMPTY,
+  GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+} from 'shared/constants/ActionTypes';
 import useSound from 'use-sound';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import EchoConfig from 'plugins/echo';
@@ -73,7 +76,12 @@ const SingleAuctionItem = (props) => {
     WebEcho();
     window.Echo.channel(`web.bid`).listen('Web', (e) => {
       if (e.action == 'bidAccepted') {
+        console.log(e.data[0] == router.query.id);
         if (e.data[0] == router.query.id) {
+          dispatch({
+            type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+            payload: e.data[0],
+          });
           setVehicle((d) => {
             return {
               ...d,
@@ -87,6 +95,10 @@ const SingleAuctionItem = (props) => {
       }
       if (e.action == 'bidCanceled') {
         if (e.data[0] == router.query.id) {
+          dispatch({
+            type: GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+            payload: '',
+          });
           setVehicle((d) => {
             return {
               ...d,
