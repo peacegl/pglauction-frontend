@@ -72,9 +72,8 @@ const SingleAuctionItem = (props) => {
   useEffect(() => {
     WebEcho();
     window.Echo.channel(`web.bid`).listen('Web', (e) => {
-      console.log(e.action);
       if (e.action == 'bidAccepted') {
-        if (e.data[0] == vehicle.id) {
+        if (e.data[0] == router.query.id) {
           setVehicle((d) => {
             return {
               ...d,
@@ -87,6 +86,17 @@ const SingleAuctionItem = (props) => {
         }
       }
       if (e.action == 'bidCanceled') {
+        if (e.data[0] == router.query.id) {
+          setVehicle((d) => {
+            return {
+              ...d,
+              vehicle: {
+                ...d.vehicle,
+                status: 'available',
+              },
+            };
+          });
+        }
       }
     });
     return () => {
@@ -157,7 +167,6 @@ const SingleAuctionItem = (props) => {
                 admin={true}
                 auction_id={vehicle?.id}
                 bidData={auctionItemBid}
-                setVehicle={setVehicle}
               />
             </Box>
           </Box>
