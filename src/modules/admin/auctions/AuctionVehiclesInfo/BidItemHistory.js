@@ -193,7 +193,7 @@ const BidItemHistory = ({id}) => {
       ref={_scrollBarRef}
       style={{height: '600px', overflow: 'auto', width: '100%'}}
     >
-      <Table stickyHeader className='table' sx={{pb: 7, height: `100%`}}>
+      <Table stickyHeader className='table' sx={{pb: 7}}>
         <TableHead
           sx={{
             borderBottom: '0 none',
@@ -214,7 +214,6 @@ const BidItemHistory = ({id}) => {
                   '& .tableCell': {
                     fontSize: 13,
                     padding: 2,
-                    maxHeight: '100px',
                     '&:first-of-type': {
                       pl: 2,
                     },
