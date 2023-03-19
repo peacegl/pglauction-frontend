@@ -251,7 +251,7 @@ const BidItemHistory = ({id}) => {
                         fontWeight: Fonts.MEDIUM,
                       }}
                     >
-                      {item?.buyer.username}
+                      {item?.buyer?.username}
                     </Box>
                   </Box>
                 </TableCell>
