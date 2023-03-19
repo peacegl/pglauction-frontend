@@ -214,7 +214,7 @@ const BidItemHistory = ({id}) => {
                   '& .tableCell': {
                     fontSize: 13,
                     padding: 2,
-
+                    maxHeight: '100px',
                     '&:first-of-type': {
                       pl: 2,
                     },
