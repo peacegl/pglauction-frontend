@@ -15,11 +15,13 @@ import {alpha, Box} from '@mui/material';
 import AuctionGrid from '../AuctionGrid';
 import WebEcho from 'plugins/echoWeb';
 import moment from 'moment';
+import {EXPIRE_AUCTION} from 'shared/constants/ActionTypes';
 
 const TodayAuctions = () => {
   const dispatch = useDispatch();
   const {theme} = useThemeContext();
   const [page, setPage] = useState(0);
+  const [exp, setExp] = useState(1);
   const perPage = 10;
   const {user} = useAuthUser();
   const {data = [], total = 0} = useSelector(
@@ -93,6 +95,11 @@ const TodayAuctions = () => {
     await dispatch(updateTodayAuctionItem(data));
   };
 
+  const expGParent = (id) => {
+    setExp(exp + 1);
+    dispatch({type: EXPIRE_AUCTION, payload: id});
+  };
+
   return (
     <>
       <ListHeader
@@ -122,6 +129,7 @@ const TodayAuctions = () => {
         >
           <AuctionGrid
             list={data}
+            expGParent={expGParent}
             loading={loading}
             perPage={perPage}
             user={user}

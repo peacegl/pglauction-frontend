@@ -2,7 +2,9 @@ import ListEmptyResult from '@crema/core/AppList/ListEmptyResult';
 import AuctionGridItem from './AuctionGridItem';
 import AppGrid from '@crema/core/AppGrid';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {EXPIRE_AUCTION} from 'shared/constants/ActionTypes';
 
 const AuctionGrid = ({
   list,
@@ -11,26 +13,34 @@ const AuctionGrid = ({
   emptyContent,
   emptyTitle,
   user,
-}) => (
-  <AppGrid
-    responsive={{
-      xs: 1,
-      sm: 1,
-      lg: 2,
-    }}
-    data={list}
-    renderRow={(item, index) => (
-      <AuctionGridItem item={item} key={index} user={user} />
-    )}
-    perPage={perPage}
-    ListEmptyComponent={
-      <ListEmptyResult
-        content={loading ? 'Loading...' : emptyContent}
-        title={emptyTitle}
-      />
-    }
-  />
-);
+  expGParent,
+}) => {
+  const expParent = (id) => {
+    expGParent(id);
+  };
+
+  return (
+    <AppGrid
+      responsive={{
+        xs: 1,
+        sm: 1,
+        lg: 2,
+      }}
+      data={list}
+      renderRow={(item, index) => (
+        <AuctionGridItem item={item} key={index} user={user} exp={expParent} />
+      )}
+      perPage={perPage}
+      ListEmptyComponent={
+        <ListEmptyResult
+          content={loading ? 'Loading...' : emptyContent}
+          title={emptyTitle}
+        />
+      }
+    />
+  );
+};
+
 export default AuctionGrid;
 
 AuctionGrid.propTypes = {
@@ -41,4 +51,5 @@ AuctionGrid.propTypes = {
   emptyContent: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   emptyTitle: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   user: PropTypes.any,
+  expGParent: PropTypes.any,
 };

@@ -10,9 +10,11 @@ import {AppCard} from '@crema';
 import moment from 'moment';
 import 'moment-timezone';
 
-const AuctionGridItem = ({item, user}) => {
+const AuctionGridItem = ({item, user, exp}) => {
   const router = useRouter();
+
   const [isStarted, setIsStarted] = useState(false);
+
   let endTime = moment(
     item?.end_date,
     'YYYY-MM-DD hh:mm:ss A',
@@ -58,6 +60,7 @@ const AuctionGridItem = ({item, user}) => {
         })
         .then((data) => {
           if (data.status === 200) {
+            exp(data.data.data.id);
           } else {
           }
         });
@@ -177,7 +180,10 @@ const AuctionGridItem = ({item, user}) => {
                     'YYYY-MM-DD hh:mm:ss A',
                     user?.timezone ? user.timezone : 'UTC',
                   ).tz('UTC')}
-                  onExpire={() => onExpire(item?.end_date)}
+                  onExpire={() => {
+                    console.log('nasim');
+                    onExpire(item?.end_date);
+                  }}
                 />
               )}
               {!isStarted && (
@@ -188,6 +194,7 @@ const AuctionGridItem = ({item, user}) => {
                     user?.timezone ? user.timezone : 'UTC',
                   ).tz('UTC')}
                   onExpire={() => {
+                    console.log('exprire');
                     setIsStarted(true);
                   }}
                 />
@@ -224,4 +231,5 @@ export default AuctionGridItem;
 AuctionGridItem.propTypes = {
   item: PropTypes.any,
   user: PropTypes.object,
+  exp: PropTypes.any,
 };

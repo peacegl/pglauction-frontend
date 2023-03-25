@@ -10,6 +10,7 @@ import {
   INCREMENT_TOTAL_UPCOMING_AUCTION_ITEM,
   UPDATE_UPCOMING_AUCTION,
   UPDATE_TODAY_AUCTION,
+  EXPIRE_AUCTION,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -28,6 +29,18 @@ const AuctionReducer = (state = initialState, action) => {
         ...state,
         auctionsList: action.payload,
       };
+    case EXPIRE_AUCTION:
+      console.log(action.payload);
+      return {
+        ...state,
+        auctionsList: {
+          ...state.auctionsList,
+          data: state.auctionsList.data.filter(
+            (item) => item.id != action.payload,
+          ),
+        },
+      };
+
     case GET_UP_COMING_WEB_AUCTIONS:
       return {
         ...state,
