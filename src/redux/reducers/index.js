@@ -13,6 +13,7 @@ import Makes from './Makes';
 import Models from './Models';
 import Sales from './Sales';
 import WebAuctions from './WebAuctions';
+import Dashboard from './Dashboard';
 
 const reducers = combineReducers({
   settings: Settings,
@@ -29,5 +30,6 @@ const reducers = combineReducers({
   sales: Sales,
   auctions: Auctions,
   webAuctions: WebAuctions,
+  dashboard: Dashboard,
 });
 export default reducers;
