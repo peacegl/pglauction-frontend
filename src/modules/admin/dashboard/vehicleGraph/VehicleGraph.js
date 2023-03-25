@@ -37,13 +37,14 @@ const VehicleGraph = ({data, value}) => {
           dataKey={onGetDataKey(value)}
           tickLine={false}
           axisLine={false}
+          fontSize={10}
           padding={{left: 20, right: 20}}
         />
         <Tooltip labelStyle={{color: 'black'}} />
         <YAxis
           tickLine={false}
           axisLine={false}
-          ticks={[0, 5, 10, 15, 20]}
+          ticks={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
           type='number'
         />
         <CartesianGrid

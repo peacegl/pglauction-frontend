@@ -55,9 +55,12 @@ const Vehicle = (props) => {
           <Box
             sx={{
               display: 'inline-block',
+              px: '32px',
+              fontWeight: 'bold',
+              fontSize: '18px',
             }}
           >
-            Vehicles
+            <IntlMessages id='sidebar.vehicles' />
           </Box>
         </Box>
         <Box
