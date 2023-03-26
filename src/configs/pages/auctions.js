@@ -80,6 +80,19 @@ export const tableColumns = function (router, showAuctionVehicles) {
     {
       name: 'status',
       label: messages['common.status'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography
+            sx={{
+              textTransform: 'capitalize',
+              color: value == 'active' ? 'green' : 'red',
+            }}
+          >
+            {value}
+          </Typography>
+        ),
+      },
     },
     {
       name: 'created_by',
