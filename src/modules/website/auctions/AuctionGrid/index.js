@@ -2,9 +2,7 @@ import ListEmptyResult from '@crema/core/AppList/ListEmptyResult';
 import AuctionGridItem from './AuctionGridItem';
 import AppGrid from '@crema/core/AppGrid';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {EXPIRE_AUCTION} from 'shared/constants/ActionTypes';
+import React from 'react';
 
 const AuctionGrid = ({
   list,

@@ -1,6 +1,7 @@
 import {Box, Container} from '@mui/material';
 import React from 'react';
-import AuctionsList from './auctionsList';
+import TodayAuctions from './todayAuction/todayAcutions';
+import UpComingAuctions from './upcomingAuction/upComingAcutions';
 
 const index = () => {
   return (
@@ -15,7 +16,8 @@ const index = () => {
             flex: {xs: 1, md: 2, lg: 3, xl: 3},
           }}
         >
-          <AuctionsList />
+          <TodayAuctions />
+          <UpComingAuctions />
         </Box>
       </Box>
     </Container>
