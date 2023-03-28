@@ -6,6 +6,7 @@ import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAdminCounts} from 'redux/actions';
 import {onGetVehicleGraph} from 'redux/actions/Dashboard';
+import BtcVolumeCurrency from './BtcVolumeCurrency';
 import Vehicle from './vehicleGraph';
 
 export default function Dashboard() {
@@ -155,6 +156,36 @@ export default function Dashboard() {
             <AppGridContainer>
               <Grid item xs={12}>
                 <Vehicle coinGraphData={vehiclesGraph} />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <BtcVolumeCurrency
+                  data={[
+                    {
+                      id: 1001,
+                      name: 'Future',
+                      value: vehicles.future,
+                      color: '#4299E1',
+                    },
+                    {
+                      id: 1002,
+                      name: 'Available',
+                      value: vehicles.available,
+                      color: '#38B2AC',
+                    },
+                    {
+                      id: 1003,
+                      name: 'Inactive',
+                      value: vehicles.inactive,
+                      color: '#E53E3E',
+                    },
+                    {
+                      id: 1004,
+                      name: 'Sold',
+                      value: vehicles.sold,
+                      color: '#4C51BF',
+                    },
+                  ]}
+                />
               </Grid>
             </AppGridContainer>
           </Box>

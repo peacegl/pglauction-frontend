@@ -1236,5 +1236,6 @@
   "common.areYouSure": "Are you sure?",
   "common.acceptDialogText": "Do you want to accept this bid !",
   "common.cancelDialogText": "Do you want to cancel this bid !",
-  "common.close": "close"
+  "common.close": "close",
+  "common.vehicleCountByStatus": "Vehicle count by status"
 }
