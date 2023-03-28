@@ -1,12 +1,12 @@
 import React from 'react';
-import BtcGraph from './BtcGraph';
+import BtcGraph from './VehicleStatusGraph';
 import {Box} from '@mui/material';
 import PropTypes from 'prop-types';
 import AppCard from '../../../../@crema/core/AppCard';
 import {useIntl} from 'react-intl';
 import {Fonts} from '../../../../shared/constants/AppEnums';
 
-const BtcVolumeCurrency = (props) => {
+const VehicleStatusGraph = (props) => {
   const {data} = props;
 
   const {messages} = useIntl();
@@ -63,12 +63,12 @@ const BtcVolumeCurrency = (props) => {
   );
 };
 
-export default BtcVolumeCurrency;
+export default VehicleStatusGraph;
 
-BtcVolumeCurrency.defaultProps = {
+VehicleStatusGraph.defaultProps = {
   data: [],
 };
 
-BtcVolumeCurrency.propTypes = {
+VehicleStatusGraph.propTypes = {
   data: PropTypes.array,
 };

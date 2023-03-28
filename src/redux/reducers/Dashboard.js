@@ -1,7 +1,11 @@
-import {GET_VEHICLE_GRAPH} from 'shared/constants/ActionTypes';
+import {
+  GET_VEHICLE_GRAPH,
+  GET_LATEST_SOLD_VEHICLES,
+} from 'shared/constants/ActionTypes';
 
 const initialState = {
   vehiclesGraph: {},
+  latestSoldVehicles: [],
 };
 
 const Dashboard = (state = initialState, action) => {
@@ -10,6 +14,11 @@ const Dashboard = (state = initialState, action) => {
       return {
         ...state,
         vehiclesGraph: action.payload,
+      };
+    case GET_LATEST_SOLD_VEHICLES:
+      return {
+        ...state,
+        latestSoldVehicles: action.payload,
       };
     default:
       return state;

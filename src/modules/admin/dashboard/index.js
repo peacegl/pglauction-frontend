@@ -5,9 +5,10 @@ import {useRouter} from 'next/router';
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAdminCounts} from 'redux/actions';
-import {onGetVehicleGraph} from 'redux/actions/Dashboard';
-import BtcVolumeCurrency from './BtcVolumeCurrency';
+import {onGetVehicleGraph, onLatestSoldVehicle} from 'redux/actions/Dashboard';
+import LatestNews from './LatestNews';
 import Vehicle from './vehicleGraph';
+import VehicleStatusGraph from './VehicleStatusGraph';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -15,14 +16,16 @@ export default function Dashboard() {
   const {vehicles = {}} = useSelector(({common}) => common.counts);
 
   const {vehiclesGraph = {}} = useSelector(({dashboard}) => dashboard);
+  const {latestSoldVehicles = {}} = useSelector(({dashboard}) => dashboard);
 
   useEffect(() => {
     fetchData();
-    dispatch(getAdminCounts());
   }, [dispatch]);
 
   const fetchData = async () => {
-    await dispatch(onGetVehicleGraph());
+    dispatch(onGetVehicleGraph());
+    dispatch(onLatestSoldVehicle());
+    dispatch(getAdminCounts());
   };
 
   const router = useRouter();
@@ -158,7 +161,7 @@ export default function Dashboard() {
                 <Vehicle coinGraphData={vehiclesGraph} />
               </Grid>
               <Grid item xs={12} md={4}>
-                <BtcVolumeCurrency
+                <VehicleStatusGraph
                   data={[
                     {
                       id: 1001,
@@ -186,6 +189,9 @@ export default function Dashboard() {
                     },
                   ]}
                 />
+              </Grid>
+              <Grid item xs={12} md={8}>
+                <LatestNews newsData={latestSoldVehicles} />
               </Grid>
             </AppGridContainer>
           </Box>
