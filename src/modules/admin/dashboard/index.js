@@ -1,4 +1,5 @@
 import {AppAnimate, AppGridContainer} from '@crema';
+import AppsContainer from '@crema/core/AppsContainer';
 import {Box, Grid, Skeleton} from '@mui/material';
 import CardState from 'components/design/CardState';
 import {useRouter} from 'next/router';
@@ -67,7 +68,86 @@ export default function Dashboard() {
       ) : (
         <AppAnimate animation='transition.slideUpIn' delay={200}>
           <Box>
-            <Box
+            <AppGridContainer sx={{mb: 5}}>
+              <Grid item xs={12} md={3} lg={2.3}>
+                <CardState
+                  item={{
+                    title: 'All Vehicles',
+                    count: vehicles.all,
+                    color: '#9E49E6',
+                    icon: 'AL',
+                  }}
+                  onClick={() => {
+                    handleClick(`/admin/vehicles`);
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} md={3} lg={2.3}>
+                <CardState
+                  item={{
+                    title: 'Future Vehicles',
+                    count: vehicles.future,
+                    color: '#ff9800',
+                    icon: 'F',
+                  }}
+                  onClick={() => {
+                    handleClick(
+                      '/admin/vehicles',
+                      JSON.stringify({'vehicles.status': ['future']}),
+                    );
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} md={3} lg={2.3}>
+                <CardState
+                  item={{
+                    title: 'Available Vehicle',
+                    count: vehicles.available,
+                    color: '#4caf50',
+                    icon: 'AV',
+                  }}
+                  onClick={() => {
+                    handleClick(
+                      '/admin/vehicles',
+                      JSON.stringify({'vehicles.status': ['available']}),
+                    );
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} md={3} lg={2.3}>
+                <CardState
+                  item={{
+                    title: 'Sold Vehicles',
+                    count: vehicles.sold,
+                    color: '#b23c17',
+                    icon: 'S',
+                  }}
+                  onClick={() => {
+                    handleClick(
+                      '/admin/vehicles',
+                      JSON.stringify({'vehicles.status': ['sold']}),
+                    );
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} md={3} lg={2.3}>
+                <CardState
+                  item={{
+                    title: 'Inactive Vehicles',
+                    count: vehicles.inactive,
+                    color: '#009688',
+                    icon: 'IN',
+                  }}
+                  onClick={() => {
+                    handleClick(
+                      '/admin/vehicles',
+                      JSON.stringify({'vehicles.status': ['inactive']}),
+                    );
+                  }}
+                />
+              </Grid>
+            </AppGridContainer>
+            {/* <Box
               sx={{
                 display: 'flex',
                 // alignItems: 'center',
@@ -155,7 +235,7 @@ export default function Dashboard() {
                   }}
                 />
               </Box>
-            </Box>
+            </Box> */}
             <AppGridContainer>
               <Grid item xs={12}>
                 <Vehicle coinGraphData={vehiclesGraph} />

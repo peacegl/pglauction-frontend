@@ -40,7 +40,7 @@ export const onLatestSoldVehicle = () => {
       const res = await jwtAxios.get('/latest/sold_vehicles');
       if (res.status === 200 && res.data.result) {
         dispatch({type: FETCH_SUCCESS});
-        console.log(res.data.data);
+
         dispatch({type: GET_LATEST_SOLD_VEHICLES, payload: res.data.data});
       } else {
         dispatch({
