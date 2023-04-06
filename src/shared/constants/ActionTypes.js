@@ -242,3 +242,8 @@ export const ADD_NEW_SALE = 'ADD_NEW_SALE';
 export const UPDATE_SALE = 'UPDATE_SALE';
 export const SET_AUCTION_DATA = 'SET_AUCTION_DATA';
 export const GET_ALL_SALES_LIST = 'GET_ALL_SALES_LIST';
+
+// dashboard
+
+export const GET_VEHICLE_GRAPH = 'GET_VEHICLE_GRAPH';
+export const GET_LATEST_SOLD_VEHICLES = 'GET_LATEST_SOLD_VEHICLES';

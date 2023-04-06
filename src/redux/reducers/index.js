@@ -13,6 +13,7 @@ import WebVehicles from './WebVehicles';
 import Makes from './Makes';
 import Models from './Models';
 import Sales from './Sales';
+import Dashboard from './Dashboard';
 
 const reducers = combineReducers({
   settings: Settings,
@@ -29,5 +30,6 @@ const reducers = combineReducers({
   makes: Makes,
   models: Models,
   sales: Sales,
+  dashboard: Dashboard,
 });
 export default reducers;
