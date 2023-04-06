@@ -6,6 +6,7 @@ import {Fonts} from 'shared/constants/AppEnums';
 import Link from '@mui/material/Link';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
+import {useRouter} from 'next/router';
 
 const AppCard = ({
   sxStyle,
@@ -22,6 +23,8 @@ const AppCard = ({
   onClick = () => {},
   ...rest
 }) => {
+  const router = useRouter();
+
   return (
     <Card
       onClick={onClick}
@@ -69,11 +72,17 @@ const AppCard = ({
             ) : (
               <span {...actionStyle}>
                 <Link
-                  href='#'
+                  onClick={(e) => {
+                    e.prevent;
+                    router.push('/admin/sales');
+                  }}
                   underline='none'
                   sx={{
                     fontSize: 14,
                     fontWeight: Fonts.MEDIUM,
+                    '&:hover': {
+                      cursor: 'pointer',
+                    },
                   }}
                 >
                   {action}

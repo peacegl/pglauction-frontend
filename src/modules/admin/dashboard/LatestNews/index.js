@@ -15,7 +15,6 @@ const LatestNews = (props) => {
       contentStyle={{px: 0}}
       title={messages['dashboard.latestSoldVehicles']}
       action={messages['common.viewAll']}
-      actionLink={'/admin/sales'}
     >
       <NewsList newsData={newsData} />
     </AppCard>
