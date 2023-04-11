@@ -28,7 +28,7 @@ export {default as AppContextProvider} from './utility/AppContextProvider';
 export {default as AuthRoutes} from './utility/AuthRoutes';
 
 // export {default as AppSemiCircleProgress} from './core/AppSemiCircleProgress';
-// export {default as AppMedialViewer} from './core/AppMedialViewer';
+export {default as AppMedialViewer} from './core/AppMedialViewer';
 // export {default as AppLinearProgress} from './core/AppLinearProgress';
 // export {default as AppEmptyResult} from './core/AppEmptyResult';
 // export {default as AppComponentHeader} from './core/AppComponentHeader';
