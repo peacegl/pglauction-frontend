@@ -26,8 +26,6 @@ const clientSideEmotionCache = createEmotionCache();
 export default function MyApp(props) {
   const {Component, emotionCache = clientSideEmotionCache, pageProps} = props;
   const store = useStore(pageProps.initialReduxState);
-  window.Echo = echoConfig();
-
   return (
     // <EchoProvider>
     <CacheProvider value={emotionCache}>
