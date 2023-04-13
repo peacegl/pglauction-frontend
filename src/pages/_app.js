@@ -1,4 +1,6 @@
 import * as React from 'react';
+import echoConfig from 'plugins/laravel-echo-setup';
+// import Echo from 'laravel-echo';
 import PropTypes from 'prop-types';
 import CssBaseline from '@mui/material/CssBaseline';
 import {CacheProvider} from '@emotion/react';
@@ -15,6 +17,7 @@ import '@crema/services/index';
 import 'shared/vendors/index.css';
 import AppPageMeta from '@crema/core/AppPageMeta';
 import JWTAuthProvider from '@crema/services/auth/jwt-auth/JWTAuthProvider';
+
 // import EchoProvider from 'configs/EchoProvider';
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -23,6 +26,7 @@ const clientSideEmotionCache = createEmotionCache();
 export default function MyApp(props) {
   const {Component, emotionCache = clientSideEmotionCache, pageProps} = props;
   const store = useStore(pageProps.initialReduxState);
+  window.Echo = echoConfig();
 
   return (
     // <EchoProvider>
