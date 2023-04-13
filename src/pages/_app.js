@@ -1,6 +1,4 @@
 import * as React from 'react';
-import echoConfig from 'plugins/laravel-echo-setup';
-// import Echo from 'laravel-echo';
 import PropTypes from 'prop-types';
 import CssBaseline from '@mui/material/CssBaseline';
 import {CacheProvider} from '@emotion/react';
@@ -26,7 +24,6 @@ const clientSideEmotionCache = createEmotionCache();
 export default function MyApp(props) {
   const {Component, emotionCache = clientSideEmotionCache, pageProps} = props;
   const store = useStore(pageProps.initialReduxState);
-  window.Echo = echoConfig();
 
   return (
     // <EchoProvider>

@@ -60,22 +60,22 @@ const VehicleDetail = () => {
     });
     return () => {
       const echoChannel = window.Echo.channel(`web.vehicles.${id}`);
-      echoChannel.stopListening('Web');
-      Echo.leave(`web.vehicles.${id}`);
+      echoChannel.stopListening('.Web');
+      window.Echo.leave(`web.vehicles.${id}`);
     };
   }, []);
 
   useEffect(() => {
     WebEcho();
-    window.Echo.channel(`web.vehicles`).listen('Web', (e) => {
+    window.Echo.channel(`web.vehicles`).listen('.Web', (e) => {
       if (e.action == 'deleted' && e?.data?.includes(id)) {
         router.push('/');
       }
     });
     return () => {
       const echoChannel = window.Echo.channel(`web.vehicles`);
-      echoChannel.stopListening('Web');
-      Echo.leave(`web.vehicles`);
+      echoChannel.stopListening('.Web');
+      window.Echo.leave(`web.vehicles`);
     };
   }, []);
 
