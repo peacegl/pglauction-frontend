@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Echo from 'laravel-echo';
 const broadcastAuthInstance = axios.create({
-  baseURL: 'http://localhost:8000/broadcasting/', // the auth route
+  baseURL: process.env.BROADCAST_URL, // the auth route
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
