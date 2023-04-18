@@ -14,8 +14,8 @@ import {
 } from 'shared/constants/ActionTypes';
 import useSound from 'use-sound';
 import {useAuthUser} from '@crema/utility/AuthHooks';
-import EchoConfig from 'plugins/echo';
-import WebEcho from 'plugins/echoWeb';
+import echoAuthInit from 'plugins/echo';
+import echoWeb from 'plugins/echoWeb';
 
 const SingleAuctionItem = (props) => {
   const router = useRouter();
@@ -50,8 +50,8 @@ const SingleAuctionItem = (props) => {
   });
 
   useEffect(() => {
-    EchoConfig();
-    window.Echo.private(`update.bidData`).listen('Updated', (e) => {
+    echoAuthInit();
+    echoAuth.private(`update.bidData`).listen('Updated', (e) => {
       if (user.uid != e.authUser) {
         if (e.action === 'created') {
           if (e.data.auction_item_id == props.vehicle?.id) {
@@ -62,9 +62,9 @@ const SingleAuctionItem = (props) => {
       }
     });
     return () => {
-      const echoChannel = window.Echo.private(`update.bidData`);
+      const echoChannel = echoAuth.private(`update.bidData`);
       echoChannel.stopListening('Updated');
-      Echo.leave(`update.bidData`);
+      echoAuth.leave(`update.bidData`);
     };
   }, []);
 
@@ -73,8 +73,7 @@ const SingleAuctionItem = (props) => {
   };
 
   useEffect(() => {
-    WebEcho();
-    window.Echo.channel(`web.bid`).listen('Web', (e) => {
+    echoWeb.channel(`web.bid`).listen('Web', (e) => {
       if (e.action == 'bidAccepted') {
         if (e.data[0] == router.query.id) {
           dispatch({
@@ -111,9 +110,9 @@ const SingleAuctionItem = (props) => {
       }
     });
     return () => {
-      const echoChannel = window.Echo.channel(`web.bid`);
+      const echoChannel = echoWeb.channel(`web.bid`);
       echoChannel.stopListening('Web');
-      Echo.leave(`web.bid`);
+      echoWeb.leave(`web.bid`);
     };
   }, []);
 

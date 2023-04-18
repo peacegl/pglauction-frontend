@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {tableColumns} from 'configs/pages/auctions';
 import AuctionModal from './AuctionModal';
 import {useEffect, useState} from 'react';
-import EchoConfig from 'plugins/echo';
+import echoAuthInit from 'plugins/echo';
 import PropTypes from 'prop-types';
 import {
   onGetAuctionData,
@@ -106,8 +106,8 @@ export default function AuctionList({user}) {
   };
 
   useEffect(() => {
-    EchoConfig();
-    window.Echo.private(`update.auction`).listen('Updated', (e) => {
+    echoAuthInit();
+    echoAuth.private(`update.auction`).listen('Updated', (e) => {
       if (user.uid != e.authUser) {
         if (e.action === 'created') {
           console.log('', e.data);
@@ -122,9 +122,9 @@ export default function AuctionList({user}) {
       }
     });
     return () => {
-      const echoChannel = window.Echo.private(`update.auction`);
+      const echoChannel = echoAuth.private(`update.auction`);
       echoChannel.stopListening('Updated');
-      Echo.leave(`update.auction`);
+      echoAuth.leave(`update.auction`);
     };
   }, []);
 

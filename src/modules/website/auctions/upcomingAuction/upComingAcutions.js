@@ -13,7 +13,7 @@ import {
 import React, {useEffect, useState} from 'react';
 import {alpha, Box} from '@mui/material';
 import AuctionGrid from '../AuctionGrid';
-import WebEcho from 'plugins/echoWeb';
+import echoWeb from 'plugins/echoWeb';
 import moment from 'moment';
 
 const UpComingAuctions = () => {
@@ -46,8 +46,7 @@ const UpComingAuctions = () => {
   };
 
   useEffect(() => {
-    WebEcho();
-    window.Echo.channel(`web.auction_item`).listen('Web', (e) => {
+    echoWeb.channel(`web.auction_item`).listen('Web', (e) => {
       let startTime = moment(
         e.data?.start_date,
         'YYYY-MM-DD hh:mm:ss A',
@@ -79,9 +78,9 @@ const UpComingAuctions = () => {
       }
     });
     return () => {
-      const echoChannel = window.Echo.channel(`web.auction_item`);
+      const echoChannel = echoWeb.channel(`web.auction_item`);
       echoChannel.stopListening('Web');
-      Echo.leave(`web.auction_item`);
+      echoWeb.leave(`web.auction_item`);
       console.log('clean up ...');
     };
   }, []);

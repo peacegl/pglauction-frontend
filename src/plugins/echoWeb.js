@@ -1,4 +1,5 @@
-import Echo from 'laravel-echo';
+// import Echo from 'laravel-echo';
+// import Socket from 'socket.io-client';
 // const WebEcho = () => {
 //   window.Pusher = require('pusher-js');
 //   window.Echo = new Echo({
@@ -12,12 +13,14 @@ import Echo from 'laravel-echo';
 //   });
 // };
 // export default WebEcho;
-const WebEcho = () => {
-  window.io = require('socket.io-client');
-  window.Echo = new Echo({
-    broadcaster: 'socket.io',
-    host: 'http://127.0.0.1:6001',
-    // transports: ['websocket'],
-  });
-};
-export default WebEcho;
+
+import Echo from 'laravel-echo';
+import socketio from 'socket.io-client';
+
+const echoWeb = new Echo({
+  host: process.env.NEXT_PUBLIC_WEB_SOCKET_SERVER_URL,
+  broadcaster: 'socket.io',
+  client: socketio,
+});
+
+export default echoWeb;
