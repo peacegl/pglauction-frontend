@@ -15,7 +15,7 @@ import {
   EDIT_CUSTOMER,
   DELETE_CUSTOMER,
 } from 'shared/constants/Permissions';
-import EchoConfig from 'plugins/echo';
+import echoAuthInit from 'plugins/echo';
 import {
   onGetCustomerList,
   onDeleteCustomers,
@@ -141,8 +141,8 @@ export default function CustomerList({user}) {
   // end of for exporting data
 
   useEffect(() => {
-    EchoConfig();
-    window.Echo.private(`update.customer`).listen('Updated', (e) => {
+    echoAuthInit();
+    echoAuth.private(`update.customer`).listen('Updated', (e) => {
       if (user.uid != e.authUser) {
         if (e.action === 'created') {
           newCustomerAddRealTime(e.data);
@@ -156,9 +156,9 @@ export default function CustomerList({user}) {
       }
     });
     return () => {
-      const echoChannel = window.Echo.private(`update.customer`);
+      const echoChannel = echoAuth.private(`update.customer`);
       echoChannel.stopListening('Updated');
-      Echo.leave(`update.customer`);
+      echoAuth.leave(`update.customer`);
     };
   }, []);
 

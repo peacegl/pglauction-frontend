@@ -17,7 +17,7 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
-import WebEcho from 'plugins/echoWeb';
+import echoWeb from 'plugins/echoWeb';
 import {async} from '@firebase/util';
 
 const AuctionItemList = () => {
@@ -62,16 +62,15 @@ const AuctionItemList = () => {
   };
 
   useEffect(() => {
-    WebEcho();
-    window.Echo.channel(`web.auction_items.${id}`).listen('Web', (e) => {
+    echoWeb.channel(`web.auction_items.${id}`).listen('Web', (e) => {
       if (e.action === 'sync') {
         fetchData();
       }
     });
     return () => {
-      const echoChannel = window.Echo.channel(`web.auction_items.${id}`);
+      const echoChannel = echoWeb.channel(`web.auction_items.${id}`);
       echoChannel.stopListening('Web');
-      Echo.leave(`web.auction_items.${id}`);
+      echoWeb.leave(`web.auction_items.${id}`);
     };
   }, []);
 

@@ -21,7 +21,7 @@ import {
 } from 'shared/constants/Permissions';
 import SingleLocationModal from './SingleLocationModal';
 import PropTypes from 'prop-types';
-import EchoConfig from 'plugins/echo';
+import echoAuthInit from 'plugins/echo';
 
 export default function LocationList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -139,8 +139,8 @@ export default function LocationList({user}) {
   // end of for exporting data
 
   useEffect(() => {
-    EchoConfig();
-    window.Echo.private(`update.location`).listen('Updated', (e) => {
+    echoAuthInit();
+    echoAuth.private(`update.location`).listen('Updated', (e) => {
       if (user.uid != e.authUser) {
         if (e.action === 'created') {
           newLocationRealTime(e.data);
@@ -154,9 +154,9 @@ export default function LocationList({user}) {
       }
     });
     return () => {
-      const echoChannel = window.Echo.private(`update.location`);
+      const echoChannel = echoAuth.private(`update.location`);
       echoChannel.stopListening('Updated');
-      Echo.leave(`update.location`);
+      echoAuth.leave(`update.location`);
     };
   }, []);
 
