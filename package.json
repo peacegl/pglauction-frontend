@@ -64,6 +64,7 @@
     "react-dropzone": "^11.4.0",
     "react-easy-crop": "^4.6.2",
     "react-google-maps": "^9.4.5",
+    "react-hook-form": "^7.43.9",
     "react-icons": "^4.2.0",
     "react-image-magnify": "^2.7.4",
     "react-intl": "^5.20.10",

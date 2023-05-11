@@ -25,22 +25,22 @@ export default function RoleList({user}) {
   const [roleId, setRoleId] = useState('');
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
-  const [search, setSearch] = useState('');
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(({roles}) => roles.roleList);
   const filterData = useSelector(({roles}) => roles.filterData);
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   useEffect(() => {
-    fetchData(search);
+    fetchData();
   }, [dispatch, page, per_page, orderBy]);
 
-  const fetchData = async (search = '') => {
+  const fetchData = async (search = '', exactMatch = false) => {
     await dispatch(
       onGetRoleList({
         page: page + 1,
         per_page,
         search,
+        exactMatch,
         filterData,
         orderBy,
       }),
@@ -71,9 +71,6 @@ export default function RoleList({user}) {
     ) => {
       setSelected(rowsSelected);
     },
-    onSearchChange: (value) => {
-      setSearch(value);
-    },
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
@@ -97,9 +94,9 @@ export default function RoleList({user}) {
     setSelected([]);
   };
 
-  const onEnterSearch = (value) => {
+  const onEnterSearch = (value, exactMatch) => {
     setPage(0);
-    fetchData(value);
+    fetchData(value, exactMatch);
   };
 
   //  export data as pdf and Excel states
