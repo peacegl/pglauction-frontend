@@ -21,8 +21,7 @@ export default function SaleList({user}) {
   const [showSingleSaleModal, setShowSingleSaleModal] = useState(false);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
-  const [search, setSearch] = useState('');
-  const [exactMatch, setExactMatch] = useState(false);
+
   const [filterData, setFilterData] = useState({});
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(({sales}) => sales.saleList);
@@ -53,10 +52,10 @@ export default function SaleList({user}) {
   // end of for exporting data
 
   useEffect(() => {
-    fetchData(search);
+    fetchData();
   }, [dispatch, page, per_page, orderBy, filterData]);
 
-  const fetchData = async (search = '') => {
+  const fetchData = async (search = '', exactMatch = false) => {
     await dispatch(
       onGetSaleList({
         page: page + 1,
@@ -93,9 +92,7 @@ export default function SaleList({user}) {
     ) => {
       setSelected(rowsSelected);
     },
-    onSearchChange: (value) => {
-      setSearch(value);
-    },
+
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
@@ -120,9 +117,9 @@ export default function SaleList({user}) {
     setSelected([]);
   };
 
-  const onEnterSearch = (value) => {
+  const onEnterSearch = (value, exactMatch) => {
     setPage(0);
-    fetchData(value);
+    fetchData(value, exactMatch);
   };
 
   const getSingleSale = (id) => {
@@ -145,7 +142,6 @@ export default function SaleList({user}) {
         isLoading={loading}
         selected={selected}
         onEnterSearch={onEnterSearch}
-        onExactChange={(value) => setExactMatch(value)}
         onAdd={onAdd}
         showAddButton={user?.permissions?.includes(ADD_SALE)}
         showEditButton={user?.permissions?.includes(EDIT_SALE)}
