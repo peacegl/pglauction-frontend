@@ -18,8 +18,6 @@ export default function AuctionItemList({user}) {
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
   const [recordId, setRecordId] = useState(null);
-  const [search, setSearch] = useState('');
-  const [exactMatch, setExactMatch] = useState(false);
   const [filterData, setFilterData] = useState({});
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(
@@ -28,10 +26,10 @@ export default function AuctionItemList({user}) {
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   useEffect(() => {
-    fetchData(search);
+    fetchData();
   }, [dispatch, page, per_page, orderBy, filterData]);
 
-  const fetchData = async (search = '') => {
+  const fetchData = async (search = '', exactMatch = false) => {
     await dispatch(
       onGetAuctionItemData({
         page: page + 1,
@@ -59,9 +57,6 @@ export default function AuctionItemList({user}) {
     ) => {
       setSelected(rowsSelected);
     },
-    onSearchChange: (value) => {
-      setSearch(value);
-    },
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
@@ -81,9 +76,9 @@ export default function AuctionItemList({user}) {
     );
     setSelected([]);
   };
-  const onEnterSearch = (value) => {
+  const onEnterSearch = (value, exactMatch) => {
     setPage(0);
-    fetchData(value);
+    fetchData(value, exactMatch);
   };
 
   return (
@@ -100,7 +95,6 @@ export default function AuctionItemList({user}) {
         isLoading={loading}
         selected={selected}
         onEnterSearch={onEnterSearch}
-        onExactChange={(value) => setExactMatch(value)}
         showAddButton={user?.permissions?.includes(ADD_AUCTION_ITEM)}
         showEditButton={user?.permissions?.includes(EDIT_AUCTION_ITEM)}
         showDeleteButton={user?.permissions?.includes(DELETE_AUCTION_ITEM)}

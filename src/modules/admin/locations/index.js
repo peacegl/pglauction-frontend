@@ -25,9 +25,7 @@ export default function LocationList({user}) {
   const [showSingleLocationModal, setShowSingleLocationModal] = useState(false);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
-  const [search, setSearch] = useState('');
   const [filterData, setFilterData] = useState({});
-  const [exactMatch, setExactMatch] = useState(false);
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(
     ({locations}) => locations.locationData,
@@ -35,10 +33,10 @@ export default function LocationList({user}) {
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   useEffect(() => {
-    fetchData(search);
+    fetchData();
   }, [dispatch, page, per_page, orderBy, filterData]);
 
-  const fetchData = async (search = '') => {
+  const fetchData = async (search = '', exactMatch = false) => {
     await dispatch(
       onGetLocationList({
         page: page + 1,
@@ -75,9 +73,6 @@ export default function LocationList({user}) {
     ) => {
       setSelected(rowsSelected);
     },
-    onSearchChange: (value) => {
-      setSearch(value);
-    },
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
@@ -103,9 +98,9 @@ export default function LocationList({user}) {
     setSelected([]);
   };
 
-  const onEnterSearch = (value) => {
+  const onEnterSearch = (value, exactMatch) => {
     setPage(0);
-    fetchData(value);
+    fetchData(value, exactMatch);
   };
 
   //  export data as pdf and Excel states
@@ -152,7 +147,6 @@ export default function LocationList({user}) {
         isLoading={loading}
         selected={selected}
         onEnterSearch={onEnterSearch}
-        onExactChange={(value) => setExactMatch(value)}
         showAddButton={user?.permissions?.includes(ADD_LOCATION)}
         showEditButton={user?.permissions?.includes(EDIT_LOCATION)}
         showDeleteButton={user?.permissions?.includes(DELETE_LOCATION)}
