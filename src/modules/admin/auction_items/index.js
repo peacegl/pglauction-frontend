@@ -1,24 +1,28 @@
-import CustomDataTable from '../../../components/CustomDataTable';
-import {tableColumns} from '../../../configs/pages/makes';
+import {onGetAuctionItemData, onDeleteAuctionItems} from 'redux/actions';
+import CustomDataTable from 'components/CustomDataTable';
+import {tableColumns} from 'configs/pages/auctionItems';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
+import AuctionItemModal from './AuctionItemModal';
 import {useEffect, useState} from 'react';
-import MakeModal from './MakeModal';
+import PropTypes from 'prop-types';
 import {
-  onGetMakeList,
-  onDeleteMakes,
-  getUserAutocompleteOptions,
-} from 'redux/actions';
+  ADD_AUCTION_ITEM,
+  DELETE_AUCTION_ITEM,
+  EDIT_AUCTION_ITEM,
+} from 'shared/constants/Permissions';
 
-export default function MakeList() {
+export default function AuctionItemList({user}) {
   const [openModal, setOpenModal] = useState(false);
-  const [recordId, setRecordId] = useState(null);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
+  const [recordId, setRecordId] = useState(null);
   const [filterData, setFilterData] = useState({});
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
-  const {data = [], total = 0} = useSelector(({makes}) => makes.makeData);
+  const {data = [], total = 0} = useSelector(
+    ({auctionItems}) => auctionItems.auctionItemsList,
+  );
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -27,7 +31,7 @@ export default function MakeList() {
 
   const fetchData = async (search = '', exactMatch = false) => {
     await dispatch(
-      onGetMakeList({
+      onGetAuctionItemData({
         page: page + 1,
         per_page,
         search,
@@ -37,10 +41,10 @@ export default function MakeList() {
       }),
     );
   };
-
   const options = {
     count: total,
     rowsPerPage: per_page,
+    page: page,
     onChangeRowsPerPage: (numberOfRows) => {
       setPerPage(numberOfRows);
       setPage(0);
@@ -56,23 +60,6 @@ export default function MakeList() {
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
-    confirmFilters: true,
-    onFilterDialogOpen: () => {
-      dispatch(getUserAutocompleteOptions());
-    },
-    // callback that gets executed when filters are confirmed
-    onFilterConfirm: (filterList) => {
-      handleFilter(filterList);
-    },
-    onFilterChange: (column, filterList, type) => {
-      if (type === 'chip') {
-        handleFilter(filterList);
-      }
-    },
-  };
-  const onAdd = () => {
-    setRecordId(null);
-    setOpenModal(true);
   };
   const onEdit = () => {
     setRecordId(data[selected[0]].id);
@@ -80,8 +67,8 @@ export default function MakeList() {
   };
   const onDelete = async () => {
     await dispatch(
-      onDeleteMakes({
-        makeIds: selected.map((item) => data[item].id),
+      onDeleteAuctionItems({
+        auctionIds: selected.map((item) => data[item].id),
         page: page + 1,
         per_page,
         orderBy,
@@ -89,56 +76,47 @@ export default function MakeList() {
     );
     setSelected([]);
   };
-
   const onEnterSearch = (value, exactMatch) => {
     setPage(0);
     fetchData(value, exactMatch);
   };
 
-  const handleFilter = (filterList) => {
-    const filterData = {};
-    filterData['makes.name'] = filterList[0][0]
-      ? 'like@@' + filterList[0][0].trim()
-      : undefined;
-    filterData['makes.created_by'] = filterList[1].map((item) => item.id);
-    filterData['makes.updated_by'] = filterList[3].map((item) => item.id);
-    filterData['makes.created_at'] = {
-      from: filterList[2][0],
-      to: filterList[2][1],
-    };
-    filterData['makes.updated_at'] = {
-      from: filterList[4][0],
-      to: filterList[4][1],
-    };
-    setFilterData(filterData);
-  };
-
   return (
     <>
       <CustomDataTable
-        title={<IntlMessages id='make.makeList' />}
+        title={<IntlMessages id='auction.auctionItemList' />}
         total={total}
         data={data}
         columns={tableColumns()}
         options={options}
-        onAdd={onAdd}
         onEdit={onEdit}
         onDelete={onDelete}
-        deleteTitle={<IntlMessages id='make.deleteMessage' />}
+        deleteTitle={<IntlMessages id='auctionItem.deleteMessage' />}
         isLoading={loading}
         selected={selected}
         onEnterSearch={onEnterSearch}
+        showAddButton={user?.permissions?.includes(ADD_AUCTION_ITEM)}
+        showEditButton={user?.permissions?.includes(EDIT_AUCTION_ITEM)}
+        showDeleteButton={user?.permissions?.includes(DELETE_AUCTION_ITEM)}
+        selectableRows={
+          user?.permissions?.includes(EDIT_AUCTION_ITEM) ||
+          user?.permissions?.includes(DELETE_AUCTION_ITEM)
+            ? 'multiple'
+            : 'none'
+        }
         exportData={data}
       />
       {openModal && (
-        <MakeModal
+        <AuctionItemModal
           open={openModal}
           toggleOpen={() => setOpenModal((d) => !d)}
           recordId={recordId}
           edit={recordId ? true : false}
-          width={500}
         />
       )}
     </>
   );
 }
+AuctionItemList.propTypes = {
+  user: PropTypes.any,
+};

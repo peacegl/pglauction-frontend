@@ -16,18 +16,16 @@ export default function CustomerList() {
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
-  const [search, setSearch] = useState('');
-  const [exactMatch, setExactMatch] = useState(false);
   const [filterData, setFilterData] = useState({});
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(({models}) => models.modelData);
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   useEffect(() => {
-    fetchData(search);
+    fetchData();
   }, [dispatch, page, per_page, orderBy, filterData]);
 
-  const fetchData = async (search = '') => {
+  const fetchData = async (search = '', exactMatch = false) => {
     await dispatch(
       onGetModelList({
         page: page + 1,
@@ -55,9 +53,7 @@ export default function CustomerList() {
     ) => {
       setSelected(rowsSelected);
     },
-    onSearchChange: (value) => {
-      setSearch(value);
-    },
+
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
@@ -95,9 +91,9 @@ export default function CustomerList() {
     setSelected([]);
   };
 
-  const onEnterSearch = (value) => {
+  const onEnterSearch = (value, exactMatch) => {
     setPage(0);
-    fetchData(value);
+    fetchData(value, exactMatch);
   };
 
   const handleFilter = (filterList) => {
@@ -132,7 +128,6 @@ export default function CustomerList() {
         onDelete={onDelete}
         deleteTitle={<IntlMessages id='model.deleteMessage' />}
         isLoading={loading}
-        onExactChange={(value) => setExactMatch(value)}
         selected={selected}
         onEnterSearch={onEnterSearch}
         exportData={data}
