@@ -31,8 +31,6 @@ export default function CustomerList({user}) {
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
-  const [search, setSearch] = useState('');
-  const [exactMatch, setExactMatch] = useState(false);
   const [filterData, setFilterData] = useState({});
   const [singleCustomer, setSingleCustomer] = useState([]);
   const [singleCustomerID, setSingleCustomerID] = useState([]);
@@ -45,10 +43,10 @@ export default function CustomerList({user}) {
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   useEffect(() => {
-    fetchData(search);
+    fetchData();
   }, [dispatch, page, per_page, orderBy, filterData]);
 
-  const fetchData = async (search = '') => {
+  const fetchData = async (search = '', exactMatch = false) => {
     await dispatch(
       onGetCustomerList({
         page: page + 1,
@@ -85,9 +83,6 @@ export default function CustomerList({user}) {
     ) => {
       setSelected(rowsSelected);
     },
-    onSearchChange: (value) => {
-      setSearch(value);
-    },
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
@@ -112,9 +107,9 @@ export default function CustomerList({user}) {
     setSelected([]);
   };
 
-  const onEnterSearch = (value) => {
+  const onEnterSearch = (value, exactMatch) => {
     setPage(0);
-    fetchData(value);
+    fetchData(value, exactMatch);
   };
 
   //  export data as pdf and Excel states
@@ -202,7 +197,6 @@ export default function CustomerList({user}) {
         onFilterClick={() => setOpenFilter(true)}
         deleteTitle={<IntlMessages id='user.deleteMessage' />}
         isLoading={loading}
-        onExactChange={(value) => setExactMatch(value)}
         selected={selected}
         onEnterSearch={onEnterSearch}
         showAddButton={user?.permissions?.includes(ADD_CUSTOMER)}

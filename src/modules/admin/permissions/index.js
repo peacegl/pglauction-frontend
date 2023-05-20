@@ -16,7 +16,6 @@ export default function UserList() {
     useState(false);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
-  const [search, setSearch] = useState('');
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(
     ({permissions}) => permissions.permissionList,
@@ -25,14 +24,14 @@ export default function UserList() {
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
   useEffect(() => {
-    fetchData(search);
+    fetchData();
   }, [dispatch, page, per_page, orderBy]);
 
   const [showPermissionUserModal, setShowPermissionUserModal] = useState(false);
   const [showPermissionRoleModal, setShowPermissionRoleModal] = useState(false);
   const [PermissionId, setPermissionId] = useState('');
 
-  const fetchData = async (search = '') => {
+  const fetchData = async (search = '', exactMatch = false) => {
     await dispatch(
       onGetPermissionList({
         page: page + 1,
@@ -62,16 +61,14 @@ export default function UserList() {
       setPage(0);
     },
     onChangePage: (page) => setPage(page),
-    onSearchChange: (value) => {
-      setSearch(value);
-    },
+
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
   };
-  const onEnterSearch = (value) => {
+  const onEnterSearch = (value, exactMatch) => {
     setPage(0);
-    fetchData(value);
+    fetchData(value, exactMatch);
   };
 
   //  export data as pdf and Excel states
