@@ -7,7 +7,7 @@ const SITE_URL =
     ? 'http://localhost:3000'
     : 'https://qa-blog.mastersindia.co';
 
-const defaultTitle = 'UTC Vehicles';
+const defaultTitle = 'Your Company Name';
 const defaultDescription = 'Your Company Name';
 const defaultImage = 'logo.png';
 const defaultTwitter = '@utc';
