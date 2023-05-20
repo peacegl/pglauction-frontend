@@ -30,7 +30,7 @@ import {
 } from 'shared/constants/ActionTypes';
 import {appIntl} from '@crema/utility/helper/Utils';
 import SingleCustomerModal from './SingleCustomerModal';
-import WebEcho from 'plugins/echoWeb';
+import echoWeb from 'plugins/echoWeb';
 import {useRouter} from 'next/router';
 // import EchoConfig from 'plugins/echo';
 // import {useAuthUser} from '@crema/utility/AuthHooks';
@@ -158,8 +158,7 @@ const BidItemHistory = ({id}) => {
   };
 
   useEffect(() => {
-    WebEcho();
-    window.Echo.channel(`web.bid`).listen('Web', (e) => {
+    echoWeb.channel(`web.bid`).listen('Web', (e) => {
       if (e.action == 'bidAccepted') {
         disabled(e.data[0]);
         setAcceptedId(e.data[0]);
@@ -181,9 +180,9 @@ const BidItemHistory = ({id}) => {
       }
     });
     return () => {
-      const echoChannel = window.Echo.channel(`web.bid`);
+      const echoChannel = echoWeb.channel(`web.bid`);
       echoChannel.stopListening('Web');
-      Echo.leave(`web.bid`);
+      echoWeb.leave(`web.bid`);
     };
   }, []);
 

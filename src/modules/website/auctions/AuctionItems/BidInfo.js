@@ -9,7 +9,7 @@ import {moneyFormater, getData} from 'configs';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {LoadingButton} from '@mui/lab';
-import WebEcho from 'plugins/echoWeb';
+import echoWeb from 'plugins/echoWeb';
 import {Form, Formik} from 'formik';
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
@@ -99,8 +99,7 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
   }, []);
 
   useEffect(() => {
-    WebEcho();
-    window.Echo.channel(`web.bid`).listen('Web', (e) => {
+    echoWeb.channel(`web.bid`).listen('Web', (e) => {
       if (e.action == 'created') {
         setVehicle((d) => {
           return {...d, bids: [e.data, ...d.bids]};
@@ -136,9 +135,9 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
       }
     });
     return () => {
-      const echoChannel = window.Echo.channel(`web.bid`);
+      const echoChannel = echoWeb.channel(`web.bid`);
       echoChannel.stopListening('Web');
-      Echo.leave(`web.bid`);
+      echoWeb.leave(`web.bid`);
     };
   }, []);
 

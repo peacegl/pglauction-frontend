@@ -7,7 +7,7 @@ import {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
 import BidInfo from './BidInfo';
-import WebEcho from 'plugins/echoWeb';
+import echoWeb from 'plugins/echoWeb';
 
 const SingleAuctionItem = (props) => {
   const router = useRouter();
@@ -20,21 +20,19 @@ const SingleAuctionItem = (props) => {
   }, []);
 
   useEffect(() => {
-    WebEcho();
-    window.Echo.channel(`web.vehicles.${props.vehicle.vehicle.id}`).listen(
-      'Web',
-      (e) => {
+    echoWeb
+      .channel(`web.vehicles.${props.vehicle.vehicle.id}`)
+      .listen('Web', (e) => {
         if (e.action == 'updated') {
           setVehicle(e.data);
         }
-      },
-    );
+      });
     return () => {
-      const echoChannel = window.Echo.channel(
+      const echoChannel = echoWeb.channel(
         `web.vehicles.${props.vehicle.vehicle.id}`,
       );
       echoChannel.stopListening('Web');
-      Echo.leave(`web.vehicles.${props.vehicle.vehicle.id}`);
+      echoWeb.leave(`web.vehicles.${props.vehicle.vehicle.id}`);
     };
   }, []);
 

@@ -10,7 +10,7 @@ import {useAuthUser} from '@crema/utility/AuthHooks';
 import {useDispatch, useSelector} from 'react-redux';
 import {Box, Container} from '@mui/material';
 import {useRouter} from 'next/router';
-import WebEcho from 'plugins/echoWeb';
+import echoWeb from 'plugins/echoWeb';
 import {useEffect} from 'react';
 import {
   onCountPopularBrands,
@@ -49,8 +49,7 @@ const VehicleDetail = () => {
   }, [id]);
 
   useEffect(() => {
-    WebEcho();
-    window.Echo.channel(`web.vehicles.${id}`).listen('Web', (e) => {
+    echoWeb.channel(`web.vehicles.${id}`).listen('Web', (e) => {
       if (e.action == 'updated') {
         dispatch({
           type: GET_WEB_VEHICLE_VIEW,
@@ -59,23 +58,22 @@ const VehicleDetail = () => {
       }
     });
     return () => {
-      const echoChannel = window.Echo.channel(`web.vehicles.${id}`);
-      echoChannel.stopListening('Web');
-      Echo.leave(`web.vehicles.${id}`);
+      const echoChannel = echoWeb.channel(`web.vehicles.${id}`);
+      echoChannel.stopListening('.Web');
+      echoWeb.leave(`web.vehicles.${id}`);
     };
   }, []);
 
   useEffect(() => {
-    WebEcho();
-    window.Echo.channel(`web.vehicles`).listen('Web', (e) => {
+    echoWeb.channel(`web.vehicles`).listen('.Web', (e) => {
       if (e.action == 'deleted' && e?.data?.includes(id)) {
         router.push('/');
       }
     });
     return () => {
-      const echoChannel = window.Echo.channel(`web.vehicles`);
-      echoChannel.stopListening('Web');
-      Echo.leave(`web.vehicles`);
+      const echoChannel = echoWeb.channel(`web.vehicles`);
+      echoChannel.stopListening('.Web');
+      echoWeb.leave(`web.vehicles`);
     };
   }, []);
 

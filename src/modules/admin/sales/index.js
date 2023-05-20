@@ -17,7 +17,7 @@ import {useEffect, useState} from 'react';
 import SaleModal from './SaleModal';
 import SingleSaleModal from './SingleSaleModal';
 import PropTypes from 'prop-types';
-import EchoConfig from 'plugins/echo';
+import echoAuthInit from 'plugins/echo';
 
 export default function SaleList({user}) {
   const [showSaleModal, setShowSaleModal] = useState(false);
@@ -130,8 +130,8 @@ export default function SaleList({user}) {
   };
 
   useEffect(() => {
-    EchoConfig();
-    window.Echo.private(`update.sale`).listen('Updated', (e) => {
+    echoAuthInit();
+    echoAuth.private(`update.sale`).listen('Updated', (e) => {
       if (user.uid != e.authUser) {
         if (e.action === 'created') {
           newSaleRealTime(e.data);
@@ -145,9 +145,9 @@ export default function SaleList({user}) {
       }
     });
     return () => {
-      const echoChannel = window.Echo.private(`update.sale`);
+      const echoChannel = echoAuth.private(`update.sale`);
       echoChannel.stopListening('Updated');
-      Echo.leave(`update.sale`);
+      echoAuth.leave(`update.sale`);
     };
   }, []);
 
