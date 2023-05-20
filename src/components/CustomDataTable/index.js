@@ -27,7 +27,6 @@ const CustomDataTable = ({
   isLoading,
   selected,
   onEnterSearch,
-  onExactChange,
   onSell,
   showSell,
   selectedItems = [],
@@ -139,13 +138,10 @@ const CustomDataTable = ({
             : (searchText, handleSearch, hideSearch, options) => {
                 return (
                   <Search
-                    searchText={searchText}
-                    onSearch={handleSearch}
                     onHide={hideSearch}
                     onEnter={onEnterSearch ? onEnterSearch : () => {}}
                     options={options}
                     total={total}
-                    onExactChange={onExactChange ? onExactChange : () => {}}
                   />
                 );
               },
@@ -176,7 +172,6 @@ CustomDataTable.propTypes = {
   onDelete: PropTypes.func,
   deleteTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   isLoading: PropTypes.bool,
-  onExactChange: PropTypes.func,
   selected: PropTypes.array,
   onEnterSearch: PropTypes.func,
   onSell: PropTypes.func,

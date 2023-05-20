@@ -36,8 +36,6 @@ export default function VehicleList({user}) {
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
   const [recordId, setRecordId] = useState(null);
-  const [search, setSearch] = useState('');
-  const [exactMatch, setExactMatch] = useState(false);
   const [filterData, setFilterData] = useState({});
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {loading} = useSelector(({common}) => common);
@@ -70,7 +68,7 @@ export default function VehicleList({user}) {
 
   const router = useRouter();
   useEffect(() => {
-    fetchData(search, router.query.filteredData);
+    fetchData('', false, router.query.filteredData);
   }, [
     dispatch,
     page,
@@ -80,7 +78,7 @@ export default function VehicleList({user}) {
     router.query.filteredData,
   ]);
 
-  const fetchData = async (search = '', filteredData) => {
+  const fetchData = async (search = '', exactMatch = false, filteredData) => {
     await dispatch(
       onGetVehicleData({
         page: page + 1,
@@ -118,9 +116,6 @@ export default function VehicleList({user}) {
       setSelectedItems(rowsSelected.map((item) => data[item]));
       setSelected(rowsSelected);
     },
-    onSearchChange: (value) => {
-      setSearch(value);
-    },
     onColumnSortChange: (column, order) => {
       setOrderBy({column, order});
     },
@@ -147,9 +142,9 @@ export default function VehicleList({user}) {
   const onSell = () => {
     setShowSaleModal(true);
   };
-  const onEnterSearch = (value) => {
+  const onEnterSearch = (value, exactMatch) => {
     setPage(0);
-    fetchData(value);
+    fetchData(value, exactMatch);
   };
 
   useEffect(() => {
@@ -203,7 +198,6 @@ export default function VehicleList({user}) {
         isLoading={loading}
         selected={selected}
         onEnterSearch={onEnterSearch}
-        onExactChange={(value) => setExactMatch(value)}
         onSell={onSell}
         showSell={user?.permissions?.includes(ADD_SALE)}
         selectedItems={selectedItems}

@@ -6,8 +6,8 @@ import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import ClearIcon from '@mui/icons-material/Clear';
 import {withStyles} from 'tss-react/mui';
-import PropTypes from 'prop-types';
 import {Checkbox, FormControlLabel} from '@mui/material';
+import PropTypes from 'prop-types';
 
 const defaultStyles = (theme) => ({
   main: {
@@ -29,17 +29,27 @@ const defaultStyles = (theme) => ({
   },
 });
 
-class _Search extends React.Component {
+class Search extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      exact: false,
+    };
+  }
   componentDidMount() {
-    document.addEventListener('keyup', this.onKeyUp, false);
+    document.addEventListener('keydown', this.onKeyDown, false);
   }
   componentWillUnmount() {
-    document.removeEventListener('keyup', this.onKeyUp, false);
+    document.removeEventListener('keydown', this.onKeyDown, false);
   }
-  onKeyUp(event) {
-    if (event.keyCode === 27) {
+  onKeyDown(event) {
+    if (event.keyCode == 27) {
       this.props.onHide();
     }
+  }
+
+  onExactChange(exactMatch) {
+    this.setState({exact: exactMatch});
   }
 
   render() {
@@ -49,9 +59,7 @@ class _Search extends React.Component {
       onHide,
       searchText,
       onEnter,
-      onSearch,
       total = 0,
-      onExactChange,
     } = this.props;
 
     const clearIconVisibility = options.searchAlwaysOpen ? 'hidden' : 'visible';
@@ -68,12 +76,9 @@ class _Search extends React.Component {
               'aria-label': options.textLabels.toolbar.search,
             }}
             defaultValue={searchText}
-            onChange={(event) => {
-              onSearch(event.target.value);
-            }}
-            onKeyUp={(event) => {
-              if (event.keyCode === 13) {
-                onEnter(event.target.value);
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                onEnter(event.target.value, this.state.exact);
               }
             }}
             fullWidth={true}
@@ -86,7 +91,7 @@ class _Search extends React.Component {
             style={{visibility: clearIconVisibility}}
             onClick={() => {
               onHide();
-              onEnter('');
+              onEnter('', this.state.exact);
             }}
           >
             <ClearIcon />
@@ -94,23 +99,27 @@ class _Search extends React.Component {
           <FormControlLabel
             control={
               <Checkbox
-                onChange={(event) => onExactChange(event.target.checked)}
+                size='small'
+                color='primary'
+                onChange={(event) => this.onExactChange(event.target.checked)}
               />
             }
             label='Exact Match'
           />
           <Badge
+            showZero
             badgeContent={total}
             max={99999999}
             color='primary'
-            sx={{ml: 7}}
+            sx={{ml: 2}}
           />
         </div>
       </Grow>
     );
   }
 }
-_Search.propTypes = {
+
+Search.propTypes = {
   classes: PropTypes.object,
   options: PropTypes.object,
   onHide: PropTypes.func,
@@ -120,4 +129,6 @@ _Search.propTypes = {
   total: PropTypes.number,
   onExactChange: PropTypes.func,
 };
-export default withStyles(_Search, defaultStyles, {name: 'MUIDataTableSearch'});
+export default withStyles(Search, defaultStyles, {
+  name: 'MUIDataTableSearch',
+});
