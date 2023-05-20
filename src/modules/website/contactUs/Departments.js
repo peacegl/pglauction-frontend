@@ -11,27 +11,27 @@ import {Box, Stack} from '@mui/material';
 const departments = [
   {
     borderTop: (theme) => `4px solid ${theme.palette.info.main}`,
-    title: 'Sales Department',
+    title: 'Department',
     details: [
       {
         icon: <EmailIcon sx={{color: (theme) => theme.palette.info.main}} />,
-        content: 'crm@peacegl.com',
-        url: 'mailto:crm@peacegl.com',
+        content: 'youremail@email.com',
+        url: 'mailto:youremail@email.com',
       },
       {
         icon: <EmailIcon sx={{color: (theme) => theme.palette.info.main}} />,
-        content: 'utc@peacegl.com',
-        url: 'mailto:utc@peacegl.com',
+        content: 'youremail@email.com',
+        url: 'mailto:youremail@email.com',
       },
       {
         icon: <WhatsAppIcon sx={{color: (theme) => theme.palette.info.main}} />,
-        content: '+971 56 683 3099',
-        url: 'https://wa.me/+971566833099',
+        content: '+1 000000000000',
+        url: 'https://wa.me/+1000000000000',
       },
       {
         icon: <WhatsAppIcon sx={{color: (theme) => theme.palette.info.main}} />,
-        content: '+1 (912) 239-5061',
-        url: 'https://wa.me/+19122395061',
+        content: '+1 000000000000',
+        url: 'https://wa.me/+1000000000000',
       },
       // {
       //   icon: <PersonIcon sx={{color: (theme) => theme.palette.info.main}} />,
@@ -45,8 +45,8 @@ const departments = [
     details: [
       {
         icon: <EmailIcon sx={{color: (theme) => theme.palette.success.main}} />,
-        content: 'support@peacegl.com',
-        url: 'mailto:support@peacegl.com',
+        content: 'youremail@email.com',
+        url: 'mailto:youremail@email.com',
       },
       {
         icon: (
@@ -54,15 +54,15 @@ const departments = [
             sx={{color: (theme) => theme.palette.success.main}}
           />
         ),
-        content: '+971 56 547 4800',
-        url: 'tel:+971565474800',
+        content: '+971 000000000000',
+        url: 'tel:+000000000000',
       },
       {
         icon: (
           <WhatsAppIcon sx={{color: (theme) => theme.palette.success.main}} />
         ),
-        content: '+971 56 547 4800',
-        url: 'https://wa.me/+971565474800',
+        content: '+971 000000000000',
+        url: 'https://wa.me/+000000000000',
       },
       // {
       //   icon: (
