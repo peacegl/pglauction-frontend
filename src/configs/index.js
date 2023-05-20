@@ -142,12 +142,12 @@ export let webPages = [
     title: <IntlMessages id='website.auctions' />,
     link: '/auctions',
   },
-  {
-    key: 4,
-    title: <IntlMessages id='website.shipping' />,
-    link: 'https://peacegl.com/',
-    target: '_blank',
-  },
+  // {
+  //   key: 4,
+  //   title: <IntlMessages id='website.shipping' />,
+  //   link: 'https://peacegl.com/',
+  //   target: '_blank',
+  // },
   {
     key: 5,
     title: <IntlMessages id='website.services' />,
