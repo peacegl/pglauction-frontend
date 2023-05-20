@@ -77,10 +77,10 @@ const AuthWrapper = ({children}) => {
                 mb: 4,
               }}
             >
-              Welcome to United Used Cars!
+              Welcome to Your Company Name!
             </Typography>
             <Typography>
-              United Used Cars sells used cars at an affordable rate in Dubai,
+              Your Company Name sells used cars at an affordable rate in Dubai,
               UAE. We have a showroom in Sharjah and an office in Dubai to
               provide comprehensive support and services to customers. We have
               different affiliates to help provide shipping, clearance, and sell

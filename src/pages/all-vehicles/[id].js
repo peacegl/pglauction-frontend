@@ -32,7 +32,7 @@ export default AppPage((props) => {
           property='og:url'
           content={`https://unitedtradingcars.com/all-vehicles/${props.vehicle.id}`}
         />
-        <meta property='og:description' content='United Used Cars' />
+        <meta property='og:description' content='Your Company Name' />
         <meta
           property='og:image'
           content={props.vehicle?.images ? props.vehicle?.images[0]?.path : ''}

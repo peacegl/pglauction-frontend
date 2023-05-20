@@ -76,13 +76,7 @@ export default function Footer() {
                   src={logoImage.src}
                 />
                 <Typography sx={{m: 4, ml: 0}} variant='body1'>
-                  United Used Cars sells used cars at an affordable rate in
-                  Dubai, UAE. We have a showroom in Sharjah and an office in
-                  Dubai to provide comprehensive support and services to
-                  customers. We have different affiliates to help provide
-                  shipping, clearance, and sell cars from the USA in Dubai. We
-                  are the leading cars showroom in Dubai, UAE with various
-                  vehicles.
+                Ut quis culpa pariatur pariatur consectetur non do exercitation reprehenderit mollit dolor. Dolor culpa mollit amet enim. Anim tempor in nulla voluptate. Dolor eu eu dolor pariatur laborum laboris commodo velit pariatur dolor et commodo aute laborum. Reprehenderit laboris incididunt excepteur aliqua aute mollit laborum excepteur. Occaecat laborum aliquip duis laboris consequat aute.
                 </Typography>
               </Box>
             </Box> */}
@@ -151,7 +145,7 @@ export default function Footer() {
                     underline='none'
                     mx='5px'
                   >
-                    Some Address
+                    Your Company Address
                   </Typography>
                 </Box>
                 <Box

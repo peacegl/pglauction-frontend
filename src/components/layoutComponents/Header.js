@@ -189,7 +189,8 @@ function Header(props) {
             <Box
               component='img'
               sx={{
-                width: {xs: '100px', md: '120px', lg: '140px', xl: '160px'},
+                width: {xs: '30px', md: '40px', lg: '60px', xl: '80px'},
+                marginRight: 10,
               }}
               alt='united logo'
               src={logoImage.src}
@@ -202,7 +203,7 @@ function Header(props) {
                 fontWeight: 'bold',
               }}
             >
-              United Used Cars
+              Your Company Name
             </Typography>
           </Box>
 
