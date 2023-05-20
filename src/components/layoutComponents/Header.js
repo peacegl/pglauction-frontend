@@ -225,7 +225,7 @@ function Header(props) {
               variant='body2'
               fontSize='14px'
               underline='none'
-              href='https://www.tiktok.com/@united.used.cars?_t=8ZIpjlRz6DR&_r=1'
+              href='https://www.tiktok.com'
               mx='2px'
               target='_blank'
             >
@@ -240,7 +240,7 @@ function Header(props) {
               variant='body2'
               fontSize='14px'
               underline='none'
-              href='https://www.facebook.com/profile.php?id=100087054543656'
+              href='https://www.facebook.com'
               mx='2px'
               target='_blank'
             >
@@ -250,7 +250,7 @@ function Header(props) {
               variant='body2'
               fontSize='14px'
               underline='none'
-              href='https://www.instagram.com/united.used.cars/'
+              href='https://www.instagram.com'
               mx='2px'
               target='_blank'
             >
@@ -260,7 +260,7 @@ function Header(props) {
               variant='body2'
               fontSize='14px'
               underline='none'
-              href='https://wa.me/+19122395061'
+              href='https://wa.me'
               mx='2px'
               target='_blank'
             >
