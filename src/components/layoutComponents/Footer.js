@@ -151,9 +151,7 @@ export default function Footer() {
                     underline='none'
                     mx='5px'
                   >
-                    Sharjah Industrial Area 2
-                    <br />
-                    Sharjah-U.A.E.
+                    Some Address
                   </Typography>
                 </Box>
                 <Box
@@ -167,11 +165,11 @@ export default function Footer() {
                     variant='body2'
                     fontSize='14px'
                     underline='none'
-                    href='tel:+971565929272'
+                    href='tel:+900 00 000 0000'
                     mx='5px'
                     color={theme.palette.text.secondary}
                   >
-                    +971 56 592 9272
+                    +900 00 000 0000
                   </MuiLink>
                 </Box>
                 <Box
@@ -184,11 +182,11 @@ export default function Footer() {
                     variant='body2'
                     fontSize='14px'
                     underline='none'
-                    href='mailto:utc@peacegl.com'
+                    href='mailto:Email@email.com'
                     mx='5px'
                     color={theme.palette.text.secondary}
                   >
-                    utc@peacegl.com
+                    Email@email.com
                   </MuiLink>
                 </Box>
                 <Box
@@ -201,11 +199,11 @@ export default function Footer() {
                     variant='body2'
                     fontSize='14px'
                     underline='none'
-                    href='mailto:crm@peacegl.com'
+                    href='mailto:Email@email.com'
                     mx='5px'
                     color={theme.palette.text.secondary}
                   >
-                    crm@peacegl.com
+                    Email@email.com
                   </MuiLink>
                 </Box>
               </Box>
@@ -223,7 +221,7 @@ export default function Footer() {
             py: 3,
           }}
         >
-          &copy;{new Date().getFullYear()} United Cars Auction. All Rights
+          &copy;{new Date().getFullYear()} Your Company Name. All Rights
           Reserved
         </Typography>
       </Box>
