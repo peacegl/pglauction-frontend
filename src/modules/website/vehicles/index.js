@@ -1,11 +1,13 @@
 import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
-import {Box, Container, Drawer} from '@mui/material';
+import {Box, Button, Card, Container, Drawer, Hidden} from '@mui/material';
 import AuctionsSidebar from 'components/filterSlider';
 import {onCountPopularBrands} from 'redux/actions';
 import {useState, useEffect} from 'react';
 import VehicleList from './VehicleList';
 import {useSelector} from 'react-redux';
 import {useDispatch} from 'react-redux';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import IntlMessages from '@crema/utility/IntlMessages';
 
 const Vehicles = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -23,7 +25,7 @@ const Vehicles = () => {
     <>
       <PopularBrandsList popularBrandsCount={popularBrandsCount} small />
       <Container maxWidth='xl' sx={{mt: 6}}>
-        {/* <Hidden mdUp>
+        <Hidden mdUp>
           <Button
             sx={{mx: 3}}
             variant='outlined'
@@ -33,14 +35,14 @@ const Vehicles = () => {
           >
             <IntlMessages id='common.filter' />
           </Button>
-        </Hidden> */}
+        </Hidden>
 
         <Box
           sx={{
             display: 'flex',
           }}
         >
-          {/* <Box
+          <Box
             sx={{
               flex: 1,
               display: {xs: 'none', md: 'block'},
@@ -54,7 +56,7 @@ const Vehicles = () => {
             >
               <AuctionsSidebar />
             </Card>
-          </Box> */}
+          </Box>
           <Box
             sx={{
               flex: {xs: 1, md: 2, lg: 3, xl: 3},

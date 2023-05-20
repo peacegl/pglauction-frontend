@@ -9,9 +9,9 @@ const GridView = ({list, loading, perPage}) => (
     responsive={{
       xs: 1,
       sm: 2,
-      md: 3,
-      lg: 4,
-      xl: 5,
+      md: 2,
+      lg: 3,
+      xl: 3,
     }}
     data={list}
     renderRow={(item, index) => (

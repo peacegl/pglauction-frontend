@@ -31,62 +31,49 @@ const ColorButton = styled(Button)(({theme}) => ({
 const contents = [
   {
     icon: <EmojiEventsIcon sx={{fontSize: 35}} />,
-    title: 'Leading Showroom with Variety of Cars',
+    title: 'Est cillum reprehenderit aliquip.',
     color: deepOrange[500],
     bgcolor: deepOrange[100],
     details: ``,
     details: (
       <Typography component='p'>
-        We are one of the leading showrooms in Sharjah, UAE. Having started
-        small, we are expanding quickly and providing more services to our
-        customers so they can make profits stress-free! You may check out our
-        cars<span></span>
-        <a
-          href='https://pglcshipping.com'
-          target='_blank'
-          rel='noreferrer'
-          style={{
-            textDecoration: 'none',
-            paddingLeft: 3,
-          }}
-        >
-          in here.
-        </a>
+        Dolore incididunt minim aliqua sint enim. Labore magna duis et ea
+        proident ullamco consectetur occaecat. Eiusmod Lorem id mollit ut
+        ullamco anim elit ipsum officia incididunt exercitation. Id duis nostrud
+        esse magna ipsum ea qui dolor. Aliqua deserunt est culpa esse aliqua
+        velit voluptate nostrud.
       </Typography>
     ),
   },
   {
     icon: <AdminPanelSettingsIcon sx={{fontSize: 35}} />,
-    title: 'Comprehensive Portfolia Services',
+    title: 'Est cillum reprehenderit aliquip.',
     color: (theme) => theme.palette.success.main,
     bgcolor: green[100],
     details: (
       <Typography component='p'>
-        We do not only provide you best selling cars but offer you our
-        affiliates&apos; portfolio where you can buy cars directly from USA and
-        have a worry-free experience from dispatching, loading, shipping,
-        clearance, and landtransport. You can learn more about them<span></span>
-        <a
-          href='https://pglcshipping.com'
-          target='_blank'
-          rel='noreferrer'
-          style={{
-            textDecoration: 'none',
-            paddingLeft: 3,
-          }}
-        >
-          in here.
-        </a>
+        Dolore incididunt minim aliqua sint enim. Labore magna duis et ea
+        proident ullamco consectetur occaecat. Eiusmod Lorem id mollit ut
+        ullamco anim elit ipsum officia incididunt exercitation. Id duis nostrud
+        esse magna ipsum ea qui dolor. Aliqua deserunt est culpa esse aliqua
+        velit voluptate nostrud.
       </Typography>
     ),
   },
   {
     icon: <HighQualityIcon sx={{fontSize: 35}} />,
-    title: <IntlMessages id='website.quality' />,
+    title: 'Est cillum reprehenderit aliquip.',
     color: (theme) => theme.palette.info.main,
     bgcolor: blue[100],
-    details: `We have a CRM Department to take our customers' issues seriously and to provide a stress and hassle free experience.`,
-    link: 'pglsystem.com',
+    details: (
+      <Typography component='p'>
+        Dolore incididunt minim aliqua sint enim. Labore magna duis et ea
+        proident ullamco consectetur occaecat. Eiusmod Lorem id mollit ut
+        ullamco anim elit ipsum officia incididunt exercitation. Id duis nostrud
+        esse magna ipsum ea qui dolor. Aliqua deserunt est culpa esse aliqua
+        velit voluptate nostrud.
+      </Typography>
+    ),
   },
 ];
 
