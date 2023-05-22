@@ -9,6 +9,7 @@ import {onGetVehicleView} from 'redux/actions';
 import {Box, Container} from '@mui/material';
 import {useRouter} from 'next/router';
 import {useEffect} from 'react';
+import BidInfoAdmin from 'modules/admin/auctions/AuctionVehiclesInfo/BidInfo';
 
 const VehicleDetail = () => {
   const router = useRouter();
@@ -72,6 +73,13 @@ const VehicleDetail = () => {
               </Box>
               <Box sx={{flex: 1}}>
                 <SaleInfo vehicle={vehicle} admin={true} />
+                {!Object.keys(vehicle.bidInfo).length == 0 ? (
+                  <Box sx={{mt: 4}}>
+                    <BidInfoAdmin bid={vehicle.bidInfo} />
+                  </Box>
+                ) : (
+                  <></>
+                )}
               </Box>
             </Box>
           </Box>

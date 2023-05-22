@@ -58,7 +58,7 @@ const BidInfoAdmin = ({bid}) => {
 
           <Item
             label={<IntlMessages id='common.updated_by' />}
-            value={bid?.updated_by.username ?? ''}
+            value={bid?.updated_by?.username ?? ''}
           />
 
           <Item

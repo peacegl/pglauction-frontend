@@ -12,7 +12,9 @@ const initialState = {
   vehiclesData: {},
   vehiclesExportData: {},
   filterData: {},
-  vehicle: {},
+  vehicle: {
+    bidInfo: null,
+  },
 };
 
 const VeihcleReducers = (state = initialState, action) => {
@@ -32,7 +34,10 @@ const VeihcleReducers = (state = initialState, action) => {
     case GET_VEHICLE_VIEW:
       return {
         ...state,
-        vehicle: action.payload,
+        vehicle: {
+          ...action.payload.vehicle,
+          bidInfo: {...action.payload.bidInfo},
+        },
       };
 
     case ADD_NEW_VEHICLE:

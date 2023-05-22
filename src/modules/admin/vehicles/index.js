@@ -149,7 +149,6 @@ export default function VehicleList({user}) {
 
   useEffect(() => {
     echoAuthInit();
-    console.log(echoAuth);
     window.echoAuth.private(`update.vehicle`).listen('Updated', (e) => {
       if (user.uid != e.authUser) {
         if (e.action === 'created') {

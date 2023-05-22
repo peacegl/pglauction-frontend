@@ -189,7 +189,7 @@ export default function LotInfo({vehicle, admin}) {
               />
               <Item
                 label={<IntlMessages id='common.created_by' />}
-                value={vehicle.created_by.username}
+                value={vehicle?.created_by?.username}
               />
               <Item
                 label={<IntlMessages id='common.created_at' />}
@@ -197,7 +197,7 @@ export default function LotInfo({vehicle, admin}) {
               />
               <Item
                 label={<IntlMessages id='common.updated_by' />}
-                value={vehicle.updated_by.username}
+                value={vehicle?.updated_by?.username}
               />
               <Item
                 label={<IntlMessages id='common.last_updated' />}

@@ -45,14 +45,14 @@ export const onGetVehicleView = (id) => {
       .then((data) => {
         if (data.status === 200) {
           dispatch({type: FETCH_SUCCESS});
-          data.data.data.images.forEach((image, index, arr) => {
+          data.data.vehicle.images.forEach((image, index, arr) => {
             if (image.type == 'main_image') {
               arr.unshift(image);
               arr.splice(index + 1, 1);
               return;
             }
           });
-          dispatch({type: GET_VEHICLE_VIEW, payload: data.data.data});
+          dispatch({type: GET_VEHICLE_VIEW, payload: data.data});
         } else {
           dispatch({
             type: FETCH_ERROR,

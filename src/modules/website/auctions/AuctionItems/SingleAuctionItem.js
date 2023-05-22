@@ -84,7 +84,7 @@ const SingleAuctionItem = (props) => {
             </Box>
             <Box sx={{flex: 1}}>
               <Box sx={{mb: 2}}>
-                <SaleInfo vehicle={vehicle?.vehicle ?? vehicle} showPrice />
+                <SaleInfo vehicle={vehicle?.vehicle ?? vehicle} />
               </Box>
               <BidInfo vehicle={vehicle} id={id} setVehicle={setVehicle} />
             </Box>
