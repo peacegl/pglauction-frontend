@@ -8,14 +8,17 @@ import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 import {useState} from 'react';
 import Item from '../../design/Item';
+import BidItemHistory from 'modules/admin/auctions/AuctionVehiclesInfo/BidItemHistory';
+import {useSelector} from 'react-redux';
 
-export default function LotInfo({vehicle, admin}) {
+export default function LotInfo({vehicle, admin, auctionId, auctionItemId}) {
   const [value, setValue] = useState('lot_info');
   const theme = useTheme();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const {total = 0} = useSelector(({auctions}) => auctions.auctionItemBid);
 
   const SingleTab = (index, label) => {
     return (
@@ -67,9 +70,33 @@ export default function LotInfo({vehicle, admin}) {
               'more_info',
               <IntlMessages id='common.more_information' />,
             )}
+            {auctionItemId != undefined ? (
+              SingleTab(
+                'bid_info',
+                <Box sx={{display: 'flex'}}>
+                  <IntlMessages id='auction.bidHis' />{' '}
+                  <Box
+                    sx={{
+                      bgcolor:
+                        value == 'bid_info'
+                          ? 'white'
+                          : theme.palette.primary.main,
+                      px: 2,
+                      mx: 2,
+                      borderRadius: 10,
+                      color: value == 'bid_info' ? 'black' : 'white',
+                    }}
+                  >
+                    {total}
+                  </Box>{' '}
+                </Box>,
+              )
+            ) : (
+              <></>
+            )}
           </TabList>
         </Box>
-        <TabPanel value='lot_info' sx={{py: 0}}>
+        <TabPanel value='lot_info' sx={{py: 0, height: '600px'}}>
           <List sx={{width: '100%', bgcolor: 'background.paper'}}>
             <Item
               label={<IntlMessages id='common.status' />}
@@ -166,7 +193,7 @@ export default function LotInfo({vehicle, admin}) {
             />
           </List>
         </TabPanel>
-        <TabPanel value='more_info' sx={{pt: 3, pb: 7}}>
+        <TabPanel value='more_info' sx={{pt: 3, pb: 7, height: '600px'}}>
           <Typography
             sx={{
               color: theme.palette.primary.main,
@@ -226,6 +253,19 @@ export default function LotInfo({vehicle, admin}) {
             </>
           )}
         </TabPanel>
+        {auctionItemId != undefined ? (
+          <TabPanel
+            value='bid_info'
+            sx={{
+              p: 0,
+              position: 'relative',
+            }}
+          >
+            <BidItemHistory id={auctionId} />
+          </TabPanel>
+        ) : (
+          <></>
+        )}
       </TabContext>
     </Card>
   );
@@ -234,4 +274,6 @@ export default function LotInfo({vehicle, admin}) {
 LotInfo.propTypes = {
   vehicle: PropTypes.any,
   admin: PropTypes.bool,
+  auctionId: PropTypes.string,
+  auctionItemId: any,
 };

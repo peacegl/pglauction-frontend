@@ -5,11 +5,12 @@ import VehicleHeader from 'components/design/VehicleHeader';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import {useDispatch, useSelector} from 'react-redux';
 import Error404 from 'modules/errorPages/Error404';
-import {onGetVehicleView} from 'redux/actions';
+import {onGetAuctionItemBid, onGetVehicleView} from 'redux/actions';
 import {Box, Container} from '@mui/material';
 import {useRouter} from 'next/router';
 import {useEffect} from 'react';
 import BidInfoAdmin from 'modules/admin/auctions/AuctionVehiclesInfo/BidInfo';
+import {GET_AUCTION_ITEM_BID_EMPTY} from 'shared/constants/ActionTypes';
 
 const VehicleDetail = () => {
   const router = useRouter();
@@ -18,6 +19,7 @@ const VehicleDetail = () => {
   const loading = useSelector(({common}) => common.loading);
   const {vehicle = {}} = useSelector(({vehicles}) => vehicles);
   const {user} = useAuthUser();
+  const {auctionItemBid} = useSelector(({auctions}) => auctions.auctionItemBid);
 
   useEffect(() => {
     if (id) {
@@ -30,6 +32,24 @@ const VehicleDetail = () => {
       dispatch(onGetVehicleView(id));
     }
   }, [user?.type]);
+
+  useEffect(() => {
+    if (vehicle?.bidInfo?.id != undefined) {
+    }
+    dispatch({type: GET_AUCTION_ITEM_BID_EMPTY});
+    fetchData(vehicle?.bidInfo?.id);
+  }, [vehicle?.bidInfo?.id]);
+
+  const fetchData = async (id) => {
+    console.log(id);
+    await dispatch(
+      onGetAuctionItemBid(id, {
+        per_page: 10,
+        page: 1,
+        orderBy: {column: 'created_at', order: 'desc'},
+      }),
+    );
+  };
 
   return (
     <>
@@ -60,7 +80,7 @@ const VehicleDetail = () => {
             </Box>
             <Box
               sx={{
-                display: 'flex',
+                display: vehicle?.bidInfo?.id != undefined ? 'block' : 'flex',
                 flex: 2,
                 alignContent: 'space-between',
                 columnGap: '10px',
@@ -68,10 +88,21 @@ const VehicleDetail = () => {
                 flexDirection: {xs: 'column', sm: 'row'},
               }}
             >
-              <Box sx={{flex: 1.5}}>
-                <LotInfo vehicle={vehicle} admin={true} />
+              <Box sx={{flex: vehicle?.bidInfo?.id != undefined ? 2 : 1.5}}>
+                <LotInfo
+                  vehicle={vehicle}
+                  admin={true}
+                  auctionId={vehicle?.bidInfo?.auction_id}
+                  auctionItemId={vehicle?.bidInfo?.id}
+                  bidData={auctionItemBid}
+                />
               </Box>
-              <Box sx={{flex: 1}}>
+              <Box
+                sx={{
+                  flex: 1,
+                  marginTop: vehicle?.bidInfo?.id != undefined ? '20px' : '0',
+                }}
+              >
                 <SaleInfo vehicle={vehicle} admin={true} />
                 {!Object.keys(vehicle.bidInfo).length == 0 ? (
                   <Box sx={{mt: 4}}>
