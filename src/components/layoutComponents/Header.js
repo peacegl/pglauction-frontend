@@ -233,6 +233,7 @@ function Header(props) {
                 component='img'
                 mt='2px'
                 width='26px'
+                alt='tiktok'
                 src={TiktokIcon.src}
               ></Box>
             </Link>
