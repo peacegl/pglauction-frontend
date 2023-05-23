@@ -275,5 +275,5 @@ LotInfo.propTypes = {
   vehicle: PropTypes.any,
   admin: PropTypes.bool,
   auctionId: PropTypes.string,
-  auctionItemId: any,
+  auctionItemId: PropTypes.any,
 };
