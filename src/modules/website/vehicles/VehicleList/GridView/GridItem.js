@@ -16,6 +16,10 @@ import {LoadingButton} from '@mui/lab';
 import Card from '@mui/material/Card';
 import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
+import {useAuthUser} from '@crema/utility/AuthHooks';
+import moment from 'moment';
+import 'moment-timezone';
+import MyTimer from 'components/design/timer';
 
 export default function GridItem({item, ...props}) {
   const router = useRouter();
@@ -36,6 +40,31 @@ export default function GridItem({item, ...props}) {
   //       : '';
   //   setAddressUrl(origin + router.asPath + `/${item.id}`);
   // }, []);
+
+  //for demo
+  const {user} = useAuthUser();
+  const [isStarted, setIsStarted] = useState(false);
+
+  let endTime = moment(
+    item?.auctions[0]?.end_date,
+    'YYYY-MM-DD hh:mm:ss A',
+    user?.timezone ? user.timezone : 'UTC',
+  )
+    .tz(user?.timezone ? user.timezone : moment.tz.guess())
+    .format('YYYY-MM-DD hh:mm:ss A');
+
+  let startTime = moment(
+    item?.auctions[0]?.start_date,
+    'YYYY-MM-DD hh:mm:ss A',
+    user?.timezone ? user.timezone : 'UTC',
+  )
+    .tz(user?.timezone ? user.timezone : moment.tz.guess())
+    .format('YYYY-MM-DD hh:mm:ss A');
+
+  useEffect(() => {
+    setIsStarted(moment().isAfter(startTime));
+  }, []);
+
   return (
     <>
       <Card sx={{borderRadius: 1}}>
@@ -51,7 +80,13 @@ export default function GridItem({item, ...props}) {
           <Box
             sx={{cursor: 'pointer'}}
             overflow='hidden'
-            onClick={() => router.push(`/all-vehicles/${item?.id}`)}
+            onClick={() =>
+              item.auctions.length > 0
+                ? router.push(
+                    `/auctions/auction_items/${item?.auctions[0].pivot.id}`,
+                  )
+                : router.push(`/all-vehicles/${item?.id}`)
+            }
             onMouseEnter={() => setHoverImage(true)}
             onMouseLeave={() => setHoverImage(false)}
           >
@@ -108,7 +143,13 @@ export default function GridItem({item, ...props}) {
             <Box sx={{display: 'flex'}}>
               <AppTooltip title={`${item.year} ${item.make} ${item.model}`}>
                 <Typography
-                  onClick={() => router.push(`/all-vehicles/${item.id}`)}
+                  onClick={() =>
+                    item?.auctions.length > 0
+                      ? router.push(
+                          `/auctions/auction_items/${item?.auctions[0].pivot.id}`,
+                        )
+                      : router.push(`/all-vehicles/${item?.id}`)
+                  }
                   noWrap
                   gutterBottom
                   variant='h4'
@@ -156,7 +197,15 @@ export default function GridItem({item, ...props}) {
                       ? theme.palette.success.main
                       : '#ffa834',
                 }}
-                label={item.status == 'future' ? 'On The Way' : item.status}
+                label={
+                  item.status == 'future'
+                    ? 'on the way'
+                    : item?.auctions.length > 0
+                    ? isStarted
+                      ? 'auction in progress'
+                      : 'upcoming auction'
+                    : item.status
+                }
                 size='small'
               />
             )}
@@ -217,6 +266,39 @@ export default function GridItem({item, ...props}) {
               <Button size='small' sx={{mt: 2}}>
                 <Skeleton animation='wave' sx={{width: 90, py: 3}} />
               </Button>
+            ) : item?.auctions.length > 0 ? (
+              <>
+                {isStarted && (
+                  <>
+                    <IntlMessages id='common.endDate' />
+                    <MyTimer
+                      expiryTimestamp={moment(
+                        item?.auctions[0]?.end_date,
+                        'YYYY-MM-DD hh:mm:ss A',
+                        user?.timezone ? user.timezone : 'UTC',
+                      ).tz('UTC')}
+                      onExpire={() => {
+                        onExpire(item?.id);
+                      }}
+                    />
+                  </>
+                )}
+                {!isStarted && (
+                  <>
+                    <IntlMessages id='common.startDate' />
+                    <MyTimer
+                      expiryTimestamp={moment(
+                        item?.auctions[0]?.start_date,
+                        'YYYY-MM-DD hh:mm:ss A',
+                        user?.timezone ? user.timezone : 'UTC',
+                      ).tz('UTC')}
+                      onExpire={() => {
+                        setIsStarted(true);
+                      }}
+                    />
+                  </>
+                )}
+              </>
             ) : (
               <LoadingButton
                 loading={watchlistLoading}
@@ -243,6 +325,23 @@ export default function GridItem({item, ...props}) {
             {!item ? (
               <Button size='small' sx={{mt: 2}}>
                 <Skeleton animation='wave' sx={{width: 100, py: 3}} />
+              </Button>
+            ) : item.auctions.length > 0 ? (
+              <Button
+                onClick={() =>
+                  router.push(
+                    `/auctions/auction_items/${item?.auctions[0].pivot.id}`,
+                  )
+                }
+                variant='contained'
+                size='small'
+                sx={{mt: 2, color: 'white'}}
+              >
+                {isStarted ? (
+                  <IntlMessages id='auction.bidNow' />
+                ) : (
+                  <IntlMessages id='auction.preBid' />
+                )}
               </Button>
             ) : (
               <Button
