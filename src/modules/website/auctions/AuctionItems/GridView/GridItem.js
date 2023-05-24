@@ -72,7 +72,7 @@ export default function GridItem({item, ...props}) {
                   width='45px'
                   component='img'
                   src={SoldIcon.src}
-                  alt={item?.name}
+                  alt={'company Name'}
                 />
               </Box>
             )}
