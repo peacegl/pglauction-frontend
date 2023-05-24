@@ -101,8 +101,6 @@ const VehicleList = () => {
   };
 
   useEffect(() => {
-    console.log(router.query.make);
-
     echoWeb.channel(`web.vehicle`).listen('Web', (e) => {
       if (e.action == 'created') {
         vehicleReaTimeCreated(e);
