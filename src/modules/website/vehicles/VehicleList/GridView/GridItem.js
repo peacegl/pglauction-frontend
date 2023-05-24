@@ -15,7 +15,6 @@ import {useEffect, useState} from 'react';
 import {LoadingButton} from '@mui/lab';
 import Card from '@mui/material/Card';
 import {useRouter} from 'next/router';
-import {moneyFormater} from 'configs';
 import PropTypes from 'prop-types';
 
 export default function GridItem({item, ...props}) {
