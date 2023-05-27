@@ -13,7 +13,6 @@ import AppTooltip from '@crema/core/AppTooltip';
 import {useEffect, useState} from 'react';
 import {LoadingButton} from '@mui/lab';
 import Card from '@mui/material/Card';
-import {moneyFormater} from 'configs';
 import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
 import {
