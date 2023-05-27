@@ -247,19 +247,7 @@ export default function ListItem({item, ...props}) {
                       size='small'
                     />
                   )}
-                  {/* <Typography
-                    component='div'
-                    color={theme.palette.primary.main}
-                    overflow='hidden'
-                    fontSize='16px'
-                    fontWeight='bold'
-                    sx={{display: {xs: 'block', sm: 'none'}, fontSize: '14px'}}
-                  >
-                    {moneyFormater(
-                      parseInt(item.price) +
-                        parseInt((item.price * item.sale_rate ?? 15) / 100),
-                    )}
-                  </Typography> */}
+
                   {item && (
                     <Typography
                       component='div'
