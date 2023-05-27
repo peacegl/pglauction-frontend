@@ -24,7 +24,12 @@ import {
   useTheme,
   Chip,
   Skeleton,
+  Link,
 } from '@mui/material';
+import {useAuthUser} from '@crema/utility/AuthHooks';
+import moment from 'moment';
+import 'moment-timezone';
+import MyTimer from 'components/design/timer';
 
 const TextShow = ({value, label, extra = ''}) => {
   return (
@@ -62,8 +67,34 @@ export default function ListItem({item, ...props}) {
     useAddToWatchList(item, setShowSignInModl);
 
   const viewPage = () => {
-    item?.id && router.push(`/all-vehicles/${item?.id}`);
+    item?.id && item.auctions.length > 0
+      ? router.push(`/auctions/auction_items/${item?.auctions[0].pivot.id}`)
+      : router.push(`/all-vehicles/${item?.id}`);
   };
+
+  const {user} = useAuthUser();
+  const [isStarted, setIsStarted] = useState(false);
+
+  let endTime = moment(
+    item?.auctions[0]?.end_date,
+    'YYYY-MM-DD hh:mm:ss A',
+    user?.timezone ? user.timezone : 'UTC',
+  )
+    .tz(user?.timezone ? user.timezone : moment.tz.guess())
+    .format('YYYY-MM-DD hh:mm:ss A');
+
+  let startTime = moment(
+    item?.auctions[0]?.start_date,
+    'YYYY-MM-DD hh:mm:ss A',
+    user?.timezone ? user.timezone : 'UTC',
+  )
+    .tz(user?.timezone ? user.timezone : moment.tz.guess())
+    .format('YYYY-MM-DD hh:mm:ss A');
+
+  useEffect(() => {
+    setIsStarted(moment().isAfter(startTime));
+  }, []);
+
   return (
     <>
       <Card
@@ -205,7 +236,13 @@ export default function ListItem({item, ...props}) {
                             : '#ffa834',
                       }}
                       label={
-                        item.status == 'future' ? 'On The Way' : item.status
+                        item.status == 'future'
+                          ? 'on the way'
+                          : item?.auctions.length > 0
+                          ? isStarted
+                            ? 'auction in progress'
+                            : 'upcoming auction'
+                          : item.status
                       }
                       size='small'
                     />
@@ -325,7 +362,8 @@ export default function ListItem({item, ...props}) {
                     }}
                   >
                     <WhatsAppButton
-                      number={item.seller?.loginable?.whatsapp}
+                      // number={item.seller?.loginable?.whatsapp}
+                      number={'whatsapp number'}
                       url={window.location.origin + '/all-vehicles/' + item.id}
                     />
                   </Box>
@@ -403,29 +441,83 @@ export default function ListItem({item, ...props}) {
                 <Box sx={{flex: 1, display: {xs: 'none', sm: 'block'}, px: 2}}>
                   <Skeleton animation='wave' sx={{py: 3}} />
                 </Box>
+              ) : item.auctions.length > 0 ? (
+                <Box sx={{flex: 1, display: {xs: 'none', sm: 'block'}, px: 2}}>
+                  <Button
+                    onClick={() =>
+                      router.push(
+                        `/auctions/auction_items/${item?.auctions[0].pivot.id}`,
+                      )
+                    }
+                    variant='contained'
+                    size='small'
+                    sx={{mt: 2, color: 'white'}}
+                  >
+                    {isStarted ? (
+                      <IntlMessages id='auction.bidNow' />
+                    ) : (
+                      <IntlMessages id='auction.preBid' />
+                    )}
+                  </Button>
+
+                  <Box sx={{mt: 2}}>
+                    {isStarted && (
+                      <>
+                        <IntlMessages id='common.endDate' />
+                        <MyTimer
+                          color='red'
+                          expiryTimestamp={moment(
+                            item?.auctions[0]?.end_date,
+                            'YYYY-MM-DD hh:mm:ss A',
+                            user?.timezone ? user.timezone : 'UTC',
+                          ).tz('UTC')}
+                          onExpire={() => {
+                            onExpire(item?.id);
+                          }}
+                        />
+                      </>
+                    )}
+                    {!isStarted && (
+                      <>
+                        <IntlMessages id='common.startDate' />
+                        <MyTimer
+                          color='primary'
+                          expiryTimestamp={moment(
+                            item?.auctions[0]?.start_date,
+                            'YYYY-MM-DD hh:mm:ss A',
+                            user?.timezone ? user.timezone : 'UTC',
+                          ).tz('UTC')}
+                          onExpire={() => {
+                            setIsStarted(true);
+                          }}
+                        />
+                      </>
+                    )}
+                  </Box>
+                  <Box sx={{mt: 2}}>
+                    <Link
+                      variant='body2'
+                      fontSize='14px'
+                      underline='none'
+                      href=''
+                      mx='2px'
+                      target='_blank'
+                    >
+                      {'Buy now price' +
+                        ': ' +
+                        item?.auctions[0]?.pivot?.buy_now_price}
+                    </Link>
+                  </Box>
+                </Box>
               ) : (
                 <Box sx={{flex: 1, display: {xs: 'none', sm: 'block'}, px: 2}}>
-                  {/* <Typography
-                    component='div'
-                    color={theme.palette.primary.main}
-                    overflow='hidden'
-                    mb='10px'
-                    fontSize='20px'
-                    fontWeight='bold'
-                  >
-                    {moneyFormater(
-                      parseInt(item.price) +
-                        parseInt((item.price * item.sale_rate ?? 15) / 100),
-                    )}
-                  </Typography> */}
                   <WhatsAppButton
-                    number={item.seller?.loginable?.whatsapp}
+                    number={'whatsapp number'}
+                    // number={item.seller?.loginable?.whatsapp}
                     url={window.location.origin + '/all-vehicles/' + item.id}
                   />
                 </Box>
               )}
-
-              {/* <Divider orientation='vertical' flexItem /> */}
             </Stack>
           </CardContent>
         </Box>

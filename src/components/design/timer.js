@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Box} from '@mui/material';
 import React from 'react';
 
-const MyTimer = ({expiryTimestamp, onExpire}) => {
+const MyTimer = ({expiryTimestamp, onExpire, color = 'black'}) => {
   const {
     seconds,
     minutes,
@@ -20,7 +20,7 @@ const MyTimer = ({expiryTimestamp, onExpire}) => {
   });
 
   return (
-    <Box style={{textAlign: 'center'}}>
+    <Box style={{textAlign: 'center', color: color}}>
       <Box
         sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}
       >
@@ -48,4 +48,5 @@ export default MyTimer;
 MyTimer.propTypes = {
   expiryTimestamp: PropTypes.any,
   onExpire: PropTypes.func,
+  color: PropTypes.string,
 };

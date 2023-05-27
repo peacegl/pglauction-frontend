@@ -272,6 +272,7 @@ export default function GridItem({item, ...props}) {
                   <>
                     <IntlMessages id='common.endDate' />
                     <MyTimer
+                      color='red'
                       expiryTimestamp={moment(
                         item?.auctions[0]?.end_date,
                         'YYYY-MM-DD hh:mm:ss A',
@@ -287,6 +288,7 @@ export default function GridItem({item, ...props}) {
                   <>
                     <IntlMessages id='common.startDate' />
                     <MyTimer
+                      color='primary'
                       expiryTimestamp={moment(
                         item?.auctions[0]?.start_date,
                         'YYYY-MM-DD hh:mm:ss A',
@@ -349,11 +351,12 @@ export default function GridItem({item, ...props}) {
                 variant='contained'
                 size='small'
                 sx={{mt: 2}}
-                href={`https://wa.me/${item?.seller?.loginable?.whatsapp}?text=${window.location.origin}/all-vehicles/${item?.id}`}
+                // href={`https://wa.me/${item?.seller?.loginable?.whatsapp}?text=${window.location.origin}/all-vehicles/${item?.id}`}
                 target='_blank'
                 startIcon={<WhatsAppIcon />}
               >
-                {item?.seller?.loginable?.whatsapp}
+                {/* {item?.seller?.loginable?.whatsapp} */}
+                whatsapp number
               </Button>
             )}
           </Box>
