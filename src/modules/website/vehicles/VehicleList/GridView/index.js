@@ -27,11 +27,6 @@ const GridView = ({list, loading, perPage}) => (
     }
   />
 );
-// list.map((item, index) => (
-//   <Grid item xs={12} sm={6} md={4} key={index}>
-//     <GridItem item={item} key={item.id} />
-//   </Grid>
-// ));
 export default GridView;
 
 GridView.propTypes = {

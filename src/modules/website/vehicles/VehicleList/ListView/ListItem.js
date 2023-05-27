@@ -74,14 +74,6 @@ export default function ListItem({item, ...props}) {
   const {user} = useAuthUser();
   const [isStarted, setIsStarted] = useState(false);
 
-  let endTime = moment(
-    item?.auctions[0]?.end_date,
-    'YYYY-MM-DD hh:mm:ss A',
-    user?.timezone ? user.timezone : 'UTC',
-  )
-    .tz(user?.timezone ? user.timezone : moment.tz.guess())
-    .format('YYYY-MM-DD hh:mm:ss A');
-
   let startTime = moment(
     item?.auctions[0]?.start_date,
     'YYYY-MM-DD hh:mm:ss A',
