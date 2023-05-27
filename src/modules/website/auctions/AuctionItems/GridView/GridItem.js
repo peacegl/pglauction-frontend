@@ -20,13 +20,9 @@ import 'moment-timezone';
 export default function GridItem({item, ...props}) {
   const router = useRouter();
   const {user} = useAuthUser();
-
   const [hoverImage, setHoverImage] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showSignInModal, setShowSignInModl] = useState(false);
-
-  const [addressUrl, setAddressUrl] = useState('');
-
   const [isStarted, setIsStarted] = useState(false);
   let startTime = moment(
     item?.start_date,
@@ -87,7 +83,6 @@ export default function GridItem({item, ...props}) {
             <Box sx={imageLoaded ? {} : {display: 'none'}}>
               <CardMedia
                 component='img'
-                // height={height}
                 image={
                   item.images?.find((item) => item.type == 'main_image')
                     ?.path ?? DefaultCarImage.src

@@ -37,35 +37,6 @@ const AuctionGridItem = ({item, user, exp}) => {
 
   const onExpire = (id) => {
     exp(id);
-    // const time = moment(
-    //   endDate,
-    //   'YYYY-MM-DD HH:mm:ss',
-    //   user?.timezone ? user.timezone : 'UTC',
-    // )
-    //   .tz(user?.timezone ? user.timezone : moment.tz.guess())
-    //   .format('YYYY-MM-DD hh:mm:ss A');
-
-    // const current = moment(
-    //   new Date(),
-    //   'YYYY-MM-DD HH:mm:ss',
-    //   user?.timezone ? user.timezone : 'UTC',
-    // )
-    //   .tz(user?.timezone ? user.timezone : moment.tz.guess())
-    //   .format('YYYY-MM-DD hh:mm:ss A');
-    // if (time == current || time < current) {
-    //   jwtAxios
-    //     .post(`/website/expire_auctions`, null, {
-    //       params: {
-    //         id: item?.id,
-    //       },
-    //     })
-    //     .then((data) => {
-    //       if (data.status === 200) {
-    //
-    //       } else {
-    //       }
-    //     });
-    // }
   };
 
   return (

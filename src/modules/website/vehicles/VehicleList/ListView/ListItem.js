@@ -13,7 +13,6 @@ import AppTooltip from '@crema/core/AppTooltip';
 import {useEffect, useState} from 'react';
 import {LoadingButton} from '@mui/lab';
 import Card from '@mui/material/Card';
-import {moneyFormater} from 'configs';
 import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
 import {
@@ -74,14 +73,6 @@ export default function ListItem({item, ...props}) {
 
   const {user} = useAuthUser();
   const [isStarted, setIsStarted] = useState(false);
-
-  let endTime = moment(
-    item?.auctions[0]?.end_date,
-    'YYYY-MM-DD hh:mm:ss A',
-    user?.timezone ? user.timezone : 'UTC',
-  )
-    .tz(user?.timezone ? user.timezone : moment.tz.guess())
-    .format('YYYY-MM-DD hh:mm:ss A');
 
   let startTime = moment(
     item?.auctions[0]?.start_date,

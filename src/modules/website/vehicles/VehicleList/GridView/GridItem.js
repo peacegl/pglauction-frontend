@@ -23,35 +23,16 @@ import MyTimer from 'components/design/timer';
 
 export default function GridItem({item, ...props}) {
   const router = useRouter();
-  // const [height, setHeight] = useState('260px');
   const [hoverImage, setHoverImage] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showSignInModal, setShowSignInModl] = useState(false);
   const {addToWatchList, watchlistLoading, addedToWatchList} =
     useAddToWatchList(item, setShowSignInModl);
-  // useLayoutEffect(() => {
-  //   setHeight((cardRef.current?.clientWidth / 4) * 3 + 'px');
-  // });
   const [addressUrl, setAddressUrl] = useState('');
-  // useEffect(() => {
-  //   const origin =
-  //     typeof window !== 'undefined' && window.location.origin
-  //       ? window.location.origin
-  //       : '';
-  //   setAddressUrl(origin + router.asPath + `/${item.id}`);
-  // }, []);
 
   //for demo
   const {user} = useAuthUser();
   const [isStarted, setIsStarted] = useState(false);
-
-  let endTime = moment(
-    item?.auctions[0]?.end_date,
-    'YYYY-MM-DD hh:mm:ss A',
-    user?.timezone ? user.timezone : 'UTC',
-  )
-    .tz(user?.timezone ? user.timezone : moment.tz.guess())
-    .format('YYYY-MM-DD hh:mm:ss A');
 
   let startTime = moment(
     item?.auctions[0]?.start_date,
@@ -117,7 +98,6 @@ export default function GridItem({item, ...props}) {
             <Box sx={imageLoaded ? {} : {display: 'none'}}>
               <CardMedia
                 component='img'
-                // height={height}
                 image={
                   item.images?.find((item) => item.type == 'main_image')
                     ?.path ?? DefaultCarImage.src
@@ -166,15 +146,6 @@ export default function GridItem({item, ...props}) {
           )}
 
           <Divider sx={{mb: 2}} />
-          <Box display='flex' justifyContent='space-between'>
-            {/* <Typography color={theme.palette.primary.main} fontWeight='bold'>
-            {moneyFormater(
-              parseInt(item.price) +
-                parseInt((item.price * item.sale_rate ?? 15) / 100),
-            )}
-            </Typography> */}
-            {/* {item && <Typography>{item.odometer_type}</Typography>} */}
-          </Box>
 
           <Box sx={{mt: 1}}>
             {!item ? (
