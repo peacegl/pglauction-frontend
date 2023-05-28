@@ -70,7 +70,7 @@ const VehicleList = () => {
         };
         dispatch(
           onGetWebVehicleData({
-            // filterData,
+            filterData,
             filterBrands,
             per_page: perPage,
             page: page + 1,
@@ -80,7 +80,7 @@ const VehicleList = () => {
       } else {
         dispatch(
           onGetWebVehicleData({
-            // filterData,
+            filterData,
             filterBrands,
             per_page: perPage,
             page: page + 1,
@@ -91,7 +91,7 @@ const VehicleList = () => {
     }
     dispatch(setBrandFilter(filterBrands));
     // filterData
-  }, [makeData, page, search, perPage, user?.type]);
+  }, [makeData, page, search, perPage, user?.type, filterData]);
 
   const onPageChange = (event, value) => {
     setPage(value);
