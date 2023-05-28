@@ -110,7 +110,7 @@ export default function VehicleModal({
           if (res.status === 200 && res.data.result) {
             let values = {};
             let oldImages = [];
-            Object.entries(res.data.data).forEach(([key, value]) => {
+            Object.entries(res.data.vehicle).forEach(([key, value]) => {
               if (Object.keys(initialValues).includes(key)) {
                 if (key == 'images') {
                   value?.forEach((item) => {
@@ -134,6 +134,7 @@ export default function VehicleModal({
                   }
                 });
             });
+
             setImages(oldImages);
             setInitialValues(values);
             searchLocations({}, values.location_id);
@@ -141,6 +142,7 @@ export default function VehicleModal({
           }
           setIsLoading(false);
         } catch (error) {
+          console.log(error, 'error');
           setIsLoading(false);
         }
       })();
