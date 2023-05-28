@@ -107,7 +107,6 @@ export default function VehicleModal({
         try {
           setIsLoading(true);
           const res = await jwtAxios.get(`/vehicles/${recordId}`);
-
           if (res.status === 200 && res.data.result) {
             let values = {};
             let oldImages = [];
