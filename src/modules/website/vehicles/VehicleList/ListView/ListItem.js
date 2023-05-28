@@ -29,6 +29,7 @@ import {useAuthUser} from '@crema/utility/AuthHooks';
 import moment from 'moment';
 import 'moment-timezone';
 import MyTimer from 'components/design/timer';
+import {moneyFormater} from 'configs';
 
 const TextShow = ({value, label, extra = ''}) => {
   return (
@@ -484,7 +485,7 @@ export default function ListItem({item, ...props}) {
                     >
                       {'Buy now price' +
                         ': ' +
-                        item?.auctions[0]?.pivot?.buy_now_price}
+                        moneyFormater(item?.auctions[0]?.pivot?.buy_now_price)}
                     </Link>
                   </Box>
                 </Box>
