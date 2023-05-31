@@ -15,7 +15,7 @@ export async function getServerSideProps(context) {
   try {
     const res = await jwtAxios.get(`website/auction_items/${context.query.id}`);
     if (res.status === 200 && res.data.result) {
-      vehicle = res.data.data;
+      vehicle = {...res.data.data, ...res.data.data.auction};
     }
   } catch (error) {}
   if (!vehicle.id) {

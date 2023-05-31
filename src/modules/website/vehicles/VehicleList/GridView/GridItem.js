@@ -164,17 +164,19 @@ export default function GridItem({item, ...props}) {
                   bgcolor: (theme) =>
                     item.status == 'sold'
                       ? theme.palette.error.main
-                      : item.status == 'available'
+                      : item?.auctions.length > 0
                       ? theme.palette.success.main
                       : '#ffa834',
                 }}
                 label={
                   item.status == 'future'
                     ? 'on the way'
-                    : item?.auctions.length > 0
+                    : item?.auctions.length > 0 && item.status == 'available'
                     ? isStarted
                       ? 'auction in progress'
                       : 'upcoming auction'
+                    : item.status == 'available'
+                    ? 'on the way'
                     : item.status
                 }
                 size='small'
@@ -250,7 +252,7 @@ export default function GridItem({item, ...props}) {
                         user?.timezone ? user.timezone : 'UTC',
                       ).tz('UTC')}
                       onExpire={() => {
-                        onExpire(item?.id);
+                        // onExpire(item?.id);
                       }}
                     />
                   </>

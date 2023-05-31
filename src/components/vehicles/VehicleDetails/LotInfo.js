@@ -6,12 +6,21 @@ import List from '@mui/material/List';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Item from '../../design/Item';
 import BidItemHistory from 'modules/admin/auctions/AuctionVehiclesInfo/BidItemHistory';
 import {useSelector} from 'react-redux';
+import {useAuthUser} from '@crema/utility/AuthHooks';
+import moment from 'moment';
+import 'moment-timezone';
 
-export default function LotInfo({vehicle, admin, auctionId, auctionItemId}) {
+export default function LotInfo({
+  vehicle,
+  admin,
+  auctionId,
+  auctionItemId,
+  auction,
+}) {
   const [value, setValue] = useState('lot_info');
   const theme = useTheme();
 
@@ -19,6 +28,23 @@ export default function LotInfo({vehicle, admin, auctionId, auctionItemId}) {
     setValue(newValue);
   };
   const {total = 0} = useSelector(({auctions}) => auctions.auctionItemBid);
+
+  console.log(auction != undefined ? auction : 'hhhhh');
+
+  const {user} = useAuthUser();
+  const [isStarted, setIsStarted] = useState(false);
+
+  let startTime = moment(
+    auction?.start_date,
+    'YYYY-MM-DD hh:mm:ss A',
+    user?.timezone ? user.timezone : 'UTC',
+  )
+    .tz(user?.timezone ? user.timezone : moment.tz.guess())
+    .format('YYYY-MM-DD hh:mm:ss A');
+
+  useEffect(() => {
+    setIsStarted(moment().isAfter(startTime));
+  }, []);
 
   const SingleTab = (index, label) => {
     return (
@@ -103,19 +129,27 @@ export default function LotInfo({vehicle, admin, auctionId, auctionItemId}) {
               value={
                 <Chip
                   sx={{
-                    px: 2,
+                    float: 'right',
                     textTransform: 'capitalize',
                     fontWeight: 'bold',
                     color: (theme) => theme.palette.primary.contrastText,
                     bgcolor: (theme) =>
                       vehicle.status == 'sold'
                         ? theme.palette.error.main
-                        : vehicle.status == 'available'
+                        : auction != undefined
                         ? theme.palette.success.main
                         : '#ffa834',
                   }}
                   label={
-                    vehicle.status == 'future' ? 'On The Way' : vehicle.status
+                    vehicle.status == 'future'
+                      ? 'on the way'
+                      : auction != undefined && vehicle.status == 'available'
+                      ? isStarted
+                        ? 'auction in progress'
+                        : 'upcoming auction'
+                      : vehicle.status == 'available'
+                      ? 'on the way'
+                      : vehicle.status
                   }
                   size='small'
                 />
@@ -276,4 +310,5 @@ LotInfo.propTypes = {
   admin: PropTypes.bool,
   auctionId: PropTypes.string,
   auctionItemId: PropTypes.any,
+  auction: PropTypes.any,
 };
