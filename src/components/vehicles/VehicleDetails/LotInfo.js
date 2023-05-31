@@ -23,17 +23,12 @@ export default function LotInfo({
 }) {
   const [value, setValue] = useState('lot_info');
   const theme = useTheme();
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   const {total = 0} = useSelector(({auctions}) => auctions.auctionItemBid);
-
-  console.log(auction != undefined ? auction : 'hhhhh');
-
   const {user} = useAuthUser();
   const [isStarted, setIsStarted] = useState(false);
-
   let startTime = moment(
     auction?.start_date,
     'YYYY-MM-DD hh:mm:ss A',
