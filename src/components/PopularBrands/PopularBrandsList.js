@@ -17,6 +17,7 @@ import Benz from 'assets/vehicle_logos/benz.png';
 import Ford from 'assets/vehicle_logos/ford.png';
 import BMW from 'assets/vehicle_logos/bmw.png';
 import GMC from 'assets/vehicle_logos/gmc.png';
+import Chrysler from 'assets/vehicle_logos/chrysler.png';
 import Kia from 'assets/vehicle_logos/kia.png';
 import {setBrandFilter} from 'redux/actions';
 import Title from 'components/design/Title';
@@ -97,6 +98,11 @@ const PopularBrandsList = (props) => {
       key: 12,
       logo: LandRover.src,
       name: 'rover',
+    },
+    {
+      key: 13,
+      logo: Chrysler.src,
+      name: 'chrysler',
     },
     // {
     //   key: 10,
@@ -204,6 +210,7 @@ const PopularBrandsList = (props) => {
                 <Box
                   component='img'
                   src={brand.logo}
+                  height={brand.name == 'chrysler' ? 30 : 'auto'}
                   width={props.small ? 50 : 70}
                 ></Box>
               </Box>

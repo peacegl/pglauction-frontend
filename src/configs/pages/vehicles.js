@@ -321,7 +321,7 @@ export const filterContent = [
 
 export default function configs(invalidYoutube) {
   return {
-    fuels: ['petrol', 'diesel', 'etlectric', 'hybrid'],
+    fuels: ['petrol', 'diesel', 'electric', 'hybrid', 'flexible fuel'],
     statuses: ['available', 'inactive', 'sold', 'future'],
     transmissions: ['automatic', 'manual'],
     bodyStyles: [
