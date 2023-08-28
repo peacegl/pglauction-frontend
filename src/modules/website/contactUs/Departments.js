@@ -41,12 +41,12 @@ const departments = [
   },
   {
     borderTop: (theme) => `4px solid ${theme.palette.success.main}`,
-    title: 'Management',
+    title: 'Sales',
     details: [
       {
         icon: <EmailIcon sx={{color: (theme) => theme.palette.success.main}} />,
-        content: 'youremail@email.com',
-        url: 'mailto:youremail@email.com',
+        content: 'hashmatullah.hakimi2016@gmail.com',
+        url: 'mailto:hashmatullah.hakimi2016@gmail.com',
       },
       {
         icon: (
@@ -54,15 +54,15 @@ const departments = [
             sx={{color: (theme) => theme.palette.success.main}}
           />
         ),
-        content: '+971 000000000000',
-        url: 'tel:+000000000000',
+        content: '+183 27809429',
+        url: 'tel:+18327809429',
       },
       {
         icon: (
           <WhatsAppIcon sx={{color: (theme) => theme.palette.success.main}} />
         ),
-        content: '+971 000000000000',
-        url: 'https://wa.me/+000000000000',
+        content: '+183 27809429',
+        url: 'https://wa.me/+18327809429',
       },
       // {
       //   icon: (
