@@ -45,8 +45,8 @@ const departments = [
     details: [
       {
         icon: <EmailIcon sx={{color: (theme) => theme.palette.success.main}} />,
-        content: 'hashmatullah.hakimi2016@gmail.com',
-        url: 'mailto:hashmatullah.hakimi2016@gmail.com',
+        content: 'hakimi@peaceglobaltech.com',
+        url: 'mailto:hakimi@peaceglobaltech.com',
       },
       {
         icon: (
