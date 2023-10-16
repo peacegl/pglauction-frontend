@@ -45,7 +45,8 @@ import Echo from 'laravel-echo';
 const echoAuthInit = () => {
   const socketio = require('socket.io-client');
   window.echoAuth = new Echo({
-    host: process.env.NEXT_PUBLIC_WEB_SOCKET_SERVER_URL,
+    host: 'localhost:6001',
+    // host: process.env.NEXT_PUBLIC_WEB_SOCKET_SERVER_URL,
     broadcaster: 'socket.io',
     client: socketio,
     auth: {

@@ -35,7 +35,7 @@ export default function GridItem({item, ...props}) {
   const [isStarted, setIsStarted] = useState(false);
 
   let startTime = moment(
-    item?.auctions[0]?.start_date,
+    item?.auctions?.[0]?.start_date,
     'YYYY-MM-DD hh:mm:ss A',
     user?.timezone ? user.timezone : 'UTC',
   )
@@ -62,7 +62,7 @@ export default function GridItem({item, ...props}) {
             sx={{cursor: 'pointer'}}
             overflow='hidden'
             onClick={() =>
-              item.auctions.length > 0
+              item?.auctions?.length > 0
                 ? router.push(
                     `/auctions/auction_items/${item?.auctions[0].pivot.id}`,
                   )
@@ -124,7 +124,7 @@ export default function GridItem({item, ...props}) {
               <AppTooltip title={`${item.year} ${item.make} ${item.model}`}>
                 <Typography
                   onClick={() =>
-                    item?.auctions.length > 0
+                    item?.auctions?.length > 0
                       ? router.push(
                           `/auctions/auction_items/${item?.auctions[0].pivot.id}`,
                         )
@@ -171,7 +171,7 @@ export default function GridItem({item, ...props}) {
                 label={
                   item.status == 'future'
                     ? 'on the way'
-                    : item?.auctions.length > 0
+                    : item?.auctions?.length > 0
                     ? isStarted
                       ? 'auction in progress'
                       : 'upcoming auction'
@@ -237,7 +237,7 @@ export default function GridItem({item, ...props}) {
               <Button size='small' sx={{mt: 2}}>
                 <Skeleton animation='wave' sx={{width: 90, py: 3}} />
               </Button>
-            ) : item?.auctions.length > 0 ? (
+            ) : item?.auctions?.length > 0 ? (
               <>
                 {isStarted && (
                   <>
@@ -299,7 +299,7 @@ export default function GridItem({item, ...props}) {
               <Button size='small' sx={{mt: 2}}>
                 <Skeleton animation='wave' sx={{width: 100, py: 3}} />
               </Button>
-            ) : item.auctions.length > 0 ? (
+            ) : item?.auctions?.length > 0 ? (
               <Button
                 onClick={() =>
                   router.push(

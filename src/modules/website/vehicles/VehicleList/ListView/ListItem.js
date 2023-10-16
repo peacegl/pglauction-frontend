@@ -67,7 +67,7 @@ export default function ListItem({item, ...props}) {
     useAddToWatchList(item, setShowSignInModl);
 
   const viewPage = () => {
-    item?.id && item.auctions.length > 0
+    item?.id && item?.auctions?.length > 0
       ? router.push(`/auctions/auction_items/${item?.auctions[0].pivot.id}`)
       : router.push(`/all-vehicles/${item?.id}`);
   };
@@ -76,7 +76,7 @@ export default function ListItem({item, ...props}) {
   const [isStarted, setIsStarted] = useState(false);
 
   let startTime = moment(
-    item?.auctions[0]?.start_date,
+    item?.auctions?.[0]?.start_date,
     'YYYY-MM-DD hh:mm:ss A',
     user?.timezone ? user.timezone : 'UTC',
   )
@@ -230,7 +230,7 @@ export default function ListItem({item, ...props}) {
                       label={
                         item.status == 'future'
                           ? 'on the way'
-                          : item?.auctions.length > 0
+                          : item?.auctions?.length > 0
                           ? isStarted
                             ? 'auction in progress'
                             : 'upcoming auction'
@@ -421,7 +421,7 @@ export default function ListItem({item, ...props}) {
                 <Box sx={{flex: 1, display: {xs: 'none', sm: 'block'}, px: 2}}>
                   <Skeleton animation='wave' sx={{py: 3}} />
                 </Box>
-              ) : item.auctions.length > 0 ? (
+              ) : item?.auctions?.length > 0 ? (
                 <Box sx={{flex: 1, display: {xs: 'none', sm: 'block'}, px: 2}}>
                   <Button
                     onClick={() =>
@@ -463,7 +463,7 @@ export default function ListItem({item, ...props}) {
                         <MyTimer
                           color='primary'
                           expiryTimestamp={moment(
-                            item?.auctions[0]?.start_date,
+                            item?.auctions?.[0]?.start_date,
                             'YYYY-MM-DD hh:mm:ss A',
                             user?.timezone ? user.timezone : 'UTC',
                           ).tz('UTC')}

@@ -72,8 +72,8 @@ const AuctionItemModal = ({
             component='img'
             src={
               auctionItem.id
-                ? auctionItem?.images[0]?.path
-                : vehicle?.images[0]?.path
+                ? auctionItem?.images?.[0]?.path
+                : vehicle?.images?.[0]?.path
             }
             width={200}
           />
