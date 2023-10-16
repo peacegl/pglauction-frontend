@@ -101,8 +101,13 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
   useEffect(() => {
     echoWeb.channel(`web.bid`).listen('Web', (e) => {
       if (e.action == 'created') {
+        console.log('bid changed', e.data);
         setVehicle((d) => {
-          return {...d, bids: [e.data, ...d.bids]};
+          return {
+            ...d,
+            buy_now_price: e.data.amount,
+            bids: [e.data, ...d.bids],
+          };
         });
       }
       if (e.action == 'bidAccepted') {
