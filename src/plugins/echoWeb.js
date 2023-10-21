@@ -18,8 +18,7 @@ import Echo from 'laravel-echo';
 import socketio from 'socket.io-client';
 
 const echoWeb = new Echo({
-  host: 'localhost:6001',
-  // host: process.env.NEXT_PUBLIC_WEB_SOCKET_SERVER_URL,
+  host: process.env.NEXT_PUBLIC_WEB_SOCKET_SERVER_URL,
   broadcaster: 'socket.io',
   client: socketio,
 });
