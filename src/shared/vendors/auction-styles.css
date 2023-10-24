@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Saira:wght@300;400;500;600;700&family=Young+Serif&display=swap');
+.auction-software-wrapper{
+  font-family: "Saira", sans-serif;
+}
+.landing{
+  height: 48vh;
+  width: 100%;
+  background-image: url('../../../public/assets/images/auction-software/demo-image.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.landing .layer{
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #fff;
+}
+.layer h1{
+  text-align: center;
+  font-size: 3rem;
+}
+.layer h3{
+  font-size: 1.5rem;
+  text-align: center;
+
+}
+.demo-card{
+  display: flex;
+  background: #fff;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 10px;
+  flex-wrap: wrap
+}
+.auction-preview-button {
+  cursor: pointer;
+  text-decoration: none;
+border: 1px solid #0A8FDC;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 12px 30px;
+color: #ffffff;
+text-transform: capitalize;
+background-color: #0A8FDC;
+transition: 0.5s;
+border-radius: 30px;
+font-size: 14px;
+font-weight: 500;
+white-space:nowrap;
+
+
+}
+.auction-preview-button:hover{
+  background-color: #ffffff;
+    color: #0A8FDC;
+}
+
+.service-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
+}
+.service-card {
+  background-color: #fff;
+  padding: 40px 30px;
+  height: 450px;
+  box-shadow: 0 0px 10px 1px rgba(0, 0, 0, 0.03);
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+.card-avatar{
+  width: 70px; height: 70px; border-radius: 50%;
+  margin-bottom: 25px;
+  transition: all 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+.service-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  transition: all 0.06s ease;
+}
+.service-card h3:hover {
+  text-decoration: underline;
+}
+.service-card p{
+  line-height: 1.8;
+  font-size: 15px;
+  color: #646464;
+  transition: all 0.2s ease;
+}
+.service-card:hover {
+  margin-top: -5px;
+  background-color: #0A8FDC;
+  color: #ffffff;
+}
+.service-card:hover p{
+color: #ffffff;
+}
+.service-card:hover .card-avatar{
+  background-color: #ffffff !important;
+  color: #0A8FDC;
+}
+
+
+
+.service-card2 {
+  background-color: #fff;
+  padding: 30px;
+  height: 220px;
+  box-shadow: 0 0px 10px 1px rgba(0, 0, 0, 0.03);
+  transition: all 0.5s ease;
+  display: flex;
+  align-items: start;
+}
+.service-card2:hover{
+  margin-top: -5px;
+
+}
+.service-card2 .avatar2{
+  box-sizing: border-box;
+  width: 65px !important; 
+  height: 65px;
+  border-radius: 50%;
+  background: #f7fafd;
+  color: #0A8FDC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.service-card2:hover .avatar2{
+  color: #ffffff;
+  background-color: #0A8FDC;
+}
+
+.service-card2 h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.service-card2 p{
+  line-height: 1.8;
+  font-size: 15px;
+  color: #646464;
+  transition: all 0.2s ease;
+  width: 260px;
+}

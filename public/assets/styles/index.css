@@ -1,6 +1,8 @@
 @import 'base.css';
+@import "auction.css";
 
 img {
   width: 100%;
   height: auto;
 }
+
