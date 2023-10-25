@@ -90,7 +90,7 @@ export default function AuctionSoftware() {
             <h3>Complete Online Auction Solution customized as per your needs and requirements!</h3>
           </div>
         </div>
-        <Container style={{ maxWidth: '1320px' }}>
+        <Container style={{ maxWidth: '1320px', }} sx={{ px: 3 }}>
           <div style={{ paddingTop: '5rem', paddingBottom: '3rem' }}>
             <img
               width='100%'
@@ -103,22 +103,22 @@ export default function AuctionSoftware() {
           >
             <div>
               <h4 style={{ paddingBottom: '10px', fontSize: '17px' }}>Admin Demo Credentials</h4>
-              <div style={{ opacity: 0.7, fontSize: '16px' }}>
+              <div className='font-inter' style={{ opacity: 0.7, fontSize: '16px' }}>
                 <b>Username</b> : demo
               </div>
-              <div style={{ opacity: 0.7, fontSize: '16px' }}>
+              <div className='font-inter' style={{ opacity: 0.7, fontSize: '16px' }}>
                 <b>Password</b> : password
               </div>
             </div>
 
             <div>
               <h4 style={{ paddingBottom: '10px', fontSize: '17px' }}>Customer Demo</h4>
-              <div style={{ opacity: 0.7, fontSize: '16px' }}>Just create a new customer account</div>
+              <div className='font-inter' style={{ opacity: 0.7, fontSize: '16px' }}>Just create a new customer account</div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
               <a
                 href="https://auction.peaceglobaltech.com/"
-                className="auction-preview-button"
+                className="auction-preview-button font-inter"
                 target="_blank"
               >
                 Live Preview
@@ -127,14 +127,13 @@ export default function AuctionSoftware() {
           </div>
           <div style={{ paddingTop: '40px', paddingBottom: '20px' }}>
             <h2>Your Customized Online Auction Software</h2>
-            <p style={{ paddingTop: '10px', opacity: 0.8, fontSize: '16px' }}>Run your customized online auction software for any standard industry customized as per your needs.</p>
+            <p className='font-inter' style={{ paddingTop: '10px', opacity: 0.8, fontSize: '16px' }}>Run your customized online auction software for any standard industry customized as per your needs.</p>
           </div>
           <div class="service-container">
             {services.map((service, index) => {
               return <div
                 key={index}
                 className="service-card"
-              // onClick={() => router.push("/auction-software/network")}
               >
                 <div className='card-avatar' style={{ background: service.color }}>
                   {service.icon}
@@ -142,7 +141,7 @@ export default function AuctionSoftware() {
                 <h3 style={{ fontWeight: 600 }}>
                   {service.title}
                 </h3>
-                <p>
+                <p className='font-inter' >
                   {service.description}
                 </p>
               </div>
@@ -154,10 +153,12 @@ export default function AuctionSoftware() {
             <div className='service-container'>
               {services2.map((service, index) => {
                 return <div key={index} className='service-card2'>
-                  <div className='avatar2'>{service.icon}</div>
-                  <div style={{ paddingLeft: '20px' }}>
+                  <div>
+                    <div className='avatar2'>{service.icon}</div>
+                  </div>
+                  <div>
                     <h3>{service.title}</h3>
-                    <p >{service.description}</p>
+                    <p className='font-inter'>{service.description}</p>
                   </div>
                 </div>
               })}
@@ -165,6 +166,13 @@ export default function AuctionSoftware() {
           </div>
 
         </Container>
+        <div className='contact-section'>
+          <div className='content'>
+            <p>So what is next?</p>
+            <h3>Are You Ready? Let's get to work!</h3>
+            <button onClick={() => { router.push('/contact-us') }}>Contact US</button>
+          </div>
+        </div>
       </div>
     </>
   );

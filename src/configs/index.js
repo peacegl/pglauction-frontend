@@ -1,8 +1,8 @@
-import {appIntl} from '@crema/utility/helper/Utils';
+import { appIntl } from '@crema/utility/helper/Utils';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {useRef} from 'react';
-import {useEffect} from 'react';
+import { useRef } from 'react';
+import { useEffect } from 'react';
 
 const merge = (a, b, p) =>
   a.filter((aa) => !b.find((bb) => aa[p] === bb[p])).concat(b);
@@ -25,7 +25,7 @@ export async function getData(
 ) {
   try {
     loading(true);
-    const res = await jwtAxios.get(url, {params: content});
+    const res = await jwtAxios.get(url, { params: content });
     if (res.status === 200 && res.data.result) {
       setData(res.data.data);
       if (setExtra) setExtra(res.data);
@@ -47,7 +47,7 @@ export function dataURLtoFile(dataurl, filename) {
     u8arr[n] = bstr.charCodeAt(n);
   }
 
-  return new File([u8arr], filename, {type: mime});
+  return new File([u8arr], filename, { type: mime });
 }
 
 // Create our number formatter.
@@ -128,13 +128,13 @@ export let webPages = [
   {
     key: 1,
     title: <IntlMessages id='website.home' />,
-    link: '/home',
+    link: '/',
     target: '_self',
   },
   {
     key: 2,
     title: <IntlMessages id='website.allVehicles' />,
-    link: '/',
+    link: '/vehicles',
     target: '_self',
   },
   {

@@ -6,11 +6,11 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import VehicleSearchBar from './VehicleSearchBar';
 import TiktokIcon from 'assets/icon/tiktok.png';
 import MenuIcon from '@mui/icons-material/Menu';
-import {setVehicleSearch} from 'redux/actions';
+import { setVehicleSearch } from 'redux/actions';
 import logoImage from 'assets/united_logo.png';
-import {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {useRouter} from 'next/router';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import {
@@ -34,7 +34,7 @@ function Header(props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [open, setOpen] = useState(true);
   const [active, setActive] = useState(true);
-  const {make} = router.query;
+  const { make } = router.query;
 
   useEffect(() => {
     props.pages.forEach((item, index) => {
@@ -66,15 +66,15 @@ function Header(props) {
 
   const listMenu = (
     <Box
-      sx={{width: 250}}
+      sx={{ width: 250 }}
       role='presentation'
-      // onKeyDown={toggleDrawer(false)}
+    // onKeyDown={toggleDrawer(false)}
     >
       <List>
         {props.pages.map((item, index) => (
           <ListItem key={index} disablePadding>
             {item.children ? (
-              <Box sx={{width: '100%'}}>
+              <Box sx={{ width: '100%' }}>
                 <ListItemButton onClick={handleClick}>
                   {/* <ListItemIcon>
                     <InboxIcon />
@@ -109,7 +109,7 @@ function Header(props) {
                         <ListItemIcon>{child.icon}</ListItemIcon>
                         <ListItemText
                           primary={child.title}
-                          sx={{color: (theme) => theme.palette.text.primary}}
+                          sx={{ color: (theme) => theme.palette.text.primary }}
                         />
                       </ListItemButton>
                     ))}
@@ -165,7 +165,7 @@ function Header(props) {
         width: '100%',
         backgroundColor: 'white',
       }}
-      sx={{height: {xs: '70px', md: '80px'}}}
+      sx={{ height: { xs: '70px', md: '80px' } }}
     >
       <Container maxWidth='xl'>
         <Box
@@ -176,9 +176,9 @@ function Header(props) {
           columnGap='20px'
         >
           <Box
-            onClick={() => router.push('/home')}
+            onClick={() => router.push('/')}
             sx={{
-              '&:hover': {cursor: 'pointer'},
+              '&:hover': { cursor: 'pointer' },
               color: (theme) => theme.palette.text.primary,
             }}
             fontWeight='bold'
@@ -189,7 +189,7 @@ function Header(props) {
             <Box
               component='img'
               sx={{
-                width: {xs: '30px', md: '40px', lg: '60px', xl: '80px'},
+                width: { xs: '30px', md: '40px', lg: '60px', xl: '80px' },
                 marginRight: 10,
               }}
               alt='united logo'
@@ -198,8 +198,8 @@ function Header(props) {
             <Typography
               component='h1'
               sx={{
-                display: {xs: 'none', sm: 'inline'},
-                fontSize: {xs: '17px', lg: '22px'},
+                display: { xs: 'none', sm: 'inline' },
+                fontSize: { xs: '17px', lg: '22px' },
                 fontWeight: 'bold',
               }}
             >
@@ -207,7 +207,7 @@ function Header(props) {
             </Typography>
           </Box>
 
-          <Box sx={{display: {xs: 'none', md: 'flex'}}}>
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <VehicleSearchBar
               placeholder='Search Inventory By Make, Model, Vin, and More...'
               onEnter={onSearch}
@@ -218,7 +218,7 @@ function Header(props) {
             display='flex'
             justifyContent='space-between'
             alignItems='center'
-            sx={{columnGap: {xs: '2px', sm: '5px', md: '8px'}}}
+            sx={{ columnGap: { xs: '2px', sm: '5px', md: '8px' } }}
             zIndex='2'
           >
             <Link
@@ -273,13 +273,13 @@ function Header(props) {
             justifyContent='space-between'
             alignItems='center'
             sx={{
-              columnGap: {xs: '2px', sm: '5px', md: '8px'},
-              display: {xs: 'block', md: 'none'},
+              columnGap: { xs: '2px', sm: '5px', md: '8px' },
+              display: { xs: 'block', md: 'none' },
             }}
             zIndex='2'
           >
             <IconButton
-              sx={{color: (theme) => theme.palette.text.primary}}
+              sx={{ color: (theme) => theme.palette.text.primary }}
               onClick={toggleDrawer(true)}
             >
               <MenuIcon />
