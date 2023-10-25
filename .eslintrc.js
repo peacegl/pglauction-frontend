@@ -3,7 +3,12 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ['plugin:react/recommended'],
+  // extends: ['plugin:react/recommended'],
+  "extends": "next",
+  "rules": {
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-page-custom-font": "off"
+  },
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
