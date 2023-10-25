@@ -119,9 +119,8 @@ export default function AuctionSoftware() {
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
               <a
-                href="https://auction.peaceglobaltech.com/"
+                onClick={() => router.push('/signin')}
                 className="auction-preview-button font-inter"
-                target="_blank"
               >
                 Live Preview
               </a>
