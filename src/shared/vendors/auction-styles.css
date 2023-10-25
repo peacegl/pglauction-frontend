@@ -9,7 +9,8 @@
 .landing{
   height: 48vh;
   width: 100%;
-  background-image: url('../../../public/assets/images/auction-software/demo-image.jpg');
+  /* ../../public/assets/images/auction-software/demo-image.jpg */
+  background-image: url('../../assets/auction-software/demo-image.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -160,7 +161,7 @@ color: #ffffff;
 }
 .contact-section{
   margin-top: 20px;
-  background-image: url('../../../public/assets/images/auction-software/cta-bg.webp');
+  background-image: url('../../assets/auction-software/cta-bg.webp');
     background-position: center center;
     background-size: cover;
     text-align: center;
