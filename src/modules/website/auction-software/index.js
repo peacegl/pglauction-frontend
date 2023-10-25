@@ -1,6 +1,8 @@
 
 import { Container } from '@mui/material';
-
+import auctionImage from 'assets/auction-software/auctionPageImage.webp';
+import contentBackgroundImg from 'assets/auction-software/cta-bg.webp';
+import landingImage from 'assets/auction-software/demo-image.jpg'
 import { useRouter } from 'next/router';
 export default function AuctionSoftware() {
   const router = useRouter();
@@ -82,7 +84,7 @@ export default function AuctionSoftware() {
     <>
       <div className='auction-software-wrapper'>
 
-        <div className='landing'>
+        <div className='landing' style={{ backgroundImage: `url('${landingImage.src}')` }}>
           <div className='layer'>
             <h1>
               PGT Auction Software Enterprise
@@ -94,7 +96,7 @@ export default function AuctionSoftware() {
           <div style={{ paddingTop: '5rem', paddingBottom: '3rem' }}>
             <img
               width='100%'
-              src={'/assets/images/auction-software/auctionPageImage.webp'}
+              src={auctionImage.src}
               alt="pgtsoftware auction image"
             />
           </div>
@@ -166,14 +168,14 @@ export default function AuctionSoftware() {
           </div>
 
         </Container>
-        <div className='contact-section'>
+        <div className='contact-section' style={{ backgroundImage: `url(${contentBackgroundImg.src})` }}>
           <div className='content'>
             <p>So what is next?</p>
             <h3>Are You Ready? Let's get to work!</h3>
             <button onClick={() => { router.push('/contact-us') }}>Contact US</button>
           </div>
         </div>
-      </div>
+      </div >
     </>
   );
 }
