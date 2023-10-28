@@ -1,24 +1,24 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
-import {Checkbox} from '@mui/material';
-import {Form, Formik} from 'formik';
+import { Checkbox } from '@mui/material';
+import { Form, Formik } from 'formik';
 import GoogleIcon from '@mui/icons-material/Google';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import * as yup from 'yup';
 import IntlMessages from '../../../@crema/utility/IntlMessages';
-import {useIntl} from 'react-intl';
+import { useIntl } from 'react-intl';
 import Box from '@mui/material/Box';
-import {grey} from '@mui/material/colors';
-import {Fonts} from '../../../shared/constants/AppEnums';
+import { grey } from '@mui/material/colors';
+import { Fonts } from '../../../shared/constants/AppEnums';
 import AppAnimate from '../../../@crema/core/AppAnimate';
 import AppTextField from '../../../@crema/core/AppFormComponents/AppTextField';
-import {useAuthMethod} from '@crema/utility/AuthHooks';
-import {useRouter} from 'next/router';
-import {LoadingButton} from '@mui/lab';
+import { useAuthMethod } from '@crema/utility/AuthHooks';
+import { useRouter } from 'next/router';
+import { LoadingButton } from '@mui/lab';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import {InputAdornment, IconButton} from '@mui/material';
+import { InputAdornment, IconButton } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import AppLogo from '@crema/core/AppLayout/components/AppLogo';
 import CloseIcon from '@mui/icons-material/Close';
@@ -36,11 +36,11 @@ const validationSchema = yup.object({
 
 const Signin = (props) => {
   const history = useRouter();
-  const {signInUser} = useAuthMethod();
+  const { signInUser } = useAuthMethod();
   const onGoToForgetPassword = () => {
     history.push('/forget-password');
   };
-  const {messages} = useIntl();
+  const { messages } = useIntl();
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => {
@@ -69,21 +69,21 @@ const Signin = (props) => {
           <IconButton
             aria-label='close'
             onClick={props.toggleOpen}
-            sx={{float: 'right', display: 'flex'}}
+            sx={{ float: 'right', display: 'flex' }}
           >
-            <CloseIcon sx={{fontSize: 18}} />
+            <CloseIcon sx={{ fontSize: 18 }} />
           </IconButton>
         )}
-        <Box sx={{padding: 8}}>
+        <Box sx={{ padding: 8 }}>
           <Box
             sx={{
-              mb: {xs: 3, xl: 4},
+              mb: { xs: 3, xl: 4 },
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
             }}
           >
-            <Box sx={{mr: 2}}>
+            <Box sx={{ mr: 2 }}>
               <AppLogo />
             </Box>
             <Box
@@ -96,6 +96,11 @@ const Signin = (props) => {
               <IntlMessages id='common.login' />
             </Box>
           </Box>
+          <Box sx={{ textAlign: 'start', pb: 1 }}>
+            <p >Demo Account:</p>
+            <p>username: <span style={{ opacity: 0.7 }}>demo</span></p>
+            <p>password: <span style={{ opacity: 0.7 }}>password</span></p>
+          </Box>
 
           <Formik
             validateOnChange={true}
@@ -104,7 +109,7 @@ const Signin = (props) => {
               password: '',
             }}
             validationSchema={validationSchema}
-            onSubmit={async (data, {setSubmitting}) => {
+            onSubmit={async (data, { setSubmitting }) => {
               setSubmitting(true);
               await signInUser({
                 email_or_username: data.email_or_username,
@@ -114,7 +119,7 @@ const Signin = (props) => {
               if (props.toggleOpen) props.toggleOpen();
             }}
           >
-            {({isSubmitting}) => (
+            {({ isSubmitting }) => (
               <Form
                 sx={{
                   textAlign: 'left',
@@ -124,7 +129,7 @@ const Signin = (props) => {
               >
                 <Box
                   sx={{
-                    mb: {xs: 3, xl: 4},
+                    mb: { xs: 3, xl: 4 },
                   }}
                 >
                   <AppTextField
@@ -141,7 +146,7 @@ const Signin = (props) => {
 
                 <Box
                   sx={{
-                    mb: {xs: 3, xl: 4},
+                    mb: { xs: 3, xl: 4 },
                   }}
                 >
                   <AppTextField
@@ -172,10 +177,10 @@ const Signin = (props) => {
 
                 <Box
                   sx={{
-                    mb: {xs: 3, xl: 4},
+                    mb: { xs: 3, xl: 4 },
                     display: 'flex',
-                    flexDirection: {xs: 'column', sm: 'row'},
-                    alignItems: {sm: 'center'},
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    alignItems: { sm: 'center' },
                   }}
                 >
                   {/* <Box
@@ -201,7 +206,7 @@ const Signin = (props) => {
                     sx={{
                       // ml: {sm: 'auto'},
                       color: 'primary.main',
-                      mt: {xs: 2, sm: 0},
+                      mt: { xs: 2, sm: 0 },
                       fontWeight: Fonts.BOLD,
                       fontSize: 14,
                       cursor: 'pointer',
@@ -274,7 +279,7 @@ const Signin = (props) => {
 
           <Box
             sx={{
-              mt: {xs: 3, xl: 4},
+              mt: { xs: 3, xl: 4 },
               color: grey[700],
               fontSize: 14,
               fontWeight: Fonts.BOLD,
