@@ -60,7 +60,7 @@ function Header(props) {
   };
 
   const onSearch = (value) => {
-    // router.push(make ? `/?make=${make}` : '/');
+    router.push(make ? `/vehicles?make=${make}` : '/');
     dispatch(setVehicleSearch(value));
   };
 

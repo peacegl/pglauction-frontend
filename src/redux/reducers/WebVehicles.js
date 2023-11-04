@@ -21,7 +21,7 @@ import {
   DELETE_REAL_TIME_VEHICLE,
 } from '../../shared/constants/ActionTypes';
 
-export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
+export const VIEW_TYPE = Object.freeze({ LIST: 1, GRID: 2 });
 const initialState = {
   vehiclesData: {},
   itemsLoading: false,

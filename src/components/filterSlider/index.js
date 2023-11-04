@@ -1,13 +1,13 @@
 import IntlMessages from '@crema/utility/IntlMessages';
-import {Box, Button, Typography} from '@mui/material';
-import {useDispatch, useSelector} from 'react-redux';
-import {setWebVehiclesFilter} from 'redux/actions';
+import { Box, Button, Typography } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { setWebVehiclesFilter } from 'redux/actions';
 import FilterComponents from './FilterComponents';
-import {useState} from 'react';
+import { useState } from 'react';
 
 const AuctionsSidebar = () => {
   const dispatch = useDispatch();
-  const filterData = useSelector(({webVehicles}) => webVehicles.filterData);
+  const filterData = useSelector(({ webVehicles }) => webVehicles.filterData);
   const [resetAll, setResetAll] = useState(false);
   const onResetAll = () => {
     setResetAll(true);
@@ -20,7 +20,6 @@ const AuctionsSidebar = () => {
         'between@@price': [0, 100000],
         'between@@odometer': [0, 250000],
         'between@@year': [1995, new Date().getFullYear()],
-        make: [],
         model: [],
         make: [],
         engine_type: [],
@@ -53,7 +52,7 @@ const AuctionsSidebar = () => {
       >
         <Typography
           component='h3'
-          sx={{fontSize: '18px', fontWeight: '500'}}
+          sx={{ fontSize: '18px', fontWeight: '500' }}
           color='primary'
         >
           <IntlMessages id='common.apply_filters' />

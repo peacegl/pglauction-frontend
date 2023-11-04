@@ -4,7 +4,7 @@ import LandRover from 'assets/vehicle_logos/land_rover.webp';
 import Chevrolet from 'assets/vehicle_logos/chevrolet.webp';
 import Hyundai from 'assets/vehicle_logos/hyundai.webp';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {Box, Divider, Paper, Typography} from '@mui/material';
+import { Box, Divider, Paper, Typography } from '@mui/material';
 import Toyota from 'assets/vehicle_logos/toyota.webp';
 import Nissan from 'assets/vehicle_logos/nissan.webp';
 import Honda from 'assets/vehicle_logos/honda.webp';
@@ -18,11 +18,11 @@ import Ford from 'assets/vehicle_logos/ford.webp';
 import BMW from 'assets/vehicle_logos/bmw.webp';
 import GMC from 'assets/vehicle_logos/gmc.webp';
 import Kia from 'assets/vehicle_logos/kia.webp';
-import {setBrandFilter} from 'redux/actions';
+import { setBrandFilter } from 'redux/actions';
 import Title from 'components/design/Title';
-import {ButtonBase} from '@mui/material';
-import {useDispatch} from 'react-redux';
-import {useRouter} from 'next/router';
+import { ButtonBase } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 
 const PopularBrandsList = (props) => {
@@ -129,7 +129,7 @@ const PopularBrandsList = (props) => {
     // },
   ];
   return (
-    <Box sx={{my: props.small ? 5 : 8}}>
+    <Box sx={{ my: props.small ? 5 : 8 }}>
       {props.small ? (
         <Box
           sx={{
@@ -177,9 +177,9 @@ const PopularBrandsList = (props) => {
         {popularBrands.map((brand, index) => (
           <ButtonBase
             key={index}
-            sx={{mx: 2, my: props.small ? 1 : 2}}
+            sx={{ mx: 2, my: props.small ? 1 : 2 }}
             onClick={() => {
-              router.push(`/?make=${brand.name}`);
+              router.push(`/vehicles?make=${brand.name}`);
               filterBrand(brand.name);
             }}
           >
@@ -208,9 +208,9 @@ const PopularBrandsList = (props) => {
                   width={props.small ? 50 : 70}
                 ></Box>
               </Box>
-              <Typography sx={{textAlign: 'center', px: 1}}>
+              <Typography sx={{ textAlign: 'center', px: 1 }}>
                 <IntlMessages id='website.inStock' />{' '}
-                <Typography component='p' sx={{fontWeight: 'bold'}}>
+                <Typography component='p' sx={{ fontWeight: 'bold' }}>
                   {props.popularBrandsCount[brand.name]}
                 </Typography>
               </Typography>

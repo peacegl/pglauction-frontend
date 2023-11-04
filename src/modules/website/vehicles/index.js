@@ -1,11 +1,11 @@
 import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
-import {Box, Button, Card, Container, Drawer, Hidden} from '@mui/material';
+import { Box, Button, Card, Container, Drawer, Hidden } from '@mui/material';
 import AuctionsSidebar from 'components/filterSlider';
-import {onCountPopularBrands} from 'redux/actions';
-import {useState, useEffect} from 'react';
+import { onCountPopularBrands } from 'redux/actions';
+import { useState, useEffect } from 'react';
 import VehicleList from './VehicleList';
-import {useSelector} from 'react-redux';
-import {useDispatch} from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import IntlMessages from '@crema/utility/IntlMessages';
 
@@ -13,7 +13,7 @@ const Vehicles = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const dispatch = useDispatch();
   const popularBrandsCount = useSelector(
-    ({webVehicles}) => webVehicles.popularBrandsCount,
+    ({ webVehicles }) => webVehicles.popularBrandsCount,
   );
   useEffect(() => {
     (async function () {
@@ -24,10 +24,10 @@ const Vehicles = () => {
   return (
     <>
       <PopularBrandsList popularBrandsCount={popularBrandsCount} small />
-      <Container maxWidth='xl' sx={{mt: 6}}>
+      <Container maxWidth='xl' sx={{ mt: 6 }}>
         <Hidden mdUp>
           <Button
-            sx={{mx: 3}}
+            sx={{ mx: 3 }}
             variant='outlined'
             startIcon={<FilterListIcon />}
             aria-label='open filter'
@@ -45,7 +45,7 @@ const Vehicles = () => {
           <Box
             sx={{
               flex: 1,
-              display: {xs: 'none', md: 'block'},
+              display: { xs: 'none', md: 'block' },
             }}
           >
             <Card
@@ -59,7 +59,7 @@ const Vehicles = () => {
           </Box>
           <Box
             sx={{
-              flex: {xs: 1, md: 2, lg: 3, xl: 3},
+              flex: { xs: 1, md: 2, lg: 3, xl: 3 },
             }}
           >
             <VehicleList />
@@ -71,7 +71,7 @@ const Vehicles = () => {
         open={openDrawer}
         onClose={() => setOpenDrawer(false)}
       >
-        <Box sx={{width: {xs: '80vw', sm: '60vw'}}}>
+        <Box sx={{ width: { xs: '80vw', sm: '60vw' } }}>
           <AuctionsSidebar />
         </Box>
       </Drawer>
