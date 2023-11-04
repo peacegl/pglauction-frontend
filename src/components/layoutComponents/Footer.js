@@ -2,9 +2,9 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import logoImage from '../../assets/united_logo.png';
-import {useRouter} from 'next/router';
-import {useTheme} from '@mui/styles';
-import {webPages} from 'configs';
+import { useRouter } from 'next/router';
+import { useTheme } from '@mui/styles';
+import { webPages } from 'configs';
 import Link from 'next/link';
 import {
   Box,
@@ -48,14 +48,14 @@ export default function Footer() {
     >
       <Box
         sx={{
-          py: {xs: 10, sm: 15},
+          py: { xs: 10, sm: 15 },
         }}
       >
         <Container maxWidth='xl'>
           <Stack
-            direction={{xs: 'column', md: 'row'}}
+            direction={{ xs: 'column', md: 'row' }}
             justifyContent='space-between'
-            alignItems={{xs: 'center', sm: 'start'}}
+            alignItems={{ xs: 'center', sm: 'start' }}
             color={theme.palette.text.secondary}
           >
             {/* <Box
@@ -84,7 +84,7 @@ export default function Footer() {
               sx={{
                 flex: 2,
                 display: 'flex',
-                flexDirection: {xs: 'column', sm: 'row'},
+                flexDirection: { xs: 'column', sm: 'row' },
                 textAlign: 'center',
                 width: '100%',
               }}
@@ -94,7 +94,7 @@ export default function Footer() {
                   flex: 1,
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: {xs: 'center', sm: 'start'},
+                  alignItems: { xs: 'center', sm: 'start' },
                   mb: 5,
                 }}
               >
@@ -110,7 +110,7 @@ export default function Footer() {
                   flex: 1,
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: {xs: 'center', sm: 'start'},
+                  alignItems: { xs: 'center', sm: 'start' },
                   mb: 5,
                 }}
               >
@@ -124,7 +124,7 @@ export default function Footer() {
               <Box
                 sx={{
                   flex: 1.2,
-                  textAlign: {xs: 'center', sm: 'start'},
+                  textAlign: { xs: 'center', sm: 'start' },
                   mb: 5,
                 }}
               >
@@ -135,7 +135,7 @@ export default function Footer() {
                   display='flex'
                   alignItems='center'
                   sx={{
-                    justifyContent: {xs: 'center', sm: 'flex-start'},
+                    justifyContent: { xs: 'center', sm: 'flex-start' },
                   }}
                 >
                   <LocationOnOutlinedIcon />
@@ -145,59 +145,42 @@ export default function Footer() {
                     underline='none'
                     mx='5px'
                   >
-                    Your Company Address
+                    4701 Decker Dr, Baytown TX,USA 77520
                   </Typography>
                 </Box>
                 <Box
                   marginBottom='10px'
                   display='flex'
                   alignItems='center'
-                  sx={{justifyContent: {xs: 'center', sm: 'flex-start'}}}
+                  sx={{ justifyContent: { xs: 'center', sm: 'flex-start' } }}
                 >
                   <PhoneOutlinedIcon />
                   <MuiLink
                     variant='body2'
                     fontSize='14px'
                     underline='none'
-                    href='tel:+900 00 000 0000'
+                    href='tel:+18438138685'
                     mx='5px'
                     color={theme.palette.text.secondary}
                   >
-                    +900 00 000 0000
+                    +1(843) 813 8685
                   </MuiLink>
                 </Box>
                 <Box
                   marginBottom='10px'
                   display='flex'
-                  sx={{justifyContent: {xs: 'center', sm: 'flex-start'}}}
+                  sx={{ justifyContent: { xs: 'center', sm: 'flex-start' } }}
                 >
                   <EmailOutlinedIcon />
                   <MuiLink
                     variant='body2'
                     fontSize='14px'
                     underline='none'
-                    href='mailto:Email@email.com'
+                    href='mailto:support@peaceglobaltech.com'
                     mx='5px'
                     color={theme.palette.text.secondary}
                   >
-                    Email@email.com
-                  </MuiLink>
-                </Box>
-                <Box
-                  marginBottom='10px'
-                  display='flex'
-                  sx={{justifyContent: {xs: 'center', sm: 'flex-start'}}}
-                >
-                  <EmailOutlinedIcon />
-                  <MuiLink
-                    variant='body2'
-                    fontSize='14px'
-                    underline='none'
-                    href='mailto:Email@email.com'
-                    mx='5px'
-                    color={theme.palette.text.secondary}
-                  >
-                    Email@email.com
+                    support@peaceglobaltech.com
                   </MuiLink>
                 </Box>
               </Box>

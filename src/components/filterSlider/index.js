@@ -1,7 +1,7 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import { Box, Button, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { setWebVehiclesFilter } from 'redux/actions';
+import { setBrandFilter, setWebVehiclesFilter } from 'redux/actions';
 import FilterComponents from './FilterComponents';
 import { useState } from 'react';
 
@@ -11,6 +11,7 @@ const AuctionsSidebar = () => {
   const [resetAll, setResetAll] = useState(false);
   const onResetAll = () => {
     setResetAll(true);
+    dispatch(setBrandFilter({}))
     dispatch(
       setWebVehiclesFilter({
         newly_added: {
