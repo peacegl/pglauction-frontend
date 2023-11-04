@@ -1,12 +1,12 @@
-import {Box, IconButton, Button, alpha} from '@mui/material';
-import {Carousel} from 'react-responsive-carousel';
+import { Box, IconButton, Button, alpha } from '@mui/material';
+import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import {useTheme} from '@mui/material';
+import { useTheme } from '@mui/material';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {useRouter} from 'next/router';
-import {EastRounded} from '@mui/icons-material';
+import { useRouter } from 'next/router';
+import { EastRounded } from '@mui/icons-material';
 
 // imports all images from assets folder
 const importAll = (r) =>
@@ -41,7 +41,7 @@ const CarouselBanur = () => {
             color: theme.palette.primary.main,
             backgroundColor: theme.palette.primary.contrastText,
             opacity: 0.3,
-            padding: {xs: '0', md: '3px', lg: '5px'},
+            padding: { xs: '0', md: '3px', lg: '5px' },
             zIndex: '10',
             '&:hover': {
               color: theme.palette.primary.main,
@@ -50,7 +50,7 @@ const CarouselBanur = () => {
             },
           }}
         >
-          <NavigateBeforeIcon sx={{fontSize: 40}} />
+          <NavigateBeforeIcon sx={{ fontSize: 40 }} />
         </IconButton>
       )}
       renderArrowNext={(onClickHandler, hasNext, label) => (
@@ -63,7 +63,7 @@ const CarouselBanur = () => {
             color: theme.palette.primary.main,
             backgroundColor: theme.palette.primary.contrastText,
             opacity: 0.3,
-            padding: {xs: '0', md: '3px', lg: '5px'},
+            padding: { xs: '0', md: '3px', lg: '5px' },
             zIndex: '10',
             '&:hover': {
               color: theme.palette.primary.main,
@@ -72,14 +72,14 @@ const CarouselBanur = () => {
             },
           }}
         >
-          <NavigateNextIcon sx={{fontSize: 40}} />
+          <NavigateNextIcon sx={{ fontSize: 40 }} />
         </IconButton>
       )}
     >
       {Object.values(textureImports).map((texture, index) => (
         <Box
           key={`carousel-image-${index}`}
-          sx={{height: {xs: '300px', sm: '400px', md: '600px', lg: '700px'}}}
+          sx={{ height: { xs: '300px', sm: '400px', md: '600px', lg: '700px' } }}
         >
           <img
             src={texture.default.src}
@@ -128,7 +128,7 @@ const CarouselBanur = () => {
                     color: theme.palette.primary.main,
                   },
                 }}
-                onClick={() => router.push('/')}
+                onClick={() => router.push('/vehicles')}
               >
                 <IntlMessages id='website.allVehicles' />
               </Button>

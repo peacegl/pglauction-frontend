@@ -4,16 +4,16 @@ import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
 import SecondCustomCarousel from 'components/SecondCustomCarousel';
 import HighQualityIcon from '@mui/icons-material/HighQuality';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import {green, deepOrange, blue} from '@mui/material/colors';
+import { green, deepOrange, blue } from '@mui/material/colors';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomCarousel from 'components/CustomCarousel';
 import Container from '@mui/material/Container';
-import {Box, Paper, Typography} from '@mui/material';
+import { Box, Paper, Typography } from '@mui/material';
 import CarouselBanur from './CarouselBanur';
-import {styled} from '@mui/material/styles';
-import {useEffect, useState} from 'react';
+import { styled } from '@mui/material/styles';
+import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import {
   onCountPopularBrands,
@@ -21,7 +21,7 @@ import {
   onGetRecentlyAddedVehicles,
 } from 'redux/actions';
 
-const ColorButton = styled(Button)(({theme}) => ({
+const ColorButton = styled(Button)(({ theme }) => ({
   color: (theme) => theme.palette.primary.contrastText('success'),
   backgroundColor: '#128C7E',
   '&:hover': {
@@ -30,7 +30,7 @@ const ColorButton = styled(Button)(({theme}) => ({
 }));
 const contents = [
   {
-    icon: <EmojiEventsIcon sx={{fontSize: 35}} />,
+    icon: <EmojiEventsIcon sx={{ fontSize: 35 }} />,
     title: 'Est cillum reprehenderit aliquip.',
     color: deepOrange[500],
     bgcolor: deepOrange[100],
@@ -46,7 +46,7 @@ const contents = [
     ),
   },
   {
-    icon: <AdminPanelSettingsIcon sx={{fontSize: 35}} />,
+    icon: <AdminPanelSettingsIcon sx={{ fontSize: 35 }} />,
     title: 'Est cillum reprehenderit aliquip.',
     color: (theme) => theme.palette.success.main,
     bgcolor: green[100],
@@ -61,7 +61,7 @@ const contents = [
     ),
   },
   {
-    icon: <HighQualityIcon sx={{fontSize: 35}} />,
+    icon: <HighQualityIcon sx={{ fontSize: 35 }} />,
     title: 'Est cillum reprehenderit aliquip.',
     color: (theme) => theme.palette.info.main,
     bgcolor: blue[100],
@@ -79,13 +79,13 @@ const contents = [
 
 export default function Home() {
   const featuredVehicles = useSelector(
-    ({webVehicles}) => webVehicles.featuredVehicles,
+    ({ webVehicles }) => webVehicles.featuredVehicles,
   );
   const recentlyAddedVehicles = useSelector(
-    ({webVehicles}) => webVehicles.recentlyAddedVehicles,
+    ({ webVehicles }) => webVehicles.recentlyAddedVehicles,
   );
   const popularBrandsCount = useSelector(
-    ({webVehicles}) => webVehicles.popularBrandsCount,
+    ({ webVehicles }) => webVehicles.popularBrandsCount,
   );
 
   const dispatch = useDispatch();
@@ -102,7 +102,7 @@ export default function Home() {
   return (
     <>
       <CarouselBanur></CarouselBanur>
-      <Container maxWidth='xl' sx={{mt: 12}}>
+      <Container maxWidth='xl' sx={{ mt: 12 }}>
         {featuredVehicles.length > 0 && (
           <CustomCarousel
             title={<IntlMessages id='vehicle.featuredVehicles' />}
