@@ -4,14 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setBrandFilter, setWebVehiclesFilter } from 'redux/actions';
 import FilterComponents from './FilterComponents';
 import { useState } from 'react';
-
+import { useRouter } from 'next/router';
 const AuctionsSidebar = () => {
   const dispatch = useDispatch();
   const filterData = useSelector(({ webVehicles }) => webVehicles.filterData);
   const [resetAll, setResetAll] = useState(false);
+  const router = useRouter();
   const onResetAll = () => {
+    if (router.query.make !== undefined) {
+      router.query = {};
+    }
+
     setResetAll(true);
-    dispatch(setBrandFilter({}))
     dispatch(
       setWebVehiclesFilter({
         newly_added: {
