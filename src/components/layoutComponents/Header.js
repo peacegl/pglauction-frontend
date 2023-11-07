@@ -203,7 +203,7 @@ function Header(props) {
                 fontWeight: 'bold',
               }}
             >
-              Your Company Name
+              Motor Leads
             </Typography>
           </Box>
 
