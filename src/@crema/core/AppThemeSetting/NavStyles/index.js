@@ -34,7 +34,7 @@ const NavStyles = () => {
           mx: -1.25,
         }}
       >
-        {navStyles.map((navLayout) => {
+        {navStyles?.map((navLayout) => {
           return (
             <Box
               sx={{
