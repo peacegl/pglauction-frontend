@@ -55,12 +55,6 @@ const departments = [
         content: '+183 27809429',
         url: 'https://wa.me/+18327809429',
       },
-      // {
-      //   icon: (
-      //     <PersonIcon sx={{color: (theme) => theme.palette.success.main}} />
-      //   ),
-      //   content: 'Samirullah',
-      // },
     ],
   },
 ];
