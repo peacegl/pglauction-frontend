@@ -1,5 +1,5 @@
 import React from 'react';
-import messages from '@crema/services/db/messages';
+// import messages from '@crema/services/db/messages';
 import {Box, IconButton} from '@mui/material';
 import MessageItem from './MessageItem';
 import List from '@mui/material/List';
@@ -11,6 +11,8 @@ import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 
 const AppMessageContent = ({onClose, sxStyle}) => {
+  const messages = [];
+
   return (
     <Box
       sx={{

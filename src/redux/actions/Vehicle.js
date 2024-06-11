@@ -8,9 +8,10 @@ import {
   UPDATE_VEHICLE,
   SHOW_MESSAGE,
   GET_ALL_VEHICLE_LIST,
+  INCREMENT_TOTAL_VEHICLE,
   GET_VEHICLE_VIEW,
-} from '../../shared/constants/ActionTypes';
-import {appIntl} from '../../@crema/utility/helper/Utils';
+} from 'shared/constants/ActionTypes';
+import {appIntl} from '@crema/utility/helper/Utils';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 
 export const onGetVehicleData = (filterData) => {
@@ -44,14 +45,14 @@ export const onGetVehicleView = (id) => {
       .then((data) => {
         if (data.status === 200) {
           dispatch({type: FETCH_SUCCESS});
-          data.data.data.images.forEach((image, index, arr) => {
+          data.data.vehicle.images.forEach((image, index, arr) => {
             if (image.type == 'main_image') {
               arr.unshift(image);
               arr.splice(index + 1, 1);
               return;
             }
           });
-          dispatch({type: GET_VEHICLE_VIEW, payload: data.data.data});
+          dispatch({type: GET_VEHICLE_VIEW, payload: data.data});
         } else {
           dispatch({
             type: FETCH_ERROR,
@@ -214,6 +215,36 @@ export const onSaleVehicle = (data, toggleOpen) => {
         // });
       }
       dispatch({type: FETCH_ERROR, payload: error.message});
+    }
+  };
+};
+
+export const addRealTimeVehicle = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: ADD_NEW_VEHICLE, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const addRealTimeVehicleCount = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: INCREMENT_TOTAL_VEHICLE, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const updateRealTimeVehicle = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: UPDATE_VEHICLE, payload: data});
+    } catch (error) {
+      console.log(error);
     }
   };
 };

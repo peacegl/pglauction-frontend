@@ -3,6 +3,7 @@ import {
   GET_ALL_USERS_LIST,
   ADD_NEW_USER,
   UPDATE_USER,
+  INCREMENT_TOTAL_USER,
 } from 'shared/constants/ActionTypes';
 
 const initialUsers = {
@@ -33,6 +34,14 @@ const usersReducer = (state = initialUsers, action) => {
           data: [action.payload, ...state.userList.data],
         },
       };
+    case INCREMENT_TOTAL_USER:
+      return {
+        ...state,
+        userList: {
+          ...state.userList,
+          total: state.userList.total + 1,
+        },
+      };
     case UPDATE_USER:
       return {
         ...state,
@@ -43,6 +52,7 @@ const usersReducer = (state = initialUsers, action) => {
           ),
         },
       };
+
     default:
       return state;
   }

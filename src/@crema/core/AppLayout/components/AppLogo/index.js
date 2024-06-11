@@ -28,7 +28,7 @@ const AppLogo = () => {
         onClick={() => router.push('/')}
         component='img'
         sx={{
-          width: '130px',
+          width: '50px',
         }}
         alt='united logo'
         src={logoImage.src}

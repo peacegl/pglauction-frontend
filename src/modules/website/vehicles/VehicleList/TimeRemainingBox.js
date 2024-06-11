@@ -42,7 +42,7 @@ const checkRemaining = (diff) => {
   return total_time_spent;
 };
 
-const TimeRemainingBox = ({end_date}) => {
+const TimeRemainingBox = ({end_date, onExpire}) => {
   const [timeRemaining, setTimeRemaining] = useState('');
   const timeDiff = (end) => {
     const date1 = new Date();
@@ -73,4 +73,5 @@ const TimeRemainingBox = ({end_date}) => {
 export default TimeRemainingBox;
 TimeRemainingBox.propTypes = {
   end_date: PropTypes.string.isRequired,
+  onExpire: PropTypes.func,
 };

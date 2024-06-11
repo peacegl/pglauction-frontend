@@ -13,6 +13,8 @@ const ImageMagnifier = ({
   showNext = true,
   onPrev,
   onNext,
+  topCustom,
+  leftCustom,
 }) => {
   const [[x, y], setXY] = useState([0, 0]);
   const [[right, top], setTopRight] = useState([0, 0]);
@@ -140,8 +142,8 @@ const ImageMagnifier = ({
           sx={{
             mx: 2,
             position: 'absolute',
-            top: `${top}px`,
-            left: `${right + 10}px`,
+            top: topCustom ?? `${top}px`,
+            left: leftCustom ?? `${right + 10}px`,
             zIndex: 100,
             display: {xs: 'none', md: showMagnifier ? 'block' : 'none'},
             height: `${imgHeight}px`,
@@ -174,4 +176,6 @@ ImageMagnifier.propTypes = {
   showNext: PropTypes.bool,
   onPrev: PropTypes.func,
   onNext: PropTypes.func,
+  topCustom: PropTypes.string,
+  leftCustom: PropTypes.string,
 };

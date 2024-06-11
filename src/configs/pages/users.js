@@ -56,10 +56,7 @@ export const tableColumns = function (getSingleUser) {
         ),
       },
     },
-    {
-      name: 'str_code',
-      label: messages['common.code'],
-    },
+
     {
       name: 'username',
       label: messages['common.username'],

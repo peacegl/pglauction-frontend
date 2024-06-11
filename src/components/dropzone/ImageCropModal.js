@@ -50,12 +50,13 @@ const ImageCropModal = ({
   const showCroppedImage = useCallback(async () => {
     try {
       setIsLoading(true);
-      const croppedImage = await getCroppedImg(
+      let croppedImage = await getCroppedImg(
         URL.createObjectURL(images[imageIndex]),
         croppedAreaPixels,
         rotation,
         images[imageIndex].name,
       );
+
       if (images.length - 1 == imageIndex) {
         saveImages([...croppedImages, croppedImage]);
         toggleOpen(false);

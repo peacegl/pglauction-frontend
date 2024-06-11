@@ -4,14 +4,17 @@ import {
   SET_VEHICLE_FILTER_DATA,
   ADD_NEW_VEHICLE,
   UPDATE_VEHICLE,
+  INCREMENT_TOTAL_VEHICLE,
   GET_VEHICLE_VIEW,
-} from '../../shared/constants/ActionTypes';
+} from 'shared/constants/ActionTypes';
 
 const initialState = {
   vehiclesData: {},
   vehiclesExportData: {},
   filterData: {},
-  vehicle: {},
+  vehicle: {
+    bidInfo: null,
+  },
 };
 
 const VeihcleReducers = (state = initialState, action) => {
@@ -31,7 +34,10 @@ const VeihcleReducers = (state = initialState, action) => {
     case GET_VEHICLE_VIEW:
       return {
         ...state,
-        vehicle: action.payload,
+        vehicle: {
+          ...action.payload.vehicle,
+          bidInfo: {...action.payload.bidInfo},
+        },
       };
 
     case ADD_NEW_VEHICLE:
@@ -41,6 +47,14 @@ const VeihcleReducers = (state = initialState, action) => {
           ...state.vehiclesData,
           total: state.vehiclesData.total + 1,
           data: [action.payload, ...state.vehiclesData.data],
+        },
+      };
+    case INCREMENT_TOTAL_VEHICLE:
+      return {
+        ...state,
+        vehiclesData: {
+          ...state.vehiclesData,
+          total: state.vehiclesData.total + 1,
         },
       };
     case UPDATE_VEHICLE:

@@ -19,6 +19,7 @@ const AppCard = ({
   footerPosition,
   footerStyle,
   children,
+  actionLink,
   onClick = () => {},
   ...rest
 }) => {
@@ -69,7 +70,7 @@ const AppCard = ({
             ) : (
               <span {...actionStyle}>
                 <Link
-                  href='#'
+                  href={actionLink ?? '#'}
                   underline='none'
                   sx={{
                     fontSize: 14,
@@ -145,6 +146,7 @@ AppCard.propTypes = {
   actionStyle: PropTypes.object,
   children: PropTypes.node,
   onClick: PropTypes.func,
+  actionLink: PropTypes.string,
 };
 
 AppCard.defaultProps = {

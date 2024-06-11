@@ -34,7 +34,6 @@ export default function useAddToWatchList(item, setShowSignInModl) {
       setWatchlistLoading(false);
     } catch (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
-
       setWatchlistLoading(false);
     }
   };

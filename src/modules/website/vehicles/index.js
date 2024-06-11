@@ -1,33 +1,33 @@
 import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
-import {Box, Card, Container, Button, Drawer} from '@mui/material';
+import { Box, Button, Card, Container, Drawer, Hidden } from '@mui/material';
+import AuctionsSidebar from 'components/filterSlider';
+import { onCountPopularBrands } from 'redux/actions';
+import { useState, useEffect } from 'react';
+import VehicleList from './VehicleList';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import IntlMessages from '@crema/utility/IntlMessages';
-import AuctionsSidebar from 'components/filterSlider';
-import {onCountPopularBrands} from 'redux/actions';
-import Hidden from '@mui/material/Hidden';
-import {useState, useEffect} from 'react';
-import VehicleList from './VehicleList';
-import {useSelector} from 'react-redux';
-import {useDispatch} from 'react-redux';
 
 const Vehicles = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const dispatch = useDispatch();
   const popularBrandsCount = useSelector(
-    ({webVehicles}) => webVehicles.popularBrandsCount,
+    ({ webVehicles }) => webVehicles.popularBrandsCount,
   );
   useEffect(() => {
     (async function () {
       await dispatch(onCountPopularBrands());
     })();
   }, []);
+
   return (
     <>
       <PopularBrandsList popularBrandsCount={popularBrandsCount} small />
-      <Container maxWidth='xl' sx={{mt: 6}}>
-        {/* <Hidden mdUp>
+      <Container maxWidth='xl' sx={{ mt: 6 }}>
+        <Hidden mdUp>
           <Button
-            sx={{mx: 3}}
+            sx={{ mx: 3 }}
             variant='outlined'
             startIcon={<FilterListIcon />}
             aria-label='open filter'
@@ -35,17 +35,17 @@ const Vehicles = () => {
           >
             <IntlMessages id='common.filter' />
           </Button>
-        </Hidden> */}
+        </Hidden>
 
         <Box
           sx={{
             display: 'flex',
           }}
         >
-          {/* <Box
+          <Box
             sx={{
               flex: 1,
-              display: {xs: 'none', md: 'block'},
+              display: { xs: 'none', md: 'block' },
             }}
           >
             <Card
@@ -56,10 +56,10 @@ const Vehicles = () => {
             >
               <AuctionsSidebar />
             </Card>
-          </Box> */}
+          </Box>
           <Box
             sx={{
-              flex: {xs: 1, md: 2, lg: 3, xl: 3},
+              flex: { xs: 1, md: 2, lg: 3, xl: 3 },
             }}
           >
             <VehicleList />
@@ -71,7 +71,7 @@ const Vehicles = () => {
         open={openDrawer}
         onClose={() => setOpenDrawer(false)}
       >
-        <Box sx={{width: {xs: '80vw', sm: '60vw'}}}>
+        <Box sx={{ width: { xs: '80vw', sm: '60vw' } }}>
           <AuctionsSidebar />
         </Box>
       </Drawer>

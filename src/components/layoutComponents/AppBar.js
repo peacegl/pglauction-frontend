@@ -55,7 +55,6 @@ function TopMenu(props) {
     router.push(make ? `/?make=${make}` : '/');
     dispatch(setVehicleSearch(value));
   };
-
   const settings = useMemo(() => {
     let sets = [
       {
@@ -130,8 +129,8 @@ function TopMenu(props) {
               display: {xs: 'none', md: 'flex'},
             }}
           >
-            {props.pages.map((page, index) =>
-              page.children ? (
+            {props.pages.map((page, index) => {
+              return page.children ? (
                 <CustomMenu
                   page={page}
                   key={index}
@@ -139,7 +138,15 @@ function TopMenu(props) {
                   active={active}
                 />
               ) : (
-                <Button key={index} sx={{color: 'white', display: 'block'}}>
+                <Button
+                  variant='contained'
+                  key={index}
+                  sx={{
+                    display: 'block',
+                    boxShadow: 0,
+                  }}
+                  color={page.link == router.pathname ? 'inherit' : 'primary'}
+                >
                   <Link
                     href={page.link}
                     target={page.target}
@@ -147,15 +154,16 @@ function TopMenu(props) {
                       display: 'block',
                       width: '100%',
                       height: '100%',
-                      color: 'white',
+                      color:
+                        page.link == router.pathname ? '#0a8fdc' : 'inherit',
                       textDecoration: 'none',
                     }}
                   >
                     {page.title}
                   </Link>
                 </Button>
-              ),
-            )}
+              );
+            })}
           </Box>
           {user ? (
             <Box sx={{flexGrow: 0}}>

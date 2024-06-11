@@ -1,0 +1,268 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Saira:wght@300;400;500;600;700&family=Young+Serif&display=swap');
+.auction-software-wrapper{
+  font-family: "Saira", sans-serif;
+}
+.font-inter {
+  font-family: "Inter", sans-serif;
+
+}
+.landing{
+  height: 48vh;
+  width: 100%;
+  /* ../../public/assets/images/auction-software/demo-image.jpg */
+  /* background-image: url('../../'); */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.landing .layer{
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #fff;
+}
+.layer h1{
+  text-align: center;
+  font-size: 3rem;
+}
+.layer h3{
+  font-size: 1.5rem;
+  text-align: center;
+  
+
+}
+.demo-card{
+  display: flex;
+  background: #fff;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 10px;
+  flex-wrap: wrap
+}
+.auction-preview-button {
+  cursor: pointer;
+  text-decoration: none;
+border: 1px solid #0A8FDC;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 12px 30px;
+color: #ffffff;
+text-transform: capitalize;
+background-color: #0A8FDC;
+transition: 0.5s;
+border-radius: 30px;
+font-size: 14px;
+font-weight: 500;
+white-space:nowrap;
+
+
+}
+.auction-preview-button:hover{
+  background-color: #ffffff;
+    color: #0A8FDC;
+}
+
+.service-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
+}
+.service-card {
+  background-color: #fff;
+  padding: 40px 30px;
+  height: 450px;
+  box-shadow: 0 0px 10px 1px rgba(0, 0, 0, 0.03);
+  transition: all 0.5s ease;
+}
+.card-avatar{
+  width: 70px; height: 70px; border-radius: 50%;
+  margin-bottom: 25px;
+  transition: all 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+.service-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  transition: all 0.06s ease;
+}
+.service-card h3:hover {
+  text-decoration: underline;
+}
+.service-card p{
+  line-height: 1.8;
+  font-size: 0.9rem;
+  color: #646464;
+  transition: all 0.2s ease;
+}
+.service-card:hover {
+  margin-top: -5px;
+  background-color: #0A8FDC;
+  color: #ffffff;
+}
+.service-card:hover p{
+color: #ffffff;
+}
+.service-card:hover .card-avatar{
+  background-color: #ffffff !important;
+  color: #0A8FDC;
+}
+
+
+
+.service-card2 {
+  background-color: #fff;
+  padding: 30px;
+  height: 220px;
+  box-shadow: 0 0px 10px 1px rgba(0, 0, 0, 0.03);
+  transition: all 0.5s ease;
+  display: flex;
+  align-items: start;
+}
+.service-card2:hover{
+  margin-top: -5px;
+
+}
+.service-card2 .avatar2{
+  width: 65px !important; 
+  height: 65px !important;
+  border-radius: 50%;
+  background: #f7fafd;
+  color: #0A8FDC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+.service-card2:hover .avatar2{
+  color: #ffffff;
+  background-color: #0A8FDC;
+}
+
+.service-card2 h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.service-card2 p{
+  line-height: 1.8;
+  font-size: 0.9rem;
+  color: #646464;
+  transition: all 0.2s ease;
+}
+.contact-section{
+  margin-top: 20px;
+  /* background-image: url('../../assets/auction-software/cta-bg.webp'); */
+    background-position: center;
+    background-size: cover;
+    text-align: center;
+    position: relative;
+    background-attachment: fixed;
+}
+.contact-section .content{
+  width: 100%;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(10, 143, 220, 0.8);
+}
+.contact-section .content p {
+  color: #ffffff;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.contact-section .content h3 {
+  color: #ffffff;
+  font-size: 4rem;
+  text-transform: capitalize;
+  max-width: 800px;
+  line-height: 1.2;
+}
+.contact-section .content button{
+  margin-top: 40px;
+  padding: 15px 35px;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #0A8FDC;
+  background-color: #ffffff;
+  border-radius: 6px;
+  border: none;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+
+.contact-section .content button:hover{
+  color: #ffffff;
+  background-color: #18181b;
+}
+
+/* Responsive ==================================== */
+@media only screen and  (max-width: 767px) {
+  .layer h1{
+    font-size: 2rem;
+  }
+  .layer h3{
+    font-size: 1rem;
+  
+  }
+  .auction-preview-button{
+    margin-top: 10px;
+  }
+  .service-card{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  .service-card h3, .service-card p {
+    text-align: center;
+  }
+
+  .service-card2 h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .service-card2 p{
+    line-height: 1.8;
+    font-size: 0.9rem;
+    color: #646464;
+    transition: all 0.2s ease;
+  }
+
+  .contact-section .content{
+    width: 100%;
+    min-height: 300px;
+  }
+  .contact-section .content p {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .contact-section .content h3 {
+    font-size: 2rem;
+    max-width: 400px;
+  }
+  .contact-section .content button{
+    margin-top: 20px;
+    padding: 10px 25px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+
+}

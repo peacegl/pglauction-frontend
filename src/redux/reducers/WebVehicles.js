@@ -14,9 +14,14 @@ import {
   GET_POPULAR_BRANDS_COUNT,
   SET_BRAND_FILTER_DATA,
   FETCH_VEHICLES_ERROR,
+  LOADING_ITEM,
+  ADD_NEW_WEB_VEHICLE,
+  INCREMENT_TOTAL_WEB_VEHICLE,
+  UPDATE_WEB_VEHICLE,
+  DELETE_REAL_TIME_VEHICLE,
 } from '../../shared/constants/ActionTypes';
 
-export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
+export const VIEW_TYPE = Object.freeze({ LIST: 1, GRID: 2 });
 const initialState = {
   vehiclesData: {},
   itemsLoading: false,
@@ -31,6 +36,7 @@ const initialState = {
   bestSellingVehicles: [],
   recentlyAddedVehicles: [],
   filterBrands: {},
+  loadingItem: false,
   filterData: {
     newly_added: {
       newly_added_duration: 24,
@@ -141,6 +147,50 @@ const WebVehicleReducer = (state = initialState, action) => {
       return {
         ...state,
         myPurchaseList: action.payload,
+      };
+    case LOADING_ITEM:
+      return {
+        ...state,
+        loadingItem: action.payload,
+      };
+    case ADD_NEW_WEB_VEHICLE:
+      return {
+        ...state,
+        vehiclesData: {
+          ...state.vehiclesData,
+          total: state.vehiclesData.total + 1,
+          data: [action.payload, ...state.vehiclesData.data],
+        },
+      };
+    case INCREMENT_TOTAL_WEB_VEHICLE:
+      return {
+        ...state,
+        vehiclesData: {
+          ...state.vehiclesData,
+          total: state.vehiclesData.total + 1,
+        },
+      };
+    case UPDATE_WEB_VEHICLE:
+      return {
+        ...state,
+        vehiclesData: {
+          ...state.vehiclesData,
+          data: state.vehiclesData.data.map((item) =>
+            item.id == action.payload.id ? action.payload : item,
+          ),
+        },
+      };
+
+    case DELETE_REAL_TIME_VEHICLE:
+      return {
+        ...state,
+        vehiclesData: {
+          ...state.vehiclesData,
+          data: state.vehiclesData.data.filter(
+            (obj) => !action.payload?.includes(obj.id),
+          ),
+          total: state.vehiclesData.total - action.payload.length,
+        },
       };
     default:
       return state;

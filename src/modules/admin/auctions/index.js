@@ -1,17 +1,25 @@
-import {onGetAuctionData, onDeleteAuctions} from 'redux/actions';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {tableColumns} from 'configs/pages/auctions';
 import {useDispatch, useSelector} from 'react-redux';
+import {tableColumns} from 'configs/pages/auctions';
 import AuctionModal from './AuctionModal';
 import {useEffect, useState} from 'react';
+import echoAuthInit from 'plugins/echo';
 import PropTypes from 'prop-types';
+import {
+  onGetAuctionData,
+  onDeleteAuctions,
+  addRealTimeAuction,
+  addRealTimeAuctionCount,
+  updateRealTimeAuction,
+} from 'redux/actions';
 import {
   ADD_AUCTION,
   DELETE_AUCTION,
   EDIT_AUCTION,
 } from 'shared/constants/Permissions';
-import CustomerConfigs from 'configs/pages/customers';
+import {useRouter} from 'next/router';
+import AuctionVehicleModal from './AuctionVehiclesModal';
 
 export default function AuctionList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -26,6 +34,12 @@ export default function AuctionList({user}) {
   );
   const {loading} = useSelector(({common}) => common);
   const dispatch = useDispatch();
+  const router = useRouter();
+  const [showAuctionVehiclesModal, setShowAuctionVehiclesModal] =
+    useState(false);
+
+  const [auctionId, setAuctionId] = useState('');
+
   useEffect(() => {
     fetchData();
   }, [dispatch, page, per_page, orderBy, filterData]);
@@ -85,13 +99,54 @@ export default function AuctionList({user}) {
     setPage(0);
     fetchData(value, exactMatch);
   };
+
+  useEffect(() => {
+    echoAuthInit();
+    echoAuth.private(`update.auction`).listen('Updated', (e) => {
+      if (user.uid != e.authUser) {
+        if (e.action === 'created') {
+          console.log('', e.data);
+          newAuctionRealTime(e.data);
+        }
+        if (e.action == 'updated') {
+          updateAuctionRealTime(e.data);
+        }
+        if (e.action == 'deleted') {
+          fetchData();
+        }
+      }
+    });
+    return () => {
+      const echoChannel = echoAuth.private(`update.auction`);
+      echoChannel.stopListening('Updated');
+      echoAuth.leave(`update.auction`);
+    };
+  }, []);
+
+  const newAuctionRealTime = async (data) => {
+    if (page == 0) {
+      await dispatch(addRealTimeAuction(data));
+    } else {
+      await dispatch(addRealTimeAuctionCount(data));
+    }
+  };
+
+  const updateAuctionRealTime = async (data) => {
+    await dispatch(updateRealTimeAuction(data));
+  };
+
+  const showAuctionVehicles = (id) => {
+    setAuctionId(id);
+    setShowAuctionVehiclesModal(true);
+  };
+
   return (
     <>
       <CustomDataTable
         title={<IntlMessages id='auction.auctionList' />}
         total={total}
         data={data}
-        columns={tableColumns()}
+        columns={tableColumns(router, showAuctionVehicles)}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}
@@ -117,6 +172,13 @@ export default function AuctionList({user}) {
           toggleOpen={() => setOpenModal((d) => !d)}
           recordId={recordId}
           edit={recordId ? true : false}
+        />
+      )}
+      {showAuctionVehiclesModal && (
+        <AuctionVehicleModal
+          open={showAuctionVehiclesModal}
+          toggleOpen={() => setShowAuctionVehiclesModal((d) => !d)}
+          auctionId={auctionId}
         />
       )}
     </>

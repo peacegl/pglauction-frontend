@@ -5,7 +5,11 @@ import * as yup from 'yup';
 
 const {messages = []} = appIntl() ? appIntl() : {};
 
-export const tableColumns = function (getSingleRole) {
+export const tableColumns = function (
+  getSingleRole,
+  roleUsers,
+  rolePermission,
+) {
   return [
     {
       name: 'id',
@@ -51,10 +55,52 @@ export const tableColumns = function (getSingleRole) {
     {
       name: 'users_count',
       label: messages['common.users_count'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              fontWeight: 'bold',
+              cursor: 'pointer',
+            }}
+            onClick={() => roleUsers(tableMeta.rowData[0])}
+            noWrap={true}
+          >
+            {value +
+              ' ' +
+              `${
+                value > 1 ? messages['sidebar.users'] : messages['common.user']
+              }`}
+          </Typography>
+        ),
+      },
     },
     {
       name: 'permissions_count',
       label: messages['common.permissions_count'],
+      options: {
+        filter: false,
+        customBodyRender: (value, tableMeta, updateValue) => (
+          <Typography
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              fontWeight: 'bold',
+              cursor: 'pointer',
+            }}
+            onClick={() => rolePermission(tableMeta.rowData[0])}
+            noWrap={true}
+          >
+            {value +
+              ' ' +
+              `${
+                value > 1
+                  ? messages['role.permissions']
+                  : messages['role.permission']
+              }`}
+          </Typography>
+        ),
+      },
     },
     {
       name: 'created_by',

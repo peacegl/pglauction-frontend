@@ -2,9 +2,9 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import logoImage from '../../assets/united_logo.png';
-import {useRouter} from 'next/router';
-import {useTheme} from '@mui/styles';
-import {webPages} from 'configs';
+import { useRouter } from 'next/router';
+import { useTheme } from '@mui/styles';
+import { webPages } from 'configs';
 import Link from 'next/link';
 import {
   Box,
@@ -48,14 +48,14 @@ export default function Footer() {
     >
       <Box
         sx={{
-          py: {xs: 10, sm: 15},
+          py: { xs: 10, sm: 15 },
         }}
       >
         <Container maxWidth='xl'>
           <Stack
-            direction={{xs: 'column', md: 'row'}}
+            direction={{ xs: 'column', md: 'row' }}
             justifyContent='space-between'
-            alignItems={{xs: 'center', sm: 'start'}}
+            alignItems={{ xs: 'center', sm: 'start' }}
             color={theme.palette.text.secondary}
           >
             {/* <Box
@@ -76,13 +76,7 @@ export default function Footer() {
                   src={logoImage.src}
                 />
                 <Typography sx={{m: 4, ml: 0}} variant='body1'>
-                  United Used Cars sells used cars at an affordable rate in
-                  Dubai, UAE. We have a showroom in Sharjah and an office in
-                  Dubai to provide comprehensive support and services to
-                  customers. We have different affiliates to help provide
-                  shipping, clearance, and sell cars from the USA in Dubai. We
-                  are the leading cars showroom in Dubai, UAE with various
-                  vehicles.
+                Ut quis culpa pariatur pariatur consectetur non do exercitation reprehenderit mollit dolor. Dolor culpa mollit amet enim. Anim tempor in nulla voluptate. Dolor eu eu dolor pariatur laborum laboris commodo velit pariatur dolor et commodo aute laborum. Reprehenderit laboris incididunt excepteur aliqua aute mollit laborum excepteur. Occaecat laborum aliquip duis laboris consequat aute.
                 </Typography>
               </Box>
             </Box> */}
@@ -90,7 +84,7 @@ export default function Footer() {
               sx={{
                 flex: 2,
                 display: 'flex',
-                flexDirection: {xs: 'column', sm: 'row'},
+                flexDirection: { xs: 'column', sm: 'row' },
                 textAlign: 'center',
                 width: '100%',
               }}
@@ -100,7 +94,7 @@ export default function Footer() {
                   flex: 1,
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: {xs: 'center', sm: 'start'},
+                  alignItems: { xs: 'center', sm: 'start' },
                   mb: 5,
                 }}
               >
@@ -116,7 +110,7 @@ export default function Footer() {
                   flex: 1,
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: {xs: 'center', sm: 'start'},
+                  alignItems: { xs: 'center', sm: 'start' },
                   mb: 5,
                 }}
               >
@@ -130,7 +124,7 @@ export default function Footer() {
               <Box
                 sx={{
                   flex: 1.2,
-                  textAlign: {xs: 'center', sm: 'start'},
+                  textAlign: { xs: 'center', sm: 'start' },
                   mb: 5,
                 }}
               >
@@ -141,7 +135,7 @@ export default function Footer() {
                   display='flex'
                   alignItems='center'
                   sx={{
-                    justifyContent: {xs: 'center', sm: 'flex-start'},
+                    justifyContent: { xs: 'center', sm: 'flex-start' },
                   }}
                 >
                   <LocationOnOutlinedIcon />
@@ -151,61 +145,42 @@ export default function Footer() {
                     underline='none'
                     mx='5px'
                   >
-                    Sharjah Industrial Area 2
-                    <br />
-                    Sharjah-U.A.E.
+                    4701 Decker Dr, Baytown TX,USA 77520
                   </Typography>
                 </Box>
                 <Box
                   marginBottom='10px'
                   display='flex'
                   alignItems='center'
-                  sx={{justifyContent: {xs: 'center', sm: 'flex-start'}}}
+                  sx={{ justifyContent: { xs: 'center', sm: 'flex-start' } }}
                 >
                   <PhoneOutlinedIcon />
                   <MuiLink
                     variant='body2'
                     fontSize='14px'
                     underline='none'
-                    href='tel:+971565929272'
+                    href='tel:+18438138685'
                     mx='5px'
                     color={theme.palette.text.secondary}
                   >
-                    +971 56 592 9272
+                    +1(843) 813 8685
                   </MuiLink>
                 </Box>
                 <Box
                   marginBottom='10px'
                   display='flex'
-                  sx={{justifyContent: {xs: 'center', sm: 'flex-start'}}}
+                  sx={{ justifyContent: { xs: 'center', sm: 'flex-start' } }}
                 >
                   <EmailOutlinedIcon />
                   <MuiLink
                     variant='body2'
                     fontSize='14px'
                     underline='none'
-                    href='mailto:utc@peacegl.com'
+                    href='mailto:support@peaceglobaltech.com'
                     mx='5px'
                     color={theme.palette.text.secondary}
                   >
-                    utc@peacegl.com
-                  </MuiLink>
-                </Box>
-                <Box
-                  marginBottom='10px'
-                  display='flex'
-                  sx={{justifyContent: {xs: 'center', sm: 'flex-start'}}}
-                >
-                  <EmailOutlinedIcon />
-                  <MuiLink
-                    variant='body2'
-                    fontSize='14px'
-                    underline='none'
-                    href='mailto:crm@peacegl.com'
-                    mx='5px'
-                    color={theme.palette.text.secondary}
-                  >
-                    crm@peacegl.com
+                    support@peaceglobaltech.com
                   </MuiLink>
                 </Box>
               </Box>
@@ -223,7 +198,7 @@ export default function Footer() {
             py: 3,
           }}
         >
-          &copy;{new Date().getFullYear()} United Cars Auction. All Rights
+          &copy;{new Date().getFullYear()} Your Company Name. All Rights
           Reserved
         </Typography>
       </Box>

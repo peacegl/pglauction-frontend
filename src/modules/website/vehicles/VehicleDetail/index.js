@@ -1,14 +1,16 @@
 import PopularBrandsList from 'components/PopularBrands/PopularBrandsList';
 import SaleInfo from 'components/vehicles/VehicleDetails/SaleInfo';
+import {GET_WEB_VEHICLE_VIEW} from 'shared/constants/ActionTypes';
 import LotInfo from 'components/vehicles/VehicleDetails/LotInfo';
 import ImageCarousel from 'components/design/ImageCarousel';
 import CustomCarousel from 'components/CustomCarousel';
 import IntlMessages from '@crema/utility/IntlMessages';
-import ItemHeader from 'components/design/ItemHeader';
+import VehicleHeader from 'components/design/VehicleHeader';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import {useDispatch, useSelector} from 'react-redux';
 import {Box, Container} from '@mui/material';
 import {useRouter} from 'next/router';
+import echoWeb from 'plugins/echoWeb';
 import {useEffect} from 'react';
 import {
   onCountPopularBrands,
@@ -46,12 +48,41 @@ const VehicleDetail = () => {
     }
   }, [id]);
 
+  useEffect(() => {
+    echoWeb.channel(`web.vehicles.${id}`).listen('Web', (e) => {
+      if (e.action == 'updated') {
+        dispatch({
+          type: GET_WEB_VEHICLE_VIEW,
+          payload: e.data,
+        });
+      }
+    });
+    return () => {
+      const echoChannel = echoWeb.channel(`web.vehicles.${id}`);
+      echoChannel.stopListening('.Web');
+      echoWeb.leave(`web.vehicles.${id}`);
+    };
+  }, []);
+
+  useEffect(() => {
+    echoWeb.channel(`web.vehicles`).listen('.Web', (e) => {
+      if (e.action == 'deleted' && e?.data?.includes(id)) {
+        router.push('/');
+      }
+    });
+    return () => {
+      const echoChannel = echoWeb.channel(`web.vehicles`);
+      echoChannel.stopListening('.Web');
+      echoWeb.leave(`web.vehicles`);
+    };
+  }, []);
+
   return (
     <>
       {vehicle.id && (
-        <Container maxWidth='xl' sx={{mt: 6}}>
-          <ItemHeader
-            item={vehicle}
+        <Container maxWidth='xl'>
+          <VehicleHeader
+            vehicle={vehicle}
             admin={false}
             onBack={() => router.push('/')}
           />
@@ -83,10 +114,10 @@ const VehicleDetail = () => {
               }}
             >
               <Box sx={{flex: 1.5}}>
-                <LotInfo vehicle={vehicle} admin={false} />
+                <LotInfo vehicle={vehicle} />
               </Box>
               <Box sx={{flex: 1}}>
-                <SaleInfo vehicle={vehicle} admin={false} />
+                <SaleInfo vehicle={vehicle} />
               </Box>
             </Box>
           </Box>

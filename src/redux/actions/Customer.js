@@ -7,6 +7,7 @@ import {
   ADD_NEW_CUSTOMER,
   UPDATE_CUSTOMER,
   GET_ALL_CUSTOMER_LIST,
+  INCREMENT_TOTAL_CUSTOMER,
 } from 'shared/constants/ActionTypes';
 
 import {appIntl} from '../../@crema/utility/helper/Utils';
@@ -207,6 +208,36 @@ export const onVerifyCustomer = (id, data, toggleOpen) => {
         // });
       }
       dispatch({type: FETCH_ERROR, payload: error.message});
+    }
+  };
+};
+
+export const addRealTimeCustomer = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: ADD_NEW_CUSTOMER, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const addRealTimeCustomerCount = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: INCREMENT_TOTAL_CUSTOMER, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const updateRealTimeCustomer = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: UPDATE_CUSTOMER, payload: data});
+    } catch (error) {
+      console.log(error);
     }
   };
 };

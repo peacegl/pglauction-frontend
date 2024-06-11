@@ -1,15 +1,25 @@
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
-import {onGetWebVehicleData, setBrandFilter} from 'redux/actions';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {VIEW_TYPE} from 'redux/reducers/AuctionItems';
+
 import {useDispatch, useSelector} from 'react-redux';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import React, {useEffect, useState} from 'react';
+import ListHeader from 'components/design/ListHeader';
 import GridView from './GridView/index';
 import AppsContent from './AppsContent';
 import {useRouter} from 'next/router';
+import echoWeb from 'plugins/echoWeb';
 import ListView from './ListView';
-import Header from '../Header';
+import {
+  onGetWebVehicleData,
+  setBrandFilter,
+  setVehicleViewType,
+  updateRealTimeWebVehicle,
+  vehicleCreated,
+  vehicleCreatedCount,
+  deleteRealTimeVehicle,
+  onCountPopularBrands,
+} from 'redux/actions';
 import {
   alpha,
   Box,
@@ -19,6 +29,8 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
+import {es} from 'date-fns/locale';
+import {VIEW_TYPE} from 'redux/reducers/Auctions';
 
 const VehicleList = () => {
   const dispatch = useDispatch();
@@ -58,7 +70,7 @@ const VehicleList = () => {
         };
         dispatch(
           onGetWebVehicleData({
-            // filterData,
+            filterData,
             filterBrands,
             per_page: perPage,
             page: page + 1,
@@ -68,7 +80,7 @@ const VehicleList = () => {
       } else {
         dispatch(
           onGetWebVehicleData({
-            // filterData,
+            filterData,
             filterBrands,
             per_page: perPage,
             page: page + 1,
@@ -79,7 +91,7 @@ const VehicleList = () => {
     }
     dispatch(setBrandFilter(filterBrands));
     // filterData
-  }, [dispatch, makeData, page, search, perPage, user?.type]);
+  }, [makeData, page, search, perPage, user?.type, filterData]);
 
   const onPageChange = (event, value) => {
     setPage(value);
@@ -87,38 +99,78 @@ const VehicleList = () => {
   const onPageChange2 = (event, value) => {
     setPage(value - 1);
   };
+
+  useEffect(() => {
+    echoWeb.channel(`web.vehicle`).listen('Web', (e) => {
+      if (e.action == 'created') {
+        vehicleReaTimeCreated(e);
+      } else if (e.action == 'updated') {
+        vehicleReaTimeUpdated(e?.data);
+      }
+      if (e.action == 'deleted') {
+        deletedVehicle(e.data);
+      }
+    });
+    return () => {
+      const echoChannel = echoWeb.channel(`web.vehicle`);
+      echoChannel.stopListening('Web');
+      echoWeb.leave(`web.vehicle`);
+    };
+  }, [router]);
+
+  const vehicleReaTimeCreated = async (e) => {
+    if (page == 0 && e.data.status == 'available') {
+      if (router.query.make == undefined) {
+        await dispatch(vehicleCreated(e.data));
+        return;
+      } else if (
+        compareStrings(
+          router.query.make.toUpperCase(),
+          e.data.make.toUpperCase(),
+        )
+      ) {
+        await dispatch(vehicleCreated(e.data));
+      } else {
+        await dispatch(onCountPopularBrands());
+      }
+    } else {
+      await dispatch(vehicleCreatedCount(e.data));
+    }
+    await dispatch(onCountPopularBrands());
+  };
+
+  const deletedVehicle = async (data) => {
+    await dispatch(deleteRealTimeVehicle(data));
+    await dispatch(onCountPopularBrands());
+  };
+
+  const vehicleReaTimeUpdated = async (data) => {
+    await dispatch(updateRealTimeWebVehicle(data));
+  };
+
+  function compareStrings(s1, s2) {
+    // This condition will return true only if s1 and s2 hold true from equality
+    if (s1 == s2) {
+      return true;
+    }
+
+    return false;
+  }
+
   return (
     <>
-      <Card
-        sx={{
-          m: 3,
-          borderRadius: 1,
-        }}
-      >
-        <Box
-          sx={{
-            height: 60,
-            display: 'flex',
-            alignItems: 'center',
-            padding: {
-              xs: '4px 10px',
-              xl: '12px 10px',
-            },
-          }}
-          className='apps-header'
-        >
-          <Header
-            list={data}
-            viewType={viewType}
-            page={page}
-            perPage={perPage}
-            totalProducts={total}
-            onPageChange={onPageChange}
-            make={make}
-          />
-        </Box>
-      </Card>
-
+      <ListHeader
+        title='website.allVehicles'
+        list={data}
+        viewType={viewType}
+        page={page}
+        perPage={perPage}
+        total={total}
+        onPageChange={onPageChange}
+        make={make}
+        onLClick={() => dispatch(setVehicleViewType(VIEW_TYPE.LIST))}
+        onGClick={() => dispatch(setVehicleViewType(VIEW_TYPE.GRID))}
+      />
       <AppsContent
         style={{backgroundColor: alpha(theme.palette.background.default, 0.6)}}
       >

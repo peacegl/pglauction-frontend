@@ -1,5 +1,11 @@
 import {ADD_SALE, DELETE_SALE, EDIT_SALE} from 'shared/constants/Permissions';
-import {onGetSaleList, onDeleteSales} from 'redux/actions';
+import {
+  onGetSaleList,
+  onDeleteSales,
+  addRealTimeSale,
+  updateRealTimeSale,
+  addRealTimeSaleCount,
+} from 'redux/actions';
 import DownloadModal from 'components/CustomModal/downloadModal';
 import {filterContent, tableColumns} from 'configs/pages/sales';
 import FilterModal from 'components/CustomModal/FilterModal';
@@ -11,6 +17,7 @@ import {useEffect, useState} from 'react';
 import SaleModal from './SaleModal';
 import SingleSaleModal from './SingleSaleModal';
 import PropTypes from 'prop-types';
+import echoAuthInit from 'plugins/echo';
 
 export default function SaleList({user}) {
   const [showSaleModal, setShowSaleModal] = useState(false);
@@ -120,6 +127,40 @@ export default function SaleList({user}) {
   const onEnterSearch = (value, exactMatch) => {
     setPage(0);
     fetchData(value, exactMatch);
+  };
+
+  useEffect(() => {
+    echoAuthInit();
+    echoAuth.private(`update.sale`).listen('Updated', (e) => {
+      if (user.uid != e.authUser) {
+        if (e.action === 'created') {
+          newSaleRealTime(e.data);
+        }
+        if (e.action == 'updated') {
+          updateSaleRealTime(e.data);
+        }
+        if (e.action == 'deleted') {
+          fetchData();
+        }
+      }
+    });
+    return () => {
+      const echoChannel = echoAuth.private(`update.sale`);
+      echoChannel.stopListening('Updated');
+      echoAuth.leave(`update.sale`);
+    };
+  }, []);
+
+  const newSaleRealTime = async (data) => {
+    if (page == 0) {
+      await dispatch(addRealTimeSale(data));
+    } else {
+      await dispatch(addRealTimeSaleCount(data));
+    }
+  };
+
+  const updateSaleRealTime = async (data) => {
+    await dispatch(updateRealTimeSale(data));
   };
 
   const getSingleSale = (id) => {

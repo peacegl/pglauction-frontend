@@ -1,21 +1,28 @@
 import {filterContent, tableColumns} from 'configs/pages/customers';
-import {onGetCustomerList, onDeleteCustomers} from 'redux/actions';
 import DownloadModal from 'components/CustomModal/downloadModal';
 import FilterModal from 'components/CustomModal/FilterModal';
 import AccountVerification from './AccountVerificationModal';
 import CustomDataTable from 'components/CustomDataTable';
+import SingleCustomerModal from './SingleCustomerModal';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import {getData, onViewColumnsChange} from 'configs';
 import CustomerModal from './CustomerModal';
 import {useEffect, useState} from 'react';
-import SingleCustomerModal from './SingleCustomerModal';
 import PropTypes from 'prop-types';
 import {
   ADD_CUSTOMER,
   EDIT_CUSTOMER,
   DELETE_CUSTOMER,
 } from 'shared/constants/Permissions';
+import echoAuthInit from 'plugins/echo';
+import {
+  onGetCustomerList,
+  onDeleteCustomers,
+  addRealTimeCustomer,
+  updateRealTimeCustomer,
+  addRealTimeCustomerCount,
+} from 'redux/actions';
 
 export default function CustomerList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -127,6 +134,40 @@ export default function CustomerList({user}) {
     setDownloadColumns(tableColumns());
   }, []);
   // end of for exporting data
+
+  useEffect(() => {
+    echoAuthInit();
+    echoAuth.private(`update.customer`).listen('Updated', (e) => {
+      if (user.uid != e.authUser) {
+        if (e.action === 'created') {
+          newCustomerAddRealTime(e.data);
+        }
+        if (e.action == 'updated') {
+          updateCustomerRealTime(e.data);
+        }
+        if (e.action == 'deleted') {
+          fetchData();
+        }
+      }
+    });
+    return () => {
+      const echoChannel = echoAuth.private(`update.customer`);
+      echoChannel.stopListening('Updated');
+      echoAuth.leave(`update.customer`);
+    };
+  }, []);
+
+  const newCustomerAddRealTime = async (data) => {
+    if (page == 0) {
+      await dispatch(addRealTimeCustomer(data));
+    } else {
+      await dispatch(addRealTimeCustomerCount(data));
+    }
+  };
+
+  const updateCustomerRealTime = async (data) => {
+    await dispatch(updateRealTimeCustomer(data));
+  };
 
   const getSingleCustomer = (id) => {
     setSingleCustomerID(id);

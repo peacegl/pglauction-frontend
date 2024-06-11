@@ -1,4 +1,4 @@
-import {Box, Divider, Button, useTheme, Chip, Skeleton} from '@mui/material';
+import { Box, Divider, Button, useTheme, Chip, Skeleton } from '@mui/material';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import useAddToWatchList from 'customHooks/useAddToWatchList';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
@@ -11,35 +11,44 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import AppTooltip from '@crema/core/AppTooltip';
-import {useEffect, useState} from 'react';
-import {LoadingButton} from '@mui/lab';
+import { useEffect, useState } from 'react';
+import { LoadingButton } from '@mui/lab';
 import Card from '@mui/material/Card';
-import {useRouter} from 'next/router';
-import {moneyFormater} from 'configs';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
+import { useAuthUser } from '@crema/utility/AuthHooks';
+import moment from 'moment';
+import 'moment-timezone';
+import MyTimer from 'components/design/timer';
 
-export default function GridItem({item, ...props}) {
+export default function GridItem({ item, ...props }) {
   const router = useRouter();
-  // const [height, setHeight] = useState('260px');
   const [hoverImage, setHoverImage] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showSignInModal, setShowSignInModl] = useState(false);
-  const {addToWatchList, watchlistLoading, addedToWatchList} =
+  const { addToWatchList, watchlistLoading, addedToWatchList } =
     useAddToWatchList(item, setShowSignInModl);
-  // useLayoutEffect(() => {
-  //   setHeight((cardRef.current?.clientWidth / 4) * 3 + 'px');
-  // });
   const [addressUrl, setAddressUrl] = useState('');
-  // useEffect(() => {
-  //   const origin =
-  //     typeof window !== 'undefined' && window.location.origin
-  //       ? window.location.origin
-  //       : '';
-  //   setAddressUrl(origin + router.asPath + `/${item.id}`);
-  // }, []);
+
+  //for demo
+  const { user } = useAuthUser();
+  const [isStarted, setIsStarted] = useState(false);
+
+  let startTime = moment(
+    item?.auctions?.[0]?.start_date,
+    'YYYY-MM-DD hh:mm:ss A',
+    user?.timezone ? user.timezone : 'UTC',
+  )
+    .tz(user?.timezone ? user.timezone : moment.tz.guess())
+    .format('YYYY-MM-DD hh:mm:ss A');
+
+  useEffect(() => {
+    setIsStarted(moment().isAfter(startTime));
+  }, []);
+
   return (
     <>
-      <Card sx={{borderRadius: 1}}>
+      <Card sx={{ borderRadius: 1 }}>
         {!item && (
           <Skeleton
             variant='rectangular'
@@ -50,9 +59,15 @@ export default function GridItem({item, ...props}) {
         )}
         {item && (
           <Box
-            sx={{cursor: 'pointer'}}
+            sx={{ cursor: 'pointer' }}
             overflow='hidden'
-            onClick={() => router.push(`/all-vehicles/${item?.id}`)}
+            onClick={() =>
+              item?.auctions?.length > 0
+                ? router.push(
+                  `/auctions/auction_items/${item?.auctions[0].pivot.id}`,
+                )
+                : router.push(`/all-vehicles/${item?.id}`)
+            }
             onMouseEnter={() => setHoverImage(true)}
             onMouseLeave={() => setHoverImage(false)}
           >
@@ -80,10 +95,9 @@ export default function GridItem({item, ...props}) {
                 height={200}
               />
             )}
-            <Box sx={imageLoaded ? {} : {display: 'none'}}>
+            <Box sx={imageLoaded ? {} : { display: 'none' }}>
               <CardMedia
                 component='img'
-                // height={height}
                 image={
                   item.images?.find((item) => item.type == 'main_image')
                     ?.path ?? DefaultCarImage.src
@@ -106,10 +120,16 @@ export default function GridItem({item, ...props}) {
               <Skeleton animation='wave' />
             </Typography>
           ) : (
-            <Box sx={{display: 'flex'}}>
+            <Box sx={{ display: 'flex' }}>
               <AppTooltip title={`${item.year} ${item.make} ${item.model}`}>
                 <Typography
-                  onClick={() => router.push(`/all-vehicles/${item.id}`)}
+                  onClick={() =>
+                    item?.auctions?.length > 0
+                      ? router.push(
+                        `/auctions/auction_items/${item?.auctions[0].pivot.id}`,
+                      )
+                      : router.push(`/all-vehicles/${item?.id}`)
+                  }
                   noWrap
                   gutterBottom
                   variant='h4'
@@ -125,21 +145,12 @@ export default function GridItem({item, ...props}) {
             </Box>
           )}
 
-          <Divider sx={{mb: 2}} />
-          <Box display='flex' justifyContent='space-between'>
-            {/* <Typography color={theme.palette.primary.main} fontWeight='bold'>
-            {moneyFormater(
-              parseInt(item.price) +
-                parseInt((item.price * item.sale_rate ?? 15) / 100),
-            )}
-            </Typography> */}
-            {/* {item && <Typography>{item.odometer_type}</Typography>} */}
-          </Box>
+          <Divider sx={{ mb: 2 }} />
 
-          <Box sx={{mt: 1}}>
+          <Box sx={{ mt: 1 }}>
             {!item ? (
               <Chip
-                sx={{width: 80, float: 'right', ml: 4}}
+                sx={{ width: 80, float: 'right', ml: 4 }}
                 label={<Skeleton animation='wave' variant='rounded' />}
                 size='small'
               />
@@ -154,10 +165,18 @@ export default function GridItem({item, ...props}) {
                     item.status == 'sold'
                       ? theme.palette.error.main
                       : item.status == 'available'
-                      ? theme.palette.success.main
-                      : '#ffa834',
+                        ? theme.palette.success.main
+                        : '#ffa834',
                 }}
-                label={item.status == 'future' ? 'On The Way' : item.status}
+                label={
+                  item.status == 'future'
+                    ? 'on the way'
+                    : item?.auctions?.length > 0
+                      ? isStarted
+                        ? 'auction in progress'
+                        : 'upcoming auction'
+                      : item.status
+                }
                 size='small'
               />
             )}
@@ -165,12 +184,12 @@ export default function GridItem({item, ...props}) {
               <Box display='flex' columnGap='5px'>
                 <IntlMessages id='common.lot' />#
                 {!item ? (
-                  <Typography sx={{flex: 1}}>
+                  <Typography sx={{ flex: 1 }}>
                     <Skeleton animation='wave' />
                   </Typography>
                 ) : (
                   <Typography
-                    sx={{color: (theme) => theme.palette.primary.main}}
+                    sx={{ color: (theme) => theme.palette.primary.main }}
                   >
                     {item.lot_number}
                   </Typography>
@@ -179,12 +198,12 @@ export default function GridItem({item, ...props}) {
               <Box display='flex' columnGap='5px'>
                 <IntlMessages id='common.vin' />
                 {!item ? (
-                  <Typography sx={{flex: 1}}>
+                  <Typography sx={{ flex: 1 }}>
                     <Skeleton animation='wave' />
                   </Typography>
                 ) : (
                   <Typography
-                    sx={{color: (theme) => theme.palette.primary.main}}
+                    sx={{ color: (theme) => theme.palette.primary.main }}
                   >
                     {item.vin}
                   </Typography>
@@ -193,14 +212,14 @@ export default function GridItem({item, ...props}) {
               <Box display='flex' columnGap='5px'>
                 <IntlMessages id='common.location' />
                 {!item ? (
-                  <Typography sx={{flex: 1}}>
+                  <Typography sx={{ flex: 1 }}>
                     <Skeleton animation='wave' />
                   </Typography>
                 ) : (
                   <Typography
                     noWrap
                     gutterBottom
-                    sx={{color: (theme) => theme.palette.primary.main}}
+                    sx={{ color: (theme) => theme.palette.primary.main }}
                   >
                     {item.location?.name}
                   </Typography>
@@ -212,12 +231,48 @@ export default function GridItem({item, ...props}) {
             display='flex'
             justifyContent='space-between'
             alignItems='center'
-            sx={{flexWrap: 'wrap'}}
+            sx={{ flexWrap: 'wrap' }}
           >
             {!item ? (
-              <Button size='small' sx={{mt: 2}}>
-                <Skeleton animation='wave' sx={{width: 90, py: 3}} />
+              <Button size='small' sx={{ mt: 2 }}>
+                <Skeleton animation='wave' sx={{ width: 90, py: 3 }} />
               </Button>
+            ) : item?.auctions?.length > 0 ? (
+              <>
+                {isStarted && (
+                  <>
+                    <IntlMessages id='common.endDate' />
+                    <MyTimer
+                      color='red'
+                      expiryTimestamp={moment(
+                        item?.auctions[0]?.end_date,
+                        'YYYY-MM-DD hh:mm:ss A',
+                        user?.timezone ? user.timezone : 'UTC',
+                      ).tz('UTC')}
+
+                      onExpire={() => {
+                        // onExpire(item?.id);
+                      }}
+                    />
+                  </>
+                )}
+                {!isStarted && (
+                  <>
+                    <IntlMessages id='common.startDate' />
+                    <MyTimer
+                      color='primary'
+                      expiryTimestamp={moment(
+                        item?.auctions[0]?.start_date,
+                        'YYYY-MM-DD hh:mm:ss A',
+                        user?.timezone ? user.timezone : 'UTC',
+                      ).tz('UTC')}
+                      onExpire={() => {
+                        setIsStarted(true);
+                      }}
+                    />
+                  </>
+                )}
+              </>
             ) : (
               <LoadingButton
                 loading={watchlistLoading}
@@ -231,7 +286,7 @@ export default function GridItem({item, ...props}) {
                 }
                 variant='outlined'
                 size='small'
-                sx={{mt: 2}}
+                sx={{ mt: 2 }}
                 onClick={() => addToWatchList(item.id)}
               >
                 {!addedToWatchList ? (
@@ -242,20 +297,38 @@ export default function GridItem({item, ...props}) {
               </LoadingButton>
             )}
             {!item ? (
-              <Button size='small' sx={{mt: 2}}>
-                <Skeleton animation='wave' sx={{width: 100, py: 3}} />
+              <Button size='small' sx={{ mt: 2 }}>
+                <Skeleton animation='wave' sx={{ width: 100, py: 3 }} />
+              </Button>
+            ) : item?.auctions?.length > 0 ? (
+              <Button
+                onClick={() =>
+                  router.push(
+                    `/auctions/auction_items/${item?.auctions[0].pivot.id}`,
+                  )
+                }
+                variant='contained'
+                size='small'
+                sx={{ mt: 2, color: 'white' }}
+              >
+                {isStarted ? (
+                  <IntlMessages id='auction.bidNow' />
+                ) : (
+                  <IntlMessages id='auction.preBid' />
+                )}
               </Button>
             ) : (
               <Button
                 onClick={(e) => e.stopPropagation()}
                 variant='contained'
                 size='small'
-                sx={{mt: 2}}
-                href={`https://wa.me/${item?.seller?.loginable?.whatsapp}?text=${window.location.origin}/all-vehicles/${item?.id}`}
+                sx={{ mt: 2 }}
+                // href={`https://wa.me/${item?.seller?.loginable?.whatsapp}?text=${window.location.origin}/all-vehicles/${item?.id}`}
                 target='_blank'
                 startIcon={<WhatsAppIcon />}
               >
-                {item?.seller?.loginable?.whatsapp}
+                {/* {item?.seller?.loginable?.whatsapp} */}
+                whatsapp number
               </Button>
             )}
           </Box>

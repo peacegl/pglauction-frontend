@@ -68,11 +68,13 @@ const ListView = ({
           ? data.map((item, index) => (
               <Box key={index}>{renderRow(item, index)}</Box>
             ))
-          : loading
+          : data.length === 0 && loading
           ? Array.from(new Array(perPage)).map((item, index) => (
               <Box key={index}>{renderRow(item, index)}</Box>
             ))
-          : !loading ?? getEmptyContainer(ListEmptyComponent)}
+          : data.length === 0 &&
+            !loading &&
+            getEmptyContainer(ListEmptyComponent)}
         {getFooterContainer(ListFooterComponent)}
       </>
     </AppAnimateGroup>

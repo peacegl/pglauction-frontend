@@ -18,6 +18,11 @@ import {
   GET_POPULAR_BRANDS_COUNT,
   SET_BRAND_FILTER_DATA,
   FETCH_VEHICLES_ERROR,
+  LOADING_ITEM,
+  ADD_NEW_WEB_VEHICLE,
+  INCREMENT_TOTAL_WEB_VEHICLE,
+  UPDATE_WEB_VEHICLE,
+  DELETE_REAL_TIME_VEHICLE,
 } from 'shared/constants/ActionTypes';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import {appIntl} from '@crema/utility/helper/Utils';
@@ -69,6 +74,7 @@ export const setVehicleSearch = (data) => {
 
 export const onGetWebVehicleView = (id) => {
   return (dispatch) => {
+    dispatch({type: LOADING_ITEM, payload: true});
     dispatch({type: FETCH_START});
     jwtAxios
       .get(`/website/vehicles/${id}`)
@@ -92,9 +98,11 @@ export const onGetWebVehicleView = (id) => {
             payload: 'Something went wrong, Please try again!',
           });
         }
+        dispatch({type: LOADING_ITEM, payload: false});
       })
       .catch((error) => {
         dispatch({type: FETCH_ERROR, payload: error.message});
+        dispatch({type: LOADING_ITEM, payload: false});
       });
   };
 };
@@ -140,12 +148,10 @@ export const onGetFeaturedVehicles = () => {
 
 export const onCountPopularBrands = () => {
   return async (dispatch) => {
-    dispatch({type: FETCH_START});
     const {messages} = appIntl();
     try {
       const res = await jwtAxios.get(`/count_populars`);
       if (res.status === 200 && res.data.result) {
-        dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_POPULAR_BRANDS_COUNT, payload: res.data.data});
       } else {
         dispatch({
@@ -274,3 +280,52 @@ export const onGetMyPurchaseList = (data) => {
       });
   };
 };
+
+export const vehicleCreated = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: ADD_NEW_WEB_VEHICLE, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const vehicleCreatedCount = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: INCREMENT_TOTAL_WEB_VEHICLE, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const updateRealTimeWebVehicle = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: UPDATE_WEB_VEHICLE, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const deleteRealTimeVehicle = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch({type: DELETE_REAL_TIME_VEHICLE, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+// export const updateRealTimeUser = (data) => {
+//   return async (dispatch) => {
+//     try {
+//       dispatch({type: UPDATE_USER, payload: data});
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+// };

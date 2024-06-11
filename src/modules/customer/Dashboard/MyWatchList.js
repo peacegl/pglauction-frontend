@@ -96,7 +96,7 @@ const WatchList = () => {
           showAddButton={false}
           showEditButton={false}
           showDeleteButton={true}
-          selectableRows={true}
+          selectableRows='multiple'
           exportData={data}
         />
         {openFilter && (

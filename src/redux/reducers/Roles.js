@@ -3,12 +3,16 @@ import {
   ADD_NEW_ROLE,
   UPDATE_ROLE,
   GET_ALL_ROLES_LIST,
+  GET_USER_ROLES_LIST,
+  GET_PERMISSION_ROLES_LIST,
 } from 'shared/constants/ActionTypes';
 
 const initialState = {
   roleList: {},
   filterData: {},
   rolesExportData: [],
+  userRoles: {},
+  PermissionRoles: {},
 };
 
 const permissionsReducer = (state = initialState, action) => {
@@ -41,6 +45,17 @@ const permissionsReducer = (state = initialState, action) => {
             item.id == action.payload.id ? action.payload : item,
           ),
         },
+      };
+    case GET_USER_ROLES_LIST:
+      return {
+        ...state,
+        userRoles: action.payload,
+      };
+
+    case GET_PERMISSION_ROLES_LIST:
+      return {
+        ...state,
+        PermissionRoles: action.payload,
       };
     default:
       return state;

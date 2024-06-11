@@ -4,6 +4,7 @@ import {
   SET_LOCATION_FILTER_DATA,
   UPDATE_LOCATION,
   GET_ALL_LOCATIONS_LIST,
+  INCREMENT_TOTAL_LOCATION,
 } from '../../shared/constants/ActionTypes';
 
 const initialState = {
@@ -31,6 +32,14 @@ const LocationReducer = (state = initialState, action) => {
           ...state.locationData,
           total: state.locationData.total + 1,
           data: [action.payload, ...state.locationData.data],
+        },
+      };
+    case INCREMENT_TOTAL_LOCATION:
+      return {
+        ...state,
+        locationData: {
+          ...state.locationData,
+          total: state.locationData.total + 1,
         },
       };
     case UPDATE_LOCATION:

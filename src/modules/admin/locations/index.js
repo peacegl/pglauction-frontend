@@ -1,5 +1,11 @@
 import {filterContent, tableColumns} from 'configs/pages/locations';
-import {onGetLocationList, onDeleteLocations} from 'redux/actions';
+import {
+  onGetLocationList,
+  onDeleteLocations,
+  addRealTimeLocation,
+  updateRealTimeLocation,
+  addRealTimeLocationCount,
+} from 'redux/actions';
 import DownloadModal from 'components/CustomModal/downloadModal';
 import FilterModal from 'components/CustomModal/FilterModal';
 import CustomDataTable from 'components/CustomDataTable';
@@ -15,6 +21,7 @@ import {
 } from 'shared/constants/Permissions';
 import SingleLocationModal from './SingleLocationModal';
 import PropTypes from 'prop-types';
+import echoAuthInit from 'plugins/echo';
 
 export default function LocationList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -125,6 +132,40 @@ export default function LocationList({user}) {
     setDownloadColumns(tableColumns());
   }, []);
   // end of for exporting data
+
+  useEffect(() => {
+    echoAuthInit();
+    echoAuth.private(`update.location`).listen('Updated', (e) => {
+      if (user.uid != e.authUser) {
+        if (e.action === 'created') {
+          newLocationRealTime(e.data);
+        }
+        if (e.action == 'updated') {
+          updateLocationRealTime(e.data);
+        }
+        if (e.action == 'deleted') {
+          fetchData();
+        }
+      }
+    });
+    return () => {
+      const echoChannel = echoAuth.private(`update.location`);
+      echoChannel.stopListening('Updated');
+      echoAuth.leave(`update.location`);
+    };
+  }, []);
+
+  const newLocationRealTime = async (data) => {
+    if (page == 0) {
+      await dispatch(addRealTimeLocation(data));
+    } else {
+      await dispatch(addRealTimeLocationCount(data));
+    }
+  };
+
+  const updateLocationRealTime = async (data) => {
+    await dispatch(updateRealTimeLocation(data));
+  };
 
   const getSingleLocation = (id) => {
     setSingleLocation(data.filter((sale) => sale.id === id)[0]);

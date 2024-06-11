@@ -4,12 +4,26 @@ import {
   SET_AUCTION_DATA,
   UPDATE_AUCTION,
   ADD_NEW_AUCTION,
+  INCREMENT_TOTAL_AUCTION,
+  GET_VEHICLE_AUCTIONS,
+  GET_AUCTION_ITEMS,
+  GET_AUCTION_ITEM_BID,
+  GET_AUCTION_ITEM_BID_EMPTY,
+  GET_AUCTION_ITEM_BID_IS_ACCEPTED,
+  ADD_NEW_BID,
+  INCREMENT_TOTAL_BID,
+  GET_VEHICLE_AUCTIONS_CHANGES,
+  GET_AUCTION_ITEMS_CHANGE,
 } from '../../shared/constants/ActionTypes';
 
+export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
 const initialState = {
   auctionsList: [],
-  currectAuction: null,
+  auction: {},
   filterData: {},
+  auctionItemList: [],
+  auctionItemsData: {},
+  auctionItemBid: {},
 };
 
 const AuctionReducer = (state = initialState, action) => {
@@ -47,7 +61,128 @@ const AuctionReducer = (state = initialState, action) => {
     case SET_AUCTION_DATA:
       return {
         ...state,
-        currectAuction: action.payload,
+        auction: action.payload,
+      };
+
+    case INCREMENT_TOTAL_AUCTION:
+      return {
+        ...state,
+        auctionsList: {
+          ...state.auctionsList,
+          total: state.auctionsList.total + 1,
+        },
+      };
+
+    case GET_VEHICLE_AUCTIONS:
+      return {
+        ...state,
+        auctionItemList: action.payload,
+      };
+
+    case GET_VEHICLE_AUCTIONS_CHANGES:
+      return {
+        ...state,
+        auctionItemList: {
+          ...state.auctionItemList,
+          data: state.auctionItemList.data.map((item) => {
+            if (item.id == action.payload) {
+              item.status == 'active'
+                ? (item.status = 'sold')
+                : (item.status = 'active');
+              item.vehicle.status == 'available'
+                ? (item.vehicle.status = 'sold')
+                : (item.vehicle.status = 'available');
+            }
+            return item;
+          }),
+        },
+      };
+
+    case GET_AUCTION_ITEMS:
+      return {
+        ...state,
+        auctionItemsData: action.payload,
+      };
+
+    case GET_AUCTION_ITEMS_CHANGE:
+      return {
+        ...state,
+        auctionItemsData: {
+          ...state.auctionItemsData,
+          data: state.auctionItemsData.data.map((item) => {
+            if (item.id == action.payload) {
+              item.status == 'active'
+                ? (item.status = 'sold')
+                : (item.status = 'active');
+              item.vehicle.status == 'available'
+                ? (item.vehicle.status = 'sold')
+                : (item.vehicle.status = 'available');
+            }
+            return item;
+          }),
+        },
+      };
+
+    case GET_AUCTION_ITEM_BID:
+      let prevData = state.auctionItemBid?.data
+        ? state.auctionItemBid.data
+        : [];
+      return {
+        ...state,
+        auctionItemBid: {
+          ...action.payload,
+          data: [...prevData, ...action.payload.data],
+          hasMore:
+            action.payload.data.length == 10 &&
+            action.payload.data.length != undefined
+              ? true
+              : false,
+        },
+      };
+
+    case GET_AUCTION_ITEM_BID_EMPTY:
+      return {
+        ...state,
+        auctionItemBid: {
+          ...action.payload,
+          data: [],
+        },
+      };
+
+    case GET_AUCTION_ITEM_BID_IS_ACCEPTED:
+      return {
+        ...state,
+        auctionItemBid: {
+          ...state.auctionItemBid,
+          data: state.auctionItemBid.data.map((item) => {
+            if (item.id == action.payload) {
+              item.is_accepted == 0
+                ? (item.is_accepted = 1)
+                : (item.is_accepted = 0);
+            }
+            return item;
+          }),
+        },
+        auctionsAcceptedID: action.payload,
+      };
+
+    case ADD_NEW_BID:
+      return {
+        ...state,
+        auctionItemBid: {
+          ...state.auctionItemBid,
+          total: state.auctionItemBid.total + 1,
+          data: [action.payload, ...state.auctionItemBid.data],
+        },
+      };
+
+    case INCREMENT_TOTAL_BID:
+      return {
+        ...state,
+        auctionItemBid: {
+          ...state.auctionItemBid,
+          total: state.auctionItemBid.total + 1,
+        },
       };
 
     default:

@@ -75,7 +75,7 @@ const PurchaseHistory = () => {
           showAddButton={false}
           showEditButton={false}
           showDeleteButton={false}
-          selectableRows={false}
+          selectableRows='none'
           exportData={data}
         />
         {openFilter && (

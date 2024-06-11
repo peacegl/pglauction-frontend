@@ -2,7 +2,13 @@ import {ADD_USER, DELETE_USER, EDIT_USER} from 'shared/constants/Permissions';
 import DownloadModal from 'components/CustomModal/downloadModal';
 import {filterContent, tableColumns} from 'configs/pages/users';
 import FilterModal from 'components/CustomModal/FilterModal';
-import {onGetUserList, onDeleteUsers} from 'redux/actions';
+import {
+  onGetUserList,
+  onDeleteUsers,
+  addRealTimeUser,
+  updateRealTimeUser,
+  addRealTimeUserCount,
+} from 'redux/actions';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
@@ -11,6 +17,7 @@ import {useEffect, useState} from 'react';
 import UserModal from './UserModal';
 import SingleUserModal from './SingleUserModal';
 import PropTypes from 'prop-types';
+import echoAuthInit from 'plugins/echo';
 
 export default function UserList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -121,6 +128,40 @@ export default function UserList({user}) {
     setDownloadColumns(tableColumns());
   }, []);
   // end of for exporting data
+
+  useEffect(() => {
+    echoAuthInit();
+    echoAuth.private(`update.user`).listen('Updated', (e) => {
+      if (user.uid != e.authUser) {
+        if (e.action === 'created') {
+          newUserAddRealTime(e.data);
+        }
+        if (e.action == 'updated') {
+          updateAddRealTime(e.data);
+        }
+        if (e.action == 'deleted') {
+          fetchData();
+        }
+      }
+    });
+    return () => {
+      const echoChannel = echoAuth.private(`update.user`);
+      echoChannel.stopListening('Updated');
+      echoAuth.leave(`update.user`);
+    };
+  }, []);
+
+  const newUserAddRealTime = async (data) => {
+    if (page == 0) {
+      await dispatch(addRealTimeUser(data));
+    } else {
+      await dispatch(addRealTimeUserCount(data));
+    }
+  };
+
+  const updateAddRealTime = async (data) => {
+    await dispatch(updateRealTimeUser(data));
+  };
 
   const getSingleUser = (id) => {
     setSingleUser(data.filter((sale) => sale.id === id)[0]);

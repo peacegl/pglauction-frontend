@@ -1,6 +1,13 @@
+import {INCREMENT_TOTAL_VEHICLE} from 'shared/constants/ActionTypes';
 import {filterContent, tableColumns} from 'configs/pages/vehicles';
 import DownloadModal from 'components/CustomModal/downloadModal';
-import {onGetVehicleData, onDeleteVehicles} from 'redux/actions';
+import {
+  onGetVehicleData,
+  onDeleteVehicles,
+  addRealTimeVehicle,
+  updateRealTimeVehicle,
+  addRealTimeVehicleCount,
+} from 'redux/actions';
 import FilterModal from 'components/CustomModal/FilterModal';
 import CustomDataTable from 'components/CustomDataTable';
 import IntlMessages from '@crema/utility/IntlMessages';
@@ -17,6 +24,7 @@ import {
 } from 'shared/constants/Permissions';
 import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
+import echoAuthInit from 'plugins/echo';
 
 export default function VehicleList({user}) {
   const dispatch = useDispatch();
@@ -137,6 +145,40 @@ export default function VehicleList({user}) {
   const onEnterSearch = (value, exactMatch) => {
     setPage(0);
     fetchData(value, exactMatch);
+  };
+
+  useEffect(() => {
+    echoAuthInit();
+    window.echoAuth.private(`update.vehicle`).listen('Updated', (e) => {
+      if (user.uid != e.authUser) {
+        if (e.action === 'created') {
+          newVehicleAddRealTime(e.data);
+        }
+        if (e.action == 'updated') {
+          updateVehicleRealTime(e.data);
+        }
+        if (e.action == 'deleted') {
+          fetchData();
+        }
+      }
+    });
+    return () => {
+      const echoChannel = window.echoAuth.private(`update.vehicle`);
+      echoChannel.stopListening('Updated');
+      echoAuth.leave(`update.vehicle`);
+    };
+  }, []);
+
+  const newVehicleAddRealTime = async (data) => {
+    if (page == 0) {
+      await dispatch(addRealTimeVehicle(data));
+    } else {
+      await dispatch(addRealTimeVehicleCount(data));
+    }
+  };
+
+  const updateVehicleRealTime = async (data) => {
+    await dispatch(updateRealTimeVehicle(data));
   };
 
   return (

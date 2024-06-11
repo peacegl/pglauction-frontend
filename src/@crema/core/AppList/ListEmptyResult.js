@@ -22,7 +22,7 @@ const ListEmptyResult = ({
           <Box
             sx={{
               flexDirection: 'row',
-              minHeight: '450px',
+              minHeight: '200px',
               height: '100%',
               flex: 1,
               display: 'flex',
@@ -47,7 +47,7 @@ const ListEmptyResult = ({
       <Box
         sx={{
           flexDirection: 'column',
-          minHeight: '450px',
+          minHeight: '200px',
           height: '100%',
           flex: 1,
           display: 'flex',
@@ -111,5 +111,5 @@ ListEmptyResult.propTypes = {
   loading: PropTypes.bool,
   loader: PropTypes.bool,
   placeholder: PropTypes.node,
-  content: PropTypes.string,
+  content: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import notification from '@crema/services/db/notifications';
+// import notification from '@crema/services/db/notifications';
 import {IconButton} from '@mui/material';
 import List from '@mui/material/List';
 import Button from '@mui/material/Button';
@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 const AppNotificationContent = ({onClose, sxStyle}) => {
+  const notification = [];
   return (
     <Box
       sx={{

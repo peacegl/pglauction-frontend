@@ -79,6 +79,7 @@ const ExportPdf = forwardRef(({data, titlePdf = 'no_name', columns}, ref) => {
 });
 
 export default ExportPdf;
+
 ExportPdf.propTypes = {
   data: PropTypes.array.isRequired,
   titlePdf: PropTypes.any,

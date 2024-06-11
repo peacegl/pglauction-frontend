@@ -1,29 +1,28 @@
-import MiniCooper from 'assets/vehicle_logos/mini_cooper.png';
-import Volkswagen from 'assets/vehicle_logos/volkswagen.png';
-import LandRover from 'assets/vehicle_logos/land_rover.png';
-import Chevrolet from 'assets/vehicle_logos/chevrolet.png';
-import Hyundai from 'assets/vehicle_logos/hyundai.png';
+import MiniCooper from 'assets/vehicle_logos/mini_cooper.webp';
+import Volkswagen from 'assets/vehicle_logos/volkswagen.webp';
+import LandRover from 'assets/vehicle_logos/land_rover.webp';
+import Chevrolet from 'assets/vehicle_logos/chevrolet.webp';
+import Hyundai from 'assets/vehicle_logos/hyundai.webp';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {Box, Divider, Paper, Typography} from '@mui/material';
-import Toyota from 'assets/vehicle_logos/toyota.png';
-import Nissan from 'assets/vehicle_logos/nissan.png';
-import Honda from 'assets/vehicle_logos/honda.png';
-import Lexus from 'assets/vehicle_logos/lexus.png';
-import Tesla from 'assets/vehicle_logos/Tesla.png';
-import Dodge from 'assets/vehicle_logos/dodge.png';
-import Mazda from 'assets/vehicle_logos/mazda.png';
-import Jeep from 'assets/vehicle_logos/jeep.png';
-import Benz from 'assets/vehicle_logos/benz.png';
-import Ford from 'assets/vehicle_logos/ford.png';
-import BMW from 'assets/vehicle_logos/bmw.png';
-import GMC from 'assets/vehicle_logos/gmc.png';
-import Chrysler from 'assets/vehicle_logos/chrysler.png';
-import Kia from 'assets/vehicle_logos/kia.png';
-import {setBrandFilter} from 'redux/actions';
+import { Box, Divider, Paper, Typography } from '@mui/material';
+import Toyota from 'assets/vehicle_logos/toyota.webp';
+import Nissan from 'assets/vehicle_logos/nissan.webp';
+import Honda from 'assets/vehicle_logos/honda.webp';
+import Lexus from 'assets/vehicle_logos/lexus.webp';
+import Tesla from 'assets/vehicle_logos/Tesla.webp';
+import Dodge from 'assets/vehicle_logos/dodge.webp';
+import Mazda from 'assets/vehicle_logos/mazda.webp';
+import Jeep from 'assets/vehicle_logos/jeep.webp';
+import Benz from 'assets/vehicle_logos/benz.webp';
+import Ford from 'assets/vehicle_logos/ford.webp';
+import BMW from 'assets/vehicle_logos/bmw.webp';
+import GMC from 'assets/vehicle_logos/gmc.webp';
+import Kia from 'assets/vehicle_logos/kia.webp';
+import { setBrandFilter } from 'redux/actions';
 import Title from 'components/design/Title';
-import {ButtonBase} from '@mui/material';
-import {useDispatch} from 'react-redux';
-import {useRouter} from 'next/router';
+import { ButtonBase } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 
 const PopularBrandsList = (props) => {
@@ -135,7 +134,7 @@ const PopularBrandsList = (props) => {
     // },
   ];
   return (
-    <Box sx={{my: props.small ? 5 : 8}}>
+    <Box sx={{ my: props.small ? 5 : 8 }}>
       {props.small ? (
         <Box
           sx={{
@@ -183,9 +182,9 @@ const PopularBrandsList = (props) => {
         {popularBrands.map((brand, index) => (
           <ButtonBase
             key={index}
-            sx={{mx: 2, my: props.small ? 1 : 2}}
+            sx={{ mx: 2, my: props.small ? 1 : 2 }}
             onClick={() => {
-              router.push(`/?make=${brand.name}`);
+              router.push(`/vehicles?make=${brand.name}`);
               filterBrand(brand.name);
             }}
           >
@@ -209,14 +208,15 @@ const PopularBrandsList = (props) => {
               >
                 <Box
                   component='img'
+                  alt={brand.logo}
                   src={brand.logo}
                   height={brand.name == 'chrysler' ? 30 : 'auto'}
                   width={props.small ? 50 : 70}
                 ></Box>
               </Box>
-              <Typography sx={{textAlign: 'center', px: 1}}>
+              <Typography sx={{ textAlign: 'center', px: 1 }}>
                 <IntlMessages id='website.inStock' />{' '}
-                <Typography component='p' sx={{fontWeight: 'bold'}}>
+                <Typography component='p' sx={{ fontWeight: 'bold' }}>
                   {props.popularBrandsCount[brand.name]}
                 </Typography>
               </Typography>

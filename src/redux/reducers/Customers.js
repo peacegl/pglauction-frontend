@@ -4,6 +4,7 @@ import {
   ADD_NEW_CUSTOMER,
   UPDATE_CUSTOMER,
   GET_ALL_CUSTOMER_LIST,
+  INCREMENT_TOTAL_CUSTOMER,
 } from '../../shared/constants/ActionTypes';
 
 const initialState = {
@@ -33,6 +34,14 @@ const CustomersReducer = (state = initialState, action) => {
           ...state.customerData,
           total: state.customerData.total + 1,
           data: [action.payload, ...state.customerData.data],
+        },
+      };
+    case INCREMENT_TOTAL_CUSTOMER:
+      return {
+        ...state,
+        customerData: {
+          ...state.customerData,
+          total: state.customerData.total + 1,
         },
       };
     case UPDATE_CUSTOMER:
