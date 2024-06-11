@@ -17,6 +17,7 @@ import Benz from 'assets/vehicle_logos/benz.webp';
 import Ford from 'assets/vehicle_logos/ford.webp';
 import BMW from 'assets/vehicle_logos/bmw.webp';
 import GMC from 'assets/vehicle_logos/gmc.webp';
+import Chrysler from 'assets/vehicle_logos/chrysler.png';
 import Kia from 'assets/vehicle_logos/kia.webp';
 import { setBrandFilter } from 'redux/actions';
 import Title from 'components/design/Title';
