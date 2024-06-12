@@ -3,8 +3,7 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import {tableColumns} from 'configs/pages/auctions';
 import AuctionModal from './AuctionModal';
-import {useEffect, useState} from 'react';
-import echoAuthInit from 'plugins/echo';
+import {useEffect, useState} from 'react'; 
 import PropTypes from 'prop-types';
 import {
   onGetAuctionData,
@@ -101,8 +100,8 @@ export default function AuctionList({user}) {
   };
 
   useEffect(() => {
-    echoAuthInit();
-    echoAuth.private(`update.auction`).listen('Updated', (e) => {
+     
+    window.echo.private(`update.auction`).listen('Updated', (e) => {
       if (user.uid != e.authUser) {
         if (e.action === 'created') {
           console.log('', e.data);
@@ -117,9 +116,9 @@ export default function AuctionList({user}) {
       }
     });
     return () => {
-      const echoChannel = echoAuth.private(`update.auction`);
+      const echoChannel = window.echo.private(`update.auction`);
       echoChannel.stopListening('Updated');
-      echoAuth.leave(`update.auction`);
+      window.echo.leave(`update.auction`);
     };
   }, []);
 

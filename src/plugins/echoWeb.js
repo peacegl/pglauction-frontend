@@ -2,7 +2,7 @@
 // import Socket from 'socket.io-client';
 // const WebEcho = () => {
 //   window.Pusher = require('pusher-js');
-//   window.Echo = new Echo({
+//   echo = new Echo({
 //     broadcaster: 'pusher',
 //     key: 'd50b12da7c3c5c8ef0da', // same key used in the pusher key
 //     wsHost: '127.0.0.1', // host when you deploy would be your domain

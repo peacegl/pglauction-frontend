@@ -17,7 +17,8 @@ import {useEffect, useState} from 'react';
 import UserModal from './UserModal';
 import SingleUserModal from './SingleUserModal';
 import PropTypes from 'prop-types';
-import echoAuthInit from 'plugins/echo';
+
+ 
 
 export default function UserList({user}) {
   const [openModal, setOpenModal] = useState(false);
@@ -130,8 +131,8 @@ export default function UserList({user}) {
   // end of for exporting data
 
   useEffect(() => {
-    echoAuthInit();
-    echoAuth.private(`update.user`).listen('Updated', (e) => {
+     
+    window.echo.private(`update.user`).listen('Updated', (e) => {
       if (user.uid != e.authUser) {
         if (e.action === 'created') {
           newUserAddRealTime(e.data);
@@ -145,9 +146,9 @@ export default function UserList({user}) {
       }
     });
     return () => {
-      const echoChannel = echoAuth.private(`update.user`);
+      const echoChannel = window.echo.private(`update.user`);
       echoChannel.stopListening('Updated');
-      echoAuth.leave(`update.user`);
+      window.echo.leave(`update.user`);
     };
   }, []);
 

@@ -7,8 +7,8 @@ import React, {useEffect, useState} from 'react';
 import ListHeader from 'components/design/ListHeader';
 import GridView from './GridView/index';
 import AppsContent from './AppsContent';
-import {useRouter} from 'next/router';
-import echoWeb from 'plugins/echoWeb';
+import {useRouter} from 'next/router'; 
+
 import ListView from './ListView';
 import {
   onGetWebVehicleData,
@@ -101,7 +101,7 @@ const VehicleList = () => {
   };
 
   useEffect(() => {
-    echoWeb.channel(`web.vehicle`).listen('Web', (e) => {
+    window.echo.channel(`web.vehicle`).listen('Web', (e) => {
       if (e.action == 'created') {
         vehicleReaTimeCreated(e);
       } else if (e.action == 'updated') {
@@ -112,9 +112,9 @@ const VehicleList = () => {
       }
     });
     return () => {
-      const echoChannel = echoWeb.channel(`web.vehicle`);
+      const echoChannel = window.echo.channel(`web.vehicle`);
       echoChannel.stopListening('Web');
-      echoWeb.leave(`web.vehicle`);
+      window.echo.leave(`web.vehicle`);
     };
   }, [router]);
 

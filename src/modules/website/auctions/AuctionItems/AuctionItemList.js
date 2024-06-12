@@ -8,6 +8,8 @@ import ListHeader from 'components/design/ListHeader';
 import GridView from './GridView/index';
 import AppsContent from './AppsContent';
 import {useRouter} from 'next/router';
+
+
 import {
   alpha,
   Box,
@@ -16,8 +18,7 @@ import {
   Typography,
   Select,
   MenuItem,
-} from '@mui/material';
-import echoWeb from 'plugins/echoWeb';
+} from '@mui/material'; 
 import {async} from '@firebase/util';
 
 const AuctionItemList = () => {
@@ -62,15 +63,15 @@ const AuctionItemList = () => {
   };
 
   useEffect(() => {
-    echoWeb.channel(`web.auction_items.${id}`).listen('Web', (e) => {
+    window.echo.channel(`web.auction_items.${id}`).listen('Web', (e) => {
       if (e.action === 'sync') {
         fetchData();
       }
     });
     return () => {
-      const echoChannel = echoWeb.channel(`web.auction_items.${id}`);
+      const echoChannel = window.echo.channel(`web.auction_items.${id}`);
       echoChannel.stopListening('Web');
-      echoWeb.leave(`web.auction_items.${id}`);
+      window.echo.leave(`web.auction_items.${id}`);
     };
   }, []);
 

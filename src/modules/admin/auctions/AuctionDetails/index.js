@@ -10,7 +10,8 @@ import {AppLoader} from '@crema';
 import ItemsData from './items';
 import {useState} from 'react';
 import {GET_AUCTION_ITEMS_CHANGE} from 'shared/constants/ActionTypes';
-import echoWeb from 'plugins/echoWeb';
+
+ 
 
 const AuctionDetails = () => {
   const {auction = {}} = useSelector(({auctions}) => auctions);
@@ -46,7 +47,7 @@ const AuctionDetails = () => {
   };
 
   useEffect(() => {
-    echoWeb.channel(`web.bid`).listen('Web', (e) => {
+    window.echo.channel(`web.bid`).listen('Web', (e) => {
       if (e.action == 'bidAccepted') {
         dispatch({
           type: GET_AUCTION_ITEMS_CHANGE,
@@ -61,9 +62,9 @@ const AuctionDetails = () => {
       }
     });
     return () => {
-      const echoChannel = echoWeb.channel(`web.bid`);
+      const echoChannel = window.echo.channel(`web.bid`);
       echoChannel.stopListening('Web');
-      echoWeb.leave(`web.bid`);
+      window.echo.leave(`web.bid`);
     };
   }, []);
 

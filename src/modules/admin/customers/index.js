@@ -10,12 +10,14 @@ import {getData, onViewColumnsChange} from 'configs';
 import CustomerModal from './CustomerModal';
 import {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
+
+
 import {
   ADD_CUSTOMER,
   EDIT_CUSTOMER,
   DELETE_CUSTOMER,
 } from 'shared/constants/Permissions';
-import echoAuthInit from 'plugins/echo';
+ ;
 import {
   onGetCustomerList,
   onDeleteCustomers,
@@ -136,8 +138,8 @@ export default function CustomerList({user}) {
   // end of for exporting data
 
   useEffect(() => {
-    echoAuthInit();
-    echoAuth.private(`update.customer`).listen('Updated', (e) => {
+     
+    window.echo.private(`update.customer`).listen('Updated', (e) => {
       if (user.uid != e.authUser) {
         if (e.action === 'created') {
           newCustomerAddRealTime(e.data);
@@ -151,9 +153,9 @@ export default function CustomerList({user}) {
       }
     });
     return () => {
-      const echoChannel = echoAuth.private(`update.customer`);
+      const echoChannel = window.echo.private(`update.customer`);
       echoChannel.stopListening('Updated');
-      echoAuth.leave(`update.customer`);
+      window.echo.leave(`update.customer`);
     };
   }, []);
 

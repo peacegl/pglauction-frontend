@@ -7,9 +7,9 @@ import AppCard from '@crema/core/AppCard';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {onGetVehicleAuctionData} from 'redux/actions';
-import {CardActions, Pagination} from '@mui/material';
-import echoWeb from 'plugins/echoWeb';
+import {CardActions, Pagination} from '@mui/material'; 
 import {GET_VEHICLE_AUCTIONS_CHANGES} from 'shared/constants/ActionTypes';
+
 
 const AuctionVehicleList = ({auctionId}) => {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ const AuctionVehicleList = ({auctionId}) => {
   };
 
   useEffect(() => {
-    echoWeb.channel(`web.bid`).listen('Web', (e) => {
+    window.echo.channel(`web.bid`).listen('Web', (e) => {
       if (e.action == 'bidAccepted') {
         dispatch({
           type: GET_VEHICLE_AUCTIONS_CHANGES,
@@ -49,9 +49,9 @@ const AuctionVehicleList = ({auctionId}) => {
       }
     });
     return () => {
-      const echoChannel = echoWeb.channel(`web.bid`);
+      const echoChannel = window.echo.channel(`web.bid`);
       echoChannel.stopListening('Web');
-      echoWeb.leave(`web.bid`);
+      window.echo.leave(`web.bid`);
     };
   }, []);
 

@@ -24,7 +24,7 @@ import {
 } from 'shared/constants/Permissions';
 import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
-import echoAuthInit from 'plugins/echo';
+ 
 
 export default function VehicleList({user}) {
   const dispatch = useDispatch();
@@ -148,8 +148,7 @@ export default function VehicleList({user}) {
   };
 
   useEffect(() => {
-    echoAuthInit();
-    window.echoAuth.private(`update.vehicle`).listen('Updated', (e) => {
+    window.echo.channel(`update.vehicle`).listen('Updated', (e) => {
       if (user.uid != e.authUser) {
         if (e.action === 'created') {
           newVehicleAddRealTime(e.data);
@@ -163,9 +162,9 @@ export default function VehicleList({user}) {
       }
     });
     return () => {
-      const echoChannel = window.echoAuth.private(`update.vehicle`);
+      const echoChannel = window.echo.channel(`update.vehicle`);
       echoChannel.stopListening('Updated');
-      echoAuth.leave(`update.vehicle`);
+      window.echo.leave(`update.vehicle`);
     };
   }, []);
 

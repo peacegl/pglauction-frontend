@@ -6,8 +6,8 @@ import {Box, Container} from '@mui/material';
 import {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
-import BidInfo from './BidInfo';
-import echoWeb from 'plugins/echoWeb';
+import BidInfo from './BidInfo'; 
+
 
 const SingleAuctionItem = (props) => {
   const router = useRouter();
@@ -20,7 +20,7 @@ const SingleAuctionItem = (props) => {
   }, []);
 
   useEffect(() => {
-    echoWeb
+    echo
       .channel(`web.vehicles.${props.vehicle.vehicle.id}`)
       .listen('Web', (e) => {
         if (e.action == 'updated') {
@@ -28,11 +28,11 @@ const SingleAuctionItem = (props) => {
         }
       });
     return () => {
-      const echoChannel = echoWeb.channel(
+      const echoChannel = window.echo.channel(
         `web.vehicles.${props.vehicle.vehicle.id}`,
       );
       echoChannel.stopListening('Web');
-      echoWeb.leave(`web.vehicles.${props.vehicle.vehicle.id}`);
+      window.echo.leave(`web.vehicles.${props.vehicle.vehicle.id}`);
     };
   }, []);
 

@@ -8,11 +8,11 @@ import jwtAxios from '@crema/services/auth/jwt-auth';
 import {moneyFormater, getData} from 'configs';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {LoadingButton} from '@mui/lab';
-import echoWeb from 'plugins/echoWeb';
+import {LoadingButton} from '@mui/lab'; 
 import {Form, Formik} from 'formik';
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
+
 import * as yup from 'yup';
 import {
   alpha,
@@ -99,7 +99,7 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
   }, []);
 
   useEffect(() => {
-    echoWeb.channel(`web.bid`).listen('Web', (e) => {
+    window.echo.channel(`web.bid`).listen('Web', (e) => {
       if (e.action == 'created') {
         console.log('bid changed', e.data);
         setVehicle((d) => {
@@ -140,9 +140,9 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
       }
     });
     return () => {
-      const echoChannel = echoWeb.channel(`web.bid`);
+      const echoChannel = window.echo.channel(`web.bid`);
       echoChannel.stopListening('Web');
-      echoWeb.leave(`web.bid`);
+      window.echo.leave(`web.bid`);
     };
   }, []);
 

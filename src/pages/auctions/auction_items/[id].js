@@ -17,7 +17,8 @@ export async function getServerSideProps(context) {
     if (res.status === 200 && res.data.result) {
       vehicle = res.data.data;
     }
-  } catch (error) { }
+  } catch (error) { 
+  }
   if (!vehicle.id) {
     return {
       notFound: true,

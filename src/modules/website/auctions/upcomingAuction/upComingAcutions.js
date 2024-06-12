@@ -12,9 +12,9 @@ import {
 } from 'redux/actions';
 import React, {useEffect, useState} from 'react';
 import {alpha, Box} from '@mui/material';
-import AuctionGrid from '../AuctionGrid';
-import echoWeb from 'plugins/echoWeb';
+import AuctionGrid from '../AuctionGrid'; 
 import moment from 'moment';
+
 
 const UpComingAuctions = () => {
   const dispatch = useDispatch();
@@ -46,7 +46,7 @@ const UpComingAuctions = () => {
   };
 
   useEffect(() => {
-    echoWeb.channel(`web.auction_item`).listen('Web', (e) => {
+    window.echo.channel(`web.auction_item`).listen('Web', (e) => {
       let startTime = moment(
         e.data?.start_date,
         'YYYY-MM-DD hh:mm:ss A',
@@ -78,9 +78,9 @@ const UpComingAuctions = () => {
       }
     });
     return () => {
-      const echoChannel = echoWeb.channel(`web.auction_item`);
+      const echoChannel = window.echo.channel(`web.auction_item`);
       echoChannel.stopListening('Web');
-      echoWeb.leave(`web.auction_item`);
+      window.echo.leave(`web.auction_item`);
       console.log('clean up ...');
     };
   }, []);

@@ -15,7 +15,7 @@ import '@crema/services/index';
 import 'shared/vendors/index.css';
 import AppPageMeta from '@crema/core/AppPageMeta';
 import JWTAuthProvider from '@crema/services/auth/jwt-auth/JWTAuthProvider';
-
+import useEcho from 'plugins/echo';
 // import EchoProvider from 'configs/EchoProvider';
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -24,6 +24,12 @@ const clientSideEmotionCache = createEmotionCache();
 export default function MyApp(props) {
   const {Component, emotionCache = clientSideEmotionCache, pageProps} = props;
   const store = useStore(pageProps.initialReduxState);
+
+  React.useEffect(() => {
+    if (window) {
+      useEcho();
+    }
+  }, []);
 
   return (
     // <EchoProvider>
