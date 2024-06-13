@@ -20,7 +20,7 @@ const SingleAuctionItem = (props) => {
   }, []);
 
   useEffect(() => {
-    echo
+    window.echo
       .channel(`web.vehicles.${props.vehicle.vehicle.id}`)
       .listen('Web', (e) => {
         if (e.action == 'updated') {

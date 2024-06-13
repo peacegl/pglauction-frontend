@@ -18,6 +18,7 @@ export async function getServerSideProps(context) {
       vehicle = res.data.data;
     }
   } catch (error) { 
+    console.log('error',error)
   }
   if (!vehicle.id) {
     return {

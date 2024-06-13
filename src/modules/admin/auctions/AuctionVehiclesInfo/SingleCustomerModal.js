@@ -136,15 +136,15 @@ export default function SingleCustomerModal({
                   />
                   <Item
                     label={<IntlMessages id='common.fullname' />}
-                    value={singleCustomer.loginable.fullname}
+                    value={singleCustomer.loginable?.fullname}
                   />
                   <Item
                     label={<IntlMessages id='common.phone' />}
-                    value={singleCustomer.loginable.phone}
+                    value={singleCustomer.loginable?.phone}
                   />
                   <Item
                     label={<IntlMessages id='common.whatsapp' />}
-                    value={singleCustomer.loginable.whatsapp}
+                    value={singleCustomer.loginable?.whatsapp}
                   />
 
                   <Item
@@ -178,7 +178,7 @@ export default function SingleCustomerModal({
                 >
                   <Item
                     label={<IntlMessages id='common.birthDate' />}
-                    value={singleCustomer.loginable.birth_date}
+                    value={singleCustomer.loginable?.birth_date}
                   />
 
                   <Item
@@ -193,19 +193,19 @@ export default function SingleCustomerModal({
 
                   <Item
                     label={<IntlMessages id='common.created_by' />}
-                    value={singleCustomer.loginable.created_by?.username}
+                    value={singleCustomer.loginable?.created_by?.username}
                   />
                   <Item
                     label={<IntlMessages id='common.updated_by' />}
-                    value={singleCustomer.loginable.updated_by?.username}
+                    value={singleCustomer.loginable?.updated_by?.username}
                   />
                   <Item
                     label={<IntlMessages id='common.created_at' />}
-                    value={singleCustomer.loginable.created_at}
+                    value={singleCustomer.loginable?.created_at}
                   />
                   <Item
                     label={<IntlMessages id='common.updated_at' />}
-                    value={singleCustomer.loginable.updated_at}
+                    value={singleCustomer.loginable?.updated_at}
                   />
                 </List>
               </TabPanel>
