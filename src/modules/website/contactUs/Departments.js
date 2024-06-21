@@ -20,7 +20,7 @@ const departments = [
       },
       {
         icon: <WhatsAppIcon sx={{ color: (theme) => theme.palette.info.main }} />,
-        content: '+1(843) 813 8685',
+        content: '+971 56 592 9272',
         url: 'https://wa.me/+18438138685',
       },
 
@@ -45,15 +45,15 @@ const departments = [
             sx={{ color: (theme) => theme.palette.success.main }}
           />
         ),
-        content: '+18438138685',
-        url: 'tel:+18438138685',
+        content: '+971565474800',
+        url: 'tel:+971565474800',
       },
       {
         icon: (
           <WhatsAppIcon sx={{ color: (theme) => theme.palette.success.main }} />
         ),
-        content: '+183 27809429',
-        url: 'https://wa.me/+18327809429',
+        content: '971565474800',
+        url: 'https://wa.me/+971565474800',
       },
     ],
   },

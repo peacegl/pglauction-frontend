@@ -145,7 +145,8 @@ export default function Footer() {
                     underline='none'
                     mx='5px'
                   >
-                    4701 Decker Dr, Baytown TX,USA 77520
+                   Sharjah Industrial Area 2
+                   Sharjah-U.A.E.
                   </Typography>
                 </Box>
                 <Box
@@ -163,7 +164,7 @@ export default function Footer() {
                     mx='5px'
                     color={theme.palette.text.secondary}
                   >
-                    +1(843) 813 8685
+                    +971 56 592 9272
                   </MuiLink>
                 </Box>
                 <Box
@@ -176,11 +177,28 @@ export default function Footer() {
                     variant='body2'
                     fontSize='14px'
                     underline='none'
-                    href='mailto:support@peaceglobaltech.com'
+                    href='mailto:utc@peacegl.com'
                     mx='5px'
                     color={theme.palette.text.secondary}
                   >
-                    support@peaceglobaltech.com
+                    utc@peacegl.com
+                  </MuiLink>
+                </Box>
+                <Box
+                  marginBottom='10px'
+                  display='flex'
+                  sx={{ justifyContent: { xs: 'center', sm: 'flex-start' } }}
+                >
+                  <EmailOutlinedIcon />
+                  <MuiLink
+                    variant='body2'
+                    fontSize='14px'
+                    underline='none'
+                    href='mailto:crm@peacegl.com'
+                    mx='5px'
+                    color={theme.palette.text.secondary}
+                  >
+                    crm@peacegl.com
                   </MuiLink>
                 </Box>
               </Box>
