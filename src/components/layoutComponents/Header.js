@@ -175,10 +175,10 @@ function Header(props) {
           alignItems='center'
           columnGap='20px'
         >
-          <Box
+            <Box
             onClick={() => router.push('/')}
             sx={{
-              '&:hover': { cursor: 'pointer' },
+              '&:hover': {cursor: 'pointer'},
               color: (theme) => theme.palette.text.primary,
             }}
             fontWeight='bold'
@@ -189,8 +189,7 @@ function Header(props) {
             <Box
               component='img'
               sx={{
-                width: { xs: '30px', md: '40px', lg: '60px', xl: '80px' },
-                marginRight: 10,
+                width: {xs: '100px', md: '120px', lg: '140px', xl: '160px'},
               }}
               alt='united logo'
               src={logoImage.src}
@@ -198,12 +197,12 @@ function Header(props) {
             <Typography
               component='h1'
               sx={{
-                display: { xs: 'none', sm: 'inline' },
-                fontSize: { xs: '17px', lg: '22px' },
+                display: {xs: 'none', sm: 'inline'},
+                fontSize: {xs: '17px', lg: '22px'},
                 fontWeight: 'bold',
               }}
             >
-              Your Company Name
+              United Used Cars
             </Typography>
           </Box>
 
