@@ -52,7 +52,7 @@ function TopMenu(props) {
     router.push(link);
   };
   const onSearch = (value) => {
-    router.push(make ? `/?make=${make}` : '/');
+    router.push(make ? `/vehicles?make=${make}` : '/vehicles');
     dispatch(setVehicleSearch(value));
   };
   const settings = useMemo(() => {
