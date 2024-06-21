@@ -45,37 +45,58 @@ const AboutUs = () => {
           <Title title={<IntlMessages id='website.about_us' />} />
           <Box sx={{mt: 1}}>
             <Typography component='p' variant='body1'>
-              Labore nulla Lorem esse fugiat fugiat pariatur excepteur nostrud
-              occaecat ad labore. Sunt commodo aliquip laboris officia ea.
-              Officia quis nisi voluptate cupidatat labore ea aliqua sunt.
-              Pariatur consequat et qui exercitation excepteur. Deserunt
-              consequat ea reprehenderit excepteur irure nisi voluptate commodo
-              laboris voluptate anim qui.
+              United Used Cars sells used cars with an affordable rate in Dubai,
+              UAE. We have a showroom in Sharjah, an office in Dubai to provide
+              comprehensive support and services to the customers. We have
+              different affiliates to help provide shipping, clearance, and sell
+              cars from USA in Dubai and elsewhere.
             </Typography>
             <Typography component='p' variant='body1' sx={{mt: 1}}>
-              Est dolor laborum aute pariatur ex occaecat nulla labore tempor
-              nisi velit voluptate quis veniam. Cillum et velit commodo quis.
-              Qui incididunt in consectetur aute magna laborum enim enim. Quis
-              velit sunt non voluptate in sunt. Magna consectetur est quis est
-              culpa magna commodo dolor ex. Nisi ullamco est enim ut cupidatat
-              eu pariatur velit dolore eiusmod non laboris. Cillum pariatur esse
-              nisi est aute nostrud dolor id.
+              United Used Cars LLC is one of the top companies in UAE selling
+              cars from ranging from different models and companies. We also
+              provides other services with its affiliates ranging from having
+              bidding rooms and computer labs in Sharjah office for you to buy
+              cars from USA auctions, shipping your cars, custom clearance for
+              your cars and selling your cars at its famous showroom in Sharjah.
             </Typography>
             <Typography component='p' sx={{my: 1}}>
-              Ipsum eiusmod proident in proident ullamco Lorem. Sunt occaecat in
-              pariatur anim. Veniam anim laboris duis enim proident anim ex ea.
-              Nisi dolore cupidatat laborum Lorem aliqua sunt id ut non
-              consectetur commodo deserunt qui.
+              Customers may ship cars via Peace Global Logistics LLC which is a
+              shipping company based in United States having two branches
+              located in Georgia and Texas. We are a well established company
+              which you may find more information in their <span></span>
+              <a
+                href='https://peacegl.com'
+                target='_blank'
+                style={{
+                  textDecoration: 'none',
+                  marginLeft: 1,
+                }}
+                rel='noreferrer'
+              >
+                website.
+              </a>
             </Typography>
             <Typography component='p' sx={{my: 3}}>
               Customers may use custom clearance and other services via our
               affiliate PGLC Shipping LLC. We are a well established company
               having branches in UAE and you may find more information in their
+              <span> </span>
+              <a
+                href='https://pglcshipping.com'
+                target='_blank'
+                style={{
+                  textDecoration: 'none',
+                  marginLeft: 1,
+                }}
+                rel='noreferrer'
+              >
+                website.
+              </a>
             </Typography>
             <Typography component='p' variant='body1'>
-              Cillum cillum sit laboris cillum amet consequat laborum. Lorem
-              ullamco labore ex eiusmod labore voluptate dolore id non ea dolore
-              duis in. Laborum nisi nostrud aute nulla.
+              We are one of the leading used cars market in Sharjah, UAE. So
+              give us a visit in our showroom located in Sharjah Industrial Area
+              2, Sharjah-U.A.E.
             </Typography>
 
             <Button
