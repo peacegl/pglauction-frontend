@@ -323,12 +323,12 @@ export default function GridItem({ item, ...props }) {
                 variant='contained'
                 size='small'
                 sx={{ mt: 2 }}
-                // href={`https://wa.me/${item?.seller?.loginable?.whatsapp}?text=${window.location.origin}/all-vehicles/${item?.id}`}
+                href={`https://wa.me/${item?.seller?.loginable?.whatsapp}?text=${window.location.origin}/all-vehicles/${item?.id}`}
                 target='_blank'
                 startIcon={<WhatsAppIcon />}
               >
-                {/* {item?.seller?.loginable?.whatsapp} */}
-                whatsapp number
+                {item?.seller?.loginable?.whatsapp}
+                {/* whatsapp number */}
               </Button>
             )}
           </Box>

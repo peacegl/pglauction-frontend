@@ -492,8 +492,8 @@ export default function ListItem({item, ...props}) {
               ) : (
                 <Box sx={{flex: 1, display: {xs: 'none', sm: 'block'}, px: 2}}>
                   <WhatsAppButton
-                    number={'whatsapp number'}
-                    // number={item.seller?.loginable?.whatsapp}
+                    // number={'whatsapp number'}
+                    number={item.seller?.loginable?.whatsapp}
                     url={window.location.origin + '/all-vehicles/' + item.id}
                   />
                 </Box>
