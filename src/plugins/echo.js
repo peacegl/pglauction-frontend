@@ -11,9 +11,9 @@ import axios from 'axios'
     wsHost: process.env.NEXT_PUBLIC_WEB_SOCKET_SERVER_URL,
     wsPort: process.env.NEXT_PUBLIC_REVERB_PORT,
     wssPort:  process.env.NEXT_PUBLIC_REVERB_PORT,
-    encrypted: true,
+    encrypted: false,
     forceTLS: false,
-    enabledTransports: ['ws', ],
+    enabledTransports: ['ws'],
     
     authorizer: (channel, options) => {
         return {
