@@ -10,10 +10,10 @@ import axios from 'axios'
     key: process.env.NEXT_PUBLIC_REVERB_APP_KEY,
     wsHost: process.env.NEXT_PUBLIC_WEB_SOCKET_SERVER_URL,
     wsPort: process.env.NEXT_PUBLIC_REVERB_PORT,
-    wssPort: 8080,
+    wssPort:  process.env.NEXT_PUBLIC_REVERB_PORT,
     encrypted: true,
     forceTLS: false,
-    enabledTransports: ['ws', 'wss'],
+    enabledTransports: ['ws', ],
     
     authorizer: (channel, options) => {
         return {
