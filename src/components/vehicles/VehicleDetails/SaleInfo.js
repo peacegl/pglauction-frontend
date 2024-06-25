@@ -92,7 +92,7 @@ export default function SaleInfo({vehicle, showPrice, admin}) {
             variant='outlined'
             size='large'
             sx={{mt: 4, width: '100%', borderRadius: 20}}
-            // href={`https://wa.me/${vehicle.seller?.loginable?.whatsapp}?text=${window.location.origin}/all-vehicles/${vehicle.id}`}
+            href={`https://wa.me/${vehicle.seller?.loginable?.whatsapp}?text=${window.location.origin}/all-vehicles/${vehicle.id}`}
             target='_blank'
           >
             <WhatsAppIcon />
