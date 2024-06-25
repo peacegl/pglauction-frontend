@@ -97,8 +97,7 @@ export default function SaleInfo({vehicle, showPrice, admin}) {
           >
             <WhatsAppIcon />
             <Box pt='2px'>
-              Your WhatsApp Number
-              {/* {vehicle.seller?.loginable?.whatsapp} */}
+              {vehicle.seller?.loginable?.whatsapp}
             </Box>
           </Button>
         )}
