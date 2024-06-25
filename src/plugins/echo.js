@@ -3,7 +3,7 @@ import Pusher from 'pusher-js';
 import axios from 'axios'
 
  const useEcho = ()=>{
- window.Pusher = Pusher;
+//  window.Pusher = Pusher;
  const token  = localStorage.getItem('token')
   window.echo = new Echo({
     broadcaster: 'reverb',
