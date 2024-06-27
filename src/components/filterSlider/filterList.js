@@ -9,6 +9,7 @@ import {Box, MenuItem} from '@mui/material';
 import NewlyAdded from './NewlyAdded';
 import BodyStyle from './BodyStyle';
 import {range} from 'configs';
+import { CurrencyYenTwoTone } from '@mui/icons-material';
 
 export default function filterList(filterData, messages, reset, setReset) {
   return {
@@ -21,6 +22,7 @@ export default function filterList(filterData, messages, reset, setReset) {
           newly_added_duration: 24,
           newly_added: 0,
         },
+        currentValue: filterData['newly_added'],
         content: (
           <NewlyAdded
             filterData={filterData}
@@ -33,6 +35,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='common.price' />,
         name: 'between@@price',
         initialValue: [0, 100000],
+        currentValue: filterData['between@@price'],
         content: (
           <MinMaxSlider
             value={filterData['between@@price']}
@@ -52,6 +55,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='common.location' />,
         name: 'location_id',
         initialValue: [],
+        currentValue: filterData['location_id'],
         content: (
           <ListItems
             url='/location/auto_complete'
@@ -66,6 +70,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='vehicle.odometer' />,
         name: 'between@@odometer',
         initialValue: [0, 250000],
+        currentValue: filterData['between@@odometer'],
         content: (
           <MinMaxSlider
             value={filterData['between@@odometer']}
@@ -85,6 +90,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='common.year' />,
         name: 'between@@year',
         initialValue: [1995, new Date().getFullYear()],
+        currentValue: filterData['between@@year'],
         content: (
           <MinMaxFilter
             value={filterData['between@@year']}
@@ -107,6 +113,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='common.make' />,
         name: 'make',
         initialValue: [],
+        currentValue: filterData['make'],
         content: (
           <ListItems
             url='/vehicleColumn/auto_complete?column=make'
@@ -122,6 +129,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='vehicle.model' />,
         name: 'model',
         initialValue: [],
+        currentValue: filterData['model'],
         content: (
           <ListItems
             url='/vehicleColumn/auto_complete?column=model'
@@ -137,6 +145,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='common.engine_type' />,
         name: 'engine_type',
         initialValue: [],
+        currentValue: filterData['engine_type'],
         content: (
           <ListItems
             url='/vehicleColumn/auto_complete?column=engine_type'
@@ -152,6 +161,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='common.cylinder' />,
         name: 'cylinder',
         initialValue: [],
+        currentValue: filterData['cylinder'],
         content: (
           <ListItems
             url='/vehicleColumn/auto_complete?column=cylinder'
@@ -167,6 +177,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='vehicle.interior_color' />,
         name: 'interior_color',
         initialValue: [],
+        currentValue: filterData['interior_color'],
         content: (
           <ListItems
             url='/vehicleColumn/auto_complete?column=interior_color'
@@ -182,6 +193,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='vehicle.exterior_color' />,
         name: 'exterior_color',
         initialValue: [],
+        currentValue: filterData['exterior_color'],
         content: (
           <ListItems
             url='/vehicleColumn/auto_complete?column=exterior_color'
@@ -197,6 +209,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='vehicle.document_type' />,
         name: 'document_type',
         initialValue: [],
+        currentValue: filterData['document_type'],
         content: (
           <ListItems
             url='/vehicleColumn/auto_complete?column=document_type'
@@ -212,6 +225,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='vehicle.drive_type' />,
         name: 'drive_type',
         initialValue: [],
+        currentValue: filterData['drive_type'],
         content: (
           <ListItems
             url='/vehicleColumn/auto_complete?column=drive_type'
@@ -227,6 +241,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='vehicle.keys' />,
         name: 'keys',
         initialValue: [],
+        currentValue: filterData['keys'],
         content: (
           <ListItems
             reduxReducer={setWebVehiclesFilter}
@@ -251,6 +266,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='vehicle.test_drive' />,
         name: 'test_drive',
         initialValue: [],
+        currentValue: filterData['test_drive'],
         content: (
           <ListItems
             reduxReducer={setWebVehiclesFilter}
@@ -276,6 +292,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='common.status' />,
         name: 'status',
         initialValue: [],
+        currentValue: filterData['status'],
         content: (
           <BorderedItems
             reduxReducer={setWebVehiclesFilter}
@@ -300,6 +317,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='vehicle.fuel' />,
         name: 'fuel',
         initialValue: [],
+        currentValue: filterData['fuel'],
         content: (
           <BorderedItems
             reduxReducer={setWebVehiclesFilter}
@@ -320,6 +338,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='vehicle.transmission' />,
         name: 'transmission',
         initialValue: [],
+        currentValue: filterData['transmission'],
         content: (
           <BorderedItems
             reduxReducer={setWebVehiclesFilter}
@@ -342,6 +361,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='vehicle.body_style' />,
         name: 'body_style',
         initialValue: [],
+        currentValue: filterData['body_style'],
         content: (
           <BodyStyle
             reduxReducer={setWebVehiclesFilter}
@@ -362,6 +382,7 @@ export default function filterList(filterData, messages, reset, setReset) {
         title: <IntlMessages id='vehicle.features' />,
         name: 'feature',
         initialValue: [],
+        currentValue: filterData['feature'],
         content: (
           <BorderedItems
             url='meta_table/auto_complete?type=feature'

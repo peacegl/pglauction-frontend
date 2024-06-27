@@ -2,7 +2,7 @@ import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import {setWebVehiclesFilter} from '../../redux/actions';
 import IntlMessages from '@crema/utility/IntlMessages';
-import {Box, Button, IconButton} from '@mui/material';
+import {Badge, Box, Button, IconButton} from '@mui/material';
 import RemoveIcon from '@mui/icons-material/Remove';
 import MuiAccordion from '@mui/material/Accordion';
 import Typography from '@mui/material/Typography';
@@ -90,45 +90,53 @@ export default function FilterComponents(props) {
   };
   return (
     <Box>
-      {filterItems.map((item, index) =>
-        item.hideAccordian ? (
-          <Box
-            key={index}
-            sx={{
-              borderTop: (theme) => `1px solid ${theme.palette.divider}`,
-              mb: 4,
-            }}
-          >
-            <Box sx={{mx: 3, mt: 4}}>{item.title}</Box>
-            {item.content}
-          </Box>
-        ) : (
-          <Accordion
-            key={index}
-            expanded={openAccordians.includes(item.key)}
-            onChange={() => toggleAccordian(item.key)}
-          >
-            <AccordionSummary>
-              <Typography>{item.title}</Typography>
-              <Box>
-                <Button size='small' onClick={(e) => onReset(e, item)}>
-                  <IntlMessages id='filter.reset' />
-                </Button>
-                <IconButton>
-                  {!openAccordians.includes(item.key) ? (
-                    <AddIcon sx={{fontSize: '16px'}} />
-                  ) : (
-                    <RemoveIcon sx={{fontSize: '16px'}} />
-                  )}
-                </IconButton>
-              </Box>
-            </AccordionSummary>
+      {filterItems.map((item, index) =>{
+        const initVal= JSON.stringify(item.initialValue);
+        const currentVal= JSON.stringify(item.currentValue);
+return item.hideAccordian ? (
+  <Box
+    key={index}
+    sx={{
+      borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+      mb: 4,
+    }}
+  >
+    
+    <Box sx={{mx: 3, mt: 4}}>{item.title}</Box>
+    {item.content}
+  </Box>
+) : (
+  <Accordion
+    key={index}
+    expanded={openAccordians.includes(item.key)}
+    onChange={() => toggleAccordian(item.key)}
+  >
+    <AccordionSummary>
+    <Badge color="primary" variant="dot" invisible={initVal === currentVal}>
+    <Typography>{item.title}</Typography>
+    </Badge>
+     
+      <Box>
+        <Button size='small' onClick={(e) => onReset(e, item)}>
+          <IntlMessages id='filter.reset' />
+        </Button>
+        <IconButton>
+          {!openAccordians.includes(item.key) ? (
+            <AddIcon sx={{fontSize: '16px'}} />
+          ) : (
+            <RemoveIcon sx={{fontSize: '16px'}} />
+          )}
+        </IconButton>
+      </Box>
+    </AccordionSummary>
 
-            <AccordionDetails>
-              {openAccordians.includes(item.key) && item.content}
-            </AccordionDetails>
-          </Accordion>
-        ),
+    <AccordionDetails>
+      {openAccordians.includes(item.key) && item.content}
+    </AccordionDetails>
+  </Accordion>
+)
+      }
+       
       )}
     </Box>
   );
