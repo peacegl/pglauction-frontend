@@ -66,9 +66,9 @@ export default function VehicleSearchBar({
     if (search == '') setInputValue('');
   }, [search]);
 
-  useEffect(() => {
-    if (inputValue == '') dispatch(setVehicleSearch(''));
-  }, [inputValue]);
+  // useEffect(() => {
+  //   if (inputValue == '') dispatch(setVehicleSearch(''));
+  // }, [inputValue]);
 
   return (
     <Box sx={{display: 'flex'}}>

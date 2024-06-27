@@ -90,7 +90,9 @@ const VehicleList = () => {
       }
     }
     dispatch(setBrandFilter(filterBrands));
+
     // filterData
+    // console.log(filterData,search);
   }, [makeData, page, search, perPage, user?.type, filterData]);
 
   const onPageChange = (event, value) => {
