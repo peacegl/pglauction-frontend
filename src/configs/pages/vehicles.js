@@ -120,6 +120,10 @@ export const tableColumns = function (router) {
       label: messages['common.seller'],
     },
     {
+      name: 'vehicle_owner.name',
+      label: messages['common.vehicle_owner'],
+    },
+    {
       name: 'exterior_color',
       label: messages['vehicle.exterior_color'],
     },

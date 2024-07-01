@@ -39,6 +39,11 @@ export default function VehicleModal({
   const [locations, setLocations] = useState([]);
   const [sellerLoading, setSellerLoading] = useState(false);
   const [sellers, setSellers] = useState([]);
+
+  
+  const [ownerLoading, setOwnerLoading] = useState(false);
+  const [owners, setOwners] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     vin: '',
@@ -54,6 +59,7 @@ export default function VehicleModal({
     status: 'future',
     location_id: 'bb09b5d7-94b4-45fc-baff-2a6a0b706078',
     seller_id: '',
+    vehicle_owner_id: '',
     price: '',
     sale_rate: 15,
     document_type: '',
@@ -93,11 +99,20 @@ export default function VehicleModal({
       setSellers,
     );
   };
+  const searchOwners = (content, vehicle_owner_id = null) => {
+    getData(
+      `/owners/auto_complete${vehicle_owner_id ? '?id=' + vehicle_owner_id : ''}`,
+      content,
+      setOwnerLoading,
+      setOwners,
+    );
+  };
 
   useEffect(() => {
     if (!recordId) {
       searchLocations({});
       searchSellers({});
+      searchOwners({});
     }
   }, []);
 
@@ -139,6 +154,8 @@ export default function VehicleModal({
             setInitialValues(values);
             searchLocations({}, values.location_id);
             searchSellers({}, values.seller_id);
+            searchOwners({}, values.vehicle_owner_id);
+
           }
           setIsLoading(false);
         } catch (error) {
@@ -255,6 +272,9 @@ export default function VehicleModal({
           sellers={sellers}
           sellerLoading={sellerLoading}
           searchSellers={searchSellers}
+          searchOwners={searchOwners}
+          owners={owners}
+          ownerLoading={ownerLoading}
           setIsLoading={setIsLoading}
         />
       ),

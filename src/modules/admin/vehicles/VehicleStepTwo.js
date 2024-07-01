@@ -6,9 +6,14 @@ import MenuItem from '@mui/material/MenuItem';
 import {Box, Stack} from '@mui/material';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 
 const VehicleStepTwo = (props) => {
   const {messages} = useIntl();
+  useEffect(() => {
+    console.log(props);
+  }, [ ])
+  
   return (
     <Box>
       <Stack spacing={{xs: 5, md: 8}}>
@@ -39,6 +44,20 @@ const VehicleStepTwo = (props) => {
             keyName='fullname'
             onSearch={props.searchSellers}
             value={props.values?.seller_id}
+            handleChange={({name, value}) => props.setfieldvalue(name, value)}
+          />
+          <AppAutocompleteField
+            placeholder={messages['vehicle.ownerPlaceholder']}
+            label={<IntlMessages id='vehicle.owner' />}
+            name='vehicle_owner_id'
+            variant='outlined'
+            size='small'
+            sx={{flex: 1, width: '100%'}}
+            dataLoading={props.ownerLoading}
+            options={props.owners}
+            keyName='name'
+            onSearch={props.searchOwners}
+            value={props.values?.vehicle_owner_id}
             handleChange={({name, value}) => props.setfieldvalue(name, value)}
           />
         </Stack>
