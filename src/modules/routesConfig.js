@@ -93,6 +93,15 @@ const routesConfig = [
     permittedPermission: VIEW_CUSTOMERS,
   },
   {
+    id: 'owners',
+    title: 'Vehicle Owners List',
+    messageId: 'sidebar.owners',
+    type: 'item',
+    icon: <PeopleAltIcon sx={{fontSize: 22}} />,
+    url: '/admin/vehicle-owners',
+    permittedPermission: VIEW_CUSTOMERS,
+  },
+  {
     id: 'roles',
     title: 'Roles List',
     messageId: 'sidebar.roles',

@@ -771,6 +771,7 @@
   "sidebar.auctions": "Auctions",
   "sidebar.auctionItems": "Auction Items",
   "sidebar.customers": "Customers",
+  "sidebar.owners": "Vehicle Owners",
   "sidebar.categories": "Categories",
   "sidebar.locations": "Locations",
   "sidebar.makes": "Makes",
@@ -1237,5 +1238,16 @@
   "common.acceptDialogText": "Do you want to accept this bid !",
   "common.cancelDialogText": "Do you want to cancel this bid !",
   "common.close": "close",
-  "common.vehicleCountByStatus": "Vehicle count by status"
+  "common.vehicleCountByStatus": "Vehicle count by status",
+
+  "owner.ownerList": "Owner List",
+  "owner.ownerDownload": "Owner Download",
+  "owner.download": "Owner Download",
+  "owner.ownerInfo": "Owner Info",
+  "owner.ownerDetails": "Owner Details",
+  "owner.deleteMessage": "Are you sure, you want to delete the selected Owner(s)?",
+  "owner.message.deleted": "Owner(s) deleted successfully!",
+  "owner.vehicleOwnerInfo": "Vehicle Owner Info"
+
+
 }
