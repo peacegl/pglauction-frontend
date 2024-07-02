@@ -11,15 +11,16 @@ import jwtAxios from '@crema/services/auth/jwt-auth';
 
 
 import {
-  ADD_CUSTOMER,
-  EDIT_CUSTOMER,
-  DELETE_CUSTOMER,
+  ADD_VEHICLE_OWNER,
+  EDIT_VEHICLE_OWNER,
+  DELETE_VEHICLE_OWNER,
+  EDIT_VEHICLE_OWNER,
+  DELETE_VEHICLE_OWNER,
+  ADD_VEHICLE_OWNER,
 } from 'shared/constants/Permissions';
-import VehicleOwner from './VehicleOwnerModel';
 import VehicleOwnerModel from './VehicleOwnerModel';
 import { FETCH_ERROR, FETCH_START, SHOW_MESSAGE } from 'shared/constants/ActionTypes';
  
-
 export default function VehicleOwnerList({user}) {
   const [openFilter, setOpenFilter] = useState(false);
   const [selected, setSelected] = useState([]);
@@ -158,12 +159,12 @@ export default function VehicleOwnerList({user}) {
         isLoading={loading}
         selected={selected}
         onEnterSearch={onEnterSearch}
-        showAddButton={user?.permissions?.includes(ADD_CUSTOMER)}
-        showEditButton={user?.permissions?.includes(EDIT_CUSTOMER)}
-        showDeleteButton={user?.permissions?.includes(DELETE_CUSTOMER)}
+        showAddButton={user?.permissions?.includes(ADD_VEHICLE_OWNER)}
+        showEditButton={user?.permissions?.includes(EDIT_VEHICLE_OWNER)}
+        showDeleteButton={user?.permissions?.includes(DELETE_VEHICLE_OWNER)}
         selectableRows={
-          user?.permissions?.includes(EDIT_CUSTOMER) ||
-          user?.permissions?.includes(DELETE_CUSTOMER)
+          user?.permissions?.includes(EDIT_VEHICLE_OWNER) ||
+          user?.permissions?.includes(DELETE_VEHICLE_OWNER)
             ? 'multiple'
             : 'none'
         }

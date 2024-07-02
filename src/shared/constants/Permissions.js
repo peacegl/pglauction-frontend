@@ -15,6 +15,11 @@ export const VIEW_CUSTOMERS = 'view_customers';
 export const ADD_CUSTOMER = 'create_customers';
 export const EDIT_CUSTOMER = 'update_customers';
 export const DELETE_CUSTOMER = 'delete_customers';
+// Vehicle Owners Permissions
+export const VIEW_VEHICLE_OWNERS = 'view_vehicle_owners';
+export const ADD_VEHICLE_OWNER = 'create_vehicle_owners';
+export const EDIT_VEHICLE_OWNER = 'update_vehicle_owners';
+export const DELETE_VEHICLE_OWNER = 'delete_vehicle_owners';
 
 // Roles Permissions
 export const VIEW_ROLES = 'view_roles';
