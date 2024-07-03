@@ -11,9 +11,6 @@ import jwtAxios from '@crema/services/auth/jwt-auth';
 
 
 import {
-  ADD_VEHICLE_OWNER,
-  EDIT_VEHICLE_OWNER,
-  DELETE_VEHICLE_OWNER,
   EDIT_VEHICLE_OWNER,
   DELETE_VEHICLE_OWNER,
   ADD_VEHICLE_OWNER,
