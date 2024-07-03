@@ -15,13 +15,13 @@ const departments = [
     details: [
       {
         icon: <EmailIcon sx={{color: (theme) => theme.palette.info.main}} />,
-        content: 'crm@peacegl.com',
-        url: 'mailto:crm@peacegl.com',
+        content: 'info@unitedtradingcars.com',
+        url: 'mailto:info@unitedtradingcars.com',
       },
       {
         icon: <EmailIcon sx={{color: (theme) => theme.palette.info.main}} />,
-        content: 'utc@peacegl.com',
-        url: 'mailto:utc@peacegl.com',
+        content: 'info@unitedtradingcars.com',
+        url: 'mailto:info@unitedtradingcars.com',
       },
       {
         icon: <WhatsAppIcon sx={{color: (theme) => theme.palette.info.main}} />,

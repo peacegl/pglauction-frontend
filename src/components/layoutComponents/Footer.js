@@ -177,11 +177,11 @@ export default function Footer() {
                     variant='body2'
                     fontSize='14px'
                     underline='none'
-                    href='mailto:utc@peacegl.com'
+                    href='mailto:info@unitedtradingcars.com'
                     mx='5px'
                     color={theme.palette.text.secondary}
                   >
-                    utc@peacegl.com
+                    info@unitedtradingcars.com
                   </MuiLink>
                 </Box>
                 <Box
@@ -194,11 +194,11 @@ export default function Footer() {
                     variant='body2'
                     fontSize='14px'
                     underline='none'
-                    href='mailto:crm@peacegl.com'
+                    href='mailto:info@unitedtradingcars.com'
                     mx='5px'
                     color={theme.palette.text.secondary}
                   >
-                    crm@peacegl.com
+                    info@unitedtradingcars.com
                   </MuiLink>
                 </Box>
               </Box>
