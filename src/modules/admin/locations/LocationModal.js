@@ -32,7 +32,7 @@ export default function LocationModal({
   const searchLocations = (content) => {
     getData(
       `/location/auto_complete`,
-      content,
+      {...content,load_parent:true},
       setLocationLoading,
       setParentLocations,
     );
@@ -42,7 +42,7 @@ export default function LocationModal({
     if (!recordId) {
       getData(
         `/location/auto_complete`,
-        {},
+        {load_parent:true},
         setLocationLoading,
         setParentLocations,
       );
@@ -68,7 +68,7 @@ export default function LocationModal({
               `/location/auto_complete${
                 values.parent_id ? '?id=' + values.parent_id : ''
               }`,
-              {},
+              {load_parent:true},
               setLocationLoading,
               setParentLocations,
             );
