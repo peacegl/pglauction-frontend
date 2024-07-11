@@ -8,7 +8,7 @@ import axios from 'axios'
   window.echo = new Echo({
     broadcaster: 'reverb',
     key: process.env.NEXT_PUBLIC_REVERB_APP_KEY,
-    wsHost: 'ws://'+process.env.NEXT_PUBLIC_WEB_SOCKET_SERVER_URL,
+    wsHost:  process.env.NEXT_PUBLIC_WEB_SOCKET_SERVER_URL,
     wsPort: process.env.NEXT_PUBLIC_REVERB_PORT,
     wssPort:  process.env.NEXT_PUBLIC_REVERB_PORT,
     encrypted: false,
