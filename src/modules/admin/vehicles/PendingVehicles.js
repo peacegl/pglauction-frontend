@@ -24,9 +24,11 @@ import {
 } from 'shared/constants/Permissions';
 import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
- 
+import {AppConfirmDialog} from '@crema';
+import jwtAxios from '@crema/services/auth/jwt-auth';
 
-export default function VehicleList({user}) {
+
+export default function PendingVehicles({user}) {
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
@@ -49,6 +51,8 @@ export default function VehicleList({user}) {
   const [openDownload, setOpenDownload] = useState(false);
   const [exportType, setExportType] = useState('pdf');
   const [exportDataAmount, setExportDataAmount] = useState('current_page');
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const [approvalVehiclesLoading, setApprovalVehiclesLoading] = useState(false);
   const fetchExportAllData = async (filteredData = {}) => {
     await getData(
       `/vehicles`,
@@ -56,7 +60,7 @@ export default function VehicleList({user}) {
         page: 1,
         per_page: -1,
         filterData: filteredData,
-        approval_status: 'approved',
+        approval_status: 'pending',
       },
       () => {},
       setExportData,
@@ -88,7 +92,7 @@ export default function VehicleList({user}) {
         exactMatch,
         filterData: filteredData ? filteredData : filterData,
         orderBy,
-        approval_status: 'approved',
+        approval_status: 'pending',
       }),
     );
   };
@@ -148,6 +152,18 @@ export default function VehicleList({user}) {
     setPage(0);
     fetchData(value, exactMatch);
   };
+  const approveVehicles = async () => {
+  try {
+    setApprovalVehiclesLoading(true);
+    const res = await jwtAxios.put('/vehicles/approve', {vehicleIds: selected.map((item) => data[item].id)});
+    setApprovalVehiclesLoading(false);
+    setOpenConfirmDialog(false);
+    setSelected([]);
+    fetchData();
+  } catch (error) {
+    setApprovalVehiclesLoading(false);
+  }
+  };
 
   useEffect(() => {
     window.echo.channel(`update.vehicle`).listen('Updated', (e) => {
@@ -185,7 +201,7 @@ export default function VehicleList({user}) {
   return (
     <>
       <CustomDataTable
-        title={<IntlMessages id='vehicle.vehicleList' />}
+      title={<IntlMessages id='vehicle.pendingVehicles' />}
         total={total}
         data={data}
         columns={tableColumns(router)}
@@ -199,9 +215,7 @@ export default function VehicleList({user}) {
         selected={selected}
         onEnterSearch={onEnterSearch}
         onSell={onSell}
-        showSell={user?.permissions?.includes(ADD_SALE)}
         selectedItems={selectedItems}
-        showAddButton={user?.permissions?.includes(ADD_VEHICLE)}
         showEditButton={user?.permissions?.includes(EDIT_VEHICLE)}
         showDeleteButton={user?.permissions?.includes(DELETE_VEHICLE)}
         selectableRows={
@@ -213,6 +227,10 @@ export default function VehicleList({user}) {
         }
         onDownloadClick={() => {
           setOpenDownload(true);
+        }}
+        showApproval={user?.permissions?.includes(EDIT_VEHICLE)}
+        onApproval={() => {
+          setOpenConfirmDialog(true);
         }}
       />
       {openFilter && (
@@ -248,6 +266,7 @@ export default function VehicleList({user}) {
           exportTitle={<IntlMessages id='vehicle.vehicleList' />}
         />
       )}
+
       {/*end of for exporting data */}
 
       {openModal && (
@@ -271,9 +290,18 @@ export default function VehicleList({user}) {
           selectedItem={selectedItems[0]}
         />
       )}
+
+      <AppConfirmDialog
+        open={openConfirmDialog}
+        onDeny={setOpenConfirmDialog}
+        submitting={approvalVehiclesLoading}
+        onConfirm={approveVehicles}
+        title={'Are you sure to approve the selected vehicle(s)?'}
+        dialogTitle={<IntlMessages id='vehicle.approve' />}
+      />
     </>
   );
 }
-VehicleList.propTypes = {
+PendingVehicles.propTypes = {
   user: PropTypes.any,
 };

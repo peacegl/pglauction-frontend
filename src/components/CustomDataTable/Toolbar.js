@@ -6,6 +6,7 @@ import AppsDeleteIcon from '@crema/core/AppsDeleteIcon';
 import AppTooltip from '@crema/core/AppTooltip';
 import IntlMessages from '@crema/utility/IntlMessages';
 import SellIcon from '@mui/icons-material/Sell';
+import VerifiedIcon from '@mui/icons-material/Verified';
 
 export default function DefaultToolbar({
   onEdit,
@@ -17,9 +18,18 @@ export default function DefaultToolbar({
   selectedItems = [],
   showDeleteButton,
   showEditButton,
+  showApproval = false,
+  onApproval=()=>{},
 }) {
   return (
     <Box style={{display: 'flex'}} sx={{mx: 4, my: 1.75}}>
+      {showApproval && selected.length > 0 && (
+        <AppTooltip title={<IntlMessages id='common.approve' />}>
+          <IconButton color='info' onClick={onApproval}>
+            <VerifiedIcon sx={{fontSize: '22px'}} />
+          </IconButton>
+        </AppTooltip>
+      )}
       {showSell &&
         selected.length == 1 &&
         selectedItems[0].status != 'sold' && (

@@ -11,16 +11,17 @@ import {
   Typography,
 } from '@mui/material';
 import {Fonts} from '../../../shared/constants/AppEnums';
+import { LoadingButton } from '@mui/lab';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
 });
-const AppConfirmDialog = ({open, onDeny, onConfirm, title, dialogTitle}) => {
+const AppConfirmDialog = ({open, onDeny, onConfirm, title, dialogTitle, submitting=false,}) => {
   return (
     <Dialog
       TransitionComponent={Transition}
       open={open}
-      onClose={() => onDeny(false)}
+      onClose={() => {}}
     >
       <DialogTitle>
         <Typography
@@ -45,7 +46,8 @@ const AppConfirmDialog = ({open, onDeny, onConfirm, title, dialogTitle}) => {
           px: 6,
         }}
       >
-        <Button
+        <LoadingButton
+          loading={submitting}
           variant='outlined'
           sx={{
             fontWeight: Fonts.MEDIUM,
@@ -55,7 +57,7 @@ const AppConfirmDialog = ({open, onDeny, onConfirm, title, dialogTitle}) => {
           autoFocus
         >
           <IntlMessages id='common.yes' />
-        </Button>
+        </LoadingButton>
         <Button
           variant='outlined'
           sx={{

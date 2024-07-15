@@ -32,6 +32,8 @@ const CustomDataTable = ({
   selectedItems = [],
   selectableRows,
   onDownloadClick,
+  showApproval = false,
+  onApproval=()=>{},
 }) => {
   return (
     <>
@@ -127,6 +129,8 @@ const CustomDataTable = ({
                   onDelete={onDelete}
                   onEdit={onEdit}
                   onSell={onSell}
+                  onApproval={onApproval}
+                  showApproval={showApproval}
                   showSell={showSell}
                   selectedItems={selectedItems}
                   showEditButton={showEditButton}

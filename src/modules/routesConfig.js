@@ -7,6 +7,7 @@ import DriveEtaIcon from '@mui/icons-material/DriveEta';
 import StoreIcon from '@mui/icons-material/Store';
 import SellIcon from '@mui/icons-material/Sell';
 import HomeIcon from '@mui/icons-material/Home';
+import DepartureBoardIcon from '@mui/icons-material/DepartureBoard';
 import {
   VIEW_VEHICLES,
   VIEW_USERS,
@@ -34,6 +35,15 @@ const routesConfig = [
     type: 'item',
     icon: <DriveEtaIcon sx={{fontSize: 22}} />,
     url: '/admin/vehicles',
+    permittedPermission: VIEW_VEHICLES,
+  },
+  {
+    id: 'pending-vehicles',
+    title: 'Pending Vehicles',
+    messageId: 'sidebar.pendingVehicles',
+    type: 'item',
+    icon: <DepartureBoardIcon sx={{fontSize: 22}} />,
+    url: '/admin/vehicles/pendings',
     permittedPermission: VIEW_VEHICLES,
   },
 
