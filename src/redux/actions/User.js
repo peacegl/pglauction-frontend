@@ -32,7 +32,11 @@ export const onGetUserList = (filterData) => {
         dispatch({type: GET_USER_LIST, payload: {}});
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
       dispatch({type: GET_USER_LIST, payload: {}});
     }
   };
@@ -57,7 +61,11 @@ export const onGetAllUsers = (filterData) => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -91,7 +99,11 @@ export const onInsertUser = (data, toggleOpen) => {
         //   dispatch({type: FETCH_ERROR, payload: element.message});
         // });
       }
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -123,7 +135,11 @@ export const onUpdateUser = (id, data, toggleOpen) => {
         //   dispatch({type: FETCH_ERROR, payload: element.message});
         // });
       }
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -146,7 +162,11 @@ export const onDeleteUsers = (data) => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -195,10 +215,18 @@ export const onUpdateAuthUser = (
             payload: messages['message.wrongPassword'],
           });
         } else {
-          dispatch({type: FETCH_ERROR, payload: error.message});
+          if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
         }
       } else {
+        if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
         dispatch({type: FETCH_ERROR, payload: error.message});
+      }
       }
     }
   };

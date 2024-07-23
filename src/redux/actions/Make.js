@@ -30,7 +30,11 @@ export const onGetMakeList = (filterData) => {
         dispatch({type: GET_MAKE_LIST, payload: {}});
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
       dispatch({type: GET_MAKE_LIST, payload: {}});
     }
   };
@@ -64,7 +68,11 @@ export const onInsertMake = (data, toggleOpen) => {
         //   dispatch({type: FETCH_ERROR, payload: element.message});
         // });
       }
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -97,7 +105,11 @@ export const onUpdateMake = (id, data, toggleOpen) => {
         //   dispatch({type: FETCH_ERROR, payload: element.message});
         // });
       }
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -121,7 +133,11 @@ export const onDeleteMakes = (data) => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };

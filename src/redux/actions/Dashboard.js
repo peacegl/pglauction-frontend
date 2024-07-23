@@ -26,7 +26,11 @@ export const onGetVehicleGraph = () => {
         dispatch({type: GET_VEHICLE_GRAPH, payload: {}});
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
       dispatch({type: GET_VEHICLE_GRAPH, payload: {}});
     }
   };
@@ -50,7 +54,11 @@ export const onLatestSoldVehicle = () => {
         dispatch({type: GET_LATEST_SOLD_VEHICLES, payload: {}});
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
       dispatch({type: GET_LATEST_SOLD_VEHICLES, payload: {}});
     }
   };

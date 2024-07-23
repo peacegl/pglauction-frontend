@@ -94,7 +94,11 @@ const FirebaseAuthProvider = ({children}) => {
         isAuthenticated: false,
         isLoading: false,
       });
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 
@@ -110,7 +114,11 @@ const FirebaseAuthProvider = ({children}) => {
         isAuthenticated: false,
         isLoading: false,
       });
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
   const createUserWithEmailAndPassword = async ({name, email, password}) => {
@@ -136,7 +144,11 @@ const FirebaseAuthProvider = ({children}) => {
         isAuthenticated: false,
         isLoading: false,
       });
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 

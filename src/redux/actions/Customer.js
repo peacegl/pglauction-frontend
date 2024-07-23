@@ -32,7 +32,11 @@ export const onGetCustomerList = (filterData) => {
         dispatch({type: GET_CUSTOMER_LIST, payload: {}});
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
       dispatch({type: GET_CUSTOMER_LIST, payload: {}});
     }
   };
@@ -57,7 +61,11 @@ export const onGetAllCustomers = (filterData) => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -92,7 +100,11 @@ export const onInsertCustomer = (data, toggleOpen) => {
         //   dispatch({type: FETCH_ERROR, payload: element.message});
         // });
       }
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -124,7 +136,11 @@ export const onUpdateCustomer = (id, data, toggleOpen) => {
         //   dispatch({type: FETCH_ERROR, payload: element.message});
         // });
       }
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -148,7 +164,11 @@ export const onDeleteCustomers = (data) => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -175,7 +195,11 @@ export const onSignUpCustomer = (data, values, signInUser) => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -207,7 +231,11 @@ export const onVerifyCustomer = (id, data, toggleOpen) => {
         //   dispatch({type: FETCH_ERROR, payload: element.message});
         // });
       }
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };

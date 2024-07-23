@@ -8,10 +8,13 @@ import jwtAxios from '@crema/services/auth/jwt-auth';
 import {moneyFormater, getData} from 'configs';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {LoadingButton} from '@mui/lab'; 
+import {LoadingButton} from '@mui/lab';
 import {Form, Formik} from 'formik';
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import HistoryIcon from '@mui/icons-material/History';
 
 import * as yup from 'yup';
 import {
@@ -22,9 +25,11 @@ import {
   CardContent,
   CardHeader,
   CircularProgress,
+  IconButton,
   InputAdornment,
   Typography,
 } from '@mui/material';
+import BidHistories from './BidHistories';
 
 const BidInfo = ({id, vehicle, setVehicle}) => {
   const {messages} = useIntl();
@@ -35,6 +40,7 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
 
   const [showSignInModal, setShowSignInModl] = useState(false);
   const [bidStatusLoading, setBidStatusLoading] = useState(true);
+  const [showHistories, setShowHistories] = useState(false);
 
   const dispatch = useDispatch();
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -88,7 +94,11 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
         actions.resetForm();
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if (error?.response?.data?.message) {
+        dispatch({type: FETCH_ERROR, payload: error.response.data.message});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 
@@ -215,10 +225,17 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
                   </Button>
                 }
               />
+              <Box sx={{padding:2}} >
+                <Button 
+                onClick={() => setShowHistories(true)}
+                variant='contained' sx={{width:'100%', borderRadius:1}} endIcon={<HistoryIcon />}>
+                  Bid History
+                </Button>
+              </Box>
               <Formik
                 validateOnChange={true}
                 initialValues={{
-                  amount: '',
+                  amount: currentBid > 0 ? currentBid : vehicle.minimum_bid,
                 }}
                 enableReinitialize
                 validationSchema={validationSchema}
@@ -232,21 +249,64 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
                 {({values, ...actions}) => {
                   return (
                     <Form>
-                      <AppTextField
-                        placeholder={messages['common.amountPlaceholder']}
-                        label={<IntlMessages id='common.amount' />}
-                        name='amount'
-                        variant='outlined'
-                        size='small'
-                        sx={{width: '100%', mt: 8}}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position='start'>
-                              <IntlMessages id='common.AED' />
-                            </InputAdornment>
-                          ),
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'start',
+                          paddingTop: 5,
                         }}
-                      />
+                      >
+                        <IconButton
+                          sx={{
+                            color: 'primary.main',
+                          }}
+                          onClick={() => {
+                            const temp_amount =
+                              values.amount - vehicle.minimum_bid;
+                            if (temp_amount > 0) {
+                              actions.setFieldValue('amount', temp_amount);
+                            } else {
+                              actions.setFieldValue(
+                                'amount',
+                                vehicle.minimum_bid,
+                              );
+                            }
+                          }}
+                        >
+                          <RemoveCircleOutlineIcon />
+                        </IconButton>
+                        <AppTextField
+                          placeholder={messages['common.amountPlaceholder']}
+                          label={<IntlMessages id='common.amount' />}
+                          name='amount'
+                          variant='outlined'
+                          size='small'
+                          type='number'
+                          sx={{width: '100%'}}
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position='start'>
+                                <IntlMessages id='common.AED' />
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+
+                        <IconButton
+                          sx={{
+                            color: 'primary.main',
+                          }}
+                          onClick={() => {
+                            const temp_amount =
+                              parseFloat(values.amount) +
+                              parseFloat(vehicle.minimum_bid);
+                            actions.setFieldValue('amount', temp_amount);
+                          }}
+                        >
+                          <AddCircleOutlineIcon />
+                        </IconButton>
+                      </Box>
                       <Box sx={{display: 'flex', justifyContent: 'center'}}>
                         <LoadingButton
                           loading={actions.isSubmitting}
@@ -274,6 +334,15 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
           width={500}
         />
       )}
+      {
+        showHistories && (
+          <BidHistories
+            auction_items_id={id}
+            showHistories={showHistories}
+            setShowHistories={setShowHistories}
+          />
+        )
+      }
     </>
   );
 };

@@ -33,7 +33,11 @@ export const onGetRoleList = (filterData) => {
         dispatch({type: GET_ROLE_LIST, payload: {}});
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
       dispatch({type: GET_ROLE_LIST, payload: {}});
     }
   };
@@ -59,7 +63,11 @@ export const onGetAllRoles = (filterData) => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -94,7 +102,11 @@ export const onInsertRole = (data, toggleOpen) => {
         //   dispatch({type: FETCH_ERROR, payload: element.message});
         // });
       }
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -126,7 +138,11 @@ export const onUpdateRole = (id, data, toggleOpen) => {
         //   dispatch({type: FETCH_ERROR, payload: element.message});
         // });
       }
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -149,7 +165,11 @@ export const onDeleteRoles = (data) => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -172,7 +192,11 @@ export const onGetUserRoles = (role_id, filterData) => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -195,7 +219,11 @@ export const onGetRolePermissions = (role_id, filterData) => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };

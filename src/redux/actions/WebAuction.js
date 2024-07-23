@@ -43,7 +43,11 @@ export const onGetWebAuctionData = (filterData) => {
         }
       })
       .catch((error) => {
+        if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
         dispatch({type: FETCH_ERROR, payload: error.message});
+      }
       });
   };
 };
@@ -71,7 +75,11 @@ export const onGetWebAuctionItemsData = (id, filterData) => {
       }
       dispatch({type: LOADING_VEHICLE, payload: false});
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
       dispatch({type: LOADING_VEHICLE, payload: false});
     }
   };

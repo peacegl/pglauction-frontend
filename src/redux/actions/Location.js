@@ -32,7 +32,11 @@ export const onGetLocationList = (filterData) => {
         dispatch({type: GET_LOCATION_LIST, payload: {}});
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
       dispatch({type: GET_LOCATION_LIST, payload: {}});
     }
   };
@@ -57,7 +61,11 @@ export const onGetAllLocations = (filterData) => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -92,7 +100,11 @@ export const onInsertLocation = (data, toggleOpen) => {
         //   dispatch({type: FETCH_ERROR, payload: element.message});
         // });
       }
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -125,7 +137,11 @@ export const onUpdateLocation = (id, data, toggleOpen) => {
         //   dispatch({type: FETCH_ERROR, payload: element.message});
         // });
       }
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -149,7 +165,11 @@ export const onDeleteLocations = (data) => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };

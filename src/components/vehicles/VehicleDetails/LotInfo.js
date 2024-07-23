@@ -33,8 +33,10 @@ export default function LotInfo({vehicle, admin, auctionId, auctionItemId}) {
               textTransform: 'capitalize',
               color:
                 value == index
-                  ? theme.palette.primary.contrastText
-                  : theme.palette.primary.main,
+                  ? 
+                  theme.palette.primary.main
+                  :
+                  theme.palette.primary.contrastText
             }}
           >
             {label}
@@ -44,8 +46,10 @@ export default function LotInfo({vehicle, admin, auctionId, auctionItemId}) {
         sx={{
           backgroundColor:
             value == index
-              ? theme.palette.primary.main
-              : theme.palette.primary.contrastText,
+              ? 
+              theme.palette.primary.contrastText
+              :
+              theme.palette.primary.main
         }}
       />
     );

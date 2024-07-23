@@ -40,7 +40,11 @@ export const onGetAuctionData = (filterData) => {
         }
       })
       .catch((error) => {
+        if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
         dispatch({type: FETCH_ERROR, payload: error.message});
+      }
       });
   };
 };
@@ -73,7 +77,11 @@ export const onInsertAuction = (data, toggleOpen) => {
         //   dispatch({type: FETCH_ERROR, payload: element.message});
         // });
       }
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -106,7 +114,11 @@ export const onUpdateAuction = (id, data, toggleOpen) => {
         //   dispatch({type: FETCH_ERROR, payload: element.message});
         // });
       }
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -130,7 +142,11 @@ export const onDeleteAuctions = (data) => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -191,7 +207,11 @@ export const onGetVehicleAuctionData = (id, filterData) => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -213,7 +233,11 @@ export const onGetSingleAuctionData = (id) => {
         }
       })
       .catch((error) => {
+        if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
         dispatch({type: FETCH_ERROR, payload: error.message});
+      }
       });
   };
 };
@@ -240,7 +264,11 @@ export const onGetAuctionItems = (id, filterData) => {
         }
       })
       .catch((error) => {
+        if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
         dispatch({type: FETCH_ERROR, payload: error.message});
+      }
       });
   };
 };
@@ -265,7 +293,11 @@ export const onGetAuctionItemBid = (id, filterData) => {
         }
       })
       .catch((error) => {
+        if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
         dispatch({type: FETCH_ERROR, payload: error.message});
+      }
       });
   };
 };

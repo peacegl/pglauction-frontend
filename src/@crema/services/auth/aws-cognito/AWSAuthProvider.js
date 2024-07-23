@@ -75,7 +75,11 @@ const AwsAuthProvider = ({children}) => {
         isLoading: false,
         isAuthenticated: false,
       });
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
   const signUpCognitoUser = async ({email, password, name}) => {
@@ -101,7 +105,11 @@ const AwsAuthProvider = ({children}) => {
         isLoading: false,
         isAuthenticated: false,
       });
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
   const confirmCognitoUserSignup = async (username, code) => {
@@ -122,7 +130,11 @@ const AwsAuthProvider = ({children}) => {
         isLoading: false,
         isAuthenticated: false,
       });
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
   const forgotPassword = async (username, code) => {
@@ -143,7 +155,11 @@ const AwsAuthProvider = ({children}) => {
         isLoading: false,
         isAuthenticated: false,
       });
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 

@@ -47,7 +47,11 @@ export const onGetWebVehicleData = (data) => {
         dispatch({type: FETCH_VEHICLES_ERROR});
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
       dispatch({type: FETCH_VEHICLES_ERROR});
     }
   };
@@ -101,7 +105,11 @@ export const onGetWebVehicleView = (id) => {
         dispatch({type: LOADING_ITEM, payload: false});
       })
       .catch((error) => {
+        if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
         dispatch({type: FETCH_ERROR, payload: error.message});
+      }
         dispatch({type: LOADING_ITEM, payload: false});
       });
   };
@@ -141,7 +149,11 @@ export const onGetFeaturedVehicles = () => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -160,7 +172,11 @@ export const onCountPopularBrands = () => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -181,7 +197,11 @@ export const onGetBestSellingVehicles = () => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -205,7 +225,11 @@ export const onGetRecentlyAddedVehicles = () => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -228,7 +252,11 @@ export const onGetMyWatchList = (data) => {
         }
       })
       .catch((error) => {
+        if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
         dispatch({type: FETCH_ERROR, payload: error.message});
+      }
       });
   };
 };
@@ -252,7 +280,11 @@ export const onDeleteMyWatchList = (data) => {
         });
       }
     } catch (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
+        dispatch({type: FETCH_ERROR, payload: error.message});
+      }
     }
   };
 };
@@ -276,7 +308,11 @@ export const onGetMyPurchaseList = (data) => {
         }
       })
       .catch((error) => {
+        if(error?.response?.data?.message){
+        dispatch({type: FETCH_ERROR, payload:error.response.data.message});
+      }else{
         dispatch({type: FETCH_ERROR, payload: error.message});
+      }
       });
   };
 };
