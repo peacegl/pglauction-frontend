@@ -81,12 +81,10 @@ const Signin = (props) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              flexDirection: 'column',
             }}
           >
-            <Box sx={{ mr: 2 }}>
-              <AppLogo />
-            </Box>
-            <Box
+             <Box
               sx={{
                 mb: 1.5,
                 fontWeight: Fonts.BOLD,
@@ -95,11 +93,10 @@ const Signin = (props) => {
             >
               <IntlMessages id='common.login' />
             </Box>
-          </Box>
-          <Box sx={{ textAlign: 'start', pb: 1 }}>
-            <p >Demo Account:</p>
-            <p>username: <span style={{ opacity: 0.7 }}>demo</span></p>
-            <p>password: <span style={{ opacity: 0.7 }}>password</span></p>
+            <Box sx={{ mr: 2 }}>
+              <AppLogo />
+            </Box>
+           
           </Box>
 
           <Formik

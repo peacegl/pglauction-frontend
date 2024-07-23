@@ -111,7 +111,7 @@ const CustomerStepOne = (props) => {
           dataLoading={props.countriesLoading}
           options={props.countries}
           keyName='name'
-          onSearch={props.searchCountries}
+          // onSearch={props.searchCountries}
           value={props.values?.country_id}
           handleChange={({name, value}) => {
             props.setfieldvalue(name, value);
@@ -129,15 +129,15 @@ const CustomerStepOne = (props) => {
           dataLoading={props.statesLoading}
           options={props.states}
           keyName='name'
-          onSearch={(content) =>
-            props.searchStates({
-              country_id: props.values.country_id,
-              ...content,
-            })
-          }
+          // onSearch={(content) =>
+          //   props.searchStates({
+          //     country_id: props.values.country_id,
+          //     ...content,
+          //   })
+          // }
           value={props.values?.state_id}
           handleChange={({name, value}) => {
-            props.searchCountries({state_id: value});
+            // props.searchCountries({state_id: value});
             props.setfieldvalue(name, value);
           }}
         />

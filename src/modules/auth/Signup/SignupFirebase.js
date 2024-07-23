@@ -153,8 +153,8 @@ const SignupFirebase = () => {
 
   useEffect(() => {
     getData(`/timezones/auto_complete`, {}, setTimezonesLoading, setTimezones);
-    getData(`/countries/auto_complete`, {}, setCountriesLoading, setCountries);
-    getData(`/states/auto_complete`, {}, setStatesLoading, setStates);
+    getData(`/countries/auto_complete`, {all:true}, setCountriesLoading, setCountries);
+    getData(`/states/auto_complete`, {all:true}, setStatesLoading, setStates);
   }, []);
 
   const searchTimezones = (content) => {
@@ -169,14 +169,14 @@ const SignupFirebase = () => {
   const searchCountries = (content) => {
     getData(
       `/countries/auto_complete`,
-      content,
+      {...content, all:true},
       setCountriesLoading,
       setCountries,
     );
   };
 
   const searchStates = (content) => {
-    getData(`/states/auto_complete`, content, setStatesLoading, setStates);
+    getData(`/states/auto_complete`, {...content, all:true}, setStatesLoading, setStates);
   };
 
   const steps = [

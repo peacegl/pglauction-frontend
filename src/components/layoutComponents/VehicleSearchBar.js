@@ -13,7 +13,7 @@ const Search = styled('div')(({theme}) => ({
   display: 'flex',
   alignItems: 'center',
   position: 'relative',
-  borderRadius: 30,
+  borderRadius: '5px',
   border: '1px',
   borderStyle: 'solid',
   borderColor: 'primary',

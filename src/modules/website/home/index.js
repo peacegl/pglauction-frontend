@@ -113,18 +113,18 @@ export default function Home() {
 
   return (
     <>
+      <Container maxWidth='xl' >
       <CarouselBanur></CarouselBanur>
-      <Container maxWidth='xl' sx={{ mt: 12 }}>
         {featuredVehicles.length > 0 && (
           <CustomCarousel
             title={<IntlMessages id='vehicle.featuredVehicles' />}
             items={featuredVehicles}
           />
         )}
-        <MultipleContentSection
+        {/* <MultipleContentSection
           title={<IntlMessages id='website.why_choose_us' />}
           contents={contents}
-        />
+        /> */}
         {recentlyAddedVehicles.length > 0 && (
           <SecondCustomCarousel
             title={<IntlMessages id='vehicle.recentlyAddedVehicles' />}

@@ -1,10 +1,10 @@
-import InstagramIcon from '../../assets/icon/instagram.svg';
-import WhatsAppIcon from '../../assets/icon/whatsapp.svg';
-import FacebookIcon from '../../assets/icon/facebook.svg';
+import InstagramIcon from '../../assets/icon/instagram2.svg';
+import WhatsAppIcon from '../../assets/icon/whatsapp2.svg';
+import FBIcon from '../../assets/icon/facebook2.svg';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import VehicleSearchBar from './VehicleSearchBar';
-import TiktokIcon from 'assets/icon/tiktok.png';
+import TiktokIcon from '../../assets/icon/tiktok2.svg';
 import MenuIcon from '@mui/icons-material/Menu';
 import { setVehicleSearch } from 'redux/actions';
 import logoImage from 'assets/united_logo.png';
@@ -222,49 +222,48 @@ function Header(props) {
           >
             <Link
               variant='body2'
-              fontSize='14px'
+              color='text.secondary'
+              sx={{":hover": { textDecoration: 'none',color:'inherit'}}}
               underline='none'
               href='https://www.tiktok.com/@united.used.cars?_t=8ZIpjlRz6DR&_r=1'
               mx='2px'
               target='_blank'
             >
-              <Box
-                component='img'
-                mt='2px'
-                width='26px'
-                alt='tiktok'
-                src={TiktokIcon.src}
-              ></Box>
+              <TiktokIcon  />
             </Link>
             <Link
               variant='body2'
+              color='red'
               fontSize='14px'
               underline='none'
               href='https://www.facebook.com/profile.php?id=100087054543656'
               mx='2px'
               target='_blank'
             >
-              <FacebookIcon width='30px' />
+              <FBIcon />
             </Link>
             <Link
               variant='body2'
+              color='text.secondary'
+
               fontSize='14px'
               underline='none'
               href='https://www.instagram.com/united.used.cars/'
               mx='2px'
               target='_blank'
             >
-              <InstagramIcon width='30px' />
+              <InstagramIcon />
             </Link>
             <Link
               variant='body2'
+              color='text.secondary'
               fontSize='14px'
               underline='none'
               href='https://wa.me/+19122395061'
               mx='2px'
               target='_blank'
             >
-              <WhatsAppIcon width='30px' />
+              <WhatsAppIcon   />
             </Link>
           </Box>
           <Box
