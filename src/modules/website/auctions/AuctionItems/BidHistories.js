@@ -22,8 +22,12 @@ import jwtAxios from '@crema/services/auth/jwt-auth';
 import { FETCH_ERROR } from 'shared/constants/ActionTypes';
 import { useState } from 'react';
 import { moneyFormater } from 'configs';
+import {useDispatch} from 'react-redux';
+
 
 export default function ScrollDialog({showHistories, setShowHistories,auction_items_id}) {
+  const dispatch = useDispatch();
+
   const handleClose = () => {
     setShowHistories(false);
   };
@@ -93,8 +97,7 @@ const fetchHistories = async () => {
                   color='textSecondary'
                   sx={{whiteSpace: 'nowrap'}}
                 >
-                 
-                  {item.buyer?.username}
+                  {item.buyer?.customer?.fullname}
                 </TimelineOppositeContent>
                 <TimelineSeparator>
                   <TimelineDot />
