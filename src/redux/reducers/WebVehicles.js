@@ -19,6 +19,7 @@ import {
   INCREMENT_TOTAL_WEB_VEHICLE,
   UPDATE_WEB_VEHICLE,
   DELETE_REAL_TIME_VEHICLE,
+  SET_VEHICLE_SORT,
 } from '../../shared/constants/ActionTypes';
 
 export const VIEW_TYPE = Object.freeze({ LIST: 1, GRID: 2 });
@@ -63,6 +64,7 @@ const initialState = {
     location_id: [],
     category_id: [],
   },
+  sortBy:{column:'created_at',order:'desc'},
 };
 
 const WebVehicleReducer = (state = initialState, action) => {
@@ -102,6 +104,11 @@ const WebVehicleReducer = (state = initialState, action) => {
         ...state,
         search: action.payload,
       };
+      case SET_VEHICLE_SORT:
+        return {
+          ...state,
+          sortBy: action.payload,
+        };
     case SET_VEHICLE_VIEW_TYPE:
       return {
         ...state,

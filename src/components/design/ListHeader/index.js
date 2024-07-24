@@ -21,6 +21,7 @@ import {
   Typography,
 } from '@mui/material';
 import {VIEW_TYPE} from 'redux/reducers/Auctions';
+import VehicleSort from 'modules/website/vehicles/VehicleList/VehicleSort';
 
 const IconBtn = styled(IconButton)(({theme}) => {
   return {
@@ -47,6 +48,7 @@ const ListHeader = ({
   onGClick,
   onBack,
   name,
+  showSort=false
 }) => {
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
   const dispatch = useDispatch();
@@ -133,6 +135,9 @@ const ListHeader = ({
               ml: 'auto',
             }}
           >
+            {showSort&&(
+              <VehicleSort/>
+            )}
             {onLClick && onGClick && (
               <>
                 <IconBtn

@@ -46,12 +46,14 @@ const VehicleList = () => {
   );
   const viewType = useSelector(({webVehicles}) => webVehicles.viewType);
   const filterData = useSelector(({webVehicles}) => webVehicles.filterData);
+  const sortBy = useSelector(({webVehicles}) => webVehicles.sortBy);
+
   // const loading = useSelector(({common}) => common.loading);
   const loading = useSelector(({webVehicles}) => webVehicles.itemsLoading);
   const {search = ''} = useSelector(({webVehicles}) => webVehicles);
   useEffect(() => {
     setPage(0);
-  }, [search, filterData]);
+  }, [search, filterData,sortBy]);
 
   useEffect(() => {
     if (make) {
@@ -75,6 +77,7 @@ const VehicleList = () => {
             per_page: perPage,
             page: page + 1,
             search,
+            sortBy,
           }),
         );
       } else {
@@ -85,6 +88,7 @@ const VehicleList = () => {
             per_page: perPage,
             page: page + 1,
             search,
+            sortBy,
           }),
         );
       }
@@ -93,7 +97,7 @@ const VehicleList = () => {
 
     // filterData
     // console.log(filterData,search);
-  }, [makeData, page, search, perPage, user?.type, filterData]);
+  }, [makeData, page, search, perPage, user?.type, filterData,sortBy.column,sortBy.order]);
 
   const onPageChange = (event, value) => {
     setPage(value);
@@ -172,6 +176,7 @@ const VehicleList = () => {
         make={make}
         onLClick={() => dispatch(setVehicleViewType(VIEW_TYPE.LIST))}
         onGClick={() => dispatch(setVehicleViewType(VIEW_TYPE.GRID))}
+        showSort={true}
       />
       <AppsContent
         style={{backgroundColor: alpha(theme.palette.background.default, 0.6)}}
