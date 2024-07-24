@@ -25,6 +25,7 @@ const CarouselBanur = () => {
 
   return (
     <Carousel
+   
       infiniteLoop={true}
       showThumbs={false}
       showIndicators={false}

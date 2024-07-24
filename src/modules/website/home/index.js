@@ -113,8 +113,8 @@ export default function Home() {
 
   return (
     <>
-      <Container maxWidth='xl' >
-      <CarouselBanur></CarouselBanur>
+      <Container maxWidth='xl' sx={{paddingTop:3}} >
+      <CarouselBanur ></CarouselBanur>
         {featuredVehicles.length > 0 && (
           <CustomCarousel
             title={<IntlMessages id='vehicle.featuredVehicles' />}
