@@ -17,7 +17,7 @@ export const tableColumns = function (router,data) {
         display: false,
         viewColumns: false,
       },
-    },
+    },  
     {
       name: 'str_code',
       label: messages['common.code'],
