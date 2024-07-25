@@ -15,14 +15,20 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 const options = [
-  {id:{column:'created_at',order:'desc'},label:'Date'},
-  {id:{column:'year',order:'desc'},label:'Year'},
-  {id:{column:'make',order:'desc'},label:'Make'},
-  {id:{column:'model',order:'desc'},label:'Model'},
-  {id:{column:'status',order:'desc'},label:'Status'},
+  {id:{column:'created_at',order:'desc'},label:'Newest to Oldest'},
+  {id:{column:'created_at',order:'asc'},label:'Oldest to Newest'},
+
+  {id:{column:'price',order:'desc'},label:'Price Highest to Lowest'},
+  {id:{column:'price',order:'asc'},label:'Price Lowest to Highest'},
+
+  {id:{column:'year',order:'desc'},label:'Year Highest to Lowest'},
+  {id:{column:'year',order:'asc'},label:'Year Lowest to Highest'},
+  {id:{column:'make',order:'desc'},label:'Make Highest to Lowest'},
+  {id:{column:'make',order:'asc'},label:'Make Lowest to Highest'},
+  {id:{column:'model',order:'desc'},label:'Model Highest to Lowest'},
+  {id:{column:'model',order:'asc'},label:'Model Lowest to Highest'},
   {id:{column:'is_featured',order:'desc'},label:'Featured'},
   {id:{column:'is_best_selling',order:'desc'},label:'Best Selling'},
-  {id:{column:'engine_type',order:'desc'},label:'Engine Type'},
 ];
 
 export default function VehicleSort() {
@@ -41,11 +47,6 @@ export default function VehicleSort() {
     option,
   ) => {
     setAnchorEl(null);
-    if(option.column==currentSort.column){
-      option.order = option.order == 'desc' ? 'asc' : 'desc';
-    }else{
-      option.order = 'desc';
-    }
     dispatch({type: SET_VEHICLE_SORT, payload: option});
   };
 
@@ -99,7 +100,7 @@ export default function VehicleSort() {
             onClick={(event) => handleMenuItemClick(option.id)}
           >
                <ListItemIcon>
-           {(option.id.column==currentSort.column) ? currentSort.order=='desc' ? <ArrowDownwardIcon /> : <ArrowUpwardIcon /> : null}
+           {(JSON.stringify(option.id) === JSON.stringify(currentSort))  ? <Check />   : null}
           </ListItemIcon>
             {option.label}
           </MenuItem>
