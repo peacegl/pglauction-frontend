@@ -188,7 +188,7 @@ export default function VehicleList({user}) {
         title={<IntlMessages id='vehicle.vehicleList' />}
         total={total}
         data={data}
-        columns={tableColumns(router)}
+        columns={tableColumns(router,data)}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}

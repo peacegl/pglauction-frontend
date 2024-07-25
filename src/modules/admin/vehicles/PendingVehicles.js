@@ -204,7 +204,7 @@ export default function PendingVehicles({user}) {
       title={<IntlMessages id='vehicle.pendingVehicles' />}
         total={total}
         data={data}
-        columns={tableColumns(router)}
+        columns={tableColumns(router,data)}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}

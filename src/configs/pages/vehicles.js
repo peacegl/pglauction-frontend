@@ -2,12 +2,13 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import {Box, Typography} from '@mui/material';
 const year = new Date().getFullYear();
 import * as yup from 'yup';
-import {CommonConfigs, moneyFormater} from 'configs';
+import {CommonConfigs, locationCurrencyFormatter, moneyFormater} from 'configs';
 import {appIntl} from '@crema/utility/helper/Utils';
 const youtubeRegExp = CommonConfigs().youtubeRegExp;
 const {messages = []} = appIntl() ? appIntl() : {};
 
-export const tableColumns = function (router) {
+export const tableColumns = function (router,data) {
+  
   return [
     {
       name: 'id',
@@ -54,11 +55,12 @@ export const tableColumns = function (router) {
       label: messages['common.totalCost'],
       options: {
         filter: false,
-        customBodyRender: (value, tableMeta, updateValue) => (
-          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            {moneyFormater(value)}
+        customBodyRender: (value, tableMeta, updateValue) => {
+          const location_id=  data?.[tableMeta?.rowIndex]?.location_id;
+          return <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+            {locationCurrencyFormatter(value,location_id)}
           </Typography>
-        ),
+        },
       },
     },
     {
@@ -76,13 +78,15 @@ export const tableColumns = function (router) {
       name: 'price',
       label: messages['common.price'],
       options: {
-        customBodyRender: (value, tableMeta, updateValue) => (
-          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            {moneyFormater(
+        customBodyRender: (value, tableMeta, updateValue) => {
+          const location_id=  data?.[tableMeta?.rowIndex]?.location_id;
+         return  <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+            {locationCurrencyFormatter(
               parseInt(value) + parseInt((value * tableMeta?.rowData[5]) / 100),
+              location_id
             )}
           </Typography>
-        ),
+        },
       },
     },
     {

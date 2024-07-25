@@ -10,9 +10,7 @@ import Button from '@mui/material/Button';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Check from '@mui/icons-material/Check';
 import { useDispatch, useSelector } from 'react-redux';
-import { SET_VEHICLE_SORT } from 'shared/constants/ActionTypes';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { SET_VEHICLE_SORT } from 'shared/constants/ActionTypes'; 
 
 const options = [
   {id:{column:'created_at',order:'desc'},label:'Newest to Oldest'},

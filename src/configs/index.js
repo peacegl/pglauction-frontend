@@ -3,6 +3,7 @@ import jwtAxios from '@crema/services/auth/jwt-auth';
 import IntlMessages from '@crema/utility/IntlMessages';
 import { useRef } from 'react';
 import { useEffect } from 'react';
+import { LOCATION_CURRENCIES } from 'shared/constants/LocationCurrencies';
 
 const merge = (a, b, p) =>
   a.filter((aa) => !b.find((bb) => aa[p] === bb[p])).concat(b);
@@ -51,7 +52,20 @@ export function dataURLtoFile(dataurl, filename) {
 }
 
 // Create our number formatter.
-export function moneyFormater(number, currency = 'AED') {
+export function moneyFormater(number, currency = "AED") {
+  // if (currency == null) currency = process.env.NEXT_PUBLIC_CURRENCY;
+  const formater = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currency,
+    // These options are needed to round to whole numbers if that's what you want.
+    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+    //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+  });
+  return formater.format(number);
+}
+export function locationCurrencyFormatter(number,location_id) {
+    const currency= LOCATION_CURRENCIES[location_id] ?? 'AED';
+  // if (currency == null) currency = process.env.NEXT_PUBLIC_CURRENCY;
   const formater = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: currency,

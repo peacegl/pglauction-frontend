@@ -21,11 +21,11 @@ import {Box, CircularProgress, Typography} from '@mui/material';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import { FETCH_ERROR } from 'shared/constants/ActionTypes';
 import { useState } from 'react';
-import { moneyFormater } from 'configs';
+import { location, locationCurrencyFormatter} from 'configs';
 import {useDispatch} from 'react-redux';
 
 
-export default function ScrollDialog({showHistories, setShowHistories,auction_items_id}) {
+export default function BidHistories({showHistories, setShowHistories,auction_items_id, vehicle}) {
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -105,7 +105,7 @@ const fetchHistories = async () => {
                 </TimelineSeparator>
                 <TimelineContent sx={{py: '7px', px: 2}}>
                   <Typography variant='h4' component='span' >
-                  {moneyFormater(item.amount)}
+                  {locationCurrencyFormatter(item.amount,vehicle.location_id)}
                   </Typography>
                   <Typography>{item.created_at}</Typography>
                 </TimelineContent>

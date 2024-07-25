@@ -2,7 +2,7 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import List from '@mui/material/List';
-import {moneyFormater} from 'configs';
+import {locationCurrencyFormatter} from 'configs';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Item from '../../design/Item';
@@ -57,9 +57,10 @@ export default function SaleInfo({vehicle, showPrice, admin}) {
           {showPrice && (
             <Item
               label={<IntlMessages id='vehicle.price' />}
-              value={moneyFormater(
+              value={locationCurrencyFormatter(
                 parseInt(vehicle.price) +
                   parseInt((vehicle.price * vehicle.sale_rate ?? 15) / 100),
+                  vehicle.location_id
               )}
             />
           )}
@@ -71,9 +72,10 @@ export default function SaleInfo({vehicle, showPrice, admin}) {
             <>
               <Item
                 label={<IntlMessages id='vehicle.price' />}
-                value={moneyFormater(
+                value={locationCurrencyFormatter(
                   parseInt(vehicle.price) +
-                    parseInt((vehicle.price * vehicle.sale_rate ?? 15) / 100),
+                    parseInt((vehicle.price * vehicle.sale_rate ?? 15) / 100,),
+                    vehicle.location_id
                 )}
               />
               <Item
@@ -82,7 +84,7 @@ export default function SaleInfo({vehicle, showPrice, admin}) {
               />
               <Item
                 label={<IntlMessages id='common.totalCost' />}
-                value={'AED ' + vehicle.price}
+                value={locationCurrencyFormatter(vehicle.price,vehicle.location_id)}
               />
             </>
           )}
@@ -96,9 +98,7 @@ export default function SaleInfo({vehicle, showPrice, admin}) {
             target='_blank'
           >
             <WhatsAppIcon />
-            <Box pt='2px'>
-              {vehicle.seller?.loginable?.whatsapp}
-            </Box>
+            <Box pt='2px'>{vehicle.seller?.loginable?.whatsapp}</Box>
           </Button>
         )}
       </CardContent>
