@@ -67,7 +67,11 @@ export default AppPage((props) => {
       </Head> */}
       <AppPageMeta 
       title={`${props.vehicle.year} ${props.vehicle?.make} ${props.vehicle.model}`} 
-      images={props.vehicle?.images.map((image) => image.path)}
+      images={props.vehicle?.images.map((image) => {
+      return {
+        url: image.path,
+        alt: image.path}
+      })}
       description={`${props.vehicle.vin} ${props.vehicle?.lot_number} ${props.vehicle?.location?.name}`}
       />
       <VehicleDetail />
