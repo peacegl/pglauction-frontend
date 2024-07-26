@@ -7,6 +7,8 @@ import jwtAxios from '@crema/services/auth/jwt-auth';
 import asyncComponent from '@crema/utility/asyncComponent';
 import {GET_WEB_VEHICLE_VIEW} from 'shared/constants/ActionTypes';
 import vehicles from 'pages/vehicles';
+import AppPageMeta from '@crema/core/AppPageMeta';
+
 
 // export async function generateMetadata({params, searchParams}, parent) {
 //   try {
