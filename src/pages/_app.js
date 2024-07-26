@@ -13,7 +13,7 @@ import {useStore} from 'redux/store'; // Client-side cache, shared for the whole
 
 import '@crema/services/index';
 import 'shared/vendors/index.css';
-import AppPageMeta from '@crema/core/AppPageMeta';
+
 import JWTAuthProvider from '@crema/services/auth/jwt-auth/JWTAuthProvider';
 import useEcho from 'plugins/echo';
 // import EchoProvider from 'configs/EchoProvider';
@@ -42,7 +42,6 @@ export default function MyApp(props) {
                 <JWTAuthProvider>
                   <AuthRoutes>
                     <CssBaseline />
-                    <AppPageMeta />
                     <Component {...pageProps} />
                   </AuthRoutes>
                 </JWTAuthProvider>

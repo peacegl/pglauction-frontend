@@ -8,32 +8,29 @@ import asyncComponent from '@crema/utility/asyncComponent';
 import {GET_WEB_VEHICLE_VIEW} from 'shared/constants/ActionTypes';
 import vehicles from 'pages/vehicles';
 
-export async function generateMetadata(
-  { params, searchParams } ,
-  parent
-) {
- try {
-  const id = params.id
-  const res = await jwtAxios.get(`website/vehicles/${ id}`);
-  if (res.status === 200 && res.data.result) {
-   const vehicle = res.data.data;
-    return {
-      title: `${vehicle.year} ${vehicle?.make} ${vehicle.model}`,
-      openGraph: {
-        title:`${vehicle.year} ${vehicle?.make} ${vehicle.model}`,
-        description:`${vehicle.year} ${vehicle?.make} ${vehicle.model}`,
-        url: 'http://pglautobid.com/',
-        siteName: 'PGL AutoBid',
-        images: vehicles.images.map((image) =>image.path),
-      },
+export async function generateMetadata({params, searchParams}, parent) {
+  try {
+    const id = params.id;
+    
+    const res = await jwtAxios.get(`website/vehicles/${id}`);
+    console.log('vehicle', params,res);
+    if (res.status === 200 && res.data.result) {
+      const vehicle = res.data.data;
+      console.log('vehicle', vehicle);
+
+      return {
+        title: `${vehicle.year} ${vehicle?.make} ${vehicle.model}`,
+        openGraph: {
+          title: `${vehicle.year} ${vehicle?.make} ${vehicle.model}`,
+          description: `${vehicle.year} ${vehicle?.make} ${vehicle.model}`,
+          url: 'http://pglautobid.com/',
+          siteName: 'PGL AutoBid',
+          images: vehicles.images.map((image) => image.path),
+        },
+      };
     }
-  }
-  
- } catch (error) {
-  
- }
+  } catch (error) {}
   // read route params
- 
 }
 
 const VehicleDetail = asyncComponent(() =>
@@ -41,7 +38,6 @@ const VehicleDetail = asyncComponent(() =>
 );
 export default AppPage((props) => {
   const dispatch = useDispatch();
-  console.log(props.vehicle)
   useEffect(() => {
     if (props.vehicle?.id) {
       dispatch({

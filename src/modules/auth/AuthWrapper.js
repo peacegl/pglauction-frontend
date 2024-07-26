@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 import {alpha, Typography} from '@mui/material';
 import {Fonts} from '../../shared/constants/AppEnums';
-import AppPageMeta from '../../@crema/core/AppPageMeta';
 import AppLogo from '@crema/core/AppLayout/components/AppLogo';
 
 const AuthWrapper = ({children}) => {
@@ -38,7 +37,6 @@ const AuthWrapper = ({children}) => {
             justifyContent: 'center',
           }}
         >
-          <AppPageMeta />
           {children}
         </Box>
         <Box

@@ -7,7 +7,6 @@ import AccountTabsWrapper from './AccountTabsWrapper';
 import ChangePasswordForm from './ChangePasswordForm';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-import AppPageMeta from '@crema/core/AppPageMeta';
 import PersonalInfoForm from './PersonalInfoForm';
 import {Fonts} from 'shared/constants/AppEnums';
 import {AiOutlineLock} from 'react-icons/ai';
@@ -242,7 +241,6 @@ const Account = () => {
 
   return (
     <>
-      <AppPageMeta />
       <Box sx={{mt: 8}}>
         <AppAnimate animation='transition.slideUpIn' delay={200}>
           <AccountTabsWrapper>

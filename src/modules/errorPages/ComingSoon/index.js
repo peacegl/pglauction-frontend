@@ -15,7 +15,6 @@ import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import {styled} from '@mui/material/styles';
 import Logo from '../../../assets/icon/comingsoon.svg';
 import {useTheme} from '@mui/material';
-import AppPageMeta from '../../../@crema/core/AppPageMeta';
 
 const FormWrapper = styled(Form)(() => {
   return {
@@ -49,7 +48,7 @@ const ComingSoon = () => {
 
   return (
     <AppAnimate animation='transition.slideUpIn' delay={200}>
-      <AppPageMeta />
+    
       <>
         <Box
           sx={{

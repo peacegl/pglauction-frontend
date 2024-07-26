@@ -7,17 +7,12 @@ const SITE_URL =
     ? 'http://localhost:3000'
     : 'https://qa-blog.mastersindia.co';
 
-const defaultTitle = 'UTC Vehicles';
-const defaultDescription = 'United Used Cars';
-const defaultImage = 'logo.png';
-const defaultTwitter = '@utc';
-const defaultSep = ' | ';
-
 const AppPage = ({children, ...rest}) => {
   const {
-    title,
-    description,
-    image,
+    title='PGL AutoBid',
+    description='PGL AutoBid',
+    images=[],
+    twitter='@utc',
     category = 'Admin Panel',
     tags = [
       'Live Auction',
@@ -26,50 +21,31 @@ const AppPage = ({children, ...rest}) => {
       'Vehicle Auction',
       'UTC',
       'United Used Cars',
+      'AutoBid',
+      "pgl's autobid",
     ],
+    site_name = 'PGL AutoBid',
+    url = 'https://pglautobid.com',
   } = rest;
-  const theTitle = title
-    ? title?.length > 48
-      ? title
-      : title + defaultSep + defaultTitle
-    : defaultTitle;
-  const theDescription = description
-    ? description.substring(0, 155)
-    : defaultDescription;
-  const theImage = image ? `${SITE_URL}${image}` : defaultImage;
+  
 
   return (
     <>
       <NextSeo
-        title={theTitle}
-        description={theDescription}
+        title={title}
+        description={description}
         canonical='https://www.canonical.ie/'
         openGraph={{
-          url: 'https://www.url.ie/a',
-          title: theTitle,
-          description: theDescription,
-          images: [
-            {
-              url: theImage,
-              width: 800,
-              height: 600,
-              alt: 'United Used Cars',
-              type: 'image/jpeg',
-            },
-            {
-              url: theImage,
-              width: 900,
-              height: 800,
-              alt: 'United Used Cars',
-              type: 'image/jpeg',
-            },
-          ],
-          site_name: 'United Used Cars',
+          url ,
+          title: title,
+          description: description,
+          images,
+          site_name ,
         }}
         tags={tags}
         category={category}
         twitter={{
-          handle: defaultTwitter,
+          handle: twitter,
           site: '@utc',
           cardType: 'summary_large_image',
         }}
