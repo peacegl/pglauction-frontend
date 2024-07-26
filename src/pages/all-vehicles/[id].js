@@ -6,13 +6,42 @@ import AppPage from '@crema/hoc/WebPage';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import asyncComponent from '@crema/utility/asyncComponent';
 import {GET_WEB_VEHICLE_VIEW} from 'shared/constants/ActionTypes';
+import vehicles from 'pages/vehicles';
+
+export async function generateMetadata(
+  { params, searchParams } ,
+  parent
+) {
+ try {
+  const id = params.id
+  const res = await jwtAxios.get(`website/vehicles/${ id}`);
+  if (res.status === 200 && res.data.result) {
+   const vehicle = res.data.data;
+    return {
+      title: `${vehicle.year} ${vehicle?.make} ${vehicle.model}`,
+      openGraph: {
+        title:`${vehicle.year} ${vehicle?.make} ${vehicle.model}`,
+        description:`${vehicle.year} ${vehicle?.make} ${vehicle.model}`,
+        url: 'http://pglautobid.com/',
+        siteName: 'PGL AutoBid',
+        images: vehicles.images.map((image) =>image.path),
+      },
+    }
+  }
+  
+ } catch (error) {
+  
+ }
+  // read route params
+ 
+}
 
 const VehicleDetail = asyncComponent(() =>
   import('../../modules/website/vehicles/VehicleDetail'),
 );
 export default AppPage((props) => {
   const dispatch = useDispatch();
-
+  console.log(props.vehicle)
   useEffect(() => {
     if (props.vehicle?.id) {
       dispatch({
@@ -23,7 +52,7 @@ export default AppPage((props) => {
   }, [dispatch, props.vehicle]);
   return (
     <>
-      <Head>
+      {/* <Head>
         <meta
           property='og:title'
           content={`${props.vehicle.year} ${props.vehicle?.make} ${props.vehicle.model}`}
@@ -37,7 +66,7 @@ export default AppPage((props) => {
           property='og:image'
           content={props.vehicle?.images ? props.vehicle?.images[0]?.path : ''}
         />
-      </Head>
+      </Head> */}
       <VehicleDetail />
     </>
   );

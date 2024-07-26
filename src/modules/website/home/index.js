@@ -113,7 +113,7 @@ export default function Home() {
 
   return (
     <>
-      <Container maxWidth='xl' sx={{paddingTop:3}} >
+      <Container maxWidth='xl' sx={{paddingTop:5}} >
       <CarouselBanur ></CarouselBanur>
         {featuredVehicles.length > 0 && (
           <CustomCarousel
