@@ -8,30 +8,30 @@ import asyncComponent from '@crema/utility/asyncComponent';
 import {GET_WEB_VEHICLE_VIEW} from 'shared/constants/ActionTypes';
 import vehicles from 'pages/vehicles';
 
-export async function generateMetadata({params, searchParams}, parent) {
-  try {
-    const id = params.id;
+// export async function generateMetadata({params, searchParams}, parent) {
+//   try {
+//     const id = params.id;
     
-    const res = await jwtAxios.get(`website/vehicles/${id}`);
-    console.log('vehicle', params,res);
-    if (res.status === 200 && res.data.result) {
-      const vehicle = res.data.data;
-      console.log('vehicle', vehicle);
+//     const res = await jwtAxios.get(`website/vehicles/${id}`);
+//     console.log('vehicle', params,res);
+//     if (res.status === 200 && res.data.result) {
+//       const vehicle = res.data.data;
+//       console.log('vehicle', vehicle);
 
-      return {
-        title: `${vehicle.year} ${vehicle?.make} ${vehicle.model}`,
-        openGraph: {
-          title: `${vehicle.year} ${vehicle?.make} ${vehicle.model}`,
-          description: `${vehicle.year} ${vehicle?.make} ${vehicle.model}`,
-          url: 'http://pglautobid.com/',
-          siteName: 'PGL AutoBid',
-          images: vehicles.images.map((image) => image.path),
-        },
-      };
-    }
-  } catch (error) {}
-  // read route params
-}
+//       return {
+//         title: `${vehicle.year} ${vehicle?.make} ${vehicle.model}`,
+//         openGraph: {
+//           title: `${vehicle.year} ${vehicle?.make} ${vehicle.model}`,
+//           description: `${vehicle.year} ${vehicle?.make} ${vehicle.model}`,
+//           url: 'http://pglautobid.com/',
+//           siteName: 'PGL AutoBid',
+//           images: vehicles.images.map((image) => image.path),
+//         },
+//       };
+//     }
+//   } catch (error) {}
+//   // read route params
+// }
 
 const VehicleDetail = asyncComponent(() =>
   import('../../modules/website/vehicles/VehicleDetail'),
@@ -63,6 +63,11 @@ export default AppPage((props) => {
           content={props.vehicle?.images ? props.vehicle?.images[0]?.path : ''}
         />
       </Head> */}
+      <AppPageMeta 
+      title={`${props.vehicle.year} ${props.vehicle?.make} ${props.vehicle.model}`} 
+      images={props.vehicle?.images.map((image) => image.path)}
+      description={`${props.vehicle.vin} ${props.vehicle?.lot_number} ${props.vehicle?.location?.name}`}
+      />
       <VehicleDetail />
     </>
   );
