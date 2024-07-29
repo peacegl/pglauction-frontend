@@ -57,6 +57,7 @@ const AuctionStepTwo = (props) => {
                   <Typography component='span' sx={{fontWeight: 'bold', px: 1}}>
                     {moneyFormater(
                       parseInt(item.minimum_bid ? item.minimum_bid : 0),
+                      item.currency,
                     )}
                   </Typography>
                 </Typography>
@@ -65,6 +66,7 @@ const AuctionStepTwo = (props) => {
                   <Typography component='span' sx={{fontWeight: 'bold', px: 1}}>
                     {moneyFormater(
                       parseInt(item.buy_now_price ? item.buy_now_price : 0),
+                      item.currency,
                     )}
                   </Typography>
                 </Typography>

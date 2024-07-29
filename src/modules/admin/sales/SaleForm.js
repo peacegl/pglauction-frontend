@@ -5,6 +5,7 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import {Box, MenuItem, Stack} from '@mui/material';
 import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
+import {CURRENCIES} from 'configs/pages/currency';
 
 const SaleForm = (props) => {
   const {messages} = useIntl();
@@ -77,6 +78,24 @@ const SaleForm = (props) => {
             size='small'
             sx={{flex: 1}}
           />
+
+          <AppTextField
+            select
+            clearable
+            label={<IntlMessages id='common.currency' />}
+            name='currency'
+            variant='outlined'
+            size='small'
+            value={props.values?.currency}
+            sx={{flex: 1}}
+          >
+            {CURRENCIES.map((currency, key) => (
+              <MenuItem key={key} value={currency}>
+                <Box sx={{textTransform: 'capitalize'}}>{currency}</Box>
+              </MenuItem>
+            ))}
+          </AppTextField>
+
           <AppDateField
             label={<IntlMessages id='sale.saleDate' />}
             value={props.values?.sale_date}

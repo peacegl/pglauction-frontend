@@ -175,7 +175,7 @@ export default function SaleList({user}) {
         title={<IntlMessages id='sale.saleList' />}
         total={total}
         data={data}
-        columns={tableColumns(getSingleSale)}
+        columns={tableColumns(getSingleSale,data)}
         options={options}
         onFilterClick={() => setOpenFilter(true)}
         onEdit={onEdit}

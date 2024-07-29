@@ -56,9 +56,9 @@ export const tableColumns = function (router,data) {
       options: {
         filter: false,
         customBodyRender: (value, tableMeta, updateValue) => {
-          const location_id=  data?.[tableMeta?.rowIndex]?.location_id;
+          const currency=  data?.[tableMeta?.rowIndex]?.currency;
           return <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            {locationCurrencyFormatter(value,location_id)}
+            {moneyFormater(value,currency)}
           </Typography>
         },
       },
@@ -79,11 +79,11 @@ export const tableColumns = function (router,data) {
       label: messages['common.price'],
       options: {
         customBodyRender: (value, tableMeta, updateValue) => {
-          const location_id=  data?.[tableMeta?.rowIndex]?.location_id;
+          const currency=  data?.[tableMeta?.rowIndex]?.currency;
          return  <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            {locationCurrencyFormatter(
+            {moneyFormater(
               parseInt(value) + parseInt((value * tableMeta?.rowData[5]) / 100),
-              location_id
+              currency
             )}
           </Typography>
         },
@@ -331,7 +331,7 @@ export default function configs(invalidYoutube) {
   return {
     fuels: ['petrol', 'diesel', 'electric', 'hybrid', 'flexible fuel'],
     statuses: ['available', 'inactive', 'sold', 'future'],
-    transmissions: ['automatic', 'manual'],
+    transmissions: ['automatic', 'manual'], 
     bodyStyles: [
       'sedan',
       'suv',

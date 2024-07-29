@@ -61,6 +61,7 @@ export default function VehicleModal({
     seller_id: '',
     vehicle_owner_id: '',
     price: '',
+    currency: 'AED',
     sale_rate: 15,
     document_type: '',
     primary_damage: '',

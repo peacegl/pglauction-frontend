@@ -5,7 +5,7 @@ import {FETCH_ERROR} from 'shared/constants/ActionTypes';
 import IntlMessages from '@crema/utility/IntlMessages';
 import {useAuthUser} from '@crema/utility/AuthHooks';
 import jwtAxios from '@crema/services/auth/jwt-auth';
-import {  getData, locationCurrencyFormatter} from 'configs';
+import {getData, mon, moneyFormater, moneyFormatereyFormater} from 'configs';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {LoadingButton} from '@mui/lab';
@@ -30,7 +30,7 @@ import {
   Typography,
 } from '@mui/material';
 import BidHistories from './BidHistories';
-import { LOCATION_CURRENCIES } from 'shared/constants/LocationCurrencies';
+import {LOCATION_CURRENCIES} from 'shared/constants/LocationCurrencies';
 
 const BidInfo = ({id, vehicle, setVehicle}) => {
   const {messages} = useIntl();
@@ -55,13 +55,13 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
           ? parseFloat(currentBid) + parseFloat(500)
           : vehicle.minimum_bid,
         currentBid > 0
-          ? `${messages['validation.biggerThanCurrentBid']} ${locationCurrencyFormatter(
+          ? `${messages['validation.biggerThanCurrentBid']} ${moneyFormater(
               parseFloat(currentBid) + parseFloat(500),
-              vehicle.vehicle.location_id
+              vehicle.vehicle.currency,
             )}`
-          : `${messages['validation.bidStartsAt']} ${locationCurrencyFormatter(
+          : `${messages['validation.bidStartsAt']} ${moneyFormater(
               vehicle.minimum_bid,
-              vehicle.vehicle.location_id
+              vehicle.vehicle.currency,
             )}`,
       )
       .required(<IntlMessages id='validation.amountRequired' />),
@@ -206,12 +206,12 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
               />
               <Item
                 label={<IntlMessages id='bid.minimum_bid' />}
-                value={locationCurrencyFormatter(vehicle?.minimum_bid,vehicle.vehicle.location_id)}
+                value={moneyFormater(vehicle?.minimum_bid,vehicle.vehicle.currency)}
               />
 
               <Item
                 label={<IntlMessages id='bid.currentBid' />}
-                value={locationCurrencyFormatter(currentBid, vehicle.vehicle.location_id)}
+                value={moneyFormater(currentBid, vehicle.vehicle.currency)}
               />
 
               <Item
@@ -224,14 +224,17 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
                     href={`https://wa.me/${vehicle.vehicle?.seller?.loginable?.whatsapp}?text=${window.location.origin}/auctions/auction_items/${vehicle.id}`}
                     target='_blank'
                   >
-                    {locationCurrencyFormatter(vehicle?.buy_now_price,vehicle.vehicle.location_id)}
+                    {moneyFormater(vehicle?.buy_now_price,vehicle.vehicle.currency)}
                   </Button>
                 }
               />
-              <Box sx={{padding:2}} >
-                <Button 
-                onClick={() => setShowHistories(true)}
-                variant='contained' sx={{width:'100%', borderRadius:1}} endIcon={<HistoryIcon />}>
+              <Box sx={{padding: 2}}>
+                <Button
+                  onClick={() => setShowHistories(true)}
+                  variant='contained'
+                  sx={{width: '100%', borderRadius: 1}}
+                  endIcon={<HistoryIcon />}
+                >
                   Bid History
                 </Button>
               </Box>
@@ -290,7 +293,11 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
                           InputProps={{
                             startAdornment: (
                               <InputAdornment position='start'>
-                                <IntlMessages id={LOCATION_CURRENCIES[vehicle.vehicle.location_id]} />
+                                <IntlMessages
+                                  id={
+                                    vehicle.vehicle.currency??''
+                                  }
+                                />
                               </InputAdornment>
                             ),
                           }}
@@ -337,16 +344,14 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
           width={500}
         />
       )}
-      {
-        showHistories && (
-          <BidHistories
-            auction_items_id={id}
-            showHistories={showHistories}
-            vehicle={vehicle}
-            setShowHistories={setShowHistories}
-          />
-        )
-      }
+      {showHistories && (
+        <BidHistories
+          auction_items_id={id}
+          showHistories={showHistories}
+          vehicle={vehicle}
+          setShowHistories={setShowHistories}
+        />
+      )}
     </>
   );
 };

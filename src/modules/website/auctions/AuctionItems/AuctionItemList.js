@@ -9,7 +9,6 @@ import GridView from './GridView/index';
 import AppsContent from './AppsContent';
 import {useRouter} from 'next/router';
 
-
 import {
   alpha,
   Box,
@@ -18,7 +17,7 @@ import {
   Typography,
   Select,
   MenuItem,
-} from '@mui/material'; 
+} from '@mui/material';
 import {async} from '@firebase/util';
 
 const AuctionItemList = () => {

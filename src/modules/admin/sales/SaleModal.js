@@ -29,6 +29,7 @@ export default function SellModal({
     sale_price: '',
     sale_date: '',
     description: '',
+    currency: 'AED',
     status: '',
   });
   const validationSchema = showVehicle

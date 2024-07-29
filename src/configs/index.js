@@ -53,7 +53,7 @@ export function dataURLtoFile(dataurl, filename) {
 
 // Create our number formatter.
 export function moneyFormater(number, currency = "AED") {
-  // if (currency == null) currency = process.env.NEXT_PUBLIC_CURRENCY;
+  if (!currency) currency = 'AED';
   const formater = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: currency,

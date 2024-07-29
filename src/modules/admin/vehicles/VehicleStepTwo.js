@@ -11,7 +11,6 @@ import { useEffect } from 'react';
 const VehicleStepTwo = (props) => {
   const {messages} = useIntl();
   useEffect(() => {
-    console.log(props);
   }, [ ])
   
   return (

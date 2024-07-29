@@ -109,17 +109,17 @@ const TableItem = (props) => {
       </TableCell>
 
       <TableCell align='left' className='tableCell'>
-        {moneyFormater(row.minimum_bid)}
+        {moneyFormater(row.minimum_bid, row.currency)}
       </TableCell>
       <TableCell align='left' className='tableCell'>
-        {moneyFormater(row.buy_now_price)}
+        {moneyFormater(row.buy_now_price, row.currency)}
       </TableCell>
       <TableCell align='left' className='tableCell'>
         {row?.status}
       </TableCell>
 
       <TableCell align='left' className='tableCell' fontWeight={Fonts.MEDIUM}>
-        {moneyFormater(row.vehicle.price)}
+        {moneyFormater(row.vehicle.price, row.vehicle.currency)}
       </TableCell>
       <TableCell align='left' className='tableCell'>
         {row.vehicle.sale_rate + ' %'}
@@ -129,6 +129,7 @@ const TableItem = (props) => {
         {moneyFormater(
           parseInt(row.vehicle.price) +
             parseInt((row.vehicle.price * row.vehicle.sale_rate) / 100),
+          row.vehicle.currency,
         )}
       </TableCell>
       <TableCell align='left' className='tableCell'>

@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import AppTooltip from '@crema/core/AppTooltip';
 import {useEffect, useState} from 'react';
-import {locationCurrencyFormatter} from 'configs';
+import { moneyFormater} from 'configs';
 import Card from '@mui/material/Card';
 import {useRouter} from 'next/router';
 import PropTypes from 'prop-types';
@@ -159,7 +159,7 @@ export default function GridItem({item, ...props}) {
                       fontWeight: 'bold',
                     }}
                   >
-                    {locationCurrencyFormatter(parseInt(item?.minimum_bid),item.location_id)}
+                    {moneyFormater(parseInt(item?.minimum_bid),item.currency)}
                   </Typography>
                 )}
               </Box>
@@ -178,7 +178,7 @@ export default function GridItem({item, ...props}) {
                       fontWeight: 'bold',
                     }}
                   >
-                    {locationCurrencyFormatter(parseInt(item?.buy_now_price),item.location_id)}
+                    {moneyFormater(parseInt(item?.buy_now_price),item.currency)}
                   </Typography>
                 )}
               </Box>

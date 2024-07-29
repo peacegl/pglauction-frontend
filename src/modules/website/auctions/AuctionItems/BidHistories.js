@@ -21,7 +21,7 @@ import {Box, CircularProgress, Typography} from '@mui/material';
 import jwtAxios from '@crema/services/auth/jwt-auth';
 import { FETCH_ERROR } from 'shared/constants/ActionTypes';
 import { useState } from 'react';
-import { location, locationCurrencyFormatter} from 'configs';
+import { location, moneyFormater} from 'configs';
 import {useDispatch} from 'react-redux';
 
 
@@ -105,7 +105,7 @@ const fetchHistories = async () => {
                 </TimelineSeparator>
                 <TimelineContent sx={{py: '7px', px: 2}}>
                   <Typography variant='h4' component='span' >
-                  {locationCurrencyFormatter(item.amount,vehicle.location_id)}
+                  {moneyFormater(item.amount,vehicle.currency)}
                   </Typography>
                   <Typography>{item.created_at}</Typography>
                 </TimelineContent>

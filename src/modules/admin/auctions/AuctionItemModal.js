@@ -2,10 +2,11 @@ import AppTextField from '@crema/core/AppFormComponents/AppTextField';
 import IntlMessages from '@crema/utility/IntlMessages';
 import AuctionConfigs from 'configs/pages/auctions';
 import CustomModal from 'components/CustomModal';
-import {Box, Stack, Chip} from '@mui/material';
+import {Box, Stack, Chip, MenuItem} from '@mui/material';
 import {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useIntl} from 'react-intl';
+import { CURRENCIES } from 'configs/pages/currency';
 
 const AuctionItemModal = ({
   open,
@@ -21,6 +22,7 @@ const AuctionItemModal = ({
   const [initialValues, setInitialValues] = useState({
     minimum_bid: '',
     buy_now_price: '',
+    currency: 'AED',
   });
   const validationSchema = AuctionConfigs().itemSchema;
 
@@ -29,6 +31,7 @@ const AuctionItemModal = ({
       setInitialValues({
         minimum_bid: auctionItem.minimum_bid,
         buy_now_price: auctionItem.buy_now_price,
+        currency: auctionItem.currency,
       });
     }
   }, [auctionItem]);
@@ -87,12 +90,12 @@ const AuctionItemModal = ({
           />
         </Box>
         <Stack
-          spacing={{xs: 5, md: 8}}
+          spacing={{xs: 5, md: 4}}
           sx={{
             m: 3,
           }}
         >
-          <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+          <Stack direction={{xs: 'column', md: 'row'}} spacing={2}>
             <AppTextField
               placeholder={messages['vehicle.minimumBidPlaceholder']}
               label={<IntlMessages id='vehicle.minimumBid' />}
@@ -102,7 +105,7 @@ const AuctionItemModal = ({
               sx={{flex: 1}}
             />
           </Stack>
-          <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
+          <Stack direction={{xs: 'column', md: 'row'}} spacing={2}>
             <AppTextField
               placeholder={messages['vehicle.buyNowPricePlaceholder']}
               label={<IntlMessages id='vehicle.buyNowPrice' />}
@@ -112,6 +115,24 @@ const AuctionItemModal = ({
               sx={{flex: 1}}
             />
           </Stack>
+
+          <AppTextField
+            select
+            clearable
+            label={<IntlMessages id='common.currency' />}
+            name='currency'
+            variant='outlined'
+            size='small'
+            value={auctionItem?.currency}
+            sx={{flex: 1}}
+          >
+            {CURRENCIES.map((currency, key) => (
+              <MenuItem key={key} value={currency}>
+                <Box sx={{textTransform: 'capitalize'}}>{currency}</Box>
+              </MenuItem>
+            ))}
+          </AppTextField>
+
         </Stack>
       </Box>
     </CustomModal>

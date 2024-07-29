@@ -8,6 +8,9 @@ import {useIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 import {useEffect} from 'react';
 import {useField} from 'formik';
+import MenuItem from '@mui/material/MenuItem';
+import { CURRENCIES } from 'configs/pages/currency';
+
 
 const VehicleStepOne = (props) => {
   const {messages} = useIntl();
@@ -16,7 +19,7 @@ const VehicleStepOne = (props) => {
   //   if (props.makes.length == 1) {
   //     props.setfieldvalue('make', props.makes[0]?.id);
   //   }
-  // }, [props.makes]);
+  // }, [props.makes]); 
 
   return (
     <Box>
@@ -104,6 +107,22 @@ const VehicleStepOne = (props) => {
             size='small'
             sx={{flex: 1}}
           />
+           <AppTextField
+            select
+            clearable
+            label={<IntlMessages id='common.currency' />}
+            name='currency'
+            variant='outlined'
+            size='small'
+            value={props.values?.currency}
+            sx={{flex: 1}}
+          >
+            {CURRENCIES.map((currency, key) => (
+              <MenuItem key={key} value={currency}>
+                <Box sx={{textTransform: 'capitalize'}}>{currency}</Box>
+              </MenuItem>
+            ))}
+          </AppTextField>
           <AppTextField
             placeholder={messages['common.saleRatePlaceholder']}
             label={<IntlMessages id='common.saleRate' />}
@@ -116,6 +135,7 @@ const VehicleStepOne = (props) => {
             sx={{flex: 1}}
           />
         </Stack>
+        
         <Stack direction={{xs: 'column', md: 'row'}} spacing={5}>
           <AppTextField
             placeholder={messages['vehicle.exterior_colorPlaceholder']}

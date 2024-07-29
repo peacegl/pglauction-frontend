@@ -249,6 +249,7 @@
   "common.volume": "Volume",
   "common.price": "Price",
   "common.pricePlaceholder": "Type price",
+  "common.currency": "Currency",
   "common.saleRate": "Sale Rate",
   "common.totalCost": "Total Cost",
   "common.saleRatePlaceholder": "Type Sale Rate",

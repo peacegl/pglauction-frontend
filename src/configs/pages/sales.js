@@ -6,7 +6,7 @@ import {moneyFormater} from 'configs';
 
 const {messages = []} = appIntl() ? appIntl() : {};
 
-export const tableColumns = function (getSingleSale) {
+export const tableColumns = function (getSingleSale,data) {
   return [
     {
       name: 'id',
@@ -53,11 +53,12 @@ export const tableColumns = function (getSingleSale) {
       label: messages['sale.salePrice'],
       options: {
         filter: false,
-        customBodyRender: (value, tableMeta, updateValue) => (
-          <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
-            {moneyFormater(value)}
+        customBodyRender: (value, tableMeta, updateValue) =>{
+          const currency=  data?.[tableMeta?.rowIndex]?.currency;
+         return  <Typography sx={{textTransform: 'uppercase'}} noWrap={true}>
+            {moneyFormater(value,currency)}
           </Typography>
-        ),
+        },
       },
     },
     {

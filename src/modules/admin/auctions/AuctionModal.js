@@ -90,6 +90,7 @@ export default function AuctionModal({
                       lot_number: item.vehicle.lot_number,
                       minimum_bid: item.minimum_bid,
                       buy_now_price: item.buy_now_price,
+                      currency: item.currency,
                       images: item.vehicle.images,
                     };
                     items.push(data);
