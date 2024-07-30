@@ -7,7 +7,6 @@ import VehicleSearchBar from './VehicleSearchBar';
 import TiktokIcon from '../../assets/icon/tiktok2.svg';
 import MenuIcon from '@mui/icons-material/Menu';
 import { setVehicleSearch } from 'redux/actions';
-import logoImage from 'assets/united_logo.png';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -27,6 +26,7 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material';
+import { siteSettings } from 'configs/site_settings';
 
 function Header(props) {
   const router = useRouter();
@@ -192,7 +192,7 @@ function Header(props) {
                 width: {xs: '100px', md: '120px', lg: '140px', xl: '160px'},
               }}
               alt='united logo'
-              src={logoImage.src}
+              src={siteSettings('logo')}
             />
             <Typography
               component='h1'
@@ -202,8 +202,8 @@ function Header(props) {
                 fontWeight: 'bold',
               }}
             >
-              United Used Cars
-            </Typography>
+                {siteSettings('title')}
+                </Typography>
           </Box>
 
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

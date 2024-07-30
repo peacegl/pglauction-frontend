@@ -1,8 +1,8 @@
 import {useThemeContext} from '@crema/utility/AppContextProvider/ThemeContextProvider';
-import logoImage from 'assets/united_logo.png';
 import PropTypes from 'prop-types';
 import {Box} from '@mui/material';
 import {useRouter} from 'next/router';
+import { siteSettings } from 'configs/site_settings';
 
 const AppLogo = () => {
   const {theme} = useThemeContext();
@@ -31,7 +31,7 @@ const AppLogo = () => {
           width: '130px',
         }}
         alt='united logo'
-        src={logoImage.src}
+        src={siteSettings('logo')}
       />
     </Box>
   );

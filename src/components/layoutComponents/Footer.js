@@ -1,7 +1,6 @@
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
-import logoImage from '../../assets/united_logo.png';
 import { useRouter } from 'next/router';
 import { useTheme } from '@mui/styles';
 import { webPages } from 'configs';
