@@ -19,6 +19,7 @@ import CustomMenu from './CustomMenu';
 import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import { siteSettings } from 'configs/site_settings';
 
 const signOptions = [
   {
@@ -155,7 +156,7 @@ function TopMenu(props) {
                       width: '100%',
                       height: '100%',
                       color:
-                        page.link == router.pathname ? '#0a8fdc' : 'inherit',
+                        page.link == router.pathname ? siteSettings('primaryColor') : 'inherit',
                       textDecoration: 'none',
                     }}
                   >

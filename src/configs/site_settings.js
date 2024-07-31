@@ -3,11 +3,13 @@ import autoBidLogo from 'assets/autobid_logo.png';
 
 const autoBidSiteSettings={
     title:"AutoBid",
-    logo:autoBidLogo.src
+    logo:autoBidLogo.src,
+    primaryColor:"#B30101",
 }
 const unitedSiteSettings={
     title:"United Used Cars",
-    logo:logoImage.src
+    logo:logoImage.src,
+    primaryColor:"#0A8FDC",
 }
 
 export const siteSettings = (type)=>{
@@ -18,6 +20,6 @@ export const siteSettings = (type)=>{
        case 'pgl_united':
            return unitedSiteSettings[type];
        default:
-           return unitedSiteSettings[type];
+            return unitedSiteSettings[type];
    }
 }

@@ -43,30 +43,7 @@
   padding: 20px;
   border-radius: 10px;
   flex-wrap: wrap
-}
-.auction-preview-button {
-  cursor: pointer;
-  text-decoration: none;
-border: 1px solid #0A8FDC;
-display: flex;
-align-items: center;
-justify-content: center;
-padding: 12px 30px;
-color: #ffffff;
-text-transform: capitalize;
-background-color: #0A8FDC;
-transition: 0.5s;
-border-radius: 30px;
-font-size: 14px;
-font-weight: 500;
-white-space:nowrap;
-
-
-}
-.auction-preview-button:hover{
-  background-color: #ffffff;
-    color: #0A8FDC;
-}
+} 
 
 .service-container {
   display: grid;
@@ -218,9 +195,7 @@ color: #ffffff;
     font-size: 1rem;
   
   }
-  .auction-preview-button{
-    margin-top: 10px;
-  }
+  
   .service-card{
     display: flex;
     align-items: center;

@@ -1,15 +1,16 @@
+import { siteSettings } from 'configs/site_settings';
 import {
   backgroundDark,
   backgroundLight,
   textDark,
   textLight,
 } from '../../@crema/utility/AppContextProvider/defaultConfig';
-
+const primaryColor= siteSettings('primaryColor');
 const colorSet = [
   {
     mode: 'light',
     primary: {
-      main: '#0A8FDC',
+      main: primaryColor,
     },
     secondary: {
       main: '#F04F47',
@@ -21,7 +22,7 @@ const colorSet = [
   {
     mode: 'dark',
     primary: {
-      main: '#0A8FDC',
+      main: primaryColor,
     },
     secondary: {
       main: '#F04F47',
@@ -223,7 +224,7 @@ const colorSet = [
   {
     mode: 'dark',
     primary: {
-      main: '#0A8FDC',
+      main: primaryColor,
     },
     secondary: {
       main: '#F04F47',

@@ -1,5 +1,5 @@
 
-import { Container } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import auctionImage from 'assets/auction-software/auctionPageImage.webp';
 import contentBackgroundImg from 'assets/auction-software/cta-bg.webp';
 import landingImage from 'assets/auction-software/demo-image.jpg'
@@ -118,12 +118,20 @@ export default function AuctionSoftware() {
               <div className='font-inter' style={{ opacity: 0.7, fontSize: '16px' }}>Just create a new customer account</div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
-              <a
-                onClick={() => router.push('/signin')}
-                className="auction-preview-button font-inter"
-              >
-                Live Preview
-              </a>
+            
+
+              <Button
+                  variant='outlined'
+                  key={index}
+                  sx={{
+                    display: 'block',
+                    boxShadow: 0,
+                  }}
+                  color={page.link == router.pathname ? 'inherit' : 'primary'}
+                  onClick={() => router.push('/signin')}
+                >
+                 Live Preview
+                </Button>
             </div>
           </div>
           <div style={{ paddingTop: '40px', paddingBottom: '20px' }}>

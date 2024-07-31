@@ -43,6 +43,7 @@ const CarouselBanur = () => {
             backgroundColor: theme.palette.primary.contrastText,
             opacity: 0.3,
             padding: { xs: '0', md: '3px', lg: '5px' },
+            marginLeft:'5px',
             zIndex: '10',
             '&:hover': {
               color: theme.palette.primary.main,
@@ -66,6 +67,8 @@ const CarouselBanur = () => {
             opacity: 0.3,
             padding: { xs: '0', md: '3px', lg: '5px' },
             zIndex: '10',
+            marginRight:'5px',
+
             '&:hover': {
               color: theme.palette.primary.main,
               backgroundColor: theme.palette.primary.contrastText,

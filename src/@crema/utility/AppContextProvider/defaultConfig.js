@@ -1,3 +1,4 @@
+import { siteSettings } from 'configs/site_settings';
 import {
   Fonts,
   FooterType,
@@ -35,6 +36,7 @@ export const backgroundLight = {
 };
 
 const cardRadius = ThemeStyleRadius.STANDARD;
+const primaryColor= siteSettings('primaryColor');
 export const defaultTheme = {
   theme: {
     spacing: 4,
@@ -47,7 +49,7 @@ export const defaultTheme = {
         default: '#F4F7FE',
       },
       primary: {
-        main: '#0A8FDC',
+        main: primaryColor,
         contrastText: '#fff',
       },
       secondary: {
@@ -205,7 +207,7 @@ export const defaultTheme = {
             overflow: 'hidden',
             whiteSpace: 'nowrap',
             fontWeight: 'bold',
-            backgroundColor: '#0A8FDC',
+            backgroundColor: primaryColor,
             color: '#fff',
             'div, svg, span': {
               color: '#fff!important',
@@ -216,7 +218,7 @@ export const defaultTheme = {
       MUIDataTableSelectCell: {
         styleOverrides: {
           headerCell: {
-            backgroundColor: '#0A8FDC',
+            backgroundColor: primaryColor,
             '.MuiButtonBase-root': {
               color: '#fff',
             },
