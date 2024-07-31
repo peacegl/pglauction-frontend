@@ -22,6 +22,7 @@ const AuctionItems = () => {
             <AuctionItemList />
           </Box>
         </Box>
+        
       </Container>
       <Drawer
         anchor='left'

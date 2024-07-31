@@ -20,6 +20,8 @@ import {
   onGetFeaturedVehicles,
   onGetRecentlyAddedVehicles,
 } from 'redux/actions';
+import Partnership from './PartnerShip';
+import SuccessStory from './SuccessStory';
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: (theme) => theme.palette.primary.contrastText('success'),
@@ -132,6 +134,8 @@ export default function Home() {
           />
         )}
         <PopularBrandsList popularBrandsCount={popularBrandsCount} />
+        {/* <Partnership />
+        <SuccessStory /> */}
       </Container>
     </>
   );
