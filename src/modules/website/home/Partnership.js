@@ -1,6 +1,6 @@
 import {Box, Container, Stack, Typography} from '@mui/material';
 import React from 'react';
-function Partnership() {
+const Partnership = () => {
   return (
     <Container maxWidth='xl' sx={{mt: 6}}>
       <Stack direction={{xs: 'column', md: 'row'}}>
@@ -8,7 +8,7 @@ function Partnership() {
           <Typography   
           variant='h1'
           component='h1'
-          style={{fontSize: 30, marginTop: 16}}
+          style={{fontSize: 36, }}
           >
             PARTNERSHIP WITH PGL INTERNATIONAL
             </Typography>

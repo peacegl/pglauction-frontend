@@ -21,8 +21,8 @@ import {
   onGetRecentlyAddedVehicles,
 } from 'redux/actions';
 
-// import Partnership from './PartnerShip';
-// import SuccessStory from './SuccessStory';
+import Partnership from './PartnerShip';
+import SuccessStory from './SuccessStory';
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: (theme) => theme.palette.primary.contrastText('success'),
