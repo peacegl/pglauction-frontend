@@ -34,6 +34,8 @@ const CustomDataTable = ({
   onDownloadClick,
   showApproval = false,
   onApproval=()=>{},
+  showChangeStatus = false,
+  onChangeStatus=()=>{},
 }) => {
   return (
     <>
@@ -111,7 +113,8 @@ const CustomDataTable = ({
                 />
               )}
 
-              {showAddButton && (
+              
+               {showAddButton && (
                 <BasicTooltip
                   onClick={onAdd}
                   title={<IntlMessages id='common.add' />}
@@ -123,19 +126,22 @@ const CustomDataTable = ({
           customToolbarSelect: options.customToolbarSelect
             ? options.customToolbarSelect
             : () => (
-                <Toolbar
-                  selected={selected}
-                  deleteTitle={deleteTitle}
-                  onDelete={onDelete}
-                  onEdit={onEdit}
-                  onSell={onSell}
-                  onApproval={onApproval}
-                  showApproval={showApproval}
-                  showSell={showSell}
-                  selectedItems={selectedItems}
-                  showEditButton={showEditButton}
-                  showDeleteButton={showDeleteButton}
-                />
+              <Toolbar
+              selected={selected}
+              deleteTitle={deleteTitle}
+              onDelete={onDelete}
+              onEdit={onEdit}
+              onSell={onSell}
+              onApproval={onApproval}
+              showApproval={showApproval}
+              showSell={showSell}
+              selectedItems={selectedItems}
+              showEditButton={showEditButton}
+              showDeleteButton={showDeleteButton}
+              showChangeStatus={showChangeStatus}
+              onChangeStatus={onChangeStatus}
+              />
+              
               ),
           customSearchRender: options.customSearchRender
             ? options.customSearchRender
@@ -183,4 +189,6 @@ CustomDataTable.propTypes = {
   selectedItems: PropTypes.array,
   selectableRows: PropTypes.any,
   onDownloadClick: PropTypes.func,
+  showChangeStatus: PropTypes.bool,
+  onChangeStatus: PropTypes.func,
 };

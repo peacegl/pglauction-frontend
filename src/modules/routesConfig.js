@@ -76,6 +76,15 @@ const routesConfig = [
     permittedPermission: VIEW_SALES,
   },
   {
+    id: 'pending-sales',
+    title: 'Pending Sales',
+    messageId: 'sidebar.pendingSales',
+    type: 'item',
+    icon: <SellIcon sx={{fontSize: 22}} />,
+    url: '/admin/sales/pending',
+    permittedPermission: VIEW_SALES,
+  },
+  {
     id: 'auctions',
     title: 'Auction List',
     messageId: 'sidebar.auctions',

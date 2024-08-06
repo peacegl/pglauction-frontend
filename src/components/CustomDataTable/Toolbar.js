@@ -7,6 +7,9 @@ import AppTooltip from '@crema/core/AppTooltip';
 import IntlMessages from '@crema/utility/IntlMessages';
 import SellIcon from '@mui/icons-material/Sell';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import BasicTooltip from './BasicTooltip';
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
+
 
 export default function DefaultToolbar({
   onEdit,
@@ -20,6 +23,8 @@ export default function DefaultToolbar({
   showEditButton,
   showApproval = false,
   onApproval=()=>{},
+  showChangeStatus = false,
+  onChangeStatus=()=>{},
 }) {
   return (
     <Box style={{display: 'flex'}} sx={{mx: 4, my: 1.75}}>
@@ -56,6 +61,13 @@ export default function DefaultToolbar({
           }}
         />
       )}
+       {showChangeStatus && (
+                <BasicTooltip
+                  onClick={onChangeStatus}
+                  title={'Change Status'}
+                  icon={<ChangeCircleIcon />}
+                />
+              )}
     </Box>
   );
 }
@@ -70,4 +82,6 @@ DefaultToolbar.propTypes = {
   showSell: PropTypes.bool,
   showDeleteButton: PropTypes.bool,
   showEditButton: PropTypes.bool,
+    showChangeStatus: PropTypes.bool,
+  onChangeStatus: PropTypes.func,
 };
