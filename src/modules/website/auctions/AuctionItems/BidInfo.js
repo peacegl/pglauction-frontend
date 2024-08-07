@@ -52,11 +52,11 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
       .typeError(<IntlMessages id='validation.amountError' />)
       .min(
         currentBid > 0
-          ? parseFloat(currentBid) + parseFloat(500)
+          ? parseFloat(currentBid) + parseFloat(100)
           : vehicle.minimum_bid,
         currentBid > 0
           ? `${messages['validation.biggerThanCurrentBid']} ${moneyFormater(
-              parseFloat(currentBid) + parseFloat(500),
+              parseFloat(currentBid) + parseFloat(100),
               vehicle.vehicle.currency,
             )}`
           : `${messages['validation.bidStartsAt']} ${moneyFormater(
@@ -269,7 +269,7 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
                           }}
                           onClick={() => {
                             const temp_amount =
-                              values.amount - vehicle.minimum_bid;
+                              values.amount - 100;
                             if (temp_amount > 0) {
                               actions.setFieldValue('amount', temp_amount);
                             } else {
@@ -310,7 +310,7 @@ const BidInfo = ({id, vehicle, setVehicle}) => {
                           onClick={() => {
                             const temp_amount =
                               parseFloat(values.amount) +
-                              parseFloat(vehicle.minimum_bid);
+                              100;
                             actions.setFieldValue('amount', temp_amount);
                           }}
                         >
