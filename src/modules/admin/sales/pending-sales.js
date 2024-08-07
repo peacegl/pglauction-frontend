@@ -52,6 +52,7 @@ export default function PendingSales({user}) {
         page: 1,
         per_page: -1,
         filterData: filteredData,
+        pendingSale:true,
       },
       () => {},
       setExportData,
@@ -75,6 +76,7 @@ export default function PendingSales({user}) {
         exactMatch,
         filterData,
         orderBy,
+        pendingSale:true,
       }),
     );
   };
