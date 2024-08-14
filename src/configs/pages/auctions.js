@@ -1,12 +1,14 @@
 import IntlMessages from '@crema/utility/IntlMessages';
 import {appIntl} from '@crema/utility/helper/Utils';
 const {messages = []} = appIntl() ? appIntl() : {};
-import {Typography} from '@mui/material';
+import {Box, Typography} from '@mui/material';
 import * as yup from 'yup';
 import moment from 'moment';
 import 'moment-timezone';
+import BasicTooltip from 'components/CustomDataTable/BasicTooltip';
+import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 
-export const tableColumns = function (router, showAuctionVehicles) {
+export const tableColumns = function (router, showAuctionVehicles,recycleAuction,items) {
   return [
     {
       name: 'id',
@@ -82,16 +84,25 @@ export const tableColumns = function (router, showAuctionVehicles) {
       label: messages['common.status'],
       options: {
         filter: false,
-        customBodyRender: (value, tableMeta, updateValue) => (
+        customBodyRender: (value, tableMeta, updateValue) => {
+          const data=  items?.[tableMeta?.rowIndex];
+       return   <Box sx={{display:'flex',alignItems:'center'}}>
           <Typography
-            sx={{
-              textTransform: 'capitalize',
-              color: value == 'active' ? 'green' : 'red',
-            }}
-          >
-            {value}
-          </Typography>
-        ),
+          sx={{
+            textTransform: 'capitalize',
+            color: value == 'active' ? 'green' : 'red',
+          }}
+        >
+          {value}
+        </Typography>
+          {value=='completed' &&
+            <BasicTooltip
+             onClick={()=>recycleAuction(data)}
+             title={<IntlMessages id='common.recycle' />}
+             icon={<SettingsBackupRestoreIcon />}
+           />}
+        </Box>
+        }
       },
     },
     {

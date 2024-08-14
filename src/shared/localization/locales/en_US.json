@@ -1081,6 +1081,7 @@
   "common.logout": "Logout",
   "common.admin_panel": "Admin Panel",
   "common.filter": "Filter",
+  "common.recycle": "Recycle",
   "common.apply_filters": "Apply Filters",
   "common.reset_all": "Reset All",
   "filter.newly_added": "Newly Added",

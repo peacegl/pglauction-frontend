@@ -3,7 +3,7 @@ import IntlMessages from '@crema/utility/IntlMessages';
 import {useDispatch, useSelector} from 'react-redux';
 import {tableColumns} from 'configs/pages/auctions';
 import AuctionModal from './AuctionModal';
-import {useEffect, useState} from 'react'; 
+import {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {
   onGetAuctionData,
@@ -19,14 +19,17 @@ import {
 } from 'shared/constants/Permissions';
 import {useRouter} from 'next/router';
 import AuctionVehicleModal from './AuctionVehiclesModal';
+import AuctionRecyleDialog from './AuctionRecyleDialog';
 
 export default function AuctionList({user}) {
   const [openModal, setOpenModal] = useState(false);
+  const [openRecycleModal, setOpenRecycleModal] = useState(false);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [per_page, setPerPage] = useState(20);
   const [recordId, setRecordId] = useState(null);
   const [filterData, setFilterData] = useState({});
+  const [auctionData, setAuctionData] = useState({});
   const [orderBy, setOrderBy] = useState({column: 'created_at', order: 'desc'});
   const {data = [], total = 0} = useSelector(
     ({auctions}) => auctions.auctionsList,
@@ -100,7 +103,6 @@ export default function AuctionList({user}) {
   };
 
   useEffect(() => {
-     
     window.echo.private(`update.auction`).listen('Updated', (e) => {
       if (user.uid != e.authUser) {
         if (e.action === 'created') {
@@ -138,6 +140,10 @@ export default function AuctionList({user}) {
     setAuctionId(id);
     setShowAuctionVehiclesModal(true);
   };
+  const recycleAuction = async (data) => {
+    setAuctionData(data);
+    setOpenRecycleModal(true);
+  };
 
   return (
     <>
@@ -145,7 +151,12 @@ export default function AuctionList({user}) {
         title={<IntlMessages id='auction.auctionList' />}
         total={total}
         data={data}
-        columns={tableColumns(router, showAuctionVehicles)}
+        columns={tableColumns(
+          router,
+          showAuctionVehicles,
+          recycleAuction,
+          data,
+        )}
         options={options}
         onAdd={onAdd}
         onEdit={onEdit}
@@ -180,6 +191,15 @@ export default function AuctionList({user}) {
           auctionId={auctionId}
         />
       )}
+      <AuctionRecyleDialog
+        open={openRecycleModal}
+        setOpenModal={() => {
+          setOpenRecycleModal(false);
+          setAuctionData({});
+        }}
+        fetchData={fetchData}
+        auctionData={auctionData}
+      ></AuctionRecyleDialog>
     </>
   );
 }

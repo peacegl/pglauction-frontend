@@ -23,7 +23,7 @@ import jwtAxios from '@crema/services/auth/jwt-auth';
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
 });
-const SaleStatusDialog = ({open, setOpen, selectedIds,setSelected,fetchData}) => {
+const SaleStatusDialog = ({open, setOpenDialog, selectedIds,setSelected,fetchData}) => {
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState('');
   const {messages} = useIntl();
@@ -35,7 +35,7 @@ const submit = async () => {
       setSubmitting(false);
       setSelected([]);
       fetchData();
-      setOpen(false);
+      setOpenDialog(false);
     } catch (error) {
       setSubmitting(false);
     }
@@ -57,7 +57,7 @@ const submit = async () => {
                 color='inherit'
                 size='small'
                 onClick={() => {
-                  setOpen(false);
+                  setOpenDialog(false);
                 }}
               >
                 <CloseIcon fontSize='inherit' />

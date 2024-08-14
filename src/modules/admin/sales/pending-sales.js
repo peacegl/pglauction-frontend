@@ -264,7 +264,7 @@ export default function PendingSales({user}) {
       )}
       <SaleStatusDialog
       open={saleStatus}
-      setOpen={setSaleStatus}
+      setOpenDialog={setSaleStatus}
       selectedIds={selected.map((item) => data[item].id)}
       setSelected={setSelected}
       fetchData={fetchData}
